@@ -132,7 +132,8 @@ class DriftAdapter:
             opt.step()
             sched.step()
             if verbose and (epoch + 1) % max(1, self.config.n_epochs // 10) == 0:
-                print(f"[drift] epoch {epoch + 1}/{self.config.n_epochs}  loss={float(loss):.4f}")
+                print(f"[drift] epoch {epoch + 1}/{self.config.n_epochs}  "
+                      f"loss={float(loss.detach()):.4f}")
 
         model.eval()
         self._model = model

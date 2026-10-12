@@ -125,8 +125,9 @@ def _panel_a(ax, adata: AnnData, use_rep: Optional[str],
             ax.scatter(emb[cells[-1], 0], emb[cells[-1], 1], marker=">",
                        color="0.1", s=18, zorder=5)
 
-    cbar = plt.colorbar(sm, ax=ax, pad=0.02, aspect=20, shrink=0.6)
-    cbar.set_label(f"leading eigenvalue, Re{_axis_tag(adata)}", fontsize=7)
+    cbar = plt.colorbar(sm, ax=ax, pad=0.02, aspect=18, shrink=0.55,
+                        location="right")
+    cbar.set_label(f"Re(λ_max){_axis_tag(adata)}", fontsize=6)
     cbar.ax.tick_params(labelsize=6)
 
     ax.set_xlabel(f"{use_rep} 1")
@@ -250,9 +251,9 @@ def figure_operator_space(
             )
 
     with style():
-        fig = plt.figure(figsize=(OPSPACE_FIG_WIDTH_IN, OPSPACE_FIG_HEIGHT_IN * 2.1))
+        fig = plt.figure(figsize=(OPSPACE_FIG_WIDTH_IN, OPSPACE_FIG_HEIGHT_IN * 1.7))
         gs = fig.add_gridspec(
-            nrows=2, ncols=2, height_ratios=[1.0, 1.0], hspace=0.4, wspace=0.35,
+            nrows=2, ncols=2, height_ratios=[1.0, 0.55], hspace=0.5, wspace=0.55,
         )
         ax_a = fig.add_subplot(gs[0, 0])
         ax_b = fig.add_subplot(gs[0, 1])
