@@ -5,6 +5,55 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Dynamic ground truth — gate well-defined, DSM fit still the barrier
+
+Per user: swap the pseudotime-band ground truth for strict per-cell sign of
+the analytic Jacobian:
+
+    true_fork(c)   ⇔ analytic_lead_re at (X_true_c, α_c) > 0
+    true_holder(c) ⇔ analytic_lead_re at (X_true_c, α_c) < 0
+
+Both the equilibrated and transient synthetics carry ``X_true``, so the
+same per-cell ground truth applies across all four rows.
+
+- `scripts/equilibrated_gate.py` — `_dynamic_labels(adata)` computes the
+  analytic Jacobian and its lead_re per cell; `_gate` scores against it.
+  DSM-transient is now computed inline (3 extra fits per run) instead of
+  pulled from the standing report, so every row uses the same gate.
+- `compare/run_v1_equilibrated_pitchfork.py` — same dynamic ground truth.
+
+Results (seed 0, 5000 epochs, n_cells=1200, n_alpha=30):
+
+| row | τ_crit | fork P | fork R | holder P | holder R | verdict |
+|---|---|---|---|---|---|---|
+| oracle | 0.1 | 1.00 | 0.88 | 1.00 | 0.84 | **PASS** |
+| oracle | 0.3 | 1.00 | 0.88 | 1.00 | 0.89 | **PASS** |
+| oracle | 0.5 | 1.00 | 0.79 | 1.00 | 0.91 | FAIL (0.79 vs 0.80) |
+| dsm_equilibrated | 0.1 | 0.04 | 0.71 | nan | 0.00 | FAIL |
+| dsm_equilibrated | 0.3 | 0.04 | 0.82 | nan | 0.00 | FAIL |
+| dsm_equilibrated | 0.5 | 0.05 | 0.76 | nan | 0.00 | FAIL |
+| v1_slicing_eq | 0.1-0.5 | 0.05-0.06 | 0.72-1.00 | nan-1.00 | 0-0.04 | FAIL |
+| dsm_transient | 0.1-0.5 | 0.26-0.28 | 0.77-0.80 | nan | 0.00 | FAIL |
+
+**The gate is now well-defined and the oracle essentially passes.** The
+τ=0.5 oracle miss (fork R=0.79) is a measurement artifact from
+``opspace.behaviour`` labelling cells with |lead_re| ≤ tol as "drift";
+within noise, the ceiling is near 1 everywhere.
+
+**DSM-equilibrated fails on precision**, not recall — labels ~98 % of
+cells "fork" while analytic says only ~4 % are. The learned autodiff
+Jacobian is uniformly positive-definite independent of data regime
+(frac(Re>0) = 1.00 on all three DSM rows). The equilibration fixed the
+ORACLE but not the fit. v1 slicing shows the same pathology; same
+DriftField + DSM backend, kernel-smoothed grid doesn't fix the sign.
+
+Phase C stays blocked. The gate definition is no longer the bottleneck
+— the DSM fit itself is. The DSM loss plateaus at ~94 across every run
+(same signature in the convergence_audit/) and the output drift
+converges to a near-constant expansive field. Likely culprits ranked
+by cost to probe: σ-scaling in the DSM target, FiLM gate schedule, or
+alpha_control weighting.
+
 ### Equilibrated pitchfork synthetic + four-row gate — oracle itself < 0.8
 
 New synthetic that mixes stationary SDE snapshots per α (``snapshot = mixture

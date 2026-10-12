@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-12 04:48:22",
+  "timestamp": "2026-10-12 05:05:32",
   "args": {
     "tau_crit": [
       0.1,
@@ -11,9 +11,10 @@
     "n_epochs": 5000,
     "seed": 0,
     "inject_velocity_prior": true,
-    "v1_json": "benchmarks/phase_b_gate/equilibrated/v1_slicing.json",
-    "verbose": false
+    "v1_json": null,
+    "verbose": true
   },
+  "ground_truth": "dynamic (strict sign of analytic lead_re per cell)",
   "per_tau": [
     {
       "tau_crit": 0.1,
@@ -24,18 +25,18 @@
           "row": "oracle",
           "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
           "fork_pr": {
-            "tp": 7,
-            "fp": 36,
-            "fn": 113,
-            "precision": 0.16279069767441862,
-            "recall": 0.058333333333333334
+            "tp": 43,
+            "fp": 0,
+            "fn": 6,
+            "precision": 1.0,
+            "recall": 0.8775510204081632
           },
           "holder_pr": {
-            "tp": 696,
-            "fp": 269,
-            "fn": 184,
-            "precision": 0.7212435233160622,
-            "recall": 0.7909090909090909
+            "tp": 965,
+            "fp": 0,
+            "fn": 186,
+            "precision": 1.0,
+            "recall": 0.838401390095569
           },
           "beh_counts": {
             "damped_oscillator": 172,
@@ -47,20 +48,26 @@
             "frac_positive": 0.04083333333333333,
             "frac_negative": 0.9591666666666666,
             "median": -0.8697426555145907
+          },
+          "ground_truth": {
+            "n_true_fork": 49,
+            "n_true_holder": 1151,
+            "frac_true_fork": 0.04083333333333333,
+            "analytic_lead_re_median": -0.8697426555145907
           }
         },
         "dsm_equilibrated": {
           "fork_pr": {
-            "tp": 88,
-            "fp": 830,
-            "fn": 32,
-            "precision": 0.09586056644880174,
-            "recall": 0.7333333333333333
+            "tp": 35,
+            "fp": 883,
+            "fn": 14,
+            "precision": 0.03812636165577342,
+            "recall": 0.7142857142857143
           },
           "holder_pr": {
             "tp": 0,
             "fp": 0,
-            "fn": 880,
+            "fn": 1151,
             "precision": NaN,
             "recall": 0.0
           },
@@ -73,10 +80,50 @@
             "frac_negative": 0.0,
             "median": 0.87823286652565
           },
+          "ground_truth": {
+            "n_true_fork": 49,
+            "n_true_holder": 1151,
+            "frac_true_fork": 0.04083333333333333,
+            "analytic_lead_re_median": -0.8697426555145907
+          },
           "row": "dsm_equilibrated",
-          "fit_seconds": 104.0871073330054,
+          "fit_seconds": 119.15472287498415,
           "inject_velocity_prior": true,
           "n_epochs": 5000
+        },
+        "dsm_transient": {
+          "fork_pr": {
+            "tp": 261,
+            "fp": 683,
+            "fn": 65,
+            "precision": 0.2764830508474576,
+            "recall": 0.8006134969325154
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 874,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 944,
+            "growing_oscillator": 256
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.7391303777694702
+          },
+          "ground_truth": {
+            "n_true_fork": 326,
+            "n_true_holder": 874,
+            "frac_true_fork": 0.27166666666666667,
+            "analytic_lead_re_median": -0.4209892397867949
+          },
+          "row": "dsm_transient",
+          "fit_seconds": 115.64837175002322,
+          "note": "\u03b1-ramp synthetic \u2014 negative control"
         }
       }
     },
@@ -89,18 +136,18 @@
           "row": "oracle",
           "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
           "fork_pr": {
-            "tp": 8,
-            "fp": 36,
-            "fn": 112,
-            "precision": 0.18181818181818182,
-            "recall": 0.06666666666666667
+            "tp": 44,
+            "fp": 0,
+            "fn": 6,
+            "precision": 1.0,
+            "recall": 0.88
           },
           "holder_pr": {
-            "tp": 727,
-            "fp": 302,
-            "fn": 113,
-            "precision": 0.706511175898931,
-            "recall": 0.8654761904761905
+            "tp": 1029,
+            "fp": 0,
+            "fn": 121,
+            "precision": 1.0,
+            "recall": 0.8947826086956522
           },
           "beh_counts": {
             "damped_oscillator": 110,
@@ -112,20 +159,26 @@
             "frac_positive": 0.041666666666666664,
             "frac_negative": 0.9583333333333334,
             "median": -0.7825407446485897
+          },
+          "ground_truth": {
+            "n_true_fork": 50,
+            "n_true_holder": 1150,
+            "frac_true_fork": 0.041666666666666664,
+            "analytic_lead_re_median": -0.7825407446485897
           }
         },
         "dsm_equilibrated": {
           "fork_pr": {
-            "tp": 98,
-            "fp": 851,
-            "fn": 22,
-            "precision": 0.10326659641728135,
-            "recall": 0.8166666666666667
+            "tp": 41,
+            "fp": 908,
+            "fn": 9,
+            "precision": 0.04320337197049526,
+            "recall": 0.82
           },
           "holder_pr": {
             "tp": 0,
             "fp": 0,
-            "fn": 840,
+            "fn": 1150,
             "precision": NaN,
             "recall": 0.0
           },
@@ -138,10 +191,50 @@
             "frac_negative": 0.0,
             "median": 0.8519085049629211
           },
+          "ground_truth": {
+            "n_true_fork": 50,
+            "n_true_holder": 1150,
+            "frac_true_fork": 0.041666666666666664,
+            "analytic_lead_re_median": -0.7825407446485897
+          },
           "row": "dsm_equilibrated",
-          "fit_seconds": 113.2668417081004,
+          "fit_seconds": 119.61730183393229,
           "inject_velocity_prior": true,
           "n_epochs": 5000
+        },
+        "dsm_transient": {
+          "fork_pr": {
+            "tp": 256,
+            "fp": 683,
+            "fn": 70,
+            "precision": 0.27263045793397234,
+            "recall": 0.7852760736196319
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 874,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 939,
+            "growing_oscillator": 261
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.8099343478679657
+          },
+          "ground_truth": {
+            "n_true_fork": 326,
+            "n_true_holder": 874,
+            "frac_true_fork": 0.27166666666666667,
+            "analytic_lead_re_median": -0.41784503762513897
+          },
+          "row": "dsm_transient",
+          "fit_seconds": 119.86528304091189,
+          "note": "\u03b1-ramp synthetic \u2014 negative control"
         }
       }
     },
@@ -154,18 +247,18 @@
           "row": "oracle",
           "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
           "fork_pr": {
-            "tp": 6,
-            "fp": 40,
-            "fn": 74,
-            "precision": 0.13043478260869565,
-            "recall": 0.075
+            "tp": 46,
+            "fp": 0,
+            "fn": 12,
+            "precision": 1.0,
+            "recall": 0.7931034482758621
           },
           "holder_pr": {
-            "tp": 776,
-            "fp": 268,
-            "fn": 104,
-            "precision": 0.7432950191570882,
-            "recall": 0.8818181818181818
+            "tp": 1044,
+            "fp": 0,
+            "fn": 98,
+            "precision": 1.0,
+            "recall": 0.9141856392294221
           },
           "beh_counts": {
             "damped_oscillator": 93,
@@ -177,20 +270,26 @@
             "frac_positive": 0.04833333333333333,
             "frac_negative": 0.9516666666666667,
             "median": -0.7889652324474759
+          },
+          "ground_truth": {
+            "n_true_fork": 58,
+            "n_true_holder": 1142,
+            "frac_true_fork": 0.04833333333333333,
+            "analytic_lead_re_median": -0.7889652324474759
           }
         },
         "dsm_equilibrated": {
           "fork_pr": {
-            "tp": 65,
-            "fp": 878,
-            "fn": 15,
-            "precision": 0.0689289501590668,
-            "recall": 0.8125
+            "tp": 44,
+            "fp": 899,
+            "fn": 14,
+            "precision": 0.04665959703075292,
+            "recall": 0.7586206896551724
           },
           "holder_pr": {
             "tp": 0,
             "fp": 0,
-            "fn": 880,
+            "fn": 1142,
             "precision": NaN,
             "recall": 0.0
           },
@@ -203,113 +302,57 @@
             "frac_negative": 0.0,
             "median": 0.8348478078842163
           },
+          "ground_truth": {
+            "n_true_fork": 58,
+            "n_true_holder": 1142,
+            "frac_true_fork": 0.04833333333333333,
+            "analytic_lead_re_median": -0.7889652324474759
+          },
           "row": "dsm_equilibrated",
-          "fit_seconds": 115.08456904208288,
+          "fit_seconds": 120.81386329093948,
           "inject_velocity_prior": true,
           "n_epochs": 5000
+        },
+        "dsm_transient": {
+          "fork_pr": {
+            "tp": 241,
+            "fp": 688,
+            "fn": 72,
+            "precision": 0.25941872981700753,
+            "recall": 0.7699680511182109
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 887,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 929,
+            "growing_oscillator": 271
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.7075857222080231
+          },
+          "ground_truth": {
+            "n_true_fork": 313,
+            "n_true_holder": 887,
+            "frac_true_fork": 0.2608333333333333,
+            "analytic_lead_re_median": -0.46826803759090496
+          },
+          "row": "dsm_transient",
+          "fit_seconds": 118.28544754208997,
+          "note": "\u03b1-ramp synthetic \u2014 negative control"
         }
       }
     }
   ],
-  "dsm_transient_from_report": [
-    {
-      "row": "dsm_transient",
-      "tau_crit": 0.1,
-      "fork_pr": {
-        "tp": 94,
-        "fp": 1003,
-        "fn": 12,
-        "precision": 0.08568824065633546,
-        "recall": 0.8867924528301887
-      },
-      "holder_pr": {
-        "tp": 0,
-        "fp": 3,
-        "fn": 925,
-        "precision": 0.0,
-        "recall": 0.0
-      },
-      "beh_counts": {
-        "damped_oscillator": 5,
-        "drift": 23,
-        "fork": 1097,
-        "growing_oscillator": 72,
-        "holder": 3
-      },
-      "lead_re": {
-        "near_tau_median": 0.0187369454652071,
-        "far_from_tau_median": 0.041597574949264526,
-        "overall_median": 0.03533975966274738,
-        "overall_frac_positive": 0.985
-      },
-      "note": "snapshot from non-stationary \u03b1-ramp \u2014 see V2_PLAN R11"
-    },
-    {
-      "row": "dsm_transient",
-      "tau_crit": 0.3,
-      "fork_pr": {
-        "tp": 120,
-        "fp": 1026,
-        "fn": 1,
-        "precision": 0.10471204188481675,
-        "recall": 0.9917355371900827
-      },
-      "holder_pr": {
-        "tp": 0,
-        "fp": 0,
-        "fn": 853,
-        "precision": NaN,
-        "recall": 0.0
-      },
-      "beh_counts": {
-        "fork": 1146,
-        "growing_oscillator": 54
-      },
-      "lead_re": {
-        "near_tau_median": 0.04667055979371071,
-        "far_from_tau_median": 0.08057762682437897,
-        "overall_median": 0.06398122012615204,
-        "overall_frac_positive": 1.0
-      },
-      "note": "snapshot from non-stationary \u03b1-ramp \u2014 see V2_PLAN R11"
-    },
-    {
-      "row": "dsm_transient",
-      "tau_crit": 0.5,
-      "fork_pr": {
-        "tp": 100,
-        "fp": 913,
-        "fn": 15,
-        "precision": 0.09871668311944719,
-        "recall": 0.8695652173913043
-      },
-      "holder_pr": {
-        "tp": 6,
-        "fp": 1,
-        "fn": 816,
-        "precision": 0.8571428571428571,
-        "recall": 0.0072992700729927005
-      },
-      "beh_counts": {
-        "damped_oscillator": 5,
-        "drift": 19,
-        "fork": 1013,
-        "growing_oscillator": 156,
-        "holder": 7
-      },
-      "lead_re": {
-        "near_tau_median": 0.02822280116379261,
-        "far_from_tau_median": 0.03680421970784664,
-        "overall_median": 0.0340944305062294,
-        "overall_frac_positive": 0.9833333333333333
-      },
-      "note": "snapshot from non-stationary \u03b1-ramp \u2014 see V2_PLAN R11"
-    }
-  ],
   "v1_slicing_on_equilibrated": {
-    "row": "v1_slicing",
     "status": "complete",
-    "timestamp": "2026-10-12 04:42:30",
+    "timestamp": "2026-10-12 05:06:45",
     "args": {
       "tau_crit": [
         0.1,
@@ -325,19 +368,19 @@
     "per_tau": [
       {
         "tau_crit": 0.1,
-        "fit_seconds": 244.05382304196246,
+        "fit_seconds": 261.62254933302756,
         "T_eval": 200,
         "fork_pr": {
-          "tp": 120,
-          "fp": 880,
+          "tp": 49,
+          "fp": 951,
           "fn": 0,
-          "precision": 0.12,
+          "precision": 0.049,
           "recall": 1.0
         },
         "holder_pr": {
           "tp": 0,
           "fp": 0,
-          "fn": 880,
+          "fn": 1151,
           "precision": NaN,
           "recall": 0.0
         },
@@ -349,25 +392,30 @@
           "frac_positive": 1.0,
           "frac_negative": 0.0,
           "median": 0.05819297023117542
+        },
+        "ground_truth": {
+          "n_true_fork": 49,
+          "n_true_holder": 1151,
+          "frac_true_fork": 0.04083333333333333
         }
       },
       {
         "tau_crit": 0.3,
-        "fit_seconds": 246.29852616705466,
+        "fit_seconds": 265.87917554192245,
         "T_eval": 200,
         "fork_pr": {
-          "tp": 120,
-          "fp": 520,
-          "fn": 0,
-          "precision": 0.1875,
-          "recall": 1.0
+          "tp": 36,
+          "fp": 604,
+          "fn": 14,
+          "precision": 0.05625,
+          "recall": 0.72
         },
         "holder_pr": {
-          "tp": 0,
-          "fp": 40,
-          "fn": 840,
-          "precision": 0.0,
-          "recall": 0.0
+          "tp": 29,
+          "fp": 11,
+          "fn": 1121,
+          "precision": 0.725,
+          "recall": 0.025217391304347827
         },
         "beh_counts": {
           "damped_oscillator": 40,
@@ -379,25 +427,30 @@
           "frac_positive": 0.9333333333333333,
           "frac_negative": 0.06666666666666667,
           "median": 0.03194901719689369
+        },
+        "ground_truth": {
+          "n_true_fork": 50,
+          "n_true_holder": 1150,
+          "frac_true_fork": 0.041666666666666664
         }
       },
       {
         "tau_crit": 0.5,
-        "fit_seconds": 245.24798704206478,
+        "fit_seconds": 263.05019050010014,
         "T_eval": 200,
         "fork_pr": {
-          "tp": 80,
-          "fp": 920,
+          "tp": 58,
+          "fp": 942,
           "fn": 0,
-          "precision": 0.08,
+          "precision": 0.058,
           "recall": 1.0
         },
         "holder_pr": {
           "tp": 40,
           "fp": 0,
-          "fn": 840,
+          "fn": 1102,
           "precision": 1.0,
-          "recall": 0.045454545454545456
+          "recall": 0.03502626970227671
         },
         "beh_counts": {
           "drift": 40,
@@ -409,6 +462,11 @@
           "frac_positive": 0.9666666666666667,
           "frac_negative": 0.03333333333333333,
           "median": 0.023021589033305645
+        },
+        "ground_truth": {
+          "n_true_fork": 58,
+          "n_true_holder": 1142,
+          "frac_true_fork": 0.04833333333333333
         }
       }
     ]
