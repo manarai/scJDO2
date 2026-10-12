@@ -7,6 +7,15 @@ Read this whole file first. Build in the order given. Stop and ask if the stored
 
 **Merger note (2026-10-12):** this file is the authoritative merged spec. It is the body of the originally-attached `scJDO2_figure_api_instructions.md` plus §§7–10 (Phase B / Phase C forms, Phase C design lock Q1–Q16, R13 carry-forward and acceptance, handoff checklist). The duplicate `docs/scJDO2_figure_api_instructions.md` has been deleted per the user's merger directive. Where the two originals disagreed, the authoritative spec wins (see §10.1 for the single disagreement surfaced).
 
+**Addendum (2026-10-12, Task 41 build instructions §0).** The merged spec is amended with the four additions below. Where this addendum and the earlier body disagree, this addendum wins and `docs/scJDO2_figure_layer_build_instructions.md` + `V2_PLAN.md` (R14, R15) record the deviations.
+
+1. **Tangent restriction everywhere.** All spectral quantities (eigenvalues, eigenvectors, Henrici, transient gain, drivers) are computed on `P_c J_c P_cᵀ` (per `scjdo2.field.fit_jacobian_tangent_projectors`, Fisher-weighted ∇η SVD with a permutation-null rank — see V2_PLAN R14) and lifted back to gene space through `P_c`. Off-tangent directions never appear as eigenvalues; genes whose weight in the lifted eigenvector comes entirely from off-tangent directions are reported with reason `off_tangent`. This replaces the un-restricted treatment implicit in §§2.1–2.2 of the original spec.
+2. **Sensitive-holder mark.** A cell is `sensitive` when `henrici` is above the dataset's 90th percentile. Stored as a boolean in `obs["op_sensitive"]`. Rendered as a dashed outer ring (radius 2× the marker, 0.75 pt, dash 3-2, same colour as the behaviour class) in Panels A and B. Eigenvalue colouring and behaviour class are unchanged.
+3. **Complex eigenvector rendering.** For a complex leading mode, Panel C and the archetype sheet draw one-sided bars: length = |v_g|, colour = arg(v_g) on a cyclic map (matplotlib `twilight`), with a small horizontal cyclic colour bar labelled "early in cycle → late in cycle". No sign axis. Phase is reported relative to the gene with the largest magnitude (fixed to phase 0 by the sign convention in §2.1).
+4. **Relative-units label.** Every axis or column that carries an eigenvalue says "relative" unless `uns["scjdo2"]["clock_calibrated"]` is `True`. Tested in §5 test 7.
+
+**Addendum (2026-10-12, V2_PLAN R15 — classifier source).** `obs["op_behaviour"]`, `obs["op_sensitive"]`, and the scalar invariants used by Panels A and B (`lead_re`, `lead_im`, `henrici`, `transient_gain`, `spectral_gap`, `op_confidence`, `n_*`) are computed from the **latent per-cell Jacobian** ``J_latent(c)``. The gene-space J supplies drivers (Panel C) and the Fisher ledger. Panel C drivers come from the chain-rule lift ``w_gene = ∇η(z_c) · v_latent`` of the latent leading eigenvector, scored by |w_gene,g| weighted by Fisher precision — not from an independent gene-space eigendecomposition. See V2_PLAN R15 for the rationale.
+
 ---
 
 ## 0. Ground rules
