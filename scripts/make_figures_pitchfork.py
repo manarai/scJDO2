@@ -18,7 +18,7 @@ import matplotlib
 matplotlib.use("Agg")                    # headless
 import numpy as np
 
-from scjdo2 import opspace
+from scjdo2 import io as scjdo2_io, opspace
 from scjdo2.data import generate_pitchfork_equilibrated
 from scjdo2.drift import DriftConfig
 from scjdo2.field import (
@@ -127,15 +127,18 @@ def main() -> int:
     print("[figures] running opspace.compute (R15 orchestration)")
     opspace.compute(adata)
 
-    # Rendering first — figures do not need the AnnData persisted; adata.h5ad
-    # with a list-of-CSR J is not round-trippable via h5ad yet (see V2_PLAN
-    # Phase D io work). Figures are reproducible by re-running this script.
+    # Persist run directory first (adata.h5ad + phase_c.npz sidecar) so
+    # `scjdo2 figure *` can read it back without re-fitting.
+    print(f"[figures] saving run dir to {args.out}")
+    saved = scjdo2_io.save(adata, args.out)
+    print(f"[figures]   wrote {saved['h5ad'].name}"
+          + (f" + {saved['sidecar'].name}" if saved.get("sidecar") else ""))
+
     print("[figures] rendering operator_space")
     figure_operator_space(adata, out=args.out / "operator_space")
     print("[figures] rendering ledger_summary")
     figure_ledger_summary(adata, out=args.out / "ledger_summary")
 
-    # Per-cell invariants table (serialisable; the gene-space J stays in RAM).
     print("[figures] exporting per_cell_invariants.csv")
     try:
         opspace.export_tables(adata, args.out)

@@ -82,16 +82,26 @@ def _build_parser() -> argparse.ArgumentParser:
 
 
 def _load_adata(input_arg: str):
+    """Load a run directory (adata.h5ad + phase_c.npz sidecar) via
+    :func:`scjdo2.io.load`. Falls back to a plain ``read_h5ad`` for a
+    bare ``.h5ad`` input."""
     import anndata as ad
+    from . import io as _scjdo2_io
 
     p = Path(input_arg)
-    h5 = p / "adata.h5ad" if p.is_dir() else p
+    if p.is_dir():
+        h5 = p / "adata.h5ad"
+    else:
+        h5 = p
     if not h5.exists():
         raise SystemExit(
             f"[scjdo2] input not found: {h5}. "
             "Expected a run directory containing adata.h5ad "
             "(produced by `scjdo2 run` or the Phase C pipeline)."
         )
+    sidecar = h5.parent / "phase_c.npz"
+    if sidecar.exists():
+        return _scjdo2_io.load(h5.parent)
     return ad.read_h5ad(h5)
 
 
@@ -110,6 +120,7 @@ def _require(adata, uns_keys=(), obs_keys=(), producer="scjdo2.opspace.compute")
 
 
 def _cmd_opspace(args) -> int:
+    from . import io as _scjdo2_io
     from . import opspace
 
     adata = _load_adata(args.input)
@@ -122,8 +133,12 @@ def _cmd_opspace(args) -> int:
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     paths = opspace.export_tables(adata, out)
-    adata.write_h5ad(out / "adata.h5ad")
-    print(f"opspace: wrote {len(paths)} CSVs and adata.h5ad under {out}")
+    saved = _scjdo2_io.save(adata, out)
+    print(
+        f"opspace: wrote {len(paths)} CSVs + {saved['h5ad'].name}"
+        + (f" + {saved['sidecar'].name}" if saved.get("sidecar") else "")
+        + f" under {out}"
+    )
     return 0
 
 
