@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-10-12 05:17:11",
+  "args": {
+    "n_epochs_a": 5000,
+    "n_epochs_b": 5000,
+    "d": 20,
+    "s": 1.0,
+    "sigma": 0.1,
+    "n_cells": 1200,
+    "n_alpha": 30,
+    "tau_crit": 0.5,
+    "seed": 0,
+    "verbose": false
+  },
+  "section_a": {
+    "d": 20,
+    "s": 1.0,
+    "n_cells": 1200,
+    "n_epochs": 5000,
+    "fit_seconds": 35.97449749999214,
+    "analytic_diag": -1.0,
+    "learned_diag_mean": -1.1659811735153198,
+    "learned_off_diag_mean": 0.0023828657049881786,
+    "frob_err_vs_analytic": 0.27746769814139877,
+    "verdict": "CORRECT  (score \u2248 analytic; pitchfork failure is in the mixture/conditioning)"
+  },
+  "section_b": {
+    "tau_crit": 0.5,
+    "n_epochs": 5000,
+    "sigma": 0.1,
+    "floor_theoretical": 99.99999999999999,
+    "term_beta_score": {
+      "frob_mean": 3.1723297423393024,
+      "lead_re_mean": -0.0021481677455444984,
+      "lead_re_frac_pos": 0.3
+    },
+    "term_residual": {
+      "frob_mean": 4.74359537365318,
+      "lead_re_mean": 1.4437510945506156,
+      "lead_re_frac_pos": 1.0
+    },
+    "term_vel_prior": {
+      "frob_mean": 0.0,
+      "lead_re_mean": 0.0,
+      "lead_re_frac_pos": 0.0
+    },
+    "term_total_drift": {
+      "frob_mean": 2.1816107584287536,
+      "lead_re_mean": 0.8186163407456188,
+      "lead_re_frac_pos": 1.0
+    }
+  }
+}
