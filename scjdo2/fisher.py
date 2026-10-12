@@ -41,16 +41,19 @@ class FisherLedger:
     is self-describing.
 
     ``off_tangent`` (optional, from
-    :func:`scjdo2.field.fit_tangent_projectors`) carries the Fisher-weighted
-    η-tangent restriction (docs/opspace_figure_spec.md §9 fix (1)):
+    :func:`scjdo2.field.fit_jacobian_tangent_projectors`) carries the
+    decoder-Jacobian tangent restriction (docs/opspace_figure_spec.md §9
+    fix (c)):
 
         * ``off_tangent["rank"]`` — ``(n,)`` int: per-cell tangent rank
-          ``r_c``.
+          ``r_c`` (equal to the latent dim ``d`` on the Jacobian-SVD
+          variant).
         * ``off_tangent["projector"]`` — list of ``(r_c, G)`` arrays:
-          the orthonormal basis of each cell's η-tangent space.
-        * ``off_tangent["eigvals"]`` — list of ``(G,)`` descending
-          eigvals of the Fisher-weighted η-covariance (diagnostic).
-        * ``off_tangent["snr_cutoff"]`` — the SNR threshold used.
+          the orthonormal basis of ``image(∇η(z_c))`` (top-r left
+          singular directions of the decoder Jacobian).
+        * ``off_tangent["eigvals"]`` — list of ``(d,)`` descending
+          singular-value squares (diagnostic).
+        * ``off_tangent["method"]`` — ``"jacobian_svd"``.
 
     If ``off_tangent`` is None, consumers (e.g. :func:`opspace.spectrum`)
     treat the full gene-space as live (no tangent restriction).
@@ -152,9 +155,10 @@ def compute(
     Step 5 (same ridge likelihood); this is just the surface API.
 
     ``tangent`` is the optional output of
-    :func:`scjdo2.field.fit_tangent_projectors` — attached to the ledger
-    as ``off_tangent`` so :func:`scjdo2.opspace.spectrum` can restrict
-    eigendecomposition to the η-tangent subspace at each cell.
+    :func:`scjdo2.field.fit_jacobian_tangent_projectors` — attached to
+    the ledger as ``off_tangent`` so :func:`scjdo2.opspace.spectrum` can
+    restrict eigendecomposition to the decoder-Jacobian tangent at each
+    cell.
     """
     required = ("F", "reason_per_cell", "ridge_lambda")
     for key in required:

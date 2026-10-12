@@ -428,6 +428,32 @@ rate-model structure rather than latent score curvature alone, and
 (c) rate-model-informed per-cell variance for the lead_re statistic
 — all of which should tighten precision without sacrificing recall.
 
+**R14 (Phase C rank ceiling; recorded 2026-10-12).** With a
+``d``-dimensional decoder ``η: R^d → R^G`` the per-cell gene-space
+Jacobian is a lift of the latent Jacobian: ``J_gene(c) = ∇η(z_c) ·
+J_latent(c) · (∇η(z_c))^+`` has rank at most ``d``, and its spectrum
+on ``image(∇η(z_c))`` equals the latent spectrum up to a similarity.
+The ``G − d`` ambient directions carry no decoder-visible dynamics.
+
+Operational consequence. The Jacobian-SVD tangent restriction
+(``scjdo2.field.fit_jacobian_tangent_projectors``, Option (c) in
+``docs/opspace_figure_spec.md`` §9) projects ``J_c`` onto that
+``d``-dim subspace exactly. On the equilibrated-pitchfork synthetic
+the gene-space row of the Phase C gate therefore **can match
+``latent_dsm`` but cannot exceed it** — the above-median-conf
+agreement ceiling is set by the latent↔latent self-identity (so
+``>0.95`` is a tautology, not a test), and the fork P/R ceiling is
+R13's `latent_dsm` ceiling, inherited.
+
+Testing new modes requires both a synthetic with a hidden driver
+(some basin direction orthogonal to the top-``d`` PCs — e.g. a
+3-attractor process embedded with a correlated nuisance axis that
+captures one PCA slot) **and** rate-model capacity above the latent
+dim so the decoder can represent that direction. Both are deferred
+to Phase D. Until then the Phase C gate on this synthetic serves as
+a structural-pipeline check (ledger, tangent, Fisher-mass tie-break,
+sparse smoothing) rather than a classifier-exceeds-latent gate.
+
 ---
 
 ## 10. Phase A deliverables status

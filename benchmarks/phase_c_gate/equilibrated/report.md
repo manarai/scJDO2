@@ -1,6 +1,6 @@
 # Phase C gate — equilibrated pitchfork (gene-space J)
 
-Generated: 2026-10-12 09:34:05
+Generated: 2026-10-12 11:05:24
 
 Gate (spec §9):
   * holder P and R  ≥ 0.8 absolute
@@ -13,16 +13,16 @@ Rows: `oracle` (analytic 2D J), `latent_dsm` (Phase B DSM-equilibrated for compa
 |---|---|---|---|---|---|---|---|---|
 | oracle | 0.1 | 1.00 | 1.00 | 1.00 | 0.85 | 0.04 | **PASS** |
 | latent_dsm | 0.1 | 0.23 | 0.77 | 1.00 | 0.79 | 0.14 | **FAIL** |
-| gene_space_k0 | 0.1 | 0.03 | 0.53 | 0.95 | 0.10 | 0.76 | **FAIL** | 0.17 / 0.19 |
-| gene_space_k30 | 0.1 | 0.03 | 0.33 | 0.94 | 0.34 | 0.52 | **FAIL** | 0.33 / 0.28 |
+| gene_space_k0 | 0.1 | 0.03 | 0.60 | 0.86 | 0.02 | 0.89 | **FAIL** | 0.11 / 0.15 |
+| gene_space_k30 | 0.1 | 0.02 | 0.51 | 0.93 | 0.04 | 0.87 | **FAIL** | 0.13 / 0.17 |
 | oracle | 0.3 | 1.00 | 1.00 | 1.00 | 0.90 | 0.04 | **PASS** |
 | latent_dsm | 0.3 | 0.22 | 0.77 | 0.99 | 0.82 | 0.15 | **FAIL** |
-| gene_space_k0 | 0.3 | 0.03 | 0.41 | 0.95 | 0.18 | 0.64 | **FAIL** | 0.22 / 0.23 |
-| gene_space_k30 | 0.3 | 0.04 | 0.30 | 0.94 | 0.50 | 0.34 | **FAIL** | 0.47 / 0.42 |
+| gene_space_k0 | 0.3 | 0.04 | 0.68 | 0.97 | 0.07 | 0.76 | **FAIL** | 0.15 / 0.17 |
+| gene_space_k30 | 0.3 | 0.05 | 0.73 | 0.96 | 0.26 | 0.59 | **FAIL** | 0.30 / 0.32 |
 | oracle | 0.5 | 1.00 | 1.00 | 1.00 | 0.92 | 0.05 | **PASS** |
 | latent_dsm | 0.5 | 0.19 | 0.54 | 0.99 | 0.80 | 0.13 | **FAIL** |
-| gene_space_k0 | 0.5 | 0.03 | 0.37 | 0.91 | 0.21 | 0.56 | **FAIL** | 0.24 / 0.22 |
-| gene_space_k30 | 0.5 | 0.03 | 0.33 | 0.94 | 0.44 | 0.44 | **FAIL** | 0.39 / 0.34 |
+| gene_space_k0 | 0.5 | 0.04 | 0.59 | 1.00 | 0.08 | 0.76 | **FAIL** | 0.15 / 0.18 |
+| gene_space_k30 | 0.5 | 0.04 | 0.67 | 0.97 | 0.22 | 0.67 | **FAIL** | 0.23 / 0.25 |
 
 ## Reading
 
@@ -31,27 +31,21 @@ Rows: `oracle` (analytic 2D J), `latent_dsm` (Phase B DSM-equilibrated for compa
 * `gene_space_k30` applies sparse Gaussian smoothing over the latent kNN before classifying.
 * Agreement is reported as `all / above-median-op_confidence`. The gate uses only the above-median figure; the all-cells number is context (gene-space J carries modes the latent J can't see, so disagreement on low-confidence cells is expected — spec §8.9).
 
-## Finding — Option 1 tangent restriction unblocks `holder`, fork still bounded.
+## Finding — Option (c) Jacobian-SVD tangent (r_c = d) **underperforms** the earlier ball-covariance variant on this synthetic; the rank-ceiling observation still holds and now sits in V2_PLAN R14.
 
-Fix (1) landed: `scjdo2.field.fit_tangent_projectors` computes a per-cell Fisher-weighted η-covariance, keeps directions with λ > snr_cutoff=1 (absolute threshold, valid under Fisher normalisation), and attaches the projector to the ledger as `off_tangent`. `opspace.spectrum` eigendecomposes `P_c J_c P_cᵀ` and marks slots past `r_c` empty with reason `off_tangent`. Fisher-mass tie-break on near-identical Re.
+What landed. `scjdo2.field.fit_jacobian_tangent_projectors` replaces the ball-covariance tangent (dropped). For each cell it computes ``U, Σ, V^T = svd(∇η(z_c))`` and keeps **all** d left singular directions as rows of ``P_c``, so ``r_c = d`` by construction. Fisher-mass stays a tie-breaker inside the kept subspace (unchanged from Option 1).
 
-On this run `tangent r_c` lands at **14–19** across cells (vs ambient G=50 and the toggle-switch's structural rank of 2; the extra dimensions carry residual η-variance from the SiLU-trunk's nonlinear fit). That's a 3× reduction of the eigenvalue search space and it visibly bends the result:
+Structural claim (V2_PLAN R14, confirmed). With a ``d``-dim decoder the gene-space J is a lift of the latent J: ``J_gene = ∇η · J_latent · (∇η)^+`` has rank at most ``d``, and its spectrum on ``image(∇η(z_c))`` equals the latent spectrum up to a similarity. The ceiling for `gene_space_*` on this synthetic is therefore `latent_dsm`'s row (R13's inherited fork P gap). Phase C can match Phase B here; it cannot exceed it.
 
-* `frac(Re>0)` drops from **1.00** (pre-fix) to **0.34–0.76** across τ_crit — the lead eigenvalue is no longer stuck at a positive noise direction.
-* `holder P` recovers from **nan** to **0.91–0.95** at every τ_crit (holder cells are now actually detectable), though `holder R` is 0.10–0.50 — the classifier is **selective but under-recalling** on the holder class.
-* `latent↔gene-space agreement above median op_confidence` climbs from the pre-fix 0.12–0.15 to **0.19–0.42**. Smoothing (k=30) consistently helps agreement by 0.1–0.2 — the gene-space J is noisy at the per-cell level.
-* `fork P` stays near the oracle-independent base rate (0.03–0.04). Fork cells are a tiny minority on equilibrated data (46 cells out of 1200 at τ=0.5) and the gene-space J has a Fisher-weighted null that systematically masks the saddle-direction eigenvalue when the saddle has little Fisher mass.
+Operational surprise. At ``r_c = d = 20`` on PCA(20) of the pitchfork, the gene-space row is **worse** than the earlier ball-covariance run at ``r_c ≈ 17``: holder R collapsed from 0.10–0.50 (ball, both k variants) to 0.02–0.26 (jacobian_svd), and ``frac(Re>0)`` climbed back to 0.6–0.9 (vs ball 0.3–0.8). The two tangent choices should produce the same subspace when ``∇η`` is full-rank d — which it is here — so the gap comes from WHAT the extra directions carry:
 
-**Why holder R is low.** The tangent cutoff keeps ~17 directions on average, but only 2 of them are structurally meaningful; the remaining ~15 are soft residuals from the rate model's non-linear trunk. Even after Fisher-mass tie-breaking, the leading Re is often picked from one of those residual directions, which doesn't correspond to the physical basin eigenvalue. Fixing this requires either:
+  * The pitchfork is intrinsically 2-D; its PCA(20) has 18 near-null modes. ``∇η`` learned on counts puts 18 small (but non-zero) singular values alongside the top 2.
+  * The per-gene weighted ridge from Step 5 is numerically weakest exactly along those small-σ directions — low Fisher mass, dominated by the ``λ·I`` regulariser, so ``J_c`` entries there are near-random.
+  * **No σ-threshold on the SVD** means the full d directions feed `np.linalg.eig(block)`. The random small-σ entries numerically dominate the leading Re of the ``(d, d)`` block and pull the behaviour classifier off-signal. The ball-covariance variant implicitly truncated at ``σ² > 1`` under Fisher normalisation (r_c ≈ 17), which happened to clip the worst noise directions.
 
-  (a) A stricter tangent threshold tied to the TRUE manifold rank (e.g. an elbow detector, or `snr_cutoff > 1` chosen by held-out NB NLL).
-  (b) Fisher-mass **primary** eigenvalue sort inside the retained subspace (the current implementation uses it only as a Re tie-break).
-  (c) Projecting J_c onto the top-r singular directions of `∇η(z_c)` directly (the stricter "the Jacobian of the rate model at that cell" variant of fix (1)), which is a tighter manifold than the kNN-ball η-covariance tangent.
+What this says. Option (c) as the user specified it (r_c = d, no σ-threshold) is the right *structural* lens — tangent is ``image(∇η)`` exactly — but on PCA(20) of a 2-D attractor it includes 18 near-null directions where the Phase C ridge fit is numerically dominated by its regulariser. A follow-up would either (i) lower the latent dim to the true intrinsic rank (d_latent = 2 or 3), (ii) add a σ-threshold (keep ``σ_j > rel·σ_1``), or (iii) use a proper hidden-driver synthetic where the extra ``d − 2`` directions are informative. All three are Phase D work; recorded in R14.
 
-## Phase C status
+## Next actions
 
-Oracle PASS everywhere. Holder absolute (≥0.8) is **not** met because of R, not P. Fork within 0.10 of oracle is **not** met. Agreement-above-median ≥0.95 is **not** met (max 0.42).
-
-Phase C is unblocked structurally — the pipeline runs end-to-end, the ledger carries the Fisher info and the tangent projector, and the gene-space classifier produces non-degenerate output — but the acceptance criteria don't clear on this synthetic.
-
-The three sub-fixes above are the natural next iteration. Before touching the figure layer, we need a decision on (a) vs (b) vs (c): (b) and (c) compose cleanly; (a) is a tuning knob orthogonal to both.
+* R14 note stands in V2_PLAN.md: gene-space J is a rank-d lift of latent J, so Phase C's ceiling on this synthetic is `latent_dsm`'s row. Deferred follow-ups: σ-threshold, intrinsic-rank PCA, or hidden-driver synthetic — all Phase D.
+* Figure layer (spec §3) still waits for a run where `holder` cells on the above-median-conf subset agree with the latent classifier; current agree-above max is 0.32 at τ=0.3 k=30. Panel C's leading-eigvec drivers are not meaningful below ~0.6 agreement.

@@ -54,7 +54,7 @@ from scjdo2.drift import DriftConfig
 from scjdo2.field import (
     GeneFieldConfig,
     fit_gene_space_jacobians,
-    fit_tangent_projectors,
+    fit_jacobian_tangent_projectors,
     smooth_jacobians_sparse,
 )
 from scjdo2.fisher import compute as fisher_compute
@@ -211,15 +211,15 @@ def run_tau(
         verbose=verbose,
     )
     t_genef = time.monotonic() - t0
-    tangent = fit_tangent_projectors(
-        np.asarray(adata.obsm["X_pca"]), rm, k=k, snr_cutoff=1.0,
+    tangent = fit_jacobian_tangent_projectors(
+        np.asarray(adata.obsm["X_pca"]), rm,
     )
     ledger = fisher_compute(gs, tangent=tangent)
     rank_arr = np.asarray(tangent["rank"])
     print(f"    [{t_genef:.1f}s] ridge λ={gs['ridge_lambda']}  "
           f"mean L_c={np.mean([lc.size for lc in gs['live_cols']]):.1f}  "
-          f"tangent r_c min/median/max = {int(rank_arr.min())}/"
-          f"{int(np.median(rank_arr))}/{int(rank_arr.max())}")
+          f"tangent r_c (jacobian_svd) = {int(rank_arr[0])} "
+          f"(d_latent={np.asarray(adata.obsm['X_pca']).shape[1]})")
 
     # Save latent J so we can toggle rows cleanly
     latent_J = np.asarray(adata.uns["scjdo2"]["J"])
@@ -405,65 +405,74 @@ def _write_report(per_tau: list[dict[str, Any]], args_dict: dict, out_dir: Path)
         "context (gene-space J carries modes the latent J can't see, so "
         "disagreement on low-confidence cells is expected — spec §8.9).",
         "",
-        "## Finding — gene-space lead eigenvalue is dominated by the ambient "
-        "G-dim noise floor on this synthetic.",
+        "## Finding — Option (c) Jacobian-SVD tangent (r_c = d) "
+        "**underperforms** the earlier ball-covariance variant on this "
+        "synthetic; the rank-ceiling observation still holds and now "
+        "sits in V2_PLAN R14.",
         "",
-        "Every `gene_space_*` row reports **frac(Re>0) ≈ 1.00** and "
-        "**holder P = nan, R = 0** at every τ_crit, while the ORACLE on the "
-        "exact same cells reports frac(Re>0) ≈ 0.04-0.05 and holder P/R ≈ "
-        "1.00 / 0.85-0.92. The pipeline is wired right (η recovers to 0.85 "
-        "cos-sim on toy fits, J↔F share the same sparse layout, Fisher mask "
-        "fires at the 10th-percentile cutoff) — the gene-space classifier "
-        "is nevertheless unusable on this synthetic.",
+        "What landed. "
+        "`scjdo2.field.fit_jacobian_tangent_projectors` replaces the "
+        "ball-covariance tangent (dropped). For each cell it computes "
+        "``U, Σ, V^T = svd(∇η(z_c))`` and keeps **all** d left singular "
+        "directions as rows of ``P_c``, so ``r_c = d`` by construction. "
+        "Fisher-mass stays a tie-breaker inside the kept subspace "
+        "(unchanged from Option 1).",
         "",
-        "Root cause. The pitchfork gene matrix is a dim-2 projection "
-        "``X_obs = z_true @ W`` of a 2D process, so the per-cell η-manifold "
-        "has effective **rank 2** out of G=50 live columns. Step 5's ridge "
-        "fits a dense ``J_c`` on the full L=G=50 subspace: the 2 informative "
-        "eigenvalues (which the oracle Jacobian carries) sit alongside ~48 "
-        "near-zero / noise eigenvalues from the ridge regulariser. "
-        "`spectrum()` takes the top-``n_eig`` eigenvalues by Re, which "
-        "almost always picks a noise direction's small positive real part "
-        "over the informative basin eigenvalue. **frac(Re>0) = 1.0 is a "
-        "sampling artifact** of taking max(Re) over 48 noise + 2 signal "
-        "directions.",
+        "Structural claim (V2_PLAN R14, confirmed). With a ``d``-dim "
+        "decoder the gene-space J is a lift of the latent J: ``J_gene "
+        "= ∇η · J_latent · (∇η)^+`` has rank at most ``d``, and its "
+        "spectrum on ``image(∇η(z_c))`` equals the latent spectrum up "
+        "to a similarity. The ceiling for `gene_space_*` on this "
+        "synthetic is therefore `latent_dsm`'s row (R13's inherited "
+        "fork P gap). Phase C can match Phase B here; it cannot exceed "
+        "it.",
         "",
-        "Why the current `fisher_mask` default doesn't rescue this. The 10th-"
-        "percentile cutoff removes the lowest-Fisher 10 % of entries, but on "
-        "this synthetic every gene is uniformly Fisher-significant (dense "
-        "signal, no sparse expression), so the mask is a near no-op. On real "
-        "scRNA data most genes drop out in any given neighbourhood and the "
-        "mask recovers rank — this is the regime the spec was written for.",
+        "Operational surprise. At ``r_c = d = 20`` on PCA(20) of the "
+        "pitchfork, the gene-space row is **worse** than the earlier "
+        "ball-covariance run at ``r_c ≈ 17``: holder R collapsed from "
+        "0.10–0.50 (ball, both k variants) to 0.02–0.26 (jacobian_svd), "
+        "and ``frac(Re>0)`` climbed back to 0.6–0.9 (vs ball 0.3–0.8). "
+        "The two tangent choices should produce the same subspace "
+        "when ``∇η`` is full-rank d — which it is here — so the gap "
+        "comes from WHAT the extra directions carry:",
         "",
-        "What this changes. The gate falls through the fork criterion for a "
-        "DIFFERENT reason than Phase B's R13 (where DSM score noise flipped "
-        "borderline cells). Here the pathology is **effective-rank vs "
-        "ambient-dim mismatch in the eigenvalue selection**. Two separate "
-        "fixes are candidate for a follow-up iteration:",
+        "  * The pitchfork is intrinsically 2-D; its PCA(20) has 18 "
+        "near-null modes. ``∇η`` learned on counts puts 18 small (but "
+        "non-zero) singular values alongside the top 2.",
+        "  * The per-gene weighted ridge from Step 5 is numerically "
+        "weakest exactly along those small-σ directions — low Fisher "
+        "mass, dominated by the ``λ·I`` regulariser, so ``J_c`` entries "
+        "there are near-random.",
+        "  * **No σ-threshold on the SVD** means the full d directions "
+        "feed `np.linalg.eig(block)`. The random small-σ entries "
+        "numerically dominate the leading Re of the ``(d, d)`` block "
+        "and pull the behaviour classifier off-signal. The ball-"
+        "covariance variant implicitly truncated at ``σ² > 1`` under "
+        "Fisher normalisation (r_c ≈ 17), which happened to clip the "
+        "worst noise directions.",
         "",
-        "  1. **Rank-aware spectrum** — truncate `J_c` to the top-r singular "
-        "directions of ``∇η(z_c)`` (the Jacobian of the rate model at that "
-        "cell) before eigendecomposing. The G-dim ambient space is replaced "
-        "by the effective r-dim manifold; the eigvals carry only informative "
-        "modes. Natural fit with the Fisher-weighted invariant.",
-        "  2. **Fisher-mass eigenvalue sort** — sort eigenvalues by "
-        "`|eigvec|^T · F_diag · |eigvec|` instead of by Re, so the leading "
-        "eigenvalue is the one with the most Fisher support rather than the "
-        "numerically-largest Re on a near-degenerate ridge solution.",
-        "",
-        "Either or both can be prototyped against this same gate without "
-        "re-fitting rates or gene-space J; the gate harness is designed to "
-        "swap the opspace.spectrum call. Reporting the table unmasked "
-        "surfaces the signal rather than hides it.",
+        "What this says. Option (c) as the user specified it (r_c = d, "
+        "no σ-threshold) is the right *structural* lens — tangent is "
+        "``image(∇η)`` exactly — but on PCA(20) of a 2-D attractor "
+        "it includes 18 near-null directions where the Phase C ridge "
+        "fit is numerically dominated by its regulariser. A follow-up "
+        "would either (i) lower the latent dim to the true intrinsic "
+        "rank (d_latent = 2 or 3), (ii) add a σ-threshold (keep "
+        "``σ_j > rel·σ_1``), or (iii) use a proper hidden-driver "
+        "synthetic where the extra ``d − 2`` directions are "
+        "informative. All three are Phase D work; recorded in R14.",
         "",
         "## Next actions",
         "",
-        "* Decide between fix (1) rank-aware spectrum vs (2) Fisher-mass "
-        "eigenvalue sort (or both; they compose).",
-        "* Re-run the gate with the chosen fix before the figure layer "
-        "(spec §3) ships — Panel C renders drivers of the LEADING eigvec, "
-        "and the current leading eigvec is a noise direction, which would "
-        "make every per-cell driver plot meaningless.",
+        "* R14 note stands in V2_PLAN.md: gene-space J is a rank-d lift "
+        "of latent J, so Phase C's ceiling on this synthetic is "
+        "`latent_dsm`'s row. Deferred follow-ups: σ-threshold, "
+        "intrinsic-rank PCA, or hidden-driver synthetic — all Phase D.",
+        "* Figure layer (spec §3) still waits for a run where "
+        "`holder` cells on the above-median-conf subset agree with the "
+        "latent classifier; current agree-above max is 0.32 at τ=0.3 "
+        "k=30. Panel C's leading-eigvec drivers are not meaningful "
+        "below ~0.6 agreement.",
     ])
     (out_dir / "report.md").write_text("\n".join(lines) + "\n")
     print(f"\n[phase-c gate] wrote {out_dir / 'report.md'}")
