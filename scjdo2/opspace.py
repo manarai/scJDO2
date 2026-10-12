@@ -268,11 +268,144 @@ def _fix_eigvec_sign(v: np.ndarray) -> np.ndarray:
 # ======================================================================
 
 
+def compute(
+    adata: AnnData,
+    smooth_k: int = 0,
+    n_eig: int = 5,
+    min_fisher: Optional[float] = None,
+    tol: Optional[float] = None,
+    sensitive_pct: float = 90.0,
+) -> AnnData:
+    """§1 wrapper — run 1.1–1.6 on ``adata`` and apply V2_PLAN R15.
+
+    Order of operations (see
+    ``docs/scJDO2_figure_layer_build_instructions.md`` §1 and V2_PLAN R15):
+
+    1. **Latent pass.** If ``adata.uns["scjdo2"]["J_latent"]`` is present
+       alongside the gene-space J (``uns["scjdo2"]["J"]`` as a list of
+       sparse CSR), the latent dense J is temporarily substituted and
+       :func:`spectrum`, :func:`invariants`, :func:`behaviour` are run on
+       it. This writes the behavioural columns (``lead_re``, ``lead_im``,
+       ``n_*``, ``spectral_gap``, ``henrici``, ``transient_gain``,
+       ``reactivity``, ``eigvec_cond``, ``op_confidence``, ``op_behaviour``,
+       ``op_sensitive``) from the latent operator — R15. The latent lead
+       eigenvector is cached in ``uns["scjdo2"]["op_eigvec_latent_lead"]``
+       (shape ``(n, d)``, complex).
+    2. **Gene-space pass.** The gene-space J (now restored) is run through
+       :func:`spectrum` to obtain the gene-space eigenbasis stored in
+       ``uns["scjdo2"]["op_eigvecs"]``. The invariants and behaviour from
+       step 1 are not overwritten.
+    3. **Lifted driver eigvec.** If ``uns["scjdo2"]["grad_eta"]`` (shape
+       ``(n, G, d)``) is present, the chain-rule lift ``w_c = ∇η(z_c) ·
+       v_latent_lead`` is computed and stored in
+       ``uns["scjdo2"]["op_eigvec_lifted"]`` (``(n, G)`` complex). Panel C
+       drivers consume this (see :func:`drivers`).
+    4. :func:`archetype_operators` (skips cleanly if archetype weights
+       are missing) and :func:`field_gradient` run last.
+
+    Pure latent runs (no gene-space J): step 1 only; step 2 is a no-op
+    (same J). Pure gene-space runs (no latent J stored): step 1 is
+    skipped and behavioural columns come from the gene-space J — this
+    is the pre-R15 fallback and callers get a one-line warning.
+    """
+    import warnings
+
+    uns = adata.uns.setdefault("scjdo2", {})
+    J_main = uns.get("J")
+    J_latent = uns.get("J_latent")
+    gene_space_present = (
+        isinstance(J_main, (list, tuple)) and len(J_main) > 0
+        and issparse(J_main[0])
+    )
+    latent_present = J_latent is not None
+
+    did_latent_pass = False
+    if gene_space_present and latent_present:
+        # 1. Latent pass — swap in the latent J, run spectrum→invariants→behaviour.
+        uns["J"] = J_latent
+        spectrum(adata, n_eig=n_eig, fisher_mask=False, smooth_k=0)
+        invariants(adata, tol=tol)
+        behaviour(adata, tol=tol, sensitive_pct=sensitive_pct)
+        # Cache the latent leading eigvec for the ∇η lift step.
+        eigvecs_latent = np.asarray(uns["op_eigvecs"])
+        uns["op_eigvec_latent_lead"] = eigvecs_latent[:, 0, :].copy()
+        # Restore the gene-space J for step 2 and downstream calls.
+        uns["J"] = J_main
+        did_latent_pass = True
+    elif latent_present and not gene_space_present:
+        # Pure latent run — behavioural columns come from the latent J.
+        spectrum(adata, n_eig=n_eig, fisher_mask=False, smooth_k=smooth_k)
+        invariants(adata, tol=tol)
+        behaviour(adata, tol=tol, sensitive_pct=sensitive_pct)
+        eigvecs_latent = np.asarray(uns["op_eigvecs"])
+        uns["op_eigvec_latent_lead"] = eigvecs_latent[:, 0, :].copy()
+    else:
+        # Pure gene-space run or legacy: no latent J to classify from.
+        if gene_space_present:
+            warnings.warn(
+                "scjdo2.opspace.compute: no J_latent in adata.uns; behavioural "
+                "columns will be derived from the gene-space J (pre-R15 "
+                "fallback). Store the latent J under uns['scjdo2']['J_latent']"
+                " to enable R15.",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+
+    # 2. Gene-space (or main) pass for the eigenbasis used by drivers.
+    spectrum(adata, n_eig=n_eig, fisher_mask=True,
+             min_fisher=min_fisher, smooth_k=smooth_k)
+    if not did_latent_pass:
+        invariants(adata, tol=tol)
+        behaviour(adata, tol=tol, sensitive_pct=sensitive_pct)
+
+    # 3. Lifted driver eigvec via ∇η(z_c) · v_latent_lead.
+    grad_eta = uns.get("grad_eta")
+    v_latent = uns.get("op_eigvec_latent_lead")
+    if grad_eta is not None and v_latent is not None:
+        grad_eta = np.asarray(grad_eta)             # (n, G, d)
+        v_latent = np.asarray(v_latent)             # (n, d), complex
+        if (
+            grad_eta.ndim == 3
+            and v_latent.ndim == 2
+            and grad_eta.shape[0] == v_latent.shape[0]
+            and grad_eta.shape[2] == v_latent.shape[1]
+        ):
+            w_lifted = np.einsum("ngd,nd->ng", grad_eta.astype(np.complex128), v_latent)
+            # Sign-fix each cell's lifted vector (largest-|magnitude| → phase 0).
+            for c in range(w_lifted.shape[0]):
+                w_lifted[c] = _fix_eigvec_sign(w_lifted[c])
+            uns["op_eigvec_lifted"] = w_lifted
+
+    # 4. Archetype operators (if weights present) and field gradient.
+    try:
+        archetype_operators(adata)
+    except Exception as err:  # keep downstream figures functional
+        warnings.warn(
+            f"archetype_operators skipped: {err}", RuntimeWarning, stacklevel=2,
+        )
+    try:
+        field_gradient(adata)
+    except Exception as err:
+        warnings.warn(
+            f"field_gradient skipped: {err}", RuntimeWarning, stacklevel=2,
+        )
+
+    uns["compute_meta"] = {
+        "smooth_k": int(smooth_k),
+        "n_eig": int(n_eig),
+        "min_fisher": None if min_fisher is None else float(min_fisher),
+        "did_latent_pass": bool(did_latent_pass),
+        "has_lifted_eigvec": bool("op_eigvec_lifted" in uns),
+    }
+    return adata
+
+
 def spectrum(
     adata: AnnData,
     n_eig: int = 5,
     fisher_mask: bool = True,
     min_fisher: Optional[float] = None,
+    smooth_k: int = 0,
 ) -> None:
     """Compute per-cell conjugate-free eigenpairs of the stored Jacobian.
 
@@ -284,7 +417,9 @@ def spectrum(
             Phase D may sparsify.
         ``adata.uns["scjdo2"]["op_valid"]`` — ``(n_cells,)`` bool
         ``adata.uns["scjdo2"]["spectrum_meta"]`` — ``{n_eig, fisher_mask,
-          min_fisher, J_kind}``
+          min_fisher, J_kind, smooth_k}``
+        ``adata.obs["op_rank"]`` — per-cell ``r_c`` (Phase C only; the
+          tangent rank from ``scjdo2.field.fit_jacobian_tangent_projectors``).
 
     Behaviour:
 
@@ -297,12 +432,40 @@ def spectrum(
       of ``J_c.data`` whose Fisher info is below ``min_fisher`` are zeroed
       before the live block is extracted. ``min_fisher`` defaults to the
       10th percentile of each cell's live Fisher data.
+
+    If ``smooth_k > 0`` the per-cell J field is pre-smoothed via
+    :func:`scjdo2.field.smooth_jacobians` (dense) or
+    :func:`scjdo2.field.smooth_jacobians_sparse` (per-cell CSR) before
+    the eigendecomposition. The latent kNN is taken from
+    ``adata.obsm["X_pca"]`` when present, else the first ``d`` columns
+    of the dense latent array. The smoothed field is kept in-place for
+    the duration of the call and the original restored on return (so
+    callers chaining multiple spectrum passes stay well-behaved).
     """
     import warnings
 
+    smooth_k = int(smooth_k)
     J, kind, dim = _get_J(adata)
     n = adata.n_obs
     n_eig = min(int(n_eig), dim)
+
+    # Optional pre-smoothing. We stage the smoothed J inside the call;
+    # callers see the original adata on return.
+    orig_J = adata.uns["scjdo2"]["J"] if smooth_k > 0 else None
+    if smooth_k > 0:
+        from scjdo2 import field as _field_mod
+        z_rep = (
+            np.asarray(adata.obsm["X_pca"])
+            if "X_pca" in adata.obsm
+            else np.asarray(adata.uns["scjdo2"].get("z", np.zeros((n, dim))))
+        )
+        if kind == "dense":
+            J_sm = _field_mod.smooth_jacobians(np.asarray(J), z_rep, k=smooth_k)
+        else:
+            J_sm = _field_mod.smooth_jacobians_sparse(J, z_rep, k=smooth_k)
+        adata.uns["scjdo2"]["J"] = J_sm
+        J, kind, dim = _get_J(adata)
+        adata.uns["scjdo2"]["smooth_k"] = smooth_k
 
     ledger = _get_ledger(adata)
     F_list = _ledger_fisher_list(ledger)
@@ -461,14 +624,20 @@ def spectrum(
     if kind == "sparse":
         adata.uns["scjdo2"]["op_eig_reason"] = eig_reason
         if tangent_rank is not None:
-            adata.uns["scjdo2"]["op_tangent_rank"] = np.asarray(tangent_rank, dtype=np.int32)
+            tr = np.asarray(tangent_rank, dtype=np.int32)
+            adata.uns["scjdo2"]["op_tangent_rank"] = tr
+            adata.obs["op_rank"] = tr
     adata.uns["scjdo2"]["spectrum_meta"] = {
         "n_eig": int(n_eig),
         "fisher_mask": bool(applied_mask),
         "min_fisher": threshold_used,
         "J_kind": kind,
         "tangent_restricted": bool(tangent is not None and kind == "sparse"),
+        "smooth_k": int(smooth_k),
     }
+    # Restore the original J if we staged a smoothed copy.
+    if orig_J is not None:
+        adata.uns["scjdo2"]["J"] = orig_J
 
 
 # ======================================================================
@@ -483,7 +652,12 @@ def _default_near_zero_tol(lead_re: np.ndarray) -> float:
     return float(0.1 * np.std(finite))
 
 
-def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
+def invariants(
+    adata: AnnData,
+    transient_horizon: Optional[int] = None,
+    tol: Optional[float] = None,
+    horizon: Optional[int] = None,
+) -> None:
     """Compute per-cell operator invariants and write to ``adata.obs``.
 
     Columns written:
@@ -491,6 +665,19 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
         ``n_near_zero``, ``n_complex_pairs``, ``spectral_gap``,
         ``henrici``, ``transient_gain``, ``reactivity``,
         ``eigvec_cond``, ``op_confidence``.
+
+    Parameters
+    ----------
+    tol
+        Near-zero threshold for ``lead_re``. Default: ``0.1 · std(lead_re)``
+        (``_default_near_zero_tol``), matching :func:`behaviour`.
+    horizon, transient_horizon
+        Number of steps for the transient-gain integration. ``horizon``
+        is the §1.2 spec name; ``transient_horizon`` is the legacy alias
+        kept for callers already in the wild. Default: ``5 / median
+        |lead_re|`` of the finite leading-eigenvalue real parts (per
+        docs/scJDO2_figure_layer_build_instructions.md §1.2), clamped to
+        ``[5, 200]`` so pathological fields can't blow up the integration.
     """
     if "op_eigvals" not in adata.obsm:
         raise RuntimeError("Call spectrum(adata) before invariants(adata)")
@@ -514,7 +701,19 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
     eigvec_cond = np.full(n, np.nan)
 
     first_valid_re = eigvals.real
-    tol = _default_near_zero_tol(first_valid_re[:, 0] if n_eig else first_valid_re.ravel())
+    lead_re_arr = first_valid_re[:, 0] if n_eig else first_valid_re.ravel()
+    if tol is None:
+        tol = _default_near_zero_tol(lead_re_arr)
+    # §1.2 default horizon: 5 / median |lead_re|, clamped to [5, 200].
+    eff_horizon = horizon if horizon is not None else transient_horizon
+    if eff_horizon is None:
+        finite_re = lead_re_arr[np.isfinite(lead_re_arr)]
+        med = float(np.median(np.abs(finite_re))) if finite_re.size else 0.0
+        if med > 0:
+            eff_horizon = int(np.clip(round(5.0 / med), 5, 200))
+        else:
+            eff_horizon = 30
+    eff_horizon = int(eff_horizon)
 
     for c in range(n):
         if not valid[c]:
@@ -538,7 +737,7 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
             if np.all(np.isfinite(Jc)):
                 henrici[c] = _henrici(Jc, ev)
                 reactivity[c] = _reactivity(Jc, ev)
-                transient_gain[c] = _transient_gain(Jc.astype(np.float64), n_max=transient_horizon)
+                transient_gain[c] = _transient_gain(Jc.astype(np.float64), n_max=eff_horizon)
                 try:
                     _, V_full = np.linalg.eig(Jc)
                     eigvec_cond[c] = _eigvec_cond(V_full)
@@ -553,13 +752,18 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
             if np.all(np.isfinite(block)):
                 henrici[c] = _henrici(block, ev)
                 reactivity[c] = _reactivity(block, ev)
-                transient_gain[c] = _transient_gain(block, n_max=transient_horizon)
+                transient_gain[c] = _transient_gain(block, n_max=eff_horizon)
                 try:
                     _, V_full = np.linalg.eig(block)
                     eigvec_cond[c] = _eigvec_cond(V_full)
                 except np.linalg.LinAlgError:
                     eigvec_cond[c] = np.inf
 
+    adata.uns.setdefault("scjdo2", {})
+    adata.uns["scjdo2"]["invariants_meta"] = {
+        "tol": float(tol),
+        "horizon": int(eff_horizon),
+    }
     adata.obs["lead_re"] = lead_re
     adata.obs["lead_im"] = lead_im
     adata.obs["n_stable"] = n_stable
@@ -594,12 +798,24 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
 
 
 def behaviour(adata: AnnData, tol: Optional[float] = None,
-              sensitive_quantile: float = 0.9) -> None:
+              sensitive_pct: float = 90.0,
+              sensitive_quantile: Optional[float] = None) -> None:
     """Classify each cell's leading mode and flag non-normality.
 
     Behaviour categories: holder, drift, fork, damped_oscillator, growing_oscillator.
-    Also writes a boolean ``op_sensitive`` where ``henrici >= np.nanquantile(henrici, q)``.
+    Also writes a boolean ``op_sensitive`` where ``henrici`` is above the
+    ``sensitive_pct``'th percentile of finite ``henrici`` values.
+
+    ``sensitive_pct`` is on the 0–100 scale (§1.3). The legacy
+    ``sensitive_quantile`` kwarg (0–1 scale) is kept for back-compat;
+    when supplied it overrides ``sensitive_pct``.
     """
+    q = (
+        float(sensitive_quantile)
+        if sensitive_quantile is not None
+        else float(sensitive_pct) / 100.0
+    )
+    sensitive_quantile = q  # for the rest of the function
     for col in ("lead_re", "lead_im", "henrici"):
         if col not in adata.obs:
             raise RuntimeError(f"Call invariants(adata) before behaviour(adata) (missing {col})")
@@ -641,16 +857,16 @@ def behaviour(adata: AnnData, tol: Optional[float] = None,
 def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
             top: int = 15, min_fisher: Optional[float] = None,
             cell: Optional[int] = None,
-            archetype_id: Optional[int] = None) -> pd.DataFrame:
+            archetype_id: Optional[int] = None,
+            use_lift: Optional[bool] = None) -> pd.DataFrame:
     """Tidy DataFrame of driver genes for a cell's leading eigenvector or
     an archetype operator.
 
     Per spec §2.4 the eigvec phase is fixed so the largest-|magnitude|
-    entry is real and positive (:func:`_fix_eigvec_sign`), applied inside
-    :func:`spectrum`. ``weight`` here is the real part of that
-    phase-fixed eigvec; ``magnitude`` and ``phase`` describe the full
-    complex entry so complex-mode drivers can render the magnitude ×
-    phase bars from spec §3.1 Panel C.
+    entry is real and positive (:func:`_fix_eigvec_sign`). ``weight``
+    here is the real part of that phase-fixed eigvec; ``magnitude`` and
+    ``phase`` describe the full complex entry so complex-mode drivers
+    can render the magnitude × phase bars from spec §3.1 Panel C.
 
     Columns: ``gene``, ``weight`` (signed real part), ``magnitude``,
     ``phase`` (radians; NaN for pure-real modes), ``fisher``,
@@ -663,6 +879,17 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
     (defaults to the fork cell with the highest ``lead_re`` if omitted).
     ``which="archetype"`` + ``archetype_id`` requires the archetype
     operator spectrum to be populated by :func:`archetype_operators`.
+
+    V2_PLAN R15. When ``use_lift`` is ``None`` (default), the function
+    uses ``uns["scjdo2"]["op_eigvec_lifted"]`` if present — the gene-
+    space eigenvector obtained from the chain-rule lift
+    ``w_c = ∇η(z_c) · v_latent_lead(c)`` — in place of the independent
+    gene-space eigendecomposition. This matches the R15 design rule:
+    behaviour comes from the latent operator; Panel C drivers come from
+    the gene-space view of the latent leading mode. Set ``use_lift=False``
+    to force the pre-R15 behaviour (reads ``uns["scjdo2"]["op_eigvecs"]``
+    directly); ``use_lift=True`` requires the lifted eigvec to exist and
+    errors otherwise.
     """
     J, kind, dim = _get_J(adata)
     if kind != "sparse":
@@ -676,9 +903,24 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
             f"Gene-space J has dim={dim} but adata.n_vars={adata.n_vars}; "
             "gene-name index mismatch."
         )
-    if "op_eigvecs" not in adata.uns.get("scjdo2", {}):
-        raise RuntimeError("Call spectrum(adata) before drivers(adata)")
-    eigvecs = np.asarray(adata.uns["scjdo2"]["op_eigvecs"])  # (n, n_eig, G)
+    uns_sc = adata.uns.get("scjdo2", {})
+    if "op_eigvecs" not in uns_sc and "op_eigvec_lifted" not in uns_sc:
+        raise RuntimeError(
+            "Call spectrum(adata) (or compute(adata) for R15) before drivers(adata)"
+        )
+    eigvecs = (
+        np.asarray(uns_sc["op_eigvecs"]) if "op_eigvecs" in uns_sc
+        else None
+    )
+    # R15 preference: use the ∇η lift of the latent lead mode when available.
+    lifted = uns_sc.get("op_eigvec_lifted")
+    if use_lift is None:
+        use_lift = lifted is not None
+    elif use_lift and lifted is None:
+        raise RuntimeError(
+            "drivers(use_lift=True) needs uns['scjdo2']['op_eigvec_lifted']; "
+            "run opspace.compute(adata) after storing grad_eta."
+        )
 
     if which == "archetype":
         arch = adata.uns.get("scjdo2", {}).get("archetypes")
@@ -705,7 +947,10 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
                 raise ValueError(
                     "drivers(which='lead') with no `cell=` needs behaviour/lead_re"
                 )
-        v = eigvecs[cell, 0, :]
+        if use_lift and lifted is not None:
+            v = np.asarray(lifted)[cell, :]
+        else:
+            v = eigvecs[cell, 0, :]
         # Fetch per-entry Fisher at the live-gene indices of this cell's J.
         Jc = J[cell]
         live = _live_cols_of(Jc)
@@ -935,10 +1180,14 @@ def export_tables(adata: AnnData, out_dir: str | Path) -> dict[str, Path]:
 # ======================================================================
 
 
-def compute(J, ledger=None, n_leading: int = 2,
-            near_zero_tol: float = 1e-3, transient_n_max: int = 30) -> OpCoordinates:
+def compute_from_J_list(
+    J, ledger=None, n_leading: int = 2,
+    near_zero_tol: float = 1e-3, transient_n_max: int = 30,
+) -> OpCoordinates:
     """Legacy entry point that returns :class:`OpCoordinates` for a list or
-    ``(n, d, d)`` array of Jacobians. Prefer the AnnData-centric API above.
+    ``(n, d, d)`` array of Jacobians. Prefer :func:`compute` (the AnnData-
+    centric §1 wrapper) in new code; this function keeps the Phase B
+    first-pass contract for callers already in the wild.
     """
     if isinstance(J, np.ndarray) and J.ndim == 3:
         J_list = [J[i] for i in range(J.shape[0])]

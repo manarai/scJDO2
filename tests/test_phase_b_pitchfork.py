@@ -125,8 +125,9 @@ def _fit_scjdo2(ad, *, n_epochs: int, k: int, seed: int,
         k=k, variation_threshold=variation_threshold, ridge=ridge, seed=seed,
     ))
     jfield.fit(z, v)
-    ops = opspace.compute(jfield.J_dense(), n_leading=1, near_zero_tol=1e-3,
-                          transient_n_max=10)
+    ops = opspace.compute_from_J_list(
+        jfield.J_dense(), n_leading=1, near_zero_tol=1e-3, transient_n_max=10,
+    )
     return ops.invariants.max_real_eig, t
 
 
