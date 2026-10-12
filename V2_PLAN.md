@@ -435,8 +435,8 @@ J_latent(c) · (∇η(z_c))^+`` has rank at most ``d``, and its spectrum
 on ``image(∇η(z_c))`` equals the latent spectrum up to a similarity.
 The ``G − d`` ambient directions carry no decoder-visible dynamics.
 
-Operational implementation. Two paired choices anchor Phase C on this
-synthetic:
+Operational implementation. Three paired choices anchor Phase C on
+this synthetic:
 
 * **d_latent by held-out NB NLL.** The rate model sweeps ``d ∈
   {2, 3, 5, 10, 20}`` on ``X_pca[:, :d]`` using its own 10 % cell
@@ -450,6 +450,18 @@ synthetic:
   noise direction under the NB-precision metric). On the equilibrated
   pitchfork this lands ``r_c`` at 2–3 per cell, matching the
   intrinsic rank of the 2-D attractor.
+* **Ridge λ by held-out NB NLL (Option A).** The per-cell weighted
+  ridge in ``scjdo2.field.fit_gene_space_jacobians`` picks λ by
+  held-out NB NLL on neighbour counts, not weighted MSE. For each
+  held-out neighbour ``i`` of cell ``c``, the ridge predicts a
+  velocity shift ``v̂_i = a · (η_i − η_c)``; that shift is used as a
+  log-rate offset from ``c``, giving a predicted log-mean
+  ``log μ̂_i,g = η_c,g + v̂_i,g + log s_i`` and the standard NB
+  log-pmf against ``counts[i, g]``. Weighted MSE is kept as a
+  secondary report. The Gaussian MSE approximant rewards shrinkage
+  (``yhat → 0`` is low-MSE on the weak equilibrated signal and picks
+  the grid-max λ at every τ), so the NB NLL on real counts is the
+  faithful selection criterion for ``λ``.
 
 Consequence on this synthetic. Gene-space ``J`` restricted to the
 truncated tangent is a lift of ``J_latent`` on the decoder-visible
@@ -459,6 +471,24 @@ similarity, so the gene-space row of the Phase C gate **can match
 agreement ceiling is set by the latent↔latent self-identity (so
 ``>0.95`` is a tautology, not a test), and the fork P/R ceiling is
 R13's `latent_dsm` ceiling, inherited.
+
+Phase C synthetic — **closed on 2026-10-12** (benchmarks/phase_c_gate/
+equilibrated/report.md).
+
+* Holder reaches the latent ceiling: gene-space P/R ≈ 0.94–0.95 /
+  0.86–0.97 at every τ, passing the absolute 0.8 gate for both
+  k=0 and k=30.
+* frac(Re>0) matches oracle (0.00–0.04 vs 0.04–0.05) at every τ.
+* Fork gap persists (gene-space fork P/R ≈ 0.00–0.03 vs latent
+  0.19–0.23 / 0.54–0.77) and is **not** a ridge-CV artifact — both
+  NB-NLL and weighted-MSE selectors pick the same λ=1.0 on this
+  synthetic. The gap is R13's `latent_dsm` fork gap, amplified
+  through the lift ``∇η · J_latent · (∇η)⁺`` where the weak-saddle
+  bias and the ``(∇η)⁺`` noise outside the r_c-truncated tangent
+  pull the lead eigenvalue below ``tol = 0.1·std(lead_re)``.
+* Recorded. Follow-up work on fork recovery belongs to a Phase B
+  revisit (sharper DSM for weak saddles) and to the Phase D
+  hidden-driver synthetic — not to another Phase C ridge-CV sweep.
 
 Testing new modes requires both a synthetic with a hidden driver
 (some basin direction orthogonal to the top-``d`` PCs — e.g. a

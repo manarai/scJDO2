@@ -21,6 +21,7 @@ from typing import Any, Literal, Optional, Sequence
 
 import numpy as np
 from scipy.sparse import csr_matrix
+from scipy.special import gammaln as _lgamma
 from sklearn.neighbors import NearestNeighbors
 
 
@@ -504,12 +505,18 @@ class JacobianField:
 #         a_g = (X^T diag(w[:,g]) X + λ I_L)^{-1} X^T diag(w[:,g]) y[:,g]
 #     J_c = CSR with rows span 1..G, columns live_c, entries a_g[j].
 #
-# Ridge λ is chosen globally by 5-fold neighbour cross-validation using
-# weighted MSE on held-out neighbours. (Weighted MSE is the local Gaussian
-# approximation of the NB NLL — the Fisher-weighted ridge IS the
-# second-order NB approximation of the local likelihood, which is why the
-# user's spec says "ridge strength chosen by held-out likelihood"; here
-# we use its Gaussian approximant.) See §8.3 and §8.1 of the spec.
+# Ridge λ is chosen globally by 5-fold neighbour cross-validation. The
+# default criterion is the **held-out NB log-likelihood of predicted
+# Δη** on neighbour counts (Option A in R14): for a held-out neighbour i,
+# the ridge-predicted velocity shift ``v̂_i = a · (η_i - η_c)`` is used as a
+# log-rate shift from the base cell c, so the predicted log-rate at i is
+# ``log μ̂_i,g = η_c,g + v̂_i,g + log s_i``, and NB NLL is evaluated on the
+# observed counts ``c_i,g`` with the rate model's per-gene θ_g. We also
+# record the weighted-MSE score for comparison. Weighted MSE is the local
+# Gaussian approximation of the NB NLL — on weak equilibrated signal it
+# pushes λ to the grid maximum regardless of fit quality, so NB NLL on
+# counts is the primary selector. See docs/opspace_figure_spec.md §8.3,
+# V2_PLAN R14, and the Phase C gate report for the comparison table.
 #
 # Storage per spec §1 and §8.3:
 #     J_c as CSR, rows span all G, columns restricted to live_c with a
@@ -523,6 +530,7 @@ class GeneFieldConfig:
     ridge_lambdas: tuple = (1e-3, 1e-2, 1e-1, 1.0)
     cv_folds: int = 5
     cv_sample_cells: int = 200            # sample for λ selection; -1 = all
+    cv_metric: Literal["nb_nll", "weighted_mse"] = "nb_nll"
     seed: int = 0
 
 
@@ -530,6 +538,7 @@ def fit_gene_space_jacobians(
     z: np.ndarray,                        # (n, d) latent positions
     f: np.ndarray,                        # (n, d) latent drift f(z)
     rate_model,                           # scjdo2.rates.GeneRateModel (fitted)
+    counts: Optional[np.ndarray] = None,  # (n, G) raw counts, for NB-NLL CV
     size_factor: Optional[np.ndarray] = None,
     config: Optional[GeneFieldConfig] = None,
     verbose: bool = False,
@@ -557,8 +566,15 @@ def fit_gene_space_jacobians(
           index per cell (one array per cell).
         * ``reason`` : ``(n,)`` int8, one of ``REASON_OK``,
           ``REASON_NO_VARIATION``, ``REASON_NOT_IN_BALL``.
-        * ``ridge_lambda`` : the single λ chosen by held-out MSE.
-        * ``lambda_scores`` : dict ``{λ: mean_weighted_mse}`` from CV.
+        * ``ridge_lambda`` : the single λ chosen by the primary CV
+          metric (``cv_metric``). Fit at this λ, same for every cell.
+        * ``ridge_lambda_nll`` / ``ridge_lambda_mse`` : the two λ picks
+          side by side (either may be ``nan`` if the corresponding
+          score was non-finite throughout).
+        * ``lambda_scores`` : dict ``{λ: score}`` from the primary CV
+          metric; ``lambda_scores_nll`` and ``lambda_scores_mse`` carry
+          the two score curves separately.
+        * ``cv_metric`` : the selector used for ``ridge_lambda``.
         * ``k``, ``variation_threshold`` : config echo.
 
     Notes
@@ -577,11 +593,37 @@ def fit_gene_space_jacobians(
     if f.shape != z.shape:
         raise ValueError(f"f {f.shape} must match z {z.shape}")
     k = max(3, min(int(cfg.k), n - 1))
+    metric = str(getattr(cfg, "cv_metric", "nb_nll"))
+    if metric not in ("nb_nll", "weighted_mse"):
+        raise ValueError(f"cv_metric must be 'nb_nll' or 'weighted_mse', got {metric!r}")
 
     eta = rate_model.eta(z).astype(np.float64)              # (n, G)
     d_eta = rate_model.rate_along_eta(z, f).astype(np.float64)  # (n, G)
     w = rate_model.nb_weights(z, size_factor=size_factor).astype(np.float64)  # (n, G)
     G = eta.shape[1]
+
+    # NB-NLL path needs counts and θ_g. Default size_factor matches the
+    # rate model's fit convention (lib / median_lib) when counts are
+    # provided; else size_factor=1 everywhere, consistent with
+    # nb_weights(size_factor=None).
+    counts_arr: Optional[np.ndarray] = None
+    log_s: Optional[np.ndarray] = None
+    log_theta: Optional[np.ndarray] = None
+    if metric == "nb_nll":
+        if counts is None:
+            raise ValueError("cv_metric='nb_nll' requires counts (n, G)")
+        counts_arr = np.asarray(counts, dtype=np.float64)
+        if counts_arr.shape != (n, G):
+            raise ValueError(f"counts {counts_arr.shape} must match (n, G)=({n},{G})")
+        if size_factor is None:
+            lib = counts_arr.sum(axis=1)
+            med = float(np.median(lib[lib > 0])) if np.any(lib > 0) else 1.0
+            s_vec = (lib / med) if med > 0 else np.ones(n, dtype=np.float64)
+        else:
+            s_vec = np.asarray(size_factor, dtype=np.float64)
+        log_s = np.log(np.clip(s_vec, 1e-8, None))
+        theta = np.asarray(rate_model.theta(), dtype=np.float64)
+        log_theta = np.log(np.clip(theta, 1e-6, 1e8))
 
     nn = NearestNeighbors(n_neighbors=k + 1).fit(z)
     _, idxs = nn.kneighbors(z, return_distance=True)
@@ -591,7 +633,8 @@ def fit_gene_space_jacobians(
     rng = np.random.default_rng(int(cfg.seed))
     sample_n = n if cfg.cv_sample_cells < 0 else min(int(cfg.cv_sample_cells), n)
     sample_idx = rng.choice(n, size=sample_n, replace=False)
-    lambda_scores: dict[float, float] = {}
+    lambda_scores_mse: dict[float, float] = {}
+    lambda_scores_nll: dict[float, float] = {}
 
     def _ridge_batched(X_tr, W_tr, y_tr, lam, L):
         """Solve the per-gene weighted ridge for every gene row in one shot.
@@ -619,9 +662,12 @@ def fit_gene_space_jacobians(
         a = np.einsum("ip,ig,gi->gp", X_tr, W_tr, u)                   # (G, L)
         return a
 
+    # Precompute per-cell neighbour slices used by both metrics.
     for lam in cfg.ridge_lambdas:
-        tot = 0.0
-        cnt = 0
+        tot_mse = 0.0
+        cnt_mse = 0
+        tot_nll = 0.0
+        cnt_nll = 0
         for c in sample_idx:
             nbrs = idxs[c]
             X_full = eta[nbrs] - eta[c]                     # (k, G)
@@ -631,40 +677,74 @@ def fit_gene_space_jacobians(
                 continue
             X = X_full[:, live]                             # (k, L)
             W = w[nbrs]                                     # (k, G)
-            # Fold assignment on neighbours
             fold = rng.integers(0, cfg.cv_folds, size=k)
             fold_mse = 0.0
-            fold_cnt = 0
+            fold_mse_cnt = 0
+            fold_nll = 0.0
+            fold_nll_cnt = 0
             for fo in range(cfg.cv_folds):
                 tr = fold != fo
                 te = ~tr
                 if tr.sum() < 2 or te.sum() == 0:
                     continue
-                Xt = X[tr]                                  # (kt, L)
-                Wt = W[tr]                                  # (kt, G)
-                yt = y_full[tr]                             # (kt, G)
+                Xt = X[tr]
+                Wt = W[tr]
+                yt = y_full[tr]
                 try:
                     a = _ridge_batched(Xt, Wt, yt, lam, live.size)
                 except np.linalg.LinAlgError:
                     continue
-                # Held-out weighted MSE on te neighbours
-                Xe = X[te]                                  # (ke, L)
-                We = W[te]                                  # (ke, G)
-                ye = y_full[te]                             # (ke, G)
+                Xe = X[te]
+                We = W[te]
+                ye = y_full[te]
                 yhat = Xe @ a.T                             # (ke, G)
+                # --- weighted MSE
                 resid2 = (yhat - ye) ** 2
                 w_sum = float(We.sum())
-                if w_sum <= 0 or not np.isfinite(w_sum):
-                    continue
-                fold_mse += float((We * resid2).sum()) / w_sum
-                fold_cnt += 1
-            if fold_cnt > 0 and np.isfinite(fold_mse):
-                tot += fold_mse / fold_cnt
-                cnt += 1
-        lambda_scores[float(lam)] = (tot / cnt) if cnt > 0 else float("inf")
+                if w_sum > 0 and np.isfinite(w_sum):
+                    fold_mse += float((We * resid2).sum()) / w_sum
+                    fold_mse_cnt += 1
+                # --- NB NLL on held-out neighbour counts
+                if metric == "nb_nll":
+                    te_nbrs = nbrs[te]                      # (ke,)
+                    log_mu = eta[c][None, :] + yhat + log_s[te_nbrs][:, None]  # (ke, G)
+                    # Clip log_mu for numerical safety (exp underflow/overflow).
+                    log_mu = np.clip(log_mu, -30.0, 30.0)
+                    mu_hat = np.exp(log_mu)                 # (ke, G)
+                    # NB log-pmf (drop lgamma(c+1) const in c):
+                    #   log p = lgamma(c+θ) - lgamma(θ) + θ·(log θ - log(θ+μ))
+                    #           + c·(log μ - log(θ+μ))
+                    c_i = counts_arr[te_nbrs]               # (ke, G)
+                    theta_e = np.exp(log_theta)[None, :]    # (1, G)
+                    log_tpm = np.log(theta_e + mu_hat)
+                    lp = (
+                        _lgamma(c_i + theta_e) - _lgamma(theta_e)
+                        + theta_e * (log_theta[None, :] - log_tpm)
+                        + c_i * (log_mu - log_tpm)
+                    )
+                    nll = -float(lp.mean())
+                    if np.isfinite(nll):
+                        fold_nll += nll
+                        fold_nll_cnt += 1
+            if fold_mse_cnt > 0 and np.isfinite(fold_mse):
+                tot_mse += fold_mse / fold_mse_cnt
+                cnt_mse += 1
+            if fold_nll_cnt > 0 and np.isfinite(fold_nll):
+                tot_nll += fold_nll / fold_nll_cnt
+                cnt_nll += 1
+        lambda_scores_mse[float(lam)] = (tot_mse / cnt_mse) if cnt_mse > 0 else float("inf")
+        lambda_scores_nll[float(lam)] = (tot_nll / cnt_nll) if cnt_nll > 0 else float("inf")
         if verbose:
-            print(f"  [gene-field] λ={lam:g}  mean weighted MSE = {lambda_scores[float(lam)]:.4f}")
-    best_lambda = min(lambda_scores, key=lambda l: lambda_scores[l])
+            msg = f"  [gene-field] λ={lam:g}  weighted MSE={lambda_scores_mse[float(lam)]:.4f}"
+            if metric == "nb_nll":
+                msg += f"  NB NLL={lambda_scores_nll[float(lam)]:.4f}"
+            print(msg)
+    lambda_mse = min(lambda_scores_mse, key=lambda l: lambda_scores_mse[l])
+    if metric == "nb_nll" and any(np.isfinite(v) for v in lambda_scores_nll.values()):
+        best_lambda = min(lambda_scores_nll, key=lambda l: lambda_scores_nll[l])
+    else:
+        best_lambda = lambda_mse
+    lambda_scores = lambda_scores_nll if metric == "nb_nll" else lambda_scores_mse
 
     # --------- fit all cells at best λ, and compute the Fisher ledger
     # The Fisher info for the (g, j_live)-th entry of a_g is the (j, j)
@@ -722,7 +802,16 @@ def fit_gene_space_jacobians(
         "live_cols": live_cols,
         "reason": reason,
         "ridge_lambda": float(best_lambda),
-        "lambda_scores": lambda_scores,
+        "lambda_scores": lambda_scores,                     # primary metric
+        "lambda_scores_mse": lambda_scores_mse,
+        "lambda_scores_nll": lambda_scores_nll,
+        "ridge_lambda_mse": float(lambda_mse),
+        "ridge_lambda_nll": float(
+            min(lambda_scores_nll, key=lambda l: lambda_scores_nll[l])
+            if any(np.isfinite(v) for v in lambda_scores_nll.values())
+            else float("nan")
+        ),
+        "cv_metric": metric,
         "k": int(k),
         "variation_threshold": float(cfg.variation_threshold),
     }
