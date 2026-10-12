@@ -5,6 +5,55 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Phase B gate report — Phase B does NOT pass user's ≥0.8 target
+
+New diagnostics (held in `benchmarks/phase_b_gate/{report.json, report.md}`):
+
+- `scripts/phase_b_gate_report.py` — single-command gate measurement:
+  pitchfork fork+holder precision/recall at the strict 0.8 target for
+  τ_crit ∈ {0.1, 0.3, 0.5}, permutation null for Re(λ_max) on both
+  pitchfork and Paul15, Paul15 holder count with and without the
+  pseudotime velocity prior.
+- `scjdo2/field.py:JacobianField.permutation_null(z, v, n_perm, subset_idx,
+  seed)` — in each neighbourhood, shuffle which cell's drift vector pairs
+  with which level vector, refit ridge, and return the per-cell null
+  distribution of Re(λ_max). Precomputes `G^{-1} dz.T` once per cell.
+- `scjdo2/drift.py:DriftConfig.inject_velocity_prior` (new, default True)
+  — set to False to run DSM-only (no pseudotime-gradient velocity prior).
+  Enables the "is the pseudotime prior the reason Paul15 has zero
+  holders" test.
+
+Results (seed 0; pitchfork n=1200, Paul15 n=2730):
+
+| τ_crit | fork P | fork R | holder P | holder R |
+|---|---|---|---|---|
+| 0.1 | 0.08 | 0.42 | 0.76 | 0.26 |
+| 0.3 | 0.13 | 0.74 | 0.83 | 0.22 |
+| 0.5 | 0.11 | 0.62 | 0.84 | 0.30 |
+
+All six precision/recall numbers are below 0.8; fork precision and holder
+recall are both far below. Permutation null overlap on pitchfork is 0.000
+in every stratum — the real signal is strongly separated from the random
+pairing null, but in the direction of **lower** Re(λ_max) than null, not
+higher. The kNN-ball ridge estimator has a ~+0.5 positive bias on the
+leading real eigenvalue when fed random (z, v) pairings; the real fit
+reduces that bias to ~0 but almost never crosses into negative territory,
+which is why holders are rare and never crisply localised.
+
+Paul15 result on the velocity-prior hypothesis: removing the pseudotime
+velocity prior **did not** change the holder count (0 → 0). The DSM-only
+drift at 1500 epochs collapses to a near-zero vector field (`real_median`
+= 0.007 vs. `null_median` = 0.045), so the estimator never produces
+negative-definite neighbourhood Jacobians at putative attractors. The
+hypothesis that f = σ²∇log p would localise contractive J at attractors
+is not supported at these settings (could be under-trained — v1 uses
+5000 epochs — but the structural positive bias of the local ridge
+estimator is the dominant failure mode).
+
+**Verdict:** Phase B's latent-space first-pass estimator does not pass
+the user's gate ("holder and fork precision+recall ≥ 0.8"). Phase C is
+not yet unlocked.
+
 ### Scope cleanup — scOpAtlas removed
 
 - scOpAtlas (notebook 05) is out of v2 scope. Removed `_run_atlas` and the

@@ -143,3 +143,68 @@ class JacobianField:
             _REASON_NAMES[c]: float(np.mean(self._reason == c))
             for c in sorted(_REASON_NAMES)
         }
+
+    # ------------------------------------------------------------- null test
+    def permutation_null(
+        self,
+        z: np.ndarray,
+        v: np.ndarray,
+        n_perm: int = 50,
+        subset_idx: Optional[np.ndarray] = None,
+        seed: int = 0,
+    ) -> np.ndarray:
+        """Per-cell permutation null for ``Re(λ_max)``.
+
+        For each cell ``c`` in ``subset_idx`` (default: all cells), rebuild its
+        kNN ball with the same ``k`` as ``fit``, then draw ``n_perm`` shuffles
+        of which neighbour's ``v`` pairs with which neighbour's ``z``, refit
+        the ridge regression and record ``Re`` of the dominant eigenvalue.
+
+        Returns an array of shape ``(len(subset_idx), n_perm)``; cells that
+        are not in the ball (or whose ball is degenerate) get a row of NaNs.
+        """
+        z = np.asarray(z, dtype=np.float64)
+        v = np.asarray(v, dtype=np.float64)
+        n, d = z.shape
+        rng = np.random.default_rng(int(seed))
+        k = int(self.config.k) if self.config.k != "auto" else min(50, max(5, int(np.sqrt(n))))
+        if k >= n:
+            k = max(5, n - 1)
+        nn = NearestNeighbors(n_neighbors=k + 1).fit(z)
+        dists, idxs = nn.kneighbors(z, return_distance=True)
+        idxs = idxs[:, 1:]
+        ridge = float(self.config.ridge)
+
+        if subset_idx is None:
+            subset_idx = np.arange(n)
+        else:
+            subset_idx = np.asarray(subset_idx, dtype=np.int64)
+
+        out = np.full((subset_idx.size, int(n_perm)), np.nan, dtype=np.float64)
+        for row, c in enumerate(subset_idx):
+            nbrs = idxs[c]
+            if nbrs.size < max(3, min(k, d + 1)):
+                continue
+            dz = z[nbrs] - z[c]
+            dv = v[nbrs] - v[c]
+            if np.max(np.linalg.norm(dz, axis=1)) < float(self.config.variation_threshold):
+                continue
+            G = dz.T @ dz + ridge * np.eye(d)
+            # Precompute the (G^{-1} dz.T) factor; the permutation only affects
+            # the right-hand side dv.T so (G^{-1} dz.T @ dv_perm.T) is a cheap
+            # matmul.
+            try:
+                dz_proj = np.linalg.solve(G, dz.T)      # (d, k)
+            except np.linalg.LinAlgError:
+                continue
+            for p in range(int(n_perm)):
+                perm = rng.permutation(dz.shape[0])
+                dv_p = dv[perm]
+                A = dz_proj @ dv_p                      # (d, d) — solves G J' = dz' dv
+                Jc = A.T
+                try:
+                    evals = np.linalg.eigvals(Jc)
+                except np.linalg.LinAlgError:
+                    continue
+                out[row, p] = float(np.max(evals.real))
+        return out

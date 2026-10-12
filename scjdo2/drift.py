@@ -40,6 +40,12 @@ class DriftConfig:
     sigma: float = 0.1
     seed: int = 42
     device: Optional[str] = None
+    # When True (default), compute a pseudotime-gradient velocity prior via
+    # scjdo.tl._drift._pseudotime_velocity and add it as a soft anchor during
+    # fit — needed to learn non-gradient flows (toggle-switch pitchfork).
+    # Set to False to run DSM-only: the drift then recovers σ² ∇_z log p(z|t),
+    # whose Jacobian is the Hessian of log p (symmetric, negative near modes).
+    inject_velocity_prior: bool = True
     clock_calibrated: bool = field(default=False, init=False)
 
 
@@ -90,16 +96,22 @@ class DriftAdapter:
         X_ref = torch.as_tensor(z, dtype=torch.float32, device=device)
         t_t = torch.as_tensor(t, dtype=torch.float32, device=device)
 
-        # Compute pseudotime-gradient velocity prior if none supplied. v1 always
-        # does this; without it the DSM loss alone recovers the score of the
-        # stationary density, not the drift direction, and non-gradient flows
-        # (e.g. the toggle-switch pitchfork) fail to converge.
-        if V_ref is None:
-            V_np = _pseudotime_velocity(z.astype(np.float32), t.astype(np.float32), k=15)
+        # Compute pseudotime-gradient velocity prior unless inject_velocity_prior
+        # is False. v1 always does this; without it DSM alone recovers the
+        # score of p(z|t), i.e. f ≈ σ² ∇_z log p(z|t). That is enough on
+        # gradient flows (density follows a potential) but fails to converge
+        # on non-gradient flows like the toggle-switch pitchfork — hence the
+        # prior is on by default.
+        use_prior = bool(self.config.inject_velocity_prior)
+        if use_prior:
+            if V_ref is None:
+                V_np = _pseudotime_velocity(z.astype(np.float32), t.astype(np.float32), k=15)
+            else:
+                V_np = np.asarray(V_ref, dtype=np.float32)
+            V_ref_t = torch.as_tensor(V_np, dtype=torch.float32, device=device)
         else:
-            V_np = np.asarray(V_ref, dtype=np.float32)
-        V_ref_t = torch.as_tensor(V_np, dtype=torch.float32, device=device)
-        self.config.use_velocity_prior = True
+            V_ref_t = None
+        self.config.use_velocity_prior = use_prior
 
         v1_cfg = V1DriftConfig(
             dim=self.dim,
@@ -107,7 +119,7 @@ class DriftAdapter:
             depth=self.config.depth,
             beta=self.config.beta,
             use_spectral_norm=self.config.use_spectral_norm,
-            use_velocity_prior=True,
+            use_velocity_prior=use_prior,
             vel_scale=self.config.vel_scale,
             alpha_control=self.config.alpha_control,
         )
