@@ -22,8 +22,10 @@ from .style import (
 )
 from .figures import (
     figure_archetype_sheet,
+    figure_ledger_summary,
     figure_operator_space,
     figure_v1_vs_v2,
+    plot_drivers,
 )
 
 __all__ = [
@@ -40,5 +42,7 @@ __all__ = [
     "style",
     "figure_operator_space",
     "figure_archetype_sheet",
+    "figure_ledger_summary",
     "figure_v1_vs_v2",
+    "plot_drivers",
 ]
