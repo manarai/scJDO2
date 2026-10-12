@@ -63,6 +63,9 @@ exclude = ["tests*", "notebooks*", "compare*", "benchmarks*", "data*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-v --tb=short"
+markers = [
+    "slow: tests that take minutes (e.g. Phase B pitchfork acceptance)",
+]
 
 [tool.ruff]
 line-length = 100

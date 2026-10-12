@@ -47,16 +47,44 @@ from data import loaders  # type: ignore[import-not-found]
 
 
 def _run_fit_drift(adata, out: Path, seed: int, n_epochs: int, archetype_method: str,
-                   groupby: str, root: str) -> dict[str, Any]:
-    """Tutorial 01 and 05: `prepare_trajectory` → `fit_drift` → summary figure."""
+                   groupby: str, root: str) -> tuple[dict[str, Any], Any]:
+    """Tutorial 01 and 05: `prepare_trajectory` → `fit_drift` → summary figure.
+
+    Returns ``(config_fragment, drift_model)`` so the atlas path can reuse the
+    trained ``DriftField`` without a second training run.
+    """
     t0 = time.monotonic()
     sjd.pp.prepare_trajectory(adata, groupby=groupby, root=root)
-    sjd.tl.fit_drift(adata, n_epochs=n_epochs, archetype_method=archetype_method, seed=seed)
+    model = sjd.tl.fit_drift(adata, n_epochs=n_epochs, archetype_method=archetype_method, seed=seed)
     wall = time.monotonic() - t0
 
     sjd.pl.summary_figure(adata, save=str(out / "figures" / "summary.pdf"))
     adata.write_h5ad(out / "adata.h5ad")
-    return {"wall_time_s": wall}
+    return {"wall_time_s": wall}, model
+
+
+def _run_atlas(adata, model, out: Path) -> dict[str, Any]:
+    """Notebook 05: scOpAtlas on top of a fitted DriftField."""
+    import torch
+    from scjdo.atlas import StableOperatorAtlas
+
+    t0 = time.monotonic()
+    atlas = StableOperatorAtlas(
+        adata=adata,
+        drift_model=model,
+        use_rep="X_pca",
+        pseudotime_key="pseudotime",
+        device="cpu",
+    )
+    atlas.build(epsilon=0.1, threshold_unstable=0.1)
+    atlas_adata = atlas.to_anndata()
+    wall = time.monotonic() - t0
+
+    atlas_adata.write_h5ad(out / "atlas.h5ad")
+    torch.save({"state_dict": model.state_dict(), "cfg": model.cfg},
+               out / "drift_model.pt")
+    stats = atlas.get_regime_statistics() if hasattr(atlas, "get_regime_statistics") else {}
+    return {"atlas_wall_time_s": wall, "regime_statistics": stats}
 
 
 def _run_one(dataset: str, out: Path, seed: int, n_epochs: int, archetype_method: str) -> dict[str, Any]:
@@ -79,23 +107,23 @@ def _run_one(dataset: str, out: Path, seed: int, n_epochs: int, archetype_method
 
     if workflow == "fit_drift":
         adata = loaders.load(dataset)
-        config.update(_run_fit_drift(
+        drift_cfg, _model = _run_fit_drift(
             adata, out, seed=seed, n_epochs=n_epochs, archetype_method=archetype_method,
             groupby=loaders.groupby_for(dataset),  # type: ignore[arg-type]
             root=loaders.root_for(dataset),        # type: ignore[arg-type]
-        ))
+        )
+        config.update(drift_cfg)
     elif workflow == "atlas":
-        # Notebook 05 builds the scOpAtlas on top of a fitted DriftField. In
-        # Phase A we skip the atlas run itself; the comparable v1 output for v2
-        # purposes is the drift fit (same as workflow == "fit_drift"), so we
-        # run that and tag it.
+        # Notebook 05: scOpAtlas on top of a fitted DriftField. Run fit_drift
+        # (same as workflow == "fit_drift") then build the atlas on top.
         adata = loaders.load(dataset)
-        config.update(_run_fit_drift(
+        drift_cfg, model = _run_fit_drift(
             adata, out, seed=seed, n_epochs=n_epochs, archetype_method=archetype_method,
             groupby=loaders.groupby_for(dataset),  # type: ignore[arg-type]
             root=loaders.root_for(dataset),        # type: ignore[arg-type]
-        ))
-        config["note"] = "atlas run skipped in Phase A; drift fit stored instead"
+        )
+        config.update(drift_cfg)
+        config.update(_run_atlas(adata, model, out))
     elif workflow in ("fit_bridge", "fourier"):
         config["skipped"] = True
         config["note"] = (
@@ -105,8 +133,18 @@ def _run_one(dataset: str, out: Path, seed: int, n_epochs: int, archetype_method
     else:
         raise RuntimeError(f"Unknown workflow {workflow!r} for dataset {dataset!r}")
 
+    def _default(o):
+        import numpy as _np
+        if isinstance(o, _np.integer):
+            return int(o)
+        if isinstance(o, _np.floating):
+            return float(o)
+        if isinstance(o, _np.ndarray):
+            return o.tolist()
+        raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
+
     with (out / "config.json").open("w") as fh:
-        json.dump(config, fh, indent=2)
+        json.dump(config, fh, indent=2, default=_default)
     return config
 
 

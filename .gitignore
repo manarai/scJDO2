@@ -21,3 +21,7 @@ benchmarks/compare/*/figures/
 # keep placeholder markers
 !benchmarks/.gitkeep
 !benchmarks/**/.gitkeep
+
+# Scanpy dataset caches pulled by data/loaders.py
+data/paul15/
+data/moignard15/

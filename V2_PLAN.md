@@ -341,6 +341,20 @@ are copied literally from `scjdo/archetypes/koopman.py:_matrix_geometry`. v2
 cites v1 for provenance in `opspace.py` but does not import — keeps `opspace`
 free of EDMD baggage.
 
+**R11 (new, discovered during Phase B first pass). What is "the dataset's
+known bifurcation value"?** On the pitchfork generator with τ_crit=0.5
+(analytic, by construction) and width=1.98, the kernel-smoothed curve of the
+**true** 2D-system `Re(λ_max(J))` argmaxes at τ≈0.724, not at 0.5. Our
+scJDO2 field, trained via DriftField + pseudotime-gradient velocity prior,
+argmaxes near τ≈0.40 (err ≈ 0.1 vs. analytic, err ≈ 0.32 vs. true-J). The
+brief's acceptance target of ±0.05 is tight; which reference the ±0.05 is
+against (analytic τ_crit, true-J argmax, or v1's own slicing argmax) changes
+the pass/fail call. Resolution path: run v1's `fit_drift` on
+`scjdo2.data.generate_pitchfork(τ_crit)` and compute its own
+`tau_R1_lambda_max` (as `scJDO/scratchpad_run/saddle_readouts_midinterval.py`
+does) — then the ±0.05 is against that number. Phase B's acceptance tests
+are `xfail` with `strict=False` until that run is done.
+
 ---
 
 ## 10. Phase A deliverables status
