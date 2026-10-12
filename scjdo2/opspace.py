@@ -1007,13 +1007,232 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
 # ======================================================================
 
 
-def archetype_operators(adata: AnnData) -> None:
-    """Fisher-weighted mean of ``J_c`` per archetype; apply 2.1–2.4 to each.
+def archetype_operators(
+    adata: AnnData,
+    k: int | str = "auto",
+    membership_cutoff: float = 0.5,
+) -> None:
+    """Fisher-weighted, membership-weighted archetype operators + spectrum.
 
-    Pending :mod:`scjdo2.archetypes` adapter around v1's ``_seminmf`` (Phase B
-    Step 8) and the Fisher ledger (Phase C). Skipped with a clear error until
-    then.
+    Pipeline (spec §1.5):
+
+    1. If ``obsm["archetype_weights"]`` is missing, fit the semi-NMF
+       decomposer in :mod:`scjdo2.archetypes` on the latent Jacobian
+       tensor (``uns["scjdo2"]["J_latent"]``; falls back to the current
+       ``J`` if latent is absent). ``k`` controls the K selector:
+       ``"auto"`` picks K by held-out Frobenius reconstruction, an int
+       pins K. Writes the weights and the K-selection curve.
+    2. For every archetype k:
+
+       * ``members_c`` = cells with ``W[:, k] ≥ membership_cutoff ·
+         max(W[:, k])``.
+       * ``w_c = W[c, k]`` × per-cell Fisher mass (sum of the Fisher
+         ledger entries at ``c``), normalised across members.
+       * Archetype gene-space operator ``J_k = Σ_c w_c · J_c`` (sparse
+         weighted mean on the per-cell CSR list).
+       * Archetype projector ``P_k = Σ_c w_c · P_c``, re-orthonormalised
+         by QR to a ``(r_k, G)`` orthonormal basis (``r_k`` = max rank
+         among members).
+       * Eigendecompose ``P_k J_k P_k^T``, lift back through ``P_k``,
+         phase-fix. Classify behaviour with :func:`behaviour`'s rule.
+       * Driver DataFrame built from the lifted archetype eigvec with
+         the archetype's aggregated Fisher diagonal.
+
+    Writes ``uns["scjdo2"]["archetypes"]`` as a dict ``{k: info}`` where
+    ``info`` has ``behaviour``, ``eigenvalues``, ``eigvec``, ``henrici``,
+    ``transient_gain``, ``n_cells``, ``mean_confidence``, ``sensitive``,
+    ``fisher`` (per-gene aggregated Fisher), ``reason`` (per-gene),
+    ``drivers`` (DataFrame).
+
+    Needs: ``obsm["archetype_weights"]`` or the latent J tensor to fit
+    one, plus the Phase C ``fisher_ledger`` (with ``off_tangent`` so the
+    archetype projector carries through).
     """
+    from .archetypes import ArchetypeConfig, ArchetypeDecomposer
+
+    uns = adata.uns.setdefault("scjdo2", {})
+    ledger = _get_ledger(adata)
+    F_list = _ledger_fisher_list(ledger)
+    tangent = _ledger_tangent(ledger)
+    if F_list is None or tangent is None:
+        raise RuntimeError(
+            "archetype_operators needs the Phase C Fisher ledger + "
+            "tangent projectors (uns['scjdo2']['fisher_ledger']); run "
+            "scjdo2.pipeline.fit_rate_and_gene_field first."
+        )
+
+    # Step 1 — fit weights if absent.
+    if "archetype_weights" not in adata.obsm:
+        from .archetypes import ArchetypeConfig as _AC
+        from .archetypes import ArchetypeDecomposer as _AD
+        J_latent = uns.get("J_latent")
+        if J_latent is None:
+            J_latent = uns.get("J")
+            if isinstance(J_latent, (list, tuple)):
+                raise RuntimeError(
+                    "archetype_operators needs the latent Jacobian tensor; "
+                    "store it under uns['scjdo2']['J_latent']"
+                )
+        J_latent = np.asarray(J_latent)
+        cfg = _AC(n_archetypes=k if isinstance(k, int) else "auto")
+        decomposer = _AD(cfg)
+        res = decomposer.fit(J_latent)
+        adata.obsm["archetype_weights"] = res.weights
+        uns["archetype_K_curve"] = res.k_curve
+        uns["archetype_K_selected"] = res.k_selected
+        uns["archetype_patterns_latent"] = res.patterns
+
+    W = np.asarray(adata.obsm["archetype_weights"])
+    n, K = W.shape
+    J_gene, kind, G = _get_J(adata)
+    if kind != "sparse":
+        raise RuntimeError(
+            "archetype_operators needs a gene-space J (list of CSR); "
+            "the stored J is dense."
+        )
+
+    tangent_P = list(tangent.get("projector", []))
+    tangent_rank = np.asarray(tangent.get("rank", np.zeros(n, dtype=int)))
+
+    # Pre-compute per-cell Fisher mass for the archetype weighting.
+    f_mass = np.array(
+        [float(np.sum(F_list[c].data)) for c in range(n)], dtype=np.float64,
+    )
+    f_mass = np.where(np.isfinite(f_mass) & (f_mass > 0), f_mass, 1.0)
+
+    arch_out: dict[int, dict] = {}
+    gene_names = (
+        np.asarray(adata.var_names)
+        if adata.var_names is not None
+        else np.array([f"gene_{i}" for i in range(G)])
+    )
+
+    for ak in range(K):
+        w = W[:, ak] * f_mass
+        wmax = float(W[:, ak].max()) if np.isfinite(W[:, ak]).any() else 0.0
+        members = np.where(W[:, ak] >= membership_cutoff * wmax)[0] if wmax > 0 else np.arange(n)
+        if members.size == 0:
+            continue
+        wm = w[members]
+        wm_sum = float(wm.sum())
+        if wm_sum <= 0:
+            continue
+        wm = wm / wm_sum
+
+        # Fisher-weighted mean of J (sparse) on members.
+        J_sum = csr_matrix((G, G), dtype=np.float64)
+        F_sum = csr_matrix((G, G), dtype=np.float64)
+        for i, c in enumerate(members):
+            J_sum = J_sum + float(wm[i]) * J_gene[c]
+            F_sum = F_sum + float(wm[i]) * F_list[c]
+        # Weighted mean projector + re-orthonormalise via thin QR.
+        P_stack = []
+        rk_max = int(tangent_rank[members].max()) if members.size else 0
+        for i, c in enumerate(members):
+            Pc = np.asarray(tangent_P[c], dtype=np.float64)
+            if Pc.shape[0] < rk_max:
+                pad = np.zeros((rk_max - Pc.shape[0], Pc.shape[1]))
+                Pc = np.vstack([Pc, pad])
+            P_stack.append(float(wm[i]) * Pc)
+        P_mean = np.sum(P_stack, axis=0) if P_stack else np.zeros((0, G))
+        if P_mean.size == 0 or np.all(~np.isfinite(P_mean)):
+            continue
+        # QR → orthonormal rows up to rk_max.
+        try:
+            Q, _ = np.linalg.qr(P_mean.T)                    # (G, rk_max)
+            P_arch = Q.T
+        except np.linalg.LinAlgError:
+            P_arch = P_mean
+
+        # Restricted block and eigendecomposition.
+        block = (P_arch @ J_sum.toarray()) @ P_arch.T        # (r, r)
+        try:
+            evals, V = np.linalg.eig(block)
+        except np.linalg.LinAlgError:
+            continue
+        evals, V = _conjugate_free(evals, V)
+        V_fixed = np.column_stack([
+            _fix_eigvec_sign(V[:, j]) for j in range(V.shape[1])
+        ])
+        order = np.argsort(-evals.real, kind="stable")
+        evals = evals[order]
+        V_fixed = V_fixed[:, order]
+        lifted = (P_arch.T @ V_fixed).astype(np.complex128)   # (G, kept)
+        v_lead = _fix_eigvec_sign(lifted[:, 0]) if lifted.shape[1] else np.zeros(G, dtype=np.complex128)
+
+        # Behaviour classification using the per-dataset tol.
+        tol = float(uns.get("invariants_meta", {}).get("tol", 0.0))
+        if tol == 0.0:
+            lr_arr = adata.obs.get("lead_re")
+            if lr_arr is not None:
+                tol = _default_near_zero_tol(lr_arr.to_numpy())
+        lead_re = float(evals[0].real) if evals.size else float("nan")
+        lead_im = float(evals[0].imag) if evals.size else float("nan")
+        if abs(lead_im) <= _EPS_IM:
+            if lead_re < -tol:
+                beh = "holder"
+            elif lead_re > tol:
+                beh = "fork"
+            else:
+                beh = "drift"
+        else:
+            if lead_re < -tol:
+                beh = "damped_oscillator"
+            elif lead_re > tol:
+                beh = "growing_oscillator"
+            else:
+                beh = "drift"
+
+        # Non-normality (Henrici) + transient gain on the archetype block.
+        henrici_k = _henrici(block, evals)
+        tgain_k = _transient_gain(block)
+
+        # Aggregate Fisher diagonal across live columns for drivers().
+        fisher_diag = np.asarray(F_sum.diagonal())
+        reasons = np.array(["no_variation"] * G, dtype=object)
+        reasons[fisher_diag > 0] = "ok"
+
+        # Driver table — reuse plot_drivers' expectations.
+        magnitude = np.abs(v_lead)
+        weight = v_lead.real
+        is_complex = bool(np.max(np.abs(v_lead.imag)) > _EPS_IM)
+        phase = np.where(magnitude > 0, np.angle(v_lead), np.nan) if is_complex else np.full(G, np.nan)
+        with np.errstate(invalid="ignore", divide="ignore"):
+            fisher_se = 1.0 / np.sqrt(fisher_diag)
+        fisher_se = np.where(np.isfinite(fisher_se), fisher_se, np.nan)
+        df = pd.DataFrame({
+            "gene": gene_names,
+            "weight": weight,
+            "magnitude": magnitude,
+            "phase": phase,
+            "fisher": fisher_diag,
+            "fisher_se": fisher_se,
+            "reason": reasons,
+        }).sort_values("magnitude", ascending=False).reset_index(drop=True)
+
+        mean_conf = float(np.nanmedian(fisher_diag[fisher_diag > 0])) if np.any(fisher_diag > 0) else float("nan")
+        sensitive = bool(np.isfinite(henrici_k) and henrici_k >= float(
+            uns.get("sensitive_threshold", np.inf) or np.inf,
+        ))
+        arch_out[int(ak)] = {
+            "behaviour": beh,
+            "eigenvalues": evals,
+            "eigvec": v_lead,
+            "henrici": float(henrici_k),
+            "transient_gain": float(tgain_k),
+            "n_cells": int(members.size),
+            "mean_confidence": mean_conf,
+            "sensitive": sensitive,
+            "fisher": fisher_diag,
+            "reason": reasons,
+            "drivers": df,
+        }
+
+    uns["archetypes"] = arch_out
+    return None
+
+
+def _archetype_operators_stub_unused() -> None:
     raise NotImplementedError(
         "archetype_operators() needs scjdo2.archetypes semi-NMF adapter and "
         "the Fisher ledger. Scheduled with Phase B Step 8 and Phase C."

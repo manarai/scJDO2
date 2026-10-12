@@ -63,6 +63,10 @@ _SIDECAR_UNS_KEYS: tuple[str, ...] = (
     "op_tangent_rank",
     "op_eigvec_latent_lead",
     "op_eigvec_lifted",
+    "archetypes",                 # dict[int, dict] with complex arrays + DataFrames
+    "archetype_K_curve",          # list[tuple[int, float]]
+    "archetype_K_selected",       # int
+    "archetype_patterns_latent",  # (K, d, d) float
 )
 
 # obsm columns that h5ad can't write (complex dtype in particular).
@@ -320,6 +324,18 @@ def save(adata: AnnData, out_dir: str | Path) -> dict[str, Path]:
             vocab, codes = np.unique(arr, return_inverse=True)
             sidecar_payload["op_eig_reason_codes"] = codes.reshape(arr.shape).astype(np.int16)
             sidecar_payload["op_eig_reason_vocab"] = np.asarray(vocab.astype(str), dtype=object)
+        # Archetype dict + K-curve: dict-of-dicts with pandas DataFrames and
+        # complex arrays. Stored as pickled object arrays via npz.
+        if "archetypes" in scj and scj["archetypes"]:
+            sidecar_payload["archetypes_pkl"] = np.array([scj["archetypes"]], dtype=object)
+        if "archetype_K_curve" in scj and scj["archetype_K_curve"]:
+            sidecar_payload["archetype_K_curve"] = np.asarray(
+                scj["archetype_K_curve"], dtype=np.float64,
+            )
+        if "archetype_K_selected" in scj and scj["archetype_K_selected"] is not None:
+            sidecar_payload["archetype_K_selected"] = np.int32(scj["archetype_K_selected"])
+        if "archetype_patterns_latent" in scj and scj["archetype_patterns_latent"] is not None:
+            sidecar_payload["archetype_patterns_latent"] = np.asarray(scj["archetype_patterns_latent"])
 
         for k in _SIDECAR_UNS_KEYS:
             if k in scj:
@@ -404,4 +420,14 @@ def load(in_dir: str | Path) -> AnnData:
             scj["op_eig_reason"] = vocab[codes]
     if "op_eigvals" in payload:
         adata.obsm["op_eigvals"] = np.asarray(payload["op_eigvals"])
+    if "archetypes_pkl" in payload:
+        obj = np.asarray(payload["archetypes_pkl"], dtype=object).item()
+        scj["archetypes"] = obj
+    if "archetype_K_curve" in payload:
+        kc = np.asarray(payload["archetype_K_curve"])
+        scj["archetype_K_curve"] = [(int(k), float(e)) for k, e in kc]
+    if "archetype_K_selected" in payload:
+        scj["archetype_K_selected"] = int(np.asarray(payload["archetype_K_selected"]))
+    if "archetype_patterns_latent" in payload:
+        scj["archetype_patterns_latent"] = np.asarray(payload["archetype_patterns_latent"])
     return adata
