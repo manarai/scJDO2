@@ -7,6 +7,18 @@ mid-interval saddle control at
 from V2_PLAN.md.
 """
 
-from .synthetic_pitchfork import generate_pitchfork, ALPHA_CRIT, DEFAULT_WIDTH
+from .synthetic_pitchfork import (
+    ALPHA_CRIT,
+    DEFAULT_WIDTH,
+    analytic_jacobian,
+    generate_pitchfork,
+    generate_pitchfork_equilibrated,
+)
 
-__all__ = ["generate_pitchfork", "ALPHA_CRIT", "DEFAULT_WIDTH"]
+__all__ = [
+    "generate_pitchfork",
+    "generate_pitchfork_equilibrated",
+    "analytic_jacobian",
+    "ALPHA_CRIT",
+    "DEFAULT_WIDTH",
+]

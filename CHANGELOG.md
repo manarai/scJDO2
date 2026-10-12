@@ -5,6 +5,63 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Equilibrated pitchfork synthetic + four-row gate — oracle itself < 0.8
+
+New synthetic that mixes stationary SDE snapshots per α (``snapshot = mixture
+of stationary densities``), plus a four-row gate per user spec:
+
+- `scjdo2.data.generate_pitchfork_equilibrated(tau_crit, n_cells, n_alpha,
+  T_burn, T_sample, …)` — for each α on a grid spanning the three τ_crit
+  values, integrate the toggle SDE from random initial conditions in
+  ``[-init_box, +init_box]^2`` for ``T_burn`` time units at fixed α, then
+  sample one snapshot per trajectory from the ``T_sample`` window. Stores
+  ``obsm["X_true"]``, ``obsm["V_true"]`` (analytic drift), ``obsm["X_pca"]``,
+  ``obs["pseudotime"]``, ``obs["alpha"]``, and the gene loading + PCA
+  components under ``uns["pitchfork"]``.
+- `scjdo2.data.analytic_jacobian(z, α)` — closed-form 2D Jacobian for the
+  oracle row.
+- `scripts/equilibrated_gate.py` — oracle + DSM-equilibrated in one script;
+  pulls DSM-transient from the standing gate report; expects
+  ``benchmarks/phase_b_gate/equilibrated/v1_slicing.json`` for the v1 row.
+- `compare/run_v1_equilibrated_pitchfork.py` — v1 ``fit_drift(…, rep="X_pca",
+  windowing="kernel")`` on the equilibrated data; per-cell J = J_tensor at
+  nearest ``t_center``; same opspace, same gate; writes the v1 row JSON.
+- `tests/test_phase_b_pitchfork.py` — transient-α-ramp tests marked
+  ``xfail(strict=True)`` with the note: "snapshot data from a non-stationary
+  process does not carry basin structure".
+
+Oracle ceiling at τ_crit ∈ {0.1, 0.3, 0.5} (same classifier, same gate):
+
+| row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) |
+|---|---|---|---|---|---|---|
+| oracle | 0.1 | 0.16 | 0.06 | 0.72 | 0.79 | 0.04 |
+| oracle | 0.3 | 0.18 | 0.07 | 0.71 | 0.87 | 0.04 |
+| oracle | 0.5 | 0.13 | 0.07 | 0.74 | 0.88 | 0.05 |
+| dsm_equilibrated | 0.1 | 0.10 | 0.73 | nan | 0.00 | 1.00 |
+| dsm_equilibrated | 0.3 | 0.10 | 0.82 | nan | 0.00 | 1.00 |
+| dsm_equilibrated | 0.5 | 0.07 | 0.81 | nan | 0.00 | 1.00 |
+
+**The oracle itself does not reach 0.8.** Equilibrated SDE snapshots live
+overwhelmingly in basins (``frac(Re > 0) ≈ 0.04`` for the analytic J),
+so the gate's "cells near τ_crit should be fork" assumption fails at the
+oracle. Holder reaches ~0.7–0.9 but is capped because some cells near
+τ_crit remain in nearby basins (symmetric FP just below α_crit, or
+asymmetric branches at α just above). The gate as currently stated
+cannot be met on equilibrated data, not by any estimator.
+
+DSM-equilibrated at 5000 epochs is still catastrophic — same pathology
+as DSM-transient (loss plateaus at ~94, Jacobian uniformly positive,
+~100 % of cells labelled fork). The equilibration helps the ORACLE
+measurement (frac(Re>0) drops from 1.00 under autodiff on transient to
+0.04 under analytic on equilibrated, as expected) but not the DSM fit.
+
+v1 slicing on equilibrated: in flight.
+
+Phase C stays blocked. The decision point is now the GATE DEFINITION,
+not just the estimator: the pseudotime-τ-band labels are a poor match
+for the stationary distribution's physics. Options noted at the end of
+the report.
+
 ### Autodiff Jacobian + convergence audit — Phase B still blocked
 
 Per user direction: replace the kNN-ball ridge Jacobian with the exact

@@ -1,0 +1,314 @@
+{
+  "timestamp": "2026-10-12 04:29:12",
+  "args": {
+    "tau_crit": [
+      0.1,
+      0.3,
+      0.5
+    ],
+    "n_cells": 1200,
+    "n_alpha": 30,
+    "n_epochs": 5000,
+    "seed": 0,
+    "inject_velocity_prior": true,
+    "v1_json": null,
+    "verbose": true
+  },
+  "per_tau": [
+    {
+      "tau_crit": 0.1,
+      "n_cells": 1200,
+      "n_alpha": 30,
+      "rows": {
+        "oracle": {
+          "row": "oracle",
+          "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
+          "fork_pr": {
+            "tp": 7,
+            "fp": 36,
+            "fn": 113,
+            "precision": 0.16279069767441862,
+            "recall": 0.058333333333333334
+          },
+          "holder_pr": {
+            "tp": 696,
+            "fp": 269,
+            "fn": 184,
+            "precision": 0.7212435233160622,
+            "recall": 0.7909090909090909
+          },
+          "beh_counts": {
+            "damped_oscillator": 172,
+            "drift": 20,
+            "fork": 43,
+            "holder": 965
+          },
+          "lead_re": {
+            "frac_positive": 0.04083333333333333,
+            "frac_negative": 0.9591666666666666,
+            "median": -0.8697426555145907
+          }
+        },
+        "dsm_equilibrated": {
+          "fork_pr": {
+            "tp": 88,
+            "fp": 830,
+            "fn": 32,
+            "precision": 0.09586056644880174,
+            "recall": 0.7333333333333333
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 880,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 918,
+            "growing_oscillator": 282
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.87823286652565
+          },
+          "row": "dsm_equilibrated",
+          "fit_seconds": 102.74975612503476,
+          "inject_velocity_prior": true,
+          "n_epochs": 5000
+        }
+      }
+    },
+    {
+      "tau_crit": 0.3,
+      "n_cells": 1200,
+      "n_alpha": 30,
+      "rows": {
+        "oracle": {
+          "row": "oracle",
+          "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
+          "fork_pr": {
+            "tp": 8,
+            "fp": 36,
+            "fn": 112,
+            "precision": 0.18181818181818182,
+            "recall": 0.06666666666666667
+          },
+          "holder_pr": {
+            "tp": 727,
+            "fp": 302,
+            "fn": 113,
+            "precision": 0.706511175898931,
+            "recall": 0.8654761904761905
+          },
+          "beh_counts": {
+            "damped_oscillator": 110,
+            "drift": 17,
+            "fork": 44,
+            "holder": 1029
+          },
+          "lead_re": {
+            "frac_positive": 0.041666666666666664,
+            "frac_negative": 0.9583333333333334,
+            "median": -0.7825407446485897
+          }
+        },
+        "dsm_equilibrated": {
+          "fork_pr": {
+            "tp": 98,
+            "fp": 851,
+            "fn": 22,
+            "precision": 0.10326659641728135,
+            "recall": 0.8166666666666667
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 840,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 949,
+            "growing_oscillator": 251
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.8519085049629211
+          },
+          "row": "dsm_equilibrated",
+          "fit_seconds": 101.69246137491427,
+          "inject_velocity_prior": true,
+          "n_epochs": 5000
+        }
+      }
+    },
+    {
+      "tau_crit": 0.5,
+      "n_cells": 1200,
+      "n_alpha": 30,
+      "rows": {
+        "oracle": {
+          "row": "oracle",
+          "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
+          "fork_pr": {
+            "tp": 6,
+            "fp": 40,
+            "fn": 74,
+            "precision": 0.13043478260869565,
+            "recall": 0.075
+          },
+          "holder_pr": {
+            "tp": 776,
+            "fp": 268,
+            "fn": 104,
+            "precision": 0.7432950191570882,
+            "recall": 0.8818181818181818
+          },
+          "beh_counts": {
+            "damped_oscillator": 93,
+            "drift": 17,
+            "fork": 46,
+            "holder": 1044
+          },
+          "lead_re": {
+            "frac_positive": 0.04833333333333333,
+            "frac_negative": 0.9516666666666667,
+            "median": -0.7889652324474759
+          }
+        },
+        "dsm_equilibrated": {
+          "fork_pr": {
+            "tp": 65,
+            "fp": 878,
+            "fn": 15,
+            "precision": 0.0689289501590668,
+            "recall": 0.8125
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 880,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 943,
+            "growing_oscillator": 257
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.8348478078842163
+          },
+          "row": "dsm_equilibrated",
+          "fit_seconds": 103.07882774993777,
+          "inject_velocity_prior": true,
+          "n_epochs": 5000
+        }
+      }
+    }
+  ],
+  "dsm_transient_from_report": [
+    {
+      "row": "dsm_transient",
+      "tau_crit": 0.1,
+      "fork_pr": {
+        "tp": 94,
+        "fp": 1003,
+        "fn": 12,
+        "precision": 0.08568824065633546,
+        "recall": 0.8867924528301887
+      },
+      "holder_pr": {
+        "tp": 0,
+        "fp": 3,
+        "fn": 925,
+        "precision": 0.0,
+        "recall": 0.0
+      },
+      "beh_counts": {
+        "damped_oscillator": 5,
+        "drift": 23,
+        "fork": 1097,
+        "growing_oscillator": 72,
+        "holder": 3
+      },
+      "lead_re": {
+        "near_tau_median": 0.0187369454652071,
+        "far_from_tau_median": 0.041597574949264526,
+        "overall_median": 0.03533975966274738,
+        "overall_frac_positive": 0.985
+      },
+      "note": "snapshot from non-stationary \u03b1-ramp \u2014 see V2_PLAN R11"
+    },
+    {
+      "row": "dsm_transient",
+      "tau_crit": 0.3,
+      "fork_pr": {
+        "tp": 120,
+        "fp": 1026,
+        "fn": 1,
+        "precision": 0.10471204188481675,
+        "recall": 0.9917355371900827
+      },
+      "holder_pr": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 853,
+        "precision": NaN,
+        "recall": 0.0
+      },
+      "beh_counts": {
+        "fork": 1146,
+        "growing_oscillator": 54
+      },
+      "lead_re": {
+        "near_tau_median": 0.04667055979371071,
+        "far_from_tau_median": 0.08057762682437897,
+        "overall_median": 0.06398122012615204,
+        "overall_frac_positive": 1.0
+      },
+      "note": "snapshot from non-stationary \u03b1-ramp \u2014 see V2_PLAN R11"
+    },
+    {
+      "row": "dsm_transient",
+      "tau_crit": 0.5,
+      "fork_pr": {
+        "tp": 100,
+        "fp": 913,
+        "fn": 15,
+        "precision": 0.09871668311944719,
+        "recall": 0.8695652173913043
+      },
+      "holder_pr": {
+        "tp": 6,
+        "fp": 1,
+        "fn": 816,
+        "precision": 0.8571428571428571,
+        "recall": 0.0072992700729927005
+      },
+      "beh_counts": {
+        "damped_oscillator": 5,
+        "drift": 19,
+        "fork": 1013,
+        "growing_oscillator": 156,
+        "holder": 7
+      },
+      "lead_re": {
+        "near_tau_median": 0.02822280116379261,
+        "far_from_tau_median": 0.03680421970784664,
+        "overall_median": 0.0340944305062294,
+        "overall_frac_positive": 0.9833333333333333
+      },
+      "note": "snapshot from non-stationary \u03b1-ramp \u2014 see V2_PLAN R11"
+    }
+  ],
+  "v1_slicing_on_equilibrated": {
+    "row": "v1_slicing",
+    "status": "pending",
+    "note": "produce via compare/run_v1_equilibrated_pitchfork.py"
+  }
+}
