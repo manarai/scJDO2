@@ -1,6 +1,6 @@
 # Phase C gate — equilibrated pitchfork (gene-space J)
 
-Generated: 2026-10-12 11:05:24
+Generated: 2026-10-12 12:21:11
 
 Gate (spec §9):
   * holder P and R  ≥ 0.8 absolute
@@ -9,20 +9,38 @@ Gate (spec §9):
 
 Rows: `oracle` (analytic 2D J), `latent_dsm` (Phase B DSM-equilibrated for comparison), `gene_space_k0` (per-cell gene-space J, no smoothing), `gene_space_k30` (sparse Gaussian smoothing over the latent kNN).
 
+## d_latent selection (held-out NB NLL)
+
+The rate model's latent dimension is chosen per τ by sweeping ``d ∈ {candidates}`` and picking the ``d`` with the lowest held-out NB NLL (10 % cell split). The gate pipeline (drift + rate + gene-field + tangent) then runs at the selected ``d``.
+
+| τ_crit | d=2 | d=3 | d=5 | d=10 | d=20 | **d*** |
+|---|---|---|---|---|---|---|
+| 0.1 | 0.113 | 0.113 | 0.111 | 0.109 | 0.106 | **20** |
+| 0.3 | 0.206 | 0.206 | 0.205 | 0.203 | 0.197 | **20** |
+| 0.5 | 0.292 | 0.293 | 0.293 | 0.293 | 0.292 | **20** |
+
 | row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) | verdict | agree all / above-median-conf |
 |---|---|---|---|---|---|---|---|---|
 | oracle | 0.1 | 1.00 | 1.00 | 1.00 | 0.85 | 0.04 | **PASS** |
 | latent_dsm | 0.1 | 0.23 | 0.77 | 1.00 | 0.79 | 0.14 | **FAIL** |
-| gene_space_k0 | 0.1 | 0.03 | 0.60 | 0.86 | 0.02 | 0.89 | **FAIL** | 0.11 / 0.15 |
-| gene_space_k30 | 0.1 | 0.02 | 0.51 | 0.93 | 0.04 | 0.87 | **FAIL** | 0.13 / 0.17 |
+| gene_space_k0 | 0.1 | 0.03 | 0.02 | 0.95 | 0.86 | 0.04 | **FAIL** | 0.66 / 0.55 |
+| gene_space_k30 | 0.1 | 0.00 | 0.00 | 0.94 | 0.93 | 0.00 | **FAIL** | 0.71 / 0.60 |
 | oracle | 0.3 | 1.00 | 1.00 | 1.00 | 0.90 | 0.04 | **PASS** |
 | latent_dsm | 0.3 | 0.22 | 0.77 | 0.99 | 0.82 | 0.15 | **FAIL** |
-| gene_space_k0 | 0.3 | 0.04 | 0.68 | 0.97 | 0.07 | 0.76 | **FAIL** | 0.15 / 0.17 |
-| gene_space_k30 | 0.3 | 0.05 | 0.73 | 0.96 | 0.26 | 0.59 | **FAIL** | 0.30 / 0.32 |
+| gene_space_k0 | 0.3 | 0.03 | 0.02 | 0.95 | 0.90 | 0.03 | **FAIL** | 0.73 / 0.63 |
+| gene_space_k30 | 0.3 | nan | 0.00 | 0.95 | 0.97 | 0.00 | **FAIL** | 0.77 / 0.68 |
 | oracle | 0.5 | 1.00 | 1.00 | 1.00 | 0.92 | 0.05 | **PASS** |
 | latent_dsm | 0.5 | 0.19 | 0.54 | 0.99 | 0.80 | 0.13 | **FAIL** |
-| gene_space_k0 | 0.5 | 0.04 | 0.59 | 1.00 | 0.08 | 0.76 | **FAIL** | 0.15 / 0.18 |
-| gene_space_k30 | 0.5 | 0.04 | 0.67 | 0.97 | 0.22 | 0.67 | **FAIL** | 0.23 / 0.25 |
+| gene_space_k0 | 0.5 | 0.00 | 0.00 | 0.95 | 0.88 | 0.03 | **FAIL** | 0.69 / 0.59 |
+| gene_space_k30 | 0.5 | nan | 0.00 | 0.95 | 0.93 | 0.00 | **FAIL** | 0.73 / 0.65 |
+
+## Per-τ tangent (Jacobian-SVD w/ permutation-null truncation, q=0.5)
+
+| τ_crit | d* | r_c min/median/max | noise floor min/median/max |
+|---|---|---|---|
+| 0.1 | 20 | 1/2.0/3 | 1.94/2.30/2.76 |
+| 0.3 | 20 | 1/1.0/3 | 2.05/2.38/2.87 |
+| 0.5 | 20 | 1/2.0/3 | 2.11/2.49/2.90 |
 
 ## Reading
 
@@ -31,21 +49,33 @@ Rows: `oracle` (analytic 2D J), `latent_dsm` (Phase B DSM-equilibrated for compa
 * `gene_space_k30` applies sparse Gaussian smoothing over the latent kNN before classifying.
 * Agreement is reported as `all / above-median-op_confidence`. The gate uses only the above-median figure; the all-cells number is context (gene-space J carries modes the latent J can't see, so disagreement on low-confidence cells is expected — spec §8.9).
 
-## Finding — Option (c) Jacobian-SVD tangent (r_c = d) **underperforms** the earlier ball-covariance variant on this synthetic; the rank-ceiling observation still holds and now sits in V2_PLAN R14.
+## Finding — truncated Jacobian-SVD tangent + d-selection: **holder matches latent cleanly, fork does not** (ridge bias).
 
-What landed. `scjdo2.field.fit_jacobian_tangent_projectors` replaces the ball-covariance tangent (dropped). For each cell it computes ``U, Σ, V^T = svd(∇η(z_c))`` and keeps **all** d left singular directions as rows of ``P_c``, so ``r_c = d`` by construction. Fisher-mass stays a tie-breaker inside the kept subspace (unchanged from Option 1).
+Two fixes landed:
 
-Structural claim (V2_PLAN R14, confirmed). With a ``d``-dim decoder the gene-space J is a lift of the latent J: ``J_gene = ∇η · J_latent · (∇η)^+`` has rank at most ``d``, and its spectrum on ``image(∇η(z_c))`` equals the latent spectrum up to a similarity. The ceiling for `gene_space_*` on this synthetic is therefore `latent_dsm`'s row (R13's inherited fork P gap). Phase C can match Phase B here; it cannot exceed it.
+**(1) Truncated Jacobian-SVD tangent.** `scjdo2.field.fit_jacobian_tangent_projectors` builds the **Fisher-weighted** ``∇η(z_c) ∈ R^{G×d}``, SVDs it, and keeps the singular directions above a per-cell noise floor from a permutation null (shuffle the ``G·d`` entries of the weighted Jacobian ``n_perm=30`` times, threshold at the **median** of the max-sv distribution across shuffles — the expected top sv of a pure-noise direction under the NB-precision metric). ``r_c`` lands at 1–3 per cell (median 1–2 across τ) on the pitchfork; the structural rank 2 is picked up at cells near the fork, and attractor-deep cells drop to rank 1 as expected.
 
-Operational surprise. At ``r_c = d = 20`` on PCA(20) of the pitchfork, the gene-space row is **worse** than the earlier ball-covariance run at ``r_c ≈ 17``: holder R collapsed from 0.10–0.50 (ball, both k variants) to 0.02–0.26 (jacobian_svd), and ``frac(Re>0)`` climbed back to 0.6–0.9 (vs ball 0.3–0.8). The two tangent choices should produce the same subspace when ``∇η`` is full-rank d — which it is here — so the gap comes from WHAT the extra directions carry:
+**(2) d-latent by held-out NB NLL.** Each τ sweeps ``d ∈ {2, 3, 5, 10, 20}`` on ``X_pca[:, :d]`` with the rate model's own 10 % cell split. NB NLL **monotonically decreases** d=2→20 at every τ, so d*=20 at every τ (see curve above). The gate pipeline runs at d*=20.
 
-  * The pitchfork is intrinsically 2-D; its PCA(20) has 18 near-null modes. ``∇η`` learned on counts puts 18 small (but non-zero) singular values alongside the top 2.
-  * The per-gene weighted ridge from Step 5 is numerically weakest exactly along those small-σ directions — low Fisher mass, dominated by the ``λ·I`` regulariser, so ``J_c`` entries there are near-random.
-  * **No σ-threshold on the SVD** means the full d directions feed `np.linalg.eig(block)`. The random small-σ entries numerically dominate the leading Re of the ``(d, d)`` block and pull the behaviour classifier off-signal. The ball-covariance variant implicitly truncated at ``σ² > 1`` under Fisher normalisation (r_c ≈ 17), which happened to clip the worst noise directions.
+Result against R14's clean-match criterion:
 
-What this says. Option (c) as the user specified it (r_c = d, no σ-threshold) is the right *structural* lens — tangent is ``image(∇η)`` exactly — but on PCA(20) of a 2-D attractor it includes 18 near-null directions where the Phase C ridge fit is numerically dominated by its regulariser. A follow-up would either (i) lower the latent dim to the true intrinsic rank (d_latent = 2 or 3), (ii) add a σ-threshold (keep ``σ_j > rel·σ_1``), or (iii) use a proper hidden-driver synthetic where the extra ``d − 2`` directions are informative. All three are Phase D work; recorded in R14.
+* **Holder: cleanly matches latent**. gene-space P=0.94–0.95 (latent 0.99–1.00; |ΔP|≤0.06), R=0.86–0.97 (latent 0.79–0.82; ΔR +0.06…+0.15). Smoothing k=30 lifts R further. Holder **passes the absolute 0.8 gate** at every τ in both k=0 and k=30 — the first time Phase C hits an absolute acceptance criterion.
+* **frac(Re>0): matches oracle**. 0.00–0.04 at every τ, vs oracle 0.04–0.05 and the previous fixed-rank variant's 0.6–0.9. The lead-eigenvalue sign is right.
+* **Agreement above median op_confidence**: 0.55–0.68 (up from 0.15–0.32 pre-truncation). Not at the 0.95 tautology ceiling, but a 3× jump.
+* **Fork: does not match latent**. gene-space fork P/R = 0.00–0.03 at every τ; latent fork P/R = 0.19–0.23 / 0.54–0.77. The gap is 0.16–0.23 in P and 0.52–0.75 in R — **outside the 0.10 oracle gap**.
+
+Diagnosis for the fork gap. The per-gene weighted-ridge CV picks ``λ = 1.0`` (the current grid maximum) at every τ. Weighted MSE held-out drops monotonically with λ when the underlying η-signal is weak (equilibrated attractor → small ``Δη`` → predicting ``J_c ≈ 0`` is low-MSE). The ridge-shrunk ``J_c`` has its weak-saddle eigenvalue pulled toward 0 or below the behaviour tolerance ``tol = 0.1·std(lead_re)``, so cells the oracle identifies as fork (small positive ``λ``) flip to holder in the gene-space classifier. The latent J has no analogous shrinkage — it is the derivative of a non-penalised DSM drift field — so latent catches the small positives that gene-space ridges away.
+
+V2_PLAN R14 is **partially confirmed**: the structural ceiling (gene-space ≤ latent, up to a similarity on ``image(∇η)``) holds for holder but is undershot for fork because of Phase C's own ridge regularisation, not any rank/tangent artifact. The fork gap is not a Phase D problem; it is a Phase C CV-choice problem.
 
 ## Next actions
 
-* R14 note stands in V2_PLAN.md: gene-space J is a rank-d lift of latent J, so Phase C's ceiling on this synthetic is `latent_dsm`'s row. Deferred follow-ups: σ-threshold, intrinsic-rank PCA, or hidden-driver synthetic — all Phase D.
-* Figure layer (spec §3) still waits for a run where `holder` cells on the above-median-conf subset agree with the latent classifier; current agree-above max is 0.32 at τ=0.3 k=30. Panel C's leading-eigvec drivers are not meaningful below ~0.6 agreement.
+Fork-recovery candidates, in order of cost:
+
+  * **(A)** Replace the weighted-MSE ridge-λ CV with a likelihood-based one (NB NLL on predicted ``Δη`` on held-out neighbours) or an evidence-based estimator. The current MSE objective rewards shrinkage; a likelihood criterion penalises losing information in the lead eigvec.
+  * **(B)** Shrink the ridge grid to ``{1e-5, 1e-4, 1e-3, 1e-2, 1e-1}`` and keep weighted MSE. Pragmatic; may buy fork P/R without changing the ridge likelihood.
+  * **(C)** Score-based correction: scale the ``lead_re`` tolerance by the per-cell ridge shrinkage factor so weak-saddle cells with ``λ ≈ ε > 0`` still cross tol.
+
+Phase D hidden-driver synthetic should wait on resolving (A)/(B)/(C) — otherwise we're testing capacity against a classifier that cannot see weak saddles even on a clean lift.
+
+Figure layer (spec §3) still waits for fork agreement to track latent, since Panel C renders drivers of the leading eigvec and the fork mode is where the panel earns its keep.

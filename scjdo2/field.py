@@ -110,67 +110,106 @@ def smooth_jacobians(
 def fit_jacobian_tangent_projectors(
     z: np.ndarray,
     rate_model,
+    size_factor: Optional[np.ndarray] = None,
+    n_perm: int = 30,
+    quantile: float = 0.95,
     max_rank: Optional[int] = None,
+    seed: int = 0,
 ) -> dict:
-    """Per-cell η-tangent projector from the rate model's own Jacobian ∇η(z_c).
+    """Per-cell η-tangent projector from the Fisher-weighted decoder Jacobian,
+    with a permutation-null rank truncation.
 
-    The decoder ``η: R^d → R^G`` is differentiable; its Jacobian at cell
-    ``c`` is ``∂η/∂z|_{z_c} ∈ R^{G × d}``. The image of ``∇η(z_c)`` is the
-    η-tangent plane the decoder can actually move the cell along in gene
-    space. Its left singular vectors are the orthonormal basis of that
-    plane; by construction there are at most ``d`` of them with nonzero
-    singular values, so the tangent rank is **r_c = d exactly**.
+    For cell ``c`` the Fisher-weighted decoder Jacobian is::
 
-    The projector ``P_c`` is the ``d × G`` matrix of top-``d`` left
-    singular vectors (``U.T`` from the thin SVD of ``∇η(z_c)``). It is
-    tighter than the kNN-ball η-covariance tangent of the pre-fix: no
-    neighbour sampling, no SNR threshold, no residual-tangent slack from
-    the SiLU trunk's nonlinear fit sampled over the ball.
+        A_c  =  diag(sqrt( w_c ))  ·  ∇η(z_c)         (G × d)
 
-    Rationale (docs/opspace_figure_spec.md §9 fix (c)). On a ``d``-dim
-    decoder the gene-space J is a lift of the latent J: ``J_gene =
-    (∇η) · J_latent · (∇η)^+`` has rank at most ``d``, and its spectrum
-    on the η-tangent equals the latent spectrum up to a similarity. The
-    Jacobian-SVD tangent restricts eigendecomposition to that
-    ``d``-dim subspace exactly, so the gene-space classifier can MATCH
-    the latent one on this synthetic (it cannot exceed it — the extra
-    G - d ambient directions carry no decoder-visible dynamics).
+    where ``w_cg = μ_cg · θ_g / (μ_cg + θ_g)`` is the per-gene NB precision
+    at that cell. Under the NB precision metric, each entry of ``A_c`` has
+    unit noise variance when the direction is signal-free, so the singular
+    values of ``A_c`` live on the SNR scale.
 
-    Returns a dict with the same shape ``fit_tangent_projectors`` had,
-    for drop-in use by :mod:`scjdo2.fisher` and :func:`scjdo2.opspace.spectrum`:
-        * ``rank`` : ``(n,)`` int — all equal to ``r_c = min(d, max_rank, G)``.
-        * ``projector`` : list of ``(r_c, G)`` float64 arrays — the top-r
-          left singular directions of ``∇η(z_c)`` as rows.
-        * ``eigvals`` : list of ``(d,)`` singular-value squares (descending),
-          kept for diagnostics parity with the ball-covariance variant.
-        * ``method`` : ``"jacobian_svd"``.
+    Truncation (docs/opspace_figure_spec.md §9 fix (c), updated). For each
+    cell we build a **permutation null** by shuffling the ``G·d`` entries
+    of ``A_c`` ``n_perm`` times and recording the largest singular value
+    of each shuffle. The noise floor is the ``quantile`` (default 0.95)
+    of that null distribution; the kept rank is::
+
+        r_c  =  |{ j : σ_j(A_c)  >  floor_c }|   (clamped to [1, min(d, G, max_rank)])
+
+    The projector ``P_c`` is the ``r_c × G`` matrix whose rows are the
+    top-``r_c`` **left** singular vectors of ``A_c``.
+
+    The permutation null is the recommendation in the latest spec iteration;
+    it is scale-aware (uses the actual ``A_c`` entries) and does not require
+    an analytical Marchenko-Pastur edge. ``n_perm=30`` is a bias/variance
+    sweet spot and the per-cell cost is dominated by the main SVD anyway.
+
+    Rationale. ``image(∇η(z_c))`` is at most ``d``-dim, but on a decoder
+    trained on PCA(d) of an intrinsically-r-dim process (r ≪ d) only ``r``
+    of those directions carry decoder-visible signal above noise. The
+    remaining ``d - r`` are learned-in noise — Phase C's per-gene weighted
+    ridge is dominated by its regulariser there, which inflates the lead
+    eigenvalue of the ``(d, d)`` block. The permutation null picks exactly
+    the ``r`` significant singular directions, cell by cell, from the
+    model itself (no external rank input).
+
+    Returns a dict (shape-compatible with the previous version):
+        * ``rank`` : ``(n,)`` int — per-cell retained rank ``r_c`` (variable).
+        * ``projector`` : list of ``(r_c, G)`` float64 arrays — top-``r_c``
+          left singular directions of the Fisher-weighted ``∇η(z_c)`` as
+          rows.
+        * ``eigvals`` : list of ``(min(G, d),)`` singular-value squares
+          (descending) of ``A_c``.
+        * ``noise_floor`` : ``(n,)`` float — the per-cell σ threshold.
+        * ``method`` : ``"jacobian_svd_perm"``.
+        * ``n_perm``, ``quantile`` : config echo.
     """
     z = np.asarray(z, dtype=np.float64)
     n, d = z.shape
     g_eta = rate_model.grad_eta(z).astype(np.float64)          # (n, G, d)
+    w = rate_model.nb_weights(z, size_factor=size_factor).astype(np.float64)  # (n, G)
     G = g_eta.shape[1]
-    cap = int(max_rank) if max_rank is not None else G
-    r_c = max(1, min(d, cap, G))
+    cap = int(max_rank) if max_rank is not None else min(d, G)
+    cap = max(1, min(cap, min(d, G)))
+    rng = np.random.default_rng(int(seed))
 
-    rank_arr = np.full(n, r_c, dtype=np.int32)
+    rank_arr = np.ones(n, dtype=np.int32)
     projectors: list[np.ndarray] = []
     sv_list: list[np.ndarray] = []
+    thr_arr = np.zeros(n, dtype=np.float64)
     for c in range(n):
-        A = g_eta[c]                                           # (G, d)
+        A = (np.sqrt(np.clip(w[c], 0.0, None))[:, None] * g_eta[c])  # (G, d)
         try:
             U, S, _ = np.linalg.svd(A, full_matrices=False)    # U (G, d), S (d,)
         except np.linalg.LinAlgError:
-            projectors.append(np.eye(G)[:r_c])
+            projectors.append(np.eye(G)[:cap])
             sv_list.append(np.zeros(min(d, G)))
+            rank_arr[c] = cap
             continue
+        # Permutation null on the entries of A_c.
+        flat = A.ravel()
+        null_max = np.empty(int(n_perm), dtype=np.float64)
+        for p in range(int(n_perm)):
+            perm = rng.permutation(flat.size)
+            Ap = flat[perm].reshape(G, d)
+            Sp = np.linalg.svd(Ap, compute_uv=False)
+            null_max[p] = float(Sp[0])
+        thr = float(np.quantile(null_max, float(quantile)))
+        r_c = int(np.sum(S > thr))
+        r_c = max(1, min(r_c, cap))
         P_c = U[:, :r_c].T.astype(np.float64)                  # (r_c, G)
         projectors.append(P_c)
-        sv_list.append((S ** 2).astype(np.float64))            # σ² (descending)
+        sv_list.append((S ** 2).astype(np.float64))
+        rank_arr[c] = r_c
+        thr_arr[c] = thr
     return {
         "rank": rank_arr,
         "projector": projectors,
         "eigvals": sv_list,
-        "method": "jacobian_svd",
+        "noise_floor": thr_arr,
+        "method": "jacobian_svd_perm",
+        "n_perm": int(n_perm),
+        "quantile": float(quantile),
     }
 
 

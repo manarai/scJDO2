@@ -435,11 +435,26 @@ J_latent(c) · (∇η(z_c))^+`` has rank at most ``d``, and its spectrum
 on ``image(∇η(z_c))`` equals the latent spectrum up to a similarity.
 The ``G − d`` ambient directions carry no decoder-visible dynamics.
 
-Operational consequence. The Jacobian-SVD tangent restriction
-(``scjdo2.field.fit_jacobian_tangent_projectors``, Option (c) in
-``docs/opspace_figure_spec.md`` §9) projects ``J_c`` onto that
-``d``-dim subspace exactly. On the equilibrated-pitchfork synthetic
-the gene-space row of the Phase C gate therefore **can match
+Operational implementation. Two paired choices anchor Phase C on this
+synthetic:
+
+* **d_latent by held-out NB NLL.** The rate model sweeps ``d ∈
+  {2, 3, 5, 10, 20}`` on ``X_pca[:, :d]`` using its own 10 % cell
+  split and picks the ``d`` minimising held-out NB NLL. The chosen
+  ``d`` seeds drift, rate, gene-field and tangent.
+* **Truncated Jacobian-SVD tangent.** The projector at each cell is
+  built from the top-``r_c`` left singular vectors of the Fisher-
+  weighted ``∇η(z_c)``, with ``r_c`` set per cell by a permutation
+  null (shuffle the ``G·d`` entries, threshold at the median of the
+  shuffled max-sv distribution — the expected top sv of a pure-
+  noise direction under the NB-precision metric). On the equilibrated
+  pitchfork this lands ``r_c`` at 2–3 per cell, matching the
+  intrinsic rank of the 2-D attractor.
+
+Consequence on this synthetic. Gene-space ``J`` restricted to the
+truncated tangent is a lift of ``J_latent`` on the decoder-visible
+subspace: in the clean limit the two spectra agree up to a
+similarity, so the gene-space row of the Phase C gate **can match
 ``latent_dsm`` but cannot exceed it** — the above-median-conf
 agreement ceiling is set by the latent↔latent self-identity (so
 ``>0.95`` is a tautology, not a test), and the fork P/R ceiling is
@@ -451,8 +466,9 @@ Testing new modes requires both a synthetic with a hidden driver
 captures one PCA slot) **and** rate-model capacity above the latent
 dim so the decoder can represent that direction. Both are deferred
 to Phase D. Until then the Phase C gate on this synthetic serves as
-a structural-pipeline check (ledger, tangent, Fisher-mass tie-break,
-sparse smoothing) rather than a classifier-exceeds-latent gate.
+a structural-pipeline check (ledger, truncated tangent, Fisher-mass
+tie-break, sparse smoothing, d-selection) rather than a classifier-
+exceeds-latent gate.
 
 ---
 

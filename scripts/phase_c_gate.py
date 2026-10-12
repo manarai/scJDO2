@@ -43,7 +43,7 @@ import argparse
 import json
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Optional, Sequence
 
 import numpy as np
 from anndata import AnnData
@@ -118,6 +118,38 @@ def _agreement(a: np.ndarray, b: np.ndarray, mask: Optional[np.ndarray] = None) 
 
 
 # ------------------------------------------------- rows per τ_crit
+def _select_d_latent(
+    counts: np.ndarray,
+    X_pca_full: np.ndarray,
+    candidates: Sequence[int],
+    n_epochs: int,
+    seed: int,
+    verbose: bool = False,
+) -> tuple[int, list[tuple[int, float]]]:
+    """Fit the NB rate model at each candidate ``d`` on ``X_pca[:, :d]``;
+    pick the ``d`` with the lowest held-out NB NLL. Returns (d*, curve).
+    """
+    curve: list[tuple[int, float]] = []
+    d_max = X_pca_full.shape[1]
+    for d in candidates:
+        d = int(d)
+        if d < 1 or d > d_max:
+            curve.append((d, float("inf")))
+            continue
+        rm = GeneRateModel(RatesConfig(
+            hidden=(128, 128), n_epochs=n_epochs, lr=1e-3,
+            batch_size=256, held_out_frac=0.10, patience=30,
+            seed=seed,
+        ))
+        rm.fit(counts, X_pca_full[:, :d], verbose=False)
+        curve.append((d, float(rm.best_val_nll)))
+        if verbose:
+            print(f"    d={d:2d}  held-out NB NLL = {rm.best_val_nll:.4f}")
+    valid = [(d, s) for d, s in curve if np.isfinite(s)]
+    d_star = int(min(valid, key=lambda t: t[1])[0]) if valid else int(candidates[0])
+    return d_star, curve
+
+
 def run_tau(
     tau_crit: float,
     n_cells: int,
@@ -130,6 +162,9 @@ def run_tau(
     cv_sample_cells: int,
     seed: int,
     verbose: bool,
+    d_candidates: Sequence[int] = (2, 3, 5, 10, 20),
+    d_latent: Optional[int] = None,
+    d_select_epochs: int = 200,
 ) -> dict[str, Any]:
     print(f"\n=== τ_crit = {tau_crit} ===")
     adata = generate_pitchfork_equilibrated(
@@ -145,6 +180,23 @@ def run_tau(
 
     true_fork, true_holder, analytic_lead_re, tol = _dynamic_labels(adata)
     print(f"  oracle tol={tol:.4f}  n_fork={int(true_fork.sum())}  n_holder={int(true_holder.sum())}")
+
+    # --- d-latent selection by held-out NB NLL on sliced X_pca.
+    X_pca_full = np.asarray(adata.obsm["X_pca"], dtype=np.float32)
+    counts_all = np.asarray(adata.X, dtype=np.float32)
+    if d_latent is None:
+        print(f"  [d-select] held-out NB NLL over d ∈ {list(d_candidates)}")
+        d_star, d_curve = _select_d_latent(
+            counts_all, X_pca_full, d_candidates,
+            n_epochs=d_select_epochs, seed=seed, verbose=True,
+        )
+        print(f"    picked d_latent = {d_star}")
+    else:
+        d_star = int(d_latent)
+        d_curve = [(d_star, float("nan"))]
+        print(f"  [d-select] skipped (d_latent={d_star} supplied)")
+    # Slice X_pca to d_star in place; drift + rate + gene-field all use this.
+    adata.obsm["X_pca"] = X_pca_full[:, :d_star]
 
     # --- Row: oracle (analytic 2D J on X_true, α)
     print("  [oracle] analytic 2D J")
@@ -213,13 +265,17 @@ def run_tau(
     t_genef = time.monotonic() - t0
     tangent = fit_jacobian_tangent_projectors(
         np.asarray(adata.obsm["X_pca"]), rm,
+        n_perm=30, quantile=0.5, seed=seed,
     )
     ledger = fisher_compute(gs, tangent=tangent)
     rank_arr = np.asarray(tangent["rank"])
+    thr_arr = np.asarray(tangent["noise_floor"])
     print(f"    [{t_genef:.1f}s] ridge λ={gs['ridge_lambda']}  "
           f"mean L_c={np.mean([lc.size for lc in gs['live_cols']]):.1f}  "
-          f"tangent r_c (jacobian_svd) = {int(rank_arr[0])} "
-          f"(d_latent={np.asarray(adata.obsm['X_pca']).shape[1]})")
+          f"tangent r_c (jacobian_svd_perm q=0.5) "
+          f"min/median/max = {int(rank_arr.min())}/"
+          f"{int(np.median(rank_arr))}/{int(rank_arr.max())} "
+          f"(d_latent={d_star})")
 
     # Save latent J so we can toggle rows cleanly
     latent_J = np.asarray(adata.uns["scjdo2"]["J"])
@@ -279,6 +335,11 @@ def run_tau(
         "n_cells": int(adata.n_obs),
         "n_alpha": int(n_alpha),
         "tol": tol,
+        "d_latent": {
+            "selected": int(d_star),
+            "curve": [{"d": int(d), "nll": float(s)} for d, s in d_curve],
+            "candidates": [int(x) for x in d_candidates],
+        },
         "rates": {
             "held_out_nll": float(rm.best_val_nll),
             "fit_seconds": float(t_rates),
@@ -291,6 +352,11 @@ def run_tau(
                 "min": int(rank_arr.min()),
                 "median": float(np.median(rank_arr)),
                 "max": int(rank_arr.max()),
+            },
+            "tangent_noise_floor": {
+                "min": float(thr_arr.min()),
+                "median": float(np.median(thr_arr)),
+                "max": float(thr_arr.max()),
             },
         },
         "rows": {
@@ -374,6 +440,30 @@ def _write_report(per_tau: list[dict[str, Any]], args_dict: dict, out_dir: Path)
         "comparison), `gene_space_k0` (per-cell gene-space J, no smoothing), "
         f"`gene_space_k{smooth_k}` (sparse Gaussian smoothing over the latent kNN).",
         "",
+        "## d_latent selection (held-out NB NLL)",
+        "",
+        "The rate model's latent dimension is chosen per τ by sweeping ``d ∈ "
+        "{candidates}`` and picking the ``d`` with the lowest held-out NB NLL "
+        "(10 % cell split). The gate pipeline (drift + rate + gene-field + "
+        "tangent) then runs at the selected ``d``.",
+        "",
+        "| τ_crit | " + " | ".join(f"d={d}" for d in per_tau[0].get("d_latent", {}).get("candidates", [])) + " | **d*** |",
+        "|---|" + "|".join(["---"] * (len(per_tau[0].get("d_latent", {}).get("candidates", [])) + 1)) + "|",
+    ]
+    cands = per_tau[0].get("d_latent", {}).get("candidates", [])
+    for row in per_tau:
+        tau = row["tau_crit"]
+        dsel = row.get("d_latent", {})
+        curve = {c["d"]: c["nll"] for c in dsel.get("curve", [])}
+        cells = " | ".join(
+            (f"{curve[d]:.3f}" if (d in curve and np.isfinite(curve[d])) else "nan")
+            for d in cands
+        )
+        d_star = dsel.get("selected", "?")
+        lines.append(f"| {tau} | {cells} | **{d_star}** |")
+
+    lines += [
+        "",
         ("| row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) | verdict "
          "| agree all / above-median-conf |"),
         ("|---|---|---|---|---|---|---|---|---|"),
@@ -387,6 +477,27 @@ def _write_report(per_tau: list[dict[str, Any]], args_dict: dict, out_dir: Path)
         sm = row["rows"].get("gene_space_k_smoothed")
         if sm is not None:
             lines.append(_mdrow(f"gene_space_k{smooth_k}", tau, sm, orc))
+
+    # Per-τ tangent summary (r_c and noise floor)
+    lines.append("")
+    lines.append("## Per-τ tangent (Jacobian-SVD w/ permutation-null truncation, q=0.5)")
+    lines.append("")
+    lines.append("| τ_crit | d* | r_c min/median/max | noise floor min/median/max |")
+    lines.append("|---|---|---|---|")
+    for row in per_tau:
+        tau = row["tau_crit"]
+        gf = row.get("gene_field", {})
+        tr = gf.get("tangent_rank", {})
+        tnf = gf.get("tangent_noise_floor", {})
+        dstar = row.get("d_latent", {}).get("selected", "?")
+        lines.append(
+            f"| {tau} | {dstar} | "
+            f"{tr.get('min','?')}/{tr.get('median','?')}/{tr.get('max','?')} | "
+            f"{tnf.get('min','?'):.2f}/{tnf.get('median','?'):.2f}/{tnf.get('max','?'):.2f} |"
+            if isinstance(tnf.get("min"), (int, float)) else
+            f"| {tau} | {dstar} | "
+            f"{tr.get('min','?')}/{tr.get('median','?')}/{tr.get('max','?')} | - |"
+        )
     lines.extend([
         "",
         "## Reading",
@@ -405,74 +516,95 @@ def _write_report(per_tau: list[dict[str, Any]], args_dict: dict, out_dir: Path)
         "context (gene-space J carries modes the latent J can't see, so "
         "disagreement on low-confidence cells is expected — spec §8.9).",
         "",
-        "## Finding — Option (c) Jacobian-SVD tangent (r_c = d) "
-        "**underperforms** the earlier ball-covariance variant on this "
-        "synthetic; the rank-ceiling observation still holds and now "
-        "sits in V2_PLAN R14.",
+        "## Finding — truncated Jacobian-SVD tangent + d-selection: "
+        "**holder matches latent cleanly, fork does not** (ridge bias).",
         "",
-        "What landed. "
-        "`scjdo2.field.fit_jacobian_tangent_projectors` replaces the "
-        "ball-covariance tangent (dropped). For each cell it computes "
-        "``U, Σ, V^T = svd(∇η(z_c))`` and keeps **all** d left singular "
-        "directions as rows of ``P_c``, so ``r_c = d`` by construction. "
-        "Fisher-mass stays a tie-breaker inside the kept subspace "
-        "(unchanged from Option 1).",
+        "Two fixes landed:",
         "",
-        "Structural claim (V2_PLAN R14, confirmed). With a ``d``-dim "
-        "decoder the gene-space J is a lift of the latent J: ``J_gene "
-        "= ∇η · J_latent · (∇η)^+`` has rank at most ``d``, and its "
-        "spectrum on ``image(∇η(z_c))`` equals the latent spectrum up "
-        "to a similarity. The ceiling for `gene_space_*` on this "
-        "synthetic is therefore `latent_dsm`'s row (R13's inherited "
-        "fork P gap). Phase C can match Phase B here; it cannot exceed "
-        "it.",
+        "**(1) Truncated Jacobian-SVD tangent.** "
+        "`scjdo2.field.fit_jacobian_tangent_projectors` builds the "
+        "**Fisher-weighted** ``∇η(z_c) ∈ R^{G×d}``, SVDs it, and keeps "
+        "the singular directions above a per-cell noise floor from a "
+        "permutation null (shuffle the ``G·d`` entries of the weighted "
+        "Jacobian ``n_perm=30`` times, threshold at the **median** of "
+        "the max-sv distribution across shuffles — the expected top "
+        "sv of a pure-noise direction under the NB-precision metric). "
+        "``r_c`` lands at 1–3 per cell (median 1–2 across τ) on the "
+        "pitchfork; the structural rank 2 is picked up at cells near "
+        "the fork, and attractor-deep cells drop to rank 1 as "
+        "expected.",
         "",
-        "Operational surprise. At ``r_c = d = 20`` on PCA(20) of the "
-        "pitchfork, the gene-space row is **worse** than the earlier "
-        "ball-covariance run at ``r_c ≈ 17``: holder R collapsed from "
-        "0.10–0.50 (ball, both k variants) to 0.02–0.26 (jacobian_svd), "
-        "and ``frac(Re>0)`` climbed back to 0.6–0.9 (vs ball 0.3–0.8). "
-        "The two tangent choices should produce the same subspace "
-        "when ``∇η`` is full-rank d — which it is here — so the gap "
-        "comes from WHAT the extra directions carry:",
+        "**(2) d-latent by held-out NB NLL.** Each τ sweeps "
+        "``d ∈ {2, 3, 5, 10, 20}`` on ``X_pca[:, :d]`` with the rate "
+        "model's own 10 % cell split. NB NLL **monotonically "
+        "decreases** d=2→20 at every τ, so d*=20 at every τ (see "
+        "curve above). The gate pipeline runs at d*=20.",
         "",
-        "  * The pitchfork is intrinsically 2-D; its PCA(20) has 18 "
-        "near-null modes. ``∇η`` learned on counts puts 18 small (but "
-        "non-zero) singular values alongside the top 2.",
-        "  * The per-gene weighted ridge from Step 5 is numerically "
-        "weakest exactly along those small-σ directions — low Fisher "
-        "mass, dominated by the ``λ·I`` regulariser, so ``J_c`` entries "
-        "there are near-random.",
-        "  * **No σ-threshold on the SVD** means the full d directions "
-        "feed `np.linalg.eig(block)`. The random small-σ entries "
-        "numerically dominate the leading Re of the ``(d, d)`` block "
-        "and pull the behaviour classifier off-signal. The ball-"
-        "covariance variant implicitly truncated at ``σ² > 1`` under "
-        "Fisher normalisation (r_c ≈ 17), which happened to clip the "
-        "worst noise directions.",
+        "Result against R14's clean-match criterion:",
         "",
-        "What this says. Option (c) as the user specified it (r_c = d, "
-        "no σ-threshold) is the right *structural* lens — tangent is "
-        "``image(∇η)`` exactly — but on PCA(20) of a 2-D attractor "
-        "it includes 18 near-null directions where the Phase C ridge "
-        "fit is numerically dominated by its regulariser. A follow-up "
-        "would either (i) lower the latent dim to the true intrinsic "
-        "rank (d_latent = 2 or 3), (ii) add a σ-threshold (keep "
-        "``σ_j > rel·σ_1``), or (iii) use a proper hidden-driver "
-        "synthetic where the extra ``d − 2`` directions are "
-        "informative. All three are Phase D work; recorded in R14.",
+        "* **Holder: cleanly matches latent**. gene-space P=0.94–0.95 "
+        "(latent 0.99–1.00; |ΔP|≤0.06), R=0.86–0.97 (latent 0.79–0.82; "
+        "ΔR +0.06…+0.15). Smoothing k=30 lifts R further. Holder "
+        "**passes the absolute 0.8 gate** at every τ in both k=0 and "
+        "k=30 — the first time Phase C hits an absolute acceptance "
+        "criterion.",
+        "* **frac(Re>0): matches oracle**. 0.00–0.04 at every τ, vs "
+        "oracle 0.04–0.05 and the previous fixed-rank variant's "
+        "0.6–0.9. The lead-eigenvalue sign is right.",
+        "* **Agreement above median op_confidence**: 0.55–0.68 (up "
+        "from 0.15–0.32 pre-truncation). Not at the 0.95 tautology "
+        "ceiling, but a 3× jump.",
+        "* **Fork: does not match latent**. gene-space fork P/R = "
+        "0.00–0.03 at every τ; latent fork P/R = 0.19–0.23 / 0.54–"
+        "0.77. The gap is 0.16–0.23 in P and 0.52–0.75 in R — "
+        "**outside the 0.10 oracle gap**.",
+        "",
+        "Diagnosis for the fork gap. The per-gene weighted-ridge CV "
+        "picks ``λ = 1.0`` (the current grid maximum) at every τ. "
+        "Weighted MSE held-out drops monotonically with λ when the "
+        "underlying η-signal is weak (equilibrated attractor → small "
+        "``Δη`` → predicting ``J_c ≈ 0`` is low-MSE). The "
+        "ridge-shrunk ``J_c`` has its weak-saddle eigenvalue pulled "
+        "toward 0 or below the behaviour tolerance ``tol = 0.1·"
+        "std(lead_re)``, so cells the oracle identifies as fork "
+        "(small positive ``λ``) flip to holder in the gene-space "
+        "classifier. The latent J has no analogous shrinkage — it is "
+        "the derivative of a non-penalised DSM drift field — so "
+        "latent catches the small positives that gene-space ridges "
+        "away.",
+        "",
+        "V2_PLAN R14 is **partially confirmed**: the structural "
+        "ceiling (gene-space ≤ latent, up to a similarity on "
+        "``image(∇η)``) holds for holder but is undershot for fork "
+        "because of Phase C's own ridge regularisation, not any "
+        "rank/tangent artifact. The fork gap is not a Phase D "
+        ""
+        "problem; it is a Phase C CV-choice problem.",
         "",
         "## Next actions",
         "",
-        "* R14 note stands in V2_PLAN.md: gene-space J is a rank-d lift "
-        "of latent J, so Phase C's ceiling on this synthetic is "
-        "`latent_dsm`'s row. Deferred follow-ups: σ-threshold, "
-        "intrinsic-rank PCA, or hidden-driver synthetic — all Phase D.",
-        "* Figure layer (spec §3) still waits for a run where "
-        "`holder` cells on the above-median-conf subset agree with the "
-        "latent classifier; current agree-above max is 0.32 at τ=0.3 "
-        "k=30. Panel C's leading-eigvec drivers are not meaningful "
-        "below ~0.6 agreement.",
+        "Fork-recovery candidates, in order of cost:",
+        "",
+        "  * **(A)** Replace the weighted-MSE ridge-λ CV with a "
+        "likelihood-based one (NB NLL on predicted ``Δη`` on held-"
+        "out neighbours) or an evidence-based estimator. The current "
+        "MSE objective rewards shrinkage; a likelihood criterion "
+        "penalises losing information in the lead eigvec.",
+        "  * **(B)** Shrink the ridge grid to ``{1e-5, 1e-4, 1e-3, "
+        "1e-2, 1e-1}`` and keep weighted MSE. Pragmatic; may buy "
+        "fork P/R without changing the ridge likelihood.",
+        "  * **(C)** Score-based correction: scale the ``lead_re`` "
+        "tolerance by the per-cell ridge shrinkage factor so weak-"
+        "saddle cells with ``λ ≈ ε > 0`` still cross tol.",
+        "",
+        "Phase D hidden-driver synthetic should wait on resolving "
+        "(A)/(B)/(C) — otherwise we're testing capacity against a "
+        "classifier that cannot see weak saddles even on a clean "
+        "lift.",
+        "",
+        "Figure layer (spec §3) still waits for fork agreement to "
+        "track latent, since Panel C renders drivers of the leading "
+        "eigvec and the fork mode is where the panel earns its keep.",
     ])
     (out_dir / "report.md").write_text("\n".join(lines) + "\n")
     print(f"\n[phase-c gate] wrote {out_dir / 'report.md'}")
@@ -495,6 +627,13 @@ def main() -> int:
                    help="post-hoc Gaussian smoothing k (0 to disable)")
     p.add_argument("--cv-sample-cells", type=int, default=30,
                    help="cells sampled per λ-CV fold (lower = faster, default 30)")
+    p.add_argument("--d-candidates", type=int, nargs="+",
+                   default=[2, 3, 5, 10, 20],
+                   help="candidate latent dims for held-out NB NLL selection")
+    p.add_argument("--d-latent", type=int, default=-1,
+                   help="override d-selection (negative = select by NB NLL)")
+    p.add_argument("--d-select-epochs", type=int, default=200,
+                   help="rate-model epochs per candidate during d-selection")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--verbose", action="store_true")
     args = p.parse_args()
@@ -510,6 +649,9 @@ def main() -> int:
             k=args.k, smooth_k=args.smooth_k,
             cv_sample_cells=args.cv_sample_cells,
             seed=args.seed, verbose=args.verbose,
+            d_candidates=tuple(args.d_candidates),
+            d_latent=(None if args.d_latent < 0 else int(args.d_latent)),
+            d_select_epochs=int(args.d_select_epochs),
         ))
 
     _write_report(per_tau, vars(args), OUT)
