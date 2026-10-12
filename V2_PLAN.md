@@ -32,10 +32,10 @@ or replaced); others are drop candidates.
 | **tl.drift** | `scjdo/tl/_drift.py` | `fit_drift`, `fit_drift_branches`, `get_instability_genes`, `branch_drift_analysis`, `peak_interior`. Train DriftField → per-cell/windowed Jacobians → semi-NMF/Koopman → instability genes. | 01 |
 | **tl.bridge** | `scjdo/tl/_bridge.py` | `fit_bridge`, `fit_bridge_branches`, `get_bridge_instability_genes`. | 03, 04 |
 | **tl.regulators** | `scjdo/tl/_regulators.py` | `infer_regulators`, `infer_regulators_branches`, `load_network`, `filter_regulators`. | 01, 04 |
-| **models.drift** | `scjdo/models/drift.py` | `DriftField(cfg, X_ref, V_ref)` — FiLM-conditioned score+residual MLP with optional kNN velocity prior; `.jacobian(x, t)` returns `(B, D, D)` autograd Jacobian. | 01, 05 |
+| **models.drift** | `scjdo/models/drift.py` | `DriftField(cfg, X_ref, V_ref)` — FiLM-conditioned score+residual MLP with optional kNN velocity prior; `.jacobian(x, t)` returns `(B, D, D)` autograd Jacobian. | 01 |
 | **models.schrodinger_bridge** | `scjdo/models/schrodinger_bridge.py` | `SchrodingerBridge(cfg)` — forward/backward neural ODE with Sinkhorn OT coupling. | 03, 04 |
 | **models.fourier_score_network** | `scjdo/models/fourier_score_network.py` | `MultiBandScoreNet` — multi-band score network over DFT bands. | 02 |
-| **models.(representation / hybrid_grn / scjdo_comm)** | `scjdo/models/*.py` | Latent-space, hybrid GRN, cell-communication models — manuscript / scOpAtlas side. | no |
+| **models.(representation / hybrid_grn / scjdo_comm)** | `scjdo/models/*.py` | Latent-space, hybrid GRN, cell-communication models — manuscript side. | no |
 | **archetypes.decompose** | `scjdo/archetypes/decompose.py` | `jacobian_modes`, `jacobian_modes_svd`, `_seminmf`, `_nnls_rows`, `_rescale`, `_tv_smoothed_W_update`. Semi-NMF with column-wise NNLS. | 01 (via `fit_drift`) |
 | **archetypes.koopman** | `scjdo/archetypes/koopman.py` | `koopman_modes`, `_matrix_geometry` (henrici, reactivity, transient_gain, eigvec_cond), `_split_complex_pairs`, EDMD. | optional in `fit_drift` |
 | **archetypes.windowing** | `scjdo/archetypes/windowing.py` | Adaptive Gaussian kernel windowing: `kernel_jacobian_tensor`, `knn_adaptive_h`, `score_bandwidth`, `select_bandwidth`, `build_temporal_operator`. S = R · C · L bandwidth selection. | 01 (via `fit_drift`) |
@@ -48,7 +48,7 @@ or replaced); others are drop candidates.
 | pl.regulators | `scjdo/pl/_regulators.py` | 6 regulator plots. | 01, 04 |
 | cli | `scjdo/cli/main.py` | `scjdo drift|bridge` CLI. | no (invoked from shell) |
 | pipeline | `scjdo/pipeline/*.py` | Standalone training scripts (hybrid GRN etc.). | no |
-| atlas | `scjdo/atlas/*.py` (10 files) | scOpAtlas regime classification. | 05 |
+| atlas | `scjdo/atlas/*.py` (10 files) | scOpAtlas regime classification. | no (out of v2 scope) |
 | fourier | `scjdo/fourier/*.py` | Fourier score diffusion. | 02 |
 | grn | `scjdo/grn/*.py` | Hybrid GRN inference. | no |
 | transport | `scjdo/transport/*.py` | Sinkhorn / spectral OT. | 03 |
@@ -58,9 +58,11 @@ or replaced); others are drop candidates.
 | validation | `scjdo/validation/*.py` | archetype_cosine_similarity, temporal_shuffle_null, prior_sensitivity_report. | no (used in reproducibility) |
 | utils / viz / analysis / data | small helpers | `data/synthetic.py` has `make_spiral`, `rna_velocity_field` only — **no pitchfork generator** (see R2). | partial |
 
-**Takeaway:** 7 of 27 subpackages are hit by the five examples: `pp`, `tl`
-(drift / bridge / regulators), `pl`, `models.drift`, `models.schrodinger_bridge`,
-`models.fourier_score_network`, `archetypes`, plus `atlas` for notebook 05.
+**Takeaway:** 7 of 27 subpackages are hit by the in-scope examples: `pp`,
+`tl` (drift / bridge / regulators), `pl`, `models.drift`,
+`models.schrodinger_bridge`, `models.fourier_score_network`, `archetypes`.
+scOpAtlas (notebook 05) is out of v2 scope — its regime classifier is
+replaced by v2's operator space.
 
 ---
 
@@ -228,7 +230,12 @@ Phase C).
 
 ---
 
-## 7. The five tutorial notebooks
+## 7. The four tutorial notebooks
+
+Notebook 05 (`05_scopatlas_complete_workflow.ipynb`) is **out of v2 scope**:
+its regime classifier is replaced by v2's operator space, and scOpAtlas as
+a track is not carried into this repo (no `scjdo.atlas` import, no
+baseline, no notebook 05 counterpart).
 
 | # | Notebook | Dataset | Key v1 calls | Primary outputs | v2 coverage |
 |---|---|---|---|---|---|
@@ -236,13 +243,13 @@ Phase C).
 | 02 | `02_paul15_fourier_tutorial.ipynb` | Paul15 | `prepare_trajectory`; Fourier track only (`scjdo.fourier.*`, `MultiBandScoreNet`, `SpectralDiffusionTrainer`). No `fit_drift`. | spectrum / training / real-vs-generated / band_genes PDFs | **Out of scope.** v2 does not implement Fourier diffusion. |
 | 03 | `03_schrodinger_bridge_tutorial.ipynb` | 2D synthetic source/target gaussians | `SchrodingerBridge`, `sinkhorn_divergence`, `compute_ot_plan`. No `fit_drift`. | 6 bridge PDFs | **Out of scope.** |
 | 04 | `04_paul15_schrodinger_tutorial.ipynb` | Paul15 | `prepare_trajectory` → `tl.fit_bridge` (source=bottom-20% pt, target=top-20%); forward/backward instability genes + regulators | 6-panel `bridge_summary.pdf`, 2× regulator sets | **Out of scope.** |
-| 05 | `05_scopatlas_complete_workflow.ipynb` | Paul15 (loader stub also accepts `adata_with_drift.h5ad`) | `scjdo.atlas.build_atlas` on a fitted DriftField | `clustering.pdf`, `celltype_regime_overlap.pdf`, instability table | **Partial.** v2 operator space + archetypes directly replace the atlas regime classifier. |
 
-**Comparison report consequence (brief §4):** only 01 and 05 produce full
-side-by-side comparisons. For 02, 03, 04 the report states "v2 does not
-implement this track; v2 operator field on the same dataset is at `<path>`,
-with the following properties …". The v1 outputs are still generated and
-saved as baselines so §4's runtime/memory table has all five rows.
+**Comparison report consequence (brief §4):** only 01 produces a full
+side-by-side comparison. For 02, 03, 04 the report states "v2 does not
+implement this track; v2 operator field on the same dataset is at
+`<path>`, with the following properties …". The v1 outputs are still
+generated and saved as baselines so §4's runtime/memory table has rows
+for each in-scope notebook.
 
 **Datasets locally available:**
 - Paul15 is `sc.datasets.paul15()` (scanpy cache; no local file required).

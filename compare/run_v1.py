@@ -47,50 +47,21 @@ from data import loaders  # type: ignore[import-not-found]
 
 
 def _run_fit_drift(adata, out: Path, seed: int, n_epochs: int, archetype_method: str,
-                   groupby: str, root: str) -> tuple[dict[str, Any], Any]:
-    """Tutorial 01 and 05: `prepare_trajectory` → `fit_drift` → summary figure.
-
-    Returns ``(config_fragment, drift_model)`` so the atlas path can reuse the
-    trained ``DriftField`` without a second training run.
-    """
+                   groupby: str, root: str) -> dict[str, Any]:
+    """Tutorial 01: `prepare_trajectory` → `fit_drift` → summary figure."""
     t0 = time.monotonic()
     sjd.pp.prepare_trajectory(adata, groupby=groupby, root=root)
-    model = sjd.tl.fit_drift(adata, n_epochs=n_epochs, archetype_method=archetype_method, seed=seed)
+    sjd.tl.fit_drift(adata, n_epochs=n_epochs, archetype_method=archetype_method, seed=seed)
     wall = time.monotonic() - t0
 
     sjd.pl.summary_figure(adata, save=str(out / "figures" / "summary.pdf"))
     adata.write_h5ad(out / "adata.h5ad")
-    return {"wall_time_s": wall}, model
-
-
-def _run_atlas(adata, model, out: Path) -> dict[str, Any]:
-    """Notebook 05: scOpAtlas on top of a fitted DriftField."""
-    import torch
-    from scjdo.atlas import StableOperatorAtlas
-
-    t0 = time.monotonic()
-    atlas = StableOperatorAtlas(
-        adata=adata,
-        drift_model=model,
-        use_rep="X_pca",
-        pseudotime_key="pseudotime",
-        device="cpu",
-    )
-    atlas.build(epsilon=0.1, threshold_unstable=0.1)
-    atlas_adata = atlas.to_anndata()
-    wall = time.monotonic() - t0
-
-    atlas_adata.write_h5ad(out / "atlas.h5ad")
-    torch.save({"state_dict": model.state_dict(), "cfg": model.cfg},
-               out / "drift_model.pt")
-    stats = atlas.get_regime_statistics() if hasattr(atlas, "get_regime_statistics") else {}
-    return {"atlas_wall_time_s": wall, "regime_statistics": stats}
+    return {"wall_time_s": wall}
 
 
 def _run_one(dataset: str, out: Path, seed: int, n_epochs: int, archetype_method: str) -> dict[str, Any]:
-    """Dispatch per workflow. Bridge/Fourier/atlas-only runs are skipped with a
-    note in Phase A — those tutorials do not share v1's `fit_drift` entry
-    point, and the comparison report will handle them as out-of-scope.
+    """Dispatch per workflow. Bridge/Fourier runs are skipped with a note —
+    those tutorials do not share v1's `fit_drift` entry point.
     """
     out.mkdir(parents=True, exist_ok=True)
     (out / "figures").mkdir(exist_ok=True)
@@ -107,23 +78,12 @@ def _run_one(dataset: str, out: Path, seed: int, n_epochs: int, archetype_method
 
     if workflow == "fit_drift":
         adata = loaders.load(dataset)
-        drift_cfg, _model = _run_fit_drift(
+        drift_cfg = _run_fit_drift(
             adata, out, seed=seed, n_epochs=n_epochs, archetype_method=archetype_method,
             groupby=loaders.groupby_for(dataset),  # type: ignore[arg-type]
             root=loaders.root_for(dataset),        # type: ignore[arg-type]
         )
         config.update(drift_cfg)
-    elif workflow == "atlas":
-        # Notebook 05: scOpAtlas on top of a fitted DriftField. Run fit_drift
-        # (same as workflow == "fit_drift") then build the atlas on top.
-        adata = loaders.load(dataset)
-        drift_cfg, model = _run_fit_drift(
-            adata, out, seed=seed, n_epochs=n_epochs, archetype_method=archetype_method,
-            groupby=loaders.groupby_for(dataset),  # type: ignore[arg-type]
-            root=loaders.root_for(dataset),        # type: ignore[arg-type]
-        )
-        config.update(drift_cfg)
-        config.update(_run_atlas(adata, model, out))
     elif workflow in ("fit_bridge", "fourier"):
         config["skipped"] = True
         config["note"] = (
@@ -152,7 +112,7 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--dataset", required=True,
                    choices=["paul15", "fourier_paul15", "sb_synthetic",
-                            "paul15_bridge", "scopatlas"])
+                            "paul15_bridge"])
     p.add_argument("--out", required=True, type=Path)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--n-epochs", type=int, default=5000)

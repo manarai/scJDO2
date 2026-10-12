@@ -11,7 +11,6 @@ Supported dataset keys and the v1 notebooks they correspond to:
     fourier_paul15  — examples/02_paul15_fourier_tutorial.ipynb
     sb_synthetic    — examples/03_schrodinger_bridge_tutorial.ipynb
     paul15_bridge   — examples/04_paul15_schrodinger_tutorial.ipynb
-    scopatlas       — examples/05_scopatlas_complete_workflow.ipynb
 
 Phase A audit will confirm these mappings; adjust in Phase A if the audit
 finds different notebook↔dataset relationships.

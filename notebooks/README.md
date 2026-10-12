@@ -9,7 +9,6 @@ seeds as the v1 side. Keys match ``data/loaders.py``:
 | `02_paul15_fourier.ipynb`          | `fourier_paul15`   |
 | `03_sb_synthetic.ipynb`            | `sb_synthetic`     |
 | `04_paul15_bridge.ipynb`           | `paul15_bridge`    |
-| `05_scopatlas.ipynb`               | `scopatlas`        |
 
 Each notebook, when run, must write its outputs under
 `../benchmarks/v2/<dataset>/` so `compare/v1_vs_v2.py` can read them next to

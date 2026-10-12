@@ -1,10 +1,9 @@
 """Dataset loaders for the v1 tutorials, matched to the audit (V2_PLAN §7).
 
 Keys:
-    paul15          — ``sc.datasets.paul15()``, used by notebooks 01, 02, 04, 05.
+    paul15          — ``sc.datasets.paul15()``, used by notebooks 01, 02, 04.
     fourier_paul15  — alias for paul15 (notebook 02 is Fourier-only on Paul15).
     paul15_bridge   — alias for paul15 (notebook 04 is bridge on Paul15).
-    scopatlas       — Paul15 again (notebook 05 loader stub falls back to it).
     sb_synthetic    — generated in-notebook; see :func:`load_sb_synthetic`.
 
 v1 is not needed to call ``load(key)`` — scanpy is enough.
@@ -26,7 +25,6 @@ _GROUPBY: dict[str, str | None] = {
     "paul15": "paul15_clusters",
     "fourier_paul15": "paul15_clusters",
     "paul15_bridge": "paul15_clusters",
-    "scopatlas": "paul15_clusters",
     "sb_synthetic": None,
 }
 
@@ -34,7 +32,6 @@ _ROOT: dict[str, str | None] = {
     "paul15": "7MEP",
     "fourier_paul15": "7MEP",
     "paul15_bridge": "7MEP",
-    "scopatlas": "7MEP",
     "sb_synthetic": None,
 }
 
@@ -62,7 +59,6 @@ _LOADERS: dict[str, Callable[[], AnnData]] = {
     "paul15": _load_paul15,
     "fourier_paul15": _load_paul15,
     "paul15_bridge": _load_paul15,
-    "scopatlas": _load_paul15,
     "sb_synthetic": _load_sb_synthetic,
 }
 
@@ -72,7 +68,6 @@ WORKFLOW: dict[str, str] = {
     "paul15": "fit_drift",
     "fourier_paul15": "fourier",
     "paul15_bridge": "fit_bridge",
-    "scopatlas": "atlas",
     "sb_synthetic": "fit_bridge",
 }
 

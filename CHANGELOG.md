@@ -5,6 +5,18 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Scope cleanup — scOpAtlas removed
+
+- scOpAtlas (notebook 05) is out of v2 scope. Removed `_run_atlas` and the
+  `atlas` workflow dispatch from `compare/run_v1.py`; dropped the
+  `scopatlas` key from `data/loaders.py` and `data/__init__.py`; removed
+  the notebook-05 row from `notebooks/README.md` and the `§7` tutorial
+  table in `V2_PLAN.md`; marked the `atlas` row in V2_PLAN §1 as "no (out
+  of v2 scope)". The int64-safe JSON encoder in `compare/run_v1.py` stays
+  (general safety nit for Paul15 config too). The on-disk v1 baseline at
+  `benchmarks/v1_baseline/scopatlas/` was never git-tracked and has been
+  moved to `../scjdo2-attic/scopatlas-v1-baseline/`.
+
 ### Phase B — Operator-space analysis + plotting API (latent-space, in-memory)
 
 - `scjdo2/pipeline.py` — single entry point `fit_latent_field(adata, …)` that
