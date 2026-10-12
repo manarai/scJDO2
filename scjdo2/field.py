@@ -16,8 +16,8 @@ Cells with fewer than ``k`` neighbours within the configured radius are
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Literal, Optional
+from dataclasses import dataclass, field as _dc_field
+from typing import Any, Literal, Optional, Sequence
 
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -311,3 +311,227 @@ class JacobianField:
                     continue
                 out[row, p] = float(np.max(evals.real))
         return out
+
+
+# ============================================================ Step 5 gene-space
+#
+# Per-cell gene-space Jacobian by per-gene weighted ridge regression in
+# η-coordinates (docs/opspace_figure_spec.md §8.3).
+#
+# For cell c with k latent neighbours ``N_k(c)`` and η-coord drift
+# ``dη/dt = ∇_z η(z_c) · f(z_c)`` from the NB rate model::
+#
+#     Δη_i = η_i - η_c                                             (k × G)
+#     y_i  = (dη/dt)_i - (dη/dt)_c                                 (k × G)
+#     w_ig = μ_ig · θ_g / (μ_ig + θ_g)      (NB precision of η)    (k × G)
+#     live_c = { g : var_i(Δη_ig) > tol }                          (⊆ 1..G)
+#     X_c  = Δη[:, live_c]                                         (k × L)
+#     For each gene row g:
+#         a_g = (X^T diag(w[:,g]) X + λ I_L)^{-1} X^T diag(w[:,g]) y[:,g]
+#     J_c = CSR with rows span 1..G, columns live_c, entries a_g[j].
+#
+# Ridge λ is chosen globally by 5-fold neighbour cross-validation using
+# weighted MSE on held-out neighbours. (Weighted MSE is the local Gaussian
+# approximation of the NB NLL — the Fisher-weighted ridge IS the
+# second-order NB approximation of the local likelihood, which is why the
+# user's spec says "ridge strength chosen by held-out likelihood"; here
+# we use its Gaussian approximant.) See §8.3 and §8.1 of the spec.
+#
+# Storage per spec §1 and §8.3:
+#     J_c as CSR, rows span all G, columns restricted to live_c with a
+#     live-column index array per cell. Latent J moves to adata.obsm.
+
+
+@dataclass
+class GeneFieldConfig:
+    k: int = 30
+    variation_threshold: float = 1e-6     # η-variance threshold for live genes
+    ridge_lambdas: tuple = (1e-3, 1e-2, 1e-1, 1.0)
+    cv_folds: int = 5
+    cv_sample_cells: int = 200            # sample for λ selection; -1 = all
+    seed: int = 0
+
+
+def fit_gene_space_jacobians(
+    z: np.ndarray,                        # (n, d) latent positions
+    f: np.ndarray,                        # (n, d) latent drift f(z)
+    rate_model,                           # scjdo2.rates.GeneRateModel (fitted)
+    size_factor: Optional[np.ndarray] = None,
+    config: Optional[GeneFieldConfig] = None,
+    verbose: bool = False,
+) -> dict[str, Any]:
+    """Fit per-cell gene-space Jacobians by per-gene weighted ridge in η.
+
+    Parameters
+    ----------
+    z, f
+        Latent positions and drift velocities, both ``(n, d)``.
+    rate_model
+        Fitted :class:`scjdo2.rates.GeneRateModel`. Supplies ``η(z)``,
+        ``dη/dt`` by autodiff, and NB precision weights ``w_cg``.
+    size_factor
+        Per-cell library-size factor; defaults to the one the rate model
+        was fit on (``s_c = lib / median_lib``). Passed through to
+        ``rate_model.nb_weights`` so weights are in the fitted units.
+
+    Returns
+    -------
+    dict with keys
+        * ``J`` : list of ``(G, G)`` ``csr_matrix``, one per cell.
+          Columns are restricted to live genes; dense Gs stay sparse.
+        * ``live_cols`` : list of ``(L_c,)`` int arrays — the live-gene
+          index per cell (one array per cell).
+        * ``reason`` : ``(n,)`` int8, one of ``REASON_OK``,
+          ``REASON_NO_VARIATION``, ``REASON_NOT_IN_BALL``.
+        * ``ridge_lambda`` : the single λ chosen by held-out MSE.
+        * ``lambda_scores`` : dict ``{λ: mean_weighted_mse}`` from CV.
+        * ``k``, ``variation_threshold`` : config echo.
+
+    Notes
+    -----
+    Memory. The per-cell batched solve builds a ``(G, L_c, L_c)`` normal-
+    equation stack; for ``G=2000`` and ``L_c=500`` that is 4 GB per cell.
+    The ``variation_threshold`` + the η-neighbourhood both bound ``L_c``
+    much lower than ``G`` in practice (on the pitchfork synthetic
+    ``G=200``, ``L_c~50``). Real-data runs with large ``G`` must enable
+    column chunking (future knob).
+    """
+    cfg = config or GeneFieldConfig()
+    z = np.asarray(z, dtype=np.float64)
+    f = np.asarray(f, dtype=np.float64)
+    n, d = z.shape
+    if f.shape != z.shape:
+        raise ValueError(f"f {f.shape} must match z {z.shape}")
+    k = max(3, min(int(cfg.k), n - 1))
+
+    eta = rate_model.eta(z).astype(np.float64)              # (n, G)
+    d_eta = rate_model.rate_along_eta(z, f).astype(np.float64)  # (n, G)
+    w = rate_model.nb_weights(z, size_factor=size_factor).astype(np.float64)  # (n, G)
+    G = eta.shape[1]
+
+    nn = NearestNeighbors(n_neighbors=k + 1).fit(z)
+    _, idxs = nn.kneighbors(z, return_distance=True)
+    idxs = idxs[:, 1:]                                      # drop self
+
+    # --------- global λ selection by k-fold neighbour CV on sampled cells
+    rng = np.random.default_rng(int(cfg.seed))
+    sample_n = n if cfg.cv_sample_cells < 0 else min(int(cfg.cv_sample_cells), n)
+    sample_idx = rng.choice(n, size=sample_n, replace=False)
+    lambda_scores: dict[float, float] = {}
+    for lam in cfg.ridge_lambdas:
+        tot = 0.0
+        cnt = 0
+        for c in sample_idx:
+            nbrs = idxs[c]
+            X_full = eta[nbrs] - eta[c]                     # (k, G)
+            y_full = d_eta[nbrs] - d_eta[c]                 # (k, G)
+            live = np.where(np.var(X_full, axis=0) > cfg.variation_threshold)[0]
+            if live.size < 2 or k < max(5, cfg.cv_folds + 1):
+                continue
+            X = X_full[:, live]                             # (k, L)
+            W = w[nbrs]                                     # (k, G)
+            # Fold assignment on neighbours
+            fold = rng.integers(0, cfg.cv_folds, size=k)
+            fold_mse = 0.0
+            fold_cnt = 0
+            for fo in range(cfg.cv_folds):
+                tr = fold != fo
+                te = ~tr
+                if tr.sum() < 2 or te.sum() == 0:
+                    continue
+                # Ridge is well-posed with k_tr < L when λ > 0 (regulariser
+                # fills the rank deficiency); we only need enough rows to
+                # avoid a trivial fold.
+                Xt = X[tr]                                  # (kt, L)
+                Wt = W[tr]                                  # (kt, G)
+                yt = y_full[tr]                             # (kt, G)
+                # Batched normal equations across all gene rows
+                A = np.einsum("ig,ip,iq->gpq", Wt, Xt, Xt)  # (G, L, L)
+                A = A + lam * np.eye(live.size)[None, :, :]
+                b = np.einsum("ig,ip,ig->gp", Wt, Xt, yt)   # (G, L)
+                try:
+                    a = np.linalg.solve(A, b[..., None]).squeeze(-1)  # (G, L)
+                except np.linalg.LinAlgError:
+                    continue
+                # Held-out weighted MSE on te neighbours
+                Xe = X[te]                                  # (ke, L)
+                We = W[te]                                  # (ke, G)
+                ye = y_full[te]                             # (ke, G)
+                yhat = Xe @ a.T                             # (ke, G)
+                resid2 = (yhat - ye) ** 2
+                w_sum = float(We.sum())
+                if w_sum <= 0 or not np.isfinite(w_sum):
+                    continue
+                fold_mse += float((We * resid2).sum()) / w_sum
+                fold_cnt += 1
+            if fold_cnt > 0 and np.isfinite(fold_mse):
+                tot += fold_mse / fold_cnt
+                cnt += 1
+        lambda_scores[float(lam)] = (tot / cnt) if cnt > 0 else float("inf")
+        if verbose:
+            print(f"  [gene-field] λ={lam:g}  mean weighted MSE = {lambda_scores[float(lam)]:.4f}")
+    best_lambda = min(lambda_scores, key=lambda l: lambda_scores[l])
+
+    # --------- fit all cells at best λ, and compute the Fisher ledger
+    # The Fisher info for the (g, j_live)-th entry of a_g is the (j, j)
+    # diagonal of the ridge Hessian: H_{g, j, j} = Σ_i w_{i,g} X_{i,j}² + λ
+    # (per docs/opspace_figure_spec.md §8.4 — "diagonal curvature of the
+    # same ridge likelihood").
+    J_list: list[csr_matrix] = []
+    F_list: list[csr_matrix] = []           # same sparse layout as J
+    reason_list: list[np.ndarray] = []      # per-cell (G,) int8
+    live_cols: list[np.ndarray] = []
+    reason = np.full(n, REASON_OK, dtype=np.int8)
+    for c in range(n):
+        nbrs = idxs[c]
+        X_full = eta[nbrs] - eta[c]                         # (k, G)
+        y_full = d_eta[nbrs] - d_eta[c]                     # (k, G)
+        live = np.where(np.var(X_full, axis=0) > cfg.variation_threshold)[0]
+        rsn = np.full(G, REASON_NO_VARIATION, dtype=np.int8)
+        if live.size < 2:
+            J_list.append(csr_matrix((G, G)))
+            F_list.append(csr_matrix((G, G)))
+            live_cols.append(np.zeros(0, dtype=np.int64))
+            reason_list.append(rsn)
+            reason[c] = REASON_NO_VARIATION
+            continue
+        X = X_full[:, live]                                 # (k, L)
+        W = w[nbrs]                                         # (k, G)
+        A = np.einsum("ig,ip,iq->gpq", W, X, X)             # (G, L, L)
+        A = A + best_lambda * np.eye(live.size)[None, :, :]
+        b = np.einsum("ig,ip,ig->gp", W, X, y_full)         # (G, L)
+        try:
+            a = np.linalg.solve(A, b[..., None]).squeeze(-1)  # (G, L)
+        except np.linalg.LinAlgError:
+            J_list.append(csr_matrix((G, G)))
+            F_list.append(csr_matrix((G, G)))
+            live_cols.append(np.zeros(0, dtype=np.int64))
+            reason_list.append(rsn)
+            reason[c] = REASON_NO_VARIATION
+            continue
+        # Fisher diagonal per entry: F[g, j_live] = Σ_i w[i,g] · X[i, j]² + λ
+        F = (W.T @ (X ** 2)) + float(best_lambda)           # (G, L)
+
+        # Build CSR with rows = all G, columns = live_cols[c]
+        rows = np.repeat(np.arange(G, dtype=np.int64), live.size)
+        cols = np.tile(live.astype(np.int64), G)
+        J_c = csr_matrix((a.reshape(-1), (rows, cols)), shape=(G, G))
+        F_c = csr_matrix((F.reshape(-1), (rows, cols)), shape=(G, G))
+        J_list.append(J_c)
+        F_list.append(F_c)
+        live_cols.append(live.astype(np.int64))
+        # Per-cell reason: ok on live genes, no_variation elsewhere.
+        rsn[live] = REASON_OK
+        reason_list.append(rsn)
+
+    return {
+        "J": J_list,
+        "F": F_list,                                        # Fisher ledger
+        "reason_per_cell": reason_list,                     # list of (G,) int8
+        "live_cols": live_cols,
+        "reason": reason,
+        "ridge_lambda": float(best_lambda),
+        "lambda_scores": lambda_scores,
+        "k": int(k),
+        "variation_threshold": float(cfg.variation_threshold),
+    }

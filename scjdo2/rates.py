@@ -311,6 +311,20 @@ class GeneRateModel:
             J = vmap(jacrev(_eta_single))(Z)             # (n, G, d)
         return J.cpu().numpy()
 
+    def rate_along_eta(self, z: np.ndarray, f: np.ndarray) -> np.ndarray:
+        """η-coord drift: ``dη_g/dt = ∇_z η_g(z_c) · f(z_c)``.
+
+        Returns an ``(n, G)`` array. This is the signal regressed in
+        Step 5's gene-space Jacobian fit (per docs/opspace_figure_spec.md
+        §8.2 — J is estimated in η-coords).
+        """
+        self._require_fit()
+        f = np.asarray(f, dtype=np.float32)
+        if f.shape != z.shape:
+            raise ValueError(f"f {f.shape} must match z {z.shape}")
+        g_eta = self.grad_eta(z)                          # (n, G, d)
+        return np.einsum("ngd,nd->ng", g_eta, f).astype(np.float64)
+
     def rate_along(self, z: np.ndarray, f: np.ndarray) -> np.ndarray:
         """Chain rule: ``dμ_g/dt = μ_g · (∂η_g/∂z · f)``.
 
@@ -318,14 +332,20 @@ class GeneRateModel:
         :meth:`mu` with the same ``size_factor`` the drift was fit on
         to keep units consistent across the pipeline.
         """
-        self._require_fit()
-        f = np.asarray(f, dtype=np.float32)
-        if f.shape != z.shape:
-            raise ValueError(f"f {f.shape} must match z {z.shape}")
-        g_eta = self.grad_eta(z)                          # (n, G, d)
-        d_eta_dt = np.einsum("ngd,nd->ng", g_eta, f)      # (n, G)
+        d_eta_dt = self.rate_along_eta(z, f)              # (n, G)
         mu = self.mu(z)                                   # (n, G) at size_factor=1
         return mu * d_eta_dt
+
+    def nb_weights(self, z: np.ndarray, size_factor: Optional[np.ndarray] = None) -> np.ndarray:
+        """Per-cell per-gene NB precision of η: ``w_cg = μ_cg · θ_g / (μ_cg + θ_g)``.
+
+        This is the weight used by Step 5's per-gene-row weighted ridge
+        regression (docs/opspace_figure_spec.md §8.3).
+        """
+        self._require_fit()
+        mu = self.mu(z, size_factor=size_factor)          # (n, G)
+        theta = self.theta()                              # (G,)
+        return (mu * theta / (mu + theta + 1e-12)).astype(np.float64)
 
     def held_out_nll(
         self,
