@@ -5,6 +5,68 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Autodiff Jacobian + convergence audit — Phase B still blocked
+
+Per user direction: replace the kNN-ball ridge Jacobian with the exact
+autodiff Jacobian of the drift network (`torch.autograd` loop over output
+dims, already in `DriftField`). Keep the neighbourhood regression and
+permutation null in `scjdo2/field.py` for Phase C's gene-space step.
+
+- `scjdo2/pipeline.py:fit_latent_field` gains `jacobian_method: Literal
+  ["autodiff", "neighbourhood"] = "autodiff"`. Autodiff path writes
+  `J = drift.jacobian_autodiff(z, t_c)` (per-cell at each cell's own
+  pseudotime). Meta records `jacobian_method`.
+- `scripts/pitchfork_convergence_audit.py` — focused script: train the
+  pitchfork drift to a configurable epoch budget and compare the
+  autodiff Jacobian to the analytic one at the three analytic fixed
+  points (pre-bifurcation symmetric FP, post-bifurcation saddle,
+  asymmetric stable branches). Includes a true-space projection check
+  (fit a linear 20D→2D map by lstsq and compare learned v and J to the
+  analytic toggle flow).
+- `scripts/pitchfork_architecture_check.py` — one-off diagnostic: train
+  the drift with the ANALYTIC toggle drift as `V_ref`. Isolates whether
+  the architecture can represent the dynamics at all.
+
+Results at `benchmarks/phase_b_gate/`:
+
+Autodiff gate (`report.{json,md}`) — Phase B still fails. Fork recall
+jumps to 0.87–0.99 (the autodiff Jacobian is much more sensitive than
+the ridge estimator) but **fork precision stays ~0.10** because the
+pipeline labels ~98 % of cells as fork, and **holder P/R collapse to ~0**.
+The drift's autodiff Jacobian is uniformly positive-definite.
+
+Convergence audit (`convergence_audit/audit_e5000_*.json`):
+
+| config | cos_sim(learned_v, true_v) | frac(J_true both neg) | pre-FP eigs | saddle eigs | stable eigs |
+|---|---|---|---|---|---|
+| 5000 ep, prior=True  | **−0.015** | 0.003 | (+0.70, +0.59) | (+0.70, +0.62) | (+0.69, +0.57) |
+| 5000 ep, prior=False | **+0.066** | 0.451 | (+0.35, +0.25) | (+0.33, +0.25) | (+0.29, +0.17) |
+| V_ref = analytic toggle | **−0.006** | 0.001 | (+0.70, +0.59) | — | — |
+
+Analytic expectations: pre-FP (−, −), saddle (+, −), stable (−, −).
+
+The learned drift is **uncorrelated or anti-correlated** with the true
+toggle flow — not under-trained. **Even with the analytic drift
+supplied as the velocity prior at `vel_scale=4` for 5000 epochs the fit
+does not converge to it** (cos_sim = −0.006). The DSM term dominates
+and pulls the drift to a configuration that is approximately the score
+of a mixture over nearby α slices (snapshot-biased), which has no
+negative-definite basins because the data is non-stationary (α-ramp,
+no equilibration at any α slice).
+
+Conclusion: the DSM + pseudotime velocity prior training objective on
+this α-ramp synthetic does not learn the toggle vector field, so
+`∂f/∂z` at the analytic fixed points cannot match the analytic
+signature. v1 has the same limitation on this generator (v1 reference
+err ≈ 0.5 at every τ_crit). The user's "under-trained or
+over-regularised" hypothesis is not supported.
+
+Phase C stays blocked. Awaiting user direction on whether to (a) switch
+to an equilibrated-snapshot pitchfork synthetic, (b) swap the drift
+objective to direct velocity regression against a trajectory-derived
+target, (c) move to Phase C's gene-space NB model (which does not use
+DSM), or (d) adjust the gate.
+
 ### Phase B gate report — Phase B does NOT pass user's ≥0.8 target
 
 New diagnostics (held in `benchmarks/phase_b_gate/{report.json, report.md}`):
