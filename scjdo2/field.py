@@ -107,6 +107,107 @@ def smooth_jacobians(
     return out
 
 
+def fit_tangent_projectors(
+    z: np.ndarray,
+    rate_model,
+    k: int = 30,
+    snr_cutoff: float = 1.0,
+    size_factor: Optional[np.ndarray] = None,
+    max_rank: Optional[int] = None,
+) -> dict:
+    """Per-cell Fisher-weighted η-tangent projector (Option 1 in spec).
+
+    For cell ``c`` with ``k`` latent neighbours ``N_k(c)``, build the
+    Fisher-weighted η-covariance over the ball::
+
+        Y_i    = sqrt(w_i) · (η_i - η_c)             (k × G)
+        Σ_c    = Yᵀ Y                                (G × G)
+
+    where ``w_i = diag( μ_i · θ / (μ_i + θ) )`` is the diagonal NB precision
+    of ``η`` from the rate model (Fisher info per gene per cell).
+
+    Eigendecompose ``Σ_c`` (symmetric, PSD). The tangent rank ``r_c`` is the
+    number of eigvalues above an **absolute** cutoff that comes directly
+    from the NB-precision scaling::
+
+        r_c  =  |{ j : λ_j  >  snr_cutoff }|          # default 1.0
+
+    The Fisher weight ``w_i_g = μ_i_g · θ_g / (μ_i_g + θ_g)`` is the inverse
+    NB variance of ``η_g`` at cell ``i``; multiplying ``Δη`` by ``sqrt(w)``
+    normalises its noise variance to ``O(1)`` per gene per neighbour. An
+    eigenvalue ``λ_j`` of ``Σ_c`` therefore has SNR ``λ_j / 1`` relative
+    to the Fisher noise floor, and "SNR < 1" means ``λ_j < 1``. On a
+    rank-r η manifold the top ``r`` eigvals carry O(k) signal (one per
+    neighbour) while the remaining ``G - r`` sit near float zero, so the
+    cutoff of 1.0 picks ``r_c = r`` cleanly.
+
+    ``r_c`` is clamped to ``[1, max_rank or G]``. The projector ``P_c``
+    is the ``r_c × G`` matrix whose rows are the top-``r_c`` eigenvectors
+    of ``Σ_c``.
+
+    Rationale (docs/opspace_figure_spec.md §9 fix (1)). The gene-space J
+    from Step 5 has ambient dimension ``G`` but the real η-manifold at any
+    cell has effective rank ``r_c`` ≪ ``G`` on real scRNA data (and
+    r_c = 2 on the pitchfork synthetic). Taking ``J_c``'s spectrum in
+    the ambient G-dim space samples ``G - r_c`` noise directions, which
+    on a near-degenerate ridge solution almost always produces a
+    positive-Re eigenvalue even when the informative basin eigenvalue is
+    negative. Restricting to the ``r_c`` directions where η actually
+    responds under the Fisher metric eliminates this sampling artifact.
+
+    Returns a dict with keys ``rank`` (``(n,)`` int), ``projector`` (list
+    of ``r_c × G`` arrays), and ``eigvals`` (list of per-cell descending
+    eigvals of ``Σ_c``, kept for diagnostics).
+    """
+    z = np.asarray(z, dtype=np.float64)
+    n, _d = z.shape
+    k = max(2, min(int(k), n - 1))
+    nn_ = NearestNeighbors(n_neighbors=k + 1).fit(z)
+    _, idxs = nn_.kneighbors(z, return_distance=True)
+    idxs = idxs[:, 1:]
+
+    eta = rate_model.eta(z).astype(np.float64)                 # (n, G)
+    w = rate_model.nb_weights(z, size_factor=size_factor).astype(np.float64)  # (n, G)
+    G = eta.shape[1]
+    cap = int(max_rank) if max_rank is not None else G
+
+    rank_arr = np.ones(n, dtype=np.int32)
+    projectors: list[np.ndarray] = []
+    eigvals_list: list[np.ndarray] = []
+    for c in range(n):
+        nbrs = idxs[c]
+        diffs = eta[nbrs] - eta[c]                             # (k, G)
+        w_nb = w[nbrs]                                         # (k, G)
+        Y = np.sqrt(np.clip(w_nb, 0.0, None)) * diffs          # (k, G)
+        Sig = Y.T @ Y                                          # (G, G) PSD
+        try:
+            evals, evecs = np.linalg.eigh(Sig)
+        except np.linalg.LinAlgError:
+            projectors.append(np.eye(G))
+            eigvals_list.append(np.zeros(G))
+            rank_arr[c] = G
+            continue
+        order = np.argsort(evals)[::-1]
+        evals = evals[order]
+        evecs = evecs[:, order]
+        # Fisher-weighted Δη has unit noise variance per gene per neighbour,
+        # so an eigenvalue of Σ_c of magnitude O(1) is at the SNR=1 line.
+        # Keep directions strictly above snr_cutoff. See the docstring.
+        r_c = int(np.sum(evals > float(snr_cutoff)))
+        r_c = max(1, min(r_c, cap))
+        P_c = evecs[:, :r_c].T.astype(np.float64)              # (r_c, G)
+        rank_arr[c] = r_c
+        projectors.append(P_c)
+        eigvals_list.append(evals)
+    return {
+        "rank": rank_arr,
+        "projector": projectors,
+        "eigvals": eigvals_list,
+        "snr_cutoff": float(snr_cutoff),
+        "k": int(k),
+    }
+
+
 def smooth_jacobians_sparse(
     J_list: Sequence[csr_matrix],
     z: np.ndarray,

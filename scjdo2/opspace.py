@@ -43,9 +43,10 @@ from sklearn.neighbors import NearestNeighbors
 
 
 BEHAVIOURS = ("holder", "drift", "fork", "damped_oscillator", "growing_oscillator")
-REASON_CODES = ("ok", "no_counts", "no_variation", "not_in_ball")
+REASON_CODES = ("ok", "no_counts", "no_variation", "not_in_ball", "off_tangent")
 
 _EPS_IM = 1e-10
+_FISHER_MASS_TIE_TOL = 1e-6     # Re ties broken by Fisher mass within this margin
 
 
 # ======================================================================
@@ -220,6 +221,17 @@ def _ledger_fisher_list(ledger) -> Optional[list[csr_matrix]]:
     return None
 
 
+def _ledger_tangent(ledger) -> Optional[dict]:
+    """Normalise ledger -> off_tangent dict with per-cell projector, or None."""
+    if ledger is None:
+        return None
+    if hasattr(ledger, "off_tangent"):
+        return ledger.off_tangent
+    if isinstance(ledger, dict):
+        return ledger.get("off_tangent")
+    return None
+
+
 def _live_cols_of(Jc: csr_matrix) -> np.ndarray:
     """Return the live-column indices of a CSR Jacobian (unique column ids)."""
     if Jc.nnz == 0:
@@ -330,20 +342,29 @@ def spectrum(
             for k in range(min(n_eig, V_fixed.shape[1])):
                 eigvecs[c, k] = V_fixed[:, k]
     else:  # kind == "sparse"
+        tangent = _ledger_tangent(ledger)
+        if tangent is not None:
+            tangent_rank = np.asarray(tangent.get("rank"))
+            tangent_P = list(tangent.get("projector", []))
+        else:
+            tangent_rank = None
+            tangent_P = []
+        # op_eig_reason: per cell per eigenvalue slot. Default to "ok" for
+        # populated slots, filled with "off_tangent" for slots past r_c.
+        eig_reason = np.full((n, n_eig), "ok", dtype=object)
         for c in range(n):
             Jc = J[c]
             if Jc.nnz == 0:
                 valid[c] = False
+                eig_reason[c, :] = "no_variation"
                 continue
             # Optional Fisher mask: zero data entries below threshold.
             if applied_mask and F_list is not None:
                 Fc = F_list[c]
-                # Align sparsity: Fisher and J share layout (Step 5 invariant).
                 if Fc.nnz == Jc.nnz and np.array_equal(Fc.indices, Jc.indices) \
                         and np.array_equal(Fc.indptr, Jc.indptr):
                     f_data = Fc.data
                 else:
-                    # Fallback: evaluate F at J's (row, col) positions.
                     f_data = np.asarray(Fc[Jc.nonzero()[0], Jc.nonzero()[1]]).ravel()
                 if min_fisher is None:
                     thr_c = float(np.percentile(f_data, 10)) if f_data.size else 0.0
@@ -355,21 +376,75 @@ def spectrum(
                     Jc.data[mask] = 0.0
                     Jc.eliminate_zeros()
                 threshold_used = thr_c if threshold_used is None else threshold_used
+
+            # Tangent restriction: eigendecompose P_c J_c P_c^T, lift back
+            # through P_c. Off-tangent eigvalue slots are left NaN + reason
+            # ``off_tangent``. See docs/opspace_figure_spec.md §9 fix (1).
+            if tangent is not None and c < len(tangent_P):
+                P_c = np.asarray(tangent_P[c], dtype=np.float64)       # (r_c, G)
+                r_c = int(P_c.shape[0])
+                if r_c == 0:
+                    valid[c] = False
+                    eig_reason[c, :] = "off_tangent"
+                    continue
+                # Materialise P_c J_c P_c^T  (r_c × r_c) via sparse multiplies.
+                PJ = Jc.T.dot(P_c.T).T          # (r_c, G)
+                block = PJ @ P_c.T              # (r_c, r_c)
+                if not np.all(np.isfinite(block)):
+                    valid[c] = False
+                    eig_reason[c, :] = "off_tangent"
+                    continue
+                try:
+                    evals, V = np.linalg.eig(block)       # (r_c,), (r_c, r_c)
+                except np.linalg.LinAlgError:
+                    valid[c] = False
+                    eig_reason[c, :] = "off_tangent"
+                    continue
+                evals, V = _conjugate_free(evals, V)
+                # Fisher-mass tie-break on near-identical Re. Mass per eigvec
+                # k: v^H diag(F_c) v where F_c is the per-gene Fisher mass
+                # (sum over rows of F) evaluated after lifting.
+                if F_list is not None and evals.size >= 2:
+                    V_full = P_c.T @ V                    # (G, r_c') complex
+                    Fc_diag = np.asarray(F_list[c].sum(axis=0)).ravel()
+                    mass = np.array([
+                        float(np.sum(Fc_diag * (np.abs(V_full[:, k]) ** 2)))
+                        for k in range(V.shape[1])
+                    ])
+                    # Stable sort: primary key -Re, tie-breaker -mass.
+                    order = np.lexsort((-mass, -evals.real))
+                    evals = evals[order]
+                    V = V[:, order]
+                V_fixed = np.column_stack([_fix_eigvec_sign(V[:, k]) for k in range(V.shape[1])])
+                eigvals[c] = _pad_to(evals, n_eig, dtype=np.complex128)
+                lifted = (P_c.T @ V_fixed).astype(np.complex128)   # (G, kept)
+                # Fix sign on the lifted vectors (G-dim is the public space).
+                lifted_fixed = np.column_stack([
+                    _fix_eigvec_sign(lifted[:, k]) for k in range(lifted.shape[1])
+                ])
+                for k in range(min(n_eig, lifted_fixed.shape[1])):
+                    eigvecs[c, k] = lifted_fixed[:, k]
+                # Mark slots past r_c as off_tangent (empty, documented).
+                if r_c < n_eig:
+                    eig_reason[c, r_c:] = "off_tangent"
+                continue
+
+            # Fallback (no tangent restriction): operate on the live block.
             live = _live_cols_of(Jc)
             if live.size < 1:
                 valid[c] = False
+                eig_reason[c, :] = "no_variation"
                 continue
             block = _dense_live_block(Jc, live)
             if not np.all(np.isfinite(block)):
                 valid[c] = False
                 continue
             try:
-                evals, V = np.linalg.eig(block)                 # (L,) complex, (L, L)
+                evals, V = np.linalg.eig(block)
             except np.linalg.LinAlgError:
                 valid[c] = False
                 continue
             evals, V = _conjugate_free(evals, V)
-            # Fix sign and lift back to full dim G.
             V_fixed = np.column_stack([_fix_eigvec_sign(V[:, k]) for k in range(V.shape[1])])
             eigvals[c] = _pad_to(evals, n_eig, dtype=np.complex128)
             for k in range(min(n_eig, V_fixed.shape[1])):
@@ -381,11 +456,16 @@ def spectrum(
     adata.uns.setdefault("scjdo2", {})
     adata.uns["scjdo2"]["op_eigvecs"] = eigvecs
     adata.uns["scjdo2"]["op_valid"] = valid
+    if kind == "sparse":
+        adata.uns["scjdo2"]["op_eig_reason"] = eig_reason
+        if tangent_rank is not None:
+            adata.uns["scjdo2"]["op_tangent_rank"] = np.asarray(tangent_rank, dtype=np.int32)
     adata.uns["scjdo2"]["spectrum_meta"] = {
         "n_eig": int(n_eig),
         "fisher_mask": bool(applied_mask),
         "min_fisher": threshold_used,
         "J_kind": kind,
+        "tangent_restricted": bool(tangent is not None and kind == "sparse"),
     }
 
 

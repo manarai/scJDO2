@@ -33,18 +33,34 @@ REASON_CODES = ("ok", "no_counts", "no_variation", "not_in_ball")
 
 @dataclass
 class FisherLedger:
-    """Per-cell, per-entry Fisher info and reason codes.
+    """Per-cell, per-entry Fisher info, reason codes, and tangent projectors.
 
     ``fisher`` and ``reason_per_cell`` share the sparsity layout of the
     gene-space Jacobians (same live-column index per cell). ``thresholds``
     records what defined ``ok`` vs ``no_variation`` etc., so the ledger
     is self-describing.
+
+    ``off_tangent`` (optional, from
+    :func:`scjdo2.field.fit_tangent_projectors`) carries the Fisher-weighted
+    η-tangent restriction (docs/opspace_figure_spec.md §9 fix (1)):
+
+        * ``off_tangent["rank"]`` — ``(n,)`` int: per-cell tangent rank
+          ``r_c``.
+        * ``off_tangent["projector"]`` — list of ``(r_c, G)`` arrays:
+          the orthonormal basis of each cell's η-tangent space.
+        * ``off_tangent["eigvals"]`` — list of ``(G,)`` descending
+          eigvals of the Fisher-weighted η-covariance (diagnostic).
+        * ``off_tangent["snr_cutoff"]`` — the SNR threshold used.
+
+    If ``off_tangent`` is None, consumers (e.g. :func:`opspace.spectrum`)
+    treat the full gene-space as live (no tangent restriction).
     """
 
     fisher: list[csr_matrix]                   # same shape/sparsity as J
     reason_per_cell: list[np.ndarray]          # list of (G,) int8 per cell
     thresholds: dict = field(default_factory=dict)
     ridge_lambda: Optional[float] = None
+    off_tangent: Optional[dict] = None
 
     # ----------------------------------------------------- convenience
     @property
@@ -128,11 +144,17 @@ class FisherLedger:
 def compute(
     step5_output: dict,
     thresholds: Optional[dict] = None,
+    tangent: Optional[dict] = None,
 ) -> FisherLedger:
     """Wrap a Step 5 output dict (from
     :func:`scjdo2.field.fit_gene_space_jacobians`) into a
     :class:`FisherLedger`. The Fisher info itself is computed inside
     Step 5 (same ridge likelihood); this is just the surface API.
+
+    ``tangent`` is the optional output of
+    :func:`scjdo2.field.fit_tangent_projectors` — attached to the ledger
+    as ``off_tangent`` so :func:`scjdo2.opspace.spectrum` can restrict
+    eigendecomposition to the η-tangent subspace at each cell.
     """
     required = ("F", "reason_per_cell", "ridge_lambda")
     for key in required:
@@ -146,4 +168,5 @@ def compute(
         reason_per_cell=list(step5_output["reason_per_cell"]),
         thresholds=thr,
         ridge_lambda=float(step5_output["ridge_lambda"]),
+        off_tangent=dict(tangent) if tangent is not None else None,
     )
