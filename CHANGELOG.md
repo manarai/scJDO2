@@ -5,6 +5,65 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Phase B closed — Step 5 smoothing, fork criterion deferred to Phase C
+
+Per user directive: implement the Step 5 post-hoc field regulariser,
+report the gate with and without smoothing, and close Phase B.
+
+**Smoothing (``scjdo2.field.smooth_jacobians``).** For each cell replace
+``J_c`` by a Gaussian-kernel-weighted average of ``J`` over its ``k``
+latent neighbours::
+
+    J̃_c = Σ_{i ∈ N_k(c)∪{c}} w_{ci} J_i / Σ w_{ci}
+    w_{ci} = exp(-||z_c - z_i||² / (2 h²)),  h = median neighbour distance
+
+``k`` is fixed at 30 (per the user's "k chosen by held-out DSM loss or
+fixed at 30"; the held-out sweep from the σ sweep already covered the
+σ dimension — the smoothing k is the regularisation knob, and 30 is a
+conservative choice that matches the kNN scale used elsewhere in v2).
+The classifier is re-run on the smoothed field via
+``_gate_smoothed`` in ``scripts/equilibrated_gate.py``.
+
+**Gate table (σ_min=0.05, 5000 epochs, n_cells=1200, n_alpha=30, k=30):**
+
+| row | τ_crit | fork P | fork R | holder P | holder R | verdict |
+|---|---|---|---|---|---|---|
+| oracle | 0.1 | 1.00 | 1.00 | 1.00 | 0.85 | PASS |
+| dsm_equilibrated | 0.1 | 0.31 | 0.77 | 0.99 | 0.91 | FAIL |
+| dsm_equilibrated_smoothed | 0.1 | **0.40** | 0.70 | 0.99 | **0.95** | FAIL |
+| oracle | 0.3 | 1.00 | 1.00 | 1.00 | 0.90 | PASS |
+| dsm_equilibrated | 0.3 | 0.38 | 0.75 | 0.99 | 0.91 | FAIL |
+| dsm_equilibrated_smoothed | 0.3 | **0.54** | 0.57 | 0.98 | **0.96** | FAIL |
+| oracle | 0.5 | 1.00 | 1.00 | 1.00 | 0.92 | PASS |
+| dsm_equilibrated | 0.5 | 0.42 | 0.61 | 0.98 | 0.92 | FAIL |
+| dsm_equilibrated_smoothed | 0.5 | **0.64** | 0.35 | 0.97 | **0.97** | FAIL |
+
+Smoothing moves fork precision up (0.31→0.40, 0.38→0.54, 0.42→0.64) and
+tightens holder (R 0.91→0.95-0.97) but does not bring fork P within 0.10
+of oracle; best gap 0.36 at τ=0.5. Fork recall drops as borderline cells
+near the tol decision boundary get pulled into drift.
+
+**Phase B closed.** Holder passes absolute. Fork precision within 0.10
+of oracle is **not** met; per the directing decision this is recorded
+in V2_PLAN R13 as "fork precision bounded by per-cell score noise;
+oracle shows the ceiling; to be revisited with Fisher-weighted
+gene-space Jacobians" and the fork P/R criterion is **carried forward
+as a Phase C acceptance criterion**. Phase B's effective acceptance:
+holder P and R ≥ 0.8 absolute (met), ``frac(Re>0)`` within ~2× of
+oracle (met: 0.03–0.08 vs 0.04–0.05), and the oracle–DSM gap documented
+in ``benchmarks/phase_b_gate/equilibrated/report.md``.
+
+**Added / changed:**
+
+* ``scjdo2/field.py``: ``smooth_jacobians(J, z, k, bandwidth, include_self)``
+  module function; ``JacobianField.smooth_field`` wrapper.
+* ``scripts/equilibrated_gate.py``: ``--smooth-k`` (default 30),
+  ``_gate_smoothed`` helper, smoothed row emitted after each DSM row;
+  canonical ``benchmarks/phase_b_gate/equilibrated/report.{md,json}``
+  reproduced from ``report_smooth30.*``.
+* ``V2_PLAN.md``: R13 — Phase B closing note; fork P/R criterion moved
+  from Phase B gate to Phase C acceptance list.
+
 ### Phase B gate v2 — same-tol GT, σ sweep by held-out loss
 
 Per user iteration on top of residual-off + β=σ²:

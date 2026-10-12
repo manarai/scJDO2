@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-12 05:58:45",
+  "timestamp": "2026-10-12 07:08:09",
   "args": {
     "tau_crit": [
       0.1,
@@ -15,8 +15,9 @@
     "beta": 0.04,
     "sigma_min": 0.05,
     "sigma_max": 1.0,
-    "v1_json": null,
-    "out_tag": "final",
+    "smooth_k": 30,
+    "v1_json": "benchmarks/phase_b_gate/equilibrated/v1_slicing.json",
+    "out_tag": "smooth30",
     "verbose": false
   },
   "ground_truth": "dynamic (strict sign of analytic lead_re per cell)",
@@ -96,7 +97,7 @@
             "analytic_lead_re_median": -0.8697426555145907
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 32.99468916701153,
+          "fit_seconds": 29.348315082956105,
           "inject_velocity_prior": false,
           "use_residual": false,
           "beta": 0.04,
@@ -104,7 +105,42 @@
             0.05,
             1.0
           ],
-          "n_epochs": 5000
+          "n_epochs": 5000,
+          "smoothed": {
+            "fork_pr": {
+              "tp": 30,
+              "fp": 45,
+              "fn": 13,
+              "precision": 0.4,
+              "recall": 0.6976744186046512
+            },
+            "holder_pr": {
+              "tp": 1077,
+              "fp": 16,
+              "fn": 60,
+              "precision": 0.9853613906678865,
+              "recall": 0.9472295514511874
+            },
+            "beh_counts": {
+              "drift": 32,
+              "fork": 75,
+              "holder": 1093
+            },
+            "lead_re": {
+              "frac_positive": 0.07916666666666666,
+              "frac_negative": 0.9208333333333333,
+              "median": -0.003953691521690452
+            },
+            "ground_truth": {
+              "tol": 0.03341312996357609,
+              "n_true_fork": 43,
+              "n_true_holder": 1137,
+              "frac_true_fork": 0.035833333333333335,
+              "analytic_lead_re_median": -0.8697426555145907
+            },
+            "smooth_k": 30,
+            "row": "dsm_equilibrated_smoothed"
+          }
         },
         "dsm_transient": {
           "fork_pr": {
@@ -140,14 +176,49 @@
             "analytic_lead_re_median": -0.4209892397867949
           },
           "row": "dsm_transient",
-          "fit_seconds": 31.192155582946725,
+          "fit_seconds": 28.7307171249995,
           "use_residual": false,
           "beta": 0.04,
           "dsm_sigma_range": [
             0.05,
             1.0
           ],
-          "note": "\u03b1-ramp synthetic \u2014 negative control"
+          "note": "\u03b1-ramp synthetic \u2014 negative control",
+          "smoothed": {
+            "fork_pr": {
+              "tp": 14,
+              "fp": 0,
+              "fn": 272,
+              "precision": 1.0,
+              "recall": 0.04895104895104895
+            },
+            "holder_pr": {
+              "tp": 839,
+              "fp": 333,
+              "fn": 0,
+              "precision": 0.7158703071672355,
+              "recall": 1.0
+            },
+            "beh_counts": {
+              "drift": 14,
+              "fork": 14,
+              "holder": 1172
+            },
+            "lead_re": {
+              "frac_positive": 0.016666666666666666,
+              "frac_negative": 0.9833333333333333,
+              "median": -0.003604623821511499
+            },
+            "ground_truth": {
+              "tol": 0.05274878229487511,
+              "n_true_fork": 286,
+              "n_true_holder": 839,
+              "frac_true_fork": 0.23833333333333334,
+              "analytic_lead_re_median": -0.4209892397867949
+            },
+            "smooth_k": 30,
+            "row": "dsm_transient_smoothed"
+          }
         }
       }
     },
@@ -226,7 +297,7 @@
             "analytic_lead_re_median": -0.7825407446485897
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 31.505254041054286,
+          "fit_seconds": 28.487958832993172,
           "inject_velocity_prior": false,
           "use_residual": false,
           "beta": 0.04,
@@ -234,7 +305,42 @@
             0.05,
             1.0
           ],
-          "n_epochs": 5000
+          "n_epochs": 5000,
+          "smoothed": {
+            "fork_pr": {
+              "tp": 25,
+              "fp": 21,
+              "fn": 19,
+              "precision": 0.5434782608695652,
+              "recall": 0.5681818181818182
+            },
+            "holder_pr": {
+              "tp": 1097,
+              "fp": 18,
+              "fn": 42,
+              "precision": 0.9838565022421525,
+              "recall": 0.9631255487269534
+            },
+            "beh_counts": {
+              "drift": 39,
+              "fork": 46,
+              "holder": 1115
+            },
+            "lead_re": {
+              "frac_positive": 0.0575,
+              "frac_negative": 0.9425,
+              "median": -0.004773004608639638
+            },
+            "ground_truth": {
+              "tol": 0.03179960387635609,
+              "n_true_fork": 44,
+              "n_true_holder": 1139,
+              "frac_true_fork": 0.03666666666666667,
+              "analytic_lead_re_median": -0.7825407446485897
+            },
+            "smooth_k": 30,
+            "row": "dsm_equilibrated_smoothed"
+          }
         },
         "dsm_transient": {
           "fork_pr": {
@@ -270,14 +376,49 @@
             "analytic_lead_re_median": -0.41784503762513897
           },
           "row": "dsm_transient",
-          "fit_seconds": 30.389044582960196,
+          "fit_seconds": 28.92097491689492,
           "use_residual": false,
           "beta": 0.04,
           "dsm_sigma_range": [
             0.05,
             1.0
           ],
-          "note": "\u03b1-ramp synthetic \u2014 negative control"
+          "note": "\u03b1-ramp synthetic \u2014 negative control",
+          "smoothed": {
+            "fork_pr": {
+              "tp": 29,
+              "fp": 0,
+              "fn": 259,
+              "precision": 1.0,
+              "recall": 0.10069444444444445
+            },
+            "holder_pr": {
+              "tp": 851,
+              "fp": 285,
+              "fn": 0,
+              "precision": 0.7491197183098591,
+              "recall": 1.0
+            },
+            "beh_counts": {
+              "drift": 35,
+              "fork": 29,
+              "holder": 1136
+            },
+            "lead_re": {
+              "frac_positive": 0.03916666666666667,
+              "frac_negative": 0.9608333333333333,
+              "median": -0.0041131606046633
+            },
+            "ground_truth": {
+              "tol": 0.04960534458469563,
+              "n_true_fork": 288,
+              "n_true_holder": 851,
+              "frac_true_fork": 0.24,
+              "analytic_lead_re_median": -0.41784503762513897
+            },
+            "smooth_k": 30,
+            "row": "dsm_transient_smoothed"
+          }
         }
       }
     },
@@ -356,7 +497,7 @@
             "analytic_lead_re_median": -0.7889652324474759
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 30.443971707951277,
+          "fit_seconds": 28.48682208301034,
           "inject_velocity_prior": false,
           "use_residual": false,
           "beta": 0.04,
@@ -364,7 +505,43 @@
             0.05,
             1.0
           ],
-          "n_epochs": 5000
+          "n_epochs": 5000,
+          "smoothed": {
+            "fork_pr": {
+              "tp": 16,
+              "fp": 9,
+              "fn": 30,
+              "precision": 0.64,
+              "recall": 0.34782608695652173
+            },
+            "holder_pr": {
+              "tp": 1108,
+              "fp": 34,
+              "fn": 29,
+              "precision": 0.9702276707530648,
+              "recall": 0.9744942832014072
+            },
+            "beh_counts": {
+              "damped_oscillator": 13,
+              "drift": 20,
+              "fork": 25,
+              "holder": 1142
+            },
+            "lead_re": {
+              "frac_positive": 0.0275,
+              "frac_negative": 0.9725,
+              "median": -0.006588301463024079
+            },
+            "ground_truth": {
+              "tol": 0.03269702216271633,
+              "n_true_fork": 46,
+              "n_true_holder": 1137,
+              "frac_true_fork": 0.03833333333333333,
+              "analytic_lead_re_median": -0.7889652324474759
+            },
+            "smooth_k": 30,
+            "row": "dsm_equilibrated_smoothed"
+          }
         },
         "dsm_transient": {
           "fork_pr": {
@@ -401,19 +578,55 @@
             "analytic_lead_re_median": -0.46826803759090496
           },
           "row": "dsm_transient",
-          "fit_seconds": 31.030775499995798,
+          "fit_seconds": 28.381930542062037,
           "use_residual": false,
           "beta": 0.04,
           "dsm_sigma_range": [
             0.05,
             1.0
           ],
-          "note": "\u03b1-ramp synthetic \u2014 negative control"
+          "note": "\u03b1-ramp synthetic \u2014 negative control",
+          "smoothed": {
+            "fork_pr": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 288,
+              "precision": NaN,
+              "recall": 0.0
+            },
+            "holder_pr": {
+              "tp": 861,
+              "fp": 330,
+              "fn": 2,
+              "precision": 0.7229219143576826,
+              "recall": 0.9976825028968713
+            },
+            "beh_counts": {
+              "damped_oscillator": 1,
+              "drift": 8,
+              "holder": 1191
+            },
+            "lead_re": {
+              "frac_positive": 0.0,
+              "frac_negative": 1.0,
+              "median": -0.006911907479166739
+            },
+            "ground_truth": {
+              "tol": 0.05286486211379421,
+              "n_true_fork": 288,
+              "n_true_holder": 863,
+              "frac_true_fork": 0.24,
+              "analytic_lead_re_median": -0.46826803759090496
+            },
+            "smooth_k": 30,
+            "row": "dsm_transient_smoothed"
+          }
         }
       }
     }
   ],
   "v1_slicing_on_equilibrated": {
+    "row": "v1_slicing",
     "status": "complete",
     "timestamp": "2026-10-12 06:05:15",
     "args": {

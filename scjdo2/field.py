@@ -24,6 +24,89 @@ from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 
 
+def smooth_jacobians(
+    J: np.ndarray,
+    z: np.ndarray,
+    k: int = 30,
+    bandwidth: Optional[float] = None,
+    include_self: bool = True,
+) -> np.ndarray:
+    """Post-hoc Gaussian-kernel-weighted smoothing of a per-cell Jacobian field.
+
+    For each cell ``c`` the smoothed Jacobian is::
+
+        J̃_c = Σ_{i ∈ N_k(c)} w_{ci} J_i / Σ w_{ci},
+        w_{ci} = exp( - ||z_c - z_i||² / (2 h²) )
+
+    where ``N_k(c)`` is the k nearest neighbours of ``z_c`` in ``z`` (plus the
+    cell itself when ``include_self=True``). The bandwidth ``h`` defaults to
+    the median neighbour distance across all balls (a conservative Silverman-
+    style choice that scales with the latent geometry).
+
+    Parameters
+    ----------
+    J : (n, d, d) ndarray
+        Per-cell Jacobians to smooth. NaN rows are kept as NaN in the output
+        and are excluded from any neighbour's weighted sum.
+    z : (n, d) ndarray
+        Latent positions used to define neighbourhoods.
+    k : int, default 30
+        Number of neighbours (excluding self) per cell. Clamped to ``n - 1``.
+    bandwidth : float or None, default None
+        Gaussian kernel bandwidth. ``None`` → median neighbour distance over
+        all balls; non-positive values fall back to the median too.
+    include_self : bool, default True
+        Include the cell itself (weight 1.0 at zero distance) in the sum.
+
+    Returns
+    -------
+    J_smooth : (n, d, d) ndarray
+        Smoothed Jacobians, same shape as ``J``.
+    """
+    J = np.asarray(J, dtype=np.float64)
+    z = np.asarray(z, dtype=np.float64)
+    n = z.shape[0]
+    if J.shape[0] != n:
+        raise ValueError(f"J has n={J.shape[0]} rows but z has n={n}")
+    if J.ndim != 3 or J.shape[1] != J.shape[2]:
+        raise ValueError(f"J must be (n, d, d); got {J.shape}")
+    k = max(1, min(int(k), n - 1))
+
+    nn = NearestNeighbors(n_neighbors=k + 1).fit(z)
+    dists, idxs = nn.kneighbors(z, return_distance=True)
+    # drop self (index 0)
+    nbr_d = dists[:, 1:]
+    nbr_i = idxs[:, 1:]
+
+    if bandwidth is None or not np.isfinite(bandwidth) or bandwidth <= 0:
+        h = float(np.median(nbr_d))
+        if not np.isfinite(h) or h <= 0:
+            h = 1.0
+    else:
+        h = float(bandwidth)
+    inv2h2 = 1.0 / (2.0 * h * h)
+
+    row_finite = np.all(np.isfinite(J.reshape(n, -1)), axis=1)
+    out = np.full_like(J, np.nan)
+    for c in range(n):
+        nbrs = nbr_i[c]
+        ds = nbr_d[c]
+        mask = row_finite[nbrs]
+        nbrs = nbrs[mask]
+        ds = ds[mask]
+        if include_self and row_finite[c]:
+            nbrs = np.concatenate([[c], nbrs])
+            ds = np.concatenate([[0.0], ds])
+        if nbrs.size == 0:
+            continue
+        w = np.exp(-ds * ds * inv2h2)
+        s = float(w.sum())
+        if not np.isfinite(s) or s <= 0:
+            continue
+        out[c] = np.tensordot(w / s, J[nbrs], axes=(0, 0))
+    return out
+
+
 REASON_OK = 0
 REASON_NO_COUNTS = 1
 REASON_NO_VARIATION = 2
@@ -145,6 +228,26 @@ class JacobianField:
         }
 
     # ------------------------------------------------------------- null test
+    def smooth_field(
+        self,
+        z: Optional[np.ndarray] = None,
+        k: int = 30,
+        bandwidth: Optional[float] = None,
+        include_self: bool = True,
+    ) -> np.ndarray:
+        """Return the Gaussian-kernel-smoothed Jacobian field over the kNN ball
+        in latent space.
+
+        Delegates to the module-level ``smooth_jacobians`` on this field's
+        fitted ``J_dense()`` and the latent positions used in ``fit``.
+        """
+        if self._J is None or self._z is None:
+            raise RuntimeError("fit() must be called first")
+        z_use = self._z if z is None else np.asarray(z, dtype=np.float64)
+        return smooth_jacobians(
+            self.J_dense(), z_use, k=k, bandwidth=bandwidth, include_self=include_self,
+        )
+
     def permutation_null(
         self,
         z: np.ndarray,

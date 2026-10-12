@@ -45,6 +45,7 @@ from scjdo2.data import (
     generate_pitchfork_equilibrated,
 )
 from scjdo2.drift import DriftConfig
+from scjdo2.field import smooth_jacobians
 from scjdo2.pipeline import fit_latent_field
 
 
@@ -138,6 +139,32 @@ def _gate(adata: AnnData, tau_crit: float) -> dict[str, Any]:
     }
 
 
+def _gate_smoothed(adata: AnnData, use_rep: str, k: int,
+                   bandwidth: Optional[float] = None) -> dict[str, Any]:
+    """Apply Gaussian-kernel smoothing (Step 5 post-hoc) to J, re-run opspace,
+    rescore the gate.
+
+    Smoothing uses the SAME latent representation ``use_rep`` the drift was
+    fit on (so neighbourhoods are consistent with the drift's geometry).
+    """
+    z = np.asarray(adata.obsm[use_rep], dtype=np.float64)
+    J = np.asarray(adata.uns["scjdo2"]["J"], dtype=np.float64)
+    J_smooth = smooth_jacobians(J, z, k=int(k), bandwidth=bandwidth, include_self=True)
+    adata.uns["scjdo2"]["J_raw"] = J
+    adata.uns["scjdo2"]["J"] = J_smooth
+    adata.uns["scjdo2"].setdefault("meta", {})
+    adata.uns["scjdo2"]["meta"]["smoothed"] = True
+    adata.uns["scjdo2"]["meta"]["smooth_k"] = int(k)
+    adata.uns["scjdo2"]["meta"]["smooth_bandwidth"] = (
+        float(bandwidth) if (bandwidth is not None and np.isfinite(bandwidth)) else "median_nn"
+    )
+    out = _gate(adata, tau_crit=0.0)  # tau_crit is unused inside _gate
+    adata.uns["scjdo2"]["J"] = J  # restore raw so caller can keep going
+    adata.uns["scjdo2"].pop("J_raw", None)
+    out["smooth_k"] = int(k)
+    return out
+
+
 # -------------------------------------------------------- row producers
 
 def row_oracle(adata: AnnData, tau_crit: float) -> dict[str, Any]:
@@ -166,7 +193,8 @@ def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
                          seed: int, inject_velocity_prior: bool,
                          dsm_sigma_range: Optional[tuple],
                          use_residual: bool, beta: float,
-                         verbose: bool) -> dict[str, Any]:
+                         verbose: bool,
+                         smooth_k: Optional[int] = None) -> dict[str, Any]:
     """Row 2 — DSM drift fit + autodiff J on equilibrated snapshots.
 
     With ``use_residual=False`` and ``inject_velocity_prior=False`` the drift
@@ -198,6 +226,11 @@ def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
     r["beta"] = float(beta)
     r["dsm_sigma_range"] = list(dsm_sigma_range) if dsm_sigma_range else None
     r["n_epochs"] = int(n_epochs)
+    if smooth_k is not None and smooth_k > 0:
+        r_sm = _gate_smoothed(adata, use_rep="X_pca", k=int(smooth_k))
+        r_sm["row"] = "dsm_equilibrated_smoothed"
+        r_sm["smooth_k"] = int(smooth_k)
+        r["smoothed"] = r_sm
     return r
 
 
@@ -205,7 +238,8 @@ def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
                       inject_velocity_prior: bool,
                       dsm_sigma_range: Optional[tuple],
                       use_residual: bool, beta: float,
-                      verbose: bool) -> dict[str, Any]:
+                      verbose: bool,
+                      smooth_k: Optional[int] = None) -> dict[str, Any]:
     """Row 3 — DSM on the TRANSIENT α-ramp pitchfork, measured against the
     SAME dynamic per-cell ground truth as the other rows.
     """
@@ -236,6 +270,11 @@ def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
     r["beta"] = float(beta)
     r["dsm_sigma_range"] = list(dsm_sigma_range) if dsm_sigma_range else None
     r["note"] = "α-ramp synthetic — negative control"
+    if smooth_k is not None and smooth_k > 0:
+        r_sm = _gate_smoothed(adata, use_rep="X_pca", k=int(smooth_k))
+        r_sm["row"] = "dsm_transient_smoothed"
+        r_sm["smooth_k"] = int(smooth_k)
+        r["smoothed"] = r_sm
     return r
 
 
@@ -262,7 +301,8 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
             seed: int, inject_velocity_prior: bool,
             dsm_sigma_range: Optional[tuple],
             use_residual: bool, beta: float,
-            verbose: bool) -> dict[str, Any]:
+            verbose: bool,
+            smooth_k: Optional[int] = None) -> dict[str, Any]:
     print(f"\n=== τ_crit = {tau_crit} ===")
     adata = generate_pitchfork_equilibrated(
         tau_crit=tau_crit, seed=seed,
@@ -290,11 +330,17 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
         inject_velocity_prior=inject_velocity_prior,
         dsm_sigma_range=dsm_sigma_range,
         use_residual=use_residual, beta=beta,
-        verbose=verbose,
+        verbose=verbose, smooth_k=smooth_k,
     )
     print(f"    fork  P={r2['fork_pr']['precision']:.2f} R={r2['fork_pr']['recall']:.2f}  "
           f"holder P={r2['holder_pr']['precision']:.2f} R={r2['holder_pr']['recall']:.2f}  "
           f"frac(Re>0)={r2['lead_re']['frac_positive']:.2f}")
+    if "smoothed" in r2:
+        s = r2["smoothed"]
+        print(f"    [smoothed k={smooth_k}] fork P={s['fork_pr']['precision']:.2f} "
+              f"R={s['fork_pr']['recall']:.2f}  "
+              f"holder P={s['holder_pr']['precision']:.2f} R={s['holder_pr']['recall']:.2f}  "
+              f"frac(Re>0)={s['lead_re']['frac_positive']:.2f}")
 
     # Row 3b — DSM-transient, same gate (dynamic ground truth)
     print(f"  [dsm_transient] fit {n_epochs} epochs on α-ramp synthetic, "
@@ -304,12 +350,18 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
         seed=seed, inject_velocity_prior=inject_velocity_prior,
         dsm_sigma_range=dsm_sigma_range,
         use_residual=use_residual, beta=beta,
-        verbose=verbose,
+        verbose=verbose, smooth_k=smooth_k,
     )
     print(f"    fork  P={r3['fork_pr']['precision']:.2f} R={r3['fork_pr']['recall']:.2f}  "
           f"holder P={r3['holder_pr']['precision']:.2f} R={r3['holder_pr']['recall']:.2f}  "
           f"frac(Re>0)={r3['lead_re']['frac_positive']:.2f}  "
           f"n_true_fork={r3['ground_truth']['n_true_fork']}")
+    if "smoothed" in r3:
+        s = r3["smoothed"]
+        print(f"    [smoothed k={smooth_k}] fork P={s['fork_pr']['precision']:.2f} "
+              f"R={s['fork_pr']['recall']:.2f}  "
+              f"holder P={s['holder_pr']['precision']:.2f} R={s['holder_pr']['recall']:.2f}  "
+              f"frac(Re>0)={s['lead_re']['frac_positive']:.2f}")
 
     return {
         "tau_crit": tau_crit,
@@ -337,6 +389,9 @@ def main() -> int:
     p.add_argument("--sigma-min", type=float, default=None,
                    help="If set with --sigma-max, use multi-σ DSM log-uniform in [σ_min, σ_max].")
     p.add_argument("--sigma-max", type=float, default=None)
+    p.add_argument("--smooth-k", type=int, default=30,
+                   help="k for post-hoc Gaussian smoothing of J (0 to disable). "
+                        "Fixed-k default per user: 30.")
     p.add_argument("--v1-json", type=Path, default=None,
                    help="Path to v1 slicing-on-equilibrated JSON (optional)")
     p.add_argument("--out-tag", type=str, default=None,
@@ -351,6 +406,7 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
 
     per_tau = []
+    smooth_k = int(args.smooth_k) if args.smooth_k and args.smooth_k > 0 else None
     for tau in args.tau_crit:
         per_tau.append(run_tau(
             tau_crit=tau, n_cells=args.n_cells, n_alpha=args.n_alpha,
@@ -359,6 +415,7 @@ def main() -> int:
             dsm_sigma_range=dsm_range,
             use_residual=args.use_residual, beta=args.beta,
             verbose=args.verbose,
+            smooth_k=smooth_k,
         ))
 
     v1_row = row_v1_slicing(args.v1_json)
@@ -431,12 +488,24 @@ def main() -> int:
         tau = row["tau_crit"]
         lines.append(_mdrow("oracle", tau, row["rows"]["oracle"]))
         lines.append(_mdrow("dsm_equilibrated", tau, row["rows"]["dsm_equilibrated"]))
+        if "smoothed" in row["rows"]["dsm_equilibrated"]:
+            lines.append(_mdrow(
+                f"dsm_equilibrated_smoothed(k={smooth_k})",
+                tau,
+                row["rows"]["dsm_equilibrated"]["smoothed"],
+            ))
     v1_rows_per_tau = v1_row.get("per_tau", []) if v1_row.get("status") != "pending" else []
     for v in v1_rows_per_tau:
         lines.append(_mdrow("v1_slicing_equilibrated", v["tau_crit"], v))
     for row in per_tau:
         tau = row["tau_crit"]
         lines.append(_mdrow("dsm_transient", tau, row["rows"]["dsm_transient"]))
+        if "smoothed" in row["rows"]["dsm_transient"]:
+            lines.append(_mdrow(
+                f"dsm_transient_smoothed(k={smooth_k})",
+                tau,
+                row["rows"]["dsm_transient"]["smoothed"],
+            ))
 
     if v1_row.get("status") == "pending":
         lines.append(f"\n> v1_slicing_on_equilibrated: PENDING "
