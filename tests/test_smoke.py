@@ -9,6 +9,8 @@ from __future__ import annotations
 
 def test_package_imports():
     import scjdo2
+    import scjdo2.pipeline  # noqa: F401
+    import scjdo2.plot  # noqa: F401
 
     assert scjdo2.__version__.startswith("0.1.0")
 

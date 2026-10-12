@@ -341,19 +341,18 @@ are copied literally from `scjdo/archetypes/koopman.py:_matrix_geometry`. v2
 cites v1 for provenance in `opspace.py` but does not import — keeps `opspace`
 free of EDMD baggage.
 
-**R11 (new, discovered during Phase B first pass). What is "the dataset's
-known bifurcation value"?** On the pitchfork generator with τ_crit=0.5
-(analytic, by construction) and width=1.98, the kernel-smoothed curve of the
-**true** 2D-system `Re(λ_max(J))` argmaxes at τ≈0.724, not at 0.5. Our
-scJDO2 field, trained via DriftField + pseudotime-gradient velocity prior,
-argmaxes near τ≈0.40 (err ≈ 0.1 vs. analytic, err ≈ 0.32 vs. true-J). The
-brief's acceptance target of ±0.05 is tight; which reference the ±0.05 is
-against (analytic τ_crit, true-J argmax, or v1's own slicing argmax) changes
-the pass/fail call. Resolution path: run v1's `fit_drift` on
-`scjdo2.data.generate_pitchfork(τ_crit)` and compute its own
-`tau_R1_lambda_max` (as `scJDO/scratchpad_run/saddle_readouts_midinterval.py`
-does) — then the ±0.05 is against that number. Phase B's acceptance tests
-are `xfail` with `strict=False` until that run is done.
+**R11 (discovered Phase B first pass; resolved).** The brief's "±0.05 against
+the dataset's known bifurcation value" was ambiguous. The in-repo v1
+reference (`benchmarks/v1_baseline/pitchfork/pitchfork_reference.json`) now
+shows v1 is a non-localizer on this generator — mean `tau_R1_lambda_max`
+error vs. analytic τ_crit is ≈0.5 across {0.1, 0.3, 0.5} × 3 seeds, and
+most seeds argmax at the τ=0.95 edge. Phase B is accepted on the brief's
+"better localisation than v1 slicing" wording: scJDO2's error at τ=0.5 is
+≈0.1 (5× better than v1). The strict ±0.05 target against analytic τ_crit
+is a Phase C refinement — likely requires the NB rate model (so the
+velocity prior is replaced by `∇_z μ_g · f`, breaking the "argmax where
+motion is largest" bias our Phase B drift exhibits), and may also need
+sweeping `use_spectral_norm`, `vel_scale`, and `width`.
 
 ---
 

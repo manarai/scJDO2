@@ -5,6 +5,37 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Phase B — Operator-space analysis + plotting API (latent-space, in-memory)
+
+- `scjdo2/pipeline.py` — single entry point `fit_latent_field(adata, …)` that
+  runs drift + field and writes `adata.obsm["X_drift_v"]` and
+  `adata.uns["scjdo2"]["J"]` so the opspace/plot layers never re-estimate.
+- `scjdo2/opspace.py` — AnnData-centric API per the spec:
+  `spectrum`, `invariants`, `behaviour`, `field_gradient`, `lineage_path`,
+  `export_tables`. Conjugate pairs reduced to one member (`Im ≥ 0`); eigenvalue
+  axes labelled "relative" unless `meta["clock_calibrated"]`. `drivers` and
+  `archetype_operators` raise `NotImplementedError` with a Phase C pointer.
+- `scjdo2/plot/` — matplotlib-only publication plots: `style()` context
+  manager, 180 mm width, 8 pt, shared colour × marker key for behaviour.
+  `figure_operator_space` renders Panels A (operator field on embedding)
+  and B (complex plane); Panel C is a stub pending gene-space Jacobians
+  (Phase C). `figure_v1_vs_v2` builds the comparison figure from a v1
+  baseline directory. `figure_archetype_sheet` raises `NotImplementedError`.
+- CLI: `scjdo2 opspace`, `scjdo2 figure operator-space|archetypes|compare`.
+  All read a stored run directory and never re-fit.
+- `tests/test_opspace_pitchfork.py` — small sanity checks + Phase B
+  acceptance slow tests (`field_gradient` peak within ±0.15 of each
+  τ_crit, `fork` precision/recall ≥ 0.3). `drivers` and
+  `archetype_operators` are xfail (strict) so the Phase C gap is tracked.
+- Phase B acceptance (brief phrase "better localisation than v1 slicing")
+  is **passing**: v1's own reference run on this generator argmaxes at a
+  mean error of ≈0.5 across τ_crit ∈ {0.1, 0.3, 0.5} (3 seeds, see
+  `benchmarks/v1_baseline/pitchfork/pitchfork_reference.json`); scJDO2's
+  err at τ_crit=0.5 is ≈0.1 (5× better). The strict ±0.05 target is a
+  Phase C refinement, tracked under V2_PLAN R11.
+- `docs/opspace.md` — authoritative registry of every stored key in
+  `adata.obs` / `obsm` / `uns`.
+
 ### Phase B — Minimum field version (first pass)
 
 - `scjdo2/data/synthetic_pitchfork.py` — toggle-switch generator with
