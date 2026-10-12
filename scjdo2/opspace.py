@@ -33,11 +33,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Literal, Optional, Sequence
+from typing import Any, Literal, Optional, Sequence
 
 import numpy as np
 import pandas as pd
 from anndata import AnnData
+from scipy.sparse import csr_matrix, issparse
 from sklearn.neighbors import NearestNeighbors
 
 
@@ -154,20 +155,100 @@ def _is_clock_calibrated(adata: AnnData) -> bool:
     return bool(_get_meta(adata).get("clock_calibrated", False))
 
 
-def _get_J(adata: AnnData) -> np.ndarray:
+def _get_J(adata: AnnData) -> tuple[Any, str, int]:
+    """Return ``(J, kind, dim)`` where ``kind`` is ``"dense"`` or ``"sparse"``.
+
+    * ``"dense"``: ``J`` is an ``(n, d, d)`` ndarray (Phase B latent-space J).
+      ``dim`` is the latent dimension ``d``.
+    * ``"sparse"``: ``J`` is a list/tuple of ``n`` ``csr_matrix`` of shape
+      ``(G, G)``, with columns restricted to each cell's live-gene index
+      (Phase C gene-space J, per docs/opspace_figure_spec.md §1 and §8.3).
+      ``dim`` is ``G``.
+    """
     try:
         J = adata.uns["scjdo2"]["J"]
     except KeyError as e:
         raise KeyError(
             "adata.uns['scjdo2']['J'] not found. Run scjdo2.pipeline.fit_latent_field "
-            "first (or set the key directly) before calling opspace functions."
+            "(Phase B) or the Phase C rate-model + gene-space pipeline before "
+            "calling opspace functions."
         ) from e
-    J = np.asarray(J)
-    if J.ndim != 3 or J.shape[1] != J.shape[2]:
-        raise ValueError(f"adata.uns['scjdo2']['J'] must be (n_cells, d, d); got {J.shape}")
-    if J.shape[0] != adata.n_obs:
-        raise ValueError(f"J.shape[0]={J.shape[0]} != adata.n_obs={adata.n_obs}")
-    return J
+    # Sparse / per-cell CSR path (Phase C)
+    if isinstance(J, (list, tuple)) and len(J) > 0 and issparse(J[0]):
+        if len(J) != adata.n_obs:
+            raise ValueError(
+                f"J has {len(J)} per-cell matrices but adata.n_obs={adata.n_obs}"
+            )
+        G = int(J[0].shape[0])
+        for c, Jc in enumerate(J):
+            if Jc.shape != (G, G):
+                raise ValueError(
+                    f"J[{c}] has shape {Jc.shape}; expected ({G}, {G})"
+                )
+        return list(J), "sparse", G
+    # Dense latent-space path (Phase B)
+    J_arr = np.asarray(J)
+    if J_arr.ndim != 3 or J_arr.shape[1] != J_arr.shape[2]:
+        raise ValueError(
+            f"adata.uns['scjdo2']['J'] must be (n_cells, d, d) dense or a list of "
+            f"per-cell CSR; got dense shape {J_arr.shape}"
+        )
+    if J_arr.shape[0] != adata.n_obs:
+        raise ValueError(
+            f"J.shape[0]={J_arr.shape[0]} != adata.n_obs={adata.n_obs}"
+        )
+    return J_arr, "dense", int(J_arr.shape[1])
+
+
+def _get_ledger(adata: AnnData):
+    """Return the Fisher ledger if present, else ``None``.
+
+    Accepts either a :class:`scjdo2.fisher.FisherLedger` instance or a plain
+    dict with keys ``fisher`` (list of CSR) and ``reason_per_cell``.
+    """
+    return adata.uns.get("scjdo2", {}).get("fisher_ledger")
+
+
+def _ledger_fisher_list(ledger) -> Optional[list[csr_matrix]]:
+    """Normalise ledger -> list of per-cell Fisher CSR, or None."""
+    if ledger is None:
+        return None
+    if hasattr(ledger, "fisher"):
+        return list(ledger.fisher)
+    if isinstance(ledger, dict) and "fisher" in ledger:
+        return list(ledger["fisher"])
+    return None
+
+
+def _live_cols_of(Jc: csr_matrix) -> np.ndarray:
+    """Return the live-column indices of a CSR Jacobian (unique column ids)."""
+    if Jc.nnz == 0:
+        return np.zeros(0, dtype=np.int64)
+    return np.unique(Jc.indices).astype(np.int64)
+
+
+def _dense_live_block(Jc: csr_matrix, live: np.ndarray) -> np.ndarray:
+    """Dense ``(L, L)`` live-block of a CSR Jacobian — rows and cols
+    restricted to ``live``. For the eigendecomposition in :func:`spectrum`.
+    """
+    if live.size == 0:
+        return np.zeros((0, 0), dtype=np.float64)
+    return np.asarray(Jc[live, :][:, live].todense(), dtype=np.float64)
+
+
+def _fix_eigvec_sign(v: np.ndarray) -> np.ndarray:
+    """Fix the phase of ``v`` so the largest-|magnitude| entry is real and
+    positive (docs/opspace_figure_spec.md §2.4 and §8.6). Works for real
+    and complex vectors.
+    """
+    v = np.asarray(v)
+    if v.size == 0:
+        return v
+    k = int(np.argmax(np.abs(v)))
+    if np.abs(v[k]) == 0:
+        return v
+    phase = v[k] / np.abs(v[k])
+    return v / phase
 
 
 # ======================================================================
@@ -185,55 +266,116 @@ def spectrum(
 
     Stores:
         ``adata.obsm["op_eigvals"]`` — ``(n_cells, n_eig)`` complex
-        ``adata.uns["scjdo2"]["op_eigvecs"]`` — ``(n_cells, n_eig, d)`` complex
+        ``adata.uns["scjdo2"]["op_eigvecs"]`` — ``(n_cells, n_eig, dim)`` complex
+            where ``dim`` is the Jacobian space (latent ``d`` in Phase B,
+            genes ``G`` in Phase C). The eigenvector tensor is dense;
+            Phase D may sparsify.
         ``adata.uns["scjdo2"]["op_valid"]`` — ``(n_cells,)`` bool
-        ``adata.uns["scjdo2"]["spectrum_meta"]`` — ``{n_eig, fisher_mask, min_fisher}``
+        ``adata.uns["scjdo2"]["spectrum_meta"]`` — ``{n_eig, fisher_mask,
+          min_fisher, J_kind}``
 
-    ``fisher_mask`` + ``min_fisher`` zero out entries of ``J_c`` whose
-    Fisher information is below the threshold before decomposing. In Phase
-    B the Fisher ledger does not exist yet; if ``fisher_mask`` is True and
-    no ledger is present the call falls back to no masking and records
-    ``fisher_mask=False`` in the stored meta with a warning.
+    Behaviour:
+
+    * **Phase B dense J** (``(n, d, d)``). The ``fisher_mask`` kwarg has no
+      effect (no ledger); the call records ``fisher_mask=False`` with a
+      warning and continues.
+    * **Phase C sparse J** (list of per-cell CSR). For each cell the
+      live-block ``J_c[live, :][:, live]`` is dense ``(L_c, L_c)`` and gets
+      eigendecomposed. If ``fisher_mask`` and a ledger is present, entries
+      of ``J_c.data`` whose Fisher info is below ``min_fisher`` are zeroed
+      before the live block is extracted. ``min_fisher`` defaults to the
+      10th percentile of each cell's live Fisher data.
     """
     import warnings
 
-    J = _get_J(adata)
-    n, d, _ = J.shape
-    n_eig = min(int(n_eig), d)
+    J, kind, dim = _get_J(adata)
+    n = adata.n_obs
+    n_eig = min(int(n_eig), dim)
 
-    ledger = adata.uns.get("scjdo2", {}).get("fisher_ledger")
+    ledger = _get_ledger(adata)
+    F_list = _ledger_fisher_list(ledger)
     applied_mask = False
     threshold_used: Optional[float] = None
-    if fisher_mask and ledger is None:
+    if fisher_mask and F_list is None:
         warnings.warn(
             "spectrum(fisher_mask=True) called without a Fisher ledger; "
-            "falling back to no mask. Phase C will store the ledger.",
+            "falling back to no mask. Phase B latent runs have no ledger; "
+            "Phase C stores one when the gene-space pipeline runs.",
             RuntimeWarning,
             stacklevel=2,
         )
-    elif fisher_mask and ledger is not None:
-        # Phase C hook. Not reachable in Phase B.
+    elif fisher_mask and F_list is not None:
         applied_mask = True
         threshold_used = float(min_fisher) if min_fisher is not None else None
 
     eigvals = np.full((n, n_eig), np.nan + 1j * np.nan, dtype=np.complex128)
-    eigvecs = np.full((n, n_eig, d), np.nan + 1j * np.nan, dtype=np.complex128)
+    eigvecs = np.full((n, n_eig, dim), np.nan + 1j * np.nan, dtype=np.complex128)
     valid = np.ones(n, dtype=bool)
 
-    for c in range(n):
-        Jc = J[c]
-        if not np.all(np.isfinite(Jc)):
-            valid[c] = False
-            continue
-        try:
-            evals, V = np.linalg.eig(Jc)
-        except np.linalg.LinAlgError:
-            valid[c] = False
-            continue
-        evals, V = _conjugate_free(evals, V)
-        eigvals[c] = _pad_to(evals, n_eig, dtype=np.complex128)
-        for k in range(min(n_eig, V.shape[1])):
-            eigvecs[c, k] = V[:, k]
+    if kind == "dense":
+        for c in range(n):
+            Jc = J[c]
+            if not np.all(np.isfinite(Jc)):
+                valid[c] = False
+                continue
+            try:
+                evals, V = np.linalg.eig(Jc)
+            except np.linalg.LinAlgError:
+                valid[c] = False
+                continue
+            evals, V = _conjugate_free(evals, V)
+            # Apply sign convention per entry
+            V_fixed = np.column_stack([_fix_eigvec_sign(V[:, k]) for k in range(V.shape[1])])
+            eigvals[c] = _pad_to(evals, n_eig, dtype=np.complex128)
+            for k in range(min(n_eig, V_fixed.shape[1])):
+                eigvecs[c, k] = V_fixed[:, k]
+    else:  # kind == "sparse"
+        for c in range(n):
+            Jc = J[c]
+            if Jc.nnz == 0:
+                valid[c] = False
+                continue
+            # Optional Fisher mask: zero data entries below threshold.
+            if applied_mask and F_list is not None:
+                Fc = F_list[c]
+                # Align sparsity: Fisher and J share layout (Step 5 invariant).
+                if Fc.nnz == Jc.nnz and np.array_equal(Fc.indices, Jc.indices) \
+                        and np.array_equal(Fc.indptr, Jc.indptr):
+                    f_data = Fc.data
+                else:
+                    # Fallback: evaluate F at J's (row, col) positions.
+                    f_data = np.asarray(Fc[Jc.nonzero()[0], Jc.nonzero()[1]]).ravel()
+                if min_fisher is None:
+                    thr_c = float(np.percentile(f_data, 10)) if f_data.size else 0.0
+                else:
+                    thr_c = float(min_fisher)
+                mask = f_data < thr_c
+                if mask.any():
+                    Jc = Jc.copy()
+                    Jc.data[mask] = 0.0
+                    Jc.eliminate_zeros()
+                threshold_used = thr_c if threshold_used is None else threshold_used
+            live = _live_cols_of(Jc)
+            if live.size < 1:
+                valid[c] = False
+                continue
+            block = _dense_live_block(Jc, live)
+            if not np.all(np.isfinite(block)):
+                valid[c] = False
+                continue
+            try:
+                evals, V = np.linalg.eig(block)                 # (L,) complex, (L, L)
+            except np.linalg.LinAlgError:
+                valid[c] = False
+                continue
+            evals, V = _conjugate_free(evals, V)
+            # Fix sign and lift back to full dim G.
+            V_fixed = np.column_stack([_fix_eigvec_sign(V[:, k]) for k in range(V.shape[1])])
+            eigvals[c] = _pad_to(evals, n_eig, dtype=np.complex128)
+            for k in range(min(n_eig, V_fixed.shape[1])):
+                v_full = np.zeros(dim, dtype=np.complex128)
+                v_full[live] = V_fixed[:, k]
+                eigvecs[c, k] = v_full
 
     adata.obsm["op_eigvals"] = eigvals
     adata.uns.setdefault("scjdo2", {})
@@ -243,6 +385,7 @@ def spectrum(
         "n_eig": int(n_eig),
         "fisher_mask": bool(applied_mask),
         "min_fisher": threshold_used,
+        "J_kind": kind,
     }
 
 
@@ -270,7 +413,7 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
     if "op_eigvals" not in adata.obsm:
         raise RuntimeError("Call spectrum(adata) before invariants(adata)")
 
-    J = _get_J(adata)
+    J, kind, dim = _get_J(adata)
     eigvals = np.asarray(adata.obsm["op_eigvals"])
     valid = np.asarray(adata.uns["scjdo2"]["op_valid"])
     eigvecs = np.asarray(adata.uns["scjdo2"]["op_eigvecs"])
@@ -308,16 +451,32 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
         if ev.size >= 2:
             spectral_gap[c] = float(ev[0].real - ev[1].real)
 
-        Jc = J[c]
-        if np.all(np.isfinite(Jc)):
-            henrici[c] = _henrici(Jc, ev)
-            reactivity[c] = _reactivity(Jc, ev)
-            transient_gain[c] = _transient_gain(Jc.astype(np.float64), n_max=transient_horizon)
-            try:
-                _, V_full = np.linalg.eig(Jc)
-                eigvec_cond[c] = _eigvec_cond(V_full)
-            except np.linalg.LinAlgError:
-                eigvec_cond[c] = np.inf
+        if kind == "dense":
+            Jc = J[c]
+            if np.all(np.isfinite(Jc)):
+                henrici[c] = _henrici(Jc, ev)
+                reactivity[c] = _reactivity(Jc, ev)
+                transient_gain[c] = _transient_gain(Jc.astype(np.float64), n_max=transient_horizon)
+                try:
+                    _, V_full = np.linalg.eig(Jc)
+                    eigvec_cond[c] = _eigvec_cond(V_full)
+                except np.linalg.LinAlgError:
+                    eigvec_cond[c] = np.inf
+        else:  # sparse: operate on the live block
+            Jc = J[c]
+            live = _live_cols_of(Jc)
+            if live.size == 0:
+                continue
+            block = _dense_live_block(Jc, live)
+            if np.all(np.isfinite(block)):
+                henrici[c] = _henrici(block, ev)
+                reactivity[c] = _reactivity(block, ev)
+                transient_gain[c] = _transient_gain(block, n_max=transient_horizon)
+                try:
+                    _, V_full = np.linalg.eig(block)
+                    eigvec_cond[c] = _eigvec_cond(V_full)
+                except np.linalg.LinAlgError:
+                    eigvec_cond[c] = np.inf
 
     adata.obs["lead_re"] = lead_re
     adata.obs["lead_im"] = lead_im
@@ -331,15 +490,20 @@ def invariants(adata: AnnData, transient_horizon: int = 30) -> None:
     adata.obs["reactivity"] = reactivity
     adata.obs["eigvec_cond"] = eigvec_cond
 
-    # op_confidence: median Fisher of entries contributing to the leading
-    # eigenvector (weights above 5% of max). In Phase B there's no ledger,
-    # so op_confidence = 1.0 everywhere (uniform opacity in plots).
-    ledger = adata.uns.get("scjdo2", {}).get("fisher_ledger")
-    if ledger is None:
+    # op_confidence (spec §2.2): median Fisher of entries whose |eigvec
+    # weight| > 5 % of max. On Phase B latent (no ledger) we fall back to
+    # 1.0 everywhere so the plot layer stays functional.
+    ledger = _get_ledger(adata)
+    if ledger is None or not hasattr(ledger, "op_confidence_from_eigvec"):
         adata.obs["op_confidence"] = 1.0
     else:
-        # Phase C hook. Implement once ledger is persisted.
-        adata.obs["op_confidence"] = 1.0  # placeholder
+        # Leading eigvec per cell (|Im|≥0 member stored at index 0).
+        leading = eigvecs[:, 0, :]
+        conf = ledger.op_confidence_from_eigvec(leading)
+        if np.all(np.isnan(conf)):
+            adata.obs["op_confidence"] = 1.0
+        else:
+            adata.obs["op_confidence"] = np.where(np.isfinite(conf), conf, 0.0)
 
 
 # ======================================================================
@@ -394,25 +558,116 @@ def behaviour(adata: AnnData, tol: Optional[float] = None,
 
 def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
             top: int = 15, min_fisher: Optional[float] = None,
+            cell: Optional[int] = None,
             archetype_id: Optional[int] = None) -> pd.DataFrame:
-    """Return a tidy DataFrame of driver genes per cell or archetype.
+    """Tidy DataFrame of driver genes for a cell's leading eigenvector or
+    an archetype operator.
 
-    Phase C work: this needs gene-space eigenvectors, which require the NB
-    rate model (``scjdo2.rates``) and gene-space Jacobians. The Phase B
-    pipeline stores latent-space Jacobians only, so the eigenvectors have no
-    gene names. Call lands when ``adata.uns["scjdo2"]["J"]`` has shape
-    ``(n, n_genes, n_genes)`` and ``adata.uns["scjdo2"]["gene_names"]`` is
-    populated.
+    Per spec §2.4 the eigvec phase is fixed so the largest-|magnitude|
+    entry is real and positive (:func:`_fix_eigvec_sign`), applied inside
+    :func:`spectrum`. ``weight`` here is the real part of that
+    phase-fixed eigvec; ``magnitude`` and ``phase`` describe the full
+    complex entry so complex-mode drivers can render the magnitude ×
+    phase bars from spec §3.1 Panel C.
+
+    Columns: ``gene``, ``weight`` (signed real part), ``magnitude``,
+    ``phase`` (radians; NaN for pure-real modes), ``fisher``,
+    ``fisher_se`` (``1/sqrt(F)``), ``reason``.
+
+    Phase B latent-J adata: not supported (no gene-space eigenvectors);
+    raises :class:`NotImplementedError`.
+
+    ``which="lead"`` + ``cell=i`` picks the leading eigvec of cell ``i``
+    (defaults to the fork cell with the highest ``lead_re`` if omitted).
+    ``which="archetype"`` + ``archetype_id`` requires the archetype
+    operator spectrum to be populated by :func:`archetype_operators`.
     """
-    J = _get_J(adata)
-    gene_space = J.shape[1] == adata.n_vars
-    if not gene_space:
+    J, kind, dim = _get_J(adata)
+    if kind != "sparse":
         raise NotImplementedError(
-            "drivers() requires a gene-space Jacobian (Phase C). "
-            f"Current J is latent-space ({J.shape[1]} dims vs {adata.n_vars} genes). "
-            "Run scjdo2.rates then scjdo2.field in gene mode (Phase C work)."
+            "drivers() requires a gene-space Jacobian (Phase C per-cell CSR J). "
+            f"Current J is dense latent-space ({dim} dims vs {adata.n_vars} genes). "
+            "Run the Phase C rate model + fit_gene_space_jacobians first."
         )
-    raise NotImplementedError("drivers() Phase C implementation pending")
+    if dim != adata.n_vars:
+        raise RuntimeError(
+            f"Gene-space J has dim={dim} but adata.n_vars={adata.n_vars}; "
+            "gene-name index mismatch."
+        )
+    if "op_eigvecs" not in adata.uns.get("scjdo2", {}):
+        raise RuntimeError("Call spectrum(adata) before drivers(adata)")
+    eigvecs = np.asarray(adata.uns["scjdo2"]["op_eigvecs"])  # (n, n_eig, G)
+
+    if which == "archetype":
+        arch = adata.uns.get("scjdo2", {}).get("archetypes")
+        if arch is None:
+            raise RuntimeError(
+                "drivers(which='archetype') needs archetype_operators() to have run first."
+            )
+        if archetype_id is None:
+            raise ValueError("drivers(which='archetype') requires archetype_id=...")
+        v = np.asarray(arch[archetype_id]["eigvec"], dtype=np.complex128)
+        fisher = np.asarray(arch[archetype_id].get("fisher"), dtype=np.float64)
+        if fisher.shape != v.shape:
+            fisher = np.full(v.shape, np.nan)
+        reasons = np.asarray(arch[archetype_id].get("reason", ["ok"] * v.size))
+    else:
+        if cell is None:
+            # Default: fork cell with the highest lead_re
+            if "op_behaviour" in adata.obs and "lead_re" in adata.obs:
+                mask = adata.obs["op_behaviour"].astype(str) == "fork"
+                lead = adata.obs["lead_re"].to_numpy()
+                lead_m = np.where(mask, lead, -np.inf)
+                cell = int(np.argmax(lead_m)) if mask.any() else int(np.nanargmax(lead))
+            else:
+                raise ValueError(
+                    "drivers(which='lead') with no `cell=` needs behaviour/lead_re"
+                )
+        v = eigvecs[cell, 0, :]
+        # Fetch per-entry Fisher at the live-gene indices of this cell's J.
+        Jc = J[cell]
+        live = _live_cols_of(Jc)
+        ledger = _get_ledger(adata)
+        F_list = _ledger_fisher_list(ledger)
+        fisher = np.full(dim, np.nan)
+        if F_list is not None:
+            Fc = F_list[cell]
+            diag_vals = Fc.diagonal()
+            fisher[live] = diag_vals[live]
+        reasons = np.array(["no_variation"] * dim, dtype=object)
+        reasons[live] = "ok"
+
+    # Sign is already fixed by spectrum(); recompute as a safeguard.
+    v = _fix_eigvec_sign(v)
+    magnitude = np.abs(v)
+    weight = v.real
+    phase = np.where(magnitude > 0, np.angle(v), np.nan)
+    is_complex = bool(np.max(np.abs(v.imag)) > _EPS_IM)
+    if not is_complex:
+        phase = np.full_like(magnitude, np.nan)
+
+    with np.errstate(invalid="ignore", divide="ignore"):
+        fisher_se = 1.0 / np.sqrt(fisher)
+    fisher_se = np.where(np.isfinite(fisher_se), fisher_se, np.nan)
+
+    gene_names = (
+        np.asarray(adata.var_names)
+        if adata.var_names is not None
+        else np.array([f"gene_{i}" for i in range(dim)])
+    )
+    df = pd.DataFrame({
+        "gene": gene_names,
+        "weight": weight,
+        "magnitude": magnitude,
+        "phase": phase,
+        "fisher": fisher,
+        "fisher_se": fisher_se,
+        "reason": reasons,
+    })
+    if min_fisher is not None:
+        df = df[df["fisher"] >= float(min_fisher)]
+    df = df.sort_values("magnitude", ascending=False).head(int(top)).reset_index(drop=True)
+    return df
 
 
 # ======================================================================
@@ -442,7 +697,7 @@ def field_gradient(adata: AnnData, k: int = 15, use_rep: str = "X_pca") -> None:
     """Mean Frobenius distance between ``J_c`` and its k latent-neighbours' J,
     normalised by ``||J_c||_F``. Writes ``adata.obs["op_field_gradient"]``.
     """
-    J = _get_J(adata)
+    J, kind, _dim = _get_J(adata)
     if use_rep not in adata.obsm:
         raise KeyError(f"adata.obsm[{use_rep!r}] not found")
     z = np.asarray(adata.obsm[use_rep], dtype=np.float32)
@@ -452,18 +707,27 @@ def field_gradient(adata: AnnData, k: int = 15, use_rep: str = "X_pca") -> None:
     _, idx = nn.kneighbors(z, return_distance=True)
     idx = idx[:, 1:]
 
+    def _frob(M) -> float:
+        if issparse(M):
+            return float(np.sqrt((M.multiply(M)).sum()))
+        return float(np.linalg.norm(M, ord="fro"))
+
     out = np.full(n, np.nan)
     for c in range(n):
         Jc = J[c]
-        if not np.all(np.isfinite(Jc)):
+        if kind == "dense" and not np.all(np.isfinite(Jc)):
             continue
-        denom = float(np.linalg.norm(Jc, ord="fro")) + 1e-12
+        if kind == "sparse" and Jc.nnz == 0:
+            continue
+        denom = _frob(Jc) + 1e-12
         diffs = []
         for j in idx[c]:
             Jj = J[j]
-            if not np.all(np.isfinite(Jj)):
+            if kind == "dense" and not np.all(np.isfinite(Jj)):
                 continue
-            diffs.append(float(np.linalg.norm(Jj - Jc, ord="fro")))
+            if kind == "sparse" and Jj.nnz == 0:
+                continue
+            diffs.append(_frob(Jj - Jc))
         if diffs:
             out[c] = float(np.mean(diffs)) / denom
     adata.obs["op_field_gradient"] = out
