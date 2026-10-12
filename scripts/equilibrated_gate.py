@@ -152,6 +152,7 @@ def row_oracle(adata: AnnData, tau_crit: float) -> dict[str, Any]:
 
 def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
                          seed: int, inject_velocity_prior: bool,
+                         dsm_sigma_range: Optional[tuple],
                          verbose: bool) -> dict[str, Any]:
     """Row 2 — DSM drift fit + autodiff J on equilibrated snapshots."""
     t0 = time.monotonic()
@@ -161,6 +162,7 @@ def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
             hidden=128, depth=3, n_epochs=n_epochs, seed=seed,
             use_spectral_norm=False, batch_size=256,
             inject_velocity_prior=inject_velocity_prior,
+            dsm_sigma_range=dsm_sigma_range,
         ),
         jacobian_method="autodiff",
         verbose=verbose,
@@ -170,12 +172,15 @@ def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
     r["row"] = "dsm_equilibrated"
     r["fit_seconds"] = dt_fit
     r["inject_velocity_prior"] = bool(inject_velocity_prior)
+    r["dsm_sigma_range"] = list(dsm_sigma_range) if dsm_sigma_range else None
     r["n_epochs"] = int(n_epochs)
     return r
 
 
 def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
-                      inject_velocity_prior: bool, verbose: bool) -> dict[str, Any]:
+                      inject_velocity_prior: bool,
+                      dsm_sigma_range: Optional[tuple],
+                      verbose: bool) -> dict[str, Any]:
     """Row 3 — DSM on the TRANSIENT α-ramp pitchfork, measured against the
     SAME dynamic per-cell ground truth as the other rows.
     """
@@ -191,6 +196,7 @@ def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
             hidden=128, depth=3, n_epochs=n_epochs, seed=seed,
             use_spectral_norm=False, batch_size=256,
             inject_velocity_prior=inject_velocity_prior,
+            dsm_sigma_range=dsm_sigma_range,
         ),
         jacobian_method="autodiff",
         verbose=verbose,
@@ -199,6 +205,7 @@ def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
     r = _gate(adata, tau_crit)
     r["row"] = "dsm_transient"
     r["fit_seconds"] = dt_fit
+    r["dsm_sigma_range"] = list(dsm_sigma_range) if dsm_sigma_range else None
     r["note"] = "α-ramp synthetic — negative control"
     return r
 
@@ -223,7 +230,8 @@ def row_v1_slicing(json_path: Optional[Path]) -> dict[str, Any]:
 # ------------------------------------------------------------------- cli
 
 def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
-            seed: int, inject_velocity_prior: bool, verbose: bool) -> dict[str, Any]:
+            seed: int, inject_velocity_prior: bool,
+            dsm_sigma_range: Optional[tuple], verbose: bool) -> dict[str, Any]:
     print(f"\n=== τ_crit = {tau_crit} ===")
     adata = generate_pitchfork_equilibrated(
         tau_crit=tau_crit, seed=seed,
@@ -244,20 +252,25 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
           f"frac(Re>0)={r1['lead_re']['frac_positive']:.2f}")
 
     # Row 2 — DSM-equilibrated
-    print(f"  [dsm_equilibrated] fit {n_epochs} epochs, prior={inject_velocity_prior}")
+    print(f"  [dsm_equilibrated] fit {n_epochs} epochs, prior={inject_velocity_prior}, "
+          f"sigma_range={dsm_sigma_range}")
     r2 = row_dsm_equilibrated(
         adata, tau_crit, n_epochs=n_epochs, seed=seed,
-        inject_velocity_prior=inject_velocity_prior, verbose=verbose,
+        inject_velocity_prior=inject_velocity_prior,
+        dsm_sigma_range=dsm_sigma_range,
+        verbose=verbose,
     )
     print(f"    fork  P={r2['fork_pr']['precision']:.2f} R={r2['fork_pr']['recall']:.2f}  "
           f"holder P={r2['holder_pr']['precision']:.2f} R={r2['holder_pr']['recall']:.2f}  "
           f"frac(Re>0)={r2['lead_re']['frac_positive']:.2f}")
 
     # Row 3b — DSM-transient, same gate (dynamic ground truth)
-    print(f"  [dsm_transient] fit {n_epochs} epochs on α-ramp synthetic")
+    print(f"  [dsm_transient] fit {n_epochs} epochs on α-ramp synthetic, "
+          f"sigma_range={dsm_sigma_range}")
     r3 = row_dsm_transient(
         tau_crit=tau_crit, n_cells=adata.n_obs, n_epochs=n_epochs,
-        seed=seed, inject_velocity_prior=inject_velocity_prior, verbose=verbose,
+        seed=seed, inject_velocity_prior=inject_velocity_prior,
+        dsm_sigma_range=dsm_sigma_range, verbose=verbose,
     )
     print(f"    fork  P={r3['fork_pr']['precision']:.2f} R={r3['fork_pr']['recall']:.2f}  "
           f"holder P={r3['holder_pr']['precision']:.2f} R={r3['holder_pr']['recall']:.2f}  "
@@ -280,10 +293,19 @@ def main() -> int:
     p.add_argument("--n-epochs", type=int, default=5000)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--inject-velocity-prior", action=argparse.BooleanOptionalAction, default=True)
+    p.add_argument("--sigma-min", type=float, default=None,
+                   help="If set with --sigma-max, use multi-σ DSM log-uniform in [σ_min, σ_max].")
+    p.add_argument("--sigma-max", type=float, default=None)
     p.add_argument("--v1-json", type=Path, default=None,
                    help="Path to v1 slicing-on-equilibrated JSON (optional)")
+    p.add_argument("--out-tag", type=str, default=None,
+                   help="Suffix for output files; default uses the σ schedule.")
     p.add_argument("--verbose", action="store_true")
     args = p.parse_args()
+
+    dsm_range: Optional[tuple] = None
+    if args.sigma_min is not None and args.sigma_max is not None:
+        dsm_range = (float(args.sigma_min), float(args.sigma_max))
 
     OUT.mkdir(parents=True, exist_ok=True)
 
@@ -293,6 +315,7 @@ def main() -> int:
             tau_crit=tau, n_cells=args.n_cells, n_alpha=args.n_alpha,
             n_epochs=args.n_epochs, seed=args.seed,
             inject_velocity_prior=args.inject_velocity_prior,
+            dsm_sigma_range=dsm_range,
             verbose=args.verbose,
         ))
 
@@ -305,8 +328,11 @@ def main() -> int:
         "per_tau": per_tau,
         "v1_slicing_on_equilibrated": v1_row,
     }
-    out_json = OUT / "report.json"
+    tag = args.out_tag or ("multi_sigma" if dsm_range else "single_sigma")
+    out_json = OUT / f"report_{tag}.json"
     out_json.write_text(json.dumps(report, indent=2, default=float))
+    # Also update the canonical report.json pointer
+    (OUT / "report.json").write_text(json.dumps(report, indent=2, default=float))
     print(f"\n[equilibrated gate] wrote {out_json}")
 
     # Markdown table
@@ -368,8 +394,10 @@ def main() -> int:
         "≥ 0.8 at every τ_crit.",
     ])
 
+    out_md = OUT / f"report_{tag}.md"
+    out_md.write_text("\n".join(lines) + "\n")
     (OUT / "report.md").write_text("\n".join(lines) + "\n")
-    print(f"[equilibrated gate] wrote {OUT / 'report.md'}")
+    print(f"[equilibrated gate] wrote {out_md}")
     return 0
 
 

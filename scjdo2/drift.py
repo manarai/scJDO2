@@ -46,6 +46,14 @@ class DriftConfig:
     # Set to False to run DSM-only: the drift then recovers σ² ∇_z log p(z|t),
     # whose Jacobian is the Hessian of log p (symmetric, negative near modes).
     inject_velocity_prior: bool = True
+    # Multi-σ DSM schedule. When set to (σ_min, σ_max), each training step
+    # samples σ ~ log-uniform in that range and weights the DSM loss by σ²
+    # (equivalent to targeting σ·score ≈ -ε). This normalises target
+    # magnitudes across σ and makes the DSM loss floor a d-independent
+    # constant (unit per element). Standard cure for DSM loss dominated by
+    # the raw target magnitude at a single small σ. ``None`` → legacy
+    # single-sigma path at ``sigma`` above.
+    dsm_sigma_range: Optional[tuple] = None
     clock_calibrated: bool = field(default=False, init=False)
 
 
@@ -131,11 +139,30 @@ class DriftAdapter:
 
         model.train()
         bs = min(self.config.batch_size, n)
-        sigma = float(self.config.sigma)
+        sigma_range = self.config.dsm_sigma_range
+        if sigma_range is not None:
+            log_lo, log_hi = float(np.log(sigma_range[0])), float(np.log(sigma_range[1]))
+            schedule = "multi"
+        else:
+            schedule = "single"
+            sigma = float(self.config.sigma)
         for epoch in range(self.config.n_epochs):
             idx = torch.as_tensor(rng.integers(0, n, size=bs), dtype=torch.long, device=device)
             x_b, t_b = X_ref[idx], t_t[idx]
-            loss_dsm = denoising_score_matching(model, x_b, t_b, sigma=sigma)
+            if schedule == "multi":
+                # σ ~ log-uniform(σ_min, σ_max); σ²-weighted DSM so the floor
+                # is unit per element and gradient magnitude is bounded.
+                log_sig = torch.rand(bs, device=device) * (log_hi - log_lo) + log_lo
+                sigmas = torch.exp(log_sig)                     # (B,)
+                noise = torch.randn_like(x_b)
+                x_noisy = x_b + sigmas.unsqueeze(-1) * noise
+                target = -noise / sigmas.unsqueeze(-1)
+                s_out = model.score(x_noisy, t_b)
+                # σ² weight: ((σ(s - target))²).mean() = ((σ·s + ε)²).mean()
+                diff = sigmas.unsqueeze(-1) * (s_out - target)  # == σ·s + ε
+                loss_dsm = (diff * diff).mean()
+            else:
+                loss_dsm = denoising_score_matching(model, x_b, t_b, sigma=sigma)
             u = model(x_b, t_b)
             loss = loss_dsm + v1_cfg.alpha_control * control_energy(u)
             opt.zero_grad()
@@ -145,7 +172,7 @@ class DriftAdapter:
             sched.step()
             if verbose and (epoch + 1) % max(1, self.config.n_epochs // 10) == 0:
                 print(f"[drift] epoch {epoch + 1}/{self.config.n_epochs}  "
-                      f"loss={float(loss.detach()):.4f}")
+                      f"loss={float(loss.detach()):.4f}  schedule={schedule}")
 
         model.eval()
         self._model = model

@@ -5,6 +5,48 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Trail 1 — multi-σ annealed DSM: fixes the DSM loss, not the gate
+
+Per user plan: after the sanity checks confirmed (A) DSM works on an
+isotropic Gaussian and (B) the single-σ loss plateau at ~94 matched the
+``1/σ² = 100`` floor (so the score path was outputting ≈ 0), take trail 1
+— replace the single ``σ = 0.1`` with ``σ ~ log-uniform([0.05, 1.0])`` per
+step and the ``σ²`` weighting that makes the loss floor a unit per element.
+
+Changes:
+- ``scjdo2.drift.DriftConfig`` gets ``dsm_sigma_range: Optional[tuple]``.
+  When set, the training step samples ``σ`` per batch, multiplies the
+  DSM residual by ``σ`` (equivalent to ``σ²`` weighting), and uses the
+  per-cell ``σ`` to shape the noise. ``None`` keeps the legacy single-σ
+  path.
+- ``scripts/equilibrated_gate.py`` gets ``--sigma-min`` / ``--sigma-max``
+  passthrough. Separate ``report_multi_sigma.{json,md}`` output.
+
+Loss trajectory under multi-σ (σ ∈ [0.05, 1.0]):
+    plateau drops from ~94 (single-σ, floor 100) to ~0.70 (multi-σ, floor 1).
+    The DSM subnet is now clearly training.
+
+But the gate shape is identical:
+
+| row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) |
+|---|---|---|---|---|---|---|
+| dsm_equilibrated (multi-σ) | 0.1 | 0.04 | 0.71 | nan | 0.00 | 1.00 |
+| dsm_equilibrated (multi-σ) | 0.3 | 0.05 | 0.80 | nan | 0.00 | 1.00 |
+| dsm_equilibrated (multi-σ) | 0.5 | 0.05 | 0.83 | nan | 0.00 | 1.00 |
+
+Exactly what the sanity decomposition predicted: multi-σ improves the
+DSM-trained ``score`` subnet (which contributes only ``β·∂score/∂z ≈ 0``
+to the drift Jacobian under single-σ anyway), but the drift Jacobian is
+dominated by the ``residual`` MLP. The residual is trained only via
+``control_energy(u) = mean(u²)`` on the full forward sum, so it
+compensates the velocity-prior buffer and inherits its (sign-flipped)
+spatial structure — which on this data is uniformly expansive.
+
+Phase C stays blocked. The fix needs to attack the residual-MLP
+compensation pattern directly: either drop the residual (``residual ≡ 0``),
+constrain its spectrum (spectral norm or Jacobian penalty), or anchor
+the residual's output to zero via a dedicated loss term.
+
 ### Dynamic ground truth — gate well-defined, DSM fit still the barrier
 
 Per user: swap the pseudotime-band ground truth for strict per-cell sign of
