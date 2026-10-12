@@ -88,7 +88,7 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
     pred_fork = beh == "fork"
     pred_holder = beh == "holder"
 
-    # Dynamic ground truth: strict sign of analytic lead_re per cell
+    # Dynamic ground truth: same 0.1·std tolerance as opspace.behaviour.
     alpha = adata.obs["alpha"].to_numpy(dtype=np.float64)
     z_true = np.asarray(adata.obsm["X_true"], dtype=np.float64)
     J_analytic = analytic_jacobian(z_true, alpha)
@@ -96,8 +96,10 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
         float(np.max(np.linalg.eigvals(J_analytic[c]).real))
         for c in range(adata.n_obs)
     ])
-    true_fork = analytic_lead_re > 0.0
-    true_holder = analytic_lead_re < 0.0
+    finite = analytic_lead_re[np.isfinite(analytic_lead_re)]
+    tol = float(0.1 * np.nanstd(finite)) if finite.size else 0.1
+    true_fork = analytic_lead_re > tol
+    true_holder = analytic_lead_re < -tol
 
     return {
         "tau_crit": tau_crit,
@@ -112,6 +114,7 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
             "median": float(np.nanmedian(lead_re)),
         },
         "ground_truth": {
+            "tol": tol,
             "n_true_fork": int(true_fork.sum()),
             "n_true_holder": int(true_holder.sum()),
             "frac_true_fork": float(np.mean(true_fork)),

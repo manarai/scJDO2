@@ -1,0 +1,154 @@
+{
+  "timestamp": "2026-10-12 05:50:28",
+  "args": {
+    "tau_crit": [
+      0.5
+    ],
+    "n_cells": 200,
+    "n_alpha": 10,
+    "n_epochs": 50,
+    "seed": 0,
+    "inject_velocity_prior": false,
+    "use_residual": false,
+    "beta": 0.04,
+    "sigma_min": 0.05,
+    "sigma_max": 1.0,
+    "v1_json": null,
+    "out_tag": "smoke_tol_gt",
+    "verbose": false
+  },
+  "ground_truth": "dynamic (strict sign of analytic lead_re per cell)",
+  "per_tau": [
+    {
+      "tau_crit": 0.5,
+      "n_cells": 200,
+      "n_alpha": 10,
+      "rows": {
+        "oracle": {
+          "row": "oracle",
+          "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
+          "fork_pr": {
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "holder_pr": {
+            "tp": 168,
+            "fp": 0,
+            "fn": 20,
+            "precision": 1.0,
+            "recall": 0.8936170212765957
+          },
+          "beh_counts": {
+            "damped_oscillator": 20,
+            "drift": 4,
+            "fork": 8,
+            "holder": 168
+          },
+          "lead_re": {
+            "frac_positive": 0.045,
+            "frac_negative": 0.955,
+            "median": -0.7883276956227872
+          },
+          "ground_truth": {
+            "tol": 0.03442897539193452,
+            "n_true_fork": 8,
+            "n_true_holder": 188,
+            "frac_true_fork": 0.04,
+            "analytic_lead_re_median": -0.7883276956227872
+          }
+        },
+        "dsm_equilibrated": {
+          "fork_pr": {
+            "tp": 6,
+            "fp": 128,
+            "fn": 2,
+            "precision": 0.04477611940298507,
+            "recall": 0.75
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 188,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 134,
+            "growing_oscillator": 66
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.00027691194554790854
+          },
+          "ground_truth": {
+            "tol": 0.03442897539193452,
+            "n_true_fork": 8,
+            "n_true_holder": 188,
+            "frac_true_fork": 0.04,
+            "analytic_lead_re_median": -0.7883276956227872
+          },
+          "row": "dsm_equilibrated",
+          "fit_seconds": 1.554997417028062,
+          "inject_velocity_prior": false,
+          "use_residual": false,
+          "beta": 0.04,
+          "dsm_sigma_range": [
+            0.05,
+            1.0
+          ],
+          "n_epochs": 50
+        },
+        "dsm_transient": {
+          "fork_pr": {
+            "tp": 50,
+            "fp": 129,
+            "fn": 1,
+            "precision": 0.27932960893854747,
+            "recall": 0.9803921568627451
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 138,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 179,
+            "growing_oscillator": 21
+          },
+          "lead_re": {
+            "frac_positive": 1.0,
+            "frac_negative": 0.0,
+            "median": 0.00029263705073390156
+          },
+          "ground_truth": {
+            "tol": 0.05201696167033365,
+            "n_true_fork": 51,
+            "n_true_holder": 138,
+            "frac_true_fork": 0.255,
+            "analytic_lead_re_median": -0.43419549499236904
+          },
+          "row": "dsm_transient",
+          "fit_seconds": 0.2511404169490561,
+          "use_residual": false,
+          "beta": 0.04,
+          "dsm_sigma_range": [
+            0.05,
+            1.0
+          ],
+          "note": "\u03b1-ramp synthetic \u2014 negative control"
+        }
+      }
+    }
+  ],
+  "v1_slicing_on_equilibrated": {
+    "row": "v1_slicing",
+    "status": "pending",
+    "note": "produce via compare/run_v1_equilibrated_pitchfork.py"
+  }
+}

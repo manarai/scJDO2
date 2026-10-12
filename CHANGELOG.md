@@ -5,6 +5,54 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Phase B gate v2 — same-tol GT, σ sweep by held-out loss
+
+Per user iteration on top of residual-off + β=σ²:
+
+(1) Ground truth now uses the SAME 0.1·std tolerance that
+    ``opspace.behaviour`` applies: ``true_fork = analytic_lead_re > tol``,
+    ``true_holder = analytic_lead_re < -tol``, drift otherwise. The oracle
+    hits P/R ≈ 1.0 by construction. The v1 slicing harness
+    (``compare/run_v1_equilibrated_pitchfork.py``) uses the same tol
+    ground truth.
+
+(2) Phase B gate redefinition:
+      * **holder P and R  ≥ 0.8 absolute**
+      * **fork   P and R   within 0.10 of the oracle at the same τ_crit**
+
+(3) σ_min sweep (``scripts/sigma_sweep.py``) on {0.02, 0.05}, selected by
+    held-out DSM loss on a random 20 % test split — **not** by the gate.
+    σ_min = 0.05 wins (mean held-out loss 0.738 vs 0.800).
+
+Final four-row table at σ_min=0.05 (5000 epochs, n_cells=1200, n_alpha=30):
+
+| row | τ_crit | fork P | fork R | holder P | holder R | verdict |
+|---|---|---|---|---|---|---|
+| oracle | 0.1 | 1.00 | 1.00 | 1.00 | 0.85 | PASS |
+| oracle | 0.3 | 1.00 | 1.00 | 1.00 | 0.90 | PASS |
+| oracle | 0.5 | 1.00 | 1.00 | 1.00 | 0.92 | PASS |
+| dsm_equilibrated | 0.1 | 0.31 | 0.77 | **0.99** | **0.91** | FAIL |
+| dsm_equilibrated | 0.3 | 0.38 | 0.75 | **0.99** | **0.91** | FAIL |
+| dsm_equilibrated | 0.5 | 0.42 | 0.61 | **0.98** | **0.92** | FAIL |
+| v1_slicing_eq | 0.1 | 0.04 | 1.00 | nan | 0.00 | FAIL (R12) |
+| v1_slicing_eq | 0.3 | 0.05 | 0.73 | 0.72 | 0.03 | FAIL (R12) |
+| v1_slicing_eq | 0.5 | 0.05 | 1.00 | 1.00 | 0.04 | FAIL (R12) |
+| dsm_transient | 0.1 | 0.88 | 0.21 | 0.75 | 0.98 | FAIL |
+| dsm_transient | 0.3 | 0.78 | 0.20 | 0.77 | 0.97 | FAIL |
+| dsm_transient | 0.5 | 0.21 | 0.04 | 0.74 | 0.85 | FAIL |
+
+Oracle PASSES everywhere (expected under same-tol GT). DSM-equilibrated
+PASSES **holder absolute** at every τ_crit (P ≥ 0.98, R ≥ 0.91). Fork
+precision 0.31–0.42 and recall 0.61–0.77 — recall is approaching the
+oracle's 1.0 (gap 0.23–0.39) but precision is well short (gap 0.58–0.69):
+the DSM-learned per-cell lead_re is noisy enough near zero that many
+true-drift cells get flipped to "fork", and some true-fork cells get
+flipped to "drift". Within-0.10-of-oracle is NOT met for fork.
+
+Phase B does NOT pass this gate as literally stated. The barrier is now
+pure cell-level precision noise in the autodiff Jacobian — not a
+structural / sign / scaling pathology.
+
 ### Residual MLP off, β = σ² — holder passes, fork near oracle
 
 Per user Option-1 directive, after sanity + trail 1 confirmed the residual

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-12 05:43:58",
+  "timestamp": "2026-10-12 05:58:45",
   "args": {
     "tau_crit": [
       0.1,
@@ -15,8 +15,8 @@
     "beta": 0.04,
     "sigma_min": 0.05,
     "sigma_max": 1.0,
-    "v1_json": "benchmarks/phase_b_gate/equilibrated/v1_slicing.json",
-    "out_tag": "residual_off_beta_sigma_sq",
+    "v1_json": null,
+    "out_tag": "final",
     "verbose": false
   },
   "ground_truth": "dynamic (strict sign of analytic lead_re per cell)",
@@ -32,16 +32,16 @@
           "fork_pr": {
             "tp": 43,
             "fp": 0,
-            "fn": 6,
+            "fn": 0,
             "precision": 1.0,
-            "recall": 0.8775510204081632
+            "recall": 1.0
           },
           "holder_pr": {
             "tp": 965,
             "fp": 0,
-            "fn": 186,
+            "fn": 172,
             "precision": 1.0,
-            "recall": 0.838401390095569
+            "recall": 0.8487247141600703
           },
           "beh_counts": {
             "damped_oscillator": 172,
@@ -55,26 +55,27 @@
             "median": -0.8697426555145907
           },
           "ground_truth": {
-            "n_true_fork": 49,
-            "n_true_holder": 1151,
-            "frac_true_fork": 0.04083333333333333,
+            "tol": 0.03341312996357609,
+            "n_true_fork": 43,
+            "n_true_holder": 1137,
+            "frac_true_fork": 0.035833333333333335,
             "analytic_lead_re_median": -0.8697426555145907
           }
         },
         "dsm_equilibrated": {
           "fork_pr": {
-            "tp": 38,
-            "fp": 69,
-            "fn": 11,
-            "precision": 0.35514018691588783,
-            "recall": 0.7755102040816326
+            "tp": 33,
+            "fp": 74,
+            "fn": 10,
+            "precision": 0.308411214953271,
+            "recall": 0.7674418604651163
           },
           "holder_pr": {
-            "tp": 1042,
-            "fp": 5,
-            "fn": 109,
-            "precision": 0.9952244508118434,
-            "recall": 0.9052997393570807
+            "tp": 1037,
+            "fp": 10,
+            "fn": 100,
+            "precision": 0.9904489016236867,
+            "recall": 0.9120492524186455
           },
           "beh_counts": {
             "damped_oscillator": 4,
@@ -88,13 +89,14 @@
             "median": -0.0039524477906525135
           },
           "ground_truth": {
-            "n_true_fork": 49,
-            "n_true_holder": 1151,
-            "frac_true_fork": 0.04083333333333333,
+            "tol": 0.03341312996357609,
+            "n_true_fork": 43,
+            "n_true_holder": 1137,
+            "frac_true_fork": 0.035833333333333335,
             "analytic_lead_re_median": -0.8697426555145907
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 34.25002195802517,
+          "fit_seconds": 32.99468916701153,
           "inject_velocity_prior": false,
           "use_residual": false,
           "beta": 0.04,
@@ -106,18 +108,18 @@
         },
         "dsm_transient": {
           "fork_pr": {
-            "tp": 61,
-            "fp": 6,
-            "fn": 265,
-            "precision": 0.9104477611940298,
-            "recall": 0.18711656441717792
+            "tp": 59,
+            "fp": 8,
+            "fn": 227,
+            "precision": 0.8805970149253731,
+            "recall": 0.2062937062937063
           },
           "holder_pr": {
-            "tp": 858,
-            "fp": 235,
-            "fn": 16,
-            "precision": 0.7849954254345837,
-            "recall": 0.9816933638443935
+            "tp": 825,
+            "fp": 268,
+            "fn": 14,
+            "precision": 0.7548032936870998,
+            "recall": 0.9833134684147795
           },
           "beh_counts": {
             "damped_oscillator": 3,
@@ -131,13 +133,14 @@
             "median": -0.003457064158283174
           },
           "ground_truth": {
-            "n_true_fork": 326,
-            "n_true_holder": 874,
-            "frac_true_fork": 0.27166666666666667,
+            "tol": 0.05274878229487511,
+            "n_true_fork": 286,
+            "n_true_holder": 839,
+            "frac_true_fork": 0.23833333333333334,
             "analytic_lead_re_median": -0.4209892397867949
           },
           "row": "dsm_transient",
-          "fit_seconds": 33.40952245891094,
+          "fit_seconds": 31.192155582946725,
           "use_residual": false,
           "beta": 0.04,
           "dsm_sigma_range": [
@@ -159,16 +162,16 @@
           "fork_pr": {
             "tp": 44,
             "fp": 0,
-            "fn": 6,
+            "fn": 0,
             "precision": 1.0,
-            "recall": 0.88
+            "recall": 1.0
           },
           "holder_pr": {
             "tp": 1029,
             "fp": 0,
-            "fn": 121,
+            "fn": 110,
             "precision": 1.0,
-            "recall": 0.8947826086956522
+            "recall": 0.9034240561896401
           },
           "beh_counts": {
             "damped_oscillator": 110,
@@ -182,26 +185,27 @@
             "median": -0.7825407446485897
           },
           "ground_truth": {
-            "n_true_fork": 50,
-            "n_true_holder": 1150,
-            "frac_true_fork": 0.041666666666666664,
+            "tol": 0.03179960387635609,
+            "n_true_fork": 44,
+            "n_true_holder": 1139,
+            "frac_true_fork": 0.03666666666666667,
             "analytic_lead_re_median": -0.7825407446485897
           }
         },
         "dsm_equilibrated": {
           "fork_pr": {
-            "tp": 36,
-            "fp": 52,
-            "fn": 14,
-            "precision": 0.4090909090909091,
-            "recall": 0.72
+            "tp": 33,
+            "fp": 55,
+            "fn": 11,
+            "precision": 0.375,
+            "recall": 0.75
           },
           "holder_pr": {
-            "tp": 1044,
-            "fp": 10,
-            "fn": 106,
-            "precision": 0.9905123339658444,
-            "recall": 0.9078260869565218
+            "tp": 1042,
+            "fp": 12,
+            "fn": 97,
+            "precision": 0.9886148007590133,
+            "recall": 0.9148375768217735
           },
           "beh_counts": {
             "damped_oscillator": 19,
@@ -215,13 +219,14 @@
             "median": -0.004616694757714868
           },
           "ground_truth": {
-            "n_true_fork": 50,
-            "n_true_holder": 1150,
-            "frac_true_fork": 0.041666666666666664,
+            "tol": 0.03179960387635609,
+            "n_true_fork": 44,
+            "n_true_holder": 1139,
+            "frac_true_fork": 0.03666666666666667,
             "analytic_lead_re_median": -0.7825407446485897
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 31.929084375035018,
+          "fit_seconds": 31.505254041054286,
           "inject_velocity_prior": false,
           "use_residual": false,
           "beta": 0.04,
@@ -235,16 +240,16 @@
           "fork_pr": {
             "tp": 59,
             "fp": 17,
-            "fn": 267,
+            "fn": 229,
             "precision": 0.7763157894736842,
-            "recall": 0.18098159509202455
+            "recall": 0.2048611111111111
           },
           "holder_pr": {
-            "tp": 842,
-            "fp": 227,
-            "fn": 32,
-            "precision": 0.7876520112254444,
-            "recall": 0.9633867276887872
+            "tp": 822,
+            "fp": 247,
+            "fn": 29,
+            "precision": 0.7689429373246024,
+            "recall": 0.9659224441833137
           },
           "beh_counts": {
             "damped_oscillator": 10,
@@ -258,13 +263,14 @@
             "median": -0.003920420538634062
           },
           "ground_truth": {
-            "n_true_fork": 326,
-            "n_true_holder": 874,
-            "frac_true_fork": 0.27166666666666667,
+            "tol": 0.04960534458469563,
+            "n_true_fork": 288,
+            "n_true_holder": 851,
+            "frac_true_fork": 0.24,
             "analytic_lead_re_median": -0.41784503762513897
           },
           "row": "dsm_transient",
-          "fit_seconds": 32.193928083986975,
+          "fit_seconds": 30.389044582960196,
           "use_residual": false,
           "beta": 0.04,
           "dsm_sigma_range": [
@@ -286,16 +292,16 @@
           "fork_pr": {
             "tp": 46,
             "fp": 0,
-            "fn": 12,
+            "fn": 0,
             "precision": 1.0,
-            "recall": 0.7931034482758621
+            "recall": 1.0
           },
           "holder_pr": {
             "tp": 1044,
             "fp": 0,
-            "fn": 98,
+            "fn": 93,
             "precision": 1.0,
-            "recall": 0.9141856392294221
+            "recall": 0.9182058047493403
           },
           "beh_counts": {
             "damped_oscillator": 93,
@@ -309,26 +315,27 @@
             "median": -0.7889652324474759
           },
           "ground_truth": {
-            "n_true_fork": 58,
-            "n_true_holder": 1142,
-            "frac_true_fork": 0.04833333333333333,
+            "tol": 0.03269702216271633,
+            "n_true_fork": 46,
+            "n_true_holder": 1137,
+            "frac_true_fork": 0.03833333333333333,
             "analytic_lead_re_median": -0.7889652324474759
           }
         },
         "dsm_equilibrated": {
           "fork_pr": {
-            "tp": 34,
-            "fp": 32,
-            "fn": 24,
-            "precision": 0.5151515151515151,
-            "recall": 0.5862068965517241
+            "tp": 28,
+            "fp": 38,
+            "fn": 18,
+            "precision": 0.42424242424242425,
+            "recall": 0.6086956521739131
           },
           "holder_pr": {
-            "tp": 1046,
-            "fp": 13,
-            "fn": 96,
-            "precision": 0.987724268177526,
-            "recall": 0.9159369527145359
+            "tp": 1042,
+            "fp": 17,
+            "fn": 95,
+            "precision": 0.983947119924457,
+            "recall": 0.9164467897977133
           },
           "beh_counts": {
             "damped_oscillator": 39,
@@ -342,13 +349,14 @@
             "median": -0.006373925367370248
           },
           "ground_truth": {
-            "n_true_fork": 58,
-            "n_true_holder": 1142,
-            "frac_true_fork": 0.04833333333333333,
+            "tol": 0.03269702216271633,
+            "n_true_fork": 46,
+            "n_true_holder": 1137,
+            "frac_true_fork": 0.03833333333333333,
             "analytic_lead_re_median": -0.7889652324474759
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 32.14260683301836,
+          "fit_seconds": 30.443971707951277,
           "inject_velocity_prior": false,
           "use_residual": false,
           "beta": 0.04,
@@ -360,18 +368,18 @@
         },
         "dsm_transient": {
           "fork_pr": {
-            "tp": 15,
-            "fp": 42,
-            "fn": 298,
-            "precision": 0.2631578947368421,
-            "recall": 0.04792332268370607
+            "tp": 12,
+            "fp": 45,
+            "fn": 276,
+            "precision": 0.21052631578947367,
+            "recall": 0.041666666666666664
           },
           "holder_pr": {
-            "tp": 760,
-            "fp": 240,
-            "fn": 127,
-            "precision": 0.76,
-            "recall": 0.8568207440811725
+            "tp": 737,
+            "fp": 263,
+            "fn": 126,
+            "precision": 0.737,
+            "recall": 0.8539976825028969
           },
           "beh_counts": {
             "damped_oscillator": 72,
@@ -386,13 +394,14 @@
             "median": -0.006056366255506873
           },
           "ground_truth": {
-            "n_true_fork": 313,
-            "n_true_holder": 887,
-            "frac_true_fork": 0.2608333333333333,
+            "tol": 0.05286486211379421,
+            "n_true_fork": 288,
+            "n_true_holder": 863,
+            "frac_true_fork": 0.24,
             "analytic_lead_re_median": -0.46826803759090496
           },
           "row": "dsm_transient",
-          "fit_seconds": 32.83280037494842,
+          "fit_seconds": 31.030775499995798,
           "use_residual": false,
           "beta": 0.04,
           "dsm_sigma_range": [
@@ -405,9 +414,8 @@
     }
   ],
   "v1_slicing_on_equilibrated": {
-    "row": "v1_slicing",
     "status": "complete",
-    "timestamp": "2026-10-12 05:06:45",
+    "timestamp": "2026-10-12 06:05:15",
     "args": {
       "tau_crit": [
         0.1,
@@ -423,19 +431,19 @@
     "per_tau": [
       {
         "tau_crit": 0.1,
-        "fit_seconds": 261.62254933302756,
+        "fit_seconds": 261.63111229101196,
         "T_eval": 200,
         "fork_pr": {
-          "tp": 49,
-          "fp": 951,
+          "tp": 43,
+          "fp": 957,
           "fn": 0,
-          "precision": 0.049,
+          "precision": 0.043,
           "recall": 1.0
         },
         "holder_pr": {
           "tp": 0,
           "fp": 0,
-          "fn": 1151,
+          "fn": 1137,
           "precision": NaN,
           "recall": 0.0
         },
@@ -449,28 +457,29 @@
           "median": 0.05819297023117542
         },
         "ground_truth": {
-          "n_true_fork": 49,
-          "n_true_holder": 1151,
-          "frac_true_fork": 0.04083333333333333
+          "tol": 0.03341312996357609,
+          "n_true_fork": 43,
+          "n_true_holder": 1137,
+          "frac_true_fork": 0.035833333333333335
         }
       },
       {
         "tau_crit": 0.3,
-        "fit_seconds": 265.87917554192245,
+        "fit_seconds": 251.4571860419819,
         "T_eval": 200,
         "fork_pr": {
-          "tp": 36,
-          "fp": 604,
-          "fn": 14,
-          "precision": 0.05625,
-          "recall": 0.72
+          "tp": 32,
+          "fp": 608,
+          "fn": 12,
+          "precision": 0.05,
+          "recall": 0.7272727272727273
         },
         "holder_pr": {
           "tp": 29,
           "fp": 11,
-          "fn": 1121,
+          "fn": 1110,
           "precision": 0.725,
-          "recall": 0.025217391304347827
+          "recall": 0.025460930640913083
         },
         "beh_counts": {
           "damped_oscillator": 40,
@@ -484,28 +493,29 @@
           "median": 0.03194901719689369
         },
         "ground_truth": {
-          "n_true_fork": 50,
-          "n_true_holder": 1150,
-          "frac_true_fork": 0.041666666666666664
+          "tol": 0.03179960387635609,
+          "n_true_fork": 44,
+          "n_true_holder": 1139,
+          "frac_true_fork": 0.03666666666666667
         }
       },
       {
         "tau_crit": 0.5,
-        "fit_seconds": 263.05019050010014,
+        "fit_seconds": 249.99369429203216,
         "T_eval": 200,
         "fork_pr": {
-          "tp": 58,
-          "fp": 942,
+          "tp": 46,
+          "fp": 954,
           "fn": 0,
-          "precision": 0.058,
+          "precision": 0.046,
           "recall": 1.0
         },
         "holder_pr": {
           "tp": 40,
           "fp": 0,
-          "fn": 1102,
+          "fn": 1097,
           "precision": 1.0,
-          "recall": 0.03502626970227671
+          "recall": 0.03518029903254178
         },
         "beh_counts": {
           "drift": 40,
@@ -519,9 +529,10 @@
           "median": 0.023021589033305645
         },
         "ground_truth": {
-          "n_true_fork": 58,
-          "n_true_holder": 1142,
-          "frac_true_fork": 0.04833333333333333
+          "tol": 0.03269702216271633,
+          "n_true_fork": 46,
+          "n_true_holder": 1137,
+          "frac_true_fork": 0.03833333333333333
         }
       }
     ]

@@ -65,12 +65,19 @@ def _pr(pred: np.ndarray, truth: np.ndarray) -> dict[str, float]:
 
 
 def _dynamic_labels(adata: AnnData) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Per-cell ground truth from the analytic 2D J of f_toggle.
+    """Per-cell ground truth from the analytic 2D J of f_toggle, quantized by
+    the SAME 0.1·std tolerance that ``opspace.behaviour`` applies.
 
     Returns ``(true_fork, true_holder, analytic_lead_re)``:
-        * ``true_fork(c)   ⇔ analytic_lead_re(c) > 0``
-        * ``true_holder(c) ⇔ analytic_lead_re(c) < 0``
-    (Strict sign — no tolerance band.)
+        tol              = 0.1 * np.nanstd(analytic_lead_re_finite)
+        true_fork(c)     ⇔ analytic_lead_re(c) >  tol
+        true_holder(c)   ⇔ analytic_lead_re(c) < -tol
+        (cells with |analytic_lead_re| ≤ tol are "drift" and belong to
+         neither class.)
+
+    Using the same tol logic on both sides lets the oracle hit ~1.0 by
+    construction and makes "fork P/R within 0.10 of oracle" a well-defined
+    relative gate (Phase B gate v2).
 
     Works for both equilibrated and transient variants: equilibrated stores
     ``obs["alpha"]`` directly; transient derives α from ``pseudotime`` via
@@ -86,8 +93,10 @@ def _dynamic_labels(adata: AnnData) -> tuple[np.ndarray, np.ndarray, np.ndarray]
         alpha = a_min + adata.obs["pseudotime"].to_numpy(dtype=np.float64) * (a_max - a_min)
     J = analytic_jacobian(z_true, alpha)
     lead_re = np.array([float(np.max(np.linalg.eigvals(J[c]).real)) for c in range(J.shape[0])])
-    true_fork = lead_re > 0.0
-    true_holder = lead_re < 0.0
+    finite = lead_re[np.isfinite(lead_re)]
+    tol = float(0.1 * np.nanstd(finite)) if finite.size else 0.1
+    true_fork = lead_re > tol
+    true_holder = lead_re < -tol
     return true_fork, true_holder, lead_re
 
 
@@ -107,6 +116,8 @@ def _gate(adata: AnnData, tau_crit: float) -> dict[str, Any]:
     pred_fork = beh == "fork"
     pred_holder = beh == "holder"
     true_fork, true_holder, analytic_lead_re = _dynamic_labels(adata)
+    finite = analytic_lead_re[np.isfinite(analytic_lead_re)]
+    analytic_tol = float(0.1 * np.nanstd(finite)) if finite.size else 0.1
 
     return {
         "fork_pr": _pr(pred_fork, true_fork),
@@ -118,6 +129,7 @@ def _gate(adata: AnnData, tau_crit: float) -> dict[str, Any]:
             "median": float(np.nanmedian(lead_re)),
         },
         "ground_truth": {
+            "tol": analytic_tol,
             "n_true_fork": int(true_fork.sum()),
             "n_true_holder": int(true_holder.sum()),
             "frac_true_fork": float(np.mean(true_fork)),
@@ -366,9 +378,21 @@ def main() -> int:
     print(f"\n[equilibrated gate] wrote {out_json}")
 
     # Markdown table
+    # Phase B gate v2 (per user):
+    #   holder P and R ≥ 0.8 absolute
+    #   fork P and R within 0.10 of the oracle at the same τ_crit
+    oracle_by_tau = {row["tau_crit"]: row["rows"]["oracle"] for row in per_tau}
+
     lines = [
         "# Equilibrated pitchfork gate — four-row table",
         f"\nGenerated: {report['timestamp']}\n",
+        "Gate (Phase B, v2):",
+        "  * holder P and R  ≥ 0.8 (absolute)",
+        "  * fork P and R    within 0.10 of the oracle on the same ground truth",
+        "",
+        "Ground truth: fork = analytic_lead_re > tol, holder = analytic_lead_re < -tol,",
+        "where tol = 0.1 · std(analytic_lead_re) — same scheme as opspace.behaviour.",
+        "",
         "| row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) | verdict |",
         "|---|---|---|---|---|---|---|---|",
     ]
@@ -376,17 +400,32 @@ def main() -> int:
     def _mdrow(label, tau, r):
         f = r.get("fork_pr", {})
         h = r.get("holder_pr", {})
-        verd = "PASS" if (
-            all(np.isfinite([f.get("precision", np.nan), f.get("recall", np.nan),
-                             h.get("precision", np.nan), h.get("recall", np.nan)]))
-            and f["precision"] >= 0.8 and f["recall"] >= 0.8
-            and h["precision"] >= 0.8 and h["recall"] >= 0.8
-        ) else "FAIL"
+        fp = f.get("precision", float("nan"))
+        fr = f.get("recall", float("nan"))
+        hp = h.get("precision", float("nan"))
+        hr = h.get("recall", float("nan"))
+        # Holder absolute
+        def _ok(x): return isinstance(x, (int, float)) and np.isfinite(x)
+        holder_ok = _ok(hp) and _ok(hr) and hp >= 0.8 and hr >= 0.8
+        # Fork relative-to-oracle
+        if label == "oracle":
+            fork_ok = _ok(fp) and _ok(fr) and fp >= 0.8 and fr >= 0.8
+        else:
+            orc = oracle_by_tau.get(tau, {}).get("fork_pr", {})
+            oracle_fp = orc.get("precision", float("nan"))
+            oracle_fr = orc.get("recall", float("nan"))
+            fork_ok = (
+                _ok(fp) and _ok(fr) and _ok(oracle_fp) and _ok(oracle_fr)
+                and abs(fp - oracle_fp) <= 0.10
+                and abs(fr - oracle_fr) <= 0.10
+            )
+        verd = "PASS" if (holder_ok and fork_ok) else "FAIL"
         frac = r.get("lead_re", {}).get("frac_positive", float("nan"))
-        return (f"| {label} | {tau} | {f.get('precision', float('nan')):.2f} | "
-                f"{f.get('recall', float('nan')):.2f} | "
-                f"{h.get('precision', float('nan')):.2f} | "
-                f"{h.get('recall', float('nan')):.2f} | {frac:.2f} | **{verd}** |")
+        if frac is None:
+            frac = float("nan")
+        def _fmt(x): return "nan" if not _ok(x) else f"{x:.2f}"
+        return (f"| {label} | {tau} | {_fmt(fp)} | {_fmt(fr)} | "
+                f"{_fmt(hp)} | {_fmt(hr)} | {_fmt(frac)} | **{verd}** |")
 
     for row in per_tau:
         tau = row["tau_crit"]
@@ -408,20 +447,25 @@ def main() -> int:
         "",
         "## Reading",
         "",
-        "Ground truth is strict per-cell sign of the ANALYTIC",
-        "``∂f_toggle/∂z`` evaluated at ``(X_true_c, α_c)``.",
-        "``true_fork(c) ⇔ analytic_lead_re > 0``; ``true_holder(c) ⇔ < 0``.",
+        "Ground truth: fork/holder labels derived from the analytic 2D J of",
+        "``f_toggle(X_true_c, α_c)``, quantized by the same 0.1·std tolerance",
+        "scheme ``opspace.behaviour`` applies. The oracle becomes self-",
+        "consistent and P/R ~ 1.0 by construction.",
         "",
-        "* **Oracle** is self-consistent (classifier applied to the analytic",
-        "  J, scored against the same J's sign) → P/R ≈ 1 modulo cells near",
-        "  zero that opspace labels \"drift\".",
-        "* **DSM-equilibrated** and **v1_slicing_equilibrated** measure how",
-        "  well the LEARNED Jacobian recovers the analytic per-cell sign.",
-        "* **DSM-transient** is the α-ramp negative control, measured against",
-        "  the same analytic ground truth so it is directly comparable.",
+        "* **Oracle** is the ceiling — classifier applied to analytic J.",
+        "* **DSM-equilibrated** measures how well a learned drift's autodiff",
+        "  Jacobian (``u = β·score`` with the residual MLP frozen zero,",
+        "  ``β = σ_sde²``, multi-σ DSM) matches the oracle labels.",
+        "* **v1_slicing_equilibrated** uses v1's unmodified DriftField (with",
+        "  the residual MLP it cannot disable from the public API — V2_PLAN",
+        "  R12), so it reproduces the uniformly-expansive-Jacobian pathology",
+        "  as designed.",
+        "* **DSM-transient** is the α-ramp negative control: snapshot score",
+        "  on non-stationary data has no basin structure to recover.",
         "",
-        "Phase C unblocks only when DSM-equilibrated passes fork+holder P/R",
-        "≥ 0.8 at every τ_crit.",
+        "Phase C unblocks when DSM-equilibrated meets:",
+        "  * holder P and R  ≥ 0.8 absolute",
+        "  * fork P and R    within 0.10 of the oracle at the same τ_crit.",
     ])
 
     out_md = OUT / f"report_{tag}.md"
