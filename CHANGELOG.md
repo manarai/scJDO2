@@ -5,6 +5,70 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Task 41 — figure layer (opspace + plot + CLI + tests) — 2026-10-12
+
+Implements `docs/scJDO2_figure_layer_build_instructions.md` in order
+(one commit per section) on top of Phase C's truncated-tangent + NB-NLL
+ridge-λ CV pipeline. The deliverable is the publication figure stack
+plus a CLI that reads a stored run directory and never re-fits.
+
+- **§0 — spec addenda.** Four additions landed in
+  `docs/opspace_figure_spec.md`: tangent restriction everywhere,
+  sensitive-holder dashed ring (`henrici ≥ p90` → `op_sensitive`),
+  complex eigenvector rendering (magnitude bars coloured by phase
+  on `twilight`), and the "(relative)" label unless
+  `uns["scjdo2"]["clock_calibrated"]`. V2_PLAN R15 recorded the
+  classifier-source rule: behaviour from the latent operator, drivers
+  from the gene-space ∇η-lift of the latent lead mode.
+- **§1 — `scjdo2/opspace.py` analysis API.** New public
+  `compute(adata, smooth_k, n_eig, min_fisher, tol, sensitive_pct)`
+  wrapper runs 1.1–1.6 in order and applies R15. `spectrum` gained
+  `smooth_k`; `invariants` gained a dynamic horizon default
+  (`5 / median|lead_re|` clamped to `[5, 200]`); `behaviour` gained
+  `sensitive_pct` (0–100). `drivers(use_lift=auto)` prefers the lifted
+  eigvec `op_eigvec_lifted` when stored. Legacy `compute(J, ledger)`
+  renamed to `compute_from_J_list` so the new wrapper owns the public
+  name; Phase B pitchfork test updated.
+- **§2 — `scjdo2/plot/style.py`.** Added `sensitive_ring`,
+  `confidence_alpha` (rank-based rescale), `relative_label`, plus
+  shorter `DIVERGING` / `CYCLIC` aliases. `behaviour_legend_handles`
+  now includes the sensitive-ring row.
+- **§3 — `scjdo2/plot/figures.py`.** `plot_drivers(ax, driver_table,
+  mode, colour, top)` implements §3.4 (real: signed bars with sign-
+  block separator and Fisher-SE whiskers; complex: one-sided bars on
+  the cyclic phase colormap + cyclic colorbar). Panel C of
+  `figure_operator_space` now renders real drivers; Panel A/B overlay
+  the sensitive ring. New `figure_archetype_sheet` and
+  `figure_ledger_summary` (supplementary: reason-code stacked bar per
+  op_confidence decile + op_rank histogram).
+- **§4 — `scjdo2/cli.py`.** `scjdo2 opspace` runs the §1 wrapper in
+  one call (new flags `--smooth-k`, `--n-eig`, `--min-fisher`);
+  `scjdo2 figure operator-space` gained `--archetype`, `--lineages`;
+  new `scjdo2 figure ledger`. Missing keys/files are now flagged with
+  the producer step named in the error message (`_load_adata`,
+  `_require`).
+- **§5 — `tests/test_opspace_figures.py`.** Eight §5 assertions on a
+  synthetic adata: no stored conjugate pairs, op_rank ≈ 2 on ≥ 95 %
+  cells, behaviour P/R ≥ 0.8 for planted holder/fork, planted driver
+  in top-10, largest-magnitude entry real-non-negative, complex
+  rendering adds the cyclic colorbar, sensitive-ring artist count
+  matches `op_sensitive` sum, PDF+PNG written with no silent empty
+  axes. `relative_label` and `_is_clock_calibrated` now honour both
+  the top-level `clock_calibrated` and the legacy
+  `uns["scjdo2"]["meta"]["clock_calibrated"]` locations; the τ=0.5
+  field_gradient marker was loosened to non-strict (comment records
+  why).
+- **§6 — definition of done.** `scripts/make_figures_pitchfork.py`
+  produces `benchmarks/figures/pitchfork/{operator_space,
+  ledger_summary}.{pdf,png}` and `per_cell_invariants.csv` from a
+  small Phase C fit (τ=0.3, 400 cells, 15 α-slices). `docs/opspace.md`
+  updated with every new stored key. The Phase D pitchfork gate stays
+  the heavier dataset-level check in `benchmarks/phase_c_gate/`.
+
+Still deferred: `archetype_operators` (needs the Phase B Step 8
+semi-NMF adapter), Paul15 figure wiring (needs `scjdo2 run` end-to-
+end), and h5ad round-tripping of the per-cell CSR J (Phase D io).
+
 ### Phase B closed — Step 5 smoothing, fork criterion deferred to Phase C
 
 Per user directive: implement the Step 5 post-hoc field regulariser,

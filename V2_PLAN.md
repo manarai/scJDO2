@@ -542,6 +542,17 @@ and keeps the gene-space source for drivers (now via the explicit
 eigvec). The ``scjdo2.opspace.compute`` wrapper (§1 of the
 instructions) applies R15.
 
+Task 41 — **closed on 2026-10-12.** One commit per section as laid
+out in ``docs/scJDO2_figure_layer_build_instructions.md``. The §5
+suite passes (8 tests + the Phase B / opspace pitchfork regression
+suites). ``scripts/make_figures_pitchfork.py`` produces the pitchfork
+figure set under ``benchmarks/figures/pitchfork/``; the Paul15 wire-
+up stays deferred until ``scjdo2 run`` is implemented in Phase D.
+Known residuals: archetype operators + `figure_archetype_sheet` for
+real data wait on the Phase B Step 8 semi-NMF adapter; the per-cell
+CSR gene-space J is not yet round-trippable through h5ad (Phase D io
+work), so the figure script re-fits on each invocation.
+
 ---
 
 ## 10. Phase A deliverables status

@@ -322,6 +322,9 @@ def compute(
     did_latent_pass = False
     if gene_space_present and latent_present:
         # 1. Latent pass — swap in the latent J, run spectrum→invariants→behaviour.
+        # The Fisher ledger is gene-space; pulling it aside for the latent
+        # pass avoids a shape mismatch inside invariants' op_confidence step.
+        gene_ledger = uns.pop("fisher_ledger", None)
         uns["J"] = J_latent
         spectrum(adata, n_eig=n_eig, fisher_mask=False, smooth_k=0)
         invariants(adata, tol=tol)
@@ -329,8 +332,10 @@ def compute(
         # Cache the latent leading eigvec for the ∇η lift step.
         eigvecs_latent = np.asarray(uns["op_eigvecs"])
         uns["op_eigvec_latent_lead"] = eigvecs_latent[:, 0, :].copy()
-        # Restore the gene-space J for step 2 and downstream calls.
+        # Restore the gene-space J + ledger for step 2 and downstream calls.
         uns["J"] = J_main
+        if gene_ledger is not None:
+            uns["fisher_ledger"] = gene_ledger
         did_latent_pass = True
     elif latent_present and not gene_space_present:
         # Pure latent run — behavioural columns come from the latent J.
