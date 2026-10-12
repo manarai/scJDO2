@@ -107,6 +107,74 @@ def smooth_jacobians(
     return out
 
 
+def smooth_jacobians_sparse(
+    J_list: Sequence[csr_matrix],
+    z: np.ndarray,
+    k: int = 30,
+    bandwidth: Optional[float] = None,
+    include_self: bool = True,
+) -> list[csr_matrix]:
+    """Gaussian-kernel-weighted smoothing of per-cell CSR Jacobians.
+
+    Sparse analogue of :func:`smooth_jacobians`. For each cell ``c``::
+
+        J̃_c = Σ_{i ∈ N_k(c)∪{c}} w_{ci} J_i / Σ w_{ci}
+
+    with ``w_{ci} = exp(-||z_c - z_i||² / (2 h²))`` and ``h`` the median
+    neighbour distance (or ``bandwidth`` if explicit). The resulting
+    CSR has support equal to the union of neighbour live-column indices.
+
+    Empty cells (``nnz == 0``) are skipped — the output keeps an empty
+    CSR at that index. All ``J_i`` must share the same shape.
+    """
+    if not J_list:
+        return []
+    z = np.asarray(z, dtype=np.float64)
+    n = len(J_list)
+    if z.shape[0] != n:
+        raise ValueError(f"J_list has {n} entries but z has {z.shape[0]}")
+    shape = J_list[0].shape
+    for i, Jc in enumerate(J_list):
+        if Jc.shape != shape:
+            raise ValueError(f"J_list[{i}].shape {Jc.shape} != {shape}")
+    k = max(1, min(int(k), n - 1))
+
+    nn_ = NearestNeighbors(n_neighbors=k + 1).fit(z)
+    dists, idxs = nn_.kneighbors(z, return_distance=True)
+    nbr_d = dists[:, 1:]
+    nbr_i = idxs[:, 1:]
+
+    if bandwidth is None or not np.isfinite(bandwidth) or bandwidth <= 0:
+        h = float(np.median(nbr_d))
+        if not np.isfinite(h) or h <= 0:
+            h = 1.0
+    else:
+        h = float(bandwidth)
+    inv2h2 = 1.0 / (2.0 * h * h)
+
+    out: list[csr_matrix] = []
+    for c in range(n):
+        nbrs = list(nbr_i[c])
+        ds = list(nbr_d[c])
+        if include_self:
+            nbrs = [c] + nbrs
+            ds = [0.0] + ds
+        total = csr_matrix(shape, dtype=np.float64)
+        wsum = 0.0
+        for nb, dist in zip(nbrs, ds):
+            Jn = J_list[nb]
+            if Jn.nnz == 0:
+                continue
+            w = float(np.exp(-dist * dist * inv2h2))
+            total = total + Jn * w
+            wsum += w
+        if wsum > 0 and total.nnz > 0:
+            total = total * (1.0 / wsum)
+            total.eliminate_zeros()
+        out.append(total.tocsr())
+    return out
+
+
 REASON_OK = 0
 REASON_NO_COUNTS = 1
 REASON_NO_VARIATION = 2
@@ -418,6 +486,33 @@ def fit_gene_space_jacobians(
     sample_n = n if cfg.cv_sample_cells < 0 else min(int(cfg.cv_sample_cells), n)
     sample_idx = rng.choice(n, size=sample_n, replace=False)
     lambda_scores: dict[float, float] = {}
+
+    def _ridge_batched(X_tr, W_tr, y_tr, lam, L):
+        """Solve the per-gene weighted ridge for every gene row in one shot.
+
+        * Primal ``(L, L)`` solve when ``L <= kt`` (overdetermined).
+        * Dual ``(kt, kt)`` solve via Woodbury when ``L > kt``
+          (underdetermined). Much faster on pitchfork-like data where
+          every gene is live (L ≈ G).
+        """
+        kt = X_tr.shape[0]
+        if L <= kt:
+            A = np.einsum("ig,ip,iq->gpq", W_tr, X_tr, X_tr)
+            A = A + lam * np.eye(L)[None, :, :]
+            b = np.einsum("ig,ip,ig->gp", W_tr, X_tr, y_tr)
+            return np.linalg.solve(A, b[..., None]).squeeze(-1)       # (G, L)
+        # Dual form: a_g = X^T diag(w_g) (X X^T diag(w_g) + λ I_kt)^{-1} y_g
+        # Build the (G, kt, kt) kernel K_g = X diag(w_g) X^T.
+        K = np.einsum("ip,ig,jp->gij", X_tr, W_tr, X_tr)              # (G, kt, kt)
+        K = K + lam * np.eye(kt)[None, :, :]
+        try:
+            u = np.linalg.solve(K, y_tr.T[..., None]).squeeze(-1)      # (G, kt)
+        except np.linalg.LinAlgError:
+            raise
+        # a_g = (X^T diag(w_g)) u_g
+        a = np.einsum("ip,ig,gi->gp", X_tr, W_tr, u)                   # (G, L)
+        return a
+
     for lam in cfg.ridge_lambdas:
         tot = 0.0
         cnt = 0
@@ -439,18 +534,11 @@ def fit_gene_space_jacobians(
                 te = ~tr
                 if tr.sum() < 2 or te.sum() == 0:
                     continue
-                # Ridge is well-posed with k_tr < L when λ > 0 (regulariser
-                # fills the rank deficiency); we only need enough rows to
-                # avoid a trivial fold.
                 Xt = X[tr]                                  # (kt, L)
                 Wt = W[tr]                                  # (kt, G)
                 yt = y_full[tr]                             # (kt, G)
-                # Batched normal equations across all gene rows
-                A = np.einsum("ig,ip,iq->gpq", Wt, Xt, Xt)  # (G, L, L)
-                A = A + lam * np.eye(live.size)[None, :, :]
-                b = np.einsum("ig,ip,ig->gp", Wt, Xt, yt)   # (G, L)
                 try:
-                    a = np.linalg.solve(A, b[..., None]).squeeze(-1)  # (G, L)
+                    a = _ridge_batched(Xt, Wt, yt, lam, live.size)
                 except np.linalg.LinAlgError:
                     continue
                 # Held-out weighted MSE on te neighbours
@@ -497,11 +585,8 @@ def fit_gene_space_jacobians(
             continue
         X = X_full[:, live]                                 # (k, L)
         W = w[nbrs]                                         # (k, G)
-        A = np.einsum("ig,ip,iq->gpq", W, X, X)             # (G, L, L)
-        A = A + best_lambda * np.eye(live.size)[None, :, :]
-        b = np.einsum("ig,ip,ig->gp", W, X, y_full)         # (G, L)
         try:
-            a = np.linalg.solve(A, b[..., None]).squeeze(-1)  # (G, L)
+            a = _ridge_batched(X, W, y_full, best_lambda, live.size)
         except np.linalg.LinAlgError:
             J_list.append(csr_matrix((G, G)))
             F_list.append(csr_matrix((G, G)))

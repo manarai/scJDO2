@@ -1,0 +1,363 @@
+{
+  "timestamp": "2026-10-12 08:12:28",
+  "args": {
+    "tau_crit": [
+      0.1,
+      0.3,
+      0.5
+    ],
+    "n_cells": 1200,
+    "n_alpha": 30,
+    "n_genes": 50,
+    "n_epochs_drift": 5000,
+    "n_epochs_rate": 400,
+    "k": 30,
+    "smooth_k": 30,
+    "cv_sample_cells": 50,
+    "seed": 0,
+    "verbose": false
+  },
+  "per_tau": [
+    {
+      "tau_crit": 0.1,
+      "n_cells": 1200,
+      "n_alpha": 30,
+      "tol": 0.03341312996357609,
+      "rates": {
+        "held_out_nll": 0.10369128733873367,
+        "fit_seconds": 1.7892363750142977
+      },
+      "gene_field": {
+        "ridge_lambda": 1.0,
+        "mean_L_c": 50.0,
+        "fit_seconds": 18.46370320802089
+      },
+      "rows": {
+        "oracle": {
+          "fork_pr": {
+            "tp": 43,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "holder_pr": {
+            "tp": 965,
+            "fp": 0,
+            "fn": 172,
+            "precision": 1.0,
+            "recall": 0.8487247141600703
+          },
+          "beh_counts": {
+            "damped_oscillator": 172,
+            "drift": 20,
+            "fork": 43,
+            "holder": 965
+          },
+          "frac_re_positive": 0.04083333333333333
+        },
+        "latent_dsm": {
+          "fork_pr": {
+            "tp": 33,
+            "fp": 109,
+            "fn": 10,
+            "precision": 0.2323943661971831,
+            "recall": 0.7674418604651163
+          },
+          "holder_pr": {
+            "tp": 901,
+            "fp": 4,
+            "fn": 236,
+            "precision": 0.9955801104972376,
+            "recall": 0.7924362357080035
+          },
+          "beh_counts": {
+            "damped_oscillator": 71,
+            "drift": 82,
+            "fork": 142,
+            "holder": 905
+          },
+          "frac_re_positive": 0.13916666666666666
+        },
+        "gene_space_k0": {
+          "fork_pr": {
+            "tp": 27,
+            "fp": 859,
+            "fn": 16,
+            "precision": 0.030474040632054177,
+            "recall": 0.627906976744186
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1137,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "drift": 18,
+            "fork": 886,
+            "growing_oscillator": 296
+          },
+          "frac_re_positive": 1.0,
+          "agreement_all": 0.08083333333333333,
+          "agreement_above_median_conf": 0.13166666666666665,
+          "op_confidence_median": 4.0821051962132415
+        },
+        "gene_space_k_smoothed": {
+          "fork_pr": {
+            "tp": 34,
+            "fp": 896,
+            "fn": 9,
+            "precision": 0.03655913978494624,
+            "recall": 0.7906976744186046
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1137,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "drift": 46,
+            "fork": 930,
+            "growing_oscillator": 224
+          },
+          "frac_re_positive": 0.9966666666666667,
+          "smooth_k": 30,
+          "agreement_all": 0.08583333333333333,
+          "agreement_above_median_conf": 0.125
+        }
+      }
+    },
+    {
+      "tau_crit": 0.3,
+      "n_cells": 1200,
+      "n_alpha": 30,
+      "tol": 0.03179960387635609,
+      "rates": {
+        "held_out_nll": 0.19306416809558868,
+        "fit_seconds": 1.8797412500716746
+      },
+      "gene_field": {
+        "ridge_lambda": 1.0,
+        "mean_L_c": 50.0,
+        "fit_seconds": 21.093306666007265
+      },
+      "rows": {
+        "oracle": {
+          "fork_pr": {
+            "tp": 44,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "holder_pr": {
+            "tp": 1029,
+            "fp": 0,
+            "fn": 110,
+            "precision": 1.0,
+            "recall": 0.9034240561896401
+          },
+          "beh_counts": {
+            "damped_oscillator": 110,
+            "drift": 17,
+            "fork": 44,
+            "holder": 1029
+          },
+          "frac_re_positive": 0.041666666666666664
+        },
+        "latent_dsm": {
+          "fork_pr": {
+            "tp": 34,
+            "fp": 119,
+            "fn": 10,
+            "precision": 0.2222222222222222,
+            "recall": 0.7727272727272727
+          },
+          "holder_pr": {
+            "tp": 937,
+            "fp": 9,
+            "fn": 202,
+            "precision": 0.9904862579281184,
+            "recall": 0.8226514486391572
+          },
+          "beh_counts": {
+            "damped_oscillator": 50,
+            "drift": 50,
+            "fork": 153,
+            "growing_oscillator": 1,
+            "holder": 946
+          },
+          "frac_re_positive": 0.14583333333333334
+        },
+        "gene_space_k0": {
+          "fork_pr": {
+            "tp": 29,
+            "fp": 809,
+            "fn": 15,
+            "precision": 0.034606205250596656,
+            "recall": 0.6590909090909091
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1139,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "drift": 14,
+            "fork": 838,
+            "growing_oscillator": 348
+          },
+          "frac_re_positive": 1.0,
+          "agreement_all": 0.09,
+          "agreement_above_median_conf": 0.14833333333333334,
+          "op_confidence_median": 4.245621543811215
+        },
+        "gene_space_k_smoothed": {
+          "fork_pr": {
+            "tp": 29,
+            "fp": 847,
+            "fn": 15,
+            "precision": 0.033105022831050226,
+            "recall": 0.6590909090909091
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1139,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "damped_oscillator": 5,
+            "drift": 48,
+            "fork": 876,
+            "growing_oscillator": 271
+          },
+          "frac_re_positive": 0.985,
+          "smooth_k": 30,
+          "agreement_all": 0.09333333333333334,
+          "agreement_above_median_conf": 0.15333333333333332
+        }
+      }
+    },
+    {
+      "tau_crit": 0.5,
+      "n_cells": 1200,
+      "n_alpha": 30,
+      "tol": 0.03269702216271633,
+      "rates": {
+        "held_out_nll": 0.290597140789032,
+        "fit_seconds": 1.7676457919878885
+      },
+      "gene_field": {
+        "ridge_lambda": 1.0,
+        "mean_L_c": 50.0,
+        "fit_seconds": 21.01622612506617
+      },
+      "rows": {
+        "oracle": {
+          "fork_pr": {
+            "tp": 46,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0
+          },
+          "holder_pr": {
+            "tp": 1044,
+            "fp": 0,
+            "fn": 93,
+            "precision": 1.0,
+            "recall": 0.9182058047493403
+          },
+          "beh_counts": {
+            "damped_oscillator": 93,
+            "drift": 17,
+            "fork": 46,
+            "holder": 1044
+          },
+          "frac_re_positive": 0.04833333333333333
+        },
+        "latent_dsm": {
+          "fork_pr": {
+            "tp": 25,
+            "fp": 110,
+            "fn": 21,
+            "precision": 0.18518518518518517,
+            "recall": 0.5434782608695652
+          },
+          "holder_pr": {
+            "tp": 912,
+            "fp": 12,
+            "fn": 225,
+            "precision": 0.987012987012987,
+            "recall": 0.8021108179419525
+          },
+          "beh_counts": {
+            "damped_oscillator": 86,
+            "drift": 54,
+            "fork": 135,
+            "growing_oscillator": 1,
+            "holder": 924
+          },
+          "frac_re_positive": 0.12916666666666668
+        },
+        "gene_space_k0": {
+          "fork_pr": {
+            "tp": 32,
+            "fp": 827,
+            "fn": 14,
+            "precision": 0.037252619324796274,
+            "recall": 0.6956521739130435
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1137,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "fork": 859,
+            "growing_oscillator": 341
+          },
+          "frac_re_positive": 1.0,
+          "agreement_all": 0.08083333333333333,
+          "agreement_above_median_conf": 0.14333333333333334,
+          "op_confidence_median": 4.459502239708854
+        },
+        "gene_space_k_smoothed": {
+          "fork_pr": {
+            "tp": 31,
+            "fp": 892,
+            "fn": 15,
+            "precision": 0.03358613217768147,
+            "recall": 0.6739130434782609
+          },
+          "holder_pr": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 1137,
+            "precision": NaN,
+            "recall": 0.0
+          },
+          "beh_counts": {
+            "drift": 6,
+            "fork": 923,
+            "growing_oscillator": 271
+          },
+          "frac_re_positive": 0.9966666666666667,
+          "smooth_k": 30,
+          "agreement_all": 0.0875,
+          "agreement_above_median_conf": 0.15
+        }
+      }
+    }
+  ]
+}
