@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-12 04:29:12",
+  "timestamp": "2026-10-12 04:48:22",
   "args": {
     "tau_crit": [
       0.1,
@@ -11,8 +11,8 @@
     "n_epochs": 5000,
     "seed": 0,
     "inject_velocity_prior": true,
-    "v1_json": null,
-    "verbose": true
+    "v1_json": "benchmarks/phase_b_gate/equilibrated/v1_slicing.json",
+    "verbose": false
   },
   "per_tau": [
     {
@@ -74,7 +74,7 @@
             "median": 0.87823286652565
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 102.74975612503476,
+          "fit_seconds": 104.0871073330054,
           "inject_velocity_prior": true,
           "n_epochs": 5000
         }
@@ -139,7 +139,7 @@
             "median": 0.8519085049629211
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 101.69246137491427,
+          "fit_seconds": 113.2668417081004,
           "inject_velocity_prior": true,
           "n_epochs": 5000
         }
@@ -204,7 +204,7 @@
             "median": 0.8348478078842163
           },
           "row": "dsm_equilibrated",
-          "fit_seconds": 103.07882774993777,
+          "fit_seconds": 115.08456904208288,
           "inject_velocity_prior": true,
           "n_epochs": 5000
         }
@@ -308,7 +308,109 @@
   ],
   "v1_slicing_on_equilibrated": {
     "row": "v1_slicing",
-    "status": "pending",
-    "note": "produce via compare/run_v1_equilibrated_pitchfork.py"
+    "status": "complete",
+    "timestamp": "2026-10-12 04:42:30",
+    "args": {
+      "tau_crit": [
+        0.1,
+        0.3,
+        0.5
+      ],
+      "n_cells": 1200,
+      "n_alpha": 30,
+      "n_epochs": 5000,
+      "seed": 0,
+      "verbose": false
+    },
+    "per_tau": [
+      {
+        "tau_crit": 0.1,
+        "fit_seconds": 244.05382304196246,
+        "T_eval": 200,
+        "fork_pr": {
+          "tp": 120,
+          "fp": 880,
+          "fn": 0,
+          "precision": 0.12,
+          "recall": 1.0
+        },
+        "holder_pr": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 880,
+          "precision": NaN,
+          "recall": 0.0
+        },
+        "beh_counts": {
+          "fork": 1000,
+          "growing_oscillator": 200
+        },
+        "lead_re": {
+          "frac_positive": 1.0,
+          "frac_negative": 0.0,
+          "median": 0.05819297023117542
+        }
+      },
+      {
+        "tau_crit": 0.3,
+        "fit_seconds": 246.29852616705466,
+        "T_eval": 200,
+        "fork_pr": {
+          "tp": 120,
+          "fp": 520,
+          "fn": 0,
+          "precision": 0.1875,
+          "recall": 1.0
+        },
+        "holder_pr": {
+          "tp": 0,
+          "fp": 40,
+          "fn": 840,
+          "precision": 0.0,
+          "recall": 0.0
+        },
+        "beh_counts": {
+          "damped_oscillator": 40,
+          "fork": 640,
+          "growing_oscillator": 480,
+          "holder": 40
+        },
+        "lead_re": {
+          "frac_positive": 0.9333333333333333,
+          "frac_negative": 0.06666666666666667,
+          "median": 0.03194901719689369
+        }
+      },
+      {
+        "tau_crit": 0.5,
+        "fit_seconds": 245.24798704206478,
+        "T_eval": 200,
+        "fork_pr": {
+          "tp": 80,
+          "fp": 920,
+          "fn": 0,
+          "precision": 0.08,
+          "recall": 1.0
+        },
+        "holder_pr": {
+          "tp": 40,
+          "fp": 0,
+          "fn": 840,
+          "precision": 1.0,
+          "recall": 0.045454545454545456
+        },
+        "beh_counts": {
+          "drift": 40,
+          "fork": 1000,
+          "growing_oscillator": 120,
+          "holder": 40
+        },
+        "lead_re": {
+          "frac_positive": 0.9666666666666667,
+          "frac_negative": 0.03333333333333333,
+          "median": 0.023021589033305645
+        }
+      }
+    ]
   }
 }

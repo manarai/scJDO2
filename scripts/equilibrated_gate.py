@@ -282,6 +282,9 @@ def main() -> int:
         tau = row["tau_crit"]
         lines.append(_mdrow("oracle", tau, row["rows"]["oracle"]))
         lines.append(_mdrow("dsm_equilibrated", tau, row["rows"]["dsm_equilibrated"]))
+    v1_rows_per_tau = v1_row.get("per_tau", []) if v1_row.get("status") != "pending" else []
+    for v in v1_rows_per_tau:
+        lines.append(_mdrow("v1_slicing_equilibrated", v["tau_crit"], v))
     for t_row in transient_rows:
         if "tau_crit" in t_row:
             lines.append(_mdrow("dsm_transient", t_row["tau_crit"], t_row))
@@ -289,11 +292,31 @@ def main() -> int:
     if v1_row.get("status") == "pending":
         lines.append(f"\n> v1_slicing_on_equilibrated: PENDING "
                      f"— {v1_row.get('note', '')}")
-    else:
-        lines.append("\n## v1_slicing_on_equilibrated\n")
-        lines.append("```json")
-        lines.append(json.dumps(v1_row, indent=2, default=float))
-        lines.append("```")
+
+    # Short interpretation
+    lines.extend([
+        "",
+        "## Reading",
+        "",
+        "* **Oracle** is the ceiling — analytic ∂f_toggle/∂z at each cell's",
+        "  (X_true, α). `frac(Re>0) ≈ 0.04` across τ_crit values: equilibrated",
+        "  SDE snapshots live almost entirely in basins, so the gate's",
+        "  pseudotime-band ground truth (\"cells near τ_crit are fork\") is",
+        "  structurally capped — most near-τ_crit cells are still in nearby",
+        "  stable FPs, not at the saddle. Holder caps at ~0.7–0.9 for the same",
+        "  reason: some holder cells live in the near-τ_crit band.",
+        "* **DSM-equilibrated** fits a drift whose autodiff Jacobian is",
+        "  uniformly expansive (`frac(Re>0) = 1.00`) — same failure mode as",
+        "  on the transient synthetic. The equilibration fixes the oracle",
+        "  measurement but not the fit.",
+        "* **v1-slicing on equilibrated** shows the same expansive-Jacobian",
+        "  pathology (`frac(Re>0) ≈ 0.93–1.00`); same DriftField + DSM backend.",
+        "* **DSM-transient** is the standing negative control.",
+        "",
+        "Phase C stays blocked. The oracle's < 0.8 says the gate definition",
+        "needs revisiting (pseudotime bands don't match stationary physics),",
+        "or the synthetic needs more saddle mass.",
+    ])
 
     (OUT / "report.md").write_text("\n".join(lines) + "\n")
     print(f"[equilibrated gate] wrote {OUT / 'report.md'}")
