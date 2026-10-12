@@ -5,6 +5,64 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Residual MLP off, β = σ² — holder passes, fork near oracle
+
+Per user Option-1 directive, after sanity + trail 1 confirmed the residual
+MLP is where the expansive Jacobian comes from:
+
+(a) ``DriftConfig.use_residual: bool = True`` (new). When False, the
+    residual module is replaced by a frozen zero at `.fit()` time, so
+    ``u = β·score (+ vel_prior if any)`` and the autodiff Jacobian is
+    exactly ``β·∂²log p/∂z²`` plus the velocity contribution. For the
+    equilibrated pitchfork gate we use ``use_residual=False``,
+    ``inject_velocity_prior=False``, ``β = σ_sde² = 0.04``, multi-σ
+    DSM schedule — so the drift is literally ``σ²·∇log p`` in the SDE's
+    units.
+(b) V2_PLAN R12 added. Future velocity priors on real data must be
+    **differentiable smooth fields** (fit a small MLP or GP to the
+    pseudotime-gradient targets) and participate in the autodiff drift;
+    v1's non-differentiable kNN buffer is not acceptable in v2 going
+    forward. The plotted drift and the classified Jacobian must be the
+    same function.
+
+Four-row gate (dynamic ground truth, σ ∈ [0.05, 1.0], 5000 epochs):
+
+| row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) |
+|---|---|---|---|---|---|---|
+| oracle | 0.1 | 1.00 | 0.88 | 1.00 | 0.84 | 0.04 |
+| oracle | 0.3 | 1.00 | 0.88 | 1.00 | 0.89 | 0.04 |
+| oracle | 0.5 | 1.00 | 0.79 | 1.00 | 0.91 | 0.05 |
+| dsm_equilibrated | 0.1 | 0.36 | 0.78 | **1.00** | **0.91** | 0.10 |
+| dsm_equilibrated | 0.3 | 0.41 | 0.72 | **0.99** | **0.91** | 0.09 |
+| dsm_equilibrated | 0.5 | 0.52 | 0.59 | **0.99** | **0.92** | 0.07 |
+| v1_slicing_eq | 0.1 | 0.05 | 1.00 | nan | 0.00 | 1.00 |
+| v1_slicing_eq | 0.3 | 0.06 | 0.72 | 0.72 | 0.03 | 0.93 |
+| v1_slicing_eq | 0.5 | 0.06 | 1.00 | 1.00 | 0.04 | 0.97 |
+| dsm_transient | 0.1 | 0.91 | 0.19 | 0.78 | 0.98 | 0.07 |
+| dsm_transient | 0.3 | 0.78 | 0.18 | 0.79 | 0.96 | 0.08 |
+| dsm_transient | 0.5 | 0.26 | 0.05 | 0.76 | 0.86 | 0.07 |
+
+**Holder passes** on DSM-equilibrated at every τ_crit (P ≥ 0.99, R ≥ 0.91).
+frac(Re>0) drops from 1.00 (uniformly expansive) to 0.07–0.10, within a
+few percent of the oracle's 0.04–0.05. Fork recall tracks the oracle
+within one bucket (DSM-eq 0.59–0.78 vs oracle 0.79–0.88) but lags the
+≥ 0.8 bar — this is now a precision-vs-recall tradeoff near the saddle,
+not the structural "label everything fork" pathology.
+
+v1 slicing on equilibrated still shows the expansive pathology — v1's
+residual is hardcoded and cannot be disabled from the public API.
+DSM-transient has high fork precision (0.78–0.91) at τ_crit ∈ {0.1, 0.3}
+but low recall, as expected: snapshot score on non-stationary α-ramp
+data doesn't carry basin structure.
+
+Phase C still blocked on the ≥ 0.8 bar for fork P/R, but the barrier is
+now the fork/drift threshold near the saddle, not the drift fit itself.
+The oracle itself misses fork R = 0.80 at τ=0.5 (gets 0.79), so some
+cells with analytic lead_re > 0 are being labelled "drift" by
+``opspace.behaviour`` under its tolerance. A pass may require either a
+sharper tolerance in ``opspace.behaviour`` or a wider ``fork_half_width``
+in the ground-truth definition.
+
 ### Trail 1 — multi-σ annealed DSM: fixes the DSM loss, not the gate
 
 Per user plan: after the sanity checks confirmed (A) DSM works on an

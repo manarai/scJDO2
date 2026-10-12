@@ -54,6 +54,12 @@ class DriftConfig:
     # the raw target magnitude at a single small σ. ``None`` → legacy
     # single-sigma path at ``sigma`` above.
     dsm_sigma_range: Optional[tuple] = None
+    # When False, the residual MLP inside v1's DriftField is zero'd out so
+    # ``u = β·score + vel_scale·gate·v_hat`` (and when ``inject_velocity_prior``
+    # is also False, ``u = β·score``). The residual is unidentified under
+    # ``control_energy`` supervision — it compensates the velocity prior and
+    # inherits its Jacobian structure. See V2_PLAN R12.
+    use_residual: bool = True
     clock_calibrated: bool = field(default=False, init=False)
 
 
@@ -132,6 +138,20 @@ class DriftAdapter:
             alpha_control=self.config.alpha_control,
         )
         model = DriftField(v1_cfg, X_ref=X_ref, V_ref=V_ref_t).to(device)
+        if not bool(self.config.use_residual):
+            # Zero out the residual MLP and freeze it so it never trains.
+            # The forward sum becomes u = β·score (+ vel contribution if any),
+            # whose autodiff Jacobian is exactly β·∂score/∂z, the Hessian of
+            # log density (up to v1's β scaling). See V2_PLAN R12.
+            class _Zero(torch.nn.Module):
+                def __init__(self, d):
+                    super().__init__()
+                    self.d = d
+                def forward(self, x, t):
+                    return torch.zeros(x.shape[0], self.d, device=x.device, dtype=x.dtype)
+            model.residual = _Zero(self.dim).to(device)
+            for p in model.residual.parameters():
+                p.requires_grad_(False)
         opt = torch.optim.AdamW(model.parameters(),
                                 lr=self.config.lr,
                                 weight_decay=self.config.weight_decay)

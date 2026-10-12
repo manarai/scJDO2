@@ -1,18 +1,12 @@
 # Equilibrated pitchfork gate — four-row table
 
-Generated: 2026-10-12 05:30:51
+Generated: 2026-10-12 05:36:26
 
 | row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) | verdict |
 |---|---|---|---|---|---|---|---|
-| oracle | 0.1 | 1.00 | 0.88 | 1.00 | 0.84 | 0.04 | **PASS** |
-| dsm_equilibrated | 0.1 | 0.04 | 0.71 | nan | 0.00 | 1.00 | **FAIL** |
-| oracle | 0.3 | 1.00 | 0.88 | 1.00 | 0.89 | 0.04 | **PASS** |
-| dsm_equilibrated | 0.3 | 0.05 | 0.80 | nan | 0.00 | 1.00 | **FAIL** |
-| oracle | 0.5 | 1.00 | 0.79 | 1.00 | 0.91 | 0.05 | **FAIL** |
-| dsm_equilibrated | 0.5 | 0.05 | 0.83 | nan | 0.00 | 1.00 | **FAIL** |
-| dsm_transient | 0.1 | 0.27 | 0.84 | nan | 0.00 | 1.00 | **FAIL** |
-| dsm_transient | 0.3 | 0.27 | 0.86 | nan | 0.00 | 1.00 | **FAIL** |
-| dsm_transient | 0.5 | 0.26 | 0.85 | nan | 0.00 | 1.00 | **FAIL** |
+| oracle | 0.5 | 1.00 | 0.89 | 1.00 | 0.88 | 0.04 | **PASS** |
+| dsm_equilibrated | 0.5 | 0.05 | 0.67 | 0.94 | 0.08 | 0.81 | **FAIL** |
+| dsm_transient | 0.5 | 0.27 | 0.56 | 0.79 | 0.19 | 0.65 | **FAIL** |
 
 > v1_slicing_on_equilibrated: PENDING — produce via compare/run_v1_equilibrated_pitchfork.py
 

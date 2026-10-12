@@ -153,8 +153,16 @@ def row_oracle(adata: AnnData, tau_crit: float) -> dict[str, Any]:
 def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
                          seed: int, inject_velocity_prior: bool,
                          dsm_sigma_range: Optional[tuple],
+                         use_residual: bool, beta: float,
                          verbose: bool) -> dict[str, Any]:
-    """Row 2 — DSM drift fit + autodiff J on equilibrated snapshots."""
+    """Row 2 — DSM drift fit + autodiff J on equilibrated snapshots.
+
+    With ``use_residual=False`` and ``inject_velocity_prior=False`` the drift
+    reduces to ``u = β · score(x, t)`` whose autodiff Jacobian is exactly
+    ``β · ∂score/∂z``, the Hessian of log density (up to the β scaling).
+    Setting ``β = σ_sde²`` puts the drift in the SDE's units for a reversible
+    (gradient) flow.
+    """
     t0 = time.monotonic()
     fit_latent_field(
         adata, use_rep="X_pca", time_key="pseudotime",
@@ -163,6 +171,8 @@ def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
             use_spectral_norm=False, batch_size=256,
             inject_velocity_prior=inject_velocity_prior,
             dsm_sigma_range=dsm_sigma_range,
+            use_residual=use_residual,
+            beta=beta,
         ),
         jacobian_method="autodiff",
         verbose=verbose,
@@ -172,6 +182,8 @@ def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
     r["row"] = "dsm_equilibrated"
     r["fit_seconds"] = dt_fit
     r["inject_velocity_prior"] = bool(inject_velocity_prior)
+    r["use_residual"] = bool(use_residual)
+    r["beta"] = float(beta)
     r["dsm_sigma_range"] = list(dsm_sigma_range) if dsm_sigma_range else None
     r["n_epochs"] = int(n_epochs)
     return r
@@ -180,6 +192,7 @@ def row_dsm_equilibrated(adata: AnnData, tau_crit: float, n_epochs: int,
 def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
                       inject_velocity_prior: bool,
                       dsm_sigma_range: Optional[tuple],
+                      use_residual: bool, beta: float,
                       verbose: bool) -> dict[str, Any]:
     """Row 3 — DSM on the TRANSIENT α-ramp pitchfork, measured against the
     SAME dynamic per-cell ground truth as the other rows.
@@ -197,6 +210,8 @@ def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
             use_spectral_norm=False, batch_size=256,
             inject_velocity_prior=inject_velocity_prior,
             dsm_sigma_range=dsm_sigma_range,
+            use_residual=use_residual,
+            beta=beta,
         ),
         jacobian_method="autodiff",
         verbose=verbose,
@@ -205,6 +220,8 @@ def row_dsm_transient(tau_crit: float, n_cells: int, n_epochs: int, seed: int,
     r = _gate(adata, tau_crit)
     r["row"] = "dsm_transient"
     r["fit_seconds"] = dt_fit
+    r["use_residual"] = bool(use_residual)
+    r["beta"] = float(beta)
     r["dsm_sigma_range"] = list(dsm_sigma_range) if dsm_sigma_range else None
     r["note"] = "α-ramp synthetic — negative control"
     return r
@@ -231,7 +248,9 @@ def row_v1_slicing(json_path: Optional[Path]) -> dict[str, Any]:
 
 def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
             seed: int, inject_velocity_prior: bool,
-            dsm_sigma_range: Optional[tuple], verbose: bool) -> dict[str, Any]:
+            dsm_sigma_range: Optional[tuple],
+            use_residual: bool, beta: float,
+            verbose: bool) -> dict[str, Any]:
     print(f"\n=== τ_crit = {tau_crit} ===")
     adata = generate_pitchfork_equilibrated(
         tau_crit=tau_crit, seed=seed,
@@ -253,11 +272,12 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
 
     # Row 2 — DSM-equilibrated
     print(f"  [dsm_equilibrated] fit {n_epochs} epochs, prior={inject_velocity_prior}, "
-          f"sigma_range={dsm_sigma_range}")
+          f"residual={use_residual}, β={beta}, sigma_range={dsm_sigma_range}")
     r2 = row_dsm_equilibrated(
         adata, tau_crit, n_epochs=n_epochs, seed=seed,
         inject_velocity_prior=inject_velocity_prior,
         dsm_sigma_range=dsm_sigma_range,
+        use_residual=use_residual, beta=beta,
         verbose=verbose,
     )
     print(f"    fork  P={r2['fork_pr']['precision']:.2f} R={r2['fork_pr']['recall']:.2f}  "
@@ -266,11 +286,13 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
 
     # Row 3b — DSM-transient, same gate (dynamic ground truth)
     print(f"  [dsm_transient] fit {n_epochs} epochs on α-ramp synthetic, "
-          f"sigma_range={dsm_sigma_range}")
+          f"residual={use_residual}, β={beta}, sigma_range={dsm_sigma_range}")
     r3 = row_dsm_transient(
         tau_crit=tau_crit, n_cells=adata.n_obs, n_epochs=n_epochs,
         seed=seed, inject_velocity_prior=inject_velocity_prior,
-        dsm_sigma_range=dsm_sigma_range, verbose=verbose,
+        dsm_sigma_range=dsm_sigma_range,
+        use_residual=use_residual, beta=beta,
+        verbose=verbose,
     )
     print(f"    fork  P={r3['fork_pr']['precision']:.2f} R={r3['fork_pr']['recall']:.2f}  "
           f"holder P={r3['holder_pr']['precision']:.2f} R={r3['holder_pr']['recall']:.2f}  "
@@ -293,6 +315,13 @@ def main() -> int:
     p.add_argument("--n-epochs", type=int, default=5000)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--inject-velocity-prior", action=argparse.BooleanOptionalAction, default=True)
+    p.add_argument("--use-residual", action=argparse.BooleanOptionalAction, default=True,
+                   help="If False, zero out v1's residual MLP (drift = β·score + vel). "
+                        "Combined with --no-inject-velocity-prior gives DSM-only drift "
+                        "= β·score, Jacobian = β·∂²log p/∂z².")
+    p.add_argument("--beta", type=float, default=0.1,
+                   help="Scale on the score term in the drift. For the equilibrated "
+                        "pitchfork (σ_sde=0.20), set β=σ²=0.04 so drift = σ²·∇log p.")
     p.add_argument("--sigma-min", type=float, default=None,
                    help="If set with --sigma-max, use multi-σ DSM log-uniform in [σ_min, σ_max].")
     p.add_argument("--sigma-max", type=float, default=None)
@@ -316,6 +345,7 @@ def main() -> int:
             n_epochs=args.n_epochs, seed=args.seed,
             inject_velocity_prior=args.inject_velocity_prior,
             dsm_sigma_range=dsm_range,
+            use_residual=args.use_residual, beta=args.beta,
             verbose=args.verbose,
         ))
 

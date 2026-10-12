@@ -361,6 +361,37 @@ velocity prior is replaced by `∇_z μ_g · f`, breaking the "argmax where
 motion is largest" bias our Phase B drift exhibits), and may also need
 sweeping `use_spectral_norm`, `vel_scale`, and `width`.
 
+**R12 (identified Phase B gate iteration).** v1's `DriftField.residual` MLP
+is **unidentified** under `control_energy(u) = mean(u²)` supervision on the
+full forward sum `u = β·score + residual + vel_scale·gate·v_hat`. Nothing
+pins the residual's output; it converges to approximately cancel the
+velocity-prior buffer (same magnitude, opposite sign), inheriting the
+velocity prior's spatial structure in `∂residual/∂z`. On the pitchfork,
+the pseudotime-gradient velocity prior has a locally expansive Jacobian,
+so the compensation gives `∂residual/∂z` uniformly positive-definite.
+This explains why **every drift-based estimator on this benchmark —
+v2 autodiff on transient, v2 autodiff on equilibrated, v1 slicing on
+equilibrated — produces `frac(Re(λ_max) > 0) ≈ 1.00`**, independent of
+the data regime, the σ schedule, or the training length. The DSM module
+itself trains correctly (unit-Gaussian sanity in
+`benchmarks/phase_b_gate/dsm_sanity/report.json` returns learned
+`∂score/∂z ≈ -I`); the pathology is downstream.
+
+Fix adopted in v2:
+* ``DriftConfig.use_residual: bool = True`` (new). When set to ``False``
+  (``scjdo2/drift.py``) the residual module is replaced by a frozen zero
+  module. Drift becomes ``u = β·score (+ vel_prior if any)``, whose
+  autodiff Jacobian is exactly ``β · ∂²log p / ∂z²`` plus the velocity
+  contribution. On the equilibrated pitchfork gate we set
+  ``use_residual=False``, ``inject_velocity_prior=False``, and
+  ``β = σ_sde²`` so the drift is ``σ²·∇log p`` in the SDE's units.
+* **Velocity priors on real data must be differentiable smooth fields**
+  — fit a small MLP or GP to the pseudotime-gradient targets so the
+  prior is part of the autodiff drift. v1's `KNNVelocity` buffer is a
+  non-differentiable gather and must not be used in v2's gene-space
+  phase: the plotted drift and the classified Jacobian must be the
+  **same function**.
+
 ---
 
 ## 10. Phase A deliverables status

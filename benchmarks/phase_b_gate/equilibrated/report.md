@@ -1,20 +1,21 @@
 # Equilibrated pitchfork gate — four-row table
 
-Generated: 2026-10-12 05:30:51
+Generated: 2026-10-12 05:43:58
 
 | row | τ_crit | fork P | fork R | holder P | holder R | frac(Re>0) | verdict |
 |---|---|---|---|---|---|---|---|
 | oracle | 0.1 | 1.00 | 0.88 | 1.00 | 0.84 | 0.04 | **PASS** |
-| dsm_equilibrated | 0.1 | 0.04 | 0.71 | nan | 0.00 | 1.00 | **FAIL** |
+| dsm_equilibrated | 0.1 | 0.36 | 0.78 | 1.00 | 0.91 | 0.10 | **FAIL** |
 | oracle | 0.3 | 1.00 | 0.88 | 1.00 | 0.89 | 0.04 | **PASS** |
-| dsm_equilibrated | 0.3 | 0.05 | 0.80 | nan | 0.00 | 1.00 | **FAIL** |
+| dsm_equilibrated | 0.3 | 0.41 | 0.72 | 0.99 | 0.91 | 0.09 | **FAIL** |
 | oracle | 0.5 | 1.00 | 0.79 | 1.00 | 0.91 | 0.05 | **FAIL** |
-| dsm_equilibrated | 0.5 | 0.05 | 0.83 | nan | 0.00 | 1.00 | **FAIL** |
-| dsm_transient | 0.1 | 0.27 | 0.84 | nan | 0.00 | 1.00 | **FAIL** |
-| dsm_transient | 0.3 | 0.27 | 0.86 | nan | 0.00 | 1.00 | **FAIL** |
-| dsm_transient | 0.5 | 0.26 | 0.85 | nan | 0.00 | 1.00 | **FAIL** |
-
-> v1_slicing_on_equilibrated: PENDING — produce via compare/run_v1_equilibrated_pitchfork.py
+| dsm_equilibrated | 0.5 | 0.52 | 0.59 | 0.99 | 0.92 | 0.07 | **FAIL** |
+| v1_slicing_equilibrated | 0.1 | 0.05 | 1.00 | nan | 0.00 | 1.00 | **FAIL** |
+| v1_slicing_equilibrated | 0.3 | 0.06 | 0.72 | 0.72 | 0.03 | 0.93 | **FAIL** |
+| v1_slicing_equilibrated | 0.5 | 0.06 | 1.00 | 1.00 | 0.04 | 0.97 | **FAIL** |
+| dsm_transient | 0.1 | 0.91 | 0.19 | 0.78 | 0.98 | 0.07 | **FAIL** |
+| dsm_transient | 0.3 | 0.78 | 0.18 | 0.79 | 0.96 | 0.08 | **FAIL** |
+| dsm_transient | 0.5 | 0.26 | 0.05 | 0.76 | 0.86 | 0.07 | **FAIL** |
 
 ## Reading
 
