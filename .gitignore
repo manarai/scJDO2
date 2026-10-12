@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.env
+.DS_Store
+
+# scientific outputs
+benchmarks/v1_baseline/
+benchmarks/v2/
+benchmarks/compare/*/figures/
+*.h5ad
+*.zarr/
+*.pt
+*.ckpt
+
+# keep placeholder markers
+!benchmarks/.gitkeep
+!benchmarks/**/.gitkeep
