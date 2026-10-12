@@ -182,14 +182,17 @@ def relative_label(adata: Any, base: str) -> str:
     """Return ``base`` or ``f"{base} (relative)"`` depending on calibration.
 
     The spec requires every eigenvalue axis to carry "(relative)" unless
-    ``adata.uns["scjdo2"]["clock_calibrated"]`` is ``True``. ``adata``
-    can also be a plain dict (handy for tests) — anything that supports
-    ``.uns[...]["scjdo2"]`` or ``[...]["scjdo2"]`` dict access.
+    the clock-calibration flag is ``True``. Both current conventions are
+    honoured: ``uns["scjdo2"]["clock_calibrated"]`` (the top-level flag
+    introduced by the §0 addendum) and the legacy
+    ``uns["scjdo2"]["meta"]["clock_calibrated"]`` nested form. ``adata``
+    can also be a plain dict (handy for tests).
     """
     try:
         uns = getattr(adata, "uns", adata)
-        meta = uns["scjdo2"] if isinstance(uns, dict) else uns.get("scjdo2", {})
-        calibrated = bool(meta.get("clock_calibrated", False))
+        scj = uns["scjdo2"] if isinstance(uns, dict) else uns.get("scjdo2", {})
+        meta = scj.get("meta", {}) if isinstance(scj, dict) else {}
+        calibrated = bool(scj.get("clock_calibrated", False) or meta.get("clock_calibrated", False))
     except (KeyError, AttributeError, TypeError):
         calibrated = False
     return base if calibrated else f"{base} (relative)"

@@ -52,7 +52,9 @@ def _axis_tag(adata: AnnData) -> str:
 
 def _is_clock_calibrated(adata: AnnData) -> bool:
     try:
-        return bool(adata.uns["scjdo2"].get("clock_calibrated", False))
+        scj = adata.uns["scjdo2"]
+        meta = scj.get("meta", {}) if isinstance(scj, dict) else {}
+        return bool(scj.get("clock_calibrated", False) or meta.get("clock_calibrated", False))
     except (KeyError, AttributeError, TypeError):
         return False
 
