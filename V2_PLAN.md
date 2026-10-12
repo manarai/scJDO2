@@ -500,6 +500,48 @@ a structural-pipeline check (ledger, truncated tangent, Fisher-mass
 tie-break, sparse smoothing, d-selection) rather than a classifier-
 exceeds-latent gate.
 
+**R15 (figure-layer design rule; recorded 2026-10-12).** *Behaviour
+classification uses the latent operator; gene-space J supplies
+drivers and the Fisher ledger.* Operationally:
+
+* ``obs["op_behaviour"]`` (and ``obs["op_sensitive"]``, ``obs``
+  invariants used by Panels A and B — ``lead_re``, ``lead_im``,
+  ``henrici``, ``transient_gain``, ``spectral_gap``, ``n_*``, ``op_
+  confidence``) are computed from the latent per-cell Jacobian
+  ``J_latent(c)``.
+* The gene-space per-cell Jacobian ``J_gene(c)`` and its Fisher
+  ledger are only used downstream for driver tables (``scjdo2.
+  opspace.drivers``, ``archetype_operators``) and for Panel C.
+* Panel C drivers are computed from the **gene-space eigenvector
+  lifted on the latent leading mode**: take the latent lead eigvec
+  ``v_latent``, lift via chain rule to ``w_gene = ∇η(z_c) · v_
+  latent`` (a (G,) vector), score each gene by |w_gene,g| weighted
+  by Fisher precision ``w_cg``, filter by the gene-space ledger
+  reason codes, and render as 3.4's bars with Fisher-SE whiskers.
+
+Rationale. Phase C R14 established that gene-space ``J`` is a lift
+``J_gene = ∇η · J_latent · (∇η)⁺``; the lift preserves the spectrum
+on ``image(∇η)`` up to similarity *in the clean limit* but, in
+practice, (a) the ``(∇η)⁺`` factor amplifies ridge-shrinkage bias
+on weak eigenvalues (the fork saddle) and (b) off-tangent noise
+leaks sign-flipping components into the gene-space lead eigvec. On
+the equilibrated pitchfork the gene-space row misses fork cells
+even though holder is at the ceiling (see §9 R14 above). The
+latent operator is where the behaviour signal is clean; gene-space
+is where the per-gene *loadings* and the Fisher *uncertainty* live.
+Panels A and B therefore render latent classifications; Panel C's
+driver table renders the gene-space view of the latent leading
+mode.
+
+Operational deviation from ``docs/scJDO2_figure_layer_build_
+instructions.md``: that document's §1.3 ``behaviour`` and §1.4
+``drivers`` are specified against the gene-space operator by
+default. R15 overrides the default source for behaviour (latent)
+and keeps the gene-space source for drivers (now via the explicit
+∇η-lift on the latent lead mode, not the independent gene-space
+eigvec). The ``scjdo2.opspace.compute`` wrapper (§1 of the
+instructions) applies R15.
+
 ---
 
 ## 10. Phase A deliverables status
