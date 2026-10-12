@@ -323,6 +323,8 @@ def spectrum(
     eigvals = np.full((n, n_eig), np.nan + 1j * np.nan, dtype=np.complex128)
     eigvecs = np.full((n, n_eig, dim), np.nan + 1j * np.nan, dtype=np.complex128)
     valid = np.ones(n, dtype=bool)
+    tangent: Optional[dict] = None       # only populated in sparse branch
+    tangent_rank: Optional[np.ndarray] = None
 
     if kind == "dense":
         for c in range(n):

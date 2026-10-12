@@ -54,6 +54,7 @@ from scjdo2.drift import DriftConfig
 from scjdo2.field import (
     GeneFieldConfig,
     fit_gene_space_jacobians,
+    fit_tangent_projectors,
     smooth_jacobians_sparse,
 )
 from scjdo2.fisher import compute as fisher_compute
@@ -210,9 +211,15 @@ def run_tau(
         verbose=verbose,
     )
     t_genef = time.monotonic() - t0
-    ledger = fisher_compute(gs)
+    tangent = fit_tangent_projectors(
+        np.asarray(adata.obsm["X_pca"]), rm, k=k, snr_cutoff=1.0,
+    )
+    ledger = fisher_compute(gs, tangent=tangent)
+    rank_arr = np.asarray(tangent["rank"])
     print(f"    [{t_genef:.1f}s] ridge λ={gs['ridge_lambda']}  "
-          f"mean L_c={np.mean([lc.size for lc in gs['live_cols']]):.1f}")
+          f"mean L_c={np.mean([lc.size for lc in gs['live_cols']]):.1f}  "
+          f"tangent r_c min/median/max = {int(rank_arr.min())}/"
+          f"{int(np.median(rank_arr))}/{int(rank_arr.max())}")
 
     # Save latent J so we can toggle rows cleanly
     latent_J = np.asarray(adata.uns["scjdo2"]["J"])
@@ -280,6 +287,11 @@ def run_tau(
             "ridge_lambda": float(gs["ridge_lambda"]),
             "mean_L_c": float(np.mean([lc.size for lc in gs["live_cols"]])),
             "fit_seconds": float(t_genef),
+            "tangent_rank": {
+                "min": int(rank_arr.min()),
+                "median": float(np.median(rank_arr)),
+                "max": int(rank_arr.max()),
+            },
         },
         "rows": {
             "oracle": oracle_scores,
