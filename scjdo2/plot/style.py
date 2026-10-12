@@ -2,15 +2,22 @@
 
 Shared colour key for operator-space behaviour classes. Marker shape is a
 required second channel so the figure survives greyscale printing.
+
+See ``docs/scJDO2_figure_layer_build_instructions.md`` §2 for the full
+style contract this module implements: behaviour colours/markers,
+``sensitive_ring``, diverging/cyclic colormaps, ``style()`` context,
+``confidence_alpha`` (rank-based rescale), ``relative_label`` (axis
+suffix that respects ``uns["scjdo2"]["clock_calibrated"]``).
 """
 
 from __future__ import annotations
 
 from contextlib import contextmanager
-from typing import Iterator
+from typing import Any, Iterator, Sequence
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Colour-blind-safe palette shared across all operator-space figures.
 BEHAVIOUR_COLOURS: dict[str, str] = {
@@ -35,6 +42,10 @@ BEHAVIOUR_MARKERS: dict[str, str] = {
 
 DIVERGING_CMAP = "RdBu_r"       # blue–white–red; the standard choice
 PHASE_CMAP = "twilight"         # cyclic, perceptually uniform
+
+# §2 aliases (shorter names from the build instructions).
+DIVERGING = DIVERGING_CMAP
+CYCLIC = PHASE_CMAP
 
 # Figure sizing — matches journal 180 mm wide full-column.
 OPSPACE_FIG_WIDTH_IN: float = 180.0 / 25.4
@@ -74,7 +85,7 @@ def style() -> Iterator[None]:
 
 def behaviour_legend_handles():
     """Return (handles, labels) for a single shared legend showing the
-    behaviour → colour × marker key."""
+    behaviour → colour × marker key, including the dashed sensitive ring."""
     import matplotlib.lines as mlines
 
     handles = []
@@ -95,4 +106,90 @@ def behaviour_legend_handles():
                               markersize=6)
         handles.append(h)
         labels.append(beh.replace("_", " "))
+    # Sensitive ring: dashed outer circle, same colour semantics (grey proxy).
+    sens = mlines.Line2D([], [], marker="o", linestyle="",
+                         markerfacecolor="none", markeredgecolor="#404040",
+                         markersize=10, markeredgewidth=0.75)
+    sens.set_dashes((3, 2))
+    handles.append(sens)
+    labels.append("sensitive (henrici ≥ p90)")
     return handles, labels
+
+
+# ----------------------------------------------------------------------
+# §2 helpers used by figures.py
+# ----------------------------------------------------------------------
+
+
+def sensitive_ring(
+    ax: "plt.Axes",
+    x: float | Sequence[float],
+    y: float | Sequence[float],
+    colour: str,
+    r: float,
+) -> list:
+    """Draw a dashed outer ring on each (x, y): radius 2r, 0.75 pt, dash (3, 2).
+
+    Returns the list of artist handles so tests can count them. ``r`` is
+    the base marker radius (in display units); the ring sits at 2× that,
+    matching the §0 "sensitive-holder mark" rule.
+    """
+    import matplotlib.patches as mpatches
+
+    xs = np.atleast_1d(np.asarray(x, dtype=float))
+    ys = np.atleast_1d(np.asarray(y, dtype=float))
+    handles: list = []
+    for xi, yi in zip(xs, ys):
+        circ = mpatches.Circle(
+            (xi, yi), radius=2.0 * r, fill=False,
+            edgecolor=colour, linewidth=0.75,
+            linestyle=(0, (3, 2)),
+        )
+        ax.add_patch(circ)
+        handles.append(circ)
+    return handles
+
+
+def confidence_alpha(
+    values: Sequence[float] | np.ndarray,
+    lo: float = 0.15,
+    hi: float = 1.0,
+) -> np.ndarray:
+    """Rank-based rescale of ``values`` into ``[lo, hi]``.
+
+    Confidence columns are heavy-tailed (per-cell Fisher medians); using
+    the rank instead of the raw magnitude keeps the alpha channel evenly
+    distributed across the figure without losing the ordering. NaN
+    entries map to ``lo`` so missing-confidence cells are not loud.
+    """
+    arr = np.asarray(values, dtype=float)
+    out = np.full(arr.shape, lo, dtype=float)
+    finite = np.isfinite(arr)
+    if not finite.any():
+        return out
+    ranks = np.empty(arr.shape, dtype=float)
+    order = np.argsort(arr[finite], kind="mergesort")
+    rk = np.empty(order.shape, dtype=float)
+    rk[order] = np.linspace(0.0, 1.0, order.size) if order.size > 1 else np.array([1.0])
+    ranks_full = np.zeros_like(arr, dtype=float)
+    idx = np.where(finite)[0]
+    ranks_full[idx] = rk
+    out[finite] = lo + (hi - lo) * ranks_full[finite]
+    return out
+
+
+def relative_label(adata: Any, base: str) -> str:
+    """Return ``base`` or ``f"{base} (relative)"`` depending on calibration.
+
+    The spec requires every eigenvalue axis to carry "(relative)" unless
+    ``adata.uns["scjdo2"]["clock_calibrated"]`` is ``True``. ``adata``
+    can also be a plain dict (handy for tests) — anything that supports
+    ``.uns[...]["scjdo2"]`` or ``[...]["scjdo2"]`` dict access.
+    """
+    try:
+        uns = getattr(adata, "uns", adata)
+        meta = uns["scjdo2"] if isinstance(uns, dict) else uns.get("scjdo2", {})
+        calibrated = bool(meta.get("clock_calibrated", False))
+    except (KeyError, AttributeError, TypeError):
+        calibrated = False
+    return base if calibrated else f"{base} (relative)"

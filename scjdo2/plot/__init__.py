@@ -10,8 +10,14 @@ Public entry points:
 from .style import (
     BEHAVIOUR_COLOURS,
     BEHAVIOUR_MARKERS,
+    CYCLIC,
+    DIVERGING,
     DIVERGING_CMAP,
     OPSPACE_FIG_WIDTH_IN,
+    PHASE_CMAP,
+    confidence_alpha,
+    relative_label,
+    sensitive_ring,
     style,
 )
 from .figures import (
@@ -23,8 +29,14 @@ from .figures import (
 __all__ = [
     "BEHAVIOUR_COLOURS",
     "BEHAVIOUR_MARKERS",
+    "CYCLIC",
+    "DIVERGING",
     "DIVERGING_CMAP",
     "OPSPACE_FIG_WIDTH_IN",
+    "PHASE_CMAP",
+    "confidence_alpha",
+    "relative_label",
+    "sensitive_ring",
     "style",
     "figure_operator_space",
     "figure_archetype_sheet",
