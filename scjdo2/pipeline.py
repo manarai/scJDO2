@@ -1,9 +1,8 @@
-"""Phase B pipeline — fit the drift + field in latent space and write to AnnData.
-
-This module is the single entry point that produces the AnnData state the
-opspace/plot layers consume. In Phase C it is extended with the NB rate
-model (gene-space Jacobians, Fisher ledger, archetype decomposition). For
-now it stores a dense latent-space Jacobian in ``adata.uns["scjdo2"]["J"]``.
+"""Phase B + C pipeline — fit the drift + field in latent space and, when
+``with_rate_model=True``, also the NB rate model, the per-cell gene-space
+Jacobian, the Fisher ledger, the Fisher-weighted tangent projector and
+``grad_eta``. The resulting AnnData is what the opspace / plot layers
+consume (via :func:`scjdo2.io.save` / :func:`scjdo2.io.load`).
 
 Jacobian estimator (``jacobian_method``):
 
@@ -110,4 +109,100 @@ def fit_latent_field(
         "field": field_meta,
     }
     adata.uns["scjdo2"]["field_reason_summary"] = field_reason_summary
+    return adata
+
+
+def fit_rate_and_gene_field(
+    adata: AnnData,
+    use_rep: str = "X_pca",
+    n_epochs_rate: int = 400,
+    rate_hidden: tuple[int, ...] = (128, 128),
+    k: int = 30,
+    cv_sample_cells: int = 30,
+    cv_metric: Literal["nb_nll", "weighted_mse"] = "nb_nll",
+    n_perm_tangent: int = 30,
+    tangent_quantile: float = 0.5,
+    seed: int = 0,
+    verbose: bool = False,
+) -> AnnData:
+    """Phase C extension — NB rate model + gene-space J + Fisher ledger
+    + Fisher-weighted tangent projector + ``grad_eta``.
+
+    Prerequisites written by :func:`fit_latent_field`:
+      - ``adata.obsm[use_rep]`` latent positions,
+      - ``adata.obsm["X_drift_v"]`` drift velocities,
+      - ``adata.uns["scjdo2"]["J"]`` latent Jacobian field.
+
+    Writes:
+      - ``adata.uns["scjdo2"]["J_latent"]`` — the dense latent J moved
+        aside (so ``opspace.compute`` can run its R15 behavioural pass
+        on it).
+      - ``adata.uns["scjdo2"]["J"]`` — overwritten with the per-cell
+        gene-space CSR Jacobian list.
+      - ``adata.uns["scjdo2"]["fisher_ledger"]`` — Fisher ledger with
+        ``off_tangent`` carrying the per-cell projector + rank.
+      - ``adata.uns["scjdo2"]["grad_eta"]`` — ``(n, G, d)``.
+    """
+    from .field import (
+        GeneFieldConfig,
+        fit_gene_space_jacobians,
+        fit_jacobian_tangent_projectors,
+    )
+    from .fisher import compute as fisher_compute
+    from .rates import GeneRateModel, RatesConfig
+
+    uns = adata.uns.setdefault("scjdo2", {})
+    if "J" not in uns:
+        raise RuntimeError(
+            "fit_rate_and_gene_field needs the latent Jacobian in "
+            "uns['scjdo2']['J']; run fit_latent_field first."
+        )
+    if "X_drift_v" not in adata.obsm:
+        raise RuntimeError(
+            "fit_rate_and_gene_field needs obsm['X_drift_v']; run "
+            "fit_latent_field first."
+        )
+
+    z = np.asarray(adata.obsm[use_rep])
+    v = np.asarray(adata.obsm["X_drift_v"])
+    counts = np.asarray(adata.X, dtype=np.float32)
+    # anndata.X may be sparse; densify once for the rate model.
+    if hasattr(counts, "toarray"):
+        counts = counts.toarray()
+
+    rm = GeneRateModel(RatesConfig(
+        hidden=tuple(rate_hidden), n_epochs=int(n_epochs_rate), lr=1e-3,
+        batch_size=256, held_out_frac=0.10, patience=30, seed=int(seed),
+    ))
+    rm.fit(counts, z, verbose=verbose)
+
+    gs = fit_gene_space_jacobians(
+        z, v, rm, counts=counts,
+        config=GeneFieldConfig(
+            k=int(k), cv_sample_cells=int(cv_sample_cells),
+            cv_metric=cv_metric, seed=int(seed),
+        ),
+        verbose=verbose,
+    )
+    tangent = fit_jacobian_tangent_projectors(
+        z, rm,
+        n_perm=int(n_perm_tangent),
+        quantile=float(tangent_quantile),
+        seed=int(seed),
+    )
+    ledger = fisher_compute(gs, tangent=tangent)
+
+    uns["J_latent"] = np.asarray(uns["J"])
+    uns["J"] = gs["J"]
+    uns["fisher_ledger"] = ledger
+    uns["grad_eta"] = rm.grad_eta(z)
+    # Record the ridge λ selection + rate-model held-out NLL for the report.
+    uns["rate_meta"] = {
+        "held_out_nll": float(rm.best_val_nll),
+        "n_epochs": int(n_epochs_rate),
+        "cv_metric": cv_metric,
+        "ridge_lambda": float(gs.get("ridge_lambda", float("nan"))),
+        "ridge_lambda_nll": float(gs.get("ridge_lambda_nll", float("nan"))),
+        "ridge_lambda_mse": float(gs.get("ridge_lambda_mse", float("nan"))),
+    }
     return adata

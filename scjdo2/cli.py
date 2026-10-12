@@ -27,12 +27,28 @@ def _build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     run = sub.add_parser("run", help="run the scJDO2 pipeline on an h5ad input")
-    run.add_argument("--input", required=True)
-    run.add_argument("--embed", choices=["scvi", "fa", "pca"], default="pca")
-    run.add_argument("--k", default="auto")
-    run.add_argument("--n-archetypes", default="auto")
+    run.add_argument("--input", required=True,
+                     help="input .h5ad (or run dir with adata.h5ad)")
+    run.add_argument("--out", required=True,
+                     help="output run directory (adata.h5ad + phase_c.npz)")
+    run.add_argument("--use-rep", default="X_pca",
+                     help="latent key in adata.obsm (default: X_pca)")
+    run.add_argument("--time-key", default="pseudotime",
+                     help="pseudotime key in adata.obs (default: pseudotime)")
+    run.add_argument("--n-epochs", type=int, default=1500,
+                     dest="n_epochs_drift",
+                     help="DSM drift epochs (default: 1500)")
+    run.add_argument("--k", type=int, default=30,
+                     help="gene-space kNN radius (default: 30)")
     run.add_argument("--seed", type=int, default=0)
-    run.add_argument("--out", required=True)
+    run.add_argument("--with-rate-model", action="store_true",
+                     help="also fit NB rate model + gene-space J + Fisher "
+                          "ledger + tangent + grad_eta (Phase C)")
+    run.add_argument("--rate-epochs", type=int, default=400,
+                     dest="n_epochs_rate",
+                     help="NB rate-model epochs (default: 400)")
+    run.add_argument("--cv-sample-cells", type=int, default=30,
+                     help="sampled cells for ridge-λ CV (default: 30)")
 
     ops = sub.add_parser("opspace",
                          help="compute operator-space invariants on a stored run")
@@ -202,10 +218,53 @@ def _cmd_fig_ledger(args) -> int:
     return 0
 
 
+def _cmd_run(args) -> int:
+    from . import io as _scjdo2_io
+    from .drift import DriftConfig
+    from .pipeline import fit_latent_field, fit_rate_and_gene_field
+
+    adata = _load_adata(args.input)
+    if args.use_rep not in adata.obsm:
+        raise SystemExit(
+            f"[scjdo2] adata.obsm['{args.use_rep}'] missing — provide "
+            "the latent representation (e.g. X_pca from `sc.tl.pca`)."
+        )
+    if args.time_key not in adata.obs:
+        raise SystemExit(
+            f"[scjdo2] adata.obs['{args.time_key}'] missing — provide "
+            "the pseudotime column (e.g. from `sc.tl.dpt`)."
+        )
+    print(f"[run] fitting latent drift + field "
+          f"({args.n_epochs_drift} epochs, use_rep={args.use_rep})")
+    fit_latent_field(
+        adata, use_rep=args.use_rep, time_key=args.time_key,
+        drift_config=DriftConfig(
+            hidden=96, depth=3, n_epochs=int(args.n_epochs_drift),
+            seed=int(args.seed), use_spectral_norm=False, batch_size=256,
+        ),
+    )
+    if args.with_rate_model:
+        print(f"[run] fitting NB rate model + gene-space J "
+              f"({args.n_epochs_rate} rate epochs, k={args.k})")
+        fit_rate_and_gene_field(
+            adata, use_rep=args.use_rep,
+            n_epochs_rate=int(args.n_epochs_rate),
+            k=int(args.k),
+            cv_sample_cells=int(args.cv_sample_cells),
+            seed=int(args.seed),
+        )
+    out = Path(args.out)
+    saved = _scjdo2_io.save(adata, out)
+    print(f"[run] wrote {saved['h5ad'].name}"
+          + (f" + {saved['sidecar'].name}" if saved.get("sidecar") else "")
+          + f" under {out}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
     if args.cmd == "run":
-        raise NotImplementedError("Phase D: wire scjdo2 pipeline end-to-end")
+        return _cmd_run(args)
     if args.cmd == "compare":
         raise NotImplementedError("Phase D: delegate to compare.v1_vs_v2")
     if args.cmd == "opspace":
