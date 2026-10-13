@@ -16,6 +16,7 @@ __all__ = [
     "fisher",
     "opspace",
     "archetypes",
+    "clone",
     "grammar",
     "io",
     "cli",

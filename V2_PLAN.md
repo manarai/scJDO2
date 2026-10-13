@@ -681,6 +681,40 @@ moves after Phase D. Phase D adds:
 2. R17/R18 recorded here. Done.
 3. ``scjdo2.data.larry`` loader for Weinreb 2020 (GSE140802;
    raw counts, clone barcodes, day labels).
+
+   **Data provenance (recorded 2026-10-13).** GEO GSE140802
+   distributes the in-vitro counts matrix as
+   ``GSM4185642_stateFate_inVitro_normed_counts.mtx.gz`` (2.07 GB
+   compressed). The MatrixMarket header is ``coordinate real
+   general`` with floating-point entries; the AllonKleinLab
+   paper-data README confirms the normalisation is
+   ``norm_ij = (umi_ij / total_i) · S`` with ``S = median_total``.
+   ``cospar.datasets.hematopoiesis()`` downloads from
+   ``wangshouwen.lab.westlake.edu.cn/.../LARRY_adata_preprocessed.
+   h5ad``, which returns ``HTTP 403 Forbidden`` as of 2026-10-13.
+   ``GSE140802_RAW.tar`` (4.67 GB) is a repackaging of the same
+   per-GSM supplementary files — no per-sample raw 10x matrices
+   are present.
+
+   **However, Weinreb's normalisation is losslessly invertible.**
+   The row-sum of the normed matrix is exactly ``S`` for every
+   cell (verified: row-sums 2878.7490 within float noise across
+   all 130,887 cells). For each cell the minimum positive normed
+   value is achieved at ``umi_ij = 1``, so ``norm_min_i = S /
+   total_i`` and ``umi_ij = round(norm_ij / norm_min_i)`` recovers
+   the integer UMI exactly. ``scripts/assemble_larry_raw.py``
+   streams the ``.mtx.gz``, applies the per-row inversion, and
+   writes ``benchmarks/data/larry/larry_inVitro_raw.h5ad``.
+   Verified on the full dataset: max rounding error over all 177M
+   nonzero entries = ``3.41e-13`` (pure float64 roundoff); recovered
+   per-cell UMI totals min/median/max = 300/2249/29043 (physically
+   plausible for inDrops). SHA-256 of the assembled file is
+   recorded in ``benchmarks/data/larry/CHECKSUMS.txt``.
+   ``scjdo2.data.load_larry()`` preferentially reads this h5ad; the
+   normed_counts.mtx.gz and the auxiliary supplementary files
+   (``gene_names.txt.gz``, ``metadata.txt.gz``,
+   ``clone_matrix.mtx.gz``) stay in the cache dir as the raw
+   inputs. ``cospar`` is in the env but not called at load time.
 4. Clone arm in Step 2: a clone-split map over Panel A plus a
    clone-consistency score for the drift (fraction of clone pairs
    where integrating ``f`` forward from the earlier-day member
@@ -692,6 +726,37 @@ moves after Phase D. Phase D adds:
    name the cell types.
 6. Clock check: day labels only check lineage-path pseudotime
    monotonicity; eigenvalues stay relative.
+
+**Paul15 archetype-5 negative finding (recorded 2026-10-13).** On
+the 2000-gene R16 run, the ery–myeloid-split archetype (5; fork,
+``lead_re = +0.107``, 50% ery · 15% myelo · 11% MEP) ranks Gata1
+and Sfpi1 modestly in both views:
+
+| gene  | responders rank | drivers_left rank | fisher | snr   | reason |
+|-------|-----------------|-------------------|--------|-------|--------|
+| Gata1 | 464             | 493               | 5.52   | 0.236 | ok     |
+| Sfpi1 | 1404            | 1615              | 1.01   | 0.151 | ok     |
+
+Neither TF makes the top-N of either the right- or the left-
+eigenvector on either side of the operator. This is a **negative
+finding**: the Paul15 fork archetype does not encode the Gata1 /
+Sfpi1 switch on either side of the local operator — the switch
+isn't a saddle *inside this snapshot*. Consistent with the zero-
+holder result on the same dataset: in a non-stationary mid-
+differentiation snapshot there is no basin structure, so the
+ery–myelo bifurcation does not appear as a saddle whose
+leading-mode left-ev weighs Gata1 or Sfpi1. LARRY — which carries
+clone-barcoded cross-day lineage history and includes
+pre-commitment progenitors — is the proper test: a saddle
+encoding the Gata1 / Spi1 switch should show up at the
+annotated clone-split positions, driven by Spi1 on one axis and
+Gata1 on the other, with holder behaviour on the downstream
+terminal states. If that structure appears on LARRY, Phase C's
+operator decomposition reads the ery/myelo switch correctly on a
+dataset that actually has the switch; if it doesn't appear, the
+scJDO2 pipeline cannot see the switch on either dataset and R15's
+"behaviour from latent, drivers from gene-space lift" rule needs a
+rethink. Full gate below.
 
 Full gate on LARRY: behaviour counts by annotated fate, holders
 on terminal states, fork at the clone-split positions, driver

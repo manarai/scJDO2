@@ -196,7 +196,7 @@ def load_larry(
     *,
     require_clone_matrix: bool = True,
 ) -> AnnData:
-    """Load the Weinreb 2020 LARRY haematopoiesis snapshot.
+    """Load the Weinreb 2020 LARRY haematopoiesis snapshot (raw UMIs).
 
     Returns an :class:`AnnData` with:
 
@@ -211,8 +211,51 @@ def load_larry(
                                  ``clone_matrix[c, k] > 0``.
 
     No pseudotime is written. No root cell. No arrow. V2_PLAN R17.
+
+    Data source resolution order (V2_PLAN R16 provenance decision):
+
+    1. ``<cache>/larry_inVitro_raw.h5ad`` — the assembled raw-UMI
+       artefact built by ``scripts/assemble_larry_raw.py`` from the
+       GEO GSE140802 raw per-library 10x matrices and the stateFate_*
+       supplementary files. SHA-256 recorded in ``<cache>/CHECKSUMS
+       .txt``. Preferred when present.
+    2. ``<cache>/state_fate_data.npz`` + ``clone_matrix.npz`` — the
+       Weinreb published-processed layout. May carry raw or
+       normalised counts depending on upstream; the loader does not
+       check. Use only if you have a mirror that holds integer UMIs
+       in these files (not GEO: GEO stateFate_*normed_counts.mtx.gz
+       is confirmed non-integer).
     """
     cache = Path(cache_dir) if cache_dir else DEFAULT_CACHE
+
+    # Preferred path: assembled h5ad with raw integer counts.
+    h5 = cache / "larry_inVitro_raw.h5ad"
+    if h5.exists():
+        import anndata as _ad
+        adata = _ad.read_h5ad(h5)
+        # Normalise obs column names → the GEO metadata uses "Time point"
+        # / "Cell type annotation" with capitalised spaces. We fold those
+        # to the scJDO2 convention so downstream code can address them
+        # consistently.
+        rename = {
+            "Time point": "day",
+            "Cell type annotation": "cell_type_annotation",
+            "Library": "library",
+            "Well": "well",
+            "Starting population": "starting_population",
+            "Cell barcode": "cell_barcode",
+            "SPRING-x": "spring_x",
+            "SPRING-y": "spring_y",
+        }
+        for old, new in rename.items():
+            if old in adata.obs.columns and new not in adata.obs.columns:
+                adata.obs[new] = adata.obs[old]
+        if "day" in adata.obs:
+            adata.obs["day"] = pd.to_numeric(adata.obs["day"], errors="coerce").astype("Int64")
+        adata.uns.setdefault("dataset", {})
+        adata.uns["dataset"].setdefault("name", "LARRY (in-vitro)")
+        return adata
+
     npz_state = cache / "state_fate_data.npz"
     npz_clone = cache / "clone_matrix.npz"
     csv_meta = cache / "metadata.csv"

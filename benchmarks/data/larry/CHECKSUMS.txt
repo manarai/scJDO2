@@ -1,0 +1,11 @@
+# LARRY in-vitro (Weinreb 2020, GSE140802) — scJDO2 cached artefacts.
+#
+# Raw inputs from GEO (NOT checked into git; sizes are informational):
+#   GSM4185642_stateFate_inVitro_normed_counts.mtx.gz  2,065,697,092 bytes
+#   gene_names.txt.gz                                       66,130 bytes
+#   metadata.txt.gz                                      2,215,288 bytes
+#   clone_matrix.mtx.gz                                    197,607 bytes
+#   cell_barcodes.txt.gz                                   595,644 bytes
+#
+# Assembled artefact (produced by scripts/assemble_larry_raw.py):
+3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e  larry_inVitro_raw.h5ad
