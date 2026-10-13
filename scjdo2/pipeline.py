@@ -172,10 +172,13 @@ def fit_rate_and_gene_field(
 
     z = np.asarray(adata.obsm[use_rep])
     v = np.asarray(adata.obsm["X_drift_v"])
-    counts = np.asarray(adata.X, dtype=np.float32)
-    # anndata.X may be sparse; densify once for the rate model.
-    if hasattr(counts, "toarray"):
-        counts = counts.toarray()
+    # ``adata.X`` may be sparse — densify first, then cast. ``np.asarray``
+    # on a scipy sparse matrix returns a 0-d object array which breaks
+    # the downstream rate-model fit.
+    X = adata.X
+    if hasattr(X, "toarray"):
+        X = X.toarray()
+    counts = np.asarray(X, dtype=np.float32)
 
     import time as _time
     _t0 = _time.monotonic()

@@ -1,0 +1,12 @@
+fate,monotone,day_pseudotime_rows
+Baso,false,"d2:18.798(n=1),d4:15.073(n=405),d6:16.565(n=1031)"
+Ccr7_DC,true,"d2:12.083(n=1),d4:14.139(n=4),d6:15.488(n=9)"
+Eos,false,"d4:11.467(n=7),d6:10.875(n=19)"
+Erythroid,false,"d4:12.483(n=9),d6:12.437(n=40)"
+Lymphoid,true,"d4:9.722(n=14),d6:9.917(n=30)"
+Mast,true,"d2:16.627(n=3),d4:20.121(n=64),d6:20.122(n=242)"
+Meg,true,"d2:15.760(n=1),d4:16.011(n=58),d6:19.138(n=131)"
+Monocyte,false,"d2:17.839(n=6),d4:16.505(n=425),d6:17.056(n=1287)"
+Neutrophil,true,"d2:10.825(n=10),d4:12.957(n=499),d6:14.750(n=1234)"
+Undifferentiated,true,"d2:5.551(n=583),d4:6.615(n=1676),d6:7.965(n=2206)"
+pDC,false,"d4:16.233(n=2),d6:15.971(n=3)"
