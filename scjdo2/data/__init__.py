@@ -9,6 +9,7 @@ from V2_PLAN.md.
 
 from .dynamo_hematopoiesis import load_dynamo_hematopoiesis
 from .larry import clone_pairs, clone_split_positions, load_larry
+from .setty_cd34 import PROGENITOR_CLUSTERS, TERMINAL_CLUSTERS, load_setty_cd34
 from .synthetic_pitchfork import (
     ALPHA_CRIT,
     DEFAULT_WIDTH,
@@ -27,4 +28,7 @@ __all__ = [
     "clone_pairs",
     "clone_split_positions",
     "load_dynamo_hematopoiesis",
+    "load_setty_cd34",
+    "TERMINAL_CLUSTERS",
+    "PROGENITOR_CLUSTERS",
 ]

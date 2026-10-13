@@ -5,6 +5,15 @@ is read-only; v1 is pinned here at tag **`scjdo-v56-submission-20260922-r25`**
 (highest `-r*` on the submission series, `__version__ = "0.3.0"`, Python ≥ 3.9,
 PyTorch ≥ 2.2).
 
+**Primary hematopoiesis comparison is the Setty 2019 Palantir CD34+ bone
+marrow dataset** (the preprint target). v1 reports per-Palantir-branch
+slicing; v2 reports a whole-dataset field. The matched measured-flow
+counterpart (same compartment, human CD34+ hematopoiesis) is Qiu 2022
+scNT-seq hematopoiesis, loaded via dynamo. **Paul15 is a secondary mouse
+replicate of the snapshot arm**; the LARRY in-vitro set (Weinreb 2020)
+adds clone-barcoded nesting on mouse. All side-by-side results live in
+``SUMMARY.md``.
+
 Phase A snapshot:
 - Package layout (§2 of the brief) scaffolded; all modules are typed stubs that
   raise `NotImplementedError`.
