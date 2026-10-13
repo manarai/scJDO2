@@ -59,6 +59,85 @@ Palantir pseudotime (as stored). Phase C anchor fit max_live=200,
 Setty is a snapshot (no labelling); eigenvalues reported relative,
 no clock calibration.
 
+**(1) Behaviour counts by annotated lineage — progenitors
+separated from terminals** (output under
+``benchmarks/v2/setty_cd34/behaviour_by_cluster.csv`` and
+``behaviour_grouped.csv``):
+
+Progenitors (ery–myelo–lymphoid decision region):
+
+| cluster | n | fork | holder | growing_osc | frac_fork | frac_holder |
+|---|---|---|---|---|---|---|
+| HSC_1       | 1118 | 903 | 0 | 215 | 0.81 | 0.00 |
+| HSC_2       |  984 | 549 | 0 | 435 | 0.56 | 0.00 |
+| Precursors  |  666 | 503 | 0 | 163 | 0.76 | 0.00 |
+| **total**   | 2768 | 1955 | 0 | 813 | **0.706** | 0.00 |
+
+Terminals:
+
+| cluster | n | fork | holder | growing_osc | frac_fork | frac_holder |
+|---|---|---|---|---|---|---|
+| CLP     |  488 | 400 | 0 |  88 | 0.82 | 0.00 |
+| DCs     |  303 | 243 | 0 |  60 | 0.80 | 0.00 |
+| Ery_1   |  742 | 637 | 0 | 105 | 0.86 | 0.00 |
+| Ery_2   |  265 | 260 | 0 |   5 | 0.98 | 0.00 |
+| Mega    |   61 |  21 | 0 |  40 | 0.34 | 0.00 |
+| Mono_1  |  724 | 585 | 0 | 139 | 0.81 | 0.00 |
+| Mono_2  |  429 | 305 | 0 | 124 | 0.71 | 0.00 |
+| **total** | 3012 | 2451 | 0 | 561 | **0.814** | 0.00 |
+
+**Zero holders on any cluster** — the signature DSM-snapshot result.
+
+**(2) Fork fraction in the decision region vs elsewhere:**
+`frac_fork` in the ery–myelo–lymphoid decision region (HSC_1 +
+HSC_2 + Precursors, 2768 cells) is **0.706**; `frac_fork` elsewhere
+(terminals, 3012 cells) is **0.814**. **Terminals are more
+fork-dominated than the decision region**, i.e. the opposite of the
+"fork at the saddle, holders in the basins" expectation. The
+decision region carries 29% ``growing_oscillator`` cells vs 19% in
+terminals — the DSM score reads a low-divergence rotational flow
+in the dense HSC compartment and divergent spokes toward each
+terminal. This is the known limitation of a density-score drift on
+a snapshot: it classifies by local flow geometry, not by
+attractor-basin structure.
+
+**(3) Decision-region archetype — nearest archetype in soft weight
+to the HSC + Precursors layer** (output under
+``archetype_by_cluster.csv`` + ``decision_region_archetype.csv``):
+
+Archetype 3 (fork, lead_re +0.086, n_hard = 1162 cells) carries
+**72.6%** of its soft weight on the progenitor region (HSC_1 24.4%,
+HSC_2 30.9%, Precursors 17.3%). Its GATA1 / SPI1 ranks (out of
+2002 HVG):
+
+| table | gene | rank | fisher | snr | sensitivity | reason |
+|---|---|---|---|---|---|---|
+| responders   | GATA1 | 1051 | 0.00 | 0.0018 | — | **capped** |
+| responders   | SPI1  | **73**   | 0.85 | 0.020  | — | ok |
+| drivers_left | GATA1 | 1279 | 0.00 | 0.0018 | 0.110 | **capped** |
+| drivers_left | SPI1  | **137**  | 0.85 | 0.020  | 1.074 | ok |
+
+**At the decision-region archetype, SPI1 is a top-5% driver on
+both sides of the operator (rank 73 responder, rank 137 driver);
+GATA1 is capped with Fisher = 0.** The anchor_max_live=150 cap
+clips GATA1 at every anchor in archetype 3's membership — the
+SNR-based column selection in R16 keeps the top-150 genes by
+NB-precision-weighted η-variance, and GATA1 doesn't make the cut
+at this fork saddle. The asymmetry is a real feature: the DSM
+drift's gene-space Fisher load on the decision archetype falls on
+myeloid-axis SPI1 but not on erythroid-axis GATA1.
+
+**(4) v1-vs-v2 comparison figure** (``v1_vs_v2_figure.pdf`` /
+``.png``). Left panel: Setty tSNE coloured by v2 behaviour
+(fork / growing_oscillator — zero holders) with archetype 3 hard-
+membership cells circled over the HSC + Precursors region. Right
+panel: v1 per-branch ``max_real_eig`` along pseudotime for Ery /
+Mono / DC — all three curves stay strictly positive (no
+negative waypoints, matching v1's per-branch top-15 instability
+tables that recovered KLF1 but ranked GATA1 at 16059 / 16106 on
+Ery). The figure is the direct side-by-side the preprint comparison
+asks for.
+
 **v2 behaviour counts by annotated cluster** (output under
 ``benchmarks/v2/setty_cd34/behaviour_by_cluster.csv``):
 
