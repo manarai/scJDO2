@@ -1,0 +1,4 @@
+n,fork,holder,drift,median_lead_re,frac_fork,frac_holder,variant,holders_on_terminals,holders_total,holder_Bas,n_Bas,holder_Ery,n_Ery,holder_GMP-like,n_GMP-like,holder_HSC,n_HSC,holder_MEP-like,n_MEP-like,holder_Meg,n_Meg,holder_Mon,n_Mon,holder_Neu,n_Neu
+1947,1910,37,0,0.051173951290474994,0.9809964047252183,0.019003595274781716,A unprojected,37,37,22,177,0,234,0,161,0,309,0,457,15,154,0,423,0,32
+1947,1909,38,0,0.0500402606593629,0.980482794042116,0.019517205957883924,B score-regressed,38,38,27,177,0,234,0,161,0,309,0,457,11,154,0,423,0,32
+1947,1939,8,0,0.04906973085716736,0.9958911145351823,0.004108885464817668,C rotation-projected,8,8,7,177,0,234,0,161,0,309,0,457,1,154,0,423,0,32

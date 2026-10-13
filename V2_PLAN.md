@@ -1023,16 +1023,95 @@ The measured flow does **not** yet:
       median) with 17–22% of the eigvec weight on cycle genes on
       the strongest archetypes.
 
-**Next (cycle regression, Phase D §7a).** Repeat the §7 pipeline
-with cycle-regressed velocities: compute per-cell S / G2M scores
-from the available cell-cycle panel, regress ``velocity_pca`` on
-them, use the residual as the measured drift, and re-run the gate.
-If the archetype eigvec's cell-cycle fraction drops under 5% and
-holders *survive* on terminals (Meg, Bas) with Fisher mass in the
-Gata1/Spi1 top-tail unchanged, that is the recovery claim. If the
-cycle regression wipes out the holder minority or the Gata1/Spi1
-ranks, the §7 pattern was cell-cycle-driven and R15's rule still
-needs a rethink under measured flow.
+**§7a (recorded 2026-10-13, outputs under
+``benchmarks/v2/dynamo_hematopoiesis/s7a_*.csv``). Cycle-genes
+back in the embedding; cycle subspace projected out of the operator.**
+
+Per-cell S + G2M scores from the Seurat S / G2M panels (only 4 of
+97 genes survive the dynamo HVG filter: 1 S + 3 G2M). Latent-frame
+cycle directions by OLS regression of each score onto ``X_pca``;
+orthonormalise to ``U_cycle ∈ R^(10 × 2)``. Phase stored as
+``obs["_phase"] = atan2(G2M, S)``. Three variants compared:
+
+  A. **Unprojected** — the §7 fit.
+  B. **Score-regressed** — residualise ``velocity_pca`` on
+     ``[S, G2M]`` per cell (OLS), refit MeasuredDrift, run full
+     Phase C refit.
+  C. **Rotation-projected** — keep A's full Phase C fit; replace
+     the latent operator by ``J_c ← (I - UU^T) J_c (I - UU^T)``
+     per cell BEFORE the eigendecomp. Projected directions are
+     tagged ``reason=known_rotation`` in the ledger. The gene-space
+     ``J`` is unchanged.
+
+Side-by-side on the latent operator:
+
+    variant               n   fork  holder  frac_h  cycle_w (med / q95 of |U^T v|²/|v|²)
+    A unprojected        1947 1910    37    1.9%    0.079 / 0.362
+    B score-regressed    1947 1909    38    1.95%   0.068 / 0.343
+    C rotation-projected 1947 1939     8    0.4%    ~0    / ~0
+
+  - **Holders by annotated fate (all three variants):** 100% on
+    terminals (Bas + Meg). A: 22 Bas + 15 Meg; B: 27 Bas + 11
+    Meg; C: 7 Bas + 1 Meg. HSC, MEP-like, GMP-like, Ery, Mon,
+    Neu: zero holders under every variant.
+  - **Cycle weight in the leading latent eigvec**: variant A's
+    median 7.9% (q95 36%) is high — the top eigvec of the raw
+    operator is substantially cycle-aligned on at least 5% of cells.
+    Variant B's score regression barely moves this (6.8% / 34%),
+    because OLS on ``velocity_pca`` only removes the linear part
+    of the cycle drift. Variant C's projection drives it to zero
+    by construction and drops the holder count 37 → 8 (22%
+    survival).
+
+**37-holder deep dive (variant A).**
+  - **100% on terminal fates** (Bas + Meg) and **100% from the
+    3 h pulse batch**. The 5 h pulse batch (818 cells) contributes
+    zero holders.
+  - 0 G0-like under ``|S|<0.2 ∧ |G2M|<0.2 ∧ cycle_logexp < median``
+    — the panel is too small to tell (only 1 S gene survives HVG).
+  - Mean cycle log-expression = 0 for 32 of the 37 cells (no
+    cycle-gene UMIs at all); the 5 remaining holders have
+    ``mean_cycle_logexp`` between 0.17 and 1.21.
+  - The pulse-duration batch confound (day 3 vs day 5) is a direct
+    threat: the drift MLP sees velocity vectors in two chemically
+    different units stacked into one latent frame, and the entire
+    holder minority sits on the slow-pulse side.
+
+**GATA1 / SPI1 under cycle variants.**
+  - Variant A: GATA1 responder ranks ∈ [51, 436], SPI1 ∈ [86, 582].
+  - Variant B (score-regressed): GATA1 ranks improve on 4 of 8
+    archetypes (median goes to ~130), but SPI1 degrades sharply —
+    reports ``reason=capped`` with Fisher = 0 on archetypes 5 and 6
+    (the strongest lead_re archetypes). Score regression *reduces*
+    the SPI1 signal on the two archetypes where it was clearest.
+  - Variant C: GATA1 / SPI1 ranks unchanged (gene-space ``J`` is
+    identical to A); only the archetype's behaviour label depends
+    on the latent projection, and all 8 archetypes stay fork.
+
+**Recovery verdict (refined).** The recovery criterion was
+"holders survive on terminals AFTER the projection AND cycle
+weight drops under 5%". Variant C hits both — 8 holders survive,
+all on terminals; cycle weight ~0 by construction. **But** every
+one of the 8 surviving holders is from the 3 h pulse batch and
+the cycle panel is only 4 genes deep. The 5 h pulse batch (818
+cells) contributes zero holders in every variant. The holder
+signal is confounded with pulse duration, not clearly with
+terminal biology. Score regression (B) does not move the needle
+(cycle weight drops <1 pt, SPI1 recovery degrades on strong
+archetypes), confirming that OLS-on-scores is the wrong lever —
+the operator rotation projection (C) is cleaner but still leaves
+the batch confound unresolved. **The §7a result is: the measured-
+flow pipeline produces a terminal-biased holder minority that is
+dominated by cell-cycle rotation (29 of 37 holders are inside the
+cycle subspace), with the residual 8 holders carrying a pulse-
+duration batch artifact.** No recovery claim.
+
+**Next.** Either (a) subset the dataset to a single pulse batch
+and re-run, which halves the sample but removes the clock
+confound; or (b) treat ``pulse_duration`` as a per-cell clock
+scale in the drift fit (``clock_scale`` input in DriftConfig
+already exists for the DSM path; needs the equivalent in
+MeasuredDrift). Both are § 7b candidates.
 
 **Velocyto re-alignment of LARRY** is still open; the gate on
 Dynamo hemat.scNT-seq is independent of it and the two
