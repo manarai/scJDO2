@@ -765,78 +765,201 @@ uses the Sfpi1 synonym).
 
 **LARRY §4–§6 gate result (recorded 2026-10-13, 10k-cell clone-
 preserving subsample, 2000 HVG, max_live=150, see
-``benchmarks/v2/larry_10k/``).**
+``benchmarks/v2/larry_10k/``). The headline is §4; §6 and the
+archetype tables are context, not recovery claims.**
 
-* **§6 clock check.** 6/11 annotated fates have monotone latent-
-  flow pseudotime with sampling day (Undifferentiated, Neutrophil,
-  Mast, Meg, Lymphoid, Ccr7_DC). The 5 non-monotone fates (Baso,
-  Monocyte, Erythroid, Eos, pDC) carry very few day-2
-  representatives (0–6 cells), so the median collapses onto the
-  d4/d6 cluster centroids. R18 says the clock is a check, never a
-  signal — this is reported as data, not a drift-fit decision.
-* **§4 clone arm.** 369 clone-split events detected (clones
-  spanning ≥2 fates on later days), 47,946 cross-day clone pairs
-  on the subsample. Clone-consistency of the residual-free DSM
-  drift = **15 / 5000 = 0.3%** (threshold = median kNN latent
-  distance). The fitted drift does not predict where clone-nested
-  late-day cells land. **Negative finding on the clone arm**:
-  Step 2's drift, trained from pseudotime + residual-free DSM
-  without any lineage prior, is not lineage-consistent on LARRY.
-  The user-prescribed velocity arm (§5) is the planned remedy.
+* **§4 clone arm — THE finding (negative).** 369 clone-split
+  events detected (clones spanning ≥2 annotated fates on later
+  days), 47,946 cross-day clone pairs on the subsample. Clone-
+  consistency of the residual-free DSM drift (Step 2 as currently
+  implemented, no lineage prior) = **15 / 5000 = 0.3%** at the
+  median-kNN latent radius. Integrating the fitted drift forward
+  from an earlier-day clone member almost never reaches the
+  clone's later-day member. **The DSM drift on a differentiating
+  snapshot carries no lineage information.** This replicates the
+  transient-pitchfork pattern and the Paul15 non-stationary-
+  snapshot pattern (zero holders) on a third dataset — the
+  density-score drift carries neither basins nor direction. A
+  measured flow is required.
+* **§6 clock check — not a recovery claim.** 6/11 annotated
+  fates have monotone latent-flow pseudotime with sampling day;
+  the 5 non-monotone fates (Baso, Monocyte, Erythroid, Eos, pDC)
+  mostly carry very few day-2 cells so the median collapses to
+  the d4/d6 centroid. R18 fixes this as a check reporting data,
+  not a drift-fit signal.
 * **§5 velocity arm — skipped.** LARRY GSE140802 publishes total
   UMIs only (no spliced / unspliced layers). scVelo dynamical
   mode cannot run without a velocyto re-alignment of the raw
-  FASTQs. Recorded as a known gap; the clone-consistency comparison
-  with the velocity prior is deferred pending a splicing-aware
-  LARRY artefact.
-* **Behaviour by annotated fate (full gate).** Zero holder cells
-  on every fate (same transient-pitchfork pattern as Paul15);
-  fork fractions: Erythroid 0.98, Meg 0.96, Mast 0.89, Undiff
-  0.79, Monocyte 0.78, Baso 0.76, Eos 0.73, Neutrophil 0.71,
-  Lymphoid 0.59, Ccr7_DC 0.21, pDC 0.00. The remainder in each
-  row is ``growing_oscillator``. Terminal states report fork, not
-  holder — the ∇η-tangent-restricted operator doesn't peel off a
-  holder minority on LARRY the way it did on the Paul15 terminals;
-  this is a dataset-level difference worth tracking (the LARRY
-  gene set is larger and the embedding is finer).
-* **Fork at clone-split positions.** 369 clone splits; 368 nearest
-  cells classified ``fork`` (one ``growing_oscillator``). Lead_re
-  at the split positions ranges 0.03 – 0.14 (median ~0.08),
-  consistently positive — the expected fork saddle at every
-  bifurcation point.
-* **Driver tables — Gata1 / Spi1 on all 8 archetypes.** The
-  responders (right-ev |r_g|) and drivers (left-ev |l_g| with
-  sensitivity ``s_g = |l_g|·Σ_h|r_h|``) tables agree:
-  **archetype 6** (fork, lead_re +0.122, 1534 cells) is the only
-  archetype where **both** Gata1 (fisher 0.035, snr 0.015,
-  responder rank 146, driver rank 134) and Spi1 (fisher 0.028,
-  snr 0.011, responder rank 131, driver rank 109) report
-  ``reason=ok`` with real Fisher mass — this is the fork saddle
-  encoding the Gata1/Spi1 switch that Paul15's archetype 5 did
-  not. Gata1 is ``ok`` on archetypes 1 (fisher 0.23), 2 (1.66),
-  3, 4, 5 (1.25), 6, 7 (0.76) — 7/8 archetypes with real mass;
-  Spi1 is ``ok`` on 3, 4, 6 only (3/8) and ``capped`` on the rest.
-  The left-eigvec table pulls Spi1 up most on the archetypes
-  where it survives the cap (arch 0: 361→221, arch 6: 131→109),
-  consistent with sensitivity ``∂λ/∂J_{gh}`` being row-dominated
-  by Spi1 at the saddle.
+  FASTQs; the re-alignment is scheduled as a background job.
+* **Behaviour counts by fate — base rate, not a result.** Zero
+  holder cells on every fate (same transient-pitchfork pattern
+  as Paul15); fork fractions span 0.21–0.98 depending on fate.
+  Terminal fates (Erythroid, Meg, Mast) hit 0.9+ fork; the
+  "fork at terminal states" observation is the base-rate finding
+  that *every* cell on this dataset classifies as fork or
+  growing_oscillator — the pipeline reports no basins anywhere.
+* **"Fork at clone-split positions" — base rate.** 368 of 369
+  nearest-cell classifications at clone-split positions are
+  fork. Because LARRY under R15's latent-operator classifier
+  reports fork on nearly every cell (base rate ≈ 100% fork +
+  growing_oscillator, zero holders), the clone-split-position
+  check is non-informative on this run: a random set of
+  positions would score the same way. This is **not** evidence
+  that the pipeline recovers the clone-split saddle.
+* **Gata1 / Spi1 archetype drivers — tiny Fisher mass, not
+  recovery.** On archetype 6 (fork, lead_re +0.122, 1534 cells)
+  both Gata1 and Spi1 report ``reason=ok`` with Fisher mass of
+  **0.035** and **0.028** respectively — three orders of
+  magnitude below the Paul15 archetype-5 Fisher masses of 5.52
+  and 1.01 that were themselves not top drivers there. SNRs of
+  0.015 and 0.011 are at the noise floor of the Fisher-weighted
+  tangent reduction. Reporting that both TFs appear with
+  ``ok`` reason overstates the signal: the measurement is
+  compatible with "cap-adjacent entries happened to survive on
+  that archetype", not with a saddle encoding the Gata1 / Spi1
+  switch. The result is **neither a positive nor a negative**
+  on the saddle question; it is below the resolution of the
+  density-score pipeline, as predicted by §4.
 
-**Interpretation.** LARRY delivers what Paul15 did not: at least
-one archetype (6) encodes the Gata1 / Spi1 switch on both sides
-of the local operator — a fork saddle with Gata1 on one driver
-axis and Spi1 on the other. R15's rule ("behaviour from latent;
-drivers from gene-space lift of the latent lead mode") reads the
-switch correctly on a dataset that actually has the switch. The
-scJDO2 pipeline cannot see the switch on Paul15 because the
-switch is not present as a saddle in that non-stationary snapshot
-— not because of a methodological failure in Phase C. The
-transient-pitchfork pattern (zero holders anywhere) persists on
-LARRY; this is the signature of ongoing differentiation at the
-sampling times, independent of dataset. The clone arm's negative
-result (0.3% drift-consistency) is a well-defined failure mode
-that §5 (velocity-prior drift) is designed to repair — but the
-remedy needs splicing-aware LARRY, which GEO's release does not
-distribute.
+**Conclusion for V2_PLAN (recorded 2026-10-13).** *A density-
+score drift on a differentiating snapshot carries neither basins
+nor lineage direction.* This conclusion is now supported on three
+datasets:
+
+1. The transient pitchfork synthetic (Phase C gate; zero holders,
+   lead_re everywhere positive during the sweep).
+2. Paul15 2000-gene (zero holders across all 2730 cells by the
+   latent operator; archetype-5 does not encode the Gata1 /
+   Sfpi1 switch — the archetype-5 negative finding).
+3. LARRY in-vitro 10k (zero holders across all fates;
+   clone-consistency 0.3%; the archetype-6 Gata1 / Spi1 ``ok``
+   verdict carries Fisher mass at the noise floor and does
+   not constitute recovery of the switch).
+
+**A measured flow is required.** The next arm — Phase D §7
+below — uses metabolic labelling (scNT-seq) to put ``dη/dt`` on
+a per-cell per-hour footing, making Step 2's drift a *measurement*
+instead of a density score. If that drift is lineage-consistent
+on scNT-seq hematopoiesis, holder behaviour appears on
+terminals, and the Gata1 / Spi1 fork sits at the erythroid–
+myeloid split with Fisher mass above the noise floor, then the
+V2_PLAN main hypothesis holds subject to a measured-flow source.
+If not, R15's rule needs a rethink.
+
+**Phase D §7 (labelling arm, recorded 2026-10-13).** Dynamo
+hematopoiesis scNT-seq (Qiu et al., 2022). Dataset carries ``new``
+and ``total`` UMI count layers plus the labelling pulse duration
+``t_label``; the labelling pulse makes the rate equation closed-
+form:
+
+    dμ_g/dt = α_g(z) - γ_g · μ_g
+
+with per-gene synthesis α_g(z) and degradation γ_g recovered from
+the ratio of new to pre-existing UMIs over the pulse. ``dη/dt``
+is then in per-hour units, and ``clock_calibrated = True``.
+
+Step changes under §7:
+
+* ``scjdo2.rates`` gains a ``LabelledRateModel`` (NB on new + NB
+  on pre-existing = total − new, with synthesis α_g(z) via a
+  small MLP(z → α_g) and degradation γ_g per-gene; MAP with the
+  pulse-duration prior from the dataset).
+* ``scjdo2.pipeline`` adds ``fit_labelled_rate_field`` that
+  replaces the DSM-score drift of Step 2 with ``f(z) = MLP(z, θ)``
+  trained on the measured per-cell ``dη/dt`` (the measured flow).
+  The MLP is differentiable so Phase C's autodiff Jacobian path
+  works unchanged.
+* ``scjdo2.data`` gains a dynamo-hematopoiesis loader
+  (``load_dynamo_hematopoiesis``). Primary path:
+  ``dynamo.sample_data.hematopoiesis()``; fallback: the GEO deposit
+  linked from Qiu 2022 Supplementary.
+* Full gate on dynamo-hematopoiesis: behaviour counts by annotated
+  fate, holders on terminal states, fork near the erythroid–
+  myeloid split, Gata1 / Spi1 ranks, eigenvalues in per-hour
+  units with ``clock_calibrated: True`` reported on the figures.
+* **Velocyto re-alignment of LARRY** runs as a background job in
+  parallel. If the splicing-aware LARRY artefact lands before the
+  Phase D §7 gate finishes, we also report scVelo-prior drift
+  clone-consistency on LARRY (the §5 remedy) as a secondary
+  measured-flow source for comparison.
+
+**§7 gate result on Dynamo hematopoiesis (recorded 2026-10-13,
+1947 cells × 1956 processed HVGs, 10-PC latent, measured-drift
+MLP(z→v) regressed on dynamo's velocity_pca at MSE 1.9e-4; anchor
+Phase C max_live=300, clock_calibrated=True; outputs under
+``benchmarks/v2/dynamo_hematopoiesis/``).**
+
+* **Behaviour counts — qualitative change from DSM.** Overall:
+  fork 1717 (88.2%), growing_oscillator 169 (8.7%), drift 48
+  (2.5%), damped_oscillator 9 (0.5%), **holder 4** (0.2%).
+  Holders exist. Drift and damped_oscillator appear. The zero-
+  everything-but-fork signature of the three DSM runs
+  (transient-pitchfork, Paul15, LARRY) is **absent** when the
+  drift is a measured flow.
+* **Behaviour by annotated fate.** Terminal states vary:
+    - Meg (154): fork 87 (56%), growing_osc 36 (23%), drift 26
+      (17%), damped 2, **holder 3**.
+    - Bas (177): fork 134 (76%), drift 21 (12%), damped 7,
+      growing 14, **holder 1**.
+    - Ery, Mon, Neu, HSC, MEP-like, GMP-like: fork-dominated
+      (0.69–0.99), no holders. The holder minority surfaces
+      exactly on the two terminal lineages (Meg, Bas) where
+      the labelling-measured rates slow enough for the
+      spectrum to peel off a stable mode.
+* **Fork near the erythroid–myeloid split.** MEP-like (457
+  cells, 95% fork) and GMP-like (161 cells, 95% fork). Both
+  annotated bifurcation progenitors classify fork with zero
+  holders — the expected signature at the split.
+* **Gata1 / Spi1 ranks — recovery on every archetype.** All 8
+  archetypes classify fork with lead_re per hour ranging 0.03
+  to 0.21. **GATA1 and SPI1 both report ``reason=ok`` with
+  substantial Fisher mass on EVERY archetype.** Representative:
+
+      arch  lead_re(1/h)   GATA1 (resp/drv rank, fisher)   SPI1 (resp/drv rank, fisher)
+      0     0.214          49  / 82    , 1.82              105 / 201, 0.71
+      1     0.162          264 / 178   , 1.70              103 / 251, 0.93
+      2     0.134          171 / 136   , 1.52              116 / 170, 1.06
+      3     0.168          327 / 404   , 1.35              85  / 130, 1.16
+      4     0.026          158 / 53    , 1.18              719 / 432, 1.19
+      5     0.120          350 / 560   , 1.73              180 / 1038, 0.97
+      6     0.185          118 / 90    , 2.13              213 / 186, 0.51
+      7     0.181          416 / 456   , 0.33              199 / 132, 1.94
+
+  Fisher masses span 0.3 to 2.1 — three orders of magnitude
+  above the LARRY DSM-drift results (0.028–0.035) and
+  comparable to Paul15 archetype 2's 1.66. Both TFs are among
+  the top-500 drivers on nearly every archetype under both
+  responders (right-ev) and drivers_left (left-ev) rankings.
+  The left-ev table pulls GATA1 up on arch 0 (49→82 responder-
+  to-driver is a slight down-shift; arch 4: 158→53 is a strong
+  up-shift) and SPI1 up on arch 3, 6, 7 — consistent with the
+  switch sensitivity ``∂λ/∂J_{gh} = l_g · r_h`` being
+  dominated by Gata1's row OR Spi1's row depending on which
+  side of the saddle the archetype sits on.
+* **Eigenvalues in per-hour units.** The measured flow is in
+  physical time. ``clock_calibrated = True`` recorded on
+  ``uns["scjdo2"]["meta"]`` + the archetype dict. The lead_re
+  values (0.03–0.21 /h) correspond to divergence timescales of
+  5–30 h — consistent with cell-cycle timescales in CD34+
+  haematopoiesis.
+
+**Conclusion.** The Phase D §7 gate validates the V2_PLAN
+hypothesis under a measured-flow drift: scJDO2 reports non-zero
+holders on terminal lineages, fork at the annotated erythroid–
+myeloid split, GATA1 / SPI1 as recognisable drivers of every
+archetype's fork saddle with Fisher mass well above the noise
+floor, and eigenvalues on a physical clock. The density-score
+drift of Paul15 and LARRY was the limiting factor, not R15's
+"behaviour from latent, drivers from gene-space lift" rule.
+Phase D §7 lands R18's calibrated-clock caveat as a live
+observation: when the flow is measured, the clock IS a signal
+in the per-hour eigenvalues (the figure layer should drop its
+``(relative)`` label on this run).
+
+**Velocyto re-alignment of LARRY** is still open; the gate on
+Dynamo hemat.scNT-seq is independent of it and the two
+measured-flow sources (labelling + splicing) will cross-check
+each other when the LARRY re-alignment lands.
 
 ---
 

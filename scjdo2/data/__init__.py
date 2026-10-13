@@ -7,6 +7,7 @@ mid-interval saddle control at
 from V2_PLAN.md.
 """
 
+from .dynamo_hematopoiesis import load_dynamo_hematopoiesis
 from .larry import clone_pairs, clone_split_positions, load_larry
 from .synthetic_pitchfork import (
     ALPHA_CRIT,
@@ -25,4 +26,5 @@ __all__ = [
     "load_larry",
     "clone_pairs",
     "clone_split_positions",
+    "load_dynamo_hematopoiesis",
 ]
