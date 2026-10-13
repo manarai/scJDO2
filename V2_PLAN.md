@@ -553,6 +553,44 @@ real data wait on the Phase B Step 8 semi-NMF adapter; the per-cell
 CSR gene-space J is not yet round-trippable through h5ad (Phase D io
 work), so the figure script re-fits on each invocation.
 
+**R16 (anchor-cap book-keeping, recorded 2026-10-13).** *A gene
+excluded from an anchor's live set by the ``anchor_max_live`` cap
+reports reason ``capped``, not ``no_variation``.* The former is a
+storage choice; the latter is a measurement that the gene's η-
+variance across the ball is below the ``variation_threshold`` floor.
+Collapsing them produced false ``no_variation`` entries for real
+transcription factors (e.g. Gata1 / Sfpi1 on the Paul15 2000-gene
+run) and hid the fact that the pipeline *could* see them if the cap
+were higher.
+
+Operationally:
+
+* ``scjdo2.field.REASON_CAPPED = 4`` and the Fisher ledger's
+  ``REASON_CODES`` tuple extends to ``("ok", "no_counts",
+  "no_variation", "not_in_ball", "capped")``. The plot layer's
+  stacked-bar reason summary now carries the extra slice.
+* The anchor path ranks live columns by **NB-precision-weighted η
+  variance** on the log-rate scale (``var_i(η_i,g) · <w_i,g>_i``, a
+  chi-square-like SNR statistic), not raw ``var_i(η_i,g)``, so the
+  cap keeps genes whose signal survives NB noise, not just the loudest
+  movers.
+* The default ``anchor_max_live`` is **300**; 150 clipped
+  biologically-interesting TFs on real data. ``uns["scjdo2"]
+  ["anchor_snr"]`` ``(n_anchors, G)`` and ``uns["scjdo2"]
+  ["anchor_capped_cols"]`` (ragged list) round-trip through the
+  sidecar.
+* ``archetype_operators`` reads per-cell reasons from the ledger and
+  aggregates: ``fisher_diag > 0`` → ``ok``; else, if *any* member
+  cell had the gene capped at its dominant anchor → ``capped``; else
+  modal non-ok code (almost always ``no_variation``). The driver
+  DataFrame gains an ``snr`` column — mean SNR across the archetype's
+  members' dominant anchors — so a ``capped`` or ``no_variation``
+  verdict carries a measurement, not just a label.
+* **No must-keep gene lists.** The ledger now distinguishes "cap
+  wouldn't fit it" from "no SNR here"; forcing a priori gene lists
+  into every anchor's live set would reintroduce the lie by other
+  means.
+
 ---
 
 ## 10. Phase A deliverables status

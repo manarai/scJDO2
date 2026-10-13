@@ -43,7 +43,13 @@ from sklearn.neighbors import NearestNeighbors
 
 
 BEHAVIOURS = ("holder", "drift", "fork", "damped_oscillator", "growing_oscillator")
-REASON_CODES = ("ok", "no_counts", "no_variation", "not_in_ball", "off_tangent")
+# Reason-code slots. Slots 0..4 line up with the integer codes written by
+# ``scjdo2.field`` into ``reason_per_cell`` (see
+# ``scjdo2.field._REASON_NAMES``), so the plot layer's int-vs-slot
+# matching ("code 4 means capped") is correct. ``off_tangent`` is a
+# string-only reason that only ever appears in ``op_eig_reason`` object
+# arrays; it is appended at the end to keep the integer slots stable.
+REASON_CODES = ("ok", "no_counts", "no_variation", "not_in_ball", "capped", "off_tangent")
 
 _EPS_IM = 1e-10
 _FISHER_MASS_TIE_TOL = 1e-6     # Re ties broken by Fisher mass within this margin
@@ -1107,6 +1113,31 @@ def archetype_operators(
         else np.array([f"gene_{i}" for i in range(G)])
     )
 
+    # Per-cell reason array (integer codes, matching ``scjdo2.field``'s
+    # numbering: 0=ok, 1=no_counts, 2=no_variation, 3=not_in_ball,
+    # 4=capped). We use it below to tell "capped by the anchor_max_live
+    # cap" apart from "below the η-variance floor across the ball" at
+    # the archetype level, instead of collapsing everything with
+    # ``fisher_diag == 0`` to ``no_variation``.
+    reason_per_cell = (
+        ledger.get("reason_per_cell") if isinstance(ledger, dict)
+        else getattr(ledger, "reason_per_cell", None)
+    )
+    reason_stack = None
+    if reason_per_cell is not None and len(reason_per_cell):
+        reason_stack = np.stack([np.asarray(r, dtype=np.int8) for r in reason_per_cell])
+
+    # Per-anchor SNR (on the log-rate scale) + the per-cell dominant
+    # anchor id, so we can report a measured SNR beside every ``capped``
+    # or ``no_variation`` verdict in the driver table.
+    anchor_snr = uns.get("anchor_snr")
+    op_anchor_obs = adata.obs.get("op_anchor")
+    op_anchor_arr = (
+        op_anchor_obs.to_numpy()
+        if op_anchor_obs is not None and hasattr(op_anchor_obs, "to_numpy")
+        else (np.asarray(op_anchor_obs) if op_anchor_obs is not None else None)
+    )
+
     for ak in range(K):
         w = W[:, ak] * f_mass
         wmax = float(W[:, ak].max()) if np.isfinite(W[:, ak]).any() else 0.0
@@ -1189,8 +1220,55 @@ def archetype_operators(
 
         # Aggregate Fisher diagonal across live columns for drivers().
         fisher_diag = np.asarray(F_sum.diagonal())
+        # Per-gene reason at the archetype level. Default ``no_variation``;
+        # ``fisher_diag > 0`` means at least one member cell contributed to
+        # that column → ``ok``. For the remaining genes (fisher_diag == 0),
+        # pick the modal per-cell reason across members so the "capped by
+        # the anchor cap" slice stays distinct from "below the η-variance
+        # floor across the ball". Falls back to the plain fisher>0 rule
+        # when no ledger reason array is available.
         reasons = np.array(["no_variation"] * G, dtype=object)
-        reasons[fisher_diag > 0] = "ok"
+        ok_mask = fisher_diag > 0
+        reasons[ok_mask] = "ok"
+        if reason_stack is not None and members.size:
+            from .field import REASON_CAPPED, _REASON_NAMES
+            member_reasons = reason_stack[members]            # (M, G) int8
+            non_ok = ~ok_mask
+            # "capped" wins over "no_variation" if ANY member had the gene
+            # capped at its dominant anchor — a gene with real SNR in some
+            # ball but clipped by the storage cap is a storage call, not a
+            # measurement verdict, and should surface distinctly from the
+            # ball-level "no SNR" verdict.
+            any_capped = (member_reasons == REASON_CAPPED).any(axis=0)
+            cap_sel = non_ok & any_capped
+            if cap_sel.any():
+                reasons[cap_sel] = _REASON_NAMES[REASON_CAPPED]
+            # Everything else non-ok falls back to the modal non-zero code
+            # across members (will almost always be no_variation).
+            n_codes = 5                                        # 0..4 inclusive
+            counts = np.zeros((n_codes, G), dtype=np.int32)
+            for code in range(1, n_codes):                     # skip "ok"
+                counts[code] = (member_reasons == code).sum(axis=0)
+            modal_code = counts.argmax(axis=0)
+            for code in range(1, n_codes):
+                if code == REASON_CAPPED:
+                    continue                                   # handled above
+                sel = non_ok & ~any_capped & (modal_code == code)
+                if sel.any():
+                    reasons[sel] = _REASON_NAMES[code]
+
+        # Per-gene mean SNR across member cells' dominant anchors. Lets
+        # the driver table report a measured SNR beside every ``capped``
+        # or ``no_variation`` verdict — "weak everywhere" vs "clipped by
+        # the cap" is testable from the numbers, not just the label.
+        snr_vec = np.full(G, np.nan, dtype=np.float64)
+        if anchor_snr is not None and op_anchor_arr is not None and members.size:
+            try:
+                mem_anchors = np.unique(np.asarray(op_anchor_arr)[members])
+                if mem_anchors.size:
+                    snr_vec = np.asarray(anchor_snr[mem_anchors]).mean(axis=0).astype(np.float64)
+            except Exception:
+                pass
 
         # Driver table — reuse plot_drivers' expectations.
         magnitude = np.abs(v_lead)
@@ -1207,6 +1285,7 @@ def archetype_operators(
             "phase": phase,
             "fisher": fisher_diag,
             "fisher_se": fisher_se,
+            "snr": snr_vec,
             "reason": reasons,
         }).sort_values("magnitude", ascending=False).reset_index(drop=True)
 

@@ -5,6 +5,40 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### R16 — anchor-cap reason + SNR-ranked live columns — 2026-10-13
+
+Fixes the Paul15 2000-gene anchor run's false ``no_variation`` verdict
+on genes that were above the η-variance floor but didn't fit the
+``anchor_max_live`` cap.
+
+- **New reason code ``capped``** (``scjdo2.field.REASON_CAPPED = 4``,
+  tagged in ``_REASON_NAMES`` and the ``REASON_CODES`` tuple in both
+  ``scjdo2.fisher`` and ``scjdo2.opspace``). Per-cell reason arrays set
+  ``capped`` on the dominant anchor's capped-out columns; everything
+  below the η-variance floor stays ``no_variation``.
+- **SNR-ranked live columns.** The anchor path ranks live columns by
+  ``var_i(η_i,g) · <w_i,g>_i`` — NB-precision-weighted η variance,
+  signal-to-noise on the log-rate scale. Formerly the ranking used raw
+  ``var_i(η_i,g)``, which keeps the loudest movers regardless of NB
+  measurement noise.
+- **Default ``anchor_max_live`` raised to 300** (was 150). The sidecar
+  now carries ``uns["scjdo2"]["anchor_snr"]`` (``(n_anchors, G)``
+  float32), ``uns["scjdo2"]["anchor_capped_cols"]`` (ragged list), and
+  ``uns["scjdo2"]["anchor_max_live"]``.
+- **Archetype driver tables carry SNR.** ``archetype_operators`` now
+  pulls per-cell reasons from the ledger and emits ``capped`` whenever
+  any member cell had the gene capped at its dominant anchor; the
+  driver DataFrame grows an ``snr`` column (mean across members'
+  dominant anchors), so ``capped`` and ``no_variation`` verdicts carry
+  the measured SNR, not just the label.
+- **``scripts/run_paul15.py``** gains ``--anchor-max-live`` (default
+  300) and emits the reason-code fractions above every fork-archetype
+  driver table.
+- **No must-keep gene lists.** The ledger distinguishes "didn't fit
+  the cap" from "no SNR in the ball". Forcing a priori gene lists into
+  every anchor's live set would reintroduce the no_variation lie by
+  other means.
+
 ### Task 41 — figure layer (opspace + plot + CLI + tests) — 2026-10-12
 
 Implements `docs/scJDO2_figure_layer_build_instructions.md` in order

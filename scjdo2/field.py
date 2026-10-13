@@ -286,12 +286,14 @@ REASON_OK = 0
 REASON_NO_COUNTS = 1
 REASON_NO_VARIATION = 2
 REASON_NOT_IN_BALL = 3
+REASON_CAPPED = 4
 
 _REASON_NAMES = {
     REASON_OK: "ok",
     REASON_NO_COUNTS: "no_counts",
     REASON_NO_VARIATION: "no_variation",
     REASON_NOT_IN_BALL: "not_in_ball",
+    REASON_CAPPED: "capped",
 }
 
 
@@ -537,11 +539,16 @@ class GeneFieldConfig:
     anchor_top_k: int = 10                 # anchors used in each cell's lift
     anchor_bandwidth: Optional[float] = None  # Gaussian kernel σ (None → auto)
     anchor_batch: int = 25                 # anchors solved per batched call
-    anchor_max_live: int = 150             # cap per-anchor live-cols to the top-N
-                                           # most-variable genes (keeps the dense
-                                           # anchor cache + per-cell CSR bounded on
-                                           # real data where every gene has
-                                           # η-variance in a 30-neighbour ball).
+    anchor_max_live: int = 300             # cap per-anchor live-cols to the top-N
+                                           # genes by NB-precision-weighted η
+                                           # variance (signal-to-noise on the
+                                           # log-rate scale). Genes above the
+                                           # variation threshold but below this
+                                           # cap are tagged REASON_CAPPED, not
+                                           # REASON_NO_VARIATION — the ledger
+                                           # distinguishes "no SNR here" from
+                                           # "SNR there but the cap wouldn't
+                                           # fit it". No must-keep gene lists.
 
 
 def fit_gene_space_jacobians(
@@ -1095,39 +1102,62 @@ def fit_gene_space_jacobians_anchored(
     J_anchor_dense: list[np.ndarray] = []       # (G, L_a) per anchor
     F_anchor_dense: list[np.ndarray] = []       # (G, L_a) per anchor
     live_cols_anchor: list[np.ndarray] = []
-    max_live = int(getattr(cfg, "anchor_max_live", 150) or 0)
+    capped_cols_anchor: list[np.ndarray] = []    # above threshold, clipped by cap
+    # Per-anchor SNR of η across the ball on the log-rate scale, stored as
+    # float32 so downstream (archetype aggregation + sidecar) stays cheap on
+    # (n_anchors × G) tensors. snr_g = Var_i(η_i,g) · <w_i,g>_i : signal² ·
+    # NB precision = the chi-square-like statistic for detectable η movement
+    # at that anchor. Reporting it per-gene lets a `capped` or `no_variation`
+    # finding carry a measurement, not just a label.
+    snr_per_anchor = np.zeros((n_anchors, G), dtype=np.float32)
+    max_live = int(getattr(cfg, "anchor_max_live", 300) or 0)
     for sa in range(n_anchors):
         a_cell = int(anchors[sa])
         nbrs = anchor_idxs[sa]
         X_full = eta[nbrs] - eta[a_cell]
         y_full = d_eta[nbrs] - d_eta[a_cell]
         var_g = np.var(X_full, axis=0)
-        live = np.where(var_g > cfg.variation_threshold)[0]
-        # Cap live cols to the top-N most-variable genes to keep memory
-        # bounded on real data (every gene has η-variance in a small
-        # ball, so an uncapped `live` is near-G and the dense anchor
-        # cache + per-cell CSR grow to several GB per anchor).
-        if max_live > 0 and live.size > max_live:
-            order = np.argsort(-var_g[live])[:max_live]
-            live = np.sort(live[order])
+        W = w[nbrs]
+        mean_w_g = W.mean(axis=0)                           # (G,) NB precision
+        snr_g = var_g * mean_w_g                            # (G,) SNR on log-rate
+        snr_per_anchor[sa] = snr_g.astype(np.float32)
+        live_above = np.where(var_g > cfg.variation_threshold)[0]
+        # Rank live cols by NB-precision-weighted η variance (signal·precision
+        # on the log-rate scale); keep the top-``max_live``. Genes above the
+        # variation threshold but below the cap are "capped", not
+        # "no_variation" — the former is a storage choice, the latter is a
+        # measurement about the ball.
+        if max_live > 0 and live_above.size > max_live:
+            order = np.argsort(-snr_g[live_above])[:max_live]
+            live = np.sort(live_above[order])
+            capped = np.setdiff1d(live_above, live, assume_unique=True)
+        else:
+            live = live_above
+            capped = np.zeros(0, dtype=np.int64)
         if live.size < 2:
             J_anchor_dense.append(np.zeros((G, 0)))
             F_anchor_dense.append(np.zeros((G, 0)))
             live_cols_anchor.append(np.zeros(0, dtype=np.int64))
+            capped_cols_anchor.append(capped.astype(np.int64))
             continue
         X = X_full[:, live]
-        W = w[nbrs]
         try:
             a_mat = _ridge_batched_live(X, W, y_full, float(best_lambda), live.size)
         except np.linalg.LinAlgError:
             J_anchor_dense.append(np.zeros((G, 0)))
             F_anchor_dense.append(np.zeros((G, 0)))
             live_cols_anchor.append(np.zeros(0, dtype=np.int64))
+            capped_cols_anchor.append(capped.astype(np.int64))
             continue
         Fv = (W.T @ (X ** 2)) + float(best_lambda)          # (G, L)
-        J_anchor_dense.append(np.asarray(a_mat))
-        F_anchor_dense.append(np.asarray(Fv))
+        # Dense anchor cache stored as float32: 300 anchors × (G, L=300)
+        # ×2 is 2.88 GB in float64 but only 1.44 GB in float32, and the
+        # kernel-interp step is a weighted sum where float32 precision
+        # is plenty. The ridge solve itself ran in float64 above.
+        J_anchor_dense.append(np.asarray(a_mat, dtype=np.float32))
+        F_anchor_dense.append(np.asarray(Fv, dtype=np.float32))
         live_cols_anchor.append(live.astype(np.int64))
+        capped_cols_anchor.append(capped.astype(np.int64))
     if verbose:
         print(f"  [gene-field anchor] fit {n_anchors} anchor ridges")
 
@@ -1177,8 +1207,8 @@ def fit_gene_space_jacobians_anchored(
     # exceeds ``variation_threshold``, not a count of rows.
     L_cap = max((la.size for la in live_cols_anchor), default=1)
     L_cap = max(1, int(L_cap))
-    J_buf = np.zeros((G, L_cap), dtype=np.float64)
-    F_buf = np.zeros((G, L_cap), dtype=np.float64)
+    J_buf = np.zeros((G, L_cap), dtype=np.float32)
+    F_buf = np.zeros((G, L_cap), dtype=np.float32)
     import gc as _gc
     for c in range(n):
         if verbose and c and c % 500 == 0:
@@ -1226,14 +1256,33 @@ def fit_gene_space_jacobians_anchored(
         # owns its data (the buffer is reused next iteration).
         indptr = (np.arange(G + 1, dtype=np.int32) * L_c)
         indices = np.tile(live_this.astype(np.int32), G)
+        # Store CSR data as float32 — on real data (G ≈ 2000, L ≈ 300,
+        # n ≈ 2700) the per-cell J + F dominate peak RSS, and halving
+        # the dtype keeps the lift within the 36 GB machine budget.
+        # Downstream opspace arithmetic (``F_sum + float·CSR`` etc.)
+        # auto-upcasts to float64 on the aggregated side, so precision
+        # at the archetype level is unaffected.
         J_list[c] = csr_matrix(
-            (J_c.reshape(-1).copy(), indices, indptr), shape=(G, G),
+            (J_c.reshape(-1).astype(np.float32, copy=True), indices, indptr),
+            shape=(G, G),
         )
         F_list[c] = csr_matrix(
-            (F_c.reshape(-1).copy(), indices, indptr), shape=(G, G),
+            (F_c.reshape(-1).astype(np.float32, copy=True), indices, indptr),
+            shape=(G, G),
         )
         live_cols[c] = live_this.astype(np.int64)
-        rsn = np.full(G, REASON_NOT_IN_BALL, dtype=np.int8)
+        # Per-cell gene reason: no_variation everywhere by default, then
+        # mark the dominant anchor's capped-out set, then mark the kept
+        # live set. ``capped`` reports "had SNR but didn't fit the cap";
+        # ``no_variation`` is the measurement-level verdict (η-variance
+        # below the floor across the ball). ``not_in_ball`` is reserved
+        # for cells whose dominant anchor has no live columns at all,
+        # which we handled with the ``REASON_NO_VARIATION`` short-circuit
+        # above.
+        rsn = np.full(G, REASON_NO_VARIATION, dtype=np.int8)
+        capped_this = capped_cols_anchor[a0]
+        if capped_this.size:
+            rsn[capped_this] = REASON_CAPPED
         rsn[live_this] = REASON_OK
         reason_list[c] = rsn
 
@@ -1265,4 +1314,7 @@ def fit_gene_space_jacobians_anchored(
         "anchor_bandwidth": float(h),
         "n_anchors": int(n_anchors),
         "anchor_top_k": int(cfg.anchor_top_k),
+        "anchor_snr": snr_per_anchor,                 # (n_anchors, G) float32
+        "anchor_capped_cols": capped_cols_anchor,     # list of (K_a,) int64
+        "anchor_max_live": int(max_live),
     }

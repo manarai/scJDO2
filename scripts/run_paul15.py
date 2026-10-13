@@ -88,6 +88,9 @@ def main() -> int:
     p.add_argument("--n-anchors", type=int, default=300)
     p.add_argument("--anchor-top-k", type=int, default=10)
     p.add_argument("--anchor-batch", type=int, default=25)
+    p.add_argument("--anchor-max-live", type=int, default=300,
+                   help="cap per-anchor live-cols to the top-N genes by "
+                        "NB-precision-weighted η variance (SNR on log-rate scale)")
     p.add_argument("--out-run", type=Path, default=OUT_RUN)
     p.add_argument("--out-fig", type=Path, default=OUT_FIG)
     args = p.parse_args()
@@ -131,6 +134,7 @@ def main() -> int:
         n_anchors=int(args.n_anchors),
         anchor_top_k=int(args.anchor_top_k),
         anchor_batch=int(args.anchor_batch),
+        anchor_max_live=int(args.anchor_max_live),
     )
     print(f"[paul15]   Phase C fit in {time.monotonic() - t0:.1f}s")
 
@@ -170,7 +174,33 @@ def main() -> int:
         idx = df.index[df["gene"].astype(str) == g].tolist()
         return (int(idx[0]), df.loc[idx[0]].to_dict()) if idx else (None, None)
     drivers_path = out_fig / "fork_archetype_drivers.txt"
+    # Fisher-ledger reason-code fractions across all cells (expands to
+    # include "capped" once the anchor path is in play — see
+    # scjdo2.field.REASON_CAPPED).
+    ledger_summary = None
+    led = scj.get("fisher_ledger")
+    if led is not None:
+        if hasattr(led, "summary"):
+            ledger_summary = led.summary()
+        elif isinstance(led, dict) and "reason_per_cell" in led and led["reason_per_cell"]:
+            from scjdo2.fisher import REASON_CODES as _RC
+            stack = np.stack(
+                [np.asarray(r, dtype=np.int8) for r in led["reason_per_cell"]]
+            )
+            total = stack.size
+            ledger_summary = {
+                name: float((stack == i).sum() / total) if total else 0.0
+                for i, name in enumerate(_RC)
+            }
     with open(drivers_path, "w") as fh:
+        if ledger_summary is not None:
+            fh.write("reason-code fractions (per cell × gene entries):\n")
+            print("\n[paul15] reason-code fractions:")
+            for name, frac in ledger_summary.items():
+                line = f"  {name}: {frac * 100:.2f}%"
+                print(line)
+                fh.write(line + "\n")
+            fh.write("\n")
         for aid in fork_ids:
             info = arch[aid]
             df = info["drivers"]
@@ -190,9 +220,12 @@ def main() -> int:
                 if rank is None:
                     msg = f"  {g}: absent from driver table"
                 else:
+                    snr = row.get("snr", float("nan"))
+                    snr_str = f", snr={snr:.3g}" if np.isfinite(snr) else ""
                     msg = (f"  {g}: rank {rank}, weight={row['weight']:+.4f}, "
                            f"magnitude={row['magnitude']:.4f}, "
-                           f"fisher={row['fisher']:.2f}, reason={row['reason']}")
+                           f"fisher={row['fisher']:.2f}, reason={row['reason']}"
+                           f"{snr_str}")
                 print(msg)
                 fh.write(msg + "\n")
             fh.write("\n")

@@ -71,6 +71,9 @@ _SIDECAR_UNS_KEYS: tuple[str, ...] = (
     "anchor_ids",                 # (n_anchors,) int
     "anchor_bandwidth",           # float
     "anchor_top_k",               # int
+    "anchor_snr",                 # (n_anchors, G) float32
+    "anchor_capped_cols",         # list of (K_a,) int64, ragged
+    "anchor_max_live",            # int
 )
 
 # obsm columns that h5ad can't write (complex dtype in particular).
@@ -358,6 +361,18 @@ def save(adata: AnnData, out_dir: str | Path) -> dict[str, Path]:
             sidecar_payload["anchor_bandwidth"] = np.float64(scj["anchor_bandwidth"])
         if "anchor_top_k" in scj and scj["anchor_top_k"] is not None:
             sidecar_payload["anchor_top_k"] = np.int32(scj["anchor_top_k"])
+        if "anchor_snr" in scj and scj["anchor_snr"] is not None:
+            sidecar_payload["anchor_snr"] = np.asarray(scj["anchor_snr"], dtype=np.float32)
+        if "anchor_capped_cols" in scj and scj["anchor_capped_cols"] is not None:
+            cc = list(scj["anchor_capped_cols"])
+            sizes = np.asarray([int(np.asarray(c).size) for c in cc], dtype=np.int64)
+            flat = np.concatenate(
+                [np.asarray(c, dtype=np.int64) for c in cc]
+            ) if cc else np.zeros(0, dtype=np.int64)
+            sidecar_payload["anchor_capped_cols_flat"] = flat
+            sidecar_payload["anchor_capped_cols_sizes"] = sizes
+        if "anchor_max_live" in scj and scj["anchor_max_live"] is not None:
+            sidecar_payload["anchor_max_live"] = np.int32(scj["anchor_max_live"])
 
         for k in _SIDECAR_UNS_KEYS:
             if k in scj:
@@ -466,4 +481,16 @@ def load(in_dir: str | Path) -> AnnData:
         scj["anchor_bandwidth"] = float(np.asarray(payload["anchor_bandwidth"]))
     if "anchor_top_k" in payload:
         scj["anchor_top_k"] = int(np.asarray(payload["anchor_top_k"]))
+    if "anchor_snr" in payload:
+        scj["anchor_snr"] = np.asarray(payload["anchor_snr"], dtype=np.float32)
+    if "anchor_capped_cols_flat" in payload and "anchor_capped_cols_sizes" in payload:
+        flat = np.asarray(payload["anchor_capped_cols_flat"], dtype=np.int64)
+        sizes = np.asarray(payload["anchor_capped_cols_sizes"], dtype=np.int64)
+        offsets = np.concatenate([[0], np.cumsum(sizes)])
+        scj["anchor_capped_cols"] = [
+            flat[int(offsets[i]):int(offsets[i + 1])].copy()
+            for i in range(sizes.size)
+        ]
+    if "anchor_max_live" in payload:
+        scj["anchor_max_live"] = int(np.asarray(payload["anchor_max_live"]))
     return adata

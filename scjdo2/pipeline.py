@@ -129,7 +129,7 @@ def fit_rate_and_gene_field(
     anchor_top_k: int = 10,
     anchor_bandwidth: Optional[float] = None,
     anchor_batch: int = 25,
-    anchor_max_live: int = 150,
+    anchor_max_live: int = 300,
 ) -> AnnData:
     """Phase C extension — NB rate model + gene-space J + Fisher ledger
     + Fisher-weighted tangent projector + ``grad_eta``.
@@ -244,4 +244,12 @@ def fit_rate_and_gene_field(
         uns["anchor_bandwidth"] = float(gs.get("anchor_bandwidth", 0.0))
         uns["anchor_top_k"] = int(gs.get("anchor_top_k", 0))
         uns["anchor_weights"] = gs["anchor_weights"]
+        if "anchor_snr" in gs and gs["anchor_snr"] is not None:
+            uns["anchor_snr"] = np.asarray(gs["anchor_snr"], dtype=np.float32)
+        if "anchor_capped_cols" in gs and gs["anchor_capped_cols"] is not None:
+            uns["anchor_capped_cols"] = [
+                np.asarray(c, dtype=np.int64) for c in gs["anchor_capped_cols"]
+            ]
+        if "anchor_max_live" in gs and gs["anchor_max_live"] is not None:
+            uns["anchor_max_live"] = int(gs["anchor_max_live"])
     return adata

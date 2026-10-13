@@ -28,7 +28,7 @@ import numpy as np
 from scipy.sparse import csr_matrix
 
 
-REASON_CODES = ("ok", "no_counts", "no_variation", "not_in_ball")
+REASON_CODES = ("ok", "no_counts", "no_variation", "not_in_ball", "capped")
 
 
 @dataclass
