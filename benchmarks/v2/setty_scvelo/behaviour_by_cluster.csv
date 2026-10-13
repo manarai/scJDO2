@@ -1,0 +1,11 @@
+cluster,n,is_terminal,is_progenitor,fork,holder,drift,damped_oscillator,growing_oscillator,frac_fork,frac_holder
+CLP,488,True,False,341,0,0,0,147,0.6987704918032787,0.0
+DCs,303,True,False,219,0,1,0,83,0.7227722772277227,0.0
+Ery_1,742,True,False,316,0,3,0,423,0.42587601078167114,0.0
+Ery_2,265,True,False,178,0,0,0,87,0.6716981132075471,0.0
+HSC_1,1118,False,True,708,0,1,0,409,0.6332737030411449,0.0
+HSC_2,984,False,True,738,0,2,0,244,0.75,0.0
+Mega,61,True,False,25,0,0,0,36,0.4098360655737705,0.0
+Mono_1,724,True,False,518,0,2,0,204,0.7154696132596685,0.0
+Mono_2,429,True,False,317,0,0,0,112,0.7389277389277389,0.0
+Precursors,666,False,True,497,0,0,0,169,0.7462462462462462,0.0

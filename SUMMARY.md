@@ -255,30 +255,120 @@ once the pulse-duration confound is accounted for. R15's rule is
 neither confirmed nor falsified by Dynamo scNT-seq hematopoiesis
 in its distributed form.
 
-## 3 · Snapshot vs measured flow — side-by-side on matched biology
+## 2.5 · Setty + scVelo — same dataset, measured flow via splicing
 
-Setty and Dynamo scNT-seq sit on the same compartment (human CD34+
-bone marrow) and the pipelines they stress are complementary:
-Setty's DSM-residualised drift is a density score on a snapshot;
-scNT-seq's velocity is a measured flow on a labelled time axis.
-Both report **zero or batch-confined holders on terminal lineages**.
-Neither pipeline recovers a GATA1 / SPI1 fork saddle that is clean
-of cell-cycle contamination or batch effects. **Neither snapshot
-density scores nor the as-distributed labelling-rate velocity give
-R15's rule a clean recovery.**
+Same Setty 2019 CD34+ h5ad (5780 cells, HVG 2002); same scJDO2 Phase C
+anchor fit (``max_live=150``, 200 anchors). Only the drift source
+changes: scVelo dynamical mode on Setty's spliced / unspliced layers
+produces a per-cell ``velocity_pca`` which a MeasuredDrift MLP
+regresses into a differentiable field. Clock is **relative** (scVelo's
+time axis is not calibrated to physical hours). Outputs under
+``benchmarks/v2/setty_scvelo/``.
+
+**Behaviour counts (scVelo-measured drift on Setty):**
+
+| cluster | n | fork | holder | growing_osc | frac_fork |
+|---|---|---|---|---|---|
+| HSC_1       | 1118 | 708 | 0 | 409 | 0.63 |
+| HSC_2       |  984 | 738 | 0 | 244 | 0.75 |
+| Precursors  |  666 | 497 | 0 | 169 | 0.75 |
+| CLP         |  488 | 341 | 0 | 147 | 0.70 |
+| DCs         |  303 | 219 | 0 |  83 | 0.72 |
+| Ery_1       |  742 | 316 | 0 | 423 | **0.43** |
+| Ery_2       |  265 | 178 | 0 |  87 | 0.67 |
+| Mega        |   61 |  25 | 0 |  36 | 0.41 |
+| Mono_1      |  724 | 518 | 0 | 204 | 0.72 |
+| Mono_2      |  429 | 317 | 0 | 112 | 0.74 |
+| **overall** | 5780 | 3857 | **0** | 1914 | 0.67 |
+
+**Still zero holders on every cluster.** Overall: 67% fork + 33%
+growing_oscillator, vs DSM-Setty's 77% fork + 23% growing_oscillator.
+scVelo flow rotates more than it diverges on this dataset — most
+strikingly on Ery_1, which drops from 86% fork (DSM) to 43% fork
+(scVelo).
+
+**Decision-region archetype (scVelo): archetype 7** (fork, lead_re
++0.142, n=246 cells; 72% of weight on HSC + Precursors). GATA1 /
+SPI1 ranks (out of 2002 HVG):
+
+| table | gene | rank | fisher | snr | sensitivity | reason |
+|---|---|---|---|---|---|---|
+| responders   | **GATA1** | **57**  | 0.32 | 0.015 | — | **ok** |
+| responders   | SPI1  | 392 | 2.04 | 0.032 | — | ok |
+| drivers_left | **GATA1** | **54**  | 0.32 | 0.015 | 1.18 | **ok** |
+| drivers_left | SPI1  | 227 | 2.04 | 0.032 | 0.43 | ok |
+
+**Recovery vs DSM-Setty on GATA1.** On DSM-Setty's decision archetype
+(arch 3), GATA1 was **capped with Fisher = 0** (anchor_max_live SNR
+cut dropped it); SPI1 was rank 73 responder / 137 driver. On scVelo-
+Setty's decision archetype (arch 7), **GATA1 is rank 57 / 54 with
+real Fisher mass**, SPI1 is 392 / 227 — the two TFs swap primacy at
+the saddle under splicing vs density-score drift. Measured flow via
+splicing surfaces erythroid-axis GATA1 at the decision region
+where the DSM drift did not. **This is the first clean recovery of
+GATA1 as a top-tail driver of a scJDO2 archetype under a drift
+other than the DSM score.**
+
+**Caveats.** (a) Zero holders remain on every terminal, so the
+"basin on terminals" signature is still absent — measured flow via
+splicing changes the gene-level driver profile but not the
+terminal-basin flag. (b) scVelo's dynamical fit on Setty retained
+~700 velocity-fittable genes out of 2002 HVG (the dynamical fit
+drops genes with poor splicing-steady-state solubility), so the
+measured flow is intrinsically narrower than the DSM score. (c)
+Setty's clock is relative; the per-hour calibration arm needs a
+labelling dataset.
+
+## 3 · Snapshot vs measured flow — three-way on human CD34+
+
+Three drift sources on the same compartment:
+
+| source | drift | dataset | n | holders | arch at decision | GATA1 (resp/drv) | SPI1 (resp/drv) |
+|---|---|---|---|---|---|---|---|
+| **Setty DSM** (snapshot score)         | DSM MLP on Palantir pseudotime      | Setty 2019    | 5780 | 0 | 3 (lead_re +0.09) | 1051 / 1279 **capped** | 73 / 137 |
+| **Setty scVelo** (splicing-flow drift) | MLP(z→v) on scVelo ``velocity_pca`` | Setty 2019    | 5780 | 0 | 7 (lead_re +0.14) | **57 / 54**            | 392 / 227 |
+| **Dynamo scNT-seq** (labelling-flow)   | MLP(z→v) on labelling ``velocity_pca`` | Qiu 2022     | 1947 | 37 (batch-confined, §7b) | 6 (lead_re +0.19 /h) | 146 / 134 | 131 / 109 |
+
+Reading the row-by-row:
+
+* **Behaviour on terminals.** All three sources report **zero holders
+  on terminal lineages** (Setty DSM/scVelo at scale) or **batch-
+  confined holders only** (Dynamo scNT-seq, 37 of 1947, 100% from
+  the 3-h pulse batch per §7b). None of the three gives a clean
+  "basin on terminals" biological finding.
+* **Decision-region archetype classification.** All three decision
+  archetypes classify fork; none holder.
+* **GATA1 at the decision archetype.** DSM caps GATA1 (Fisher = 0,
+  rank ~1000); scVelo lifts GATA1 to responder rank 57 / driver
+  rank 54 with real Fisher mass (0.32); scNT-seq ranks GATA1 at
+  146 / 134 across a different compartment. **Measured flow (via
+  splicing or labelling) is required for GATA1 to surface as a
+  top-tail decision driver.**
+* **SPI1 at the decision archetype.** DSM reads SPI1 clearest (top-
+  150 both tables); scVelo reads SPI1 weaker (top-400); scNT-seq
+  reads SPI1 clearest among the three on this metric. SPI1 is less
+  sensitive to the drift source than GATA1.
+
+**Interpretation.** Neither snapshot density scoring nor the two
+measured-flow sources (splicing + labelling) gives R15's rule a
+clean recovery on CD34+ hematopoiesis — the "holders on terminal
+basins" signature is absent across all three drifts. But measured
+flow IS necessary to surface GATA1 at the ery–myelo–lymphoid
+decision archetype: the DSM score alone caps it with Fisher = 0.
+The splicing-flow Setty run is the cleanest "no batch confound"
+measured-flow result in-session.
 
 Next steps already recorded in ``V2_PLAN.md``:
 
 * **§7c (labelled rate model from new/total counts with per-cell
   t_c in the NB likelihood)** — removes the dynamo-upstream pulse-
   duration bias at its source rather than post-hoc clock scaling.
-* **Setty + scVelo dynamical** — Setty has spliced / unspliced
-  layers; a scVelo measured flow on the SAME dataset as the DSM
-  snapshot would isolate the "measured vs scored drift" variable
-  from the "scNT-seq batch artifact" variable.
 * **A single-pulse labelling dataset** (dynamo scEU-seq organoid
   or scNT-seq neuron) where every cell carries the same ``t_c``,
   removing the batch confound by construction.
+* **Setty + scVelo whole-genome rerun** (this one dropped to ~700
+  velocity-fittable genes under the dynamical fit; a broader HVG
+  pool or a steady-state scVelo could keep more).
 
 ## 4 · Paul15 (secondary mouse replicate)
 
