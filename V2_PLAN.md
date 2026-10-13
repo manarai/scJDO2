@@ -591,6 +591,30 @@ Operationally:
   into every anchor's live set would reintroduce the lie by other
   means.
 
+**Zero-holder diagnosis on Paul15 (R16, 2000-gene, 2026-10-13).**
+The run reports zero ``holder`` cells across all 2730 cells by the
+latent-operator classification (R15), with ``frac(Re > 0) = 1.00``
+and median ``lead_re`` of +0.067 / +0.071 / +0.099 / +0.090 on
+erythrocytes / monocytes / megakaryocytes / progenitors. This is
+the **transient-pitchfork pattern**, not a drift-fit failure.
+Evidence distinguishing the two: (a) magnitudes track biology — the
+terminal megakaryocyte cluster scores the highest median
+``lead_re`` and the terminal erythrocyte cluster the lowest, with
+progenitors in between, rather than being noise-flat or
+implausibly aligned across cell types; (b) the gene-space per-cell
+Jacobian restricted to the Fisher tangent *does* peel off a holder
+minority exactly where equilibrating terminals should sit —
+``frac(Re > 0) = 0.63`` on erythrocytes and ``0.90`` on monocytes,
+while megakaryocytes and progenitors remain uniformly positive
+(``1.00``). A drift-fit failure would not produce this biology-
+aligned ery > mono > mk/prog gradient, and would smear noise
+uniformly across clusters. The latent-everywhere-fork /
+gene-space-partial-holder split is the ∇η-lift signature R14 §9
+flagged (ridge bias on weak contractions pushed through
+``(∇η)⁺``), consistent with Paul15 being a differentiation
+snapshot with ongoing basin approach but no fully attained steady
+states.
+
 ---
 
 ## 10. Phase A deliverables status
