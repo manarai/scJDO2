@@ -289,41 +289,87 @@ class GeneRateModel:
             return torch.exp(eta + log_s).cpu().numpy()
 
     # ---------------------------------------------------- autograd grad_η
-    def grad_eta(self, z: np.ndarray) -> np.ndarray:
+    def grad_eta(
+        self, z: np.ndarray, chunk: int = 256, dtype: str = "float32",
+    ) -> np.ndarray:
         """Return ``∂η_g/∂z_c`` of shape ``(n, G, d)`` by autograd.
 
-        Chain-rule factor for Step 4 / Step 5. Computed per cell by
-        reverse-mode on each gene's eta — vectorised with
-        :func:`torch.func.jacrev`.
+        Chain-rule factor for Step 4 / Step 5. Uses forward-mode AD
+        (``torch.func.jacfwd``) when the latent dim ``d`` is smaller
+        than the gene dim ``G`` — which is the usual case
+        (``d ≈ 50 ≪ G ≈ 2000``) and ~``G/d`` times faster than reverse
+        mode. Falls back to ``jacrev`` when ``d ≥ G``.
+        Chunked into cell batches of ``chunk`` so peak memory stays
+        below ``chunk · G · d · sizeof(dtype)``; ``dtype="float32"``
+        halves the final tensor's RAM footprint for free.
         """
         self._require_fit()
         import torch
         try:
-            from torch.func import jacrev, vmap
+            from torch.func import jacfwd, jacrev, vmap
         except ImportError:  # fallback for older torch
-            from functorch import jacrev, vmap  # type: ignore[no-redef]
+            from functorch import jacfwd, jacrev, vmap  # type: ignore[no-redef]
         Z = torch.as_tensor(z, dtype=torch.float32, device=self._device)
         model = self._model
+        np_dtype = np.float32 if dtype == "float32" else np.float64
 
         def _eta_single(z_row: "torch.Tensor") -> "torch.Tensor":
             return model.eta(z_row.unsqueeze(0)).squeeze(0)
-        with torch.no_grad():
-            J = vmap(jacrev(_eta_single))(Z)             # (n, G, d)
-        return J.cpu().numpy()
 
-    def rate_along_eta(self, z: np.ndarray, f: np.ndarray) -> np.ndarray:
+        n, d = Z.shape
+        G = int(self._n_genes or model.eta(Z[:1]).shape[1])
+        jac = jacfwd(_eta_single) if d < G else jacrev(_eta_single)
+        out = np.empty((n, G, d), dtype=np_dtype)
+        chunk = max(1, int(chunk))
+        with torch.no_grad():
+            for s in range(0, n, chunk):
+                e = min(n, s + chunk)
+                Jc = vmap(jac)(Z[s:e])                            # (chunk, G, d)
+                out[s:e] = Jc.cpu().numpy().astype(np_dtype, copy=False)
+                del Jc
+        return out
+
+    def rate_along_eta(
+        self, z: np.ndarray, f: np.ndarray, chunk: int = 256,
+    ) -> np.ndarray:
         """η-coord drift: ``dη_g/dt = ∇_z η_g(z_c) · f(z_c)``.
 
-        Returns an ``(n, G)`` array. This is the signal regressed in
-        Step 5's gene-space Jacobian fit (per docs/opspace_figure_spec.md
-        §8.2 — J is estimated in η-coords).
+        Returns an ``(n, G)`` array. Uses a direct Jacobian-vector
+        product (``torch.func.jvp``) so the full ``(n, G, d)`` tensor
+        is never materialised — one forward pass per cell gives
+        ``∇η(z_c) · f(z_c)`` directly, which on real datasets
+        (G ≈ 2000, n ≈ 3000, d ≈ 50) is dramatically faster than
+        reverse-mode on grad_eta followed by einsum.
         """
         self._require_fit()
         f = np.asarray(f, dtype=np.float32)
         if f.shape != z.shape:
             raise ValueError(f"f {f.shape} must match z {z.shape}")
-        g_eta = self.grad_eta(z)                          # (n, G, d)
-        return np.einsum("ngd,nd->ng", g_eta, f).astype(np.float64)
+        import torch
+        try:
+            from torch.func import jvp, vmap
+        except ImportError:
+            from functorch import jvp, vmap  # type: ignore[no-redef]
+        Z = torch.as_tensor(z, dtype=torch.float32, device=self._device)
+        F = torch.as_tensor(f, dtype=torch.float32, device=self._device)
+        model = self._model
+
+        def _eta_single(z_row: "torch.Tensor") -> "torch.Tensor":
+            return model.eta(z_row.unsqueeze(0)).squeeze(0)
+
+        n = Z.shape[0]
+        G = int(self._n_genes or model.eta(Z[:1]).shape[1])
+        out = np.empty((n, G), dtype=np.float64)
+        chunk = max(1, int(chunk))
+        with torch.no_grad():
+            for s in range(0, n, chunk):
+                e = min(n, s + chunk)
+                z_b, f_b = Z[s:e], F[s:e]
+                # vmap jvp across cells: jvp(_eta_single, (z,), (v,)) → (η, ∇η·v).
+                _, jvp_out = vmap(lambda z, v: jvp(_eta_single, (z,), (v,)))(z_b, f_b)
+                out[s:e] = jvp_out.cpu().numpy().astype(np.float64, copy=False)
+                del jvp_out
+        return out
 
     def rate_along(self, z: np.ndarray, f: np.ndarray) -> np.ndarray:
         """Chain rule: ``dμ_g/dt = μ_g · (∂η_g/∂z · f)``.

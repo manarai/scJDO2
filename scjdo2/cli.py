@@ -49,6 +49,15 @@ def _build_parser() -> argparse.ArgumentParser:
                      help="NB rate-model epochs (default: 400)")
     run.add_argument("--cv-sample-cells", type=int, default=30,
                      help="sampled cells for ridge-λ CV (default: 30)")
+    run.add_argument("--anchor-fit", action="store_true",
+                     help="use the anchor-based Step 5 variant (k-means "
+                          "anchors + batched ridge + Gaussian kernel lift)")
+    run.add_argument("--n-anchors", type=int, default=300,
+                     help="anchor count for --anchor-fit (default: 300)")
+    run.add_argument("--anchor-top-k", type=int, default=10,
+                     help="anchors used per cell's lift (default: 10)")
+    run.add_argument("--anchor-batch", type=int, default=25,
+                     help="anchor-batch size for the ridge solve (default: 25)")
 
     ops = sub.add_parser("opspace",
                          help="compute operator-space invariants on a stored run")
@@ -244,14 +253,19 @@ def _cmd_run(args) -> int:
         ),
     )
     if args.with_rate_model:
+        variant = "anchor" if args.anchor_fit else "per_cell"
         print(f"[run] fitting NB rate model + gene-space J "
-              f"({args.n_epochs_rate} rate epochs, k={args.k})")
+              f"({args.n_epochs_rate} rate epochs, k={args.k}, variant={variant})")
         fit_rate_and_gene_field(
             adata, use_rep=args.use_rep,
             n_epochs_rate=int(args.n_epochs_rate),
             k=int(args.k),
             cv_sample_cells=int(args.cv_sample_cells),
             seed=int(args.seed),
+            anchor_fit=bool(args.anchor_fit),
+            n_anchors=int(args.n_anchors),
+            anchor_top_k=int(args.anchor_top_k),
+            anchor_batch=int(args.anchor_batch),
         )
     out = Path(args.out)
     saved = _scjdo2_io.save(adata, out)

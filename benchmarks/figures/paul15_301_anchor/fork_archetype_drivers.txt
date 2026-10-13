@@ -1,0 +1,200 @@
+archetype 0 — behaviour=fork, n_cells=411, lead_re=+0.887, henrici=0.318
+     gene    weight  magnitude  phase    fisher  fisher_se       reason
+   Atp1b2  0.154540   0.154540    NaN 15.989802   0.250080           ok
+Serpina3f -0.140705   0.140705    NaN 17.471460   0.239241           ok
+  Tnfaip2  0.138783   0.138783    NaN  6.193124   0.401833           ok
+    Rab37 -0.133761   0.133761    NaN  2.819164   0.595580           ok
+   Itga2b -0.127286   0.127286    NaN  5.509724   0.426025           ok
+    Spns2 -0.126926   0.126926    NaN  5.247217   0.436552           ok
+  Slc18a2 -0.126404   0.126404    NaN  7.740930   0.359421           ok
+    Mdga1 -0.124260   0.124260    NaN  4.551937   0.468707           ok
+  Ptprcap -0.120818   0.120818    NaN  0.727197   1.172665           ok
+    Myct1 -0.119473   0.119473    NaN  7.405071   0.367481           ok
+     Dok2 -0.111753   0.111753    NaN  4.214748   0.487096           ok
+     Ehd3 -0.110247   0.110247    NaN  6.734421   0.385345           ok
+    Prkch -0.105747   0.105747    NaN  4.052671   0.496740           ok
+    Rbpms -0.103773   0.103773    NaN  4.900140   0.451747           ok
+    Abcg1 -0.102173   0.102173    NaN  2.097962   0.690401           ok
+     Mycn -0.101834   0.101834    NaN  7.519678   0.364670           ok
+     Egr1 -0.100745   0.100745    NaN  8.345324   0.346161           ok
+      Lat -0.100569   0.100569    NaN  8.386504   0.345310           ok
+    Tubb5  0.100472   0.100472    NaN  0.000000        NaN no_variation
+   Ctla2a -0.099149   0.099149    NaN  7.347561   0.368917           ok
+  Gata1: rank 133, weight=+0.0503, magnitude=0.0503, fisher=0.30, reason=ok
+  Sfpi1: rank 260, weight=-0.0157, magnitude=0.0157, fisher=3.01, reason=ok
+
+archetype 1 — behaviour=fork, n_cells=323, lead_re=+0.564, henrici=0.192
+   gene    weight  magnitude  phase   fisher  fisher_se       reason
+    Mpl  0.145972   0.145972    NaN 5.695508   0.419019           ok
+   Ehd3  0.126529   0.126529    NaN 6.266893   0.399461           ok
+  Prtn3 -0.125486   0.125486    NaN 0.000000        NaN no_variation
+ Tuba1b -0.122000   0.122000    NaN 0.000000        NaN no_variation
+  Gata2  0.121399   0.121399    NaN 2.829308   0.594511           ok
+  Ddah2  0.118912   0.118912    NaN 0.180762   2.352048           ok
+Ptprcap  0.115620   0.115620    NaN 1.370022   0.854351           ok
+ Itga2b  0.114132   0.114132    NaN 4.534582   0.469604           ok
+  Meis1  0.113209   0.113209    NaN 6.987824   0.378294           ok
+    Cd9  0.112127   0.112127    NaN 9.177558   0.330093           ok
+  Mfge8  0.112097   0.112097    NaN 1.647113   0.779181           ok
+  Rpl23 -0.111840   0.111840    NaN 0.212436   2.169633           ok
+   Mycn  0.111782   0.111782    NaN 5.466150   0.427720           ok
+   Gm2a  0.104959   0.104959    NaN 0.848777   1.085433           ok
+  Rab37  0.104706   0.104706    NaN 3.724678   0.518150           ok
+  Tuba8  0.101262   0.101262    NaN 5.294198   0.434610           ok
+  Ndrg1  0.099302   0.099302    NaN 0.103893   3.102458           ok
+Gucy1a3  0.095844   0.095844    NaN 2.916406   0.585566           ok
+    Mpo -0.095734   0.095734    NaN 0.000000        NaN no_variation
+   Sdpr  0.093891   0.093891    NaN 5.329921   0.433151           ok
+  Gata1: rank 257, weight=+0.0192, magnitude=0.0192, fisher=0.35, reason=ok
+  Sfpi1: rank 276, weight=+0.0125, magnitude=0.0125, fisher=1.29, reason=ok
+
+archetype 2 — behaviour=fork, n_cells=601, lead_re=+0.396, henrici=0.195
+    gene   weight  magnitude  phase   fisher  fisher_se reason
+    Ets1 0.133122   0.133122    NaN 2.304333   0.658760     ok
+   Cebpe 0.126518   0.126518    NaN 7.002140   0.377907     ok
+ Ptprcap 0.126387   0.126387    NaN 1.804265   0.744475     ok
+    Fcnb 0.118418   0.118418    NaN 3.800771   0.512937     ok
+   P2rx1 0.114409   0.114409    NaN 4.906629   0.451449     ok
+  Lpcat2 0.109976   0.109976    NaN 5.086993   0.443373     ok
+   Tuba8 0.106668   0.106668    NaN 3.636115   0.524422     ok
+     Cd9 0.106615   0.106615    NaN 4.286915   0.482978     ok
+  Tbxas1 0.105837   0.105837    NaN 1.006095   0.996966     ok
+   Spns2 0.104432   0.104432    NaN 2.695423   0.609097     ok
+    Dok2 0.102909   0.102909    NaN 3.465196   0.537200     ok
+  Itga2b 0.102203   0.102203    NaN 3.777349   0.514525     ok
+   Spna2 0.101920   0.101920    NaN 2.035843   0.700854     ok
+   Dach1 0.100822   0.100822    NaN 2.218421   0.671395     ok
+    Cd63 0.100187   0.100187    NaN 1.558733   0.800966     ok
+   Ffar2 0.098576   0.098576    NaN 0.561595   1.334407     ok
+Cdcrel-1 0.098466   0.098466    NaN 5.262460   0.435919     ok
+  Gimap1 0.098248   0.098248    NaN 2.535531   0.628008     ok
+     Tcb 0.097008   0.097008    NaN 2.187536   0.676118     ok
+     Id2 0.095356   0.095356    NaN 3.132928   0.564969     ok
+  Gata1: rank 99, weight=+0.0621, magnitude=0.0621, fisher=0.34, reason=ok
+  Sfpi1: rank 295, weight=+0.0022, magnitude=0.0022, fisher=0.88, reason=ok
+
+archetype 3 — behaviour=fork, n_cells=702, lead_re=+0.294, henrici=0.193
+    gene    weight  magnitude  phase   fisher  fisher_se       reason
+    Nrgn  0.129272   0.129272    NaN 5.959849   0.409621           ok
+ Ptprcap  0.121937   0.121937    NaN 3.655630   0.523021           ok
+    Cd63  0.113073   0.113073    NaN 2.804823   0.597100           ok
+    Apoe  0.111218   0.111218    NaN 3.667494   0.522174           ok
+    Gm2a  0.110706   0.110706    NaN 0.339643   1.715886           ok
+   Elane -0.107929   0.107929    NaN 0.346553   1.698693           ok
+   P2rx1  0.106263   0.106263    NaN 2.629645   0.616668           ok
+   Spns2  0.100156   0.100156    NaN 4.211990   0.487255           ok
+   Gata2  0.099840   0.099840    NaN 2.969678   0.580290           ok
+   Hmox1  0.099767   0.099767    NaN 2.467208   0.636645           ok
+   F13a1 -0.098743   0.098743    NaN 8.312701   0.346840           ok
+   Itgb7  0.096233   0.096233    NaN 3.311827   0.549498           ok
+  S100a4  0.094391   0.094391    NaN 3.480931   0.535985           ok
+     Emb -0.093399   0.093399    NaN 0.217196   2.145723           ok
+Tmem176a  0.092914   0.092914    NaN 0.156897   2.524602           ok
+    Irf8 -0.092419   0.092419    NaN 5.921928   0.410931           ok
+    Calr -0.091969   0.091969    NaN 0.000000        NaN no_variation
+   Meis1  0.091001   0.091001    NaN 2.879782   0.589278           ok
+   Cebpe  0.090965   0.090965    NaN 7.166716   0.373542           ok
+     Cd9  0.090459   0.090459    NaN 2.515217   0.630539           ok
+  Gata1: rank 125, weight=+0.0586, magnitude=0.0586, fisher=0.31, reason=ok
+  Sfpi1: rank 270, weight=-0.0181, magnitude=0.0181, fisher=0.04, reason=ok
+
+archetype 4 — behaviour=fork, n_cells=506, lead_re=+0.425, henrici=0.319
+    gene    weight  magnitude  phase   fisher  fisher_se reason
+    Ets1  0.150059   0.150059    NaN 2.601670   0.619975     ok
+    Fcnb  0.141378   0.141378    NaN 5.215503   0.437877     ok
+   Cebpe  0.137431   0.137431    NaN 7.086295   0.375656     ok
+  Lpcat2  0.135306   0.135306    NaN 4.331417   0.480491     ok
+   Tuba8  0.132533   0.132533    NaN 2.217776   0.671492     ok
+     Emb -0.132172   0.132172    NaN 0.634336   1.255568     ok
+   P2rx1  0.128706   0.128706    NaN 3.969898   0.501892     ok
+Cdcrel-1  0.123932   0.123932    NaN 4.002537   0.499842     ok
+     Cd9  0.123831   0.123831    NaN 3.132756   0.564985     ok
+    Cd63  0.120874   0.120874    NaN 2.609061   0.619096     ok
+  Itga2b  0.117881   0.117881    NaN 4.413911   0.475979     ok
+   Dach1  0.116382   0.116382    NaN 2.922817   0.584924     ok
+    Apoe  0.114789   0.114789    NaN 5.957867   0.409689     ok
+    Fli1  0.113808   0.113808    NaN 0.061094   4.045769     ok
+     Id2  0.113027   0.113027    NaN 4.157015   0.490466     ok
+   Ffar2  0.108232   0.108232    NaN 0.982847   1.008689     ok
+    Prg3  0.106468   0.106468    NaN 5.291001   0.434741     ok
+    Nrgn  0.104523   0.104523    NaN 6.312825   0.398005     ok
+  Tbxas1  0.104285   0.104285    NaN 0.430088   1.524829     ok
+ Ptprcap  0.104162   0.104162    NaN 2.634805   0.616064     ok
+  Gata1: rank 92, weight=+0.0607, magnitude=0.0607, fisher=0.30, reason=ok
+  Sfpi1: rank 257, weight=-0.0164, magnitude=0.0164, fisher=0.79, reason=ok
+
+archetype 5 — behaviour=fork, n_cells=561, lead_re=+0.656, henrici=0.203
+         gene    weight  magnitude  phase    fisher  fisher_se       reason
+       Malat1  0.160247   0.160247    NaN 46.198673   0.147125           ok
+        Prkch -0.128602   0.128602    NaN  4.034157   0.497879           ok
+        Myct1 -0.127275   0.127275    NaN  6.122058   0.404158           ok
+        Tubb5  0.125485   0.125485    NaN  0.000000        NaN no_variation
+        Mdga1 -0.124836   0.124836    NaN  3.417099   0.540968           ok
+          Zyx -0.122619   0.122619    NaN  1.039653   0.980744           ok
+    Serpina3f -0.120931   0.120931    NaN 14.916885   0.258917           ok
+        Gpr56 -0.116316   0.116316    NaN  0.750190   1.154554           ok
+        S1pr1 -0.112697   0.112697    NaN  6.308315   0.398147           ok
+          F2r -0.108633   0.108633    NaN  8.447462   0.344062           ok
+      Ptprcap -0.107575   0.107575    NaN  0.793468   1.122626           ok
+         Mycn -0.107133   0.107133    NaN  6.345561   0.396977           ok
+         Ehd3 -0.105890   0.105890    NaN  5.881272   0.412348           ok
+1110013L07Rik -0.105723   0.105723    NaN  3.491024   0.535209           ok
+          Mt2  0.104887   0.104887    NaN  8.113624   0.351069           ok
+       Gimap6 -0.104563   0.104563    NaN  3.506442   0.534031           ok
+        Hspa5  0.104242   0.104242    NaN  0.040704   4.956542           ok
+         Gbp2 -0.104119   0.104119    NaN  6.596151   0.389363           ok
+       Ctla2a -0.103395   0.103395    NaN  5.635600   0.421240           ok
+       Iqgap1 -0.102567   0.102567    NaN  2.870812   0.590198           ok
+  Gata1: rank 241, weight=+0.0235, magnitude=0.0235, fisher=0.27, reason=ok
+  Sfpi1: rank 244, weight=-0.0232, magnitude=0.0232, fisher=2.66, reason=ok
+
+archetype 6 — behaviour=fork, n_cells=949, lead_re=+0.072, henrici=0.240
+   gene    weight  magnitude  phase   fisher  fisher_se       reason
+  Glrx5  0.136227   0.136227    NaN 0.000000        NaN no_variation
+    Mt2  0.120404   0.120404    NaN 0.142249   2.651403           ok
+   Cpox  0.114870   0.114870    NaN 0.057242   4.179665           ok
+Slc45a3 -0.114587   0.114587    NaN 2.279352   0.662360           ok
+   Calr  0.111526   0.111526    NaN 0.000000        NaN no_variation
+   Nrgn -0.111204   0.111204    NaN 0.574131   1.319759           ok
+Hsp90b1  0.109997   0.109997    NaN 0.000000        NaN no_variation
+    Mpo  0.104533   0.104533    NaN 0.000000        NaN no_variation
+ Iqgap1 -0.103536   0.103536    NaN 0.807006   1.113170           ok
+Ptprcap -0.102834   0.102834    NaN 2.967113   0.580541           ok
+S100a10 -0.102794   0.102794    NaN 3.012181   0.576182           ok
+   P4hb  0.099042   0.099042    NaN 0.000000        NaN no_variation
+   Aff3 -0.097621   0.097621    NaN 0.671591   1.220246           ok
+   Aqp1  0.097343   0.097343    NaN 0.000000        NaN no_variation
+ Mrpl52  0.095129   0.095129    NaN 0.000000        NaN no_variation
+  Prdx2  0.089683   0.089683    NaN 0.000000        NaN no_variation
+  Prtn3  0.088286   0.088286    NaN 0.000000        NaN no_variation
+   Klf1  0.087351   0.087351    NaN 0.000000        NaN no_variation
+    Pf4 -0.087297   0.087297    NaN 1.646992   0.779210           ok
+  Ypel3 -0.087047   0.087047    NaN 0.638024   1.251934           ok
+  Gata1: rank 292, weight=-0.0150, magnitude=0.0150, fisher=0.06, reason=ok
+  Sfpi1: rank 286, weight=-0.0172, magnitude=0.0172, fisher=0.11, reason=ok
+
+archetype 7 — behaviour=fork, n_cells=372, lead_re=+0.705, henrici=0.215
+  gene    weight  magnitude  phase    fisher  fisher_se       reason
+   Mpl  0.178277   0.178277    NaN  7.307865   0.369917           ok
+Treml1  0.133146   0.133146    NaN  5.160824   0.440190           ok
+Tbxas1  0.132274   0.132274    NaN  2.249597   0.666726           ok
+ Prdx2 -0.125351   0.125351    NaN  0.000000        NaN no_variation
+Rnf180  0.122985   0.122985    NaN  5.380998   0.431091           ok
+ Myct1  0.119748   0.119748    NaN  5.958284   0.409675           ok
+  Ehd3  0.113362   0.113362    NaN  7.570528   0.363444           ok
+Itga2b  0.112708   0.112708    NaN  5.573925   0.423564           ok
+ Tubb5 -0.111310   0.111310    NaN  0.000000        NaN no_variation
+ P2rx1  0.110555   0.110555    NaN 10.208529   0.312981           ok
+  Sdpr  0.109536   0.109536    NaN  6.169969   0.402586           ok
+   Tcb  0.105954   0.105954    NaN  5.382946   0.431013           ok
+  Car1 -0.104069   0.104069    NaN  2.165096   0.679613           ok
+  Mycn  0.103539   0.103539    NaN  6.911571   0.380375           ok
+ Rab37  0.103137   0.103137    NaN  2.462515   0.637251           ok
+   Fyn  0.102661   0.102661    NaN  2.663144   0.612777           ok
+  Dok2  0.102327   0.102327    NaN  4.524139   0.470145           ok
+ Rbpms  0.102303   0.102303    NaN  4.131557   0.491975           ok
+ Spns2  0.101204   0.101204    NaN  2.877105   0.589552           ok
+Tuba1b -0.100759   0.100759    NaN  0.000000        NaN no_variation
+  Gata1: rank 133, weight=-0.0497, magnitude=0.0497, fisher=0.60, reason=ok
+  Sfpi1: rank 157, weight=+0.0448, magnitude=0.0448, fisher=2.68, reason=ok
+

@@ -124,6 +124,12 @@ def fit_rate_and_gene_field(
     tangent_quantile: float = 0.5,
     seed: int = 0,
     verbose: bool = False,
+    anchor_fit: bool = False,
+    n_anchors: int = 300,
+    anchor_top_k: int = 10,
+    anchor_bandwidth: Optional[float] = None,
+    anchor_batch: int = 25,
+    anchor_max_live: int = 150,
 ) -> AnnData:
     """Phase C extension — NB rate model + gene-space J + Fisher ledger
     + Fisher-weighted tangent projector + ``grad_eta``.
@@ -146,6 +152,7 @@ def fit_rate_and_gene_field(
     from .field import (
         GeneFieldConfig,
         fit_gene_space_jacobians,
+        fit_gene_space_jacobians_anchored,
         fit_jacobian_tangent_projectors,
     )
     from .fisher import compute as fisher_compute
@@ -170,32 +177,56 @@ def fit_rate_and_gene_field(
     if hasattr(counts, "toarray"):
         counts = counts.toarray()
 
+    import time as _time
+    _t0 = _time.monotonic()
     rm = GeneRateModel(RatesConfig(
         hidden=tuple(rate_hidden), n_epochs=int(n_epochs_rate), lr=1e-3,
         batch_size=256, held_out_frac=0.10, patience=30, seed=int(seed),
     ))
     rm.fit(counts, z, verbose=verbose)
+    if verbose:
+        print(f"  [pipeline] rate-model fit {_time.monotonic() - _t0:.1f}s")
+    else:
+        print(f"  [pipeline] rate-model fit {_time.monotonic() - _t0:.1f}s  "
+              f"NLL={rm.best_val_nll:.3f}")
 
-    gs = fit_gene_space_jacobians(
-        z, v, rm, counts=counts,
-        config=GeneFieldConfig(
-            k=int(k), cv_sample_cells=int(cv_sample_cells),
-            cv_metric=cv_metric, seed=int(seed),
-        ),
-        verbose=verbose,
+    gf_cfg = GeneFieldConfig(
+        k=int(k), cv_sample_cells=int(cv_sample_cells),
+        cv_metric=cv_metric, seed=int(seed),
+        n_anchors=int(n_anchors),
+        anchor_top_k=int(anchor_top_k),
+        anchor_bandwidth=anchor_bandwidth,
+        anchor_batch=int(anchor_batch),
+        anchor_max_live=int(anchor_max_live),
     )
+    _t0 = _time.monotonic()
+    if anchor_fit:
+        gs = fit_gene_space_jacobians_anchored(
+            z, v, rm, counts=counts, config=gf_cfg, verbose=True,
+        )
+    else:
+        gs = fit_gene_space_jacobians(
+            z, v, rm, counts=counts, config=gf_cfg, verbose=True,
+        )
+    print(f"  [pipeline] gene-space J fit {_time.monotonic() - _t0:.1f}s")
+
+    _t0 = _time.monotonic()
     tangent = fit_jacobian_tangent_projectors(
-        z, rm,
-        n_perm=int(n_perm_tangent),
-        quantile=float(tangent_quantile),
-        seed=int(seed),
+        z, rm, n_perm=int(n_perm_tangent),
+        quantile=float(tangent_quantile), seed=int(seed),
     )
+    print(f"  [pipeline] tangent projector fit {_time.monotonic() - _t0:.1f}s")
+
+    _t0 = _time.monotonic()
     ledger = fisher_compute(gs, tangent=tangent)
+    print(f"  [pipeline] Fisher ledger assembled {_time.monotonic() - _t0:.1f}s")
 
     uns["J_latent"] = np.asarray(uns["J"])
     uns["J"] = gs["J"]
     uns["fisher_ledger"] = ledger
+    _t0 = _time.monotonic()
     uns["grad_eta"] = rm.grad_eta(z)
+    print(f"  [pipeline] grad_eta computed {_time.monotonic() - _t0:.1f}s")
     # Record the ridge λ selection + rate-model held-out NLL for the report.
     uns["rate_meta"] = {
         "held_out_nll": float(rm.best_val_nll),
@@ -204,5 +235,13 @@ def fit_rate_and_gene_field(
         "ridge_lambda": float(gs.get("ridge_lambda", float("nan"))),
         "ridge_lambda_nll": float(gs.get("ridge_lambda_nll", float("nan"))),
         "ridge_lambda_mse": float(gs.get("ridge_lambda_mse", float("nan"))),
+        "variant": gs.get("variant", "per_cell"),
     }
+    # Anchor path extras (safe to omit on the per-cell path).
+    if gs.get("variant") == "anchor":
+        adata.obs["op_anchor"] = np.asarray(gs["op_anchor"], dtype=np.int32)
+        uns["anchor_ids"] = np.asarray(gs["anchor_ids"], dtype=np.int64)
+        uns["anchor_bandwidth"] = float(gs.get("anchor_bandwidth", 0.0))
+        uns["anchor_top_k"] = int(gs.get("anchor_top_k", 0))
+        uns["anchor_weights"] = gs["anchor_weights"]
     return adata

@@ -1379,22 +1379,36 @@ def export_tables(adata: AnnData, out_dir: str | Path) -> dict[str, Path]:
     paths = {"per_cell_invariants": inv_path}
 
     archetypes = adata.uns.get("scjdo2", {}).get("archetypes")
-    if archetypes is not None:
+    if archetypes:
+        # archetypes is now a {int: info} dict (R15/§1.5); handle legacy
+        # list-of-dicts too.
+        items = (
+            archetypes.items() if isinstance(archetypes, dict)
+            else list(enumerate(archetypes))
+        )
         arch_rows = []
-        for aid, a in enumerate(archetypes):
+        for aid, a in items:
+            if not isinstance(a, dict):
+                continue
+            ev = a.get("eigenvalues")
+            lead_re = (float(ev[0].real) if ev is not None and len(ev)
+                       else a.get("lead_re"))
+            lead_im = (float(ev[0].imag) if ev is not None and len(ev)
+                       else a.get("lead_im"))
             arch_rows.append({
-                "archetype_id": aid,
+                "archetype_id": int(aid),
                 "behaviour": a.get("behaviour"),
-                f"lead_re{tag}": a.get("lead_re"),
-                f"lead_im{tag}": a.get("lead_im"),
+                f"lead_re{tag}": lead_re,
+                f"lead_im{tag}": lead_im,
                 "henrici": a.get("henrici"),
                 "transient_gain": a.get("transient_gain"),
                 "n_cells": a.get("n_cells"),
                 "mean_confidence": a.get("mean_confidence"),
             })
-        p = out / "per_archetype_summary.csv"
-        pd.DataFrame(arch_rows).to_csv(p, index=False)
-        paths["per_archetype_summary"] = p
+        if arch_rows:
+            p = out / "per_archetype_summary.csv"
+            pd.DataFrame(arch_rows).to_csv(p, index=False)
+            paths["per_archetype_summary"] = p
 
     return paths
 

@@ -67,6 +67,10 @@ _SIDECAR_UNS_KEYS: tuple[str, ...] = (
     "archetype_K_curve",          # list[tuple[int, float]]
     "archetype_K_selected",       # int
     "archetype_patterns_latent",  # (K, d, d) float
+    "anchor_weights",             # (n, n_anchors) CSR
+    "anchor_ids",                 # (n_anchors,) int
+    "anchor_bandwidth",           # float
+    "anchor_top_k",               # int
 )
 
 # obsm columns that h5ad can't write (complex dtype in particular).
@@ -336,6 +340,24 @@ def save(adata: AnnData, out_dir: str | Path) -> dict[str, Path]:
             sidecar_payload["archetype_K_selected"] = np.int32(scj["archetype_K_selected"])
         if "archetype_patterns_latent" in scj and scj["archetype_patterns_latent"] is not None:
             sidecar_payload["archetype_patterns_latent"] = np.asarray(scj["archetype_patterns_latent"])
+        # Anchor-path extras.
+        if "anchor_ids" in scj and scj["anchor_ids"] is not None:
+            sidecar_payload["anchor_ids"] = np.asarray(scj["anchor_ids"], dtype=np.int64)
+        if "anchor_weights" in scj and scj["anchor_weights"] is not None:
+            aw = scj["anchor_weights"]
+            if issparse(aw):
+                sidecar_payload["anchor_weights"] = {
+                    "data": np.asarray(aw.data),
+                    "indices": np.asarray(aw.indices, dtype=np.int32),
+                    "indptr": np.asarray(aw.indptr, dtype=np.int32),
+                    "shape": np.asarray(aw.shape, dtype=np.int64),
+                }
+            else:
+                sidecar_payload["anchor_weights_dense"] = np.asarray(aw)
+        if "anchor_bandwidth" in scj and scj["anchor_bandwidth"] is not None:
+            sidecar_payload["anchor_bandwidth"] = np.float64(scj["anchor_bandwidth"])
+        if "anchor_top_k" in scj and scj["anchor_top_k"] is not None:
+            sidecar_payload["anchor_top_k"] = np.int32(scj["anchor_top_k"])
 
         for k in _SIDECAR_UNS_KEYS:
             if k in scj:
@@ -430,4 +452,18 @@ def load(in_dir: str | Path) -> AnnData:
         scj["archetype_K_selected"] = int(np.asarray(payload["archetype_K_selected"]))
     if "archetype_patterns_latent" in payload:
         scj["archetype_patterns_latent"] = np.asarray(payload["archetype_patterns_latent"])
+    if "anchor_ids" in payload:
+        scj["anchor_ids"] = np.asarray(payload["anchor_ids"], dtype=np.int64)
+    if "anchor_weights" in payload:
+        d = payload["anchor_weights"]
+        scj["anchor_weights"] = csr_matrix(
+            (np.asarray(d["data"]), np.asarray(d["indices"]), np.asarray(d["indptr"])),
+            shape=tuple(np.asarray(d["shape"]).tolist()),
+        )
+    elif "anchor_weights_dense" in payload:
+        scj["anchor_weights"] = np.asarray(payload["anchor_weights_dense"])
+    if "anchor_bandwidth" in payload:
+        scj["anchor_bandwidth"] = float(np.asarray(payload["anchor_bandwidth"]))
+    if "anchor_top_k" in payload:
+        scj["anchor_top_k"] = int(np.asarray(payload["anchor_top_k"]))
     return adata

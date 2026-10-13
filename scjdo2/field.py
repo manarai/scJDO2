@@ -532,6 +532,16 @@ class GeneFieldConfig:
     cv_sample_cells: int = 200            # sample for λ selection; -1 = all
     cv_metric: Literal["nb_nll", "weighted_mse"] = "nb_nll"
     seed: int = 0
+    # Anchor-based fitting knobs (see fit_gene_space_jacobians_anchored).
+    n_anchors: int = 300                   # k-means centroids in latent z
+    anchor_top_k: int = 10                 # anchors used in each cell's lift
+    anchor_bandwidth: Optional[float] = None  # Gaussian kernel σ (None → auto)
+    anchor_batch: int = 25                 # anchors solved per batched call
+    anchor_max_live: int = 150             # cap per-anchor live-cols to the top-N
+                                           # most-variable genes (keeps the dense
+                                           # anchor cache + per-cell CSR bounded on
+                                           # real data where every gene has
+                                           # η-variance in a 30-neighbour ball).
 
 
 def fit_gene_space_jacobians(
@@ -814,4 +824,445 @@ def fit_gene_space_jacobians(
         "cv_metric": metric,
         "k": int(k),
         "variation_threshold": float(cfg.variation_threshold),
+    }
+
+
+# ============================================================ Step 5 (anchor variant)
+#
+# Scale fix for real data: fitting the per-cell weighted ridge at every
+# cell is O(n_cells · G · L²) with large constants, and on Paul15
+# (n ≈ 2700, G = 2000) one-shot solves take over an hour. The anchor
+# variant does three things:
+#
+#   1. Pick ``n_anchors`` cells by k-means on the latent embedding (each
+#      centroid is replaced by its nearest actual cell so the anchor set
+#      is cells, not synthetic points).
+#   2. Fit the per-gene weighted ridge at anchors only, batched in
+#      ``anchor_batch`` chunks (each chunk solves a stacked
+#      ``(batch, G, L_max, L_max)`` tensor via ``np.linalg.solve``).
+#   3. Interpolate ``J`` and the Fisher ledger ``F`` to every cell by a
+#      Gaussian kernel over the anchor distances in latent space, keeping
+#      the ``anchor_top_k`` nearest anchors per cell.
+#
+# ``obs["op_anchor"]`` stores the index of each cell's dominant anchor
+# (nearest in z); ``obsm["anchor_weights"]`` is the sparse ``(n,
+# n_anchors)`` kernel matrix, both for downstream auditing. The
+# λ-selection still runs by held-out NB NLL / weighted MSE on sampled
+# anchor neighbourhoods.
+
+
+def _ridge_batched_live(
+    X_tr: np.ndarray, W_tr: np.ndarray, y_tr: np.ndarray, lam: float, L: int,
+) -> np.ndarray:
+    """Per-gene weighted ridge over a single ball's live columns.
+
+    Same math as the ``_ridge_batched`` closure inside
+    :func:`fit_gene_space_jacobians`; lifted to module scope so the
+    anchored variant can reuse it without duplicating the primal/dual
+    switch.
+    """
+    kt = X_tr.shape[0]
+    if L <= kt:
+        A = np.einsum("ig,ip,iq->gpq", W_tr, X_tr, X_tr)
+        A = A + lam * np.eye(L)[None, :, :]
+        b = np.einsum("ig,ip,ig->gp", W_tr, X_tr, y_tr)
+        return np.linalg.solve(A, b[..., None]).squeeze(-1)       # (G, L)
+    K = np.einsum("ip,ig,jp->gij", X_tr, W_tr, X_tr) + lam * np.eye(kt)[None]
+    u = np.linalg.solve(K, y_tr.T[..., None]).squeeze(-1)         # (G, kt)
+    return np.einsum("ip,ig,gi->gp", X_tr, W_tr, u)               # (G, L)
+
+
+def _kmeans_anchors(z: np.ndarray, n_anchors: int, seed: int = 0) -> np.ndarray:
+    """Return cell indices (one per k-means centroid) spanning the latent
+    manifold. Each centroid is replaced by its nearest actual cell so the
+    anchors are rows of ``z``, not synthetic points.
+    """
+    from sklearn.cluster import KMeans
+
+    n = z.shape[0]
+    K = int(min(max(1, n_anchors), n))
+    if K == n:
+        return np.arange(n, dtype=np.int64)
+    km = KMeans(n_clusters=K, random_state=int(seed), n_init=4).fit(z)
+    nn = NearestNeighbors(n_neighbors=1).fit(z)
+    _, idx = nn.kneighbors(km.cluster_centers_, return_distance=True)
+    anchors = np.unique(idx.ravel())
+    if anchors.size < K:
+        # Pad with uniformly spaced fallbacks when centroids collide.
+        extra = np.setdiff1d(np.arange(n), anchors)
+        rng = np.random.default_rng(int(seed))
+        pad = rng.choice(extra, size=K - anchors.size, replace=False)
+        anchors = np.concatenate([anchors, pad])
+    return np.sort(anchors.astype(np.int64))
+
+
+def _ridge_batched_stacked(
+    X_stack: np.ndarray,     # (B, k, L_max) — padded with zeros past L_a
+    W_stack: np.ndarray,     # (B, k, G)
+    y_stack: np.ndarray,     # (B, k, G)
+    live_mask: np.ndarray,   # (B, L_max) bool, True where column j is live for anchor b
+    lam: float,
+) -> np.ndarray:
+    """Solve ``B`` weighted ridges in one batched call.
+
+    Returns ``a`` of shape ``(B, G, L_max)``. Columns past each anchor's
+    ``L_a`` are zeroed out, matching the per-anchor variable-``L`` fits.
+    """
+    B, kt, L = X_stack.shape
+    G = W_stack.shape[2]
+    # A[b, g, p, q] = Σ_i W_stack[b, i, g] · X_stack[b, i, p] · X_stack[b, i, q]
+    A = np.einsum("big,bip,biq->bgpq", W_stack, X_stack, X_stack, optimize=True)
+    A = A + lam * np.eye(L)[None, None, :, :]
+    # b[b, g, p] = Σ_i W_stack[b, i, g] · X_stack[b, i, p] · y_stack[b, i, g]
+    rhs = np.einsum("big,bip,big->bgp", W_stack, X_stack, y_stack, optimize=True)
+    try:
+        a = np.linalg.solve(A, rhs[..., None]).squeeze(-1)       # (B, G, L_max)
+    except np.linalg.LinAlgError:
+        # Fall back per-anchor so one singular ball doesn't kill the batch.
+        a = np.zeros((B, G, L), dtype=np.float64)
+        for bi in range(B):
+            try:
+                a[bi] = np.linalg.solve(A[bi], rhs[bi][..., None]).squeeze(-1)
+            except np.linalg.LinAlgError:
+                continue
+    # Zero out padded columns.
+    a = a * live_mask[:, None, :]
+    return a
+
+
+def fit_gene_space_jacobians_anchored(
+    z: np.ndarray,
+    f: np.ndarray,
+    rate_model,
+    counts: Optional[np.ndarray] = None,
+    size_factor: Optional[np.ndarray] = None,
+    config: Optional[GeneFieldConfig] = None,
+    verbose: bool = False,
+) -> dict[str, Any]:
+    """Anchored per-cell gene-space Jacobian + Fisher ledger (fast path).
+
+    Fits the per-gene weighted ridge only at ``cfg.n_anchors`` k-means
+    anchor cells and interpolates ``J`` / ``F`` to every cell by Gaussian
+    kernel weights over the anchor distances in latent space. Returns the
+    same dict shape as :func:`fit_gene_space_jacobians` plus:
+
+    * ``anchor_ids`` : ``(n_anchors,)`` cell indices of the anchors.
+    * ``op_anchor`` : ``(n_cells,)`` nearest-anchor id per cell.
+    * ``anchor_weights`` : ``(n_cells, n_anchors)`` CSR Gaussian kernel.
+    * ``anchor_bandwidth`` : the bandwidth used.
+    * ``variant`` : ``"anchor"``.
+
+    See the module header for the design rationale and the knobs on
+    :class:`GeneFieldConfig` (``n_anchors``, ``anchor_top_k``,
+    ``anchor_bandwidth``, ``anchor_batch``).
+    """
+    cfg = config or GeneFieldConfig()
+    z = np.asarray(z, dtype=np.float64)
+    f = np.asarray(f, dtype=np.float64)
+    n, d = z.shape
+    if f.shape != z.shape:
+        raise ValueError(f"f {f.shape} must match z {z.shape}")
+    k = max(3, min(int(cfg.k), n - 1))
+    metric = str(getattr(cfg, "cv_metric", "nb_nll"))
+    if metric not in ("nb_nll", "weighted_mse"):
+        raise ValueError(f"cv_metric must be 'nb_nll' or 'weighted_mse', got {metric!r}")
+
+    eta = rate_model.eta(z).astype(np.float64)              # (n, G)
+    d_eta = rate_model.rate_along_eta(z, f).astype(np.float64)  # (n, G)
+    w = rate_model.nb_weights(z, size_factor=size_factor).astype(np.float64)
+    G = eta.shape[1]
+
+    # Rate-model counts / log size factor / log theta for the NB NLL metric.
+    counts_arr: Optional[np.ndarray] = None
+    log_s: Optional[np.ndarray] = None
+    log_theta: Optional[np.ndarray] = None
+    if metric == "nb_nll":
+        if counts is None:
+            raise ValueError("cv_metric='nb_nll' requires counts (n, G)")
+        counts_arr = np.asarray(counts, dtype=np.float64)
+        if counts_arr.shape != (n, G):
+            raise ValueError(f"counts {counts_arr.shape} must match (n, G)=({n},{G})")
+        if size_factor is None:
+            lib = counts_arr.sum(axis=1)
+            med = float(np.median(lib[lib > 0])) if np.any(lib > 0) else 1.0
+            s_vec = (lib / med) if med > 0 else np.ones(n, dtype=np.float64)
+        else:
+            s_vec = np.asarray(size_factor, dtype=np.float64)
+        log_s = np.log(np.clip(s_vec, 1e-8, None))
+        theta = np.asarray(rate_model.theta(), dtype=np.float64)
+        log_theta = np.log(np.clip(theta, 1e-6, 1e8))
+
+    # ---------- anchors + neighbour balls (per anchor)
+    anchors = _kmeans_anchors(z, cfg.n_anchors, seed=cfg.seed)
+    n_anchors = int(anchors.size)
+    nn = NearestNeighbors(n_neighbors=k + 1).fit(z)
+    _, anchor_idxs = nn.kneighbors(z[anchors], return_distance=True)
+    anchor_idxs = anchor_idxs[:, 1:]                        # drop self; (n_anchors, k)
+    if verbose:
+        print(f"  [gene-field anchor] n_anchors={n_anchors} (k-means on z)")
+
+    # ---------- λ-CV on sampled anchors (reuses the per-anchor ridge loop)
+    rng = np.random.default_rng(int(cfg.seed))
+    sample_n = min(int(cfg.cv_sample_cells), n_anchors) if cfg.cv_sample_cells > 0 else n_anchors
+    sample_idx = rng.choice(n_anchors, size=sample_n, replace=False)
+    lambda_scores_mse: dict[float, float] = {}
+    lambda_scores_nll: dict[float, float] = {}
+    for lam in cfg.ridge_lambdas:
+        tot_mse, cnt_mse = 0.0, 0
+        tot_nll, cnt_nll = 0.0, 0
+        for sa in sample_idx:
+            a_cell = int(anchors[sa])
+            nbrs = anchor_idxs[sa]
+            X_full = eta[nbrs] - eta[a_cell]
+            y_full = d_eta[nbrs] - d_eta[a_cell]
+            live = np.where(np.var(X_full, axis=0) > cfg.variation_threshold)[0]
+            if live.size < 2 or k < max(5, cfg.cv_folds + 1):
+                continue
+            X = X_full[:, live]
+            W = w[nbrs]
+            fold = rng.integers(0, cfg.cv_folds, size=k)
+            fold_mse, fold_mse_cnt = 0.0, 0
+            fold_nll, fold_nll_cnt = 0.0, 0
+            for fo in range(cfg.cv_folds):
+                tr = fold != fo
+                te = ~tr
+                if tr.sum() < 2 or te.sum() == 0:
+                    continue
+                Xt, Wt, yt = X[tr], W[tr], y_full[tr]
+                try:
+                    kt = Xt.shape[0]
+                    L = live.size
+                    if L <= kt:
+                        A = np.einsum("ig,ip,iq->gpq", Wt, Xt, Xt)
+                        A = A + lam * np.eye(L)[None, :, :]
+                        rhs = np.einsum("ig,ip,ig->gp", Wt, Xt, yt)
+                        a = np.linalg.solve(A, rhs[..., None]).squeeze(-1)
+                    else:
+                        K = np.einsum("ip,ig,jp->gij", Xt, Wt, Xt) + lam * np.eye(kt)[None]
+                        u = np.linalg.solve(K, yt.T[..., None]).squeeze(-1)
+                        a = np.einsum("ip,ig,gi->gp", Xt, Wt, u)
+                except np.linalg.LinAlgError:
+                    continue
+                Xe, We, ye = X[te], W[te], y_full[te]
+                yhat = Xe @ a.T
+                resid2 = (yhat - ye) ** 2
+                w_sum = float(We.sum())
+                if w_sum > 0 and np.isfinite(w_sum):
+                    fold_mse += float((We * resid2).sum()) / w_sum
+                    fold_mse_cnt += 1
+                if metric == "nb_nll" and counts_arr is not None and log_theta is not None:
+                    te_nbrs = nbrs[te]
+                    log_mu = eta[a_cell][None, :] + yhat + log_s[te_nbrs][:, None]
+                    log_mu = np.clip(log_mu, -30.0, 30.0)
+                    mu_hat = np.exp(log_mu)
+                    c_i = counts_arr[te_nbrs]
+                    theta_e = np.exp(log_theta)[None, :]
+                    log_tpm = np.log(theta_e + mu_hat)
+                    lp = (
+                        _lgamma(c_i + theta_e) - _lgamma(theta_e)
+                        + theta_e * (log_theta[None, :] - log_tpm)
+                        + c_i * (log_mu - log_tpm)
+                    )
+                    nll = -float(lp.mean())
+                    if np.isfinite(nll):
+                        fold_nll += nll
+                        fold_nll_cnt += 1
+            if fold_mse_cnt > 0:
+                tot_mse += fold_mse / fold_mse_cnt
+                cnt_mse += 1
+            if fold_nll_cnt > 0:
+                tot_nll += fold_nll / fold_nll_cnt
+                cnt_nll += 1
+        lambda_scores_mse[float(lam)] = (tot_mse / cnt_mse) if cnt_mse else float("inf")
+        lambda_scores_nll[float(lam)] = (tot_nll / cnt_nll) if cnt_nll else float("inf")
+        if verbose:
+            msg = f"  [gene-field anchor] λ={lam:g}  weighted MSE={lambda_scores_mse[float(lam)]:.4f}"
+            if metric == "nb_nll":
+                msg += f"  NB NLL={lambda_scores_nll[float(lam)]:.4f}"
+            print(msg)
+    lambda_mse = min(lambda_scores_mse, key=lambda l: lambda_scores_mse[l])
+    if metric == "nb_nll" and any(np.isfinite(v) for v in lambda_scores_nll.values()):
+        best_lambda = min(lambda_scores_nll, key=lambda l: lambda_scores_nll[l])
+    else:
+        best_lambda = lambda_mse
+
+    # ---------- per-anchor ridge fit — reuses `_ridge_batched` across genes.
+    # We keep each anchor's dense (G, L_a) block so the kernel-interp step
+    # can accumulate columns without creating a new sparse matrix per
+    # (cell, anchor) pair. Batched-across-anchors einsum blew up memory
+    # on G ≈ 2000 (16 GB max RSS seen before); the anchor count (default
+    # 300) is already the real speedup over per-cell n ≈ 2700.
+    J_anchor_dense: list[np.ndarray] = []       # (G, L_a) per anchor
+    F_anchor_dense: list[np.ndarray] = []       # (G, L_a) per anchor
+    live_cols_anchor: list[np.ndarray] = []
+    max_live = int(getattr(cfg, "anchor_max_live", 150) or 0)
+    for sa in range(n_anchors):
+        a_cell = int(anchors[sa])
+        nbrs = anchor_idxs[sa]
+        X_full = eta[nbrs] - eta[a_cell]
+        y_full = d_eta[nbrs] - d_eta[a_cell]
+        var_g = np.var(X_full, axis=0)
+        live = np.where(var_g > cfg.variation_threshold)[0]
+        # Cap live cols to the top-N most-variable genes to keep memory
+        # bounded on real data (every gene has η-variance in a small
+        # ball, so an uncapped `live` is near-G and the dense anchor
+        # cache + per-cell CSR grow to several GB per anchor).
+        if max_live > 0 and live.size > max_live:
+            order = np.argsort(-var_g[live])[:max_live]
+            live = np.sort(live[order])
+        if live.size < 2:
+            J_anchor_dense.append(np.zeros((G, 0)))
+            F_anchor_dense.append(np.zeros((G, 0)))
+            live_cols_anchor.append(np.zeros(0, dtype=np.int64))
+            continue
+        X = X_full[:, live]
+        W = w[nbrs]
+        try:
+            a_mat = _ridge_batched_live(X, W, y_full, float(best_lambda), live.size)
+        except np.linalg.LinAlgError:
+            J_anchor_dense.append(np.zeros((G, 0)))
+            F_anchor_dense.append(np.zeros((G, 0)))
+            live_cols_anchor.append(np.zeros(0, dtype=np.int64))
+            continue
+        Fv = (W.T @ (X ** 2)) + float(best_lambda)          # (G, L)
+        J_anchor_dense.append(np.asarray(a_mat))
+        F_anchor_dense.append(np.asarray(Fv))
+        live_cols_anchor.append(live.astype(np.int64))
+    if verbose:
+        print(f"  [gene-field anchor] fit {n_anchors} anchor ridges")
+
+    # ---------- Gaussian kernel over anchors → per-cell interpolation
+    nn_a = NearestNeighbors(n_neighbors=min(cfg.anchor_top_k, n_anchors)).fit(z[anchors])
+    d_a, idx_a = nn_a.kneighbors(z, return_distance=True)      # (n, top_k)
+    if cfg.anchor_bandwidth is not None and cfg.anchor_bandwidth > 0:
+        h = float(cfg.anchor_bandwidth)
+    else:
+        h = float(np.median(d_a[:, 0]))                        # auto bandwidth
+        h = h if h > 0 else 1.0
+    weights = np.exp(-(d_a ** 2) / (2.0 * h ** 2))            # (n, top_k)
+    weights = weights / (weights.sum(axis=1, keepdims=True) + 1e-12)
+
+    # Build CSR anchor_weights (n, n_anchors).
+    aw_rows = np.repeat(np.arange(n), weights.shape[1])
+    aw_cols = idx_a.reshape(-1)
+    aw_data = weights.reshape(-1)
+    anchor_weights = csr_matrix(
+        (aw_data, (aw_rows, aw_cols)), shape=(n, n_anchors),
+    )
+
+    # Per-cell J[c] / F[c] = Σ_a w_ca · J_anchor[a], restricted to the
+    # DOMINANT anchor's live column set (≤ k columns, same storage
+    # footprint as the per-cell path). Taking the union across the top-K
+    # anchors blows up to ≤ k·top_K columns per cell — on Paul15 (G =
+    # 2000, k = 30, top_k = 10) that produced ~24 GB of CSR data for
+    # 2730 cells and OOM-killed the run. Each off-dominant anchor still
+    # contributes through the Gaussian kernel, but only on the live
+    # columns of the cell's nearest anchor.
+    J_list: list[csr_matrix] = [csr_matrix((G, G)) for _ in range(n)]
+    F_list: list[csr_matrix] = [csr_matrix((G, G)) for _ in range(n)]
+    reason_list: list[np.ndarray] = [np.full(G, REASON_NOT_IN_BALL, dtype=np.int8)
+                                     for _ in range(n)]
+    live_cols: list[np.ndarray] = [np.zeros(0, dtype=np.int64) for _ in range(n)]
+    reason = np.full(n, REASON_OK, dtype=np.int8)
+    top_k = idx_a.shape[1]
+    if verbose:
+        print(f"  [gene-field anchor] lifting J/F to {n} cells "
+              f"(top_k={top_k}, dominant-live-cols)")
+    # Pre-allocate the per-cell working buffers once; reused each cell to
+    # keep the macOS jetsam-triggering address-space churn in check (we
+    # saw 50 GB peak VM when the loop allocated fresh float64 (G, L_c)
+    # arrays per cell). L_cap is the max live-col count across anchors
+    # (bounded by G); the ball's live-column count can exceed ``k`` since
+    # live-cols are genes whose η-variance across the k-neighbour ball
+    # exceeds ``variation_threshold``, not a count of rows.
+    L_cap = max((la.size for la in live_cols_anchor), default=1)
+    L_cap = max(1, int(L_cap))
+    J_buf = np.zeros((G, L_cap), dtype=np.float64)
+    F_buf = np.zeros((G, L_cap), dtype=np.float64)
+    import gc as _gc
+    for c in range(n):
+        if verbose and c and c % 500 == 0:
+            print(f"    [gene-field anchor] lifted {c}/{n} cells")
+            _gc.collect()
+        a0 = int(idx_a[c, 0])
+        live_this = live_cols_anchor[a0]
+        if live_this.size == 0:
+            reason[c] = REASON_NO_VARIATION
+            continue
+        L_c = int(live_this.size)
+        J_c = J_buf[:, :L_c]
+        F_c = F_buf[:, :L_c]
+        J_c.fill(0.0)
+        F_c.fill(0.0)
+        # Renormalise the kernel over the top-K anchors restricted to
+        # those that overlap the dominant anchor's live set.
+        for i_a in range(top_k):
+            a = int(idx_a[c, i_a])
+            wca = float(weights[c, i_a])
+            if wca <= 0.0:
+                continue
+            la = live_cols_anchor[a]
+            if la.size == 0:
+                continue
+            if i_a == 0:
+                # Dominant anchor contributes to every column of J_c.
+                J_c += wca * J_anchor_dense[a]
+                F_c += wca * F_anchor_dense[a]
+                continue
+            # Other anchors contribute only where they share columns with
+            # the dominant anchor's live set.
+            common_mask = np.isin(la, live_this, assume_unique=False)
+            if not common_mask.any():
+                continue
+            cols_shared = la[common_mask]
+            dst = np.searchsorted(live_this, cols_shared)
+            src = common_mask
+            J_c[:, dst] += wca * J_anchor_dense[a][:, src]
+            F_c[:, dst] += wca * F_anchor_dense[a][:, src]
+        # Direct CSR construction (indices + indptr) — skips the COO sort
+        # that the (data, (row, col)) constructor does. Each row has
+        # exactly ``L_c`` nnz at the same column pattern, so indptr is a
+        # stride and indices are tiled. .copy() the slice so the CSR
+        # owns its data (the buffer is reused next iteration).
+        indptr = (np.arange(G + 1, dtype=np.int32) * L_c)
+        indices = np.tile(live_this.astype(np.int32), G)
+        J_list[c] = csr_matrix(
+            (J_c.reshape(-1).copy(), indices, indptr), shape=(G, G),
+        )
+        F_list[c] = csr_matrix(
+            (F_c.reshape(-1).copy(), indices, indptr), shape=(G, G),
+        )
+        live_cols[c] = live_this.astype(np.int64)
+        rsn = np.full(G, REASON_NOT_IN_BALL, dtype=np.int8)
+        rsn[live_this] = REASON_OK
+        reason_list[c] = rsn
+
+    op_anchor = idx_a[:, 0].astype(np.int32)
+
+    return {
+        "J": J_list,
+        "F": F_list,
+        "reason_per_cell": reason_list,
+        "live_cols": live_cols,
+        "reason": reason,
+        "ridge_lambda": float(best_lambda),
+        "lambda_scores": lambda_scores_nll if metric == "nb_nll" else lambda_scores_mse,
+        "lambda_scores_mse": lambda_scores_mse,
+        "lambda_scores_nll": lambda_scores_nll,
+        "ridge_lambda_mse": float(lambda_mse),
+        "ridge_lambda_nll": float(
+            min(lambda_scores_nll, key=lambda l: lambda_scores_nll[l])
+            if any(np.isfinite(v) for v in lambda_scores_nll.values())
+            else float("nan")
+        ),
+        "cv_metric": metric,
+        "k": int(k),
+        "variation_threshold": float(cfg.variation_threshold),
+        "variant": "anchor",
+        "anchor_ids": anchors.astype(np.int64),
+        "op_anchor": op_anchor,
+        "anchor_weights": anchor_weights,
+        "anchor_bandwidth": float(h),
+        "n_anchors": int(n_anchors),
+        "anchor_top_k": int(cfg.anchor_top_k),
     }
