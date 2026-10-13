@@ -1113,6 +1113,98 @@ scale in the drift fit (``clock_scale`` input in DriftConfig
 already exists for the DSM path; needs the equivalent in
 MeasuredDrift). Both are § 7b candidates.
 
+**§7b (recorded 2026-10-13, outputs under ``s7b_*.csv``).**
+Pulse duration as a per-cell clock scale, then per-batch splits.
+
+**(1) Clock scale.** Dynamo's ``uns['dynamics']['t']`` is a
+constant 5 h for every cell, so the stored ``velocity_pca`` is
+reported on a 5-h-equivalent clock for both the 3-h batch
+(JL12_0 + JL12_1, 1129 cells) and the 5-h batch (JL_10, 818
+cells). We rescale ``velocity_pca_c * (t_ref / t_c)`` with
+``t_ref = 5`` so 3-h cells carry ``× 5/3 = 1.667``, 5-h cells
+``× 1``. ``obs['clock_scale']`` records the scale. On pre-scaling
+velocity norms, median-3h / median-5h = 1.954 (the 3-h batch
+already dominates magnitude); after scaling, the ratio widens to
+3.257 — multiplicative clock scaling moves the 3-h batch further
+from the 5-h batch, consistent with the stored dynamo velocity
+being more biased than a single scalar can repair.
+
+**(2) + (3) Variant A/C under clock-scaled velocity AND per-
+batch splits** (all MeasuredDrift refit from scratch, same
+MLP settings, 1500 epochs):
+
+    fit                  variant  n     n_hold  frac   cycle_w_med  per-fate holders (Bas / Meg / Mon / Ery / Neu)
+    all_unscaled (§7a)   A        1947  37      1.9%   0.079        22 / 15 / 0 / 0 / 0
+    all_unscaled (§7a)   C        1947   8      0.4%   ~0            7 /  1 / 0 / 0 / 0
+    all_clock_scaled     A        1947  46      2.4%   0.068        16 / 29 / 1 / 0 / 0
+    all_clock_scaled     C        1947  11      0.6%   ~0            4 /  7 / 0 / 0 / 0
+    batch_3h             A        1129  68      6.0%   0.123        24 / 34 / 10 / 0 / 0
+    batch_3h             C        1129  17      1.5%   ~0            5 /  8 /  4 / 0 / 0
+    **batch_5h           A         818   0      0.0%   0.024         0 /  0 /  0 / 0 / 0**
+    **batch_5h           C         818   0      0.0%   ~0            0 /  0 /  0 / 0 / 0**
+
+  **The 5-h batch alone produces ZERO holders in every variant.**
+  The 3-h batch alone produces 68 (6.0%) under A — the largest
+  holder fraction in any §7 experiment — and 17 (1.5%) under C.
+  Clock-scaling the pooled data (46 / 11) sits between the two
+  batches but closer to the 3-h-batch result because that batch
+  is larger. Rotation projection C survives at ~1.5% on the 3-h
+  batch and ~0% on the 5-h batch; same pattern as A at smaller
+  magnitude.
+
+**(4) Holder-cell depth check.** For every holder cell in every
+fit above:
+
+    fit                     n_holder   UMI_ratio_vs_median        n_genes_ratio_vs_median
+    all_clock_scaled / A    46         2.12 (q05 1.40, q95 3.32)  1.41 (median)
+    all_clock_scaled / C    11         1.69 (q05 1.37, q95 2.81)  1.22
+    batch_3h / A            68         1.96 (q05 1.35, q95 2.99)  —
+    batch_3h / C            17         ~1.7                        —
+
+  **Holders are the HIGH-UMI tail, not the low-count tail.**
+  Median holder UMI is ~2× the dataset median; q05 is 1.35× (so
+  no holder is a low-depth call). These are well-sequenced,
+  gene-rich cells. Not noise; a feature of the drift fit on the
+  3-h batch specifically.
+
+**Verdict.** The holder minority is a **3-h-batch artifact**:
+
+  * The 5-h batch (818 cells, dynamo's actual rate-fit reference)
+    is holder-free under every treatment: unprojected, cycle-
+    rotation-projected, clock-rescaled, and even by itself.
+  * The 3-h batch (1129 cells) carries every single holder in
+    every variant; the holders are HIGH-UMI, HIGH-gene-count
+    cells confined to Bas / Meg / Mon.
+  * Multiplicative clock scaling by ``t_ref / t_c`` moves holders
+    around but does not reconcile the two batches — dynamo's
+    ``velocity_pca`` is more deeply tied to the 5-h fit than a
+    scalar scale can repair.
+
+**No recovery claim.** The §7 "holders on terminal Meg + Bas"
+observation does not replicate in the 5-h batch, which is the
+batch dynamo actually fit the rate model on. Holders survive the
+cycle-rotation projection on the 3-h batch only, exactly where
+dynamo's rate parameters are mis-matched. R15's rule is neither
+confirmed nor falsified by Dynamo scNT-seq hematopoiesis — the
+dataset in its distributed form cannot cleanly separate measured-
+flow dynamics from pulse-duration bias.
+
+**Next.** Three remaining options for a defensible measured-flow
+gate:
+
+  * Refit the labelled rate model from new + total counts
+    per-cell, with ``t_c`` entering the NB likelihood as
+    ``E[new_cg] / E[total_cg] = 1 - exp(-γ_g · t_c)`` so γ is
+    estimated on a per-hour footing consistent across batches
+    (a proper §7b (1), replacing dynamo's upstream fit; needs a
+    LabelledRateModel). Then redo variants A/C.
+  * Use dynamo's per-batch ``time_3_gamma`` / ``time_5_gamma``
+    columns (already in ``var``) to rebuild per-batch velocity
+    and compare, which bypasses the global ``velocity_pca``.
+  * Switch to a dataset where the labelling clock is uniform
+    (e.g. scEU-seq organoid or the single-pulse scNT-seq
+    neuron dataset, both already surfaced by ``dynamo.sample_data``).
+
 **Velocyto re-alignment of LARRY** is still open; the gate on
 Dynamo hemat.scNT-seq is independent of it and the two
 measured-flow sources (labelling + splicing) will cross-check
