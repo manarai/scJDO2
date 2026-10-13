@@ -7,6 +7,7 @@ mid-interval saddle control at
 from V2_PLAN.md.
 """
 
+from .larry import clone_pairs, clone_split_positions, load_larry
 from .synthetic_pitchfork import (
     ALPHA_CRIT,
     DEFAULT_WIDTH,
@@ -21,4 +22,7 @@ __all__ = [
     "analytic_jacobian",
     "ALPHA_CRIT",
     "DEFAULT_WIDTH",
+    "load_larry",
+    "clone_pairs",
+    "clone_split_positions",
 ]

@@ -869,7 +869,8 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
             top: int = 15, min_fisher: Optional[float] = None,
             cell: Optional[int] = None,
             archetype_id: Optional[int] = None,
-            use_lift: Optional[bool] = None) -> pd.DataFrame:
+            use_lift: Optional[bool] = None,
+            kind: Literal["responders", "drivers"] = "responders") -> pd.DataFrame:
     """Tidy DataFrame of driver genes for a cell's leading eigenvector or
     an archetype operator.
 
@@ -941,11 +942,18 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
             )
         if archetype_id is None:
             raise ValueError("drivers(which='archetype') requires archetype_id=...")
-        v = np.asarray(arch[archetype_id]["eigvec"], dtype=np.complex128)
-        fisher = np.asarray(arch[archetype_id].get("fisher"), dtype=np.float64)
+        info = arch[archetype_id]
+        if kind == "drivers":
+            # Left-eigvec table (``∂λ/∂J_{gh} = l_g · r_h``) — sensitivity
+            # ranking rather than co-variation. Falls back to the right-ev
+            # if ``eigvec_left`` is missing (e.g. an old sidecar).
+            v = np.asarray(info.get("eigvec_left", info["eigvec"]), dtype=np.complex128)
+        else:
+            v = np.asarray(info["eigvec"], dtype=np.complex128)
+        fisher = np.asarray(info.get("fisher"), dtype=np.float64)
         if fisher.shape != v.shape:
             fisher = np.full(v.shape, np.nan)
-        reasons = np.asarray(arch[archetype_id].get("reason", ["ok"] * v.size))
+        reasons = np.asarray(info.get("reason", ["ok"] * v.size))
     else:
         if cell is None:
             # Default: fork cell with the highest lead_re
@@ -958,6 +966,13 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
                 raise ValueError(
                     "drivers(which='lead') with no `cell=` needs behaviour/lead_re"
                 )
+        if kind == "drivers":
+            raise NotImplementedError(
+                "drivers(which='lead', kind='drivers') needs per-cell left "
+                "eigenvectors; current spectrum() only stores right eigvecs. "
+                "Use kind='responders' for the right-ev lead-mode table, or "
+                "which='archetype' for the full responders/drivers split."
+            )
         if use_lift and lifted is not None:
             v = np.asarray(lifted)[cell, :]
         else:
@@ -1002,9 +1017,23 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
         "fisher_se": fisher_se,
         "reason": reasons,
     })
+    sort_col = "magnitude"
+    if kind == "drivers" and which == "archetype":
+        # Sensitivity ``s_g = |l_g| · Σ_h|r_h|`` — needs the responder
+        # (right-ev) magnitudes from the same archetype to form the row
+        # sum. Fall back to |l_g| alone if the responder table is missing.
+        r_mag = None
+        info = adata.uns["scjdo2"]["archetypes"][archetype_id]
+        if "responders" in info and "magnitude" in info["responders"]:
+            r_tbl = info["responders"]
+            r_sum = float(r_tbl["magnitude"].sum())
+            r_mag = r_sum
+        if r_mag is not None:
+            df["sensitivity"] = df["magnitude"].to_numpy() * r_mag
+            sort_col = "sensitivity"
     if min_fisher is not None:
         df = df[df["fisher"] >= float(min_fisher)]
-    df = df.sort_values("magnitude", ascending=False).head(int(top)).reset_index(drop=True)
+    df = df.sort_values(sort_col, ascending=False).head(int(top)).reset_index(drop=True)
     return df
 
 
@@ -1175,7 +1204,15 @@ def archetype_operators(
         except np.linalg.LinAlgError:
             P_arch = P_mean
 
-        # Restricted block and eigendecomposition.
+        # Restricted block and eigendecomposition. We take both right and
+        # left eigenvectors so the archetype's leading mode exposes
+        # *responders* (right-ev: what moves under the operator) and
+        # *drivers* (left-ev: whose entries, if perturbed, move the
+        # eigenvalue — the row-space sensitivity ``∂λ/∂J_{gh} =
+        # l_g · r_h``). Biorthogonal pair: ``L = R^{-1}`` so
+        # ``l_k^T r_h = δ_{kh}``; lifting through the tangent projector
+        # keeps the dual: ``v_right_lifted = P^T r_block``,
+        # ``v_left_lifted = P^T l_block``.
         block = (P_arch @ J_sum.toarray()) @ P_arch.T        # (r, r)
         try:
             evals, V = np.linalg.eig(block)
@@ -1188,8 +1225,21 @@ def archetype_operators(
         order = np.argsort(-evals.real, kind="stable")
         evals = evals[order]
         V_fixed = V_fixed[:, order]
-        lifted = (P_arch.T @ V_fixed).astype(np.complex128)   # (G, kept)
-        v_lead = _fix_eigvec_sign(lifted[:, 0]) if lifted.shape[1] else np.zeros(G, dtype=np.complex128)
+        # Left eigenvectors via R^{-1} with the same column ordering.
+        try:
+            L = np.linalg.inv(V_fixed)                        # (r, r) rows=l_k
+        except np.linalg.LinAlgError:
+            L = np.linalg.pinv(V_fixed)
+        lifted_right = (P_arch.T @ V_fixed).astype(np.complex128)   # (G, kept)
+        lifted_left = (P_arch.T @ L.T).astype(np.complex128)        # (G, kept)
+        v_lead = (
+            _fix_eigvec_sign(lifted_right[:, 0])
+            if lifted_right.shape[1] else np.zeros(G, dtype=np.complex128)
+        )
+        v_lead_left = (
+            _fix_eigvec_sign(lifted_left[:, 0])
+            if lifted_left.shape[1] else np.zeros(G, dtype=np.complex128)
+        )
 
         # Behaviour classification using the per-dataset tol.
         tol = float(uns.get("invariants_meta", {}).get("tol", 0.0))
@@ -1270,24 +1320,49 @@ def archetype_operators(
             except Exception:
                 pass
 
-        # Driver table — reuse plot_drivers' expectations.
-        magnitude = np.abs(v_lead)
-        weight = v_lead.real
+        # Responder (right-ev) and driver (left-ev) tables.
+        #   responders: rank |r_g| — the genes that MOVE under the
+        #               leading mode (co-vary with the eigenvector).
+        #   drivers:    rank |l_g| with sensitivity s_g = |l_g| · Σ_h|r_h|
+        #               — the genes whose row of ``J`` controls the
+        #               eigenvalue (``∂λ/∂J_{gh} = l_g · r_h``).
+        # Fisher-filtered via the aggregated per-gene ``fisher_diag``
+        # already computed; both tables share it so a driver with zero
+        # Fisher mass (``capped`` / ``no_variation``) is kept but
+        # tagged, not silently excluded.
         is_complex = bool(np.max(np.abs(v_lead.imag)) > _EPS_IM)
-        phase = np.where(magnitude > 0, np.angle(v_lead), np.nan) if is_complex else np.full(G, np.nan)
+        r_mag = np.abs(v_lead)
+        l_mag = np.abs(v_lead_left)
+        r_sum_abs = float(r_mag.sum())
+        sens_score = l_mag * r_sum_abs
         with np.errstate(invalid="ignore", divide="ignore"):
             fisher_se = 1.0 / np.sqrt(fisher_diag)
         fisher_se = np.where(np.isfinite(fisher_se), fisher_se, np.nan)
-        df = pd.DataFrame({
+        phase_r = np.where(r_mag > 0, np.angle(v_lead), np.nan) if is_complex else np.full(G, np.nan)
+        phase_l = np.where(l_mag > 0, np.angle(v_lead_left), np.nan) if is_complex else np.full(G, np.nan)
+
+        responders_df = pd.DataFrame({
             "gene": gene_names,
-            "weight": weight,
-            "magnitude": magnitude,
-            "phase": phase,
+            "weight": v_lead.real,
+            "magnitude": r_mag,
+            "phase": phase_r,
             "fisher": fisher_diag,
             "fisher_se": fisher_se,
             "snr": snr_vec,
             "reason": reasons,
         }).sort_values("magnitude", ascending=False).reset_index(drop=True)
+
+        drivers_df = pd.DataFrame({
+            "gene": gene_names,
+            "weight": v_lead_left.real,
+            "magnitude": l_mag,
+            "sensitivity": sens_score,
+            "phase": phase_l,
+            "fisher": fisher_diag,
+            "fisher_se": fisher_se,
+            "snr": snr_vec,
+            "reason": reasons,
+        }).sort_values("sensitivity", ascending=False).reset_index(drop=True)
 
         mean_conf = float(np.nanmedian(fisher_diag[fisher_diag > 0])) if np.any(fisher_diag > 0) else float("nan")
         sensitive = bool(np.isfinite(henrici_k) and henrici_k >= float(
@@ -1297,6 +1372,7 @@ def archetype_operators(
             "behaviour": beh,
             "eigenvalues": evals,
             "eigvec": v_lead,
+            "eigvec_left": v_lead_left,
             "henrici": float(henrici_k),
             "transient_gain": float(tgain_k),
             "n_cells": int(members.size),
@@ -1304,7 +1380,12 @@ def archetype_operators(
             "sensitive": sensitive,
             "fisher": fisher_diag,
             "reason": reasons,
-            "drivers": df,
+            # Back-compat: ``drivers`` keeps the responders DF the figure
+            # layer already consumes; ``responders`` is a named alias;
+            # ``drivers_left`` is the new left-eigvec driver table.
+            "drivers": responders_df,
+            "responders": responders_df,
+            "drivers_left": drivers_df,
         }
 
     uns["archetypes"] = arch_out

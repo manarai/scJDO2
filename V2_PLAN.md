@@ -615,6 +615,89 @@ flagged (ridge bias on weak contractions pushed through
 snapshot with ongoing basin approach but no fully attained steady
 states.
 
+**R17 (direction and the ``no root cell`` rule, recorded 2026-10-13).**
+*scJDO2 never consumes a root cell, a lineage prior, or an
+annotation-based arrow.* Behaviour classification depends only on
+the per-cell operator spectrum (``lead_re``, ``lead_im`` and the
+tangent-restricted eigvecs); it is **direction-free** by
+construction and must stay that way. Any need for a time direction
+must come from a *physical* ordering, not a user-supplied arrow:
+
+* **Clone nesting** (shared barcodes across sampling days) — pairs
+  (c_early, c_late) give a per-pair direction without a global
+  root.
+* **Splicing kinetics** (La Manno 2018 / scVelo) — nascent/mature
+  ratios are a chemistry-level direction when the equilibration
+  assumption is defensible.
+* **Metabolic labelling** (scEU-seq, dynamo) — isotope ratios give
+  per-cell nascent-fraction direction.
+* **Sampling-day labels** — a coarse time axis along a lineage
+  path; see R18 below for the clock-check rule.
+
+Operational implications:
+
+* ``opspace.compute``/``behaviour``/``spectrum`` never consume a
+  root cell. ``obs["pseudotime"]`` enters the drift fit as a
+  smoothness prior (not a direction), and the drift is velocity-
+  free in the sense that its sign is set only by Step 2's velocity
+  prior, which must itself be derivable from one of the physical
+  orderings above.
+* Latent-space arrows on figures come from the drift ``f(z)``, not
+  from annotation. Overlaying cluster labels is fine (R15 Panel
+  A); drawing arrows from "progenitor" to "terminal" is not.
+* The R15 driver-table split into ``responders`` (right-ev) and
+  ``drivers`` (left-ev) is likewise direction-free: both tables
+  describe the local Jacobian's leading mode, and the biology of a
+  terminal state vs a progenitor is read off from the operator's
+  behaviour, not injected.
+
+**Paul15 zero-holder is the non-stationary-snapshot finding.** The
+2000-gene R16 run reports zero ``holder`` cells across all 2730
+cells by the latent operator (``frac(Re > 0) = 1.00`` on every
+lineage group), consistent with Paul15 being a snapshot of ongoing
+differentiation rather than a set of attained steady states. The
+∇η-tangent reduction of the gene-space ``J`` peels off a holder
+minority exactly on the terminal clusters (37% of erythrocytes,
+10% of monocytes; megakaryocytes and progenitors stay fork at
+100%) — the ridge-bias signature from R14 §9. Full numbers are in
+``benchmarks/figures/paul15_bench_compare.md``.
+
+**R18 (clock is a check, never a signal, recorded 2026-10-13).**
+Sampling-day labels (and any other physical time axis) are used
+*only* to check that the lineage-path ordering of ``obs
+["pseudotime"]`` (or the equivalent latent flow coordinate)
+increases with the day label. They never enter the drift fit, the
+eigenvalue computation, or the behaviour classifier. All reported
+eigenvalues stay in ``clock_calibrated = False`` units
+(``(relative)`` label on the figures); if a dataset has a tight
+clock and the check passes, we may *also* report calibrated
+eigenvalues alongside, but the relative pair stays the default.
+
+**Phase D (redefined, 2026-10-13).** The hidden-driver synthetic
+moves after Phase D. Phase D adds:
+
+1. ``opspace.drivers``: left-ev drivers + sensitivity (see this
+   file's commit log). Done.
+2. R17/R18 recorded here. Done.
+3. ``scjdo2.data.larry`` loader for Weinreb 2020 (GSE140802;
+   raw counts, clone barcodes, day labels).
+4. Clone arm in Step 2: a clone-split map over Panel A plus a
+   clone-consistency score for the drift (fraction of clone pairs
+   where integrating ``f`` forward from the earlier-day member
+   reaches a cell within ``ε`` of the later-day member).
+5. Velocity arm: fit scVelo dynamical on LARRY, wrap the per-cell
+   velocity in a small MLP(latent → velocity), use that MLP as
+   the Step 2 drift prior, and report clone-consistency with and
+   without the velocity prior; where the two drifts disagree,
+   name the cell types.
+6. Clock check: day labels only check lineage-path pseudotime
+   monotonicity; eigenvalues stay relative.
+
+Full gate on LARRY: behaviour counts by annotated fate, holders
+on terminal states, fork at the clone-split positions, driver
+tables with Gata1 / Spi1 (note the symbol: LARRY uses Spi1, Paul15
+uses the Sfpi1 synonym).
+
 ---
 
 ## 10. Phase A deliverables status
