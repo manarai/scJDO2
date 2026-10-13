@@ -883,78 +883,156 @@ Step changes under §7:
   clone-consistency on LARRY (the §5 remedy) as a secondary
   measured-flow source for comparison.
 
-**§7 gate result on Dynamo hematopoiesis (recorded 2026-10-13,
-1947 cells × 1956 processed HVGs, 10-PC latent, measured-drift
-MLP(z→v) regressed on dynamo's velocity_pca at MSE 1.9e-4; anchor
-Phase C max_live=300, clock_calibrated=True; outputs under
-``benchmarks/v2/dynamo_hematopoiesis/``).**
+**§7 gate on Dynamo hematopoiesis — AUDIT REQUIRED BEFORE
+RECOVERY CLAIM (restated 2026-10-13).** The initial §7 writeup
+overstated the result: 0.2% holders on 1947 cells and 95% fork at
+the annotated split are the *same pattern* as Paul15 and LARRY in
+different units. **Measured flow calibrates units and raises
+Fisher mass; whether it yields holders is undetermined until the
+five audit checks are in.** Running them now (outputs under
+``benchmarks/v2/dynamo_hematopoiesis/audit_*.csv``):
 
-* **Behaviour counts — qualitative change from DSM.** Overall:
-  fork 1717 (88.2%), growing_oscillator 169 (8.7%), drift 48
-  (2.5%), damped_oscillator 9 (0.5%), **holder 4** (0.2%).
-  Holders exist. Drift and damped_oscillator appear. The zero-
-  everything-but-fork signature of the three DSM runs
-  (transient-pitchfork, Paul15, LARRY) is **absent** when the
-  drift is a measured flow.
-* **Behaviour by annotated fate.** Terminal states vary:
-    - Meg (154): fork 87 (56%), growing_osc 36 (23%), drift 26
-      (17%), damped 2, **holder 3**.
-    - Bas (177): fork 134 (76%), drift 21 (12%), damped 7,
-      growing 14, **holder 1**.
-    - Ery, Mon, Neu, HSC, MEP-like, GMP-like: fork-dominated
-      (0.69–0.99), no holders. The holder minority surfaces
-      exactly on the two terminal lineages (Meg, Bas) where
-      the labelling-measured rates slow enough for the
-      spectrum to peel off a stable mode.
-* **Fork near the erythroid–myeloid split.** MEP-like (457
-  cells, 95% fork) and GMP-like (161 cells, 95% fork). Both
-  annotated bifurcation progenitors classify fork with zero
-  holders — the expected signature at the split.
-* **Gata1 / Spi1 ranks — recovery on every archetype.** All 8
-  archetypes classify fork with lead_re per hour ranging 0.03
-  to 0.21. **GATA1 and SPI1 both report ``reason=ok`` with
-  substantial Fisher mass on EVERY archetype.** Representative:
+**(1) Permutation null on the measured-flow drift** (10 refits
+with the velocity-vector-cell assignment shuffled, same MLP
+settings and seeds offset).
 
-      arch  lead_re(1/h)   GATA1 (resp/drv rank, fisher)   SPI1 (resp/drv rank, fisher)
-      0     0.214          49  / 82    , 1.82              105 / 201, 0.71
-      1     0.162          264 / 178   , 1.70              103 / 251, 0.93
-      2     0.134          171 / 136   , 1.52              116 / 170, 1.06
-      3     0.168          327 / 404   , 1.35              85  / 130, 1.16
-      4     0.026          158 / 53    , 1.18              719 / 432, 1.19
-      5     0.120          350 / 560   , 1.73              180 / 1038, 0.97
-      6     0.185          118 / 90    , 2.13              213 / 186, 0.51
-      7     0.181          416 / 456   , 0.33              199 / 132, 1.94
+    quantity           real fit     perm null (median)   perm q05–q95
+    frac_fork          0.981        1.000                [1.000, 1.000]
+    frac_holder        0.019 (37)   0.000                [0.000, 0.000]
+    median_lead_re     0.0512 /h    0.0069 /h            [0.0057, 0.0107]
+    q95(lead_re)       0.0832 /h    ~0.020 /h            [0.013, 0.032]
 
-  Fisher masses span 0.3 to 2.1 — three orders of magnitude
-  above the LARRY DSM-drift results (0.028–0.035) and
-  comparable to Paul15 archetype 2's 1.66. Both TFs are among
-  the top-500 drivers on nearly every archetype under both
-  responders (right-ev) and drivers_left (left-ev) rankings.
-  The left-ev table pulls GATA1 up on arch 0 (49→82 responder-
-  to-driver is a slight down-shift; arch 4: 158→53 is a strong
-  up-shift) and SPI1 up on arch 3, 6, 7 — consistent with the
-  switch sensitivity ``∂λ/∂J_{gh} = l_g · r_h`` being
-  dominated by Gata1's row OR Spi1's row depending on which
-  side of the saddle the archetype sits on.
-* **Eigenvalues in per-hour units.** The measured flow is in
-  physical time. ``clock_calibrated = True`` recorded on
-  ``uns["scjdo2"]["meta"]`` + the archetype dict. The lead_re
-  values (0.03–0.21 /h) correspond to divergence timescales of
-  5–30 h — consistent with cell-cycle timescales in CD34+
-  haematopoiesis.
+  Real lead_re distribution is ~8× the permutation-null median
+  with no overlap. The ~2% holder minority NEVER appears in the
+  null — zero holders in 10/10 permutations. The signal is above
+  noise. The null's 100% fork is base rate; the real fit's small
+  holder minority is a non-zero but weak deviation from base rate.
 
-**Conclusion.** The Phase D §7 gate validates the V2_PLAN
-hypothesis under a measured-flow drift: scJDO2 reports non-zero
-holders on terminal lineages, fork at the annotated erythroid–
-myeloid split, GATA1 / SPI1 as recognisable drivers of every
-archetype's fork saddle with Fisher mass well above the noise
-floor, and eigenvalues on a physical clock. The density-score
-drift of Paul15 and LARRY was the limiting factor, not R15's
-"behaviour from latent, drivers from gene-space lift" rule.
-Phase D §7 lands R18's calibrated-clock caveat as a live
-observation: when the flow is measured, the clock IS a signal
-in the per-hour eigenvalues (the figure layer should drop its
-``(relative)`` label on this run).
+**(2) MLP held-out velocity R² + regularisation.** 80 / 20 split,
+same architecture (SiLU MLP hidden=(96, 96, 96)), weight-decay
+grid ∈ {0, 1e-5, 1e-4, 1e-3, 1e-2}, 1500 epochs:
+
+    weight_decay   held-out R²
+    0              0.848
+    1e-5           0.848
+    1e-4           0.848
+    1e-3           0.848
+    1e-2           0.848
+
+  R² ≈ 0.85 across all regs — the MLP captures the measured
+  velocity field well and weight decay is not load-bearing here.
+  Jacobian estimates are driven by the data, not noise.
+
+**(3) d_latent + tangent-rank distribution.** d_latent = 10.
+Per-cell tangent rank from the permutation-null-cut SVD on the
+Fisher-weighted ∇η decoder Jacobian:
+
+    rank 2  508 cells (26%)
+    rank 3  1396 cells (72%)
+    rank 4  43 cells (2%)
+    min=2, median=3, max=4
+
+  **The operator per cell lives in a 2–4-dim subspace, not 10.**
+  The behaviour verdict (fork vs holder) is on a 3×3 restricted
+  block for most cells. Archetype blocks are QR'd to the max
+  member rank — at most 4 dimensions. This is a *major* qualifier
+  on any "the lead eigenvalue says X" statement.
+
+**(4) GATA1 / SPI1 ranks per archetype** (both tables, out of
+1956 genes). All 8 archetypes classify fork; both TFs report
+``reason=ok`` with ``fisher`` ≥ 0.15 on every archetype:
+
+    arch  lead_re(1/h)  GATA1 resp / drv rank  (fisher)   SPI1 resp / drv rank  (fisher)
+    0     0.198         51   / 79              1.57       103 / 172             0.68
+    1     0.153         256  / 154             1.48       104 / 222             0.80
+    2     0.122         172  / 135             1.29       135 / 185             0.98
+    3     0.152         316  / 467             1.07       86  / 131             1.08
+    4     0.024         139  / 70              0.87       582 / 309             0.90
+    5     0.113         334  / 1207            1.23       198 / 996             0.91
+    6     0.173         121  / 96              1.74       257 / 307             0.50
+    7     0.156         436  / 450             0.15       184 / 138             1.88
+
+  Ranks mostly in [51, 582] out of 1956 (top 2.5–30%). The driver
+  (left-ev) ranking differs substantially from the responder
+  ranking on arch 5 (GATA1 334→1207, SPI1 198→996) — the archetype
+  that lost its signal under left-ev. **GATA1 and SPI1 are
+  consistent top-tail drivers, not top-10 drivers.** Fisher masses
+  (0.15–1.88) are indeed three orders of magnitude above the
+  LARRY DSM run's 0.028–0.035, confirming the "measured flow
+  raises Fisher mass" claim.
+
+**(5) Cell-cycle projection on archetype eigvecs.** Seurat S + G2M
+panel (Tirosh 2016, 97 genes) and Dynamo's own
+``cell_phase_genes`` curated panel (61 genes) — of these, **only 4
+genes overlap with the processed HVG set** (dynamo's HVG filter
+excluded most cycle genes). Projecting ``|v_g|²`` of each
+archetype's leading eigvec onto those 4 cycle genes:
+
+    archetype  table         frac_seurat_cycle  frac_dynamo_cycle
+    0          responders    0.207              0.217
+    0          drivers_left  0.180              0.188
+    1          responders    0.158              0.165
+    1          drivers_left  0.158              0.164
+    2          responders    0.090              0.097
+    2          drivers_left  0.101              0.107
+    3          responders    0.112              0.117
+    3          drivers_left  0.094              0.098
+    4          responders    0.058              0.062
+    4          drivers_left  0.057              0.061
+    5          responders    0.199              0.210
+    5          drivers_left  0.104              0.110
+    6          responders    0.166              0.180
+    6          drivers_left  0.189              0.203
+    7          responders    0.021              0.022
+    7          drivers_left  0.020              0.021
+
+  **Baseline expectation under uniform |v_g|² weight: 4 / 1956 =
+  0.2%.** Measured: 2–22% of eigvec squared weight falls on just
+  4 cycle genes — 10–100× over the uniform baseline. On
+  archetypes 0, 5, 6 (the ones with the largest lead_re) the
+  cycle contamination is 17–22%. **The archetype operator is
+  substantially cell-cycle-aligned.** The 2–22% figure is a lower
+  bound: of the 61 cell-cycle genes in dynamo's own panel, only
+  4 survived the HVG filter, so the true cycle load on the eigvec
+  is almost certainly higher once the full cycle panel is in the
+  gene set.
+
+**Verdict after (1)–(5), restated.** The measured flow does:
+
+  (i) *calibrate units* — lead_re is in per-hour, so the clock
+      caveat (R18) resolves to ``clock_calibrated = True`` on this
+      run;
+  (ii) *raise Fisher mass* — GATA1 and SPI1 reach Fisher 0.15–1.88
+       vs the LARRY DSM run's 0.028–0.035; and
+  (iii) *distinguish signal from permutation null* — the real
+        lead_re distribution and the small holder minority are
+        both above the null band.
+
+The measured flow does **not** yet:
+
+  (iv) *recover holders on terminal states as a biological
+       finding* — the 0.2% overall holder fraction is the same
+       pattern as Paul15 and LARRY in different units; the perm
+       null confirms the real fit's holders are not pure noise
+       but it does not confirm they correspond to terminal-state
+       equilibration vs cell-cycle-driven damping;
+  (v) *recover a Gata1/Spi1 saddle at the ery/myelo split* — all
+      the "fork at MEP-like / GMP-like" and the fork labels on
+      every archetype are compatible with cell-cycle-driven
+      divergence in a low-dim tangent (3 dims per cell on
+      median) with 17–22% of the eigvec weight on cycle genes on
+      the strongest archetypes.
+
+**Next (cycle regression, Phase D §7a).** Repeat the §7 pipeline
+with cycle-regressed velocities: compute per-cell S / G2M scores
+from the available cell-cycle panel, regress ``velocity_pca`` on
+them, use the residual as the measured drift, and re-run the gate.
+If the archetype eigvec's cell-cycle fraction drops under 5% and
+holders *survive* on terminals (Meg, Bas) with Fisher mass in the
+Gata1/Spi1 top-tail unchanged, that is the recovery claim. If the
+cycle regression wipes out the holder minority or the Gata1/Spi1
+ranks, the §7 pattern was cell-cycle-driven and R15's rule still
+needs a rethink under measured flow.
 
 **Velocyto re-alignment of LARRY** is still open; the gate on
 Dynamo hemat.scNT-seq is independent of it and the two
