@@ -20,7 +20,6 @@ import json
 import re
 import subprocess
 import sys
-from fnmatch import fnmatch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,8 +73,24 @@ def read_task(ws: str, task_id: str) -> tuple[dict, dict]:
     return front_matter(text), json_block(text, str(path))
 
 
+def glob_re(pattern: str) -> re.Pattern:
+    """Path glob: ``*`` and ``?`` stay within one path segment, ``**``
+    spans segments."""
+    out, i = [], 0
+    while i < len(pattern):
+        if pattern.startswith("**", i):
+            out.append(".*"); i += 2
+        elif pattern[i] == "*":
+            out.append("[^/]*"); i += 1
+        elif pattern[i] == "?":
+            out.append("[^/]"); i += 1
+        else:
+            out.append(re.escape(pattern[i])); i += 1
+    return re.compile("".join(out) + r"\Z")
+
+
 def matches(path: str, globs: list[str]) -> bool:
-    return any(fnmatch(path, g) for g in globs)
+    return any(glob_re(g).match(path) for g in globs)
 
 
 def symbol_body(source: str, signature: str) -> str | None:

@@ -64,7 +64,11 @@ task is `<workstream>/<ID>`; its branch is `manus/<workstream>-<ID>`.
    * `ACCEPT` — Claude merges the task branch into the base branch
      (`--no-ff`, keeping Manus's commits) and issues the next task;
    * `REVISE` — numbered fixes; Manus commits them on the same branch
-     and appends `## Revision n` to its report;
+     and appends `## Revision n` to its report. If the review's front
+     matter says `sync_base: yes` (Claude changed the task, frozen rules
+     or library code on the base branch), Manus first brings those
+     changes into its task branch with `git merge --no-edit <base
+     branch>` — the only merge Manus ever makes;
    * `STOP` — a frozen gate failed or a rule cannot execute; the user
      decides.
 4. **Interpret and propose.** After every verdict Claude reads the

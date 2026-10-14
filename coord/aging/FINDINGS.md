@@ -30,3 +30,17 @@ centroid estimates use 30 cells. Calibration on real data comes from
 the split-half null itself.
 
 **Next.** aging/A01 (planned) issued.
+
+## 2026-10-14 — aging/A01 (planned, REVISE — blocked at age-label audit)
+
+**Result.** Fetch matches PREREG §1. 4-week cells (excluded by design)
+are 10.2 % of lung, 7.5 % of marrow. Young/old cells: lung 3 612 /
+18 420 (4 / 10 donors), marrow 3 490 / 33 703 (2 / 13 donors).
+**Meaning.** Young cell counts will decide how many types pass the
+≥ 200 gate. Two rule defects surfaced before any preprocessing and were
+fixed by PREREG §2b: the 4-week exemption, and §2a's per-donor
+downsampling (each mouse has one age).
+**Caveats.** Few young donors, especially marrow (2). "Old" includes
+"20 months and over" mice.
+**Next.** A01 revision issued. Exploratory old-age split proposed (X01),
+awaiting the user.

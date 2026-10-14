@@ -16,7 +16,10 @@ Every message you get from the user has this form:
 1. `cd <your folder>`. If `git status` is not clean, stop and ask:
    do not commit or discard changes you did not make.
 2. `git switch manus/<workstream>-<ID>` (Claude has created it). On a
-   revision you are already on it.
+   revision you are already on it; if the review's front matter says
+   `sync_base: yes`, run `git merge --no-edit <base branch>` (from
+   `WORKSTREAM.md`) on your task branch before anything else. That is
+   the only merge you make.
 3. Read, in order: `coord/PROTOCOL.md`, `coord/PROJECT.md`,
    `coord/<workstream>/WORKSTREAM.md`, `coord/<workstream>/tasks/<ID>.md`,
    the spec sections the task names, and `coord/<workstream>/FINDINGS.md`
