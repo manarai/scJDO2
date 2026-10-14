@@ -1,0 +1,9 @@
+tissue,cell_type,mode_id,mode_label,silhouette_k
+lung,fibroblast of lung,0,mixed,2
+lung,natural killer cell,0,mixed,2
+marrow,granulocyte,0,mixed,2
+marrow,granulocytopoietic cell,1,mixed,2
+marrow,hematopoietic precursor cell,0,mixed,2
+marrow,monocyte,0,mixed,2
+marrow,precursor B cell,0,mixed,2
+marrow,promonocyte,0,mixed,2
