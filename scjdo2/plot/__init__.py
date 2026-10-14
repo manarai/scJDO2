@@ -27,6 +27,14 @@ from .figures import (
     figure_v1_vs_v2,
     plot_drivers,
 )
+from .figures_v05 import (
+    basin_index_by_type,
+    ledger_map,
+    oracle_agreement,
+    perturb_paired,
+    soft_axis_map,
+    spectrum_ladder,
+)
 
 __all__ = [
     "BEHAVIOUR_COLOURS",
@@ -45,4 +53,11 @@ __all__ = [
     "figure_ledger_summary",
     "figure_v1_vs_v2",
     "plot_drivers",
+    # v0.5 symmetric-operator figures (snapshot defaults)
+    "spectrum_ladder",
+    "soft_axis_map",
+    "ledger_map",
+    "oracle_agreement",
+    "perturb_paired",
+    "basin_index_by_type",
 ]

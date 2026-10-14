@@ -121,9 +121,14 @@ eigvec null (95pct +0.637). The lead-eigenvector of `J_mean` does
 not out-rank random gene-space directions on this measure. The
 paper should not state a driver recovery based on this score.
 
-**Claim (basin, held at tag v0.5-basin-lock):** 92.6 % of resting
-PBMC cells read as basins at d_latent = 15 under the lead-eig rule,
-with the continuous basin_index as the primary readout. Unchanged.
+**Claim (basin, held at tag v0.5-basin-lock):** Under the LOCKED
+lead-eig rule (symmetric J, sign of ``lead_re`` with
+tol = 0.1 × std(lead_re)), **47.2 %** of resting PBMC cells read as
+basins at d_latent = 15, with the continuous ``basin_index`` as the
+primary readout (see §5 of SUMMARY.md, §5.10 "Final close-out"). The
+earlier 92.6 % number belongs to the retired ``n_neg ≥ r − 1`` rule
+(§5.5, SUPERSEDED) — may only be cited as such, not as the locked
+result.
 
 **Figures a reader should look at first:**
 

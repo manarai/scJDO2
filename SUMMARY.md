@@ -19,6 +19,13 @@ Reproducible under:
   `pitchfork_rule_auc.{pdf,png}`,
   `pitchfork_basin_index_vs_pt.{pdf,png}` — pitchfork figure set
 
+**Headline basin numbers under v0.5-basin-lock (locked lead-eig
+rule, symmetric J, sign of ``lead_re`` with
+tol = 0.1 × std(lead_re)):** PBMC resting basin fraction =
+**47.2 %** (1 076 / 2 282 cells). The 92.6 % number in earlier §5
+drafts belongs to the retired ``n_neg ≥ r − 1`` rule (§5.5) and may
+only be cited as a retired-rule reference.
+
 
 
 The manuscript's primary comparison is on **CD34+ bone marrow**. v1
@@ -411,16 +418,30 @@ Next steps already recorded in ``V2_PLAN.md``:
   velocity-fittable genes under the dynamical fit; a broader HVG
   pool or a steady-state scVelo could keep more).
 
-## 5 · PBMC positive control — magnitude rule (final) : partial PASS
+## 5 · PBMC positive control — v0.5-basin-lock, locked lead-eig rule
 
-**Verdict (fourth rework — final rule): 70.7 % of 2282 resting
-PBMC cells are basins** under the magnitude rule on the Σ-based
-tangent-restricted block. Previous r-1 rule's 92.6 % was over-
-counting: the sign of the leading eigenvalue matters when it exceeds
-oracle tol, and both B cells (lead +2.27) and CD8 T (lead +0.23)
-flip to fork at the cluster centroid under the final rule. The
-paper reports the continuous **basin_index**
-``bi = −λ_max / median|λ_neg|`` per cell, not a binary story.
+**Verdict (v0.5-basin-lock, FINAL):** Under the LOCKED lead-eig
+classifier (`scjdo2.opspace.classify_basin_latent` default,
+``rule="lead_eig"``: symmetric J, sign of ``lead_re`` with
+tol = 0.1 × std(lead_re)), **47.2 % of 2 282 resting PBMC cells
+(1 076)** read as basins; **median basin_index −0.11** across
+resting types. See §5.10 "Final close-out" for the full table.
+
+The paper reports the continuous ``basin_index = −lead_re`` per
+cell as the primary readout. Classifications (holder / fork /
+drift) are secondary.
+
+### Historical rules on the same data — DO NOT CITE AS CURRENT
+
+| rule | § | resting basin % | status |
+|---|---|---|---|
+| ``n_neg ≥ r−1`` (r-1 rule)             | 5.5 | 92.6 % | **retired** (saddle-aliasing on PCA; see §5.9) |
+| single-tol magnitude on Σ-tangent      | 5.8 | 70.7 % | superseded by continuous AUC (§5.10) |
+| two-threshold (null tol_pos)           | 5.9 | 70.7 % | superseded |
+| **lead-eig (locked)**                  | **5.10** | **47.2 %** | **current, tagged v0.5-basin-lock** |
+
+The earlier § bodies (5.1 – 5.9) are kept for provenance; cite only
+with their rule name and §-number. The current paper claim is 47.2 %.
 
 **Spec of the final rule** (``scjdo2.opspace.classify_basin_latent``,
 patched 2026-10):

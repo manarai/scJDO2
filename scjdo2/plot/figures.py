@@ -153,7 +153,7 @@ def _panel_a(ax, adata: AnnData, use_rep: Optional[str],
     sc = ax.scatter(emb[:, 0], emb[:, 1], c=rgba, s=6, edgecolors="none", zorder=2)
     # Oscillator ring is suppressed under the v0.5 lead-eig lock
     # (symmetric J → lead_im = 0 to float precision). Only draw for
-    # the legacy by="lead_re" path AND if we actually see Im > 1e-6.
+    # the legacy by="lead_re" + measured_flow path.
     if by == "lead_re":
         osc = lead_im > 1e-6
         if osc.any():
@@ -395,8 +395,16 @@ def plot_drivers(
         cbar.ax.tick_params(labelsize=6)
 
 
-def _panel_c(ax, adata: AnnData, archetype: Optional[int]) -> None:
+def _panel_c(ax, adata: AnnData, archetype: Optional[int],
+             measured_flow: bool = False) -> None:
     """Render Panel C from :func:`scjdo2.opspace.drivers`.
+
+    Under ``measured_flow=False`` (snapshot default, v0.5-basin-lock)
+    the operator is symmetric and the left and right eigenvectors
+    coincide, so the "drivers" vs "responders" distinction collapses;
+    the panel label uses "responders" only. Under ``measured_flow=True``
+    the original "drivers" terminology is preserved for the labelled
+    / RNA-velocity arm where the Jacobian is non-symmetric.
 
     Default: an archetype if archetype weights + archetype operator are
     available (first fork archetype, else first archetype). Fallback:
@@ -440,6 +448,43 @@ def _panel_c(ax, adata: AnnData, archetype: Optional[int]) -> None:
 
 
 # ======================================================================
+# Snapshot-default Panel B — spectrum ladder on tangent block (symmetric J)
+# ======================================================================
+
+
+def _panel_b_spectrum_ladder(ax, adata: AnnData) -> None:
+    """Snapshot replacement for the complex-plane Panel B.
+
+    Symmetric Jacobians have ``lead_im = 0`` to float precision, so the
+    (Re, Im) scatter collapses to the real axis. Under
+    ``measured_flow=False`` we replace it with a vertical ladder of
+    per-cell lead_re coloured by behaviour — the same information
+    the complex plane carried for the symmetric case."""
+    lead_re = adata.obs["lead_re"].to_numpy() if "lead_re" in adata.obs \
+        else -adata.obs["op_basin_index"].to_numpy()
+    beh = adata.obs.get("op_behaviour_basin",
+                         adata.obs.get("op_behaviour",
+                                        None))
+    if beh is None:
+        beh_arr = np.full(adata.n_obs, "", dtype=object)
+    else:
+        beh_arr = beh.astype(str).to_numpy()
+    rng = np.random.default_rng(0)
+    for cat, col in BEHAVIOUR_COLOURS.items():
+        m = beh_arr == cat
+        if not m.any():
+            continue
+        jitter = rng.uniform(-0.3, 0.3, size=int(m.sum()))
+        ax.scatter(jitter, lead_re[m], s=4, alpha=0.5, color=col,
+                    label=f"{cat} ({int(m.sum())})")
+    ax.axhline(0, color="k", lw=0.5, ls="--")
+    ax.set_xticks([])
+    ax.set_ylabel(f"lead_re{_axis_tag(adata)}", fontsize=7)
+    ax.set_title("spectrum (symmetric J)", fontsize=7)
+    ax.legend(fontsize=6, loc="upper right", handletextpad=0.3)
+
+
+# ======================================================================
 # Public: figure_operator_space
 # ======================================================================
 
@@ -451,6 +496,7 @@ def figure_operator_space(
     use_rep: Optional[str] = None,
     out: Optional[str | Path] = None,
     by: str = "lead_re",
+    measured_flow: bool = False,
 ) -> Figure:
     """Three-panel operator-space figure.
 
@@ -485,6 +531,13 @@ def figure_operator_space(
                 "scjdo2.opspace.classify_basin_latent or opspace.invariants first",
             )
 
+    # Routing: when ``measured_flow=False`` (snapshot default under
+    # v0.5-basin-lock), the complex-plane Panel B is replaced by a
+    # ``spectrum_ladder``-style figure in the Panel B slot because the
+    # Jacobian is symmetric (``lead_im`` ≈ 0 everywhere) and the
+    # complex plane carries no information. ``measured_flow=True``
+    # preserves the original Panel B for the labelled / RNA-velocity
+    # arm where the drift is NOT symmetric.
     with style():
         fig = plt.figure(figsize=(OPSPACE_FIG_WIDTH_IN, OPSPACE_FIG_HEIGHT_IN * 1.7))
         gs = fig.add_gridspec(
@@ -498,12 +551,19 @@ def figure_operator_space(
                   lineages=list(lineages) if lineages else None, by=by)
         ax_a.set_title("A", loc="left", fontsize=10, fontweight="bold")
 
-        _panel_b(ax_b, adata, lineages=list(lineages) if lineages else None)
-        ax_b.set_title("B", loc="left", fontsize=10, fontweight="bold")
+        if measured_flow:
+            _panel_b(ax_b, adata, lineages=list(lineages) if lineages else None)
+            ax_b.set_title("B", loc="left", fontsize=10, fontweight="bold")
+        else:
+            _panel_b_spectrum_ladder(ax_b, adata)
+            ax_b.set_title("B", loc="left", fontsize=10, fontweight="bold")
 
         # Panel C — gene drivers via the gene-space eigenvector (R15: the
         # ∇η-lift of the latent lead when op_eigvec_lifted is stored).
-        _panel_c(ax_c, adata, archetype=archetype)
+        # Under snapshot defaults the term "driver" is replaced with
+        # "responder" since the symmetric operator has r = l.
+        _panel_c(ax_c, adata, archetype=archetype,
+                  measured_flow=measured_flow)
         ax_c.set_title("C", loc="left", fontsize=10, fontweight="bold")
 
         if out is not None:
