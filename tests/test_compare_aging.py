@@ -153,3 +153,53 @@ def test_compare_types_columns_and_reproducible():
         assert col in df1.columns
     res = df1.set_index("cell_type")["iso_pass"]
     assert bool(res["axis_loss"]) and not bool(res["uniform"])
+
+
+def test_aging_modes_are_seeded_and_descriptively_labelled():
+    """A03 mode helper uses fixed-seed silhouette K-means and spec labels."""
+    from scjdo2.compare import aging_modes
+
+    rows = []
+    base = np.array([-9.0, -6.0, -4.0, -2.0])
+    for i in range(4):
+        rows.append({
+            "kind": "uniform", "spectrum_young": base,
+            "spectrum_old": base * (0.70 + 0.01 * i),
+            "median_abs_lambda_young": 5.0,
+            "median_abs_lambda_old": 3.5 + 0.05 * i,
+            "anisotropy_young": 2.0, "anisotropy_old": 2.04,
+            "n_soft_young": 0, "n_soft_old": 0,
+            "basin_index_young": 1.0, "basin_index_old": 0.7,
+            "displacement": 1.0, "split_half_noise": 0.1,
+        })
+    for i in range(4):
+        rows.append({
+            "kind": "axis", "spectrum_young": base,
+            "spectrum_old": np.array([-13.5 - i, -6.0, -4.0, -2.0]),
+            "median_abs_lambda_young": 5.0,
+            "median_abs_lambda_old": 5.1,
+            "anisotropy_young": 2.0, "anisotropy_old": 2.7,
+            "n_soft_young": 0, "n_soft_old": 1,
+            "basin_index_young": 1.0, "basin_index_old": 0.8,
+            "displacement": 1.0, "split_half_noise": 0.1,
+        })
+    for i in range(4):
+        rows.append({
+            "kind": "unchanged", "spectrum_young": base,
+            "spectrum_old": base * (1.0 + 0.002 * i),
+            "median_abs_lambda_young": 5.0,
+            "median_abs_lambda_old": 5.0,
+            "anisotropy_young": 2.0, "anisotropy_old": 2.0,
+            "n_soft_young": 0, "n_soft_old": 0,
+            "basin_index_young": 1.0, "basin_index_old": 1.0,
+            "displacement": 0.01, "split_half_noise": 0.1,
+        })
+    inp = pd.DataFrame(rows)
+    out1 = aging_modes(inp, seed=0)
+    out2 = aging_modes(inp, seed=0)
+    pd.testing.assert_frame_equal(out1, out2)
+    labels = pd.concat([inp[["kind"]], out1], axis=1).groupby("kind")["mode_label"].agg(set)
+    assert labels["uniform"] == {"uniform softening"}
+    assert labels["axis"] == {"single-axis loss"}
+    assert labels["unchanged"] == {"unchanged"}
+    assert 2 <= int(out1["silhouette_k"].iloc[0]) <= 5
