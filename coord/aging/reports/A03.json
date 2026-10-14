@@ -1,0 +1,91 @@
+{
+  "task": "aging/A03",
+  "status": "done",
+  "started_utc": "2026-10-14T23:49:05Z",
+  "finished_utc": "2026-10-14T23:54:01Z",
+  "compute": {
+    "cpu_hours": 0.01,
+    "gpu_hours": 0.0,
+    "hardware": "MacBook Pro (Apple M3 Max); CPU-only execution"
+  },
+  "metrics": {
+    "lung_n_eligible": 2,
+    "marrow_n_eligible": 6,
+    "n_correction_artifact": 0,
+    "lung_iso_pass_fraction": 0.0,
+    "marrow_iso_pass_fraction": 0.5,
+    "lung_ant_pass_fraction": 0.0,
+    "marrow_ant_pass_fraction": 0.16666666666666666,
+    "pooled_iso_pass_fraction": 0.375,
+    "pooled_ant_pass_fraction": 0.125,
+    "outcome_header": "isotropic noise increase; no aging claim beyond stiffness",
+    "n_modes": 2
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/aging/lung_compare_shared.csv",
+      "bytes": 2456,
+      "sha256": "6a08c76ccc17bd56b3d9a9f0ca6d60f42a4ab95d6a1c955880c4d75ca264dec5",
+      "committed": true,
+      "regenerate": "python scripts/run_tms_compare.py --tissue all --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/lung_compare_standalone.csv",
+      "bytes": 3590,
+      "sha256": "90733e28bf0584ee46d8513d0d55635859085f3bc26f4bba4c7c53c188d8e61d",
+      "committed": true,
+      "regenerate": "python scripts/run_tms_compare.py --tissue all --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/marrow_compare_shared.csv",
+      "bytes": 6551,
+      "sha256": "f8b83d329bfb49ba705fa3fc1e4fcb6183d105a65f5995dbd8d215dc33aaf4e9",
+      "committed": true,
+      "regenerate": "python scripts/run_tms_compare.py --tissue all --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/marrow_compare_standalone.csv",
+      "bytes": 10360,
+      "sha256": "59648c452b4fb66ca35504a2d43b141b2737e6259efa9cca52759f9ee475262d",
+      "committed": true,
+      "regenerate": "python scripts/run_tms_compare.py --tissue all --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/compare_pooled.csv",
+      "bytes": 8560,
+      "sha256": "aa58e3723591f555f81b139de630d4581884086826e3401361a1dd242c5be214",
+      "committed": true,
+      "regenerate": "python scripts/run_tms_compare.py --tissue all --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/aging_modes.csv",
+      "bytes": 323,
+      "sha256": "1d8ec9cad99553b84f3f36f87f1aba6d18d3eff9be403a1cf5d7ce75d6a6f8c4",
+      "committed": true,
+      "regenerate": "python scripts/run_tms_compare.py --tissue all --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/RESULT.md",
+      "bytes": 9612,
+      "sha256": "b26be332433974115e73e42b243aa389733b2d1dbb1977c1f97f9d874413356d",
+      "committed": true,
+      "regenerate": "python scripts/run_tms_compare.py --tissue all --seed 0"
+    }
+  ],
+  "deviations": [
+    "substate_alignment is NaN for every type because the Census observations contain no annotation below cell_type; per the binding A03 clarification, no substate clustering was derived.",
+    "Standalone fits were summarized only with axis-free per-age quantities. Isotropy and anticipation were intentionally not calculated across standalone coordinate systems, as required by the binding shared-space clarification.",
+    "No frozen parameter, seed, test, hardware, or compute-budget deviation occurred."
+  ],
+  "questions": [],
+  "observations": [
+    "All eight eligible types were retained for the frozen pooled outcome and none met the correction_artifact condition.",
+    "Three of six marrow types passed isotropy, but 3/6 is not a strict majority; both lung types failed isotropy and anticipation.",
+    "Promonocyte was the only anticipation pass (1/8 pooled), with cos_abs_u_young_d 0.470313 above its 0.462915 null q95.",
+    "Silhouette selected two descriptive aging modes: granulocytopoietic cell formed one mode and the remaining seven types the other; both received the descriptive label mixed."
+  ],
+  "suggestions": [
+    "If authorized as exploratory, assess the pre-proposed basin-only subset because five marrow types have shared holder fractions below 0.5, while the frozen outcome correctly retained all eight eligible types.",
+    "If authorized as exploratory, quantify donor-level sensitivity or hierarchical uncertainty because young-donor replication remains limited (four lung donors and two marrow donors after A01 filtering)."
+  ]
+}

@@ -345,3 +345,150 @@ def compare_types(adata, by: str = "cell_type",
             "ant_pass": ant.passes,
         })
     return pd.DataFrame(rows)
+
+# -----------------------------------------------------------------
+# aging_modes (spec §5 descriptive clustering)
+# -----------------------------------------------------------------
+
+def _mode_spectrum(value, width: int = 10) -> np.ndarray:
+    """Return the ten softest sorted eigenvalues, padded deterministically."""
+    if isinstance(value, str):
+        values = [float(x) for x in value.split(";") if x]
+    else:
+        values = np.asarray(value, dtype=float).ravel().tolist()
+    values = np.sort(np.asarray(values, dtype=float))
+    values = values[-width:]
+    out = np.zeros(width, dtype=float)
+    out[-len(values):] = values
+    return out
+
+
+def aging_modes(per_type: pd.DataFrame, *, seed: int = 0) -> pd.DataFrame:
+    """Cluster aging operator-coordinate changes and label each mode.
+
+    ``per_type`` has one shared-space row per cell type and must contain the
+    paired operator coordinates used in the frozen §5 description:
+    ``spectrum_{young,old}``, ``median_abs_lambda_{young,old}``,
+    ``anisotropy_{young,old}``, ``n_soft_{young,old}``,
+    ``basin_index_{young,old}``, plus ``displacement`` and
+    ``split_half_noise``. Spectra are sorted, reduced to their ten softest
+    directions, and zero-padded where needed. K-means chooses ``k`` from 2–5
+    by silhouette score; if fewer than three rows are supplied, the sole
+    deterministic mode is labelled ``mixed``.
+
+    Labels are descriptive, never outcome gates. They are assigned from the
+    unscaled centroid of each selected mode: ``unchanged`` has centroid
+    displacement at or below split-half noise; ``single-axis loss`` has a
+    >25% anisotropy rise while median stiffness changes by at most 20%;
+    ``uniform softening`` has all ten spectral coordinates shrinking with an
+    absolute anisotropy change below 10%; all other modes are ``mixed``.
+    """
+    required = {
+        "spectrum_young", "spectrum_old",
+        "median_abs_lambda_young", "median_abs_lambda_old",
+        "anisotropy_young", "anisotropy_old",
+        "n_soft_young", "n_soft_old",
+        "basin_index_young", "basin_index_old",
+        "displacement", "split_half_noise",
+    }
+    missing = sorted(required - set(per_type.columns))
+    if missing:
+        raise KeyError(f"aging_modes missing columns: {missing}")
+    n = len(per_type)
+    if n == 0:
+        return pd.DataFrame(columns=["mode_id", "mode_label", "silhouette_k"])
+
+    eps = 1e-12
+    specs_y = np.vstack([_mode_spectrum(x) for x in per_type["spectrum_young"]])
+    specs_o = np.vstack([_mode_spectrum(x) for x in per_type["spectrum_old"]])
+    spec_log_ratio = np.log(np.maximum(np.abs(specs_o), eps) /
+                            np.maximum(np.abs(specs_y), eps))
+    med_y = per_type["median_abs_lambda_young"].to_numpy(dtype=float)
+    med_o = per_type["median_abs_lambda_old"].to_numpy(dtype=float)
+    ani_y = per_type["anisotropy_young"].to_numpy(dtype=float)
+    ani_o = per_type["anisotropy_old"].to_numpy(dtype=float)
+    nsoft_y = per_type["n_soft_young"].to_numpy(dtype=float)
+    nsoft_o = per_type["n_soft_old"].to_numpy(dtype=float)
+    basin_y = per_type["basin_index_young"].to_numpy(dtype=float)
+    basin_o = per_type["basin_index_old"].to_numpy(dtype=float)
+    displacement = per_type["displacement"].to_numpy(dtype=float)
+    split_noise = per_type["split_half_noise"].to_numpy(dtype=float)
+
+    med_log_ratio = np.log(np.maximum(np.abs(med_o), eps) /
+                           np.maximum(np.abs(med_y), eps))
+    anisotropy_rel = (ani_o - ani_y) / np.maximum(np.abs(ani_y), eps)
+    raw = np.column_stack([
+        spec_log_ratio,
+        med_log_ratio,
+        anisotropy_rel,
+        nsoft_o - nsoft_y,
+        basin_o - basin_y,
+    ])
+    # The energy field should yield finite operator coordinates. Retain a
+    # deterministic finite fallback for descriptive clustering only.
+    col_medians = np.nanmedian(raw, axis=0)
+    col_medians = np.where(np.isfinite(col_medians), col_medians, 0.0)
+    raw = np.where(np.isfinite(raw), raw, col_medians[None, :])
+
+    if n < 3:
+        labels = np.zeros(n, dtype=int)
+        silhouette_k = 1
+    else:
+        from sklearn.cluster import KMeans
+        from sklearn.metrics import silhouette_score
+        from sklearn.preprocessing import StandardScaler
+
+        scaled = StandardScaler().fit_transform(raw)
+        best: tuple[float, int, np.ndarray] | None = None
+        for k in range(2, min(5, n - 1) + 1):
+            model = KMeans(n_clusters=k, random_state=seed, n_init=50)
+            candidate = model.fit_predict(scaled)
+            if len(set(candidate)) < 2:
+                continue
+            score = float(silhouette_score(scaled, candidate))
+            # `>` deliberately preserves the smaller k on an exact tie.
+            if best is None or score > best[0]:
+                best = (score, k, candidate)
+        if best is None:
+            labels = np.zeros(n, dtype=int)
+            silhouette_k = 1
+        else:
+            _, silhouette_k, labels = best
+
+    def label_mode(member: np.ndarray) -> str:
+        center_spec = np.mean(spec_log_ratio[member], axis=0)
+        center_med_rel = float(np.expm1(np.mean(med_log_ratio[member])))
+        center_aniso_rel = float(np.mean(anisotropy_rel[member]))
+        center_displacement = float(np.mean(displacement[member]))
+        center_noise = float(np.mean(split_noise[member]))
+        if np.isfinite(center_displacement) and np.isfinite(center_noise) and center_displacement <= center_noise:
+            return "unchanged"
+        if center_aniso_rel > 0.25 and abs(center_med_rel) <= 0.20:
+            return "single-axis loss"
+        active_spectrum = np.any(
+            (np.abs(specs_y[member]) > eps) & (np.abs(specs_o[member]) > eps),
+            axis=0,
+        )
+        if active_spectrum.any() and np.all(center_spec[active_spectrum] < 0.0) and abs(center_aniso_rel) < 0.10:
+            return "uniform softening"
+        return "mixed"
+
+    unique = sorted(set(int(x) for x in labels))
+    # KMeans labels are arbitrary. Reindex by the raw centroid for stable output.
+    centroid_key = {
+        c: tuple(np.mean(raw[labels == c], axis=0).round(12))
+        for c in unique
+    }
+    relabel = {old: new for new, old in enumerate(sorted(unique, key=centroid_key.get))}
+    mode_id = np.array([relabel[int(x)] for x in labels], dtype=int)
+    mode_label = {}
+    for old in unique:
+        mode_label[relabel[old]] = label_mode(labels == old)
+    return pd.DataFrame(
+        {
+            "mode_id": mode_id,
+            "mode_label": [mode_label[int(x)] for x in mode_id],
+            "silhouette_k": int(silhouette_k),
+        },
+        index=per_type.index,
+    )
