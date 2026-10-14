@@ -56,3 +56,13 @@ pooled outcome will rest on 8 types, 6 from marrow.
 **Caveats.** Lung latent trained on 776 young cells of 2 types.
 **Next.** Revision 2 issued. X01 (18–21 vs 24 months) and X02
 (30-month as very old) proposed, exploratory, awaiting the user.
+
+## 2026-10-14 — aging/A01 (planned, ACCEPT, revision 2)
+
+**Result.** Eligible types: lung 2 (fibroblast 263, NK 385 cells per
+group), marrow 6 (231–727 per group). Donors young/old: lung 4/6,
+marrow 2/10, after excluding 4-week and 30-month mice.
+**Meaning.** Ready for A02. The §6 pooled majority is over 8 types.
+**Caveats.** Lung reference trained on 648 young cells of 2 types;
+marrow on 2 694 of 6; young-donor replication thin.
+**Next.** A02 issued. X01/X02 exploratory, awaiting the user.
