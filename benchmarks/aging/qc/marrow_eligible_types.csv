@@ -1,0 +1,19 @@
+cell_type,n_young,n_old,eligible
+basophil,0,0,False
+erythroblast,66,66,False
+"erythroid progenitor cell, mammalian",0,0,False
+granulocyte,704,704,True
+granulocytopoietic cell,727,727,True
+hematopoietic precursor cell,285,285,True
+immature B cell,0,0,False
+late pro-B cell,29,29,False
+macrophage,101,101,False
+megakaryocyte-erythroid progenitor cell,133,133,False
+monocyte,488,488,True
+naive B cell,62,62,False
+naive T cell,134,134,False
+natural killer cell,20,20,False
+plasma cell,27,27,False
+precursor B cell,259,259,True
+proerythroblast,177,177,False
+promonocyte,231,231,True

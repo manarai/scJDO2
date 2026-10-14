@@ -1,0 +1,31 @@
+cell_type,n_young,n_old,eligible
+B cell,153,153,False
+"CD4-positive, alpha-beta T cell",108,108,False
+"CD8-positive, alpha-beta T cell",61,61,False
+T cell,0,0,False
+adventitial cell,52,52,False
+alveolar macrophage,198,198,False
+basophil,0,0,False
+bronchial smooth muscle cell,154,154,False
+ciliated columnar cell of tracheobronchial tree,0,0,False
+classical monocyte,111,111,False
+club cell,0,0,False
+dendritic cell,0,0,False
+endothelial cell of lymphatic vessel,0,0,False
+fibroblast of lung,263,263,True
+intermediate monocyte,0,0,False
+lung macrophage,0,0,False
+lung neuroendocrine cell,0,0,False
+mature NK T cell,0,0,False
+myeloid dendritic cell,0,0,False
+natural killer cell,385,385,True
+neutrophil,0,0,False
+non-classical monocyte,160,160,False
+pericyte,0,0,False
+plasma cell,0,0,False
+plasmacytoid dendritic cell,0,0,False
+pulmonary interstitial fibroblast,0,0,False
+regulatory T cell,0,0,False
+smooth muscle cell of the pulmonary artery,0,0,False
+type II pneumocyte,20,20,False
+vein endothelial cell,22,22,False

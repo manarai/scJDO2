@@ -1,0 +1,255 @@
+tissue,age_group,donor_id,cell_type,n_cells_before
+lung,old,18-F-50,B cell,92
+lung,old,18-F-50,"CD4-positive, alpha-beta T cell",5
+lung,old,18-F-50,"CD8-positive, alpha-beta T cell",12
+lung,old,18-F-50,T cell,9
+lung,old,18-F-50,adventitial cell,2
+lung,old,18-F-50,alveolar macrophage,15
+lung,old,18-F-50,basophil,2
+lung,old,18-F-50,bronchial smooth muscle cell,46
+lung,old,18-F-50,classical monocyte,39
+lung,old,18-F-50,club cell,1
+lung,old,18-F-50,dendritic cell,1
+lung,old,18-F-50,fibroblast of lung,4
+lung,old,18-F-50,intermediate monocyte,5
+lung,old,18-F-50,mature NK T cell,11
+lung,old,18-F-50,myeloid dendritic cell,5
+lung,old,18-F-50,natural killer cell,27
+lung,old,18-F-50,neutrophil,3
+lung,old,18-F-50,non-classical monocyte,41
+lung,old,18-F-50,pericyte,2
+lung,old,18-F-50,pulmonary interstitial fibroblast,1
+lung,old,18-F-50,regulatory T cell,4
+lung,old,18-F-50,smooth muscle cell of the pulmonary artery,1
+lung,old,18-F-50,vein endothelial cell,3
+lung,old,18-F-51,B cell,180
+lung,old,18-F-51,"CD4-positive, alpha-beta T cell",33
+lung,old,18-F-51,"CD8-positive, alpha-beta T cell",57
+lung,old,18-F-51,T cell,27
+lung,old,18-F-51,adventitial cell,23
+lung,old,18-F-51,alveolar macrophage,91
+lung,old,18-F-51,basophil,1
+lung,old,18-F-51,bronchial smooth muscle cell,194
+lung,old,18-F-51,ciliated columnar cell of tracheobronchial tree,3
+lung,old,18-F-51,classical monocyte,123
+lung,old,18-F-51,dendritic cell,2
+lung,old,18-F-51,endothelial cell of lymphatic vessel,2
+lung,old,18-F-51,fibroblast of lung,75
+lung,old,18-F-51,intermediate monocyte,37
+lung,old,18-F-51,mature NK T cell,97
+lung,old,18-F-51,myeloid dendritic cell,17
+lung,old,18-F-51,natural killer cell,55
+lung,old,18-F-51,neutrophil,7
+lung,old,18-F-51,non-classical monocyte,62
+lung,old,18-F-51,pericyte,2
+lung,old,18-F-51,plasma cell,3
+lung,old,18-F-51,plasmacytoid dendritic cell,5
+lung,old,18-F-51,pulmonary interstitial fibroblast,2
+lung,old,18-F-51,regulatory T cell,22
+lung,old,18-F-51,smooth muscle cell of the pulmonary artery,5
+lung,old,18-F-51,type II pneumocyte,4
+lung,old,18-F-51,vein endothelial cell,30
+lung,old,18-M-52,B cell,111
+lung,old,18-M-52,"CD4-positive, alpha-beta T cell",11
+lung,old,18-M-52,"CD8-positive, alpha-beta T cell",79
+lung,old,18-M-52,T cell,16
+lung,old,18-M-52,adventitial cell,16
+lung,old,18-M-52,alveolar macrophage,50
+lung,old,18-M-52,basophil,10
+lung,old,18-M-52,bronchial smooth muscle cell,289
+lung,old,18-M-52,ciliated columnar cell of tracheobronchial tree,2
+lung,old,18-M-52,classical monocyte,474
+lung,old,18-M-52,club cell,1
+lung,old,18-M-52,dendritic cell,2
+lung,old,18-M-52,endothelial cell of lymphatic vessel,6
+lung,old,18-M-52,fibroblast of lung,36
+lung,old,18-M-52,intermediate monocyte,23
+lung,old,18-M-52,lung macrophage,6
+lung,old,18-M-52,mature NK T cell,3
+lung,old,18-M-52,myeloid dendritic cell,10
+lung,old,18-M-52,natural killer cell,35
+lung,old,18-M-52,neutrophil,307
+lung,old,18-M-52,non-classical monocyte,45
+lung,old,18-M-52,pericyte,3
+lung,old,18-M-52,plasmacytoid dendritic cell,3
+lung,old,18-M-52,pulmonary interstitial fibroblast,2
+lung,old,18-M-52,regulatory T cell,1
+lung,old,18-M-52,smooth muscle cell of the pulmonary artery,12
+lung,old,18-M-52,type II pneumocyte,20
+lung,old,18-M-52,vein endothelial cell,30
+lung,old,18-M-53,B cell,117
+lung,old,18-M-53,"CD4-positive, alpha-beta T cell",23
+lung,old,18-M-53,"CD8-positive, alpha-beta T cell",86
+lung,old,18-M-53,T cell,12
+lung,old,18-M-53,adventitial cell,15
+lung,old,18-M-53,alveolar macrophage,44
+lung,old,18-M-53,basophil,6
+lung,old,18-M-53,bronchial smooth muscle cell,227
+lung,old,18-M-53,ciliated columnar cell of tracheobronchial tree,4
+lung,old,18-M-53,classical monocyte,345
+lung,old,18-M-53,club cell,2
+lung,old,18-M-53,dendritic cell,5
+lung,old,18-M-53,endothelial cell of lymphatic vessel,3
+lung,old,18-M-53,fibroblast of lung,51
+lung,old,18-M-53,intermediate monocyte,30
+lung,old,18-M-53,lung macrophage,10
+lung,old,18-M-53,mature NK T cell,41
+lung,old,18-M-53,myeloid dendritic cell,16
+lung,old,18-M-53,natural killer cell,41
+lung,old,18-M-53,neutrophil,96
+lung,old,18-M-53,non-classical monocyte,39
+lung,old,18-M-53,pericyte,1
+lung,old,18-M-53,plasma cell,2
+lung,old,18-M-53,plasmacytoid dendritic cell,7
+lung,old,18-M-53,pulmonary interstitial fibroblast,4
+lung,old,18-M-53,regulatory T cell,1
+lung,old,18-M-53,smooth muscle cell of the pulmonary artery,14
+lung,old,18-M-53,type II pneumocyte,11
+lung,old,18-M-53,vein endothelial cell,30
+lung,old,21-F-54,B cell,156
+lung,old,21-F-54,"CD4-positive, alpha-beta T cell",50
+lung,old,21-F-54,"CD8-positive, alpha-beta T cell",198
+lung,old,21-F-54,T cell,45
+lung,old,21-F-54,adventitial cell,14
+lung,old,21-F-54,alveolar macrophage,39
+lung,old,21-F-54,basophil,23
+lung,old,21-F-54,bronchial smooth muscle cell,339
+lung,old,21-F-54,ciliated columnar cell of tracheobronchial tree,2
+lung,old,21-F-54,classical monocyte,104
+lung,old,21-F-54,club cell,2
+lung,old,21-F-54,dendritic cell,2
+lung,old,21-F-54,endothelial cell of lymphatic vessel,7
+lung,old,21-F-54,fibroblast of lung,42
+lung,old,21-F-54,intermediate monocyte,5
+lung,old,21-F-54,lung macrophage,8
+lung,old,21-F-54,mature NK T cell,17
+lung,old,21-F-54,myeloid dendritic cell,15
+lung,old,21-F-54,natural killer cell,118
+lung,old,21-F-54,neutrophil,12
+lung,old,21-F-54,non-classical monocyte,74
+lung,old,21-F-54,plasma cell,8
+lung,old,21-F-54,plasmacytoid dendritic cell,3
+lung,old,21-F-54,pulmonary interstitial fibroblast,3
+lung,old,21-F-54,regulatory T cell,11
+lung,old,21-F-54,smooth muscle cell of the pulmonary artery,11
+lung,old,21-F-54,type II pneumocyte,8
+lung,old,21-F-54,vein endothelial cell,51
+lung,old,21-F-55,B cell,258
+lung,old,21-F-55,"CD4-positive, alpha-beta T cell",57
+lung,old,21-F-55,"CD8-positive, alpha-beta T cell",137
+lung,old,21-F-55,T cell,38
+lung,old,21-F-55,adventitial cell,29
+lung,old,21-F-55,alveolar macrophage,52
+lung,old,21-F-55,basophil,23
+lung,old,21-F-55,bronchial smooth muscle cell,331
+lung,old,21-F-55,ciliated columnar cell of tracheobronchial tree,2
+lung,old,21-F-55,classical monocyte,138
+lung,old,21-F-55,club cell,3
+lung,old,21-F-55,dendritic cell,7
+lung,old,21-F-55,endothelial cell of lymphatic vessel,5
+lung,old,21-F-55,fibroblast of lung,59
+lung,old,21-F-55,intermediate monocyte,14
+lung,old,21-F-55,lung macrophage,13
+lung,old,21-F-55,mature NK T cell,33
+lung,old,21-F-55,myeloid dendritic cell,27
+lung,old,21-F-55,natural killer cell,109
+lung,old,21-F-55,neutrophil,17
+lung,old,21-F-55,non-classical monocyte,120
+lung,old,21-F-55,pericyte,1
+lung,old,21-F-55,plasma cell,8
+lung,old,21-F-55,plasmacytoid dendritic cell,7
+lung,old,21-F-55,pulmonary interstitial fibroblast,6
+lung,old,21-F-55,regulatory T cell,9
+lung,old,21-F-55,smooth muscle cell of the pulmonary artery,15
+lung,old,21-F-55,type II pneumocyte,10
+lung,old,21-F-55,vein endothelial cell,56
+lung,young,3-F-56,B cell,23
+lung,young,3-F-56,"CD4-positive, alpha-beta T cell",14
+lung,young,3-F-56,"CD8-positive, alpha-beta T cell",9
+lung,young,3-F-56,T cell,1
+lung,young,3-F-56,adventitial cell,8
+lung,young,3-F-56,alveolar macrophage,51
+lung,young,3-F-56,basophil,2
+lung,young,3-F-56,bronchial smooth muscle cell,50
+lung,young,3-F-56,classical monocyte,51
+lung,young,3-F-56,dendritic cell,4
+lung,young,3-F-56,fibroblast of lung,11
+lung,young,3-F-56,intermediate monocyte,10
+lung,young,3-F-56,lung macrophage,7
+lung,young,3-F-56,mature NK T cell,1
+lung,young,3-F-56,myeloid dendritic cell,11
+lung,young,3-F-56,natural killer cell,38
+lung,young,3-F-56,neutrophil,3
+lung,young,3-F-56,non-classical monocyte,47
+lung,young,3-F-56,pericyte,2
+lung,young,3-F-56,plasmacytoid dendritic cell,1
+lung,young,3-F-56,pulmonary interstitial fibroblast,3
+lung,young,3-F-56,regulatory T cell,5
+lung,young,3-F-56,smooth muscle cell of the pulmonary artery,3
+lung,young,3-F-56,type II pneumocyte,1
+lung,young,3-F-56,vein endothelial cell,6
+lung,young,3-F-57,B cell,130
+lung,young,3-F-57,"CD4-positive, alpha-beta T cell",108
+lung,young,3-F-57,"CD8-positive, alpha-beta T cell",61
+lung,young,3-F-57,T cell,8
+lung,young,3-F-57,adventitial cell,9
+lung,young,3-F-57,alveolar macrophage,74
+lung,young,3-F-57,basophil,6
+lung,young,3-F-57,bronchial smooth muscle cell,104
+lung,young,3-F-57,classical monocyte,60
+lung,young,3-F-57,dendritic cell,1
+lung,young,3-F-57,endothelial cell of lymphatic vessel,2
+lung,young,3-F-57,fibroblast of lung,26
+lung,young,3-F-57,intermediate monocyte,19
+lung,young,3-F-57,lung macrophage,6
+lung,young,3-F-57,mature NK T cell,6
+lung,young,3-F-57,myeloid dendritic cell,19
+lung,young,3-F-57,natural killer cell,165
+lung,young,3-F-57,neutrophil,19
+lung,young,3-F-57,non-classical monocyte,113
+lung,young,3-F-57,pericyte,5
+lung,young,3-F-57,plasma cell,1
+lung,young,3-F-57,plasmacytoid dendritic cell,7
+lung,young,3-F-57,pulmonary interstitial fibroblast,10
+lung,young,3-F-57,regulatory T cell,6
+lung,young,3-F-57,smooth muscle cell of the pulmonary artery,13
+lung,young,3-F-57,type II pneumocyte,1
+lung,young,3-F-57,vein endothelial cell,22
+lung,young,3-M-5/6,B cell,7
+lung,young,3-M-5/6,adventitial cell,95
+lung,young,3-M-5/6,alveolar macrophage,10
+lung,young,3-M-5/6,basophil,1
+lung,young,3-M-5/6,bronchial smooth muscle cell,1
+lung,young,3-M-5/6,ciliated columnar cell of tracheobronchial tree,10
+lung,young,3-M-5/6,classical monocyte,1
+lung,young,3-M-5/6,club cell,1
+lung,young,3-M-5/6,fibroblast of lung,302
+lung,young,3-M-5/6,lung neuroendocrine cell,1
+lung,young,3-M-5/6,myeloid dendritic cell,1
+lung,young,3-M-5/6,natural killer cell,68
+lung,young,3-M-5/6,neutrophil,2
+lung,young,3-M-5/6,non-classical monocyte,9
+lung,young,3-M-5/6,pericyte,7
+lung,young,3-M-5/6,pulmonary interstitial fibroblast,32
+lung,young,3-M-5/6,type II pneumocyte,39
+lung,young,3-M-7/8,B cell,8
+lung,young,3-M-7/8,"CD4-positive, alpha-beta T cell",1
+lung,young,3-M-7/8,T cell,2
+lung,young,3-M-7/8,adventitial cell,263
+lung,young,3-M-7/8,alveolar macrophage,73
+lung,young,3-M-7/8,basophil,7
+lung,young,3-M-7/8,bronchial smooth muscle cell,1
+lung,young,3-M-7/8,ciliated columnar cell of tracheobronchial tree,21
+lung,young,3-M-7/8,classical monocyte,13
+lung,young,3-M-7/8,fibroblast of lung,804
+lung,young,3-M-7/8,lung macrophage,2
+lung,young,3-M-7/8,lung neuroendocrine cell,3
+lung,young,3-M-7/8,myeloid dendritic cell,8
+lung,young,3-M-7/8,natural killer cell,263
+lung,young,3-M-7/8,non-classical monocyte,16
+lung,young,3-M-7/8,pericyte,19
+lung,young,3-M-7/8,plasma cell,1
+lung,young,3-M-7/8,plasmacytoid dendritic cell,7
+lung,young,3-M-7/8,pulmonary interstitial fibroblast,136
+lung,young,3-M-7/8,regulatory T cell,1
+lung,young,3-M-7/8,type II pneumocyte,13

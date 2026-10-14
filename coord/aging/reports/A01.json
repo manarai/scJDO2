@@ -1,0 +1,80 @@
+{
+  "task": "aging/A01",
+  "status": "done",
+  "started_utc": "2026-10-14T14:19:45Z",
+  "finished_utc": "2026-10-14T21:03:17Z",
+  "compute": {
+    "cpu_hours": 0.05,
+    "gpu_hours": 0.0,
+    "hardware": "MacBook Pro (Apple M3 Max): 14 CPU cores, 30 GPU cores, 36 GB RAM; macOS 26.7.1 arm64; PyTorch MPS available; CUDA unavailable"
+  },
+  "metrics": {
+    "tests_passed": true,
+    "full_suite_counts": {
+      "passed": 24,
+      "failed": 6,
+      "xfailed": 10,
+      "documented_v1_scjdo_missing_failures": 6
+    },
+    "census_version": "2024-07-01",
+    "hardware": "MacBook Pro (Apple M3 Max): 14 CPU cores, 30 GPU cores, 36 GB RAM; macOS 26.7.1 arm64; PyTorch MPS available; CUDA unavailable",
+    "sandbox_persists": true,
+    "lung_n_cells_raw": 24540,
+    "marrow_n_cells_raw": 40220,
+    "lung_n_donors_young": 4,
+    "lung_n_donors_old": 6,
+    "marrow_n_donors_young": 2,
+    "marrow_n_donors_old": 10,
+    "lung_n_cells_after": 1296,
+    "marrow_n_cells_after": 5388,
+    "lung_eligible_types": 2,
+    "marrow_eligible_types": 6,
+    "lung_n_donors_30m_excluded": 4,
+    "marrow_n_donors_30m_excluded": 3
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/aging/data/lung.h5ad",
+      "bytes": 312287476,
+      "sha256": "3acef69bfed67ab45ff86d244b4aaf17634f94e431a02c51f378e6f210d0d796",
+      "committed": false,
+      "regenerate": "python scripts/fetch_tms_aging.py"
+    },
+    {
+      "path": "benchmarks/aging/data/marrow.h5ad",
+      "bytes": 585167540,
+      "sha256": "e9b711e8411ea9a0238bd39efdcf05fc42512ef270b47689fe3e07b121baf03c",
+      "committed": false,
+      "regenerate": "python scripts/fetch_tms_aging.py"
+    },
+    {
+      "path": "benchmarks/aging/data/lung_processed.h5ad",
+      "bytes": 31412444,
+      "sha256": "0514ae0b664b2105afee255807ced1d77bb050c87133f9495f4262d1ef6a9c41",
+      "committed": false,
+      "regenerate": "python scripts/preprocess_tms_aging.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/data/marrow_processed.h5ad",
+      "bytes": 117788736,
+      "sha256": "842d352ab4ee204279dcd3d5d45a4d40ac6143a1e9124a3e84032243ea9df140",
+      "committed": false,
+      "regenerate": "python scripts/preprocess_tms_aging.py --tissue marrow --seed 0"
+    }
+  ],
+  "deviations": [
+    "The full suite had six documented failures from the absent v1 scjdo package (ModuleNotFoundError: scjdo); coord/PROJECT.md and A01 explicitly permit continuing in that case. The required aging test files passed 10/10.",
+    "The initial 4-week age-label stop and the revision-1 lung LOESS failure were resolved before this final preprocessing run by the committed PREREG \u00a7\u00a72b\u20132c. \u00a72c 30-month exclusion and span=1.0 were applied uniformly to both tissues."
+  ],
+  "observations": [
+    "The fetched Census version and both observed dataset IDs exactly match PREREG \u00a71.",
+    "No unrecognized age labels remain after applying the frozen \u00a72b\u2013\u00a72c exclusions and donor-prefix mapping.",
+    "Prefix-30 exclusion removed 4 lung donors (11,093 cells) and 3 marrow donors (13,496 cells) before balancing.",
+    "The final eligibility gate yields 2 lung types and 6 marrow types; both processed objects have 2,000 HVGs, a counts layer, and 52,437-gene .raw matrices."
+  ],
+  "suggestions": [
+    "Later interpretation should state the limited young-donor replication: 4 lung donors and 2 marrow donors after frozen exclusions.",
+    "The proposed exploratory age-sensitivity analyses in the A01 review should be issued only if the user approves them; they are not part of this preregistered result."
+  ],
+  "questions": []
+}

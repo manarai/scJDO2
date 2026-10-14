@@ -1,0 +1,82 @@
+tissue,age_group,donor_id,cell_type,n_cells_after,n_cells_contributed,eligible,downsampled_age_group
+lung,old,18-F-50,B cell,26,26,False,old
+lung,old,18-F-50,bronchial smooth muscle cell,25,25,False,old
+lung,old,18-F-50,classical monocyte,18,18,False,old
+lung,old,18-F-50,natural killer cell,27,27,True,young
+lung,old,18-F-50,non-classical monocyte,27,27,False,old
+lung,old,18-F-51,B cell,25,25,False,old
+lung,old,18-F-51,"CD4-positive, alpha-beta T cell",28,28,False,old
+lung,old,18-F-51,"CD8-positive, alpha-beta T cell",12,12,False,old
+lung,old,18-F-51,adventitial cell,23,23,False,young
+lung,old,18-F-51,alveolar macrophage,39,39,False,old
+lung,old,18-F-51,bronchial smooth muscle cell,26,26,False,old
+lung,old,18-F-51,classical monocyte,19,19,False,old
+lung,old,18-F-51,fibroblast of lung,75,75,True,young
+lung,old,18-F-51,natural killer cell,55,55,True,young
+lung,old,18-F-51,non-classical monocyte,26,26,False,old
+lung,old,18-F-51,vein endothelial cell,5,5,False,old
+lung,old,18-M-52,B cell,26,26,False,old
+lung,old,18-M-52,"CD8-positive, alpha-beta T cell",12,12,False,old
+lung,old,18-M-52,alveolar macrophage,40,40,False,old
+lung,old,18-M-52,bronchial smooth muscle cell,25,25,False,old
+lung,old,18-M-52,classical monocyte,19,19,False,old
+lung,old,18-M-52,fibroblast of lung,36,36,True,young
+lung,old,18-M-52,natural killer cell,35,35,True,young
+lung,old,18-M-52,non-classical monocyte,26,26,False,old
+lung,old,18-M-52,type II pneumocyte,20,20,False,young
+lung,old,18-M-52,vein endothelial cell,4,4,False,old
+lung,old,18-M-53,B cell,25,25,False,old
+lung,old,18-M-53,"CD4-positive, alpha-beta T cell",23,23,False,old
+lung,old,18-M-53,"CD8-positive, alpha-beta T cell",12,12,False,old
+lung,old,18-M-53,alveolar macrophage,40,40,False,old
+lung,old,18-M-53,bronchial smooth muscle cell,26,26,False,old
+lung,old,18-M-53,classical monocyte,18,18,False,old
+lung,old,18-M-53,fibroblast of lung,51,51,True,young
+lung,old,18-M-53,natural killer cell,41,41,True,young
+lung,old,18-M-53,non-classical monocyte,27,27,False,old
+lung,old,18-M-53,vein endothelial cell,4,4,False,old
+lung,old,21-F-54,B cell,26,26,False,old
+lung,old,21-F-54,"CD4-positive, alpha-beta T cell",28,28,False,old
+lung,old,21-F-54,"CD8-positive, alpha-beta T cell",12,12,False,old
+lung,old,21-F-54,alveolar macrophage,39,39,False,old
+lung,old,21-F-54,bronchial smooth muscle cell,26,26,False,old
+lung,old,21-F-54,classical monocyte,19,19,False,old
+lung,old,21-F-54,fibroblast of lung,42,42,True,young
+lung,old,21-F-54,natural killer cell,118,118,True,young
+lung,old,21-F-54,non-classical monocyte,27,27,False,old
+lung,old,21-F-54,vein endothelial cell,5,5,False,old
+lung,old,21-F-55,B cell,25,25,False,old
+lung,old,21-F-55,"CD4-positive, alpha-beta T cell",29,29,False,old
+lung,old,21-F-55,"CD8-positive, alpha-beta T cell",13,13,False,old
+lung,old,21-F-55,adventitial cell,29,29,False,young
+lung,old,21-F-55,alveolar macrophage,40,40,False,old
+lung,old,21-F-55,bronchial smooth muscle cell,26,26,False,old
+lung,old,21-F-55,classical monocyte,18,18,False,old
+lung,old,21-F-55,fibroblast of lung,59,59,True,young
+lung,old,21-F-55,natural killer cell,109,109,True,young
+lung,old,21-F-55,non-classical monocyte,27,27,False,old
+lung,old,21-F-55,vein endothelial cell,4,4,False,old
+lung,young,3-F-56,B cell,23,23,False,old
+lung,young,3-F-56,alveolar macrophage,51,51,False,old
+lung,young,3-F-56,bronchial smooth muscle cell,50,50,False,old
+lung,young,3-F-56,classical monocyte,51,51,False,old
+lung,young,3-F-56,natural killer cell,38,38,True,young
+lung,young,3-F-56,non-classical monocyte,47,47,False,old
+lung,young,3-F-57,B cell,130,130,False,old
+lung,young,3-F-57,"CD4-positive, alpha-beta T cell",108,108,False,old
+lung,young,3-F-57,"CD8-positive, alpha-beta T cell",61,61,False,old
+lung,young,3-F-57,alveolar macrophage,74,74,False,old
+lung,young,3-F-57,bronchial smooth muscle cell,104,104,False,old
+lung,young,3-F-57,classical monocyte,60,60,False,old
+lung,young,3-F-57,fibroblast of lung,26,26,True,young
+lung,young,3-F-57,natural killer cell,139,139,True,young
+lung,young,3-F-57,non-classical monocyte,113,113,False,old
+lung,young,3-F-57,vein endothelial cell,22,22,False,old
+lung,young,3-M-5/6,adventitial cell,26,26,False,young
+lung,young,3-M-5/6,fibroblast of lung,118,118,True,young
+lung,young,3-M-5/6,natural killer cell,68,68,True,young
+lung,young,3-M-5/6,type II pneumocyte,20,20,False,young
+lung,young,3-M-7/8,adventitial cell,26,26,False,young
+lung,young,3-M-7/8,alveolar macrophage,73,73,False,old
+lung,young,3-M-7/8,fibroblast of lung,119,119,True,young
+lung,young,3-M-7/8,natural killer cell,140,140,True,young
