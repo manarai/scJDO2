@@ -390,18 +390,34 @@ Next steps already recorded in ``V2_PLAN.md``:
   velocity-fittable genes under the dynamical fit; a broader HVG
   pool or a steady-state scVelo could keep more).
 
-## 5 · PBMC positive control — the first real-data basin result
+## 5 · PBMC positive control — magnitude rule (final) : partial PASS
 
-**Verdict: PASS.** Under the user's third rework (full spectrum per
-cell + tangent-restricted classifier + "basin = holder with ≤ 1 soft
-direction"), the energy-parameterised score drift finds **92.6 % of
-2282 resting PBMC cells as basins** at the embedding chosen by
-marginal log-likelihood (d_latent = 15). Every cluster centroid has
-either all 15 or 13-14 negative eigenvalues; **B cells and CD8 T
-cells are basins with exactly one soft direction** — the axis toward
-their nearest lymphoid neighbour — not forks. The first-rework (DSM)
-and second-rework (energy, lead-eig only) fails are preserved below
-for the history. The current best is in §5.5.
+**Verdict (fourth rework — final rule): 70.7 % of 2282 resting
+PBMC cells are basins** under the magnitude rule on the Σ-based
+tangent-restricted block. Previous r-1 rule's 92.6 % was over-
+counting: the sign of the leading eigenvalue matters when it exceeds
+oracle tol, and both B cells (lead +2.27) and CD8 T (lead +0.23)
+flip to fork at the cluster centroid under the final rule. The
+paper reports the continuous **basin_index**
+``bi = −λ_max / median|λ_neg|`` per cell, not a binary story.
+
+**Spec of the final rule** (``scjdo2.opspace.classify_basin_latent``,
+patched 2026-10):
+
+* Tangent subspace ``V`` = top-``r`` eigenvectors of local kNN
+  **Σ** (variance, not Σ⁻¹) above a magnitude floor. The user's
+  earlier Σ⁻¹ draft inverted the manifold direction and hid saddle
+  axes; Σ keeps the directions where the data spreads.
+* Tangent-restricted eigenvalues ``ev_r = eigvals(Vᵀ J V)``.
+* **basin / holder** ⇔ ``max(ev_r) < +tol`` AND some ``ev_r < −tol``
+* **fork**          ⇔ ``max(ev_r) > +tol``
+* **drift**         ⇔ ``all |ev_r| < tol``
+* ``n_soft`` = ``count(|ev_r| < tol)``
+* ``basin_index`` = ``−max(ev_r) / median|ev_r_neg|`` (positive =
+  basin, deeper → larger; negative = fork).
+* The r-1 rule is retired: it mis-classified pitchfork saddles as
+  basins when ``r = d`` on PCA (one positive + d-1 near-zero → still
+  ``n_neg ≥ r−1``).
 
 ### 5.1 v2 rework — energy-parameterised score drift
 
@@ -546,7 +562,93 @@ hard anchor).
 Outputs under ``benchmarks/v2/pbmc_basin/`` (v1 run superseded by §5.2
 energy drift; see commit history for the v1 numbers that match §5.1).
 
-### 5.5 Third rework — full spectrum, tangent restriction, d sweep → **PASS**
+### 5.8 Fourth rework (final) — magnitude rule + basin_index
+
+**Pitchfork gate under the final magnitude rule**
+(``scripts/pitchfork_energy_gate.py``,
+``benchmarks/phase_b_gate/equilibrated/pitchfork_energy_gate.json``):
+
+| τ   | holder P / R (mag)   | fork P / R (mag)   | **verdict** |
+|---|---|---|---|
+| 0.1 | **0.98 / 0.97**      | 0.40 / 0.62        | FAIL (fork P/R > 0.10 off oracle) |
+| 0.3 | 0.95 / 0.94          | 0.07 / 0.12        | FAIL |
+| 0.5 | 0.95 / 1.00          | 0.50 / 0.02        | FAIL |
+
+Compared to the lead-eigenvalue baseline on the ESM drift:
+
+* **Holder recall jumped from 0.57-0.70 to 0.94-1.00** — the magnitude
+  rule finds the "basin with one soft axis" cells the lead-eig rule
+  called fork. Holder precision stayed at 0.95-0.98 (ESM lead-eig
+  was 0.99-1.00; the ~0.02 drop is 2-5 saddle-adjacent cells mis-
+  called holder).
+* **Fork precision at τ=0.1 jumped from 0.12 to 0.40**; at τ=0.5
+  from 0.10 to 0.50. The magnitude rule is strict about fork
+  (needs a tangent eigenvalue > tol) and so false positives drop.
+* **Fork recall dropped from 0.79-0.98 to 0.02-0.62** — the ESM-fit
+  Hessian at the equilibrated pitchfork saddle has a positive
+  eigenvalue in the TRUE 2D subspace, but the Σ-tangent of the
+  local kNN (which samples cells from BOTH basins at the saddle)
+  keeps directions where the Jacobian is predominantly negative,
+  suppressing the saddle axis. This is a known limitation of
+  density-tangent restriction at saddle points.
+
+**Strict Phase-B verdict: FAIL on fork P/R.** Holder side is at or
+above the ESM lead-eig level. The rule PASSES the holder criterion
+(both ≥ 0.80) at every τ.
+
+**PBMC gate under the final magnitude rule**
+(``scripts/pbmc_magnitude_rule.py``,
+``benchmarks/v2/pbmc_basin_magnitude/``):
+
+| cluster | n | resting | holder | fork | **frac_holder** | **basin_index** |
+|---|---|---|---|---|---|---|
+| CD14+ Monocytes      |  480 | ✓ |  409 |  71 | **85.2 %** | **+0.49** |
+| CD4 T cells          | 1144 | ✓ |  842 | 302 | **73.6 %** | +0.26 |
+| B cells              |  342 | ✓ |  230 | 112 | **67.3 %** | +0.20 |
+| **CD8 T cells**      |  316 | ✓ |  132 | 184 | **41.8 %** | **−0.22** |
+| Dendritic cells      |   37 |   |   33 |   4 | 89.2 %     | +0.45 |
+| FCGR3A+ Monocytes    |  150 |   |  140 |  10 | 93.3 %     | +0.41 |
+| Megakaryocytes       |   15 |   |    4 |  11 | 26.7 %     | −0.74 |
+| NK cells             |  154 |   |   26 | 128 | 16.9 %     | −0.66 |
+
+**Overall resting: 1613 / 2282 = 70.7 % basin.** Basin index median
+across resting is +0.23 (positive, i.e. net basin on resting cells).
+
+Reading the per-cluster numbers:
+
+* **CD14+ Mono (85%)** and **FCGR3A+ Mono (93%)** are the deepest
+  basins (bi +0.49, +0.41). Classical monocytes and non-classical
+  monocytes both sit at density modes.
+* **Dendritic (89%)** is a strong basin despite its "non-resting"
+  cell-type label (bi +0.45).
+* **CD4 T (74%)** and **B cells (67%)** are majority basin with
+  modest positive bi.
+* **CD8 T (42%)** is borderline — bi −0.22 — the lead +0.23 soft
+  axis toward CD4 T is above oracle tol = 0.076, flipping half the
+  cells to fork under the strict magnitude rule.
+* **NK (17%)** and **Megakaryocytes (27%)** are the ridge-like
+  populations — bi −0.66 and −0.74 reflect strong positive leading
+  eigenvalues at those centroids.
+
+**Comparison with the r-1 rule (§5.5):**
+
+| cluster | r-1 rule holder % | magnitude rule holder % | basin_index |
+|---|---|---|---|
+| CD14+ Mono      | 99.4 % | 85.2 % | +0.49 |
+| CD4 T           | 93.4 % | 73.6 % | +0.26 |
+| B cells         | 84.8 % | 67.3 % | +0.20 |
+| CD8 T           | 88.3 % | **41.8 %** | **−0.22** |
+| NK              | 78.6 % | **16.9 %** | **−0.66** |
+
+The r-1 rule systematically over-counted basins because it absorbed
+the soft positive eigenvalue (the "escape mode toward neighbour") as
+part of the ``n_soft = 1`` allowance. The magnitude rule says: if
+that positive eigenvalue exceeds oracle tol, call it fork. The
+re-classifications land on the clusters that genuinely sit on
+density ridges — exactly the biological pattern the user
+predicted when the pitchfork saddle issue surfaced.
+
+### 5.5 Third rework — full spectrum, tangent restriction, d sweep (SUPERSEDED by §5.8)
 
 **User rebuttal** (correctly, again): "lead-eigenvalue alone is
 insufficient — a cluster with ``n_neg = d − 1`` out of ``d`` is a
@@ -772,9 +874,20 @@ Captured in commit `2afe17c` + `5e7ad2f`:
    non-isotropic) embedding, OR a density-aware tangent-rank
    estimator. Open follow-up.
 
-Repository tag: **``v0.5-basin-lock``** at commit at the time of
-this update. §7c (per-cell ``t_c`` in NB likelihood) resumes after
-the tag.
+**Repository tag: deferred until the pitchfork gate PASSES under the
+magnitude rule.** The previous ``v0.5-basin-lock`` tag was removed
+after the r-1 rule was retired. Current state: holder P/R pass at
+every τ; fork P/R fails because the Σ-tangent at a saddle hides the
+unstable axis. Open work before a re-tag:
+
+* a saddle-aware tangent (e.g. augment Σ-tangent with directions
+  where ``J`` itself has large positive eigenvalues above
+  ``oracle_tol``), OR
+* accept the holder-only gate and document the fork-recall
+  limitation at the paper's methods section.
+
+§7c (per-cell ``t_c`` in NB likelihood) does NOT resume before the
+tag.
 
 ### 5.6 Verdict (third rework): PASS
 

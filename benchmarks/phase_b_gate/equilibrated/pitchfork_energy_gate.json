@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-13 22:03:19",
+  "timestamp": "2026-10-13 23:36:21",
   "args": {
     "tau_crit": [
       0.1,
@@ -92,7 +92,7 @@
           "analytic_lead_re_median": -0.862323417554028
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 41.54213416704442,
+        "fit_seconds": 35.03829029202461,
         "symmetry": {
           "n_sample": 100,
           "median_asym": 9.298963732362608e-08,
@@ -104,7 +104,33 @@
           0.05,
           0.5
         ],
-        "n_epochs": 1500
+        "n_epochs": 1500,
+        "magnitude_rule": {
+          "fork_pr": {
+            "tp": 28,
+            "fp": 42,
+            "fn": 17,
+            "precision": 0.4,
+            "recall": 0.6222222222222222
+          },
+          "holder_pr": {
+            "tp": 1105,
+            "fp": 25,
+            "fn": 34,
+            "precision": 0.9778761061946902,
+            "recall": 0.9701492537313433
+          },
+          "beh_counts": {
+            "fork": 70,
+            "holder": 1130
+          },
+          "tol": 0.033670612179577224,
+          "ground_truth": {
+            "n_true_fork": 45,
+            "n_true_holder": 1139,
+            "analytic_lead_re_median": -0.862323417554028
+          }
+        }
       }
     },
     {
@@ -180,7 +206,7 @@
           "analytic_lead_re_median": -0.7905196417149208
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 44.50666412501596,
+        "fit_seconds": 34.62331183301285,
         "symmetry": {
           "n_sample": 100,
           "median_asym": 8.822823716059247e-08,
@@ -192,7 +218,33 @@
           0.05,
           0.5
         ],
-        "n_epochs": 1500
+        "n_epochs": 1500,
+        "magnitude_rule": {
+          "fork_pr": {
+            "tp": 5,
+            "fp": 71,
+            "fn": 37,
+            "precision": 0.06578947368421052,
+            "recall": 0.11904761904761904
+          },
+          "holder_pr": {
+            "tp": 1067,
+            "fp": 57,
+            "fn": 69,
+            "precision": 0.949288256227758,
+            "recall": 0.9392605633802817
+          },
+          "beh_counts": {
+            "fork": 76,
+            "holder": 1124
+          },
+          "tol": 0.03205630797483338,
+          "ground_truth": {
+            "n_true_fork": 42,
+            "n_true_holder": 1136,
+            "analytic_lead_re_median": -0.7905196417149208
+          }
+        }
       }
     },
     {
@@ -268,7 +320,7 @@
           "analytic_lead_re_median": -0.7980401058391224
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 44.56137754197698,
+        "fit_seconds": 35.47109583299607,
         "symmetry": {
           "n_sample": 100,
           "median_asym": 7.983158312185878e-08,
@@ -280,7 +332,33 @@
           0.05,
           0.5
         ],
-        "n_epochs": 1500
+        "n_epochs": 1500,
+        "magnitude_rule": {
+          "fork_pr": {
+            "tp": 1,
+            "fp": 1,
+            "fn": 45,
+            "precision": 0.5,
+            "recall": 0.021739130434782608
+          },
+          "holder_pr": {
+            "tp": 1138,
+            "fp": 60,
+            "fn": 1,
+            "precision": 0.9499165275459098,
+            "recall": 0.9991220368744512
+          },
+          "beh_counts": {
+            "fork": 2,
+            "holder": 1198
+          },
+          "tol": 0.03257456742670691,
+          "ground_truth": {
+            "n_true_fork": 46,
+            "n_true_holder": 1139,
+            "analytic_lead_re_median": -0.7980401058391224
+          }
+        }
       }
     }
   ]

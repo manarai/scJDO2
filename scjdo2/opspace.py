@@ -823,37 +823,36 @@ def classify_basin_latent(adata: AnnData, tol: float,
                           use_rep: str = "X_pca",
                           k_tangent: int = 30,
                           tangent_floor_frac: float = 0.1) -> None:
-    """Tangent-restricted basin classifier on the latent operator.
+    """Magnitude-based tangent-restricted basin classifier.
 
-    This is the authoritative basin rule adopted at commit ``5e7ad2f``
-    (SUMMARY §5.5-§5.6). It replaces the leading-eigenvalue rule used by
-    :func:`behaviour` for latent-space runs when the question is
-    "is this cell inside a density basin" rather than "what is the
-    leading mode's sign".
+    Final locked rule (user, 2026-10, replacing the earlier
+    ``n_neg >= r-1`` rule which could not distinguish a saddle in a
+    high-D embedding from a basin with a soft axis):
 
     Per cell ``c``:
 
-    1. Compute the local tangent rank ``r_c`` as the number of
-       principal directions of the kNN Σ⁻¹ in ``adata.obsm[use_rep]``
-       whose eigenvalue exceeds ``tangent_floor_frac × max|λ(Σ⁻¹)|``.
-    2. Take the top-``r_c`` eigenvalues of ``J_c`` sorted by
-       magnitude — the per-cell *effective spectrum*.
-    3. Count ``n_neg = sum(λ < -tol)`` and ``n_pos = sum(λ > tol)`` on
-       the top-``r_c`` block.
-    4. Classify:
-         * **basin** (holder) iff ``n_neg ≥ r_c − 1`` — basin with up
-           to one soft direction (the axis toward its nearest related
-           cluster centroid in latent).
-         * **fork** iff a positive eigenvalue has magnitude ``> tol``
-           AND the cell is not a basin.
-         * **drift** otherwise.
+    1. Compute the local tangent rank ``r_c`` from the kNN Σ⁻¹
+       eigenvalues of ``adata.obsm[use_rep]`` above
+       ``tangent_floor_frac × max |λ(Σ⁻¹)|``.
+    2. Take the top-``r_c`` eigenvalues of ``J_c`` sorted by magnitude.
+    3. Classify (checked in this order):
+         * **fork** iff ``max(ev_r) > +tol``
+         * **drift** iff ``all |ev_r| < tol``
+         * **basin** (holder) iff ``max(ev_r) < +tol`` AND
+           ``min(ev_r) < -tol`` (negative definite above noise with
+           no positive eigenvalue above tol).
+    4. Report ``n_soft = count(|ev_r| < tol)`` and a continuous
+       **basin index** ``bi = -max(ev_r) / median|ev_r_neg|``, which
+       is positive for basins (deeper = larger) and negative for
+       forks (saddle → bi < 0 since λ_max > 0).
 
-    Writes columns:
+    Columns written:
         ``op_behaviour_basin``   — "holder" / "fork" / "drift"
         ``op_tangent_r``         — per-cell tangent rank
         ``op_n_neg_tangent``     — per-cell negative count in tangent
         ``op_n_pos_tangent``     — per-cell positive count in tangent
-        ``op_n_soft``            — ``r_c − n_neg`` (soft directions)
+        ``op_n_soft``            — ``count(|ev| < tol)``
+        ``op_basin_index``       — continuous shallowness index
     """
     uns = adata.uns.get("scjdo2", {})
     J = uns.get("J_latent")
@@ -873,6 +872,8 @@ def classify_basin_latent(adata: AnnData, tol: float,
     r_arr = np.zeros(n, dtype=np.int32)
     n_neg_arr = np.zeros(n, dtype=np.int32)
     n_pos_arr = np.zeros(n, dtype=np.int32)
+    n_soft_arr = np.zeros(n, dtype=np.int32)
+    basin_idx_arr = np.full(n, np.nan, dtype=np.float32)
     beh = np.full(n, "", dtype=object)
     k = min(int(k_tangent), n - 1)
     for c in range(n):
@@ -880,29 +881,54 @@ def classify_basin_latent(adata: AnnData, tol: float,
         idx = np.argpartition(d_c, k)[:k]
         Sigma = np.cov(z[idx], rowvar=False, bias=False)
         Sigma = Sigma + 1e-6 * np.eye(d)
+        # Tangent = directions where the data MANIFOLD spreads
+        # locally. These are the LARGE-eigenvalue directions of Σ
+        # (NOT Σ⁻¹ — Σ⁻¹'s large eigenvalues are the manifold-NORMAL
+        # directions where data is concentrated, which are precisely
+        # the directions J has no information about). The restriction
+        # keeps the saddle-unstable direction at a pitchfork saddle
+        # (Σ_yy large along the between-basin axis).
         try:
-            ev_inv = np.abs(np.linalg.eigvalsh(np.linalg.inv(Sigma)))
-            floor = float(tangent_floor_frac) * float(ev_inv.max())
-            r_c = int((ev_inv > floor).sum())
+            ev_sig, V_sig = np.linalg.eigh(Sigma)
+            abs_ev = np.abs(ev_sig)
+            floor = float(tangent_floor_frac) * float(abs_ev.max())
+            keep = abs_ev > floor
+            r_c = int(keep.sum())
+            V = V_sig[:, keep]                              # (d, r)
         except np.linalg.LinAlgError:
             r_c = d
+            V = np.eye(d)
+        if r_c == 0:
+            r_arr[c] = 0
+            beh[c] = "drift"
+            continue
+        # Tangent-restricted block: eigenvalues of V^T J V (r × r).
         try:
-            ev = np.linalg.eigvals(J[c].astype(np.float64)).real
+            B = V.T @ J[c].astype(np.float64) @ V
+            ev_r = np.linalg.eigvals(B).real
         except np.linalg.LinAlgError:
             r_arr[c] = r_c
             beh[c] = "drift"
             continue
-        order = np.argsort(-np.abs(ev))
-        ev_r = ev[order[:r_c]]
         n_neg = int((ev_r < -tol).sum())
         n_pos = int((ev_r > tol).sum())
+        n_soft = int((np.abs(ev_r) < tol).sum())
         r_arr[c] = r_c
         n_neg_arr[c] = n_neg
         n_pos_arr[c] = n_pos
-        if n_neg >= max(r_c - 1, 1):
-            beh[c] = "holder"
-        elif n_pos > 0:
+        n_soft_arr[c] = n_soft
+        lam_max = float(ev_r.max())
+        neg = ev_r[ev_r < -tol]
+        med_neg = float(np.median(neg)) if neg.size else float("nan")
+        if np.isfinite(med_neg) and abs(med_neg) > 0:
+            basin_idx_arr[c] = -lam_max / abs(med_neg)
+        # Classification (user spec: magnitude rule).
+        if lam_max > tol:
             beh[c] = "fork"
+        elif np.all(np.abs(ev_r) < tol):
+            beh[c] = "drift"
+        elif neg.size > 0:
+            beh[c] = "holder"
         else:
             beh[c] = "drift"
 
@@ -913,7 +939,8 @@ def classify_basin_latent(adata: AnnData, tol: float,
     adata.obs["op_tangent_r"] = r_arr
     adata.obs["op_n_neg_tangent"] = n_neg_arr
     adata.obs["op_n_pos_tangent"] = n_pos_arr
-    adata.obs["op_n_soft"] = (r_arr - n_neg_arr).astype(np.int32)
+    adata.obs["op_n_soft"] = n_soft_arr
+    adata.obs["op_basin_index"] = basin_idx_arr
 
 
 def behaviour(adata: AnnData, tol: Optional[float] = None,

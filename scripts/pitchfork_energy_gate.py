@@ -32,13 +32,36 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 # Reuse the dynamic ground truth + metrics + opspace plumbing from the
 # original gate script.
 from equilibrated_gate import (                               # type: ignore
-    _dynamic_labels, _gate, OUT, row_oracle,
+    _dynamic_labels, _gate, _pr, OUT, row_oracle,
 )
 from scjdo2.data import generate_pitchfork_equilibrated
 from scjdo2.energy_drift import EnergyDriftAdapter, EnergyDriftConfig
+from scjdo2.opspace import classify_basin_latent
 
 
 REPO = Path(__file__).resolve().parent.parent
+
+
+def _gate_magnitude_rule(adata, tau_crit: float, tol: float) -> dict:
+    """Apply the magnitude-rule classifier (opspace.classify_basin_latent)
+    to the latent J and score fork/holder P/R against the dynamic
+    ground truth (sign of the analytic 2D J)."""
+    classify_basin_latent(adata, tol=float(tol), use_rep="X_pca")
+    beh = adata.obs["op_behaviour_basin"].astype(str).to_numpy()
+    pred_fork = beh == "fork"
+    pred_holder = beh == "holder"
+    true_fork, true_holder, analytic_lead_re = _dynamic_labels(adata)
+    return {
+        "fork_pr": _pr(pred_fork, true_fork),
+        "holder_pr": _pr(pred_holder, true_holder),
+        "beh_counts": {b: int(np.sum(beh == b)) for b in np.unique(beh) if b},
+        "tol": float(tol),
+        "ground_truth": {
+            "n_true_fork": int(true_fork.sum()),
+            "n_true_holder": int(true_holder.sum()),
+            "analytic_lead_re_median": float(np.median(analytic_lead_re)),
+        },
+    }
 
 
 def row_energy_dsm(adata, tau_crit: float, n_epochs: int, seed: int,
@@ -99,7 +122,8 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
           f"holder P={r_oracle['holder_pr']['precision']:.2f} "
           f"R={r_oracle['holder_pr']['recall']:.2f}")
 
-    # Energy-param row.
+    # Energy-param row — ESM, legacy (leading-eig) classifier for the
+    # original gate numbers.
     print(f"  [energy_{loss}] fit {n_epochs} ep  "
           f"σ∈[{sigma_min:.3f}, {sigma_max:.3f}]  β={beta}")
     r_energy = row_energy_dsm(
@@ -110,7 +134,8 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
     sym = r_energy["symmetry"]
     print(f"  [energy_dsm] SYM median={sym['median_asym']:.3e}  "
           f"max={sym['max_asym']:.3e}")
-    print(f"  [energy_dsm] fork P={r_energy['fork_pr']['precision']:.2f} "
+    print(f"  [energy_dsm] (lead-eig)  "
+          f"fork P={r_energy['fork_pr']['precision']:.2f} "
           f"R={r_energy['fork_pr']['recall']:.2f}  "
           f"holder P={r_energy['holder_pr']['precision']:.2f} "
           f"R={r_energy['holder_pr']['recall']:.2f}  "
@@ -118,9 +143,25 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
           f"n_true_fork={r_energy['ground_truth']['n_true_fork']}  "
           f"n_true_holder={r_energy['ground_truth']['n_true_holder']}")
 
-    # Gate verdict.
-    hp = r_energy["holder_pr"]
-    fp = r_energy["fork_pr"]
+    # Magnitude-rule classifier — the FINAL spec adopted post-lock.
+    # Tol derived from the per-cell ground-truth lead_re distribution:
+    # analytic_tol = 0.1 × std(analytic_lead_re) (same scheme the
+    # oracle uses).
+    _tf, _th, analytic_lead = _dynamic_labels(adata)
+    finite = analytic_lead[np.isfinite(analytic_lead)]
+    tol_mag = float(0.1 * np.nanstd(finite)) if finite.size else 0.1
+    r_mag = _gate_magnitude_rule(adata, tau_crit, tol=tol_mag)
+    print(f"  [energy_mag]  (magnitude rule, tol={tol_mag:.4f})  "
+          f"fork P={r_mag['fork_pr']['precision']:.2f} "
+          f"R={r_mag['fork_pr']['recall']:.2f}  "
+          f"holder P={r_mag['holder_pr']['precision']:.2f} "
+          f"R={r_mag['holder_pr']['recall']:.2f}  "
+          f"beh={r_mag['beh_counts']}")
+    r_energy["magnitude_rule"] = r_mag
+
+    # Gate verdict uses the MAGNITUDE RULE now (user spec).
+    hp = r_mag["holder_pr"]
+    fp = r_mag["fork_pr"]
     op = r_oracle["fork_pr"]
     hold_abs_ok = (
         (hp["precision"] is None or np.isnan(hp["precision"]) or hp["precision"] >= 0.8)
@@ -134,7 +175,7 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
         or abs(fp["recall"] - op["recall"]) <= 0.10
     )
     verdict = "PASS" if (hold_abs_ok and fork_rel_ok) else "FAIL"
-    print(f"  >>> VERDICT @ τ={tau_crit}: {verdict}")
+    print(f"  >>> VERDICT @ τ={tau_crit} (magnitude rule): {verdict}")
 
     return {
         "tau_crit": tau_crit,
