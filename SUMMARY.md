@@ -12,6 +12,24 @@ on Dynamo scNT-seq they are per-hour (`clock_calibrated = True`).
 
 Human gene symbols throughout (``GATA1``, ``SPI1``).
 
+## 0 · Caveat — the four haematopoiesis datasets are progenitor compartments
+
+Every haematopoiesis dataset reported below is a **progenitor
+compartment with no mature resting cells**: Setty CD34+ BM, Dynamo
+scNT-seq CD34+ BM, Paul15 Kit+ progenitors, and LARRY in-vitro
+myeloid-skewed culture are all enriched for actively differentiating
+cells and depleted of terminally differentiated, non-cycling types
+(resting mature B / T lymphocytes, long-lived tissue macrophages,
+mature neutrophils). A field fit on such compartments **should not
+produce holders** on the biological ground truth — committed progeny
+in these datasets are still proliferating along a lineage, which is
+exactly the fork / drift / growing-oscillator signature. "Zero
+holders on terminals" in §1-§4 is therefore **consistent with the
+biology; it is not yet a positive test of the estimator**. A
+positive-control test needs a homeostatic compartment that
+genuinely contains basins — resting mature cells at or near a
+fixed point. That is the §5 PBMC arm.
+
 ## 1 · Setty 2019 CD34+ bone marrow — the primary snapshot comparison
 
 ### 1.1 v1 preprint pipeline (per-Palantir-branch slicing)
@@ -298,16 +316,18 @@ SPI1 ranks (out of 2002 HVG):
 | drivers_left | **GATA1** | **54**  | 0.32 | 0.015 | 1.18 | **ok** |
 | drivers_left | SPI1  | 227 | 2.04 | 0.032 | 0.43 | ok |
 
-**Recovery vs DSM-Setty on GATA1.** On DSM-Setty's decision archetype
-(arch 3), GATA1 was **capped with Fisher = 0** (anchor_max_live SNR
-cut dropped it); SPI1 was rank 73 responder / 137 driver. On scVelo-
-Setty's decision archetype (arch 7), **GATA1 is rank 57 / 54 with
-real Fisher mass**, SPI1 is 392 / 227 — the two TFs swap primacy at
-the saddle under splicing vs density-score drift. Measured flow via
-splicing surfaces erythroid-axis GATA1 at the decision region
-where the DSM drift did not. **This is the first clean recovery of
-GATA1 as a top-tail driver of a scJDO2 archetype under a drift
-other than the DSM score.**
+**Top-tail recovery of GATA1 under measured flow.** On DSM-Setty's
+decision archetype (arch 3), GATA1 was **capped with Fisher = 0**
+(anchor_max_live SNR cut dropped it); SPI1 was rank 73 responder /
+137 driver. On scVelo-Setty's decision archetype (arch 7), **GATA1
+reaches responder rank 57 / driver rank 54 with real Fisher mass**
+(0.32); SPI1 is 392 / 227 — the two TFs swap primacy at the saddle
+under splicing vs density-score drift. Phrased precisely: GATA1 is
+**top-tail (rank 57 of 2002 HVG), surfaced under measured flow
+where the score capped it**. Not a basin recovery and not a
+functional validation of the archetype — a sensitivity-level
+observation that the drift source changes which TF the gene-space
+lift highlights at the decision region.
 
 **Caveats.** (a) Zero holders remain on every terminal, so the
 "basin on terminals" signature is still absent — measured flow via
@@ -369,6 +389,152 @@ Next steps already recorded in ``V2_PLAN.md``:
 * **Setty + scVelo whole-genome rerun** (this one dropped to ~700
   velocity-fittable genes under the dynamical fit; a broader HVG
   pool or a steady-state scVelo could keep more).
+
+## 5 · PBMC positive control — the basin gate FAILS; stop before §7c
+
+**Verdict: FAIL.** The four resting mature types (CD4 T, CD8 T, B,
+CD14+ Monocytes; 2282 of 2638 cells) read **~17 % holder** under this
+setup, not ≥ 50 %. Every one of 8 archetypes classifies as fork
+(``lead_re`` +0.18 to +0.93). The per-cell operator does not
+distinguish basin from non-basin cells on this homeostatic
+compartment, so §7c is deferred until the drift source is reworked.
+Detail follows.
+
+**Setup.**
+
+* **Data.** 10x PBMC 3k (``scanpy.datasets.pbmc3k`` + louvain labels
+  from ``pbmc3k_processed``). 2638 cells × 32738 genes raw UMIs,
+  reduced to 13656 after ``min_cells=3``, then restricted to **3065
+  genes** (3000 HVG + cycle + resting markers forced in). The full
+  13656-gene run is practically out of reach of this 36 GB machine:
+  with ``anchor_max_live=150`` the per-cell CSR Jacobian is ~2 MB
+  and the gene-space tensor runs to ~5 GB; raising to 13.6k genes
+  pushes that to ~22 GB (demonstrated: a run with that pool stalled
+  the lift at ~2.5 hr with no 500-cell marker emitted — this
+  restriction is the pragmatic cap, not a scientific choice). 10x
+  PBMC 10k v3 was the preferred target; pbmc3k is the recorded
+  fallback.
+* **Embedding.** scVI 1.2 with ``d_latent`` chosen by held-out
+  marginal log-likelihood sweep over {5, 10, 15}: −2820 / −2802 /
+  −2796 → **d_latent = 15** (highest LL = best fit, within 1 % of
+  d=10).
+* **Drift.** DSM score-only (``inject_velocity_prior=False``,
+  ``use_residual=False``) → ``u = β · ∇̂ log p``; Phase C anchor fit
+  on 200 k-means anchors with ``anchor_max_live=150`` and the R16
+  SNR-ranked live-column rule. Cycle genes retained in the gene set.
+* **Known-rotation projection.** S + G2M scores regressed into the
+  latent frame (Tirosh 2016 gene lists); the resulting 2-dim subspace
+  QR-orthonormalised; ``J_c ← (I − UU^T) J_c (I − UU^T)`` applied to
+  every cell's latent Jacobian before Phase C.
+
+**Observation 1 — the parameterised score is only partially
+symmetric.** The user's spec assumed ``J = β · ∇² log p`` would be
+symmetric, which would restrict the behaviour spectrum to holder /
+drift / fork. Measured median
+``‖J − Jᵀ‖_F / ‖J‖_F = 0.37``: v1's ``DriftField`` MLP does not
+architecturally enforce ``∇φ``-form on the score head, so the learned
+score is only approximately a gradient. Imaginary-part eigenvalues
+do appear and 5-7 % of cells per cluster land in
+``damped_oscillator`` or ``growing_oscillator``. The symmetric-score
+constraint is a *theoretical* property of the true score, not an
+*architectural* guarantee of this drift.
+
+**Observation 2 — permutation null is holder-dominant by
+construction.** On shuffled latent positions (3 perms, same DSM
+drift epochs / network), **99.8 % of cells have ``Re(λ) < 0``**
+(median ``lead_re ≈ −0.010``). This is expected: a shuffled cloud is
+a single-mode density, so the Hessian of ``log p`` is negative
+definite at every point. The null drifts cells inward to one
+centroid, and inward-flow is holder-shaped.
+
+**Observation 3 — real data flips to fork-dominant.** On real
+PBMC3k with 8 cell-type modes, **75.1 % of cells have ``Re(λ) > 0``**
+(median ``lead_re ≈ 7 × 10⁻¹⁰`` — essentially zero but biased
+positive). Multi-modal density has saddle *ridges* between modes
+and the DSM-score field at ridge points reads outward (fork),
+dominating the per-cell classification over the small inward
+curvature inside each basin.
+
+**Observation 4 — resting vs non-resting have the same
+signature.** Holder fraction per cell type:
+
+| cluster | n | fork | holder | drift | d_osc | g_osc | frac_holder |
+|---|---|---|---|---|---|---|---|
+| **B cells**          |  342 | 229 |  57 | 31 | 13 | 12 | 0.167 |
+| **CD14+ Monocytes**  |  480 | 334 |  63 | 40 | 21 | 22 | 0.131 |
+| **CD4 T cells**      | 1144 | 773 | 209 | 82 | 39 | 41 | 0.183 |
+| **CD8 T cells**      |  316 | 213 |  56 | 25 | 13 |  9 | 0.177 |
+| Dendritic cells      |   37 |  23 |   9 |  1 |  3 |  1 | 0.243 |
+| FCGR3A+ Monocytes    |  150 |  93 |  34 | 11 | 11 |  1 | 0.227 |
+| Megakaryocytes       |   15 |  10 |   3 |  1 |  1 |  0 | 0.200 |
+| NK cells             |  154 | 105 |  26 | 10 |  8 |  5 | 0.169 |
+
+The four resting types (bold) land at 13-18 % holder; the four
+non-resting at 17-24 %. **The gating signal the arm was supposed to
+detect is absent.**
+
+**Observation 5 — the archetype decomposition sees cell-type
+biology, just not as basins.** All 8 archetypes classify fork,
+``lead_re`` 0.18 to 0.93. The archetype × cluster soft-weight table
+assigns archetype 3 (``lead_re`` +0.21, 227 hard-member cells) its
+heaviest weight on B cells, and the stiffest / softest gene-space
+directions on that archetype read:
+
+| rank | gene (right/stiff) | fisher | gene (left/stiff) | fisher |
+|---|---|---|---|---|
+| 1  | **CD74**     | 6.01 | **CD74**     | 6.01 |
+| 2  | **HLA-DRA**  | 7.06 | **HLA-DRA**  | 7.06 |
+| 3  | **CD79A**    | 4.47 | **HLA-DRB1** | 6.74 |
+| 4  | MALAT1       | 5.50 | **HLA-DPB1** | 7.29 |
+| 5  | KCNG1        | 3.29 | **HLA-DPA1** | 5.70 |
+| 6  | **HLA-DRB1** | 6.74 | **CD79A**    | 4.47 |
+| 7  | **HLA-DPB1** | 7.29 | **HLA-DQB1** | 5.80 |
+| 8  | RPL13A       | 4.58 | **CD37**     | 3.24 |
+| 9  | **CD37**     | 3.24 | **HLA-DQA1** | 6.09 |
+| 10 | RPS27A       | 3.94 | **HLA-DRB5** | 5.43 |
+
+MHC-II + CD79A + CD37 — the canonical B-cell antigen-presentation
+program, each with ``reason = ok`` (Fisher mass 3-7). The pipeline
+*found* B-cell biology; it just read the dominant local flow at
+that archetype as outward (fork, lead_re +0.21), not as a basin.
+The stiffest and softest modes collapse to the same gene list
+because the archetype's negative-Re tangent block is effectively
+rank-1 (the operator's basin direction is dominated by one mode;
+others are at ``Re ≥ 0``).
+
+**Diagnostic.**
+
+* The DSM score drift on a *multi-modal* homeostatic compartment
+  reports fork almost everywhere because the between-mode saddle /
+  ridge geometry dominates the within-mode basin curvature in the
+  score-field Jacobian. The known-rotation projection and the full-
+  gene anchor fit do not change this.
+* Permutation null distinguishes signal from noise in the opposite
+  direction from what the arm needed: random data → holder; real
+  data → fork.
+* Confirming the archetype decomposition recovers cell-type gene
+  programmes (B-cell MHC-II + CD79A on archetype 3's dominant mode)
+  means the drift field *does* encode identity structure; the
+  pipeline's basin-reading machinery just reads the between-mode
+  ridges as fork, not the within-mode cups as holder.
+
+**Decision (user gate).** The gate says: *if major resting types are
+not holders, stop and report the diagnostic before §7c*. **§7c is
+therefore deferred.** The failure mode is not "measured flow needs a
+better rate model" (what §7c would address); it is "snapshot score
+drift on multi-modal homeostatic data classifies by between-mode
+geometry, not within-mode basins". §7c (per-cell ``t_c`` in the NB
+likelihood) does not fix this. A path forward likely requires a
+drift source whose Jacobian carries explicit potential structure
+(energy-based drift, Fokker-Planck steady-state operator) or a
+measured steady-state flow (RNA velocity ≈ 0 on resting cells as a
+hard anchor).
+
+Outputs under ``benchmarks/v2/pbmc_basin/``: ``scvi_d_latent_sweep.csv``,
+``permutation_null.csv``, ``real_vs_perm.csv``,
+``behaviour_by_cluster.csv``, ``archetype_by_cluster.csv``,
+``stiff_soft_by_cluster.csv``, ``gate.json``,
+``operator_space_ledger.pdf``.
 
 ## 4 · Paul15 (secondary mouse replicate)
 

@@ -1373,6 +1373,13 @@ def archetype_operators(
             "eigenvalues": evals,
             "eigvec": v_lead,
             "eigvec_left": v_lead_left,
+            # Full lifted eigvec stacks ``(G, r)`` — columns ordered by
+            # descending Re(λ), same order as ``eigenvalues``. The lead
+            # mode (column 0) matches ``eigvec`` / ``eigvec_left``. The
+            # trailing columns are the stiff / soft directions used by
+            # the §5 PBMC basin arm to rank top-10 genes per eigenmode.
+            "eigvec_full": lifted_right,
+            "eigvec_left_full": lifted_left,
             "henrici": float(henrici_k),
             "transient_gain": float(tgain_k),
             "n_cells": int(members.size),
