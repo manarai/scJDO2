@@ -2,9 +2,9 @@
   "task": "aging/A01",
   "status": "blocked",
   "started_utc": "2026-10-14T14:19:45Z",
-  "finished_utc": "2026-10-14T14:38:38Z",
+  "finished_utc": "2026-10-14T20:37:13Z",
   "compute": {
-    "cpu_hours": 0.03,
+    "cpu_hours": 0.04,
     "gpu_hours": 0.0,
     "hardware": "MacBook Pro (Apple M3 Max): 14 CPU cores, 30 GPU cores, 36 GB RAM; macOS 26.7.1 arm64; PyTorch MPS available; CUDA unavailable"
   },
@@ -25,10 +25,10 @@
     "lung_n_donors_old": 10,
     "marrow_n_donors_young": 2,
     "marrow_n_donors_old": 13,
-    "lung_n_cells_after": null,
-    "marrow_n_cells_after": null,
-    "lung_eligible_types": null,
-    "marrow_eligible_types": null
+    "lung_n_cells_after": 1552,
+    "marrow_n_cells_after": 5388,
+    "lung_eligible_types": 2,
+    "marrow_eligible_types": 6
   },
   "artifacts": [
     {
@@ -44,23 +44,31 @@
       "sha256": "e9b711e8411ea9a0238bd39efdcf05fc42512ef270b47689fe3e07b121baf03c",
       "committed": false,
       "regenerate": "python scripts/fetch_tms_aging.py"
+    },
+    {
+      "path": "benchmarks/aging/data/marrow_processed.h5ad",
+      "bytes": 119197808,
+      "sha256": "2c2831ae3783df9a427021bceeae472af3296648ec4a7ee3b31c93fa18f2e12c",
+      "committed": false,
+      "regenerate": "python scripts/preprocess_tms_aging.py --tissue marrow --seed 0"
     }
   ],
   "deviations": [
     "The full suite had six documented failures from the absent v1 scjdo package (ModuleNotFoundError: scjdo); coord/PROJECT.md and A01 explicitly permit continuing in that case. The required aging test files passed 10/10.",
-    "Preprocessing, QC CSVs, processed AnnData outputs, cell-filter CSVs, and eligibility metrics were not produced because the task-level age-label stop condition triggered after the unmodified fetch.",
-    "The stop condition conflicts with the method specification's intentional exclusion of 4-week cells: those cells are outside the fetch script's young/old sets and account for 10.22% of lung and 7.53% of marrow."
+    "The initial 4-week stop was resolved before preprocessing by Claude's PREREG \u00a72b and the revised A01 task; 4-week cells are now excluded by design.",
+    "Lung selection and QC completed, but the exact required Scanpy seurat_v3 HVG call failed in _loess.loess.fit with a near-singularity ValueError. No processed lung AnnData was written and no unregistered numerical fallback was applied."
   ],
   "observations": [
-    "The fetched Census version and both observed dataset IDs exactly match PREREG §1.",
-    "All unmapped cells have development_stage equal to 4 weeks; no other unmapped development-stage label was observed.",
-    "Before exclusion, young cells are less numerous than old cells in both tissues (lung 3,612 vs 18,420; marrow 3,490 vs 33,703)."
+    "The fetched Census version and both observed dataset IDs exactly match PREREG \u00a71.",
+    "No age labels outside the revised young/old sets and the PREREG \u00a72b 4-week exclusion were observed.",
+    "The \u2265200 post-downsampling eligibility gate has 2 passing lung types and 6 passing marrow types.",
+    "Marrow processed AnnData has 5,388 cells, 2,000 HVGs, a counts layer, and 52,437 genes in .raw."
   ],
   "suggestions": [
-    "A revised or follow-up task should make the known 4-week exclusion explicit in the age-label audit rule, so the required audit remains reproducible without treating the intended exclusion as an unresolved label.",
-    "Before reissuing preprocessing, Claude should record the resolution in a review or new task rather than changing the frozen handling after this real-data fetch."
+    "A follow-up revision should prescribe a deterministic, preregistered numerical resolution for the lung seurat_v3 LOESS singularity if it is to be overcome; no fallback should be selected post hoc from the failed result.",
+    "After the lung processed object exists, retain the planned A02 shared-space analysis; the donor-count caveat remains particularly strong for marrow, which has two young donors."
   ],
   "questions": [
-    "The method specification says to drop 4-week cells, while A01 says to stop when any age label outside the script's young/old sets is at least 5% of cells. Should a revised task explicitly exempt the expected 4-week exclusion from that stop rule before preprocessing proceeds?"
+    "The frozen required seurat_v3 HVG call fails on lung with a LOESS near-singularity error. What preregistered numerical fallback or preprocessing adjustment should a new revision direct before a lung processed AnnData is created?"
   ]
 }

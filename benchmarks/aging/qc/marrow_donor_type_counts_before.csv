@@ -1,0 +1,255 @@
+tissue,age_group,donor_id,cell_type,n_cells_before
+marrow,old,18-F-50,basophil,2
+marrow,old,18-F-50,erythroblast,35
+marrow,old,18-F-50,granulocyte,226
+marrow,old,18-F-50,granulocytopoietic cell,404
+marrow,old,18-F-50,hematopoietic precursor cell,104
+marrow,old,18-F-50,immature B cell,13
+marrow,old,18-F-50,late pro-B cell,24
+marrow,old,18-F-50,macrophage,32
+marrow,old,18-F-50,megakaryocyte-erythroid progenitor cell,69
+marrow,old,18-F-50,monocyte,150
+marrow,old,18-F-50,naive B cell,26
+marrow,old,18-F-50,naive T cell,91
+marrow,old,18-F-50,natural killer cell,10
+marrow,old,18-F-50,plasma cell,7
+marrow,old,18-F-50,precursor B cell,37
+marrow,old,18-F-50,proerythroblast,20
+marrow,old,18-F-50,promonocyte,118
+marrow,old,18-F-51,erythroblast,17
+marrow,old,18-F-51,"erythroid progenitor cell, mammalian",1
+marrow,old,18-F-51,granulocyte,276
+marrow,old,18-F-51,granulocytopoietic cell,394
+marrow,old,18-F-51,hematopoietic precursor cell,105
+marrow,old,18-F-51,immature B cell,6
+marrow,old,18-F-51,late pro-B cell,65
+marrow,old,18-F-51,macrophage,87
+marrow,old,18-F-51,megakaryocyte-erythroid progenitor cell,77
+marrow,old,18-F-51,monocyte,180
+marrow,old,18-F-51,naive B cell,4
+marrow,old,18-F-51,naive T cell,126
+marrow,old,18-F-51,natural killer cell,11
+marrow,old,18-F-51,plasma cell,16
+marrow,old,18-F-51,precursor B cell,71
+marrow,old,18-F-51,proerythroblast,20
+marrow,old,18-F-51,promonocyte,177
+marrow,old,18-M-52,basophil,1
+marrow,old,18-M-52,erythroblast,72
+marrow,old,18-M-52,granulocyte,802
+marrow,old,18-M-52,granulocytopoietic cell,312
+marrow,old,18-M-52,hematopoietic precursor cell,103
+marrow,old,18-M-52,immature B cell,18
+marrow,old,18-M-52,late pro-B cell,17
+marrow,old,18-M-52,macrophage,76
+marrow,old,18-M-52,megakaryocyte-erythroid progenitor cell,181
+marrow,old,18-M-52,monocyte,68
+marrow,old,18-M-52,naive B cell,19
+marrow,old,18-M-52,naive T cell,152
+marrow,old,18-M-52,natural killer cell,4
+marrow,old,18-M-52,precursor B cell,63
+marrow,old,18-M-52,proerythroblast,590
+marrow,old,18-M-52,promonocyte,172
+marrow,old,18-M-53,erythroblast,24
+marrow,old,18-M-53,granulocyte,269
+marrow,old,18-M-53,granulocytopoietic cell,164
+marrow,old,18-M-53,hematopoietic precursor cell,22
+marrow,old,18-M-53,immature B cell,3
+marrow,old,18-M-53,late pro-B cell,10
+marrow,old,18-M-53,macrophage,28
+marrow,old,18-M-53,megakaryocyte-erythroid progenitor cell,97
+marrow,old,18-M-53,monocyte,14
+marrow,old,18-M-53,naive B cell,3
+marrow,old,18-M-53,naive T cell,69
+marrow,old,18-M-53,plasma cell,4
+marrow,old,18-M-53,precursor B cell,7
+marrow,old,18-M-53,proerythroblast,275
+marrow,old,18-M-53,promonocyte,72
+marrow,old,21-F-54,basophil,1
+marrow,old,21-F-54,erythroblast,19
+marrow,old,21-F-54,granulocyte,735
+marrow,old,21-F-54,granulocytopoietic cell,485
+marrow,old,21-F-54,hematopoietic precursor cell,170
+marrow,old,21-F-54,immature B cell,5
+marrow,old,21-F-54,late pro-B cell,37
+marrow,old,21-F-54,macrophage,83
+marrow,old,21-F-54,megakaryocyte-erythroid progenitor cell,115
+marrow,old,21-F-54,monocyte,221
+marrow,old,21-F-54,naive B cell,50
+marrow,old,21-F-54,naive T cell,105
+marrow,old,21-F-54,natural killer cell,22
+marrow,old,21-F-54,plasma cell,8
+marrow,old,21-F-54,precursor B cell,79
+marrow,old,21-F-54,proerythroblast,382
+marrow,old,21-F-54,promonocyte,124
+marrow,old,21-F-55,erythroblast,35
+marrow,old,21-F-55,"erythroid progenitor cell, mammalian",3
+marrow,old,21-F-55,granulocyte,785
+marrow,old,21-F-55,granulocytopoietic cell,412
+marrow,old,21-F-55,hematopoietic precursor cell,178
+marrow,old,21-F-55,immature B cell,7
+marrow,old,21-F-55,late pro-B cell,65
+marrow,old,21-F-55,macrophage,61
+marrow,old,21-F-55,megakaryocyte-erythroid progenitor cell,127
+marrow,old,21-F-55,monocyte,171
+marrow,old,21-F-55,naive B cell,47
+marrow,old,21-F-55,naive T cell,121
+marrow,old,21-F-55,natural killer cell,19
+marrow,old,21-F-55,plasma cell,11
+marrow,old,21-F-55,precursor B cell,26
+marrow,old,21-F-55,proerythroblast,380
+marrow,old,21-F-55,promonocyte,127
+marrow,old,24-M-58,basophil,6
+marrow,old,24-M-58,erythroblast,173
+marrow,old,24-M-58,granulocyte,720
+marrow,old,24-M-58,granulocytopoietic cell,470
+marrow,old,24-M-58,hematopoietic precursor cell,161
+marrow,old,24-M-58,immature B cell,36
+marrow,old,24-M-58,late pro-B cell,33
+marrow,old,24-M-58,macrophage,58
+marrow,old,24-M-58,megakaryocyte-erythroid progenitor cell,113
+marrow,old,24-M-58,monocyte,154
+marrow,old,24-M-58,naive B cell,17
+marrow,old,24-M-58,naive T cell,100
+marrow,old,24-M-58,natural killer cell,2
+marrow,old,24-M-58,plasma cell,17
+marrow,old,24-M-58,precursor B cell,41
+marrow,old,24-M-58,proerythroblast,130
+marrow,old,24-M-58,promonocyte,77
+marrow,old,24-M-59,erythroblast,34
+marrow,old,24-M-59,"erythroid progenitor cell, mammalian",1
+marrow,old,24-M-59,granulocyte,308
+marrow,old,24-M-59,granulocytopoietic cell,348
+marrow,old,24-M-59,hematopoietic precursor cell,156
+marrow,old,24-M-59,immature B cell,2
+marrow,old,24-M-59,late pro-B cell,11
+marrow,old,24-M-59,macrophage,57
+marrow,old,24-M-59,megakaryocyte-erythroid progenitor cell,102
+marrow,old,24-M-59,monocyte,132
+marrow,old,24-M-59,naive B cell,5
+marrow,old,24-M-59,naive T cell,85
+marrow,old,24-M-59,natural killer cell,13
+marrow,old,24-M-59,plasma cell,60
+marrow,old,24-M-59,precursor B cell,17
+marrow,old,24-M-59,proerythroblast,122
+marrow,old,24-M-59,promonocyte,76
+marrow,old,24-M-60,basophil,3
+marrow,old,24-M-60,erythroblast,260
+marrow,old,24-M-60,"erythroid progenitor cell, mammalian",401
+marrow,old,24-M-60,granulocyte,765
+marrow,old,24-M-60,granulocytopoietic cell,492
+marrow,old,24-M-60,hematopoietic precursor cell,107
+marrow,old,24-M-60,immature B cell,28
+marrow,old,24-M-60,late pro-B cell,5
+marrow,old,24-M-60,macrophage,9
+marrow,old,24-M-60,megakaryocyte-erythroid progenitor cell,42
+marrow,old,24-M-60,monocyte,67
+marrow,old,24-M-60,naive B cell,13
+marrow,old,24-M-60,naive T cell,24
+marrow,old,24-M-60,natural killer cell,1
+marrow,old,24-M-60,plasma cell,44
+marrow,old,24-M-60,precursor B cell,21
+marrow,old,24-M-60,proerythroblast,145
+marrow,old,24-M-60,promonocyte,53
+marrow,old,24-M-61,basophil,5
+marrow,old,24-M-61,erythroblast,231
+marrow,old,24-M-61,granulocyte,718
+marrow,old,24-M-61,granulocytopoietic cell,373
+marrow,old,24-M-61,hematopoietic precursor cell,62
+marrow,old,24-M-61,immature B cell,25
+marrow,old,24-M-61,late pro-B cell,17
+marrow,old,24-M-61,macrophage,7
+marrow,old,24-M-61,megakaryocyte-erythroid progenitor cell,47
+marrow,old,24-M-61,monocyte,84
+marrow,old,24-M-61,naive B cell,14
+marrow,old,24-M-61,naive T cell,24
+marrow,old,24-M-61,natural killer cell,2
+marrow,old,24-M-61,plasma cell,9
+marrow,old,24-M-61,precursor B cell,13
+marrow,old,24-M-61,proerythroblast,247
+marrow,old,24-M-61,promonocyte,84
+marrow,old,30-M-2,basophil,82
+marrow,old,30-M-2,erythroblast,631
+marrow,old,30-M-2,granulocyte,2126
+marrow,old,30-M-2,granulocytopoietic cell,1232
+marrow,old,30-M-2,hematopoietic precursor cell,146
+marrow,old,30-M-2,immature B cell,512
+marrow,old,30-M-2,late pro-B cell,57
+marrow,old,30-M-2,macrophage,218
+marrow,old,30-M-2,megakaryocyte-erythroid progenitor cell,393
+marrow,old,30-M-2,monocyte,52
+marrow,old,30-M-2,naive B cell,57
+marrow,old,30-M-2,naive T cell,238
+marrow,old,30-M-2,natural killer cell,18
+marrow,old,30-M-2,plasma cell,92
+marrow,old,30-M-2,precursor B cell,36
+marrow,old,30-M-2,proerythroblast,543
+marrow,old,30-M-2,promonocyte,891
+marrow,old,30-M-3,basophil,7
+marrow,old,30-M-3,erythroblast,341
+marrow,old,30-M-3,"erythroid progenitor cell, mammalian",1
+marrow,old,30-M-3,granulocyte,1023
+marrow,old,30-M-3,granulocytopoietic cell,538
+marrow,old,30-M-3,hematopoietic precursor cell,182
+marrow,old,30-M-3,immature B cell,75
+marrow,old,30-M-3,late pro-B cell,68
+marrow,old,30-M-3,macrophage,53
+marrow,old,30-M-3,megakaryocyte-erythroid progenitor cell,132
+marrow,old,30-M-3,monocyte,50
+marrow,old,30-M-3,naive B cell,22
+marrow,old,30-M-3,naive T cell,87
+marrow,old,30-M-3,natural killer cell,8
+marrow,old,30-M-3,plasma cell,37
+marrow,old,30-M-3,precursor B cell,74
+marrow,old,30-M-3,proerythroblast,173
+marrow,old,30-M-3,promonocyte,295
+marrow,old,30-M-5,basophil,6
+marrow,old,30-M-5,erythroblast,244
+marrow,old,30-M-5,"erythroid progenitor cell, mammalian",1
+marrow,old,30-M-5,granulocyte,894
+marrow,old,30-M-5,granulocytopoietic cell,499
+marrow,old,30-M-5,hematopoietic precursor cell,196
+marrow,old,30-M-5,immature B cell,42
+marrow,old,30-M-5,late pro-B cell,85
+marrow,old,30-M-5,macrophage,39
+marrow,old,30-M-5,megakaryocyte-erythroid progenitor cell,91
+marrow,old,30-M-5,monocyte,272
+marrow,old,30-M-5,naive B cell,28
+marrow,old,30-M-5,naive T cell,48
+marrow,old,30-M-5,natural killer cell,5
+marrow,old,30-M-5,plasma cell,83
+marrow,old,30-M-5,precursor B cell,53
+marrow,old,30-M-5,proerythroblast,273
+marrow,old,30-M-5,promonocyte,147
+marrow,young,3-F-56,erythroblast,26
+marrow,young,3-F-56,granulocyte,320
+marrow,young,3-F-56,granulocytopoietic cell,363
+marrow,young,3-F-56,hematopoietic precursor cell,161
+marrow,young,3-F-56,immature B cell,10
+marrow,young,3-F-56,late pro-B cell,5
+marrow,young,3-F-56,macrophage,49
+marrow,young,3-F-56,megakaryocyte-erythroid progenitor cell,59
+marrow,young,3-F-56,monocyte,238
+marrow,young,3-F-56,naive B cell,27
+marrow,young,3-F-56,naive T cell,55
+marrow,young,3-F-56,natural killer cell,6
+marrow,young,3-F-56,plasma cell,12
+marrow,young,3-F-56,precursor B cell,115
+marrow,young,3-F-56,proerythroblast,88
+marrow,young,3-F-56,promonocyte,111
+marrow,young,3-F-57,basophil,3
+marrow,young,3-F-57,erythroblast,40
+marrow,young,3-F-57,granulocyte,384
+marrow,young,3-F-57,granulocytopoietic cell,364
+marrow,young,3-F-57,hematopoietic precursor cell,124
+marrow,young,3-F-57,immature B cell,11
+marrow,young,3-F-57,late pro-B cell,29
+marrow,young,3-F-57,macrophage,52
+marrow,young,3-F-57,megakaryocyte-erythroid progenitor cell,74
+marrow,young,3-F-57,monocyte,250
+marrow,young,3-F-57,naive B cell,35
+marrow,young,3-F-57,naive T cell,79
+marrow,young,3-F-57,natural killer cell,20
+marrow,young,3-F-57,plasma cell,27
+marrow,young,3-F-57,precursor B cell,144
+marrow,young,3-F-57,proerythroblast,89
+marrow,young,3-F-57,promonocyte,120
