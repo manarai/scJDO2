@@ -1,0 +1,286 @@
+{
+  "timestamp": "2026-10-13 20:25:24",
+  "args": {
+    "tau_crit": [
+      0.1,
+      0.3,
+      0.5
+    ],
+    "n_cells": 1200,
+    "n_alpha": 20,
+    "n_epochs": 3000,
+    "sigma_min": 0.05,
+    "sigma_max": 0.5,
+    "beta": 0.04,
+    "seed": 0,
+    "verbose": false
+  },
+  "ground_truth": "dynamic sign of analytic lead_re per cell",
+  "drift_parameterisation": "energy_scalar_mlp (E_\u03b8: R^d \u2192 R)",
+  "per_tau": [
+    {
+      "tau_crit": 0.1,
+      "n_cells": 1200,
+      "verdict": "FAIL",
+      "oracle": {
+        "row": "oracle",
+        "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
+        "fork_pr": {
+          "tp": 45,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "holder_pr": {
+          "tp": 949,
+          "fp": 0,
+          "fn": 190,
+          "precision": 1.0,
+          "recall": 0.8331870061457419
+        },
+        "beh_counts": {
+          "damped_oscillator": 190,
+          "drift": 16,
+          "fork": 45,
+          "holder": 949
+        },
+        "lead_re": {
+          "frac_positive": 0.0425,
+          "frac_negative": 0.9575,
+          "median": -0.862323417554028
+        },
+        "ground_truth": {
+          "tol": 0.033670612179577224,
+          "n_true_fork": 45,
+          "n_true_holder": 1139,
+          "frac_true_fork": 0.0375,
+          "analytic_lead_re_median": -0.862323417554028
+        }
+      },
+      "energy_dsm": {
+        "fork_pr": {
+          "tp": 38,
+          "fp": 279,
+          "fn": 7,
+          "precision": 0.11987381703470032,
+          "recall": 0.8444444444444444
+        },
+        "holder_pr": {
+          "tp": 811,
+          "fp": 9,
+          "fn": 328,
+          "precision": 0.9890243902439024,
+          "recall": 0.7120280948200176
+        },
+        "beh_counts": {
+          "drift": 63,
+          "fork": 317,
+          "holder": 820
+        },
+        "lead_re": {
+          "frac_positive": 0.2866666666666667,
+          "frac_negative": 0.7133333333333334,
+          "median": -0.001498314959462732
+        },
+        "ground_truth": {
+          "tol": 0.033670612179577224,
+          "n_true_fork": 45,
+          "n_true_holder": 1139,
+          "frac_true_fork": 0.0375,
+          "analytic_lead_re_median": -0.862323417554028
+        },
+        "row": "energy_dsm_equilibrated",
+        "fit_seconds": 11.311823374941014,
+        "symmetry": {
+          "n_sample": 100,
+          "median_asym": 1.056925285070065e-07,
+          "max_asym": 1.287066311306262e-07,
+          "mean_asym": 1.0484311161462755e-07
+        },
+        "beta": 0.04,
+        "dsm_sigma_range": [
+          0.05,
+          0.5
+        ],
+        "n_epochs": 3000
+      }
+    },
+    {
+      "tau_crit": 0.3,
+      "n_cells": 1200,
+      "verdict": "FAIL",
+      "oracle": {
+        "row": "oracle",
+        "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
+        "fork_pr": {
+          "tp": 42,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "holder_pr": {
+          "tp": 1023,
+          "fp": 0,
+          "fn": 113,
+          "precision": 1.0,
+          "recall": 0.9005281690140845
+        },
+        "beh_counts": {
+          "damped_oscillator": 113,
+          "drift": 22,
+          "fork": 42,
+          "holder": 1023
+        },
+        "lead_re": {
+          "frac_positive": 0.04416666666666667,
+          "frac_negative": 0.9558333333333333,
+          "median": -0.7905196417149208
+        },
+        "ground_truth": {
+          "tol": 0.03205630797483338,
+          "n_true_fork": 42,
+          "n_true_holder": 1136,
+          "frac_true_fork": 0.035,
+          "analytic_lead_re_median": -0.7905196417149208
+        }
+      },
+      "energy_dsm": {
+        "fork_pr": {
+          "tp": 12,
+          "fp": 288,
+          "fn": 30,
+          "precision": 0.04,
+          "recall": 0.2857142857142857
+        },
+        "holder_pr": {
+          "tp": 823,
+          "fp": 32,
+          "fn": 313,
+          "precision": 0.9625730994152046,
+          "recall": 0.7244718309859155
+        },
+        "beh_counts": {
+          "drift": 45,
+          "fork": 300,
+          "holder": 855
+        },
+        "lead_re": {
+          "frac_positive": 0.2633333333333333,
+          "frac_negative": 0.7366666666666667,
+          "median": -0.0031228349544107914
+        },
+        "ground_truth": {
+          "tol": 0.03205630797483338,
+          "n_true_fork": 42,
+          "n_true_holder": 1136,
+          "frac_true_fork": 0.035,
+          "analytic_lead_re_median": -0.7905196417149208
+        },
+        "row": "energy_dsm_equilibrated",
+        "fit_seconds": 10.50789716700092,
+        "symmetry": {
+          "n_sample": 100,
+          "median_asym": 9.531878575330666e-08,
+          "max_asym": 1.16808209327246e-07,
+          "mean_asym": 9.56000672402979e-08
+        },
+        "beta": 0.04,
+        "dsm_sigma_range": [
+          0.05,
+          0.5
+        ],
+        "n_epochs": 3000
+      }
+    },
+    {
+      "tau_crit": 0.5,
+      "n_cells": 1200,
+      "verdict": "FAIL",
+      "oracle": {
+        "row": "oracle",
+        "note": "analytic 2D J of f_toggle at (X_true, \u03b1) per cell",
+        "fork_pr": {
+          "tp": 46,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        },
+        "holder_pr": {
+          "tp": 1049,
+          "fp": 0,
+          "fn": 90,
+          "precision": 1.0,
+          "recall": 0.9209833187006146
+        },
+        "beh_counts": {
+          "damped_oscillator": 90,
+          "drift": 15,
+          "fork": 46,
+          "holder": 1049
+        },
+        "lead_re": {
+          "frac_positive": 0.0425,
+          "frac_negative": 0.9575,
+          "median": -0.7980401058391224
+        },
+        "ground_truth": {
+          "tol": 0.03257456742670691,
+          "n_true_fork": 46,
+          "n_true_holder": 1139,
+          "frac_true_fork": 0.03833333333333333,
+          "analytic_lead_re_median": -0.7980401058391224
+        }
+      },
+      "energy_dsm": {
+        "fork_pr": {
+          "tp": 30,
+          "fp": 415,
+          "fn": 16,
+          "precision": 0.06741573033707865,
+          "recall": 0.6521739130434783
+        },
+        "holder_pr": {
+          "tp": 643,
+          "fp": 11,
+          "fn": 496,
+          "precision": 0.9831804281345565,
+          "recall": 0.5645302897278315
+        },
+        "beh_counts": {
+          "drift": 101,
+          "fork": 445,
+          "holder": 654
+        },
+        "lead_re": {
+          "frac_positive": 0.41333333333333333,
+          "frac_negative": 0.5866666666666667,
+          "median": -0.0008785479585640132
+        },
+        "ground_truth": {
+          "tol": 0.03257456742670691,
+          "n_true_fork": 46,
+          "n_true_holder": 1139,
+          "frac_true_fork": 0.03833333333333333,
+          "analytic_lead_re_median": -0.7980401058391224
+        },
+        "row": "energy_dsm_equilibrated",
+        "fit_seconds": 10.508216125075705,
+        "symmetry": {
+          "n_sample": 100,
+          "median_asym": 8.867680989510518e-08,
+          "max_asym": 1.1569222380103383e-07,
+          "mean_asym": 8.93586154404602e-08
+        },
+        "beta": 0.04,
+        "dsm_sigma_range": [
+          0.05,
+          0.5
+        ],
+        "n_epochs": 3000
+      }
+    }
+  ]
+}

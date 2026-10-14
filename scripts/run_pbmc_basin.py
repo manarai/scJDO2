@@ -1,44 +1,48 @@
-"""PBMC positive-control for the basin arm (SUMMARY §5).
+"""PBMC positive-control for the basin arm (SUMMARY §5) — v2 rework.
 
-The four haematopoiesis datasets in §1-§4 are progenitor compartments
-with no mature resting cells — zero holders there is consistent with
-biology, not a positive test of the estimator. This script runs the
-scJDO2 pipeline on a homeostatic PBMC dataset where resting mature
-cells (CD4 T, CD8 T, B, classical mono) are the dominant populations
-and should sit at or near fixed points of their lineages.
+v1 of this script (committed 5d94b31) used v1's ``DriftField`` MLP as
+the DSM-score backbone, whose ``forward`` output is NOT architecturally
+the gradient of a scalar; the user's basin arm assumed a symmetric
+score Jacobian. Measured median asymmetry on that run was 0.37, and
+all 8 archetypes classified fork — the within-mode basin curvature
+was dominated by the asymmetric parts of the Jacobian.
 
-Spec (user, 2026-10):
+v2 (this script) uses the **energy-parameterised drift** in
+``scjdo2.energy_drift.EnergyDriftAdapter``:
 
-* **Data.** 10x PBMC 3k via ``scanpy.datasets.pbmc3k`` + louvain labels
-  from ``pbmc3k_processed`` (2638 cells, 8 types). PBMC 10k v3 was the
-  preferred target but requires external download; pbmc3k already
-  contains the resting mature types, so it is the recorded fallback.
-* **Embedding.** scVI. ``d_latent`` selected by held-out NB marginal
-  log-likelihood (sweep over {5, 10, 15}).
-* **Drift.** DSM score-only (``inject_velocity_prior=False``,
-  ``use_residual=False``). The resulting J is the Hessian of log p —
-  symmetric — so only holder / drift / fork are reachable; oscillator
-  / sensitive classes are out of reach of snapshot data by
-  construction, which this run acknowledges rather than treats as a
-  bug.
-* **Gene set.** Full expressed set (``sc.pp.filter_genes(min_cells=3)``);
-  cycle genes (Tirosh S + G2M) kept in the embedding and the gene-
-  space anchor fit.
-* **Anchor fit.** SNR-ranked live columns (R16 default); cycle genes
-  retained.
-* **Known-rotation projection.** The cycle-score subspace in the
-  latent frame (``U_cycle`` = QR of latent regression of S / G2M
-  scores) is projected out of each ``J_c``:
-  ``J_c ← (I - UU^T) J_c (I - UU^T)``. This matches §7a variant C.
-* **Permutation null.** Shuffle latent positions, refit DSM, record
-  the resulting lead_re distribution; compare to the real run.
-* **Outputs.** Behaviour by cell type; median lead_re + frac(Re>0);
-  tangent rank distribution; for each holder-dominated type, the
-  dominant archetype's eigenvalue range (relative units) and the
-  top-10 genes along the stiffest and softest modes (with Fisher).
-* **Gate.** If the four major resting types (CD4 T, CD8 T, B,
-  CD14+ Monocytes) are predominantly holders → tag the repo and
-  continue to §7c. Else stop and report the diagnostic.
+    E_θ: R^d → R scalar MLP,  s_θ = -∇_z E_θ,  u = β · s,
+    J = -β · Hess E_θ         — symmetric by construction.
+
+Spec (user, 2026-10, rework):
+
+* **Data.** PBMC3k (``scanpy.datasets.pbmc3k`` + louvain from
+  ``pbmc3k_processed``). 2638 cells × 8 types; 3065 HVG (cycle +
+  resting markers forced in; 13k full-gene pool is practically out
+  of reach of the 36 GB machine — ~22 GB CSR tensor at that scale).
+* **Embedding.** scVI 1.2, ``d_latent`` chosen by held-out marginal
+  log-likelihood over {5, 10, 15}.
+* **Drift.** Energy-parameterised DSM, multi-σ schedule.
+* **Symmetry gate.** Verify ``‖J − Jᵀ‖_F / ‖J‖_F`` is at autodiff
+  noise (``~ 1e-6``) on 100 random cells.
+* **Gaussian oracle.** Fit a Gaussian to each resting cluster in
+  latent; ``−Σ⁻¹`` is the analytic Hessian of its log-density at
+  the mean. Report fraction of resting-type cells where the learned
+  Hessian's leading-eigenvalue sign matches the oracle (should be
+  negative — both say holder).
+* **σ-scale check.** Report ``σ_min / median_within-cluster σ``;
+  if ``σ_min > median_within-cluster σ`` the DSM schedule can't
+  see sub-mode structure — rerun with a smaller ``σ_min``.
+* **Known-rotation projection.** As v1 — project latent S + G2M
+  cycle subspace out of ``J_c``.
+* **Permutation null.** 3 shuffled refits.
+* **Reports.** Behaviour × cluster, median lead_re × cluster, lead_re
+  vs. distance to cluster centroid, archetype × cluster, stiff/soft
+  top-10 genes per cluster's dominant archetype, operator_space +
+  ledger figure, gate.json.
+* **Gate.** If the four resting types (CD4 T, CD8 T, B, CD14+ Mono)
+  are predominantly holders → first real-data basin result; tag the
+  repo and continue to §7c. Else report the diagnostic — including
+  the oracle agreement — before any further step.
 """
 
 from __future__ import annotations
@@ -66,6 +70,7 @@ from scjdo2.data import (
     present_cycle_genes,
 )
 from scjdo2.drift import DriftAdapter, DriftConfig
+from scjdo2.energy_drift import EnergyDriftAdapter, EnergyDriftConfig
 from scjdo2.pipeline import fit_rate_and_gene_field
 
 
@@ -160,19 +165,19 @@ def _project_out_latent(J: np.ndarray, U: np.ndarray) -> np.ndarray:
 
 
 # -----------------------------------------------------------------
-# Permutation null: shuffle z-positions, refit DSM, measure lead_re
+# Permutation null: shuffle z-positions, refit energy drift, lead_re
 # -----------------------------------------------------------------
 
 
-def _permutation_null(z: np.ndarray, t: np.ndarray, n_perm: int,
-                      drift_cfg: DriftConfig, seed: int = 0) -> pd.DataFrame:
+def _permutation_null(z: np.ndarray, n_perm: int,
+                      drift_cfg: EnergyDriftConfig, seed: int = 0) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     rows = []
     for p in range(n_perm):
         perm = rng.permutation(z.shape[0])
         z_perm = z[perm]
-        drift = DriftAdapter(dim=z.shape[1], config=drift_cfg).fit(
-            z_perm, t=t, verbose=False,
+        drift = EnergyDriftAdapter(dim=z.shape[1], config=drift_cfg).fit(
+            z_perm, verbose=False,
         )
         J = drift.jacobian_autodiff(z_perm)
         lead = _lead_re(J)
@@ -185,6 +190,89 @@ def _permutation_null(z: np.ndarray, t: np.ndarray, n_perm: int,
             "max_lead_re": float(np.max(lead)),
         })
     return pd.DataFrame(rows)
+
+
+# -----------------------------------------------------------------
+# Gaussian-oracle agreement + within-cluster σ scale
+# -----------------------------------------------------------------
+
+
+def _gaussian_oracle(z: np.ndarray, cluster: np.ndarray,
+                     J_learned: np.ndarray,
+                     resting_types) -> dict:
+    """For each resting-type cluster: fit a Gaussian in latent, compare
+    the sign of the leading eigenvalue of -Σ⁻¹ (analytic Hessian) with
+    that of the per-cell learned ``J``.
+
+    Returns a dict with per-cluster breakdown + overall agreement.
+    """
+    rows = []
+    agreements = []
+    for cl in sorted(set(cluster)):
+        m = cluster == cl
+        n_c = int(m.sum())
+        if n_c < 10:
+            continue
+        z_c = z[m]
+        mu = z_c.mean(axis=0)
+        # Add small ridge to Σ for stability (small clusters).
+        Sigma = np.cov(z_c, rowvar=False, bias=False)
+        Sigma = Sigma + 1e-4 * np.eye(Sigma.shape[0])
+        Sigma_inv = np.linalg.inv(Sigma)
+        H_oracle = -Sigma_inv                                  # analytic Hessian
+        ev_oracle = np.linalg.eigvalsh(H_oracle)
+        lead_oracle_sign = int(np.sign(ev_oracle.max()))
+        # Per-cell learned sign.
+        J_cl = J_learned[m]
+        signs = np.array([
+            int(np.sign(np.max(np.linalg.eigvals(Jc.astype(np.float64)).real)))
+            for Jc in J_cl
+        ])
+        agree = (signs == lead_oracle_sign).mean()
+        all_neg_oracle = bool(np.all(ev_oracle < 0))
+        rows.append({
+            "cluster": cl,
+            "n": n_c,
+            "is_resting": cl in resting_types,
+            "oracle_lead_eig": float(ev_oracle.max()),
+            "oracle_min_eig": float(ev_oracle.min()),
+            "oracle_all_neg": all_neg_oracle,
+            "oracle_lead_sign": lead_oracle_sign,
+            "frac_sign_agree": float(agree),
+            "frac_learned_neg": float((signs < 0).mean()),
+            "frac_learned_pos": float((signs > 0).mean()),
+        })
+        if cl in resting_types:
+            agreements.append(float(agree))
+    overall = float(np.mean(agreements)) if agreements else float("nan")
+    return {"per_cluster": pd.DataFrame(rows), "resting_agreement": overall}
+
+
+def _sigma_scale_report(z: np.ndarray, cluster: np.ndarray,
+                        sigma_min: float, sigma_max: float) -> dict:
+    """Median within-cluster isotropic σ (RMS deviation per cluster
+    across latent dims) vs the DSM ``σ_min``. If ``σ_min`` > median
+    within-cluster σ, the schedule only sees between-cluster scale.
+    """
+    scales = []
+    rows = []
+    for cl in sorted(set(cluster)):
+        m = cluster == cl
+        if m.sum() < 5:
+            continue
+        z_c = z[m]
+        s = float(np.sqrt(np.mean(np.var(z_c, axis=0))))
+        scales.append(s)
+        rows.append({"cluster": cl, "n": int(m.sum()),
+                     "within_cluster_sigma": s})
+    med = float(np.median(scales)) if scales else float("nan")
+    return {
+        "per_cluster": pd.DataFrame(rows),
+        "median_within_cluster_sigma": med,
+        "sigma_min_schedule": float(sigma_min),
+        "sigma_max_schedule": float(sigma_max),
+        "sigma_min_too_large": bool(sigma_min > med) if np.isfinite(med) else None,
+    }
 
 
 def _lead_re(J: np.ndarray) -> np.ndarray:
@@ -355,6 +443,10 @@ def main() -> int:
     p.add_argument("--k", type=int, default=30)
     p.add_argument("--n-perm", type=int, default=5)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--sigma-min", type=float, default=0.05,
+                   help="DSM σ_min (lower bound of multi-σ schedule)")
+    p.add_argument("--sigma-max", type=float, default=0.5,
+                   help="DSM σ_max (upper bound of multi-σ schedule)")
     p.add_argument("--min-cells", type=int, default=3,
                    help="min_cells filter for the FULL gene set")
     p.add_argument("--n-top-genes", type=int, default=0,
@@ -443,19 +535,44 @@ def main() -> int:
     print(f"[pbmc]   latent cycle basis: shape {U_cycle.shape}  "
           f"cosine(u_S, u_G2M) ~ orthonormalised")
 
-    # DSM score-only drift (no prior, no residual).
-    print(f"\n[pbmc] DSM score drift (no prior, no residual) — {args.drift_epochs} ep")
+    # Within-cluster scale → σ_min check.
+    sigma_min = float(args.sigma_min)
+    sigma_max = float(args.sigma_max)
+    cluster_arr = a.obs["cluster"].astype(str).to_numpy()
+    scale_rep = _sigma_scale_report(z, cluster_arr, sigma_min, sigma_max)
+    pd.DataFrame(scale_rep["per_cluster"]).to_csv(
+        OUT / "within_cluster_sigma.csv", index=False,
+    )
+    print(f"\n[pbmc] σ-scale check: median within-cluster σ = "
+          f"{scale_rep['median_within_cluster_sigma']:.3f}, "
+          f"σ_min={sigma_min:.3f}, σ_max={sigma_max:.3f}")
+    print(f"[pbmc]   σ_min_too_large={scale_rep['sigma_min_too_large']}")
+    if scale_rep["sigma_min_too_large"]:
+        new_min = max(0.01, 0.5 * scale_rep["median_within_cluster_sigma"])
+        print(f"[pbmc]   lowering σ_min to {new_min:.3f} (half the within-cluster σ)")
+        sigma_min = new_min
+        scale_rep["sigma_min_adjusted"] = sigma_min
+
+    # Energy-parameterised DSM drift.
+    print(f"\n[pbmc] Energy-param DSM drift — {args.drift_epochs} ep  "
+          f"σ∈[{sigma_min:.3f}, {sigma_max:.3f}]")
     t0 = time.monotonic()
-    drift = DriftAdapter(dim=z.shape[1], config=DriftConfig(
+    drift = EnergyDriftAdapter(dim=z.shape[1], config=EnergyDriftConfig(
         hidden=96, depth=3, n_epochs=args.drift_epochs,
-        seed=args.seed, use_spectral_norm=False, batch_size=256,
-        inject_velocity_prior=False, use_residual=False,
+        seed=args.seed, batch_size=256,
+        dsm_sigma_range=(sigma_min, sigma_max),
     )).fit(z, verbose=False)
     v = drift.velocity(z)
+    print(f"[pbmc]   drift fit {time.monotonic()-t0:.1f}s")
+    t0 = time.monotonic()
     J = drift.jacobian_autodiff(z)
-    print(f"[pbmc]   drift + J {time.monotonic()-t0:.1f}s")
-    print(f"[pbmc]   J symmetry check (median |J - J.T|_F / |J|_F): "
-          f"{np.median([np.linalg.norm(Jc - Jc.T, 'fro') / (np.linalg.norm(Jc, 'fro') + 1e-9) for Jc in J]):.3e}")
+    print(f"[pbmc]   J (autodiff Hessian) {time.monotonic()-t0:.1f}s")
+    sym = drift.symmetry_check(z, n_cells=100, seed=args.seed)
+    print(f"[pbmc]   SYMMETRY check (100 cells): median={sym['median_asym']:.3e}  "
+          f"max={sym['max_asym']:.3e}  mean={sym['mean_asym']:.3e}")
+    with open(OUT / "symmetry_check.json", "w") as _f:
+        json.dump({**sym, "sigma_min": sigma_min, "sigma_max": sigma_max,
+                   "sigma_scale": scale_rep}, _f, indent=2, default=str)
 
     # Known-rotation projection.
     J_proj = _project_out_latent(J, U_cycle)
@@ -472,19 +589,26 @@ def main() -> int:
     }
     a.uns["scjdo2"]["field_reason_summary"] = {"ok": 1.0, "autodiff": True}
 
-    # Permutation null.
+    # Permutation null (energy-param drift).
     print(f"\n[pbmc] permutation null (n={args.n_perm})")
     t0 = time.monotonic()
-    perm_cfg = DriftConfig(
+    perm_cfg = EnergyDriftConfig(
         hidden=96, depth=3, n_epochs=max(300, args.drift_epochs // 3),
-        seed=args.seed + 101, use_spectral_norm=False, batch_size=256,
-        inject_velocity_prior=False, use_residual=False,
+        seed=args.seed + 101, batch_size=256,
+        dsm_sigma_range=(sigma_min, sigma_max),
     )
-    perm_df = _permutation_null(z, np.zeros(a.n_obs, dtype=np.float32),
-                                 args.n_perm, perm_cfg, seed=args.seed + 101)
+    perm_df = _permutation_null(z, args.n_perm, perm_cfg, seed=args.seed + 101)
     perm_df.to_csv(OUT / "permutation_null.csv", index=False)
     print(f"[pbmc]   perm null {time.monotonic()-t0:.1f}s")
     print(perm_df.to_string(index=False))
+
+    # Gaussian oracle check (before Phase C — only needs J_latent).
+    print(f"\n[pbmc] Gaussian oracle agreement on resting clusters")
+    oracle = _gaussian_oracle(z, cluster_arr, J, RESTING_TYPES)
+    oracle["per_cluster"].to_csv(OUT / "oracle_agreement.csv", index=False)
+    print(oracle["per_cluster"].to_string(index=False))
+    print(f"[pbmc]   RESTING-type oracle mean agreement = "
+          f"{oracle['resting_agreement']:.3f}")
 
     # Phase C.
     print(f"\n[pbmc] Phase C (anchor max_live={args.anchor_max_live}, "
@@ -506,6 +630,36 @@ def main() -> int:
     per_type.to_csv(OUT / "behaviour_by_cluster.csv", index=False)
     print("\n[pbmc] BEHAVIOUR BY CLUSTER:")
     print(per_type.to_string(index=False))
+
+    # lead_re vs distance to cluster centroid.
+    z_arr = np.asarray(a.obsm["X_scVI"])
+    clusters = a.obs["cluster"].astype(str).to_numpy()
+    centroid_dist = np.zeros(a.n_obs, dtype=np.float32)
+    for cl in sorted(set(clusters)):
+        m = clusters == cl
+        mu = z_arr[m].mean(axis=0)
+        centroid_dist[m] = np.linalg.norm(z_arr[m] - mu, axis=1)
+    lead_arr = a.obs["lead_re"].to_numpy(dtype=np.float64)
+    scatter = pd.DataFrame({
+        "cluster": clusters, "centroid_dist": centroid_dist,
+        "lead_re": lead_arr,
+        "behaviour": a.obs["op_behaviour"].astype(str).to_numpy(),
+    })
+    scatter.to_csv(OUT / "lead_re_vs_centroid.csv", index=False)
+    # Per-cluster correlation (within-cluster): if the field is reading
+    # basins, cells near the centroid should have the most-negative
+    # lead_re (ρ > 0 under "distance ↑ ⇒ lead_re more positive").
+    corr_rows = []
+    for cl in sorted(set(clusters)):
+        m = clusters == cl
+        if m.sum() < 10:
+            continue
+        r = float(np.corrcoef(centroid_dist[m], lead_arr[m])[0, 1])
+        corr_rows.append({"cluster": cl, "n": int(m.sum()),
+                          "is_resting": cl in RESTING_TYPES, "rho": r})
+    pd.DataFrame(corr_rows).to_csv(OUT / "centroid_corr.csv", index=False)
+    print("\n[pbmc] within-cluster corr(centroid_dist, lead_re):")
+    print(pd.DataFrame(corr_rows).to_string(index=False))
 
     # Real vs null lead_re summary.
     real_lead_re = a.obs["lead_re"].to_numpy(dtype=np.float64)
@@ -605,10 +759,16 @@ def main() -> int:
         "n_resting_holders": holder_resting,
         "frac_holder_resting": holder_resting / n_resting if n_resting else 0.0,
         "verdict": "pass" if (holder_resting / max(1, n_resting)) >= 0.5 else "fail",
+        "drift_parameterisation": "energy_scalar_mlp (E_θ: R^d → R)",
+        "symmetry_check": sym,
+        "sigma_schedule": {"sigma_min": sigma_min, "sigma_max": sigma_max,
+                            "median_within_cluster_sigma":
+                                scale_rep["median_within_cluster_sigma"]},
+        "gaussian_oracle_resting_agreement": oracle["resting_agreement"],
     }
-    (OUT / "gate.json").write_text(json.dumps(gate, indent=2))
+    (OUT / "gate.json").write_text(json.dumps(gate, indent=2, default=str))
     print("\n[pbmc] GATE:")
-    print(json.dumps(gate, indent=2))
+    print(json.dumps(gate, indent=2, default=str))
 
     print(f"\n[pbmc] outputs → {OUT}")
     return 0

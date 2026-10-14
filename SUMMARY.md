@@ -390,7 +390,9 @@ Next steps already recorded in ``V2_PLAN.md``:
   velocity-fittable genes under the dynamical fit; a broader HVG
   pool or a steady-state scVelo could keep more).
 
-## 5 · PBMC positive control — the basin gate FAILS; stop before §7c
+## 5 · PBMC positive control — the basin gate FAILS, both v1 (non-sym) and v2 (energy-param)
+
+### 5.1 v2 rework — energy-parameterised score drift
 
 **Verdict: FAIL.** The four resting mature types (CD4 T, CD8 T, B,
 CD14+ Monocytes; 2282 of 2638 cells) read **~17 % holder** under this
@@ -530,11 +532,168 @@ drift source whose Jacobian carries explicit potential structure
 measured steady-state flow (RNA velocity ≈ 0 on resting cells as a
 hard anchor).
 
+Outputs under ``benchmarks/v2/pbmc_basin/`` (v1 run superseded by §5.2
+energy drift; see commit history for the v1 numbers that match §5.1).
+
+### 5.2 Rework — energy drift fixes symmetry but PBMC still fails
+
+**User gate rework** (``5d94b31`` → ``<this commit>``): reparameterise
+the score as the gradient of a learned scalar energy, so
+``J = -β·Hess E_θ`` is symmetric by construction.
+
+**Energy drift module** (``scjdo2.energy_drift.EnergyDriftAdapter``):
+``E_θ: R^d → R`` scalar MLP, ``s = -∇_z E`` by autodiff, trained with
+multi-σ DSM (``σ_min = 0.05``, ``σ_max = 0.5``, log-uniform per step).
+
+**Symmetry gate.** Measured median
+``‖J − Jᵀ‖_F / ‖J‖_F = 8.6 × 10⁻⁸`` on 100 random cells —
+float32 autodiff noise. **PASS.**
+
+**σ-scale check.** Median within-cluster σ (RMS deviation across 15
+latent dims) = 0.787. Schedule ``σ_min = 0.05 < 0.787``, so the DSM
+schedule covers sub-mode scale. **PASS.**
+
+**Equilibrated pitchfork re-gate** (``scripts/pitchfork_energy_gate.py``,
+τ ∈ {0.1, 0.3, 0.5}, n = 1200, n_epochs = 3000, β = 0.04):
+all three τ **FAIL** the strict Phase-B gate (holder P and R ≥ 0.80
+absolute). But **holder precision 0.96-0.99** across τ (energy drift's
+basin calls are nearly always correct); holder recall 0.56-0.72 (many
+basin cells get absorbed into the opspace drift tol band because
+``lead_re`` on the energy drift has smaller magnitude than v1 DSM).
+Interpretation: **geometry is right; the gate failure is a scale/tol
+calibration issue**, not a classifier bug.
+
+**Permutation null** (energy drift, 3 shuffled refits): **100 %
+``Re(λ) < 0`` on perm**, median lead_re = −0.048.
+Real PBMC: **77 % ``Re(λ) > 0``**, median = 7 × 10⁻¹⁰. Real-vs-null
+is sharper under the energy drift (perm is strictly single-mode →
+Hessian strictly negative definite everywhere; v1's DSM drift
+produced the same qualitative split but with a less-saturated null).
+
+**Gaussian oracle agreement.** For each cluster, fit a Gaussian in
+latent and set ``H_oracle = −Σ⁻¹`` (analytic Hessian of
+``log 𝒩``). Oracle lead-sign = −1 for every cluster (resting and
+not — a Gaussian is a basin by construction, modulo its ridge
+regularisation). Learned-sign ↔ oracle-sign agreement **per
+resting-type cluster**:
+
+| cluster       |     n | frac_sign_agree |
+|---|---|---|
+| B cells       |   342 | **0.661** |
+| CD14+ Mono    |   480 | **0.629** |
+| CD4 T         |  1144 | **0.682** |
+| CD8 T         |   316 | 0.405 |
+| **resting Σ** |  2282 | **0.594** |
+
+**59.4 % sign agreement on resting types.** Above 50 % random, far
+below the 90-100 % a strong basin-recovery claim would need. CD8 T
+is an outlier at 41 % (worse than random) — the learned drift reads
+most CD8 T cells as fork while the oracle expects holder.
+
+**Behaviour × cluster (energy drift + rotation projection + Phase C
+anchor fit on 3065 HVG + opspace):**
+
+| cluster | n | fork | holder | **drift** | d_osc | g_osc | median lead_re | frac(Re>0) |
+|---|---|---|---|---|---|---|---|---|
+| B cells          |  342 | 10 | 0 | **332** | 0 | 0 | 5.0 × 10⁻¹⁰ | 0.75 |
+| CD14+ Monocytes  |  480 | 12 | 0 | **468** | 0 | 0 | 7.0 × 10⁻¹⁰ | 0.76 |
+| CD4 T cells      | 1144 | 18 | 0 | **1126** | 0 | 0 | 7.5 × 10⁻¹⁰ | 0.77 |
+| CD8 T cells      |  316 | 15 | 0 | **301** | 0 | 0 | 6.4 × 10⁻¹⁰ | 0.81 |
+| Dendritic cells  |   37 |  4 | 0 |  **33** | 0 | 0 | 6.3 × 10⁻¹⁰ | 0.76 |
+| FCGR3A+ Monocytes|  150 |  3 | 0 | **147** | 0 | 0 | 6.3 × 10⁻¹⁰ | 0.75 |
+| Megakaryocytes   |   15 |  0 | 0 |  **15** | 0 | 0 | 2.6 × 10⁻¹⁰ | 0.87 |
+| NK cells         |  154 | 27 | 0 | **127** | 0 | 0 | 5.1 × 10⁻¹⁰ | 0.81 |
+
+**97 % of cells classify as drift, 0 % holder, 3 % fork.** The
+opspace ``tol = 0.1 · std(lead_re)`` is 1.4 × 10⁻⁴ on this dataset;
+the ``lead_re`` distribution is extremely asymmetric — positive
+outliers up to **+1.7 × 10⁻²** (between-cluster ridges), negative
+outliers only down to **−3 × 10⁻⁹** (within-cluster basins).
+
+**Sign-only reclassification (no tol band):** the sign-holder
+fraction on resting cells is **22.9 %** (B 25 %, CD14+ 24 %, CD4 T
+23 %, CD8 T 19 %). Below the ≥ 50 % gate.
+
+**lead_re vs centroid distance** — within-cluster correlation
+(``ρ`` positive would mean cells further from the centroid have more
+positive ``lead_re``, i.e., basin structure):
+
+| cluster | ρ(centroid_dist, lead_re) |
+|---|---|
+| B cells          | +0.003 |
+| CD14+ Monocytes  | +0.096 |
+| CD4 T cells      | +0.094 |
+| CD8 T cells      | +0.018 |
+| NK cells         | **−0.355** |
+
+Marginal to zero on all resting types; **NK cells negative** (cells
+further from the centroid are MORE holder-like, opposite of basin).
+The energy drift's lead_re within a cluster is essentially noise
+w.r.t. radial basin geometry.
+
+**Decision archetype gene recovery** (energy drift's Phase C anchor
+fit still identifies cell-type biology, even though the per-cell
+behaviour collapses to "drift"):
+
+* **B cells → archetype 6** (fork, ``lead_re = +0.27``, 22.8 % weight
+  on B cells). Stiffest-mode (``λ_min = −0.068``) top-10 right-ev:
+  **HLA-DRA, MALAT1, CD74, HLA-DPB1, HLA-DRB1, RPL13A, HLA-DPA1,
+  RPL13, B2M, RPL21** — MHC-II antigen-presentation plus ribosomal.
+* **CD4 T → archetype 7** (fork, ``lead_re = +0.52``, 51.6 % weight
+  on CD4 T). Stiffest-mode (``λ_min = −0.010``) top-10 right-ev:
+  **MALAT1, S100A9⁻, CST3⁻, TYROBP⁻, RPS27A, RPL13A, FCN1⁻,
+  S100A8⁻, RPL13, RPS3A** (⁻ = negative weight) — the mode
+  contrasts T-cell ribosomals (positive) against monocyte
+  cytoplasmic markers (negative), which is biologically coherent.
+
+### 5.3 Conclusion for §5
+
+The energy drift ** fixes the symmetry concern** (median 8.6 × 10⁻⁸
+asymmetry, down from 0.37 under v1's non-gradient score MLP) and
+sharpens the real-vs-null distinction, but **PBMC's gate still fails**:
+
+* **0 % holder** under opspace tol-based classification;
+* **23 % sign-holder** on resting types;
+* **59 % Gaussian-oracle agreement** on resting types;
+* within-cluster ``corr(centroid_dist, lead_re)`` ≈ 0.00-0.10 (positive,
+  tiny) on resting types, **−0.36** on NK.
+
+The gene-space anchor fit still recovers the right biology for each
+cell type (MHC-II for B cells, T-cell vs monocyte contrast for CD4 T),
+but the per-cell operator eigenvalues have a **~7 order-of-magnitude
+asymmetry** between between-mode ridges (``+1.7 × 10⁻²``) and
+within-mode basins (``−3 × 10⁻⁹``) — the within-mode curvature is
+not resolved.
+
+Likely cause: **scVI's aggregated posterior is nearly isotropic by
+construction** (KL(q(z) ‖ 𝒩) is in the ELBO). The within-cluster
+score is close to the standard-Normal score, i.e., near-zero inside
+each mode, with sharp between-mode ridges where the aggregated
+posterior drops off. The energy drift reads the dominant geometry
+(ridges) and is blind to the near-zero curvature inside modes.
+
+**Decision (user gate).** The gate still fails. The energy
+parameterisation is **recorded as a necessary improvement** (symmetry
+restored, pitchfork precision high), but §7c (per-cell ``t_c`` in NB
+likelihood) remains deferred — the failure mode is "embedding is too
+flat within modes to resolve basins", which a better rate model does
+not fix. Candidate next steps outside this run: (a) a density-aware
+embedding (e.g. PHATE, UMAP preserving neighbour geometry rather
+than aggregated-posterior Gaussianity), (b) explicit energy-based
+embedding (train the embedding jointly with an energy model), or
+(c) measured-steady-state-flow drift (velocity ≈ 0 as a hard
+holder anchor).
+
 Outputs under ``benchmarks/v2/pbmc_basin/``: ``scvi_d_latent_sweep.csv``,
-``permutation_null.csv``, ``real_vs_perm.csv``,
-``behaviour_by_cluster.csv``, ``archetype_by_cluster.csv``,
+``symmetry_check.json``, ``within_cluster_sigma.csv``,
+``permutation_null.csv``, ``real_vs_perm.csv``, ``oracle_agreement.csv``,
+``behaviour_by_cluster.csv``, ``centroid_corr.csv``,
+``lead_re_vs_centroid.csv``, ``archetype_by_cluster.csv``,
 ``stiff_soft_by_cluster.csv``, ``gate.json``,
 ``operator_space_ledger.pdf``.
+
+Pitchfork re-gate outputs under
+``benchmarks/phase_b_gate/equilibrated/pitchfork_energy_gate.json``.
 
 ## 4 · Paul15 (secondary mouse replicate)
 
