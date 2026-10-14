@@ -43,7 +43,6 @@ def _train(model: scvi.model.SCVI, *, plan_kwargs: dict | None = None) -> tuple[
         "check_val_every_n_epoch": 1,
         "enable_progress_bar": False,
         "enable_model_summary": False,
-        "logger": False,
     }
     if plan_kwargs is not None:
         kwargs["plan_kwargs"] = plan_kwargs
