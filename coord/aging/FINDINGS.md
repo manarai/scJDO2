@@ -79,3 +79,20 @@ operator change, not basin loosening.
 **Caveats.** Thin lung reference (648 cells, 45 epochs). 0 correction
 artifacts expected under the frozen 0.5 rule.
 **Next.** A03 issued. X03 (basin-only subset, exploratory) proposed.
+
+## 2026-10-14 — aging/A03 (planned, ACCEPT) — the frozen result
+
+**Result.** Isotropy 3/8, anticipation 1/8 (no majority). PREREG §6:
+**isotropic noise increase; no aging claim beyond stiffness**.
+Reproduced independently to 2e-16.
+**Meaning.** Within that row, stiffness did not fall (old/young median
+|λ| ≈ 1.00 in lung, 1.04–1.14 in marrow, 3.1 granulocytopoietic). The
+three real basins (lung fibroblast, NK, marrow granulocyte) are
+unchanged on every measure. Direction-specific change appears only in
+marrow transit states (granulocytopoietic, HPC, pre-B), more than
+chance; granulocytopoietic cells become more basin-like with age
+(hypothesis). The one anticipation pass is chance-level.
+**Caveats.** Reference mapping may shrink differences (X04); thin lung
+arm; 2 young marrow donors; one seed.
+**Next.** A04 issued. Proposed: X04 mapping-shrinkage (first), X05
+donor-level, X03 basin-only, X01, X02; hlca/H01.
