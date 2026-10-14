@@ -53,26 +53,44 @@ class LabelledRatesConfig:
 
 
 class _LabelledNBDecoder(nn.Module if nn is not None else object):
-    """Shared trunk + ``α(z)`` head, plus per-gene scalar
-    ``log_gamma`` and ``log_theta_{new,total}``."""
+    """Shared trunk + ``α(z, batch)`` head, plus per-gene scalar
+    ``log_gamma`` and ``log_theta_{new,total}``.
 
-    def __init__(self, d_in: int, n_genes: int, hidden: tuple[int, ...]) -> None:
+    When ``n_batch > 0`` the trunk's first linear takes
+    ``[z; batch_one_hot]`` so α(z, batch) can absorb batch-specific
+    offsets, leaving γ to be the (hopefully) batch-invariant
+    degradation rate — the whole point of adding a batch covariate.
+    """
+
+    def __init__(self, d_in: int, n_genes: int, hidden: tuple[int, ...],
+                 n_batch: int = 0) -> None:
         super().__init__()
+        self.n_batch = int(n_batch)
         layers: list[nn.Module] = []
-        prev = d_in
+        prev = d_in + self.n_batch
         for h in hidden:
             layers.append(nn.Linear(prev, h))
             layers.append(nn.SiLU())
             prev = h
         self.trunk = nn.Sequential(*layers)
-        self.alpha_head = nn.Linear(prev, n_genes)                 # log α(z)
+        self.alpha_head = nn.Linear(prev, n_genes)                 # log α(z, b)
         self.log_gamma = nn.Parameter(torch.zeros(n_genes))        # γ_g per gene
         self.log_theta_total = nn.Parameter(torch.zeros(n_genes))
         self.log_theta_new = nn.Parameter(torch.zeros(n_genes))
 
-    def log_total(self, z: "torch.Tensor") -> "torch.Tensor":
-        """``log E[total_cg] = log α(z) − log γ_g``."""
-        return self.alpha_head(self.trunk(z)) - self.log_gamma.unsqueeze(0)
+    def _trunk_input(self, z: "torch.Tensor",
+                      batch_oh: Optional["torch.Tensor"]) -> "torch.Tensor":
+        if self.n_batch == 0:
+            return z
+        if batch_oh is None:
+            raise ValueError("batch_oh required when n_batch > 0")
+        return torch.cat([z, batch_oh.to(z.dtype)], dim=-1)
+
+    def log_total(self, z: "torch.Tensor",
+                  batch_oh: Optional["torch.Tensor"] = None) -> "torch.Tensor":
+        """``log E[total_cg] = log α(z, batch) − log γ_g``."""
+        x = self._trunk_input(z, batch_oh)
+        return self.alpha_head(self.trunk(x)) - self.log_gamma.unsqueeze(0)
 
     def log_frac_new(self, t_c: "torch.Tensor",
                      clamp: Tuple[float, float] = (1e-3, 10.0)) -> "torch.Tensor":
@@ -90,9 +108,9 @@ class _LabelledNBDecoder(nn.Module if nn is not None else object):
         log_main = torch.log1p(-torch.exp(-safe_a.clamp(min=1e-6)))
         return torch.where(small, log_series, log_main)
 
-    def log_new(self, z: "torch.Tensor",
-                t_c: "torch.Tensor") -> "torch.Tensor":
-        return self.log_total(z) + self.log_frac_new(t_c)
+    def log_new(self, z: "torch.Tensor", t_c: "torch.Tensor",
+                 batch_oh: Optional["torch.Tensor"] = None) -> "torch.Tensor":
+        return self.log_total(z, batch_oh) + self.log_frac_new(t_c)
 
 
 def _nb_log_prob(counts, log_mu, log_theta):
@@ -135,6 +153,7 @@ class LabelledRateModel:
     def fit(self, counts_new: np.ndarray, counts_total: np.ndarray,
             z: np.ndarray, t_c: np.ndarray,
             size_factor_total: Optional[np.ndarray] = None,
+            batch: Optional[np.ndarray] = None,
             verbose: bool = False) -> "LabelledRateModel":
         if torch is None:
             raise RuntimeError("torch is required to fit LabelledRateModel")
@@ -151,7 +170,21 @@ class LabelledRateModel:
             "mps" if torch.backends.mps.is_available()
             else "cuda" if torch.cuda.is_available() else "cpu"
         )
-        model = _LabelledNBDecoder(d_in, G, self.config.hidden).to(device)
+
+        # Batch one-hot (optional). Integer-coded ``batch`` → one-hot.
+        if batch is not None:
+            batch_arr = np.asarray(batch).astype(np.int64)
+            n_batch = int(batch_arr.max()) + 1
+            batch_oh = np.eye(n_batch, dtype=np.float32)[batch_arr]
+            batch_oh_t = torch.as_tensor(batch_oh, device=device)
+            self._n_batch = n_batch
+        else:
+            n_batch = 0
+            batch_oh_t = None
+            self._n_batch = 0
+
+        model = _LabelledNBDecoder(d_in, G, self.config.hidden,
+                                     n_batch=n_batch).to(device)
 
         # Closed-form γ init per gene from pooled (new, total) counts:
         #   γ̂_g = −log(1 − new_g / total_g) / t̄
@@ -215,7 +248,8 @@ class LabelledRateModel:
                 rng.choice(train_idx, size=bs, replace=False),
                 dtype=torch.long, device=device,
             )
-            log_total = model.log_total(Z[idx]) + log_s[idx]
+            b_idx = batch_oh_t[idx] if batch_oh_t is not None else None
+            log_total = model.log_total(Z[idx], b_idx) + log_s[idx]
             log_new = log_total + model.log_frac_new(T[idx])
             lp_tot = _nb_log_prob(C_tot[idx], log_total, model.log_theta_total)
             lp_new = _nb_log_prob(C_new[idx], log_new, model.log_theta_new)
@@ -231,7 +265,8 @@ class LabelledRateModel:
             if (epoch + 1) % max(1, self.config.n_epochs // 20) == 0:
                 model.eval()
                 with torch.no_grad():
-                    log_total_v = model.log_total(Z[test_idx]) + log_s[test_idx]
+                    b_test = batch_oh_t[test_idx] if batch_oh_t is not None else None
+                    log_total_v = model.log_total(Z[test_idx], b_test) + log_s[test_idx]
                     log_new_v = log_total_v + model.log_frac_new(T[test_idx])
                     lp_tot_v = _nb_log_prob(C_tot[test_idx], log_total_v, model.log_theta_total).mean()
                     lp_new_v = _nb_log_prob(C_new[test_idx], log_new_v, model.log_theta_new).mean()
@@ -281,16 +316,27 @@ class LabelledRateModel:
             ).detach().cpu().numpy()
         return g.astype(np.float64)
 
-    def eta_total(self, z: np.ndarray) -> np.ndarray:
+    def _batch_oh(self, batch: Optional[np.ndarray]) -> Optional["torch.Tensor"]:
+        if getattr(self, "_n_batch", 0) == 0 or batch is None:
+            return None
+        arr = np.asarray(batch).astype(np.int64)
+        oh = np.eye(self._n_batch, dtype=np.float32)[arr]
+        return torch.as_tensor(oh, device=self._device)
+
+    def eta_total(self, z: np.ndarray,
+                  batch: Optional[np.ndarray] = None) -> np.ndarray:
         self._require_fit()
         with torch.no_grad():
             Z = torch.as_tensor(z, dtype=torch.float32, device=self._device)
-            return self._model.log_total(Z).detach().cpu().numpy()
+            b_oh = self._batch_oh(batch)
+            return self._model.log_total(Z, b_oh).detach().cpu().numpy()
 
-    def eta_new(self, z: np.ndarray, t_c: np.ndarray) -> np.ndarray:
+    def eta_new(self, z: np.ndarray, t_c: np.ndarray,
+                batch: Optional[np.ndarray] = None) -> np.ndarray:
         self._require_fit()
         with torch.no_grad():
             Z = torch.as_tensor(z, dtype=torch.float32, device=self._device)
             T = torch.as_tensor(np.asarray(t_c, dtype=np.float32),
                                  device=self._device)
-            return self._model.log_new(Z, T).detach().cpu().numpy()
+            b_oh = self._batch_oh(batch)
+            return self._model.log_new(Z, T, b_oh).detach().cpu().numpy()

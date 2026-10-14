@@ -6,5 +6,10 @@
   "res_de_mean": -0.006568796328986519,
   "partial_spearman": 0.6200972915843125,
   "projected_spearman": 0.6189783422044763,
-  "expression_spearman": 0.058609367102814426
+  "expression_spearman": 0.058609367102814426,
+  "LOO_partial_spearman": 0.6200450473487837,
+  "LOO_hold_abs_gt_0_30": true,
+  "LOO_hold_above_null_q95": false,
+  "LOO_holds": false,
+  "tag_v06_perturb": false
 }

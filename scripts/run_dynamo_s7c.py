@@ -81,14 +81,22 @@ def main() -> int:
     total = _dense(a.layers["X_total"]).astype(np.float32)
     z = np.asarray(a.obsm["X_pca"]).astype(np.float32)
 
-    # Fit the LabelledRateModel on all cells (pooled 3h+5h).
-    print("[s7c] fit LabelledRateModel (pooled 3h+5h) — closed-form init + "
-          "lr_γ×10")
+    # Build batch covariate (3h → 0, 5h → 1) for the batch-conditioned
+    # fit — V2_PLAN §9f follow-up. Attempting to pull batch structure out
+    # of γ and into the α(z, batch) head so γ can become batch-invariant.
+    batch_arr = (pulse == 5.0).astype(np.int64)
+    print(f"[s7c]   batch covariate shape {batch_arr.shape}  "
+          f"n_batch={int(batch_arr.max()) + 1}")
+
+    # Fit the LabelledRateModel on all cells (pooled 3h+5h), with the
+    # batch covariate wired into the trunk.
+    print("[s7c] fit LabelledRateModel (pooled 3h+5h) — batch-conditioned "
+          "α(z, batch), closed-form init + lr_γ×10")
     t0 = time.monotonic()
     rm = LabelledRateModel(LabelledRatesConfig(
         hidden=(128, 128), n_epochs=args.rate_epochs, seed=args.seed,
         lr_gamma_scale=10.0,
-    )).fit(new, total, z, t_c=pulse, verbose=True)
+    )).fit(new, total, z, t_c=pulse, batch=batch_arr, verbose=True)
     print(f"[s7c]   fit {time.monotonic()-t0:.1f}s  val NLL = {rm.best_val_nll:.3f}")
     g_norm_hist = getattr(rm, "_gamma_grad_history", [])
     if g_norm_hist:

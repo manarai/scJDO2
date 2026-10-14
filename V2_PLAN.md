@@ -1413,6 +1413,42 @@ Report + notebook at ``benchmarks/perturbseq_k562/report.md`` +
 
 ---
 
+## 9g. K562 LOO-with-null driver check: withdrawn + §7c STOP (2026-10-14)
+
+**Driver claim withdrawn.** LOO partial Spearman(sens, |δ_proj_LOO| |
+expression) = **+0.620**; random-eigvec null partial Spearman
+distribution (20 draws, LOO-style): mean +0.606, std 0.027, **95pct
++0.637**. LOO is BELOW the null 95pct → the lead-eigenvector of
+`J_mean` does NOT out-rank random gene-space directions on this
+measure. Mathematical cause: `sens[g] = |v_lead_g| · Σ|v_lead_h|` and
+`obs_proj[g] = |scalar · v_lead_g|` share a common `|v_lead_g|`
+factor whether v_lead is special or random. Any unit vector gives
++0.6 on this test; the user's null exposed the construction.
+
+A real driver claim needs a different sensitivity formula or a
+different experimental test (e.g., does the operator predict which
+KDs produce the LARGEST shifts, not which gene-indices move within
+each KD).
+
+**§7c STOP.** LabelledRateModel + batch-conditioned α(z, batch) →
+3h-only vs 5h-only per-gene γ Spearman = **+0.081** (unchanged from
++0.066 without the batch covariate). Adding batch does not pull γ
+to a batch-invariant gene property. Per user directive, labelled
+rates on this dataset are batch-confounded; §7c halts here.
+
+**Tag v0.6-perturb: NOT APPLIED.** `v0.5-basin-lock` stays as the
+only outstanding tag.
+
+Outputs:
+  benchmarks/perturbseq_k562/driver_check_LOO.csv
+  benchmarks/perturbseq_k562/driver_check_LOO_nulls.csv
+  benchmarks/perturbseq_k562/controls_gate.json
+  benchmarks/perturbseq_k562/RESULT.md
+  benchmarks/v2/dynamo_s7c/fit_meta.json (batch-conditioned γ)
+  benchmarks/v2/dynamo_s7c/gamma_per_gene.csv
+
+---
+
 ## 9f. K562 controls → v0.6-perturb withheld (2026-10-14)
 
 Two controls on top of the first-result K562 paired comparison:

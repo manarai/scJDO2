@@ -1,0 +1,2 @@
+partial_spearman_full,partial_spearman_LOO,null_partial_mean,null_partial_std,null_partial_q95,LOO_hold_abs_gt_0_30,LOO_hold_above_null_q95,LOO_holds,lead_eigenvalue_of_J_mean
+0.6200972915843125,0.6200450473487837,0.6058880185720323,0.026886412761465375,0.6365143890561482,True,False,False,-1.282732192960699
