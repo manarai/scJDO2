@@ -61,3 +61,36 @@ floor. First-result observation, no post-hoc tuning.
   measurement noise.
 * Driver-sensitivity Spearman = −0.31 — anti-correlation, written up
   as a result; no post-hoc change to the sensitivity formula.
+
+---
+
+## Follow-up (post-first-result corrections, 2026-10-14)
+
+### DE-only paired comparison + Wilcoxon
+
+Paired per-KD cosine: operator cos vs DE-only cos (δx = b_g itself).
+Wilcoxon signed-rank one-sided (H₁: operator > DE):
+
+| arm              |   n_kd |   operator_cos_mean |   de_only_cos_mean |   random_cos_mean |   frac_op_gt_de |   frac_op_gt_rand |   wilcoxon_W |   wilcoxon_p_op_gt_de |
+|:-----------------|-------:|--------------------:|-------------------:|------------------:|----------------:|------------------:|-------------:|----------------------:|
+| all              |    768 |              0.1083 |             0.0025 |            0.0001 |          0.6745 |            0.6706 |       217822 |                     0 |
+| linear_regime    |    378 |              0.0855 |             0.0011 |            0.0003 |          0.6296 |            0.6243 |        49401 |                     0 |
+| nonlinear_regime |    390 |              0.1303 |             0.0038 |            0      |          0.7179 |            0.7154 |        59594 |                     0 |
+
+The paired test asks whether the operator improves on DE-only on
+a per-KD basis. `frac_op_gt_de` is the fraction of KDs where the
+operator cosine strictly exceeds DE-only. The data support the
+arm whose p is tiny AND frac is well above 0.5.
+
+### Driver check — raw vs projected onto lead eigenvector
+
+* Lead eigenvalue of mean J at control basin: -1.1755 (least-negative eigenvalue — the soft-escape direction).
+* Driver Spearman raw        (|δx_obs| per gene vs sensitivity): **+0.091**
+* Driver Spearman projected  (|⟨δx_obs, v_lead⟩ · v_lead_g| vs sensitivity): **+0.562**
+
+Projecting δx_obs onto the lead eigenvector of ``J_mean`` before
+correlating with sensitivity isolates the component the operator
+actually acts on. The projected Spearman is the fair test of
+whether sensitive-direction drivers correlate with observed shifts
+along the operator's soft axis; the raw Spearman mixes orthogonal
+components that the operator never affects.

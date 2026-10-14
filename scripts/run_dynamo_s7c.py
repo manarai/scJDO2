@@ -81,28 +81,61 @@ def main() -> int:
     total = _dense(a.layers["X_total"]).astype(np.float32)
     z = np.asarray(a.obsm["X_pca"]).astype(np.float32)
 
-    # Fit the LabelledRateModel.
-    print("[s7c] fit LabelledRateModel")
+    # Fit the LabelledRateModel on all cells (pooled 3h+5h).
+    print("[s7c] fit LabelledRateModel (pooled 3h+5h) — closed-form init + "
+          "lr_γ×10")
     t0 = time.monotonic()
     rm = LabelledRateModel(LabelledRatesConfig(
         hidden=(128, 128), n_epochs=args.rate_epochs, seed=args.seed,
-    )).fit(new, total, z, t_c=pulse, verbose=False)
+        lr_gamma_scale=10.0,
+    )).fit(new, total, z, t_c=pulse, verbose=True)
     print(f"[s7c]   fit {time.monotonic()-t0:.1f}s  val NLL = {rm.best_val_nll:.3f}")
+    g_norm_hist = getattr(rm, "_gamma_grad_history", [])
+    if g_norm_hist:
+        print(f"[s7c]   log_γ grad norm — first {g_norm_hist[0]:.3e}  "
+              f"last {g_norm_hist[-1]:.3e}  "
+              f"mean {float(np.mean(g_norm_hist)):.3e}")
 
-    gamma = rm.gamma
+    gamma_pool = rm.gamma
+    print(f"[s7c]   pooled γ — median={float(np.median(gamma_pool)):.4f}  "
+          f"q25={float(np.quantile(gamma_pool,0.25)):.4f}  "
+          f"q75={float(np.quantile(gamma_pool,0.75)):.4f}  "
+          f"min={float(gamma_pool.min()):.4f}  max={float(gamma_pool.max()):.4f}")
+
+    # Per-batch refits for γ agreement check.
+    print("[s7c] per-batch γ agreement — refit on 3h and 5h subsets")
+    def _fit_subset(mask: np.ndarray) -> np.ndarray:
+        return LabelledRateModel(LabelledRatesConfig(
+            hidden=(128, 128), n_epochs=args.rate_epochs,
+            seed=args.seed + int(mask.sum()),
+            lr_gamma_scale=10.0,
+        )).fit(new[mask], total[mask], z[mask], t_c=pulse[mask],
+                verbose=False).gamma
+    m3 = pulse == 3.0
+    m5 = pulse == 5.0
+    gamma_3h = _fit_subset(m3)
+    gamma_5h = _fit_subset(m5)
+    from scipy.stats import spearmanr, pearsonr
+    valid = np.isfinite(gamma_3h) & np.isfinite(gamma_5h)
+    rho_batch = float(spearmanr(gamma_3h[valid], gamma_5h[valid]).correlation)
+    pr_batch = float(pearsonr(gamma_3h[valid], gamma_5h[valid])[0])
+    print(f"[s7c]   per-gene Spearman(γ_3h, γ_5h) = {rho_batch:+.3f}")
+    print(f"[s7c]   per-gene Pearson (γ_3h, γ_5h) = {pr_batch:+.3f}")
+
+    gamma_df = pd.DataFrame({
+        "gene": list(a.var_names),
+        "gamma_s7c_pooled": gamma_pool.astype(float),
+        "gamma_s7c_3h": gamma_3h.astype(float),
+        "gamma_s7c_5h": gamma_5h.astype(float),
+    })
     # Compare to dynamo's per-batch γ if present in var.
-    time3 = a.var.get("time_3_gamma")
-    time5 = a.var.get("time_5_gamma")
-    rows = [{"gene": g, "gamma_s7c": float(gamma[i])}
-            for i, g in enumerate(a.var_names)]
-    gamma_df = pd.DataFrame(rows)
-    if time3 is not None and time5 is not None:
-        gamma_df["dynamo_time3_gamma"] = time3.to_numpy()
-        gamma_df["dynamo_time5_gamma"] = time5.to_numpy()
+    if "time_3_gamma" in a.var:
+        gamma_df["dynamo_time3_gamma"] = a.var["time_3_gamma"].to_numpy()
+    if "time_5_gamma" in a.var:
+        gamma_df["dynamo_time5_gamma"] = a.var["time_5_gamma"].to_numpy()
     gamma_df.to_csv(OUT / "gamma_per_gene.csv", index=False)
-    print(f"[s7c]   γ summary — median={float(np.median(gamma)):.4f}  "
-          f"q25={float(np.quantile(gamma,0.25)):.4f}  "
-          f"q75={float(np.quantile(gamma,0.75)):.4f}")
+
+    gamma = gamma_pool
 
     # Build a new velocity under the s7c γ: v_g(z, t_c) = γ_g · (total - new/(1-exp(-γt)))
     # or more directly: dμ/dt from the labelled fit at steady state is
@@ -158,37 +191,69 @@ def main() -> int:
         "symmetry_median": sym["median_asym"],
         "oracle_tol": tol,
         "labelled_rate_nll": rm.best_val_nll,
-        "gamma_median": float(np.median(gamma)),
-        "gamma_q25": float(np.quantile(gamma, 0.25)),
-        "gamma_q75": float(np.quantile(gamma, 0.75)),
+        "gamma_pooled": {
+            "median": float(np.median(gamma)),
+            "q25": float(np.quantile(gamma, 0.25)),
+            "q75": float(np.quantile(gamma, 0.75)),
+            "min": float(gamma.min()),
+            "max": float(gamma.max()),
+        },
+        "gamma_grad_norm_first": float(g_norm_hist[0]) if g_norm_hist else None,
+        "gamma_grad_norm_last": float(g_norm_hist[-1]) if g_norm_hist else None,
+        "gamma_per_batch_agreement": {
+            "spearman_3h_vs_5h": rho_batch,
+            "pearson_3h_vs_5h": pr_batch,
+        },
     }
     (OUT / "fit_meta.json").write_text(json.dumps(meta, indent=2, default=str))
 
     # Report.
+    def _r(x, n=3):
+        try: return round(float(x), n)
+        except Exception: return x
     lines = [
         "# §7c — LabelledRateModel on Dynamo scNT-seq hematopoiesis",
         "",
         f"Tag: `v0.5-basin-lock`.  Val NLL (joint new+total NB) = "
         f"{meta['labelled_rate_nll']:.3f}.",
         "",
-        "## γ per gene (hour⁻¹)",
-        f"* median: {meta['gamma_median']:.4f}",
-        f"* IQR: [{meta['gamma_q25']:.4f}, {meta['gamma_q75']:.4f}]",
-        "* Fit on both 3h and 5h cells with the pulse length in the",
-        "  likelihood directly → single γ_g per gene, no per-batch split.",
+        "## γ training diagnostics",
         "",
-        "## Behaviour by (cell_type, day) under lead_eig rule",
+        f"* Closed-form init: `γ̂_g = −log(1 − new_g/total_g) / t̄` on",
+        "  pooled cells, clamped to [1e-3, 10].",
+        f"* Separate param group: `log_γ` lr = base lr × 10.",
+        f"* `log_γ` grad norm — first step: "
+        f"{meta['gamma_grad_norm_first']:.3e}" if meta.get('gamma_grad_norm_first') else "",
+        f"* `log_γ` grad norm — last step: "
+        f"{meta['gamma_grad_norm_last']:.3e}" if meta.get('gamma_grad_norm_last') else "",
+        "",
+        "## Pooled γ (hour⁻¹)",
+        "",
+        f"* median: {_r(meta['gamma_pooled']['median'])}",
+        f"* IQR:    [{_r(meta['gamma_pooled']['q25'])}, "
+        f"{_r(meta['gamma_pooled']['q75'])}]",
+        f"* range:  [{_r(meta['gamma_pooled']['min'])}, "
+        f"{_r(meta['gamma_pooled']['max'])}]",
+        "",
+        "## Per-batch γ agreement (3h-only fit vs 5h-only fit)",
+        "",
+        f"* Spearman: **{_r(meta['gamma_per_batch_agreement']['spearman_3h_vs_5h'])}**",
+        f"* Pearson:  **{_r(meta['gamma_per_batch_agreement']['pearson_3h_vs_5h'])}**",
+        "",
+        "If γ is a stable gene property, 3h-only and 5h-only fits should",
+        "agree closely. This is the clean test of whether the labelled rate",
+        "model recovers a batch-invariant degradation rate per gene.",
+        "",
+        "## Behaviour by (cell_type, day) under the locked lead_eig rule",
         "",
         beh_df.round(3).to_markdown(index=False),
         "",
-        "## Comparison to §7b 3h-batch artefact",
+        "## Note on comparison to §7b",
         "",
-        "§7b under the pre-lock classifier found 37 holders at 3h and 0 at 5h.",
-        "Under the v0.5 lead_eig rule + s7c γ, the per-batch holder fractions",
-        "and basin_index medians are above. If the two days now give similar",
-        "fractions on terminal cell types, the 3h artefact is accounted for by",
-        "the γ-footing fix; if a persistent 3h-only pattern remains, dynamo's",
-        "upstream velocity_pca (not the γ fit) must be the source.",
+        "The user directive is: **do not re-interpret the batch-flip",
+        "pattern until γ trains**. The behaviour table above is reported",
+        "but not analysed vs §7b until the γ training diagnostics",
+        "(above) show non-trivial gradient and a spread γ distribution.",
     ]
     (OUT / "report.md").write_text("\n".join(lines) + "\n")
     print(f"\n[s7c] outputs → {OUT}")

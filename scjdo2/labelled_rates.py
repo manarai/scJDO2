@@ -37,6 +37,10 @@ class LabelledRatesConfig:
     hidden: Tuple[int, ...] = (128, 128)
     n_epochs: int = 400
     lr: float = 1e-3
+    # Separate learning rate for ``log_gamma`` — the shared trunk gets
+    # a flat gradient on γ when γ is pinned at init, so a larger lr
+    # for the γ group is the standard fix. Default 10× the base lr.
+    lr_gamma_scale: float = 10.0
     batch_size: int = 256
     held_out_frac: float = 0.10
     patience: int = 30
@@ -148,8 +152,40 @@ class LabelledRateModel:
             else "cuda" if torch.cuda.is_available() else "cpu"
         )
         model = _LabelledNBDecoder(d_in, G, self.config.hidden).to(device)
-        opt = torch.optim.AdamW(model.parameters(),
-                                 lr=self.config.lr, weight_decay=1e-4)
+
+        # Closed-form γ init per gene from pooled (new, total) counts:
+        #   γ̂_g = −log(1 − new_g / total_g) / t̄
+        # where t̄ is the mean per-cell pulse. If new_g ≥ total_g (noise /
+        # saturated), fall back to the gamma_max; if ratios ≤ 0, use
+        # gamma_min. This gives log_γ a strong starting point so the γ
+        # head gets non-trivial gradient from the first epoch.
+        with torch.no_grad():
+            n_sum = counts_new.sum(axis=0)
+            t_sum = counts_total.sum(axis=0)
+            t_bar = float(np.mean(t_c[t_c > 0])) if (t_c > 0).any() else 1.0
+            ratio = np.clip(n_sum / np.clip(t_sum, 1.0, None), 1e-6, 1 - 1e-6)
+            gamma_init = -np.log1p(-ratio) / max(t_bar, 1e-3)
+            gamma_init = np.clip(gamma_init,
+                                   self.config.gamma_min,
+                                   self.config.gamma_max)
+            model.log_gamma.copy_(torch.as_tensor(
+                np.log(gamma_init), dtype=torch.float32, device=device,
+            ))
+
+        # Two parameter groups: γ gets lr × lr_gamma_scale, everything
+        # else the base lr. Standard fix for a parameter the optimiser
+        # otherwise undertrains.
+        base_params = [p for n, p in model.named_parameters()
+                       if n != "log_gamma"]
+        gamma_params = [model.log_gamma]
+        opt = torch.optim.AdamW(
+            [
+                {"params": base_params, "lr": self.config.lr},
+                {"params": gamma_params,
+                 "lr": self.config.lr * float(self.config.lr_gamma_scale)},
+            ],
+            weight_decay=1e-4,
+        )
 
         if size_factor_total is None:
             lib = counts_total.sum(axis=1)
@@ -171,6 +207,8 @@ class LabelledRateModel:
 
         bs = min(self.config.batch_size, len(train_idx))
         best_val = float("inf"); patience = 0; best_state = None
+        gamma_grad_history = []
+        gamma_log_history = []
         for epoch in range(self.config.n_epochs):
             model.train()
             idx = torch.as_tensor(
@@ -182,7 +220,14 @@ class LabelledRateModel:
             lp_tot = _nb_log_prob(C_tot[idx], log_total, model.log_theta_total)
             lp_new = _nb_log_prob(C_new[idx], log_new, model.log_theta_new)
             loss = -(lp_tot.mean() + lp_new.mean())
-            opt.zero_grad(); loss.backward(); opt.step()
+            opt.zero_grad(); loss.backward()
+            if model.log_gamma.grad is not None:
+                g_norm = float(model.log_gamma.grad.norm().item())
+                gamma_grad_history.append(g_norm)
+                gamma_log_history.append(
+                    float(model.log_gamma.detach().std().item()),
+                )
+            opt.step()
             if (epoch + 1) % max(1, self.config.n_epochs // 20) == 0:
                 model.eval()
                 with torch.no_grad():
@@ -193,7 +238,9 @@ class LabelledRateModel:
                     val = -(lp_tot_v + lp_new_v).item()
                 if verbose and (epoch + 1) % max(1, self.config.n_epochs // 10) == 0:
                     print(f"[labelled-rate] epoch {epoch+1}/{self.config.n_epochs}  "
-                          f"train_loss={float(loss.detach()):.3f}  val={val:.3f}")
+                          f"train_loss={float(loss.detach()):.3f}  val={val:.3f}  "
+                          f"log_γ grad norm={gamma_grad_history[-1]:.3e}  "
+                          f"log_γ std={gamma_log_history[-1]:.3f}")
                 if val < best_val:
                     best_val = val; patience = 0
                     best_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
@@ -201,6 +248,8 @@ class LabelledRateModel:
                     patience += 1
                     if patience >= self.config.patience:
                         break
+        self._gamma_grad_history = gamma_grad_history
+        self._gamma_log_std_history = gamma_log_history
         if best_state is not None:
             model.load_state_dict(best_state)
         model.eval()
