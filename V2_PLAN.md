@@ -1221,6 +1221,113 @@ each other when the LARRY re-alignment lands.
 
 ---
 
+## 9b. OPEN ITEM — basin classifier spec not locked (2026-10-14)
+
+The §5 PBMC basin arm converged to the ESM-energy drift (symmetric
+Jacobian) + Σ-tangent restriction. The CLASSIFIER rule is not locked:
+every candidate fails the strict Phase-B pitchfork gate on fork P/R
+with the user's expected ``~1.00 / ~0.98`` ESM-lead-eig profile. Full
+numbers below so the next pass starts from the same ground truth.
+
+**Common setup for all three rules.** ESM energy drift
+(``scjdo2.energy_drift.EnergyDriftAdapter``, loss=esm, β=1.0),
+τ ∈ {0.1, 0.3, 0.5} equilibrated pitchfork (n=1200, 20D PCA), dynamic
+ground truth (sign of analytic 2D J at (X_true, α)).
+
+**Candidate 1 — lead-eigenvalue (``opspace.behaviour``, legacy):**
+Classifies on ``sign(lead_re)`` with tol = ``0.1 × std(lead_re)``.
+
+| τ | fork P / R | holder P / R |
+|---|---|---|
+| 0.1 | 0.12 / **0.98** | **1.00** / 0.70 |
+| 0.3 | 0.08 / 0.79     | 0.99 / 0.63  |
+| 0.5 | 0.10 / 0.93     | **1.00** / 0.57 |
+
+Fork recall near perfect; fork precision very low (lead_re > tol
+fires on near-zero positives). Holder recall caps at 0.70 at τ=0.1
+because basin cells with any positive-leaning soft axis get called
+fork or drift.
+
+**Candidate 2 — single-tol magnitude on Σ-tangent (§5.8):**
+Classifies on ``eigvals(Vᵀ J V)`` with
+``V = top-r Σ-eigvecs`` and
+``tol = 0.1 × median |λ(−Σ⁻¹)|`` for both signs.
+
+| τ | tol    | fork P / R | holder P / R |
+|---|---|---|---|
+| 0.1 | 0.034 | 0.40 / 0.62 | 0.98 / **0.97** |
+| 0.3 | 0.032 | 0.07 / 0.12 | 0.95 / 0.94 |
+| 0.5 | 0.033 | 0.50 / 0.02 | 0.95 / **1.00** |
+
+Holder recall jumps to 0.94-1.00 across τ (3× lead-eig); holder
+precision 0.95-0.98. Fork precision mixed (0.07-0.50). Fork recall
+collapses at τ=0.5 (only 2 cells pass "max > tol" in the Σ-tangent
+block — the saddle direction is absorbed by the restriction).
+
+**Candidate 3 — two-threshold (tol_neg from oracle, tol_pos from
+null, 95pct, floored at 1e-6 × max |λ|, no clamp to tol_neg) (§5.9+):**
+
+Null = 10 refits of ESM on shuffled-marginal latent; tol_pos =
+95th percentile of per-cell ``λ_max``, floored at ``1e-6 × max|λ|``
+(so that a null without positive outliers still accepts any
+positive eigenvalue as signal).
+
+| τ | tol_neg | null tol_pos (used) | fork P / R | holder P / R |
+|---|---|---|---|---|
+| 0.1 | 0.034 | +0.303 | 0.40 / 0.18 | 0.98 / **0.97** |
+| 0.3 | 0.032 | +0.150 | 0.00 / 0.00 | 0.95 / 0.94 |
+| 0.5 | 0.033 | −0.098 → ~5e-6 (floor) | 0.18 / 0.09 | 0.95 / **0.98** |
+
+Holder P/R PASS at every τ (both ≥ 0.94); strict Phase-B gate on
+fork P/R still FAILS. The null provides a sensible positive tol_pos
+at τ=0.1 and τ=0.3 (0.30 / 0.15, reflecting null-noise outliers in
+the latent), but the ESM-fit Hessian at the pitchfork saddle has
+tangent eigenvalues below the null floor at τ=0.3 and 0.5.
+
+**PBMC consequence** (all three rules):
+* Lead-eig: resting basin fraction NOT reported this way directly
+  (lead_re > 0 → fork → NK/B/CD8T mostly fork).
+* Single-tol: 70.7 % resting basin (CD14+ 85, CD4T 74, B 67, CD8T 42).
+* Two-tol + null: identical to single-tol on PBMC (null tol_pos is
+  negative on scVI because shuffled scVI remains near-unimodal, so
+  the floor kicks tol_pos to ~1e-6 → equivalent to single-tol at
+  tol_neg=0.076).
+
+**Root cause of the fork-P/R gap, same across candidates 2 and 3.**
+The Σ-tangent at a pitchfork saddle samples cells from both basins
+along the between-basin axis; Σ along that axis is LARGE, so it IS
+kept in V — but the ESM-fit Hessian along that axis is weak
+(data-sparse saddle region, DSM-equivalent loss can't resolve
+curvature there). Candidate 1's lead-eig rule bypasses the tangent
+and sees the saddle's positive mode in the full J; it has high
+fork recall but at the cost of calling every near-zero-positive
+cell "fork".
+
+**Decision deferred.** Three mutually-exclusive next passes exist;
+none is the clear winner at this scale, and the user asked to stop
+tonight. Options for the next session, with their trade-offs:
+
+1. **Keep the two-tol rule but drop the Σ-tangent on synthetic data
+   where the latent is already low-D.** The user previously rejected
+   a "saddle-aware tangent" as circular; a *dimension-aware*
+   tangent (restrict only if the latent is high-D relative to the
+   data manifold rank) is distinct. Trade-off: adds a dataset-level
+   knob.
+2. **Report the lead-eig rule but with ``tol = 0.1 × median |λ(−Σ⁻¹)|``
+   from the oracle instead of from std(lead_re).** Keeps the full
+   J spectrum, uses the Gaussian oracle for the threshold.
+3. **Accept that the paper's §5 is PBMC-only with the single-tol
+   rule, document the pitchfork fork-P/R gap as a known
+   limitation of the current pipeline, and move to §7c.** The
+   PBMC basin result (70.7 %) is already stronger than any
+   previous §5 draft; the pitchfork gate is a methodological
+   proof-of-concept, not a dataset in the paper's main story.
+
+**Repository tag v0.5-basin-lock remains REMOVED** until this item
+closes.
+
+---
+
 ## 10. Phase A deliverables status
 
 | Deliverable | Status | Where |

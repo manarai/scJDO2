@@ -872,7 +872,11 @@ def classify_basin_latent(adata: AnnData, tol: float,
       ``0.1 × median |λ(−Σ⁻¹)|`` from the Gaussian oracle.
     * ``tol_pos`` — expansion threshold from the permutation null
       (95th percentile of per-cell ``λ_max`` under shuffled-marginal
-      refits). If ``None``, falls back to the legacy single-tol rule
+      refits). Floored at ``1e-6 × max |λ(J)|`` (numerical precision
+      only, NOT at ``tol_neg``): a null with no positive outliers
+      means positive curvature in real data is signal, and basin
+      stiffness is the wrong reference for calling fork.
+      If ``None``, falls back to the legacy single-tol rule
       (``tol_pos = tol``) so pre-null callers still work.
 
     Per cell ``c``:
@@ -918,13 +922,24 @@ def classify_basin_latent(adata: AnnData, tol: float,
     z = np.asarray(adata.obsm[use_rep], dtype=np.float32)
 
     tol_neg = float(tol)
-    # Clamp tol_pos ≥ tol_neg: if the null's 95th percentile of λ_max is
-    # below basin stiffness (happens when the shuffled-marginal fit
-    # produces an all-negative Jacobian field — e.g. late-stage
-    # equilibrated pitchfork with well-separated basins), fall back to
-    # tol_neg so the fork call stays conservative.
-    tol_pos_val = (max(float(tol_pos), tol_neg)
-                   if tol_pos is not None else tol_neg)
+    if tol_pos is None:
+        tol_pos_val = tol_neg
+    else:
+        # No clamp to tol_neg: a null with no positive outliers means
+        # positive curvature is signal, and basin stiffness is the
+        # WRONG reference for calling fork. Floor at numerical
+        # precision only: ``1e-6 × max |λ(J)|`` across all cells.
+        try:
+            scale = 0.0
+            for c in range(n):
+                ev_c = np.linalg.eigvals(J[c].astype(np.float64)).real
+                a_max = float(np.max(np.abs(ev_c))) if ev_c.size else 0.0
+                if a_max > scale:
+                    scale = a_max
+        except np.linalg.LinAlgError:
+            scale = 1.0
+        tp_floor = 1e-6 * (scale if scale > 0 else 1.0)
+        tol_pos_val = max(float(tol_pos), tp_floor)
 
     r_arr = np.zeros(n, dtype=np.int32)
     n_neg_arr = np.zeros(n, dtype=np.int32)
