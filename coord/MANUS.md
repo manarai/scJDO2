@@ -19,7 +19,8 @@ Every message you get from the user has this form:
    revision you are already on it.
 3. Read, in order: `coord/PROTOCOL.md`, `coord/PROJECT.md`,
    `coord/<workstream>/WORKSTREAM.md`, `coord/<workstream>/tasks/<ID>.md`,
-   and the spec sections the task names. If
+   the spec sections the task names, and `coord/<workstream>/FINDINGS.md`
+   for what earlier tasks showed. If
    `<Claude's folder>/coord/<workstream>/reviews/<ID>.md` exists (the
    path is in `PROJECT.md`), read it: its fixes and answers are binding.
 4. Python: use `<your folder>/.venv` (create it if missing, with the
@@ -30,7 +31,13 @@ Every message you get from the user has this form:
 6. Write `coord/<workstream>/reports/<ID>.json` and `.md` in the format
    of `coord/PROTOCOL.md` §Report. Every `required_metrics` key must be
    present (`null` plus a deviation note if it could not be computed).
-   Commit them.
+   Under **Observations**, note anything notable you saw (an outlier
+   type, a QC pattern, a surprising count), stated as fact. Under
+   **Suggestions**, propose further analyses worth running and why.
+   Do not run them: Claude interprets your results and turns approved
+   suggestions into tasks. Commit the report.
+   If the task's `kind` is `exploratory`, say so in the report's first
+   line.
 7. Run `python coord/coord_check.py check <workstream> <ID>` and fix
    anything it flags that is yours to fix.
 8. Tell the user in ≤ 5 lines: project, task, status, the gate numbers,

@@ -30,6 +30,7 @@ coord/
   coord_check.py       mechanical review checker (generic)
   <workstream>/        one per analysis (e.g. aging, atlas, k562)
     WORKSTREAM.md      goal, base branch, spec docs, frozen rules, protected paths
+    FINDINGS.md        running interpretation: what each accepted task showed
     tasks/<ID>.md      Claude writes
     reports/<ID>.md    Manus writes (+ <ID>.json)
     reviews/<ID>.md    Claude writes
@@ -66,7 +67,26 @@ task is `<workstream>/<ID>`; its branch is `manus/<workstream>-<ID>`.
      and appends `## Revision n` to its report;
    * `STOP` — a frozen gate failed or a rule cannot execute; the user
      decides.
-4. **Answer.** If Manus is stuck, it commits its report with
+4. **Interpret and propose.** After every verdict Claude reads the
+   results for what they mean, not only whether they pass: against the
+   workstream's question and frozen rules, with caveats, and alongside
+   Manus's own observations and suggestions. Claude writes this in the
+   review (`## Interpretation`, `## Proposed next tasks`) and adds a
+   dated entry to `coord/<ws>/FINDINGS.md`. Proposed tasks are drafts:
+   * **planned** — the next task already drafted for the workstream;
+     Claude issues it after ACCEPT;
+   * **follow-up** — new work the results call for (a control, a
+     robustness check, a fix, a new data source); issued only after
+     the user approves it;
+   * **exploratory** — analyses beyond the frozen rules; labelled
+     exploratory in the task, its report and FINDINGS, never counted
+     toward a pre-registered outcome, issued only after the user
+     approves it.
+   The user approves, edits or declines; Claude then writes the task
+   file and issues it. This is the back-and-forth: Manus runs and
+   observes, Claude interprets and proposes, the user decides, and
+   everything lands in files.
+5. **Answer.** If Manus is stuck, it commits its report with
    `status: blocked` and the question under `## Questions`. Claude
    answers under `## Answers` in the review; the answer is binding as
    if it were in the task.
@@ -81,9 +101,10 @@ tasks, never mid-task.
 
 ## Task file (`coord/<ws>/tasks/<ID>.md`)
 
-Front matter `id, workstream, title, owner (claude|manus), status
-(draft|issued|accepted|stopped), base_commit, spec_sections,
-depends_on`. Body: Goal, Steps, Gate (numeric conditions), Stop and
+Front matter `id, workstream, title, owner (claude|manus), kind
+(planned|follow-up|exploratory), status (draft|issued|accepted|stopped),
+base_commit, spec_sections, depends_on, motivated_by` (the review or
+finding that led to it, for follow-ups and exploratory tasks). Body: Goal, Steps, Gate (numeric conditions), Stop and
 ask, and one fenced `json` contract block:
 
 ```json
@@ -116,13 +137,19 @@ branch; a non-zero exit is a failure.
      "regenerate": "python scripts/... --seed 0"}
   ],
   "deviations": ["what differed from the task and why"],
-  "questions": []
+  "questions": [],
+  "observations": ["anything notable in the results or data, stated as fact"],
+  "suggestions": ["a further analysis Manus thinks is worth running, and why"]
 }
 ```
 
 `coord/<ws>/reports/<ID>.md`, sections in order: Summary (≤ 10 lines),
 What ran (commands, in order), Gate numbers (table), Deviations,
-Questions, Artifacts.
+Observations, Suggestions, Questions, Artifacts.
+
+Observations and suggestions are input to Claude's interpretation.
+Manus never acts on its own suggestions; they become work only as a
+task Claude writes after the user approves.
 
 ## Rules that bind both sides
 
