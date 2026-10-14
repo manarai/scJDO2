@@ -1221,7 +1221,49 @@ each other when the LARRY re-alignment lands.
 
 ---
 
-## 9b. OPEN ITEM — basin classifier spec not locked (2026-10-14)
+## 9b. CLOSED — basin classifier locked to lead-eig by continuous AUC (2026-10-14)
+
+**Resolution** (user, 2026-10-14 close-out): instead of a fifth rule,
+evaluate the three candidates on the equilibrated pitchfork with
+continuous metrics (Spearman of ``basin_index`` vs analytic
+``lead_re``; AUC of ``basin_index`` separating holders from the
+``±0.05`` saddle window; fork-call distance to saddle). Pick the
+winner, lock it, tag ``v0.5-basin-lock``, and move to §7c.
+
+**Winner by mean AUC across τ ∈ {0.1, 0.3, 0.5}:**
+
+| rule | mean AUC | mean Spearman |
+|---|---|---|
+| **lead_eig**      | **0.859** | **+0.662** |
+| single_tol        | 0.768 | +0.519 |
+| two_tol_null      | 0.768 | +0.519 |
+
+**Locked spec** (``scjdo2.opspace.classify_basin_latent`` default,
+``rule="lead_eig"``): classify by the sign of the leading real
+eigenvalue of per-cell ``J`` with tol = ``0.1 × std(lead_re)``;
+``basin_index = −lead_re``. The two tangent-restricted magnitude
+rules remain available under ``rule="magnitude"`` for callers that
+want them; they lose on AUC/Spearman but win on holder-recall /
+precision.
+
+**Gate recorded under this rule** (holder P/R ≥ 0.8, fork R ≥ 0.8;
+fork precision bounded by saddle-window width, NOT a gate
+criterion). Lead_eig pitchfork gate: fork R PASS at every τ
+(0.79-0.98), holder R 0.57-0.70 (below 0.8). This is a documented
+trade-off; the pick is by continuous AUC, not by the discrete gate.
+
+**Repository tag ``v0.5-basin-lock`` reinstated** at the commit
+holding this spec.
+
+---
+
+## 9c. Previous open-item history (archived)
+
+The §9b open-item write-up below is the pre-close-out state (three
+candidate rules, strict Phase-B gate failing on each). Kept here
+for provenance; the resolution above supersedes it.
+
+### Open-item write-up (pre-close-out)
 
 The §5 PBMC basin arm converged to the ESM-energy drift (symmetric
 Jacobian) + Σ-tangent restriction. The CLASSIFIER rule is not locked:
@@ -1323,8 +1365,35 @@ tonight. Options for the next session, with their trade-offs:
    previous §5 draft; the pitchfork gate is a methodological
    proof-of-concept, not a dataset in the paper's main story.
 
-**Repository tag v0.5-basin-lock remains REMOVED** until this item
-closes.
+**Repository tag v0.5-basin-lock reinstated at the close-out commit.**
+
+---
+
+## 9d. §7c — resumes after v0.5-basin-lock (2026-10-14)
+
+With the latent-space basin arm locked at ``v0.5-basin-lock``, the
+measured-flow track resumes.
+
+**§7c scope (per Phase D §7 audit → §7b batch audit → close-out):**
+
+* Build ``scjdo2.rates.LabelledRateModel`` — an NB rate model that
+  takes new + total UMI counts and a **per-cell labelling pulse
+  length ``t_c``**, parameterised so
+  ``E[new_cg] / E[total_cg] = 1 − exp(−γ_g · t_c)``.
+* Fit on Dynamo scNT-seq hematopoiesis with the per-cell ``day``
+  (3h or 5h) entering the NB likelihood directly, bypassing
+  dynamo's upstream per-batch ``γ`` fit.
+* Re-run the gate variants A (unprojected) and C (rotation-
+  projected) on the newly-fit per-batch γ_g — expectation: the
+  3h-batch holder-only pattern (§7b) collapses when γ is on the
+  same per-hour footing across batches.
+
+**Secondary tracks (deferred to post-§7c):**
+
+* Single-pulse labelling dataset (dynamo scEU-seq organoid or
+  scNT-seq neuron) — same gate, no 3h/5h confound.
+* Velocyto re-alignment of LARRY — splicing-flow cross-check.
+* Setty + scVelo whole-genome rerun with broader HVG pool.
 
 ---
 

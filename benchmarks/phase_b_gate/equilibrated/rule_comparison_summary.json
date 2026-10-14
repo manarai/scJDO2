@@ -1,0 +1,11 @@
+{
+  "winner": "lead_eig",
+  "mean_auc_by_rule": {
+    "lead_eig": 0.859170526098259,
+    "single_tol": 0.7680143612931398,
+    "two_tol_null": 0.7680143612931398
+  },
+  "all_tau_gate_pass_for_winner": false,
+  "gate_criterion": "holder P/R >= 0.8 AND fork recall >= 0.8",
+  "note": "fork precision in \u00b10.05 saddle window bounded by neighbourhood width; not a gate criterion"
+}

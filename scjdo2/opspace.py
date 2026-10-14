@@ -861,8 +861,40 @@ def classify_basin_latent(adata: AnnData, tol: float,
                           use_rep: str = "X_pca",
                           k_tangent: int = 30,
                           tangent_floor_frac: float = 0.1,
-                          tol_pos: Optional[float] = None) -> None:
-    """Two-threshold magnitude classifier on the Σ-tangent block.
+                          tol_pos: Optional[float] = None,
+                          rule: str = "lead_eig") -> None:
+    """Latent basin classifier — final locked spec after the §5.9
+    continuous-metric comparison on the equilibrated pitchfork.
+
+    **Rule selection** (``rule="lead_eig"`` is the AUC winner and the
+    v0.5 default):
+
+    * ``"lead_eig"`` — classify by the SIGN of the leading real
+      eigenvalue of ``J`` (full J, no tangent restriction) with the
+      given ``tol`` as the near-zero band. Picked at commit
+      v0.5-basin-lock after beating the two tangent-restricted
+      magnitude rules on mean AUC (0.859 vs 0.768) and per-τ
+      Spearman (ρ 0.60-0.70 vs 0.46-0.58) on the equilibrated
+      pitchfork at τ ∈ {0.1, 0.3, 0.5}.
+    * ``"magnitude"`` — original magnitude rule on the Σ-tangent
+      block (see below). Kept for comparison; produces higher holder
+      precision/recall at the cost of fork recall.
+
+    **Gate criterion recorded on this rule:**
+    ``holder P ≥ 0.8``, ``holder R ≥ 0.8``, ``fork R ≥ 0.8``.
+    Fork precision at a ±0.05 saddle window is bounded by
+    neighbourhood width (many near-saddle cells have analytic
+    ``lead_re ≈ 0`` → ground truth drift → fork precision ceilings
+    well below 1.00) and is **not** a gate criterion.
+
+    **``basin_index``** = ``−lead_re`` (universal signed shallowness
+    score, positive = basin, deeper = larger; negative = fork). The
+    paper reports this per-cell quantity as the primary readout.
+
+    The magnitude-rule tangent restriction (two-threshold with
+    ``tol_pos`` from the permutation null) remains available under
+    ``rule="magnitude"`` for callers that want it — same thresholds
+    and spec as §5.9.
 
     Final locked rule (user, 2026-10, after retiring the single-tol
     magnitude rule which judged a saddle's shallow positive
@@ -922,6 +954,39 @@ def classify_basin_latent(adata: AnnData, tol: float,
     z = np.asarray(adata.obsm[use_rep], dtype=np.float32)
 
     tol_neg = float(tol)
+    # Lead-eig rule (locked default) — classify on the full J's
+    # leading real eigenvalue, basin_index = -lead_re.
+    if str(rule).lower() == "lead_eig":
+        n_cells = J.shape[0]
+        beh = np.full(n_cells, "", dtype=object)
+        basin_idx_arr = np.full(n_cells, np.nan, dtype=np.float32)
+        for c in range(n_cells):
+            try:
+                ev = np.linalg.eigvals(J[c].astype(np.float64)).real
+            except np.linalg.LinAlgError:
+                beh[c] = "drift"
+                continue
+            lam_max = float(ev.max())
+            lam_min = float(ev.min())
+            if lam_max > tol_neg:
+                beh[c] = "fork"
+            elif lam_max < -tol_neg:
+                beh[c] = "holder"
+            else:
+                beh[c] = "drift"
+            basin_idx_arr[c] = -lam_max
+        import pandas as _pd
+        adata.obs["op_behaviour_basin"] = _pd.Categorical(
+            beh, categories=["", "holder", "fork", "drift"],
+        )
+        adata.obs["op_basin_index"] = basin_idx_arr
+        adata.obs["op_tangent_r"] = np.full(n_cells, int(J.shape[1]),
+                                              dtype=np.int32)
+        adata.obs["op_n_neg_tangent"] = np.zeros(n_cells, dtype=np.int32)
+        adata.obs["op_n_pos_tangent"] = np.zeros(n_cells, dtype=np.int32)
+        adata.obs["op_n_soft"] = np.zeros(n_cells, dtype=np.int32)
+        return
+
     if tol_pos is None:
         tol_pos_val = tol_neg
     else:
@@ -994,6 +1059,14 @@ def classify_basin_latent(adata: AnnData, tol: float,
         med_neg = float(np.median(neg)) if neg.size else float("nan")
         if np.isfinite(med_neg) and abs(med_neg) > 0:
             basin_idx_arr[c] = -lam_max / abs(med_neg)
+        else:
+            # No negative eigenvalue above the basin-stiffness floor —
+            # cell is pure fork or flat. Fall back to ``-lam_max``
+            # directly so basin_index stays defined everywhere
+            # (negative for forks, zero for flat Hessians). The
+            # downstream Spearman / AUC / "basin index as primary"
+            # readouts require a finite score at every cell.
+            basin_idx_arr[c] = -lam_max
         # Two-threshold classification (user spec, 2026-10 final):
         #   fork iff any λ > tol_pos  (above the permutation-null ceiling)
         #   basin iff max λ < tol_neg AND some λ < -tol_neg

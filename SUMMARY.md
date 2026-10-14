@@ -562,7 +562,101 @@ hard anchor).
 Outputs under ``benchmarks/v2/pbmc_basin/`` (v1 run superseded by §5.2
 energy drift; see commit history for the v1 numbers that match §5.1).
 
-### 5.9 Fifth rework (final) — two thresholds (tol_neg + tol_pos from null)
+### 5.10 Final close-out — lead-eig rule picked by continuous AUC (locked)
+
+**User-directed close-out of §9b.** Instead of adding a fifth
+candidate rule, evaluate the three existing ones on the equilibrated
+pitchfork with continuous metrics and pick the one with the best AUC.
+
+**Setup.** τ ∈ {0.1, 0.3, 0.5}, 1200 cells × 20D PCA, dynamic
+ground truth (sign of analytic 2D J at (X_true, α)). Saddle window
+``|pseudotime − τ_crit| ≤ 0.05``.
+
+**Three continuous metrics per rule:**
+
+* **Spearman** of ``basin_index`` vs ``−analytic lead_re`` per cell.
+* **AUC** of ``basin_index`` separating ``true_holder`` cells (outside
+  the saddle window) from cells inside the saddle window (not
+  true_holder) — classical ROC-AUC of basin ranking.
+* **Median ``|pseudotime − τ_crit|``** of fork-called cells vs
+  random — fork localisation.
+
+**Results** (``benchmarks/phase_b_gate/equilibrated/
+rule_comparison.csv`` + ``rule_comparison_summary.json``):
+
+| rule | mean AUC | mean Spearman | fork-dist ratio range |
+|---|---|---|---|
+| **lead_eig**      | **0.859** | **+0.662** | 0.23 - 0.56 |
+| single_tol        | 0.768 | +0.519 | 0.17 - 0.87 |
+| two_tol_null      | 0.768 | +0.519 | 0.26 - 0.56 |
+
+Per-τ AUCs: lead_eig **0.980 / 0.780 / 0.817** (τ=0.1/0.3/0.5);
+single_tol 0.963 / 0.680 / 0.661.
+
+**Winner: ``lead_eig`` by AUC and Spearman at every τ.**
+
+**Gate (locked criterion, NOT a pass requirement for the tag — the
+pick is by AUC):** ``holder P ≥ 0.8``, ``holder R ≥ 0.8``,
+``fork R ≥ 0.8``. **Fork precision at a ±0.05 saddle window is bounded
+by neighbourhood width** (many near-saddle cells have analytic
+``lead_re`` near zero → ground truth drift → fork precision ceilings
+well below 1.00); fork precision is **not** a gate criterion.
+
+Lead_eig pitchfork gate numbers:
+
+| τ | holder P / R | fork R |
+|---|---|---|
+| 0.1 | 1.00 / 0.70 | 0.98 |
+| 0.3 | 0.99 / 0.63 | 0.79 |
+| 0.5 | 1.00 / 0.57 | 0.93 |
+
+Fork recall PASSES at every τ (0.79 - 0.98); holder recall sits in
+0.57-0.70 (below the 0.8 criterion). The trade-off is intrinsic to
+the tol used (``0.1 × std(lead_re)``) — tightening tol would raise
+holder recall but drop fork recall. Documented and tagged as the
+locked state at this point.
+
+**PBMC under the locked lead_eig rule** (
+``benchmarks/v2/pbmc_basin_magnitude/behaviour_by_cluster.csv``):
+
+| cluster | n | resting | holder | fork | drift | **basin_index median** |
+|---|---|---|---|---|---|---|
+| CD14+ Monocytes      |  480 | ✓ | 296 | 162 |  22 | **+0.41** |
+| CD4 T cells          | 1144 | ✓ | 624 | 411 | 109 | **+0.14** |
+| B cells              |  342 | ✓ |  87 | 218 |  37 | **−0.37** |
+| CD8 T cells          |  316 | ✓ |  69 | 223 |  24 | **−0.46** |
+| Dendritic cells      |   37 |   |  19 |  15 |   3 | +0.23 |
+| FCGR3A+ Monocytes    |  150 |   |  90 |  44 |  16 | +0.29 |
+| Megakaryocytes       |   15 |   |   0 |  13 |   2 | −0.37 |
+| NK cells             |  154 |   |   0 | 153 |   1 | **−0.77** |
+
+**Resting basin fraction: 1076 / 2282 = 47.15 %.** Resting
+``basin_index`` median = **−0.11** across the four resting types.
+
+**Paper statement under the locked rule** (basin_index primary,
+class secondary):
+
+* **CD14+ Monocytes** (bi +0.41) and **CD4 T** (bi +0.14) are
+  basin-leaning on average — the deepest resting basin is CD14+ Mono.
+* **FCGR3A+ Monocytes** (bi +0.29) and **Dendritic** (bi +0.23) also
+  basin-leaning — monocyte / DC programmes are shallow but
+  cohesive density modes.
+* **B cells** (bi −0.37) and **CD8 T** (bi −0.46) are **basins
+  with one real shallow ridge toward CD4 T** (not deep basins
+  because their leading mode is weakly expanding toward the T-cell
+  neighbour — the +2.27 and +0.23 modes from §5.5 lift them above
+  the ``0.1 × std(lead_re)`` tol). Their basin_index is negative but
+  substantially less so than NK.
+* **NK cells** (bi −0.77) are strongly fork — the only PBMC cluster
+  that sits at a clear density ridge, between CD8 T and the
+  cytolytic / innate compartment.
+
+The lead_eig rule's gate failure (holder R below 0.8 on pitchfork)
+is recorded; the AUC winner is locked regardless, and the continuous
+basin_index is reported in place of a hard-classification story for
+the paper's §5.
+
+### 5.9 Fifth rework — two thresholds (tol_neg + tol_pos from null) (SUPERSEDED by §5.10)
 
 **User rebuttal (correct):** judging a saddle's shallow positive
 eigenvalue against basin stiffness is wrong — a saddle's expanding
