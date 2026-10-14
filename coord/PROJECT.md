@@ -23,3 +23,4 @@ time.
 | workstream | base branch | goal |
 |---|---|---|
 | `aging` | `aging-basins` | Does aging loosen cell-type basins along specific directions (TMS lung + marrow), per PREREG_aging_basins.md |
+| `hlca` | `aging-basins` | Same aging-basin tests on human lung: HLCA core (Sikkema, Theis et al., Nat Med 2023) with scArches reference mapping; compare with mouse |

@@ -57,6 +57,35 @@ with fewer than 20 cells on either side (bookkeeping floor, not a
 gate); then keep only cell types with `≥ 200` cells in **both** age
 groups (the §2 inclusion gate, unchanged).
 
+### 2b — Prereg amendment: age labels and downsampling unit (2026-10-14, made before any preprocessing, model fit or statistic on these data)
+
+Context: the TMS fetch (aging/A01, census 2024-07-01, dataset IDs as
+§1) has run; only `obs` metadata has been read (age labels, donor
+counts). Nothing governed by this amendment has run.
+
+1. **4-week cells are excluded by design** (spec §1; young = 3 months
+   per §2). They are 2 508 / 24 540 lung cells (2 donors) and
+   3 027 / 40 220 marrow cells (2 donors). They are not "unmapped"
+   labels; they are dropped before §2a.
+2. **"Old" as executed** = census `development_stage` labels
+   `18 month-old stage` and `20 month-old stage and over`. The census
+   does not separate 21, 24 and older mice inside the second label, so
+   "old" may include mice older than the 18–24 months stated in §2.
+   This is recorded, not corrected.
+3. **Downsampling unit.** Every TMS donor (mouse) has exactly one age,
+   so §2a's per-`(donor, cell_type)` balancing cannot execute.
+   **Rule as executed:** per `cell_type`, downsample the larger age
+   group to the size of the smaller, seed 0, sampling as evenly across
+   that group's donors as their cell counts allow (each donor
+   contributes `min(n_donor, quota)` cells, with the quota raised until
+   the target is met). Before this, drop `(donor, cell_type)` sets with
+   fewer than 20 cells (bookkeeping floor, not a gate). The §2
+   inclusion gate is unchanged: `≥ 200` cells in **both** age groups
+   after downsampling.
+4. **Donor counts** (young / old, 4-week excluded): lung 4 / 10,
+   marrow 2 / 13. Donor-level replication of shifts is reported where
+   possible (§2), and marrow's two young donors are a stated limit.
+
 ## 3 — Operators + per-type measurements
 
 Per `(tissue, cell_type, age_group)`:
