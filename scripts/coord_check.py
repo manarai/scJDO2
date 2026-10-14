@@ -1,7 +1,7 @@
 """Mechanical checks for the Claude ⇄ Manus protocol (coord/PROTOCOL.md).
 
     python scripts/coord_check.py board
-    python scripts/coord_check.py check A01 [--head origin/manus/A01] [--base <sha>]
+    python scripts/coord_check.py check A01 [--head manus/A01] [--base aging-basins]
     python scripts/coord_check.py outcome [--ref HEAD]
 
 ``check`` verifies a task branch against the task's json contract:
@@ -103,13 +103,14 @@ class Report:
 
 def cmd_check(args: argparse.Namespace) -> int:
     front, contract = read_task(args.task)
-    head = args.head or f"origin/manus/{args.task}"
-    base = args.base or front.get("base_commit", "")
-    if not base or base == "SET-AT-ISSUE":
-        base = "aging-basins"
+    head = args.head or f"manus/{args.task}"
+    # Diff from the merge base with aging-basins (three-dot), so coord
+    # commits Claude makes on aging-basins after the branch was cut
+    # never count against Manus.
+    base = args.base or "aging-basins"
     r = Report()
     if not git_ok("rev-parse", "--verify", head):
-        r.fail(f"head ref {head} not found (git fetch?)")
+        r.fail(f"head ref {head} not found")
         return r.finish(f"check {args.task}")
 
     changed = [p for p in git("diff", "--name-only", f"{base}...{head}").split("\n") if p]
@@ -163,12 +164,8 @@ def cmd_check(args: argparse.Namespace) -> int:
             used = (rep.get("compute") or {}).get("cpu_hours")
             if budget is not None and isinstance(used, (int, float)) and used > budget:
                 r.fail(f"compute {used} CPU-h exceeds budget {budget}")
-            rep_head = rep.get("head_commit", "")
-            if rep_head and not git("rev-parse", head).startswith(rep_head[:7]):
-                r.warn(f"report head_commit {rep_head[:7]} != branch head "
-                       "(report committed after its own sha is expected; check parent)")
 
-        log = git("log", "--format=%H%x00%s%x00%b%x1e", f"{base}..{head}")
+        log = git("log", "--no-merges", "--format=%H%x00%s%x00%b%x1e", f"{base}..{head}")
         for entry in filter(str.strip, log.split("\x1e")):
             sha, subj, body = (entry.strip().split("\x00") + ["", ""])[:3]
             if "Co-Authored-By: Manus" not in body:

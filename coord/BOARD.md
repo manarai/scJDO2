@@ -1,6 +1,8 @@
 # Board — aging-basins arm
 
-Open task: **A01** (Manus), base `20f1371`.
+Open task: **A01** (Manus), in `~/Documents/scJDO2-manus` on `manus/A01`.
+
+Folders: Claude `~/Documents/scJDO2` (`aging-basins`); Manus `~/Documents/scJDO2-manus` (worktree, `manus/<id>`).
 
 | id | owner | status | title | branch / PR | verdict |
 |---|---|---|---|---|---|
@@ -16,3 +18,4 @@ Live status from the files: `python scripts/coord_check.py board`.
 
 * 2026-10-14 — protocol set up; A00 issued to Claude; A01–A04 drafted.
 * 2026-10-14 — A00 accepted (20f1371); A01 issued to Manus.
+* 2026-10-14 — switched from GitHub PRs to a local shared repo: Manus works in the worktree `~/Documents/scJDO2-manus`.
