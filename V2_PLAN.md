@@ -1413,6 +1413,36 @@ Report + notebook at ``benchmarks/perturbseq_k562/report.md`` +
 
 ---
 
+## 9f. K562 controls → v0.6-perturb withheld (2026-10-14)
+
+Two controls on top of the first-result K562 paired comparison:
+
+* **Generic-response subtraction.** Subtract the mean `δx_obs`
+  across all KDs from both `δx_pred` and `δx_obs`; redo the paired
+  op-vs-DE comparison on the residuals. **FAILS** the pre-stated
+  gate (frac(op>DE) ≥ 0.60 AND op_mean > 0.05 in residual space).
+  Residual op_mean = +0.014, DE_mean = −0.007, frac = 0.547,
+  Wilcoxon p = 4.4×10⁻⁵. The full-space win (0.049) is dominated
+  by alignment with the generic response (`cos(δx_obs, mean) =
+  +0.45`), not by KD-specific direction.
+* **Expression nuisance.** Partial Spearman between the operator
+  sensitivity score and projected `|δ_obs|`, controlling for log
+  mean control expression of the target. **HOLDS**: partial
+  Spearman = **+0.620** (raw projected = +0.619; expression alone
+  vs `|δ_proj|` = +0.059; sens vs expression = −0.001 — no
+  confound).
+
+Gate: tag `v0.6-perturb` iff BOTH controls hold. Control 1 fails;
+**tag withheld**. Paper claim restated at the smaller effect size
+that survives the subtraction (RESULT.md §Claim).
+
+Outputs under ``benchmarks/perturbseq_k562/``:
+``RESULT.md``, ``generic_control_comparison.csv``,
+``driver_check_expression_control.csv``, ``controls_gate.json``,
+``figures/scatter_cos_vs_fisher_residual.{pdf,png}``.
+
+---
+
 ## 9d. §7c — resumes after v0.5-basin-lock (2026-10-14)
 
 With the latent-space basin arm locked at ``v0.5-basin-lock``, the

@@ -1,0 +1,10 @@
+{
+  "generic_control_holds": false,
+  "expression_control_holds": true,
+  "res_frac_op_gt_de": 0.5466586393738712,
+  "res_op_mean": 0.01385665517470912,
+  "res_de_mean": -0.006568796328986519,
+  "partial_spearman": 0.6200972915843125,
+  "projected_spearman": 0.6189783422044763,
+  "expression_spearman": 0.058609367102814426
+}

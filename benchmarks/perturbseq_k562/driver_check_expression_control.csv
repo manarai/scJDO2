@@ -1,0 +1,2 @@
+spearman_raw_sens_vs_obs,spearman_proj_sens_vs_delta_proj,spearman_expression_vs_delta_proj,spearman_sens_vs_expression,partial_spearman_sens_vs_delta_proj_given_expression,n_genes
+0.04381413838311239,0.6189783422044763,0.058609367102814426,-0.0008999830863324237,0.6200972915843125,1661
