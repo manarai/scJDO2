@@ -1,0 +1,9 @@
+{
+  "tag": "v0.5-basin-lock",
+  "n_kd_evaluated": 1661,
+  "n_kd_linear": 831,
+  "median_mag_obs_cutoff": 4.131861209869385,
+  "symmetry_median": 1.424188695864359e-07,
+  "rate_model_nll": -4.4879536628723145,
+  "driver_sensitivity_spearman": -0.31002855840954013
+}

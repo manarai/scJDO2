@@ -1369,6 +1369,50 @@ tonight. Options for the next session, with their trade-offs:
 
 ---
 
+## 9e. K562 Perturb-seq decisions (2026-10-14 autonomous run)
+
+Reviewer-defensible choices for the K562 CRISPRi prediction arm,
+recorded BEFORE seeing numbers:
+
+* **Dataset.** Replogle 2022 Essential K562 (
+  ``/Users/terooatt/Documents/scJDO/data/replogle_2022_k562_essential.h5ad``,
+  310 385 cells × 8 563 genes, 10 691 non-targeting controls,
+  2 058 perturbations). Most-common Perturb-seq benchmark; shipped
+  in v1's cache so no download required.
+* **Gene set.** 2 000 HVG from controls + mandatory inclusion of
+  every perturbation-target gene present in ``var_names`` (so each
+  KD's own gene has a measurable ``lfc_g``). Pre-stated reason:
+  Phase C anchor fit on the full 8 563 would need 6-10 h; 2 000 HVG
+  on the 10 k controls stays under ~1 h.
+* **KD inclusion.** Pre-stated rule: KDs with ≥ 50 cells AND the
+  target gene present in the HVG+mandatory set. No post-hoc drops.
+* **Linear-regime split.** ``|δx_obs|_1`` below the median across
+  KDs ⇒ "linear"; others ⇒ "nonlinear". Reported separately AND
+  pooled. Threshold = median of per-KD ``|δx_obs|``, pre-stated.
+* **Baselines.** (a) Random unit vectors in η-space, 10 draws per
+  KD. (b) ``δx = b_g`` directly (DE-only, no operator). (c) GEARS
+  — skipped: not installable in a few CPU-hours without external
+  deps; recorded as deferred.
+* **Operator at the control basin.** Mean of per-cell latent ``J``
+  across non-targeting cells (``J_latent`` from
+  ``EnergyDriftAdapter.jacobian_autodiff`` on control latent) +
+  rate-model ``grad_eta`` at the control centroid. ``δx_pred``
+  computed in latent and lifted via ``grad_eta`` — mathematically
+  equivalent to the "tangent-restricted gene-space J inverse" when
+  the Fisher-information tangent spans the ``grad_eta`` image.
+  Avoids a 6-10 h gene-space Phase C that the user's time budget
+  forbids.
+* **Ledger reasons.** Per-gene confidence = the rate model's
+  held-out NB NLL per gene (lower = more confident). Carried in
+  the per-KD scatter.
+* **No archetype decomposition, no pseudotime, no prior.** Per
+  user spec.
+
+Report + notebook at ``benchmarks/perturbseq_k562/report.md`` +
+``notebooks/perturbseq_k562.ipynb``.
+
+---
+
 ## 9d. §7c — resumes after v0.5-basin-lock (2026-10-14)
 
 With the latent-space basin arm locked at ``v0.5-basin-lock``, the
