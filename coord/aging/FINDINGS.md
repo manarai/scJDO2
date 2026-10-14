@@ -44,3 +44,15 @@ downsampling (each mouse has one age).
 "20 months and over" mice.
 **Next.** A01 revision issued. Exploratory old-age split proposed (X01),
 awaiting the user.
+
+## 2026-10-14 — aging/A01 revision 1 (planned, REVISE — blocked at lung HVG)
+
+**Result.** Eligible types: lung 2 (fibroblast, NK), marrow 6. Lung
+`seurat_v3` HVG fails per donor for donors with < ~100 cells. Donor IDs
+show 30-month mice inside "20 months and over".
+**Meaning.** PREREG §2c restores old = 18–24 months (30-month excluded;
+eligibility unchanged) and sets HVG `span=1.0` for both tissues. The
+pooled outcome will rest on 8 types, 6 from marrow.
+**Caveats.** Lung latent trained on 776 young cells of 2 types.
+**Next.** Revision 2 issued. X01 (18–21 vs 24 months) and X02
+(30-month as very old) proposed, exploratory, awaiting the user.

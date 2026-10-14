@@ -86,6 +86,29 @@ counts). Nothing governed by this amendment has run.
    marrow 2 / 13. Donor-level replication of shifts is reported where
    possible (§2), and marrow's two young donors are a stated limit.
 
+### 2c — Prereg amendment: old = 18–24 months; HVG span (2026-10-14, made before any model fit or statistic)
+
+Context: aging/A01 revision 1 ran preprocessing (eligibility counts and
+QC only). No model has been fitted and no statistic computed. Neither
+change below alters which cell types are eligible (checked: lung 2,
+marrow 6, the same types with or without the change).
+
+1. **Old = 18–24 months, as §2 states.** §2b.2 assumed the census label
+   `20 month-old stage and over` could not be resolved. It can: TMS
+   donor IDs begin with the age in months (`18-…`, `21-…`, `24-…`,
+   `30-…`). The label contains 30-month mice (lung 4 of 10 old donors,
+   marrow 3 of 13). **Rule as executed:** old = donors whose ID prefix
+   is 18, 21 or 24; donors with prefix 30 are excluded before the
+   §2b donor floor and downsampling. Young = prefix 3 (3 months); 4-week
+   donors (prefix 1) excluded as §2b.1. §2b.2 is superseded.
+2. **HVG smoothing span.** `seurat_v3` with `batch_key="donor_id"` fits a
+   LOESS per donor; at the default `span=0.3` (and 0.5) it fails with a
+   near-singularity for every lung donor contributing fewer than ~100
+   cells (7 of 13 donors in revision 1). **Rule as executed, both
+   tissues:** `flavor="seurat_v3", n_top_genes=2000,
+   batch_key="donor_id", span=1.0`. If this fails, stop; no other
+   fallback is pre-specified.
+
 ## 3 — Operators + per-type measurements
 
 Per `(tissue, cell_type, age_group)`:
