@@ -66,3 +66,16 @@ marrow 2/10, after excluding 4-week and 30-month mice.
 **Caveats.** Lung reference trained on 648 young cells of 2 types;
 marrow on 2 694 of 6; young-donor replication thin.
 **Next.** A02 issued. X01/X02 exploratory, awaiting the user.
+
+## 2026-10-14 — aging/A02 (planned, ACCEPT)
+
+**Result.** scArches shared space with the young latent encoder exactly
+frozen (params and BatchNorm buffers, checked independently); six drift
+fits, sym_max ≤ 2.5e-7.
+**Meaning.** Lung's two types and marrow granulocytes are basins; the
+other five marrow types are mostly not (holder fraction ≤ 0.44). The
+frozen tests still run on all 8 types; non-basin results describe
+operator change, not basin loosening.
+**Caveats.** Thin lung reference (648 cells, 45 epochs). 0 correction
+artifacts expected under the frozen 0.5 rule.
+**Next.** A03 issued. X03 (basin-only subset, exploratory) proposed.

@@ -6,8 +6,8 @@ Live status: `python coord/coord_check.py board`.
 |---|---|---|---|---|
 | aging/A00 | claude | accepted | Prereg amendments §2a, §4b + tests | ACCEPT |
 | aging/A01 | manus | accepted | Environment, TMS fetch, preprocessing | ACCEPT |
-| aging/A02 | manus | issued | scArches shared space, drift, operators | — |
-| aging/A03 | manus | draft | Per-type compare, artifacts, modes, outcome | — |
+| aging/A02 | manus | accepted | scArches shared space, drift, operators | ACCEPT |
+| aging/A03 | manus | issued | Per-type compare, artifacts, modes, outcome | — |
 | aging/A04 | manus | draft | Figures, QC set, notebook, RESULT.md | — |
 
 ## Log
@@ -19,6 +19,7 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-14 — aging/A01 blocked (4-week labels); PREREG §2b; REVISE issued.
 * 2026-10-14 — aging/A01 rev 1 blocked at lung HVG; PREREG §2c (old = 18–24 m, HVG span 1.0); REVISE 2 issued.
 * 2026-10-14 — aging/A01 accepted (d4eb2fe), merged; A02 issued.
+* 2026-10-14 — aging/A02 accepted (6699362), merged; A03 issued with shared-space-only tests clarified.
 
 ## hlca
 
