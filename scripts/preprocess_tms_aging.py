@@ -1,4 +1,4 @@
-"""Preprocess TMS aging data under PREREG_aging_basins.md §2b.
+"""Preprocess TMS aging data under PREREG_aging_basins.md §§2b–2c.
 
 For a selected tissue this script excludes 4-week cells, applies the donor/type
 bookkeeping floor, balances the larger age group per cell type with deterministic
@@ -16,8 +16,9 @@ import numpy as np
 import pandas as pd
 import scanpy as sc
 
-YOUNG_LABELS = {"3 month-old stage", "3 months"}
-OLD_LABELS = {"18 month-old stage", "20 month-old stage and over"}
+YOUNG_DONOR_PREFIX = "3"
+OLD_DONOR_PREFIXES = {"18", "21", "24"}
+EXCLUDED_30_MONTH_PREFIX = "30"
 EXCLUDED_LABEL = "4 weeks"
 AGE_GROUPS = ("young", "old")
 DONOR_TYPE_FLOOR = 20
@@ -71,12 +72,13 @@ def _sample_evenly_by_donor(frame: pd.DataFrame, target: int, rng: np.random.Gen
     return pd.Index(np.concatenate(selected))
 
 
-def _age_group(stage: pd.Series) -> pd.Series:
-    stage = stage.astype(str)
-    group = pd.Series(pd.NA, index=stage.index, dtype="string")
-    group.loc[stage.isin(YOUNG_LABELS)] = "young"
-    group.loc[stage.isin(OLD_LABELS)] = "old"
-    return group
+def _age_group_from_donor_id(donor_id: pd.Series) -> tuple[pd.Series, pd.Series]:
+    """Classify ages from the TMS donor-ID prefix under PREREG §2c.1."""
+    prefix = donor_id.astype(str).str.extract(r"^(\d+)", expand=False).astype("string")
+    group = pd.Series(pd.NA, index=donor_id.index, dtype="string")
+    group.loc[prefix.eq(YOUNG_DONOR_PREFIX)] = "young"
+    group.loc[prefix.isin(OLD_DONOR_PREFIXES)] = "old"
+    return group, prefix
 
 
 def _qc_counts(frame: pd.DataFrame, column: str, tissue: str) -> pd.DataFrame:
@@ -105,10 +107,11 @@ def preprocess(tissue: str, seed: int, root: Path) -> dict[str, int]:
     audit["donor_id"] = audit["donor_id"].astype(str)
     audit["cell_type"] = audit["cell_type"].astype(str)
     audit["development_stage"] = audit["development_stage"].astype(str)
-    audit["age_group"] = _age_group(audit["development_stage"])
-    audit["filter_reason"] = "age_included"
+    audit["age_group"], audit["donor_age_prefix"] = _age_group_from_donor_id(audit["donor_id"])
+    audit["filter_reason"] = "age_label_unrecognized"
     audit.loc[audit["development_stage"].eq(EXCLUDED_LABEL), "filter_reason"] = "age_label_excluded_4_weeks"
-    audit.loc[audit["age_group"].isna() & ~audit["development_stage"].eq(EXCLUDED_LABEL), "filter_reason"] = "age_label_unrecognized"
+    audit.loc[audit["donor_age_prefix"].eq(EXCLUDED_30_MONTH_PREFIX), "filter_reason"] = "excluded_30_month"
+    audit.loc[audit["age_group"].notna(), "filter_reason"] = "age_included"
 
     unexpected = audit.loc[audit["filter_reason"].eq("age_label_unrecognized"), "development_stage"]
     unexpected_fraction = len(unexpected) / len(audit)
@@ -193,6 +196,7 @@ def preprocess(tissue: str, seed: int, root: Path) -> dict[str, int]:
             flavor="seurat_v3",
             n_top_genes=N_HVGS,
             batch_key="donor_id",
+            span=1.0,
         )
         processed = processed[:, processed.var["highly_variable"]].copy()
     processed.write_h5ad(processed_path)
@@ -203,6 +207,10 @@ def preprocess(tissue: str, seed: int, root: Path) -> dict[str, int]:
         "eligible_types": int(eligible_types["eligible"].sum()),
         "unrecognized_age_cells": int((audit["filter_reason"] == "age_label_unrecognized").sum()),
         "excluded_4_week_cells": int((audit["filter_reason"] == "age_label_excluded_4_weeks").sum()),
+        "excluded_30_month_cells": int((audit["filter_reason"] == "excluded_30_month").sum()),
+        "excluded_30_month_donors": int(audit.loc[
+            audit["filter_reason"].eq("excluded_30_month"), "donor_id"
+        ].nunique()),
     }
     print(f"[{tissue}] {result}")
     return result
