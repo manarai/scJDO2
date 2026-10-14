@@ -110,7 +110,18 @@ def _transient_gain(J: np.ndarray, n_max: int = 30) -> float:
     gain = 0.0
     for _ in range(int(n_max)):
         P = J @ P
-        gn = float(np.linalg.norm(P, ord=2))
+        if not np.all(np.isfinite(P)):
+            # ESM-learned Jacobians can have large positive eigenvalues
+            # (ridges between modes); ``J^k`` then overflows float64 and
+            # SVD gives up. Cap the gain at the current estimate — the
+            # exact value past this point is +∞ anyway, which has no
+            # downstream consumer that cares about the magnitude.
+            return gain if gain > 0 else float("inf")
+        try:
+            gn = float(np.linalg.norm(P, ord=2))
+        except np.linalg.LinAlgError:
+            # SVD convergence failure on an exploding ``P`` — same cap.
+            return gain if gain > 0 else float("inf")
         if gn > gain:
             gain = gn
         if rho < 1.0 and gn < 1e-12:

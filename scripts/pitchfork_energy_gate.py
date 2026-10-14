@@ -43,18 +43,21 @@ REPO = Path(__file__).resolve().parent.parent
 
 def row_energy_dsm(adata, tau_crit: float, n_epochs: int, seed: int,
                    sigma_min: float, sigma_max: float, beta: float,
-                   verbose: bool) -> dict[str, Any]:
-    """DSM via energy-parameterised score on equilibrated snapshots.
+                   loss: str, verbose: bool) -> dict[str, Any]:
+    """Energy-parameterised score drift on equilibrated snapshots.
 
     Writes the per-cell latent J (symmetric by construction) into
     ``adata.uns['scjdo2']['J']`` so ``_gate`` can score it.
+    ``loss`` is ``"esm"`` (Hyvärinen, default) or ``"dsm"`` (multi-σ,
+    legacy).
     """
     z = np.asarray(adata.obsm["X_pca"], dtype=np.float32)
     t0 = time.monotonic()
     drift = EnergyDriftAdapter(dim=z.shape[1], config=EnergyDriftConfig(
         hidden=128, depth=3, n_epochs=n_epochs, seed=seed,
-        batch_size=256, dsm_sigma_range=(sigma_min, sigma_max),
-        beta=beta,
+        batch_size=256, loss=loss, beta=beta,
+        dsm_sigma_range=(sigma_min, sigma_max),
+        esm_laplacian="exact" if z.shape[1] <= 20 else "hutchinson",
     )).fit(z, verbose=verbose)
     dt_fit = time.monotonic() - t0
     sym = drift.symmetry_check(z, n_cells=100, seed=seed)
@@ -77,7 +80,7 @@ def row_energy_dsm(adata, tau_crit: float, n_epochs: int, seed: int,
 
 def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
             seed: int, sigma_min: float, sigma_max: float, beta: float,
-            verbose: bool) -> dict[str, Any]:
+            loss: str, verbose: bool) -> dict[str, Any]:
     print(f"\n=== τ_crit = {tau_crit} ===")
     adata = generate_pitchfork_equilibrated(
         tau_crit=tau_crit, seed=seed,
@@ -96,13 +99,13 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
           f"holder P={r_oracle['holder_pr']['precision']:.2f} "
           f"R={r_oracle['holder_pr']['recall']:.2f}")
 
-    # Energy-DSM row.
-    print(f"  [energy_dsm] fit {n_epochs} ep  "
+    # Energy-param row.
+    print(f"  [energy_{loss}] fit {n_epochs} ep  "
           f"σ∈[{sigma_min:.3f}, {sigma_max:.3f}]  β={beta}")
     r_energy = row_energy_dsm(
         adata, tau_crit, n_epochs=n_epochs, seed=seed,
         sigma_min=sigma_min, sigma_max=sigma_max, beta=beta,
-        verbose=verbose,
+        loss=loss, verbose=verbose,
     )
     sym = r_energy["symmetry"]
     print(f"  [energy_dsm] SYM median={sym['median_asym']:.3e}  "
@@ -150,7 +153,8 @@ def main() -> int:
     p.add_argument("--n-epochs", type=int, default=3000)
     p.add_argument("--sigma-min", type=float, default=0.05)
     p.add_argument("--sigma-max", type=float, default=0.5)
-    p.add_argument("--beta", type=float, default=0.1)
+    p.add_argument("--beta", type=float, default=1.0)
+    p.add_argument("--loss", choices=["esm", "dsm"], default="esm")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--verbose", action="store_true")
     args = p.parse_args()
@@ -163,7 +167,7 @@ def main() -> int:
             tau_crit=tau, n_cells=args.n_cells, n_alpha=args.n_alpha,
             n_epochs=args.n_epochs, seed=args.seed,
             sigma_min=args.sigma_min, sigma_max=args.sigma_max,
-            beta=args.beta, verbose=args.verbose,
+            beta=args.beta, loss=args.loss, verbose=args.verbose,
         ))
 
     report = {

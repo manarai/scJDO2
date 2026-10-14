@@ -51,9 +51,20 @@ class EnergyDriftConfig:
     weight_decay: float = 1e-4
     seed: int = 42
     device: Optional[str] = None
-    # Multi-σ DSM schedule. (σ_min, σ_max) log-uniform per step; σ²
-    # weighting makes the per-element loss floor equal 1.
+    # Loss: "esm" (Hyvärinen exact score matching, default — fits the
+    # data manifold's true score with no σ-noise detour) or "dsm"
+    # (multi-σ DSM, legacy).
+    loss: str = "esm"
+    # Multi-σ DSM schedule (only used when loss="dsm"). (σ_min, σ_max)
+    # log-uniform per step; σ² weighting makes the per-element loss
+    # floor equal 1.
     dsm_sigma_range: Tuple[float, float] = (0.05, 0.5)
+    # ESM Laplacian estimator. "exact" iterates d scalar backwards per
+    # step (``trace Hess E = Σ_j ∂²E/∂z_j²`` by autodiff). "hutchinson"
+    # uses K Rademacher-vector probes to approximate the trace at O(K)
+    # backwards. Exact is cheap at d ≤ 20 and preferred.
+    esm_laplacian: str = "exact"
+    esm_hutch_k: int = 4
     clock_calibrated: bool = False
 
 
@@ -117,38 +128,77 @@ class EnergyDriftAdapter:
             opt, T_max=max(1, self.config.n_epochs),
         )
 
+        bs = min(self.config.batch_size, n)
+        loss_kind = str(self.config.loss).lower()
         log_lo = float(np.log(self.config.dsm_sigma_range[0]))
         log_hi = float(np.log(self.config.dsm_sigma_range[1]))
-        bs = min(self.config.batch_size, n)
 
         model.train()
         for epoch in range(self.config.n_epochs):
             idx = torch.as_tensor(rng.integers(0, n, size=bs), dtype=torch.long,
                                   device=device)
             x_b = X_ref[idx]
-            log_sig = torch.rand(bs, device=device) * (log_hi - log_lo) + log_lo
-            sigmas = torch.exp(log_sig).unsqueeze(-1)             # (B, 1)
-            noise = torch.randn_like(x_b)
-            x_noisy = x_b + sigmas * noise                        # perturbed
-            # s_θ(x_noisy) = -∇_x E(x_noisy). Enable grads through x.
-            x_noisy = x_noisy.detach().requires_grad_(True)
-            E = model(x_noisy)                                     # (B,)
-            grad_x = torch.autograd.grad(
-                outputs=E.sum(), inputs=x_noisy,
-                create_graph=True, retain_graph=True,
-            )[0]
-            s = -grad_x                                            # (B, d)
-            # DSM σ²-weighted loss: ((σ·s + ε)²).mean()
-            diff = sigmas * s + noise
-            loss = (diff * diff).mean()
             opt.zero_grad()
+            if loss_kind == "dsm":
+                log_sig = torch.rand(bs, device=device) * (log_hi - log_lo) + log_lo
+                sigmas = torch.exp(log_sig).unsqueeze(-1)             # (B, 1)
+                noise = torch.randn_like(x_b)
+                x_noisy = (x_b + sigmas * noise).detach().requires_grad_(True)
+                E = model(x_noisy)
+                grad_x = torch.autograd.grad(
+                    outputs=E.sum(), inputs=x_noisy,
+                    create_graph=True, retain_graph=True,
+                )[0]
+                s = -grad_x
+                diff = sigmas * s + noise
+                loss = (diff * diff).mean()
+            elif loss_kind == "esm":
+                # Hyvärinen exact score matching:
+                #   L = E[ ½ ‖∇E‖² − trace(∇²E) ]
+                # For ``s = −∇E``, this is the Fisher-divergence surrogate
+                # that drives ``s`` to the data-manifold score with no
+                # σ-noise detour (so flat basins must be fit by curvature,
+                # not by a σ-averaged smoothing).
+                x_b = x_b.detach().requires_grad_(True)
+                E = model(x_b)
+                grad_E = torch.autograd.grad(
+                    outputs=E.sum(), inputs=x_b,
+                    create_graph=True, retain_graph=True,
+                )[0]                                                 # (B, d)
+                term_grad_sq = 0.5 * (grad_E * grad_E).sum(dim=1).mean()
+                if self.config.esm_laplacian == "exact":
+                    # Exact Laplacian: trace Hess E = Σ_j ∂²E/∂z_j²
+                    lap = torch.zeros(bs, device=device)
+                    for j in range(self.dim):
+                        gj = torch.autograd.grad(
+                            outputs=grad_E[:, j].sum(), inputs=x_b,
+                            create_graph=True, retain_graph=True,
+                        )[0][:, j]
+                        lap = lap + gj
+                    term_laplacian = lap.mean()
+                else:
+                    # Hutchinson probe: tr(Hess) ≈ (1/K) Σ_k v_k^T Hess v_k
+                    K = max(1, int(self.config.esm_hutch_k))
+                    probe_sum = torch.zeros(bs, device=device)
+                    for _ in range(K):
+                        v = (torch.randint(0, 2, (bs, self.dim), device=device,
+                                            dtype=torch.float32) * 2 - 1)
+                        gvs = torch.autograd.grad(
+                            outputs=(grad_E * v).sum(), inputs=x_b,
+                            create_graph=True, retain_graph=True,
+                        )[0]
+                        probe_sum = probe_sum + (gvs * v).sum(dim=1)
+                    term_laplacian = (probe_sum / K).mean()
+                loss = term_grad_sq - term_laplacian
+            else:
+                raise ValueError(f"unknown loss kind: {loss_kind!r}")
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             opt.step()
             sched.step()
             if verbose and (epoch + 1) % max(1, self.config.n_epochs // 10) == 0:
                 print(f"[energy-drift] epoch {epoch + 1}/{self.config.n_epochs}  "
-                      f"loss={float(loss.detach()):.4f}")
+                      f"loss_kind={loss_kind}  loss={float(loss.detach()):.4f}")
 
         model.eval()
         self._model = model

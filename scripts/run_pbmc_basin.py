@@ -200,52 +200,77 @@ def _permutation_null(z: np.ndarray, n_perm: int,
 def _gaussian_oracle(z: np.ndarray, cluster: np.ndarray,
                      J_learned: np.ndarray,
                      resting_types) -> dict:
-    """For each resting-type cluster: fit a Gaussian in latent, compare
-    the sign of the leading eigenvalue of -Σ⁻¹ (analytic Hessian) with
-    that of the per-cell learned ``J``.
+    """For each cluster: fit a Gaussian in latent and compare the
+    learned per-cell Jacobian to ``H_oracle = -Σ⁻¹``.
 
-    Returns a dict with per-cluster breakdown + overall agreement.
+    Reports BOTH sign agreement AND magnitude:
+      * ``oracle_lead_eig``   = leading (least-negative) eigenvalue of
+        ``H_oracle``;
+      * ``learned_lead_eig_median`` = median per-cell lead_re of ``J``
+        across the cluster;
+      * ``curvature_ratio``   = learned / oracle (same sign expected,
+        magnitude within a factor of 3 is the gate).
+
+    Also returns ``oracle_tol = 0.1 × median |λ_oracle|`` across the
+    resting-type clusters — the drop-in replacement for opspace's
+    ``0.1 × std(lead_re)`` tol (which failed on near-zero magnitudes).
     """
     rows = []
     agreements = []
+    oracle_abs_leads = []
     for cl in sorted(set(cluster)):
         m = cluster == cl
         n_c = int(m.sum())
         if n_c < 10:
             continue
         z_c = z[m]
-        mu = z_c.mean(axis=0)
         # Add small ridge to Σ for stability (small clusters).
         Sigma = np.cov(z_c, rowvar=False, bias=False)
         Sigma = Sigma + 1e-4 * np.eye(Sigma.shape[0])
         Sigma_inv = np.linalg.inv(Sigma)
-        H_oracle = -Sigma_inv                                  # analytic Hessian
+        H_oracle = -Sigma_inv
         ev_oracle = np.linalg.eigvalsh(H_oracle)
-        lead_oracle_sign = int(np.sign(ev_oracle.max()))
-        # Per-cell learned sign.
+        lead_oracle = float(ev_oracle.max())                   # least-negative
+        min_oracle = float(ev_oracle.min())                    # most-negative
+        lead_oracle_sign = int(np.sign(lead_oracle))
+        # Per-cell learned lead_re.
         J_cl = J_learned[m]
-        signs = np.array([
-            int(np.sign(np.max(np.linalg.eigvals(Jc.astype(np.float64)).real)))
+        lead_learned = np.array([
+            float(np.max(np.linalg.eigvals(Jc.astype(np.float64)).real))
             for Jc in J_cl
         ])
-        agree = (signs == lead_oracle_sign).mean()
-        all_neg_oracle = bool(np.all(ev_oracle < 0))
+        signs = np.sign(lead_learned).astype(int)
+        agree = float((signs == lead_oracle_sign).mean())
+        learned_med = float(np.median(lead_learned))
+        # Curvature ratio: learned / oracle (both leading eigenvalues).
+        with np.errstate(invalid="ignore", divide="ignore"):
+            ratio = (learned_med / lead_oracle) if lead_oracle != 0 else float("nan")
         rows.append({
             "cluster": cl,
             "n": n_c,
             "is_resting": cl in resting_types,
-            "oracle_lead_eig": float(ev_oracle.max()),
-            "oracle_min_eig": float(ev_oracle.min()),
-            "oracle_all_neg": all_neg_oracle,
+            "oracle_lead_eig": lead_oracle,
+            "oracle_min_eig": min_oracle,
             "oracle_lead_sign": lead_oracle_sign,
-            "frac_sign_agree": float(agree),
+            "learned_lead_eig_median": learned_med,
+            "learned_lead_eig_min": float(lead_learned.min()),
+            "learned_lead_eig_max": float(lead_learned.max()),
+            "curvature_ratio": float(ratio),
+            "frac_sign_agree": agree,
             "frac_learned_neg": float((signs < 0).mean()),
             "frac_learned_pos": float((signs > 0).mean()),
         })
         if cl in resting_types:
-            agreements.append(float(agree))
+            agreements.append(agree)
+            oracle_abs_leads.append(abs(lead_oracle))
     overall = float(np.mean(agreements)) if agreements else float("nan")
-    return {"per_cluster": pd.DataFrame(rows), "resting_agreement": overall}
+    oracle_tol = (0.1 * float(np.median(oracle_abs_leads))
+                  if oracle_abs_leads else 0.1)
+    return {
+        "per_cluster": pd.DataFrame(rows),
+        "resting_agreement": overall,
+        "oracle_tol": oracle_tol,
+    }
 
 
 def _sigma_scale_report(z: np.ndarray, cluster: np.ndarray,
@@ -447,6 +472,15 @@ def main() -> int:
                    help="DSM σ_min (lower bound of multi-σ schedule)")
     p.add_argument("--sigma-max", type=float, default=0.5,
                    help="DSM σ_max (upper bound of multi-σ schedule)")
+    p.add_argument("--loss", choices=["esm", "dsm"], default="esm",
+                   help="energy-drift loss: esm (Hyvärinen) or dsm (multi-σ)")
+    p.add_argument("--beta", type=float, default=1.0,
+                   help="drift scale: β in u = β · s = -β · ∇E. ESM default β=1 "
+                        "so J = -Hess E directly (not σ²-scaled).")
+    p.add_argument("--lr", type=float, default=2e-4)
+    p.add_argument("--skip-phase-c", action="store_true",
+                   help="skip the gene-space Phase C fit; the latent J alone "
+                        "is enough to score the user's basin gate")
     p.add_argument("--min-cells", type=int, default=3,
                    help="min_cells filter for the FULL gene set")
     p.add_argument("--n-top-genes", type=int, default=0,
@@ -553,14 +587,19 @@ def main() -> int:
         sigma_min = new_min
         scale_rep["sigma_min_adjusted"] = sigma_min
 
-    # Energy-parameterised DSM drift.
-    print(f"\n[pbmc] Energy-param DSM drift — {args.drift_epochs} ep  "
-          f"σ∈[{sigma_min:.3f}, {sigma_max:.3f}]")
+    # Energy-parameterised drift. Default loss: ESM (Hyvärinen exact
+    # score matching), which fits the true data-manifold curvature;
+    # DSM is behind ``--loss dsm``.
+    print(f"\n[pbmc] Energy-param drift — loss={args.loss} "
+          f"({args.drift_epochs} ep, σ∈[{sigma_min:.3f}, {sigma_max:.3f}])")
     t0 = time.monotonic()
     drift = EnergyDriftAdapter(dim=z.shape[1], config=EnergyDriftConfig(
         hidden=96, depth=3, n_epochs=args.drift_epochs,
         seed=args.seed, batch_size=256,
+        loss=args.loss, lr=args.lr,
         dsm_sigma_range=(sigma_min, sigma_max),
+        esm_laplacian="exact" if z.shape[1] <= 20 else "hutchinson",
+        beta=args.beta,
     )).fit(z, verbose=False)
     v = drift.velocity(z)
     print(f"[pbmc]   drift fit {time.monotonic()-t0:.1f}s")
@@ -595,7 +634,9 @@ def main() -> int:
     perm_cfg = EnergyDriftConfig(
         hidden=96, depth=3, n_epochs=max(300, args.drift_epochs // 3),
         seed=args.seed + 101, batch_size=256,
+        loss=args.loss, lr=args.lr, beta=args.beta,
         dsm_sigma_range=(sigma_min, sigma_max),
+        esm_laplacian="exact" if z.shape[1] <= 20 else "hutchinson",
     )
     perm_df = _permutation_null(z, args.n_perm, perm_cfg, seed=args.seed + 101)
     perm_df.to_csv(OUT / "permutation_null.csv", index=False)
@@ -610,20 +651,32 @@ def main() -> int:
     print(f"[pbmc]   RESTING-type oracle mean agreement = "
           f"{oracle['resting_agreement']:.3f}")
 
-    # Phase C.
-    print(f"\n[pbmc] Phase C (anchor max_live={args.anchor_max_live}, "
-          f"n_anchors={args.n_anchors})")
-    t0 = time.monotonic()
-    fit_rate_and_gene_field(
-        a, use_rep="X_scVI", n_epochs_rate=args.rate_epochs,
-        k=args.k, cv_sample_cells=20, seed=args.seed,
-        anchor_fit=True, n_anchors=args.n_anchors, anchor_top_k=10,
-        anchor_max_live=args.anchor_max_live,
-    )
-    print(f"[pbmc]   Phase C {time.monotonic()-t0:.1f}s")
+    # Phase C (optional — the user's basin gate is latent-J only).
+    if not args.skip_phase_c:
+        print(f"\n[pbmc] Phase C (anchor max_live={args.anchor_max_live}, "
+              f"n_anchors={args.n_anchors})")
+        t0 = time.monotonic()
+        fit_rate_and_gene_field(
+            a, use_rep="X_scVI", n_epochs_rate=args.rate_epochs,
+            k=args.k, cv_sample_cells=20, seed=args.seed,
+            anchor_fit=True, n_anchors=args.n_anchors, anchor_top_k=10,
+            anchor_max_live=args.anchor_max_live,
+        )
+        print(f"[pbmc]   Phase C {time.monotonic()-t0:.1f}s")
+    else:
+        # Skip Phase C — pure-latent opspace. ``uns["J"]`` is already
+        # the latent (n, d, d) tensor; opspace.compute's "pure latent"
+        # branch (no gene-space J) runs ``spectrum / invariants /
+        # behaviour`` on it directly.
+        print("[pbmc]   skipping Phase C (gate uses latent J only)")
 
-    print("\n[pbmc] opspace.compute")
-    opspace.compute(a)
+    # Oracle-tuned tol: 0.1 × median |lead_eig(-Σ⁻¹)| over resting
+    # clusters. Replaces opspace's default ``0.1 × std(lead_re)`` which
+    # fails when the drift's lead_re distribution is dominated by large
+    # between-mode outliers.
+    oracle_tol = float(oracle["oracle_tol"])
+    print(f"\n[pbmc] opspace.compute  (oracle-tuned tol = {oracle_tol:.4f})")
+    opspace.compute(a, tol=oracle_tol)
 
     # Per-type behaviour + lead_re.
     per_type = _per_type_report(a, RESTING_TYPES)
@@ -749,17 +802,35 @@ def main() -> int:
     # Figures.
     _figures(a, OUT)
 
-    # Gate decision.
+    # Gate decision. User criterion (rework):
+    #   (a) majority of resting cells classified as holder, AND
+    #   (b) median learned/oracle curvature ratio across resting
+    #       clusters within a factor of 3 (0.333 ≤ ratio ≤ 3).
     resting_rows = per_type[per_type["is_resting"]]
     holder_resting = int(resting_rows["holder"].sum())
     n_resting = int(resting_rows["n"].sum())
+    frac_resting_holder = holder_resting / n_resting if n_resting else 0.0
+
+    oracle_resting = oracle["per_cluster"][oracle["per_cluster"]["is_resting"]]
+    ratios = oracle_resting["curvature_ratio"].to_numpy(dtype=np.float64)
+    ratios = ratios[np.isfinite(ratios)]
+    median_ratio = float(np.median(ratios)) if ratios.size else float("nan")
+    ratio_ok = bool(np.isfinite(median_ratio) and
+                     (1.0 / 3.0) <= median_ratio <= 3.0)
+
     gate = {
         "resting_types": list(RESTING_TYPES),
         "n_resting_cells": n_resting,
         "n_resting_holders": holder_resting,
-        "frac_holder_resting": holder_resting / n_resting if n_resting else 0.0,
-        "verdict": "pass" if (holder_resting / max(1, n_resting)) >= 0.5 else "fail",
+        "frac_holder_resting": frac_resting_holder,
+        "frac_holder_resting_pass": bool(frac_resting_holder >= 0.5),
+        "median_curvature_ratio_resting": median_ratio,
+        "curvature_ratio_pass": ratio_ok,
+        "verdict": ("pass" if (frac_resting_holder >= 0.5 and ratio_ok)
+                     else "fail"),
         "drift_parameterisation": "energy_scalar_mlp (E_θ: R^d → R)",
+        "loss": args.loss,
+        "oracle_tol": oracle_tol,
         "symmetry_check": sym,
         "sigma_schedule": {"sigma_min": sigma_min, "sigma_max": sigma_max,
                             "median_within_cluster_sigma":

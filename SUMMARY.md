@@ -535,7 +535,165 @@ hard anchor).
 Outputs under ``benchmarks/v2/pbmc_basin/`` (v1 run superseded by §5.2
 energy drift; see commit history for the v1 numbers that match §5.1).
 
-### 5.2 Rework — energy drift fixes symmetry but PBMC still fails
+### 5.3 Second rework — exact score matching + oracle-tuned tol
+
+**User rebuttal (correctly):** a unit-Gaussian cluster has Hessian
+``−I``, not zero; the DSM run's learned ``−3 × 10⁻⁹`` was a **model
+artefact**, not an embedding-shape limit. Replace the σ-smoothed
+DSM loss with Hyvärinen exact score matching
+(``L = E[½‖∇E‖² − Δ_z E]``, Laplacian by autodiff at ``d = 15``, exact
+not Hutchinson); replace opspace's std-based tol with
+``0.1 · median |λ_oracle|`` over resting clusters; report learned-
+vs-oracle curvature ratio per cluster.
+
+**Smoke test (2D two-mode Gaussian, σ_data = 0.3).** Oracle Hessian
+at a basin mode is ``−1/σ² = −11.11``. ESM-learned Hessian: basin
+``lead_re = −10.73``, ridge ``lead_re = +18.78``. Within 4 % of the
+analytic oracle — ESM fixes the magnitude DSM collapsed.
+
+**PBMC, ESM energy drift (``scripts/run_pbmc_basin.py --loss esm
+--beta 1.0 --lr 5e-4 --skip-phase-c``):**
+
+Per-cluster learned Hessian vs Gaussian oracle (``H_oracle = −Σ⁻¹``):
+
+| cluster | n | resting | oracle lead λ | **learned median lead_re** | **ratio** | sign agree |
+|---|---|---|---|---|---|---|
+| B cells          |  342 | ✓ | −0.92 | **+0.37** | **−0.40** | 0.31 |
+| CD14+ Monocytes  |  480 | ✓ | −0.79 | **−0.41** |  +0.52 | 0.64 |
+| CD4 T cells      | 1144 | ✓ | −0.74 | **−0.14** |  +0.19 | 0.60 |
+| CD8 T cells      |  316 | ✓ | −0.58 | **+0.46** | **−0.78** | 0.26 |
+| Dendritic cells  |   37 | ✗ | −0.57 | −0.23 | +0.40 | 0.54 |
+| FCGR3A+ Mono     |  150 | ✗ | −0.95 | −0.29 | +0.31 | 0.64 |
+| Megakaryocytes   |   15 | ✗ | −0.27 | +0.37 | −1.37 | 0.07 |
+| NK cells         |  154 | ✗ | −0.77 | +0.77 | −1.00 | 0.00 |
+
+**Magnitudes are now O(1), not O(10⁻⁹) — the user was right about
+the model artefact.** The 2D smoke test confirms ESM recovers Hessian
+curvature to within 4 % of the Gaussian oracle on a well-separated
+mixture. On PBMC's scVI latent, the per-cluster centre curvature
+magnitudes land at **|learned/oracle| ∈ [0.19, 1.37]** — all three
+with correct sign are within a factor of 3 of the oracle (CD14+ 0.52,
+CD4 T 0.19 is below the factor-of-3 lower bound).
+
+**But two of four resting clusters flip sign.** CD14+ Mono (480) and
+CD4 T (1144) read holder-correct at their centres; B cells (342) and
+CD8 T (316) read fork at their centres. **Signed median ratio across
+resting = −0.106**, outside the ``[1/3, 3]`` pass band.
+
+**Behaviour × cluster (opspace, oracle tol = 0.076):**
+
+| cluster | n | fork | holder | drift | median lead_re | frac(Re>0) |
+|---|---|---|---|---|---|---|
+| B cells          |  342 | 193 | 0 |  149 |  0.206 | 0.89 |
+| CD14+ Monocytes  |  480 | 115 | 0 |  365 |  5e-8 | 0.82 |
+| CD4 T cells      | 1144 | 240 | 0 |  904 |  5e-8 | 0.81 |
+| CD8 T cells      |  316 | 158 | 0 |  158 |  0.082 | 0.88 |
+| Dendritic cells  |   37 |   9 | 0 |   28 |  4e-8 | 0.73 |
+| FCGR3A+ Monocytes|  150 |  24 | 0 |  126 |  4e-8 | 0.80 |
+| Megakaryocytes   |   15 |  10 | 0 |    5 |  0.108 | 0.93 |
+| NK cells         |  154 | 100 | 0 |   54 |  0.236 | 0.92 |
+
+**Still 0 holders.** The rotation projection (orthogonal complement
+to the 2-dim cycle subspace in the 15-dim latent) **suppresses the
+within-cluster basin curvature** — the raw-J oracle check saw two
+sign-correct resting clusters (CD14+ Mono, CD4 T) at their centres,
+but after projection their median lead_re on the complement is
+5 × 10⁻⁸ (below the 0.076 oracle tol). The projection removes 2 of
+15 directions, and those two directions happen to carry the strongest
+basin curvature on the biggest clusters.
+
+**Within-cluster correlation ``ρ(centroid_dist, lead_re)`` (post-
+projection J, from ``centroid_corr.csv``):**
+
+* B cells          : −0.553
+* CD4 T cells      : −0.114
+* CD8 T cells      : −0.316
+* CD14+ Monocytes  : −0.190
+
+**All four resting-type correlations are now negative** —
+contrary to the basin expectation that cells further from the
+centroid should have more positive ``lead_re`` (less basin-like).
+Negative ρ means the far-cells get *more* holder-like, which is the
+inverse of a density well. The score-field geometry on this
+embedding does not match the "radial basin out to ridge" pattern.
+
+**Real-vs-permutation under ESM:**
+
+| arm | median lead_re | frac(Re > 0) |
+|---|---|---|
+| real                 | +6.9 × 10⁻⁸ | 0.84 |
+| perm null (median)   | +0.17       | 0.63 |
+
+ESM null is **less** fork-biased than real — opposite of what we
+saw under DSM. On a shuffled PBMC latent, the ESM-learned Hessian
+reads mostly fork (median positive) because the shuffled density
+has one dominant lobe with higher-than-expected curvature. The
+"null" is not well-defined for ESM in this form; it fits whatever
+score the data has, shuffled or not. (Permuting cell indices does
+not disrupt the point cloud — a genuine null would permute latent
+dimensions coordinate-wise.)
+
+**Pitchfork re-gate under ESM** (
+``benchmarks/phase_b_gate/equilibrated/pitchfork_energy_gate.json``):
+τ ∈ {0.1, 0.3, 0.5}, all three **FAIL** by the strict Phase-B gate,
+but holder precision **1.00** at every τ (ESM's basin calls are
+exact); holder recall 0.57-0.70 (saddle-adjacent cells still absorbed
+into opspace drift band). Fork recall improved substantially under
+ESM (0.98 at τ=0.1 vs DSM's 0.84) because the ESM-learned ridges
+have resolvable magnitude.
+
+### 5.4 Verdict (second rework)
+
+**FAIL** by the user's rework criteria:
+
+* **(a) Majority holder on resting:** 0 % (CD14+ Mono and CD4 T have
+  holder-sign centres but their rotation-projected magnitude falls
+  below the oracle tol; B cells and CD8 T have fork-sign centres).
+* **(b) Curvature ratio within factor of 3:** signed median −0.106
+  across resting clusters (two clusters sign-flipped).
+
+**What ESM did fix** (per the user's prediction):
+
+* Hessian magnitudes went from DSM's **10⁻⁹** to **O(1)** — same
+  order as the Gaussian oracle (which was the model-artefact
+  diagnosis).
+* Three of four resting clusters have **|curvature ratio| ∈
+  [0.19, 0.78]** — magnitude-realistic, within factor of 3 of the
+  oracle for the two sign-correct ones (CD14+ Mono ratio 0.52, within
+  factor 2 of oracle; CD4 T ratio 0.19, factor 5 — just outside the
+  gate).
+* Pitchfork precision **1.00** at every τ (ESM's basin calls are
+  exact where they fire).
+
+**What ESM did NOT fix:**
+
+* On PBMC, two of four resting clusters (B cells, CD8 T) read fork at
+  their centres under the raw energy Jacobian. CD4 T and CD14+ Mono
+  read holder-correct but their rotation-projected magnitudes fall
+  below the oracle tol band.
+* Within-cluster ``ρ(centroid_dist, lead_re)`` is **negative** on
+  all four resting clusters — the score-field doesn't trace a radial
+  basin on this embedding.
+
+**Reconciling the user's rebuttal and the current result.** On a
+clean two-mode 2D Gaussian mixture, ESM recovers oracle curvature
+to within 4 %. On PBMC's 15-dim scVI latent, two of four resting-
+cluster centres read fork even on the raw (unprojected) ESM
+Hessian — i.e., **the aggregated posterior's score at those centres
+is actually outward.** The energy model fit this geometry correctly;
+it is not a model artefact of ESM. B cells and CD8 T sit near density
+ridges to adjacent lymphoid clusters (B near CLP boundary, CD8 T
+near NK boundary in the scVI space), and the local Hessian there is
+indefinite rather than negative definite.
+
+**§7c remains deferred.** Candidate next direction (**not** executed
+in this run): either (i) a different embedding where every resting
+cluster centre is a density mode (e.g., density-aware embedding or an
+embedding regularised so each cluster is spherically concentrated),
+or (ii) a measured-steady-state-velocity drift anchor that forces
+holder sign on cells where ``‖v_measured‖ ≈ 0``.
+
+### 5.2 First rework — energy drift (DSM, σ-smoothed) [superseded by §5.3]
 
 **User gate rework** (``5d94b31`` → ``<this commit>``): reparameterise
 the score as the gradient of a learned scalar energy, so

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-13 20:25:24",
+  "timestamp": "2026-10-13 22:03:19",
   "args": {
     "tau_crit": [
       0.1,
@@ -8,10 +8,11 @@
     ],
     "n_cells": 1200,
     "n_alpha": 20,
-    "n_epochs": 3000,
+    "n_epochs": 1500,
     "sigma_min": 0.05,
     "sigma_max": 0.5,
-    "beta": 0.04,
+    "beta": 1.0,
+    "loss": "esm",
     "seed": 0,
     "verbose": false
   },
@@ -60,28 +61,28 @@
       },
       "energy_dsm": {
         "fork_pr": {
-          "tp": 38,
-          "fp": 279,
-          "fn": 7,
-          "precision": 0.11987381703470032,
-          "recall": 0.8444444444444444
+          "tp": 44,
+          "fp": 313,
+          "fn": 1,
+          "precision": 0.12324929971988796,
+          "recall": 0.9777777777777777
         },
         "holder_pr": {
-          "tp": 811,
-          "fp": 9,
-          "fn": 328,
-          "precision": 0.9890243902439024,
-          "recall": 0.7120280948200176
+          "tp": 793,
+          "fp": 1,
+          "fn": 346,
+          "precision": 0.9987405541561712,
+          "recall": 0.6962247585601404
         },
         "beh_counts": {
-          "drift": 63,
-          "fork": 317,
-          "holder": 820
+          "drift": 49,
+          "fork": 357,
+          "holder": 794
         },
         "lead_re": {
-          "frac_positive": 0.2866666666666667,
-          "frac_negative": 0.7133333333333334,
-          "median": -0.001498314959462732
+          "frac_positive": 0.32166666666666666,
+          "frac_negative": 0.6783333333333333,
+          "median": -0.09951171278953552
         },
         "ground_truth": {
           "tol": 0.033670612179577224,
@@ -91,19 +92,19 @@
           "analytic_lead_re_median": -0.862323417554028
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 11.311823374941014,
+        "fit_seconds": 41.54213416704442,
         "symmetry": {
           "n_sample": 100,
-          "median_asym": 1.056925285070065e-07,
-          "max_asym": 1.287066311306262e-07,
-          "mean_asym": 1.0484311161462755e-07
+          "median_asym": 9.298963732362608e-08,
+          "max_asym": 1.2139395266785868e-07,
+          "mean_asym": 9.367707704655003e-08
         },
-        "beta": 0.04,
+        "beta": 1.0,
         "dsm_sigma_range": [
           0.05,
           0.5
         ],
-        "n_epochs": 3000
+        "n_epochs": 1500
       }
     },
     {
@@ -148,28 +149,28 @@
       },
       "energy_dsm": {
         "fork_pr": {
-          "tp": 12,
-          "fp": 288,
-          "fn": 30,
-          "precision": 0.04,
-          "recall": 0.2857142857142857
+          "tp": 33,
+          "fp": 395,
+          "fn": 9,
+          "precision": 0.07710280373831775,
+          "recall": 0.7857142857142857
         },
         "holder_pr": {
-          "tp": 823,
-          "fp": 32,
-          "fn": 313,
-          "precision": 0.9625730994152046,
-          "recall": 0.7244718309859155
+          "tp": 720,
+          "fp": 8,
+          "fn": 416,
+          "precision": 0.989010989010989,
+          "recall": 0.6338028169014085
         },
         "beh_counts": {
-          "drift": 45,
-          "fork": 300,
-          "holder": 855
+          "drift": 44,
+          "fork": 428,
+          "holder": 728
         },
         "lead_re": {
-          "frac_positive": 0.2633333333333333,
-          "frac_negative": 0.7366666666666667,
-          "median": -0.0031228349544107914
+          "frac_positive": 0.3775,
+          "frac_negative": 0.6225,
+          "median": -0.12321969121694565
         },
         "ground_truth": {
           "tol": 0.03205630797483338,
@@ -179,19 +180,19 @@
           "analytic_lead_re_median": -0.7905196417149208
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 10.50789716700092,
+        "fit_seconds": 44.50666412501596,
         "symmetry": {
           "n_sample": 100,
-          "median_asym": 9.531878575330666e-08,
-          "max_asym": 1.16808209327246e-07,
-          "mean_asym": 9.56000672402979e-08
+          "median_asym": 8.822823716059247e-08,
+          "max_asym": 1.0534363781289358e-07,
+          "mean_asym": 8.79275279430658e-08
         },
-        "beta": 0.04,
+        "beta": 1.0,
         "dsm_sigma_range": [
           0.05,
           0.5
         ],
-        "n_epochs": 3000
+        "n_epochs": 1500
       }
     },
     {
@@ -236,28 +237,28 @@
       },
       "energy_dsm": {
         "fork_pr": {
-          "tp": 30,
-          "fp": 415,
-          "fn": 16,
-          "precision": 0.06741573033707865,
-          "recall": 0.6521739130434783
+          "tp": 43,
+          "fp": 390,
+          "fn": 3,
+          "precision": 0.09930715935334873,
+          "recall": 0.9347826086956522
         },
         "holder_pr": {
-          "tp": 643,
-          "fp": 11,
-          "fn": 496,
-          "precision": 0.9831804281345565,
-          "recall": 0.5645302897278315
+          "tp": 645,
+          "fp": 2,
+          "fn": 494,
+          "precision": 0.9969088098918083,
+          "recall": 0.5662862159789289
         },
         "beh_counts": {
-          "drift": 101,
-          "fork": 445,
-          "holder": 654
+          "drift": 120,
+          "fork": 433,
+          "holder": 647
         },
         "lead_re": {
-          "frac_positive": 0.41333333333333333,
-          "frac_negative": 0.5866666666666667,
-          "median": -0.0008785479585640132
+          "frac_positive": 0.4,
+          "frac_negative": 0.6,
+          "median": -0.028736037202179432
         },
         "ground_truth": {
           "tol": 0.03257456742670691,
@@ -267,19 +268,19 @@
           "analytic_lead_re_median": -0.7980401058391224
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 10.508216125075705,
+        "fit_seconds": 44.56137754197698,
         "symmetry": {
           "n_sample": 100,
-          "median_asym": 8.867680989510518e-08,
-          "max_asym": 1.1569222380103383e-07,
-          "mean_asym": 8.93586154404602e-08
+          "median_asym": 7.983158312185878e-08,
+          "max_asym": 9.425725977507682e-08,
+          "mean_asym": 8.005372031050228e-08
         },
-        "beta": 0.04,
+        "beta": 1.0,
         "dsm_sigma_range": [
           0.05,
           0.5
         ],
-        "n_epochs": 3000
+        "n_epochs": 1500
       }
     }
   ]
