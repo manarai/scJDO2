@@ -1,0 +1,39 @@
+{
+  "task": "A01",
+  "status": "blocked",
+  "branch": "manus/A01",
+  "head_commit": "f8bb896e924aa29eafbc10e8f1a35820198c150b",
+  "started_utc": "2026-10-14T14:02:48Z",
+  "finished_utc": "2026-10-14T14:11:28Z",
+  "compute": {
+    "cpu_hours": 0.0,
+    "gpu_hours": 0.0,
+    "hardware": "Linux 6.18.38+ x86_64; 6 CPUs; 12,585,308,160 bytes RAM; no GPU workload run"
+  },
+  "metrics": {
+    "tests_passed": null,
+    "census_version": null,
+    "hardware": "Linux 6.18.38+ x86_64; 6 CPUs; 12,585,308,160 bytes RAM; 42,008,936,448 bytes free disk",
+    "sandbox_persists": true,
+    "lung_n_cells_raw": null,
+    "marrow_n_cells_raw": null,
+    "lung_n_donors_young": null,
+    "lung_n_donors_old": null,
+    "marrow_n_donors_young": null,
+    "marrow_n_donors_old": null,
+    "lung_n_cells_after": null,
+    "marrow_n_cells_after": null,
+    "lung_eligible_types": null,
+    "marrow_eligible_types": null
+  },
+  "artifacts": [],
+  "deviations": [
+    "No environment build, unit test, data fetch, or preprocessing run was started. coord/MANUS.md requires stopping on an instruction conflict before those steps.",
+    "coord/tasks/A01.md remains status: draft and declares base_commit: SET-AT-ISSUE, which is not a Git commit. coord/PROTOCOL.md requires an issued task to name a commit in its front matter, while coord/BOARD.md describes A01 as issued at base 20f1371.",
+    "Commit 20f1371 is absent from the fetched origin/aging-basins history, and the GitHub branch does not contain coord/, including the task, protocol, board, or scripts/coord_check.py. The required pre-push command therefore exited 2 because scripts/coord_check.py is absent.",
+    "All data-dependent required metrics are null because no data run was permitted."
+  ],
+  "questions": [
+    "Please commit and push the A01 coordination files to origin/aging-basins, update A01 front matter to status: issued with an immutable base_commit available on that remote branch (or explicitly confirm a replacement), and include scripts/coord_check.py."
+  ]
+}
