@@ -98,17 +98,46 @@ def _scatter_by_behaviour(ax, x, y, beh, alpha, size=10, edgewidth=0.6):
 
 
 def _panel_a(ax, adata: AnnData, use_rep: Optional[str],
-             lineages: Optional[list], label_fork: bool = True) -> None:
+             lineages: Optional[list], label_fork: bool = True,
+             by: str = "lead_re") -> None:
+    """Panel A — embedding scatter coloured by ``by`` on a diverging
+    scale centred at 0.
+
+    ``by="lead_re"`` (default, legacy): colour by leading real
+    eigenvalue; blue = basin, red = fork.
+    ``by="basin_index"`` (v0.5 lead-eig lock, 2026-10-14): colour by
+    ``op_basin_index`` = ``−lead_re``; red = basin (positive, deep),
+    blue = fork (negative). Oscillator ring is skipped because the
+    locked lead-eig rule reads a symmetric Jacobian (``lead_im = 0``).
+    """
     if use_rep is None:
         use_rep = "X_umap" if "X_umap" in adata.obsm else "X_pca"
     emb = np.asarray(adata.obsm[use_rep])[:, :2]
-    lead_re = adata.obs["lead_re"].to_numpy()
-    lead_im = adata.obs["lead_im"].to_numpy()
+    lead_re = adata.obs["lead_re"].to_numpy() if "lead_re" in adata.obs else None
+    lead_im = adata.obs.get("lead_im", np.zeros(adata.n_obs)).to_numpy() \
+        if "lead_im" in adata.obs else np.zeros(adata.n_obs)
     conf = adata.obs.get("op_confidence", np.ones(adata.n_obs)).to_numpy()
     alpha = _confidence_alpha(conf)
 
-    # Symmetric colour limits at the 98th percentile of |lead_re|
-    finite = lead_re[np.isfinite(lead_re)]
+    if by == "basin_index":
+        if "op_basin_index" not in adata.obs:
+            raise RuntimeError(
+                "panel_a(by='basin_index') needs obs['op_basin_index']; "
+                "call opspace.classify_basin_latent first.",
+            )
+        signal = adata.obs["op_basin_index"].to_numpy()
+        cbar_label = "basin_index  = −lead_re"
+    else:
+        if lead_re is None:
+            raise RuntimeError(
+                "panel_a(by='lead_re') needs obs['lead_re']; call "
+                "opspace.invariants first.",
+            )
+        signal = lead_re
+        cbar_label = f"Re(λ_max){_axis_tag(adata)}"
+
+    # Symmetric colour limits at the 98th percentile of |signal|
+    finite = signal[np.isfinite(signal)]
     vmax = float(np.nanpercentile(np.abs(finite), 98)) if finite.size else 1.0
     vmax = max(vmax, 1e-6)
 
@@ -118,15 +147,18 @@ def _panel_a(ax, adata: AnnData, use_rep: Optional[str],
 
     norm = mcolors.Normalize(vmin=-vmax, vmax=vmax)
     sm = ScalarMappable(norm=norm, cmap=DIVERGING_CMAP)
-    rgba = sm.to_rgba(lead_re)
+    rgba = sm.to_rgba(signal)
     rgba[:, 3] = np.clip(alpha, 0.1, 1.0)
-    sm.set_array(lead_re)
+    sm.set_array(signal)
     sc = ax.scatter(emb[:, 0], emb[:, 1], c=rgba, s=6, edgecolors="none", zorder=2)
-    # Outline rings on oscillatory cells
-    osc = lead_im > 1e-6
-    if osc.any():
-        ax.scatter(emb[osc, 0], emb[osc, 1], s=14, facecolors="none",
-                   edgecolors="black", linewidths=0.4, alpha=0.6, zorder=3)
+    # Oscillator ring is suppressed under the v0.5 lead-eig lock
+    # (symmetric J → lead_im = 0 to float precision). Only draw for
+    # the legacy by="lead_re" path AND if we actually see Im > 1e-6.
+    if by == "lead_re":
+        osc = lead_im > 1e-6
+        if osc.any():
+            ax.scatter(emb[osc, 0], emb[osc, 1], s=14, facecolors="none",
+                       edgecolors="black", linewidths=0.4, alpha=0.6, zorder=3)
 
     # Sensitive ring (§0 addition 2): dashed outer circle on high-henrici cells.
     if "op_sensitive" in adata.obs:
@@ -159,7 +191,7 @@ def _panel_a(ax, adata: AnnData, use_rep: Optional[str],
 
     cbar = plt.colorbar(sm, ax=ax, pad=0.02, aspect=18, shrink=0.55,
                         location="right")
-    cbar.set_label(f"Re(λ_max){_axis_tag(adata)}", fontsize=6)
+    cbar.set_label(cbar_label, fontsize=6)
     cbar.ax.tick_params(labelsize=6)
 
     ax.set_xlabel(f"{use_rep} 1")
@@ -418,6 +450,7 @@ def figure_operator_space(
     archetype: Optional[int] = None,
     use_rep: Optional[str] = None,
     out: Optional[str | Path] = None,
+    by: str = "lead_re",
 ) -> Figure:
     """Three-panel operator-space figure.
 
@@ -441,10 +474,15 @@ def figure_operator_space(
     out : path, optional
         If given, save ``out.pdf`` and ``out.png`` at 300 dpi.
     """
-    for col in ("lead_re", "lead_im"):
+    if by == "basin_index":
+        required = ("op_basin_index",)
+    else:
+        required = ("lead_re", "lead_im")
+    for col in required:
         if col not in adata.obs:
             raise RuntimeError(
-                f"adata.obs['{col}'] missing — call scjdo2.opspace.invariants first"
+                f"adata.obs['{col}'] missing — call "
+                "scjdo2.opspace.classify_basin_latent or opspace.invariants first",
             )
 
     with style():
@@ -456,7 +494,8 @@ def figure_operator_space(
         ax_b = fig.add_subplot(gs[0, 1])
         ax_c = fig.add_subplot(gs[1, :])
 
-        _panel_a(ax_a, adata, use_rep=use_rep, lineages=list(lineages) if lineages else None)
+        _panel_a(ax_a, adata, use_rep=use_rep,
+                  lineages=list(lineages) if lineages else None, by=by)
         ax_a.set_title("A", loc="left", fontsize=10, fontweight="bold")
 
         _panel_b(ax_b, adata, lineages=list(lineages) if lineages else None)

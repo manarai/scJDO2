@@ -1,5 +1,26 @@
 # scJDO v2 — summary of hematopoiesis comparisons
 
+**Repository tag: `v0.5-basin-lock`** (2026-10-14). Energy-param
+score drift + lead-eig classifier picked by continuous AUC (§5.10).
+Reproducible under:
+
+* `benchmarks/v0.5_lock/pbmc_v05.h5ad`                — PBMC adata
+  with locked-rule outputs (lead_re, basin_index, behaviour, J)
+* `benchmarks/v0.5_lock/pitchfork_v05.h5ad`           — pitchfork
+  τ=0.3 adata with the same columns
+* `notebooks/basin_analysis.ipynb`                    — §5 end-to-end
+  from the stored PBMC state (executed, committed)
+* `notebooks/pitchfork_gate.ipynb`                    — three-rule
+  comparison + locked-rule gate on the pitchfork (executed)
+* `benchmarks/v0.5_lock/pbmc_operator_space.{pdf,png}`,
+  `pbmc_basin_index_violin.{pdf,png}`,
+  `pbmc_behaviour_stack.{pdf,png}` — PBMC figure set
+* `benchmarks/v0.5_lock/pitchfork_operator_space.{pdf,png}`,
+  `pitchfork_rule_auc.{pdf,png}`,
+  `pitchfork_basin_index_vs_pt.{pdf,png}` — pitchfork figure set
+
+
+
 The manuscript's primary comparison is on **CD34+ bone marrow**. v1
 and v2 are both evaluated on the Setty 2019 Palantir dataset (the
 preprint target), with Dynamo scNT-seq hematopoiesis (Qiu 2022) as
