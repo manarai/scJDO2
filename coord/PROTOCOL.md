@@ -1,123 +1,143 @@
-# Claude ⇄ Manus coordination protocol (aging-basins arm)
+# Claude ⇄ Manus coordination protocol
 
-Shared contract for both agents. Claude plans, specifies and verifies;
-Manus executes the large-scale compute. Both work on the user's
-computer, in two folders of the **same git repository**:
+Generic contract, identical in every project. Project specifics live in
+`coord/PROJECT.md`; analysis specifics in `coord/<workstream>/WORKSTREAM.md`.
 
-| folder | who | branch |
-|---|---|---|
-| `~/Documents/scJDO2` | Claude | `aging-basins` |
-| `~/Documents/scJDO2-manus` (a git worktree) | Manus | `manus/<task-id>` |
+Claude plans, specifies and verifies. Manus executes the large-scale
+analysis. Both work on the user's computer in two folders of the
+**same git repository** (named in `PROJECT.md`):
 
-Separate folders mean neither agent's branch switches, installs or
-half-written files can break the other's. Same repository means no
-pushing, pulling or pull requests: each side reads the other's commits
-directly. GitHub is only a backup, pushed when the user asks.
+* **Claude's folder** — the repository itself, on the workstream's base
+  branch.
+* **Manus's folder** — a git worktree next to it (`<repo>-manus`), on
+  the task branch `manus/<workstream>-<task>`.
 
-The user relays one-line messages; their content is always "read file
-X". Everything an agent needs is in a committed file.
+Separate folders: neither agent's branch switches, installs or
+half-written files can break the other's. Same repository: no pushing,
+pulling or pull requests; each side reads the other's commits directly.
+
+The user relays one-line messages. Their content is always a pointer
+to committed files; everything an agent needs is in a file.
+
+## Layout
+
+```
+coord/
+  PROTOCOL.md          this file (generic)
+  MANUS.md             Manus's standing instructions (generic)
+  PROJECT.md           folders, environment, project-wide rules, workstreams
+  BOARD.md             every workstream's tasks and status
+  coord_check.py       mechanical review checker (generic)
+  <workstream>/        one per analysis (e.g. aging, atlas, k562)
+    WORKSTREAM.md      goal, base branch, spec docs, frozen rules, protected paths
+    tasks/<ID>.md      Claude writes
+    reports/<ID>.md    Manus writes (+ <ID>.json)
+    reviews/<ID>.md    Claude writes
+```
+
+Task IDs are per workstream (`A01`, `A02`, …). The full name of a
+task is `<workstream>/<ID>`; its branch is `manus/<workstream>-<ID>`.
 
 ## Roles
 
 | | Claude | Manus |
 |---|---|---|
-| Writes | `coord/tasks/`, `coord/reviews/`, `coord/BOARD.md`, PREREG amendments, library code unless a task grants it | `coord/reports/`, the scripts and outputs a task grants |
-| Works in | `~/Documents/scJDO2` | `~/Documents/scJDO2-manus` only |
-| Never | runs the large fits | writes anything in `~/Documents/scJDO2`; edits PREREG, tasks, reviews or BOARD; merges into `aging-basins`; pushes to GitHub |
-
-`MANUS_INSTRUCTIONS_aging_basins.md` is the full method spec. A task
-names the spec sections it executes; if a task and the spec disagree,
-the task wins and Manus says so in the report.
+| Writes | everything under `coord/` except reports; amendments to frozen rules; library code unless a task grants it | `coord/<ws>/reports/`, the scripts and outputs a task grants |
+| Works in | Claude's folder | Manus's folder only |
+| Never | runs the large compute | writes in Claude's folder; edits anything under `coord/` except its own reports; edits a workstream's protected paths; merges; pushes |
 
 ## Cycle
 
-1. **Issue.** Claude commits `coord/tasks/<id>.md` (`status: issued`)
-   on `aging-basins` and gives the user a one-line message for Manus.
-2. **Execute.** In its folder, Manus starts the task branch from the
-   current `aging-basins` (`git switch -c manus/<id> aging-basins`),
-   runs the steps, commits per spec section, writes
-   `coord/reports/<id>.md` and `.json`, commits them, and tells the
-   user it is done.
-3. **Verify.** Claude runs `python scripts/coord_check.py check <id>`,
-   re-derives the gate numbers from the committed outputs, runs the
-   tests in Manus's folder, and writes `coord/reviews/<id>.md`:
-   * `ACCEPT` — Claude merges `manus/<id>` into `aging-basins`
-     (`--no-ff`, keeping Manus's per-section commits) and issues the
-     next task;
+1. **Issue.** Claude commits `coord/<ws>/tasks/<ID>.md`
+   (`status: issued`) on the base branch, creates the task branch
+   `manus/<ws>-<ID>` at that commit, updates `BOARD.md`, and gives the
+   user the one-line message for Manus.
+2. **Execute.** Manus, in its folder, runs `git switch manus/<ws>-<ID>`,
+   does the steps, commits per step or spec section, writes and commits
+   `coord/<ws>/reports/<ID>.md` and `.json`, runs the checker, and tells
+   the user it is done.
+3. **Verify.** Claude runs `python coord/coord_check.py check <ws> <ID>
+   --run-reviews`, re-derives the gate numbers from committed outputs,
+   runs the tests in Manus's folder, and writes
+   `coord/<ws>/reviews/<ID>.md` with a verdict:
+   * `ACCEPT` — Claude merges the task branch into the base branch
+     (`--no-ff`, keeping Manus's commits) and issues the next task;
    * `REVISE` — numbered fixes; Manus commits them on the same branch
-     and appends `## Revision n` to the report;
-   * `STOP` — a prereg gate failed or a rule cannot execute; the user
+     and appends `## Revision n` to its report;
+   * `STOP` — a frozen gate failed or a rule cannot execute; the user
      decides.
-4. **Answer.** If Manus is stuck, it commits the report with
+4. **Answer.** If Manus is stuck, it commits its report with
    `status: blocked` and the question under `## Questions`. Claude
-   answers in `coord/reviews/<id>.md` under `## Answers`; the answer is
-   binding as if it were in the task.
+   answers under `## Answers` in the review; the answer is binding as
+   if it were in the task.
 
-Reviews are written after the task branch was cut, so Manus reads
-them from Claude's folder: `~/Documents/scJDO2/coord/reviews/<id>.md`
-(read-only).
+Reviews are written after the task branch was cut, so Manus reads them
+from Claude's folder, read-only: `<Claude's folder>/coord/<ws>/reviews/<ID>.md`.
 
-One task is open at a time; the next is issued only after `ACCEPT`.
+One task is open per workstream. Different workstreams can run at the
+same time only if `PROJECT.md` says Manus has capacity for it; each
+uses its own task branch, and Manus switches branches only between
+tasks, never mid-task.
 
-## Task file (`coord/tasks/<id>.md`, Claude writes)
+## Task file (`coord/<ws>/tasks/<ID>.md`)
 
-Front matter `id, title, owner, status (draft|issued|accepted|stopped),
-base_commit, spec_sections, depends_on`, then: Goal, Steps, Gate,
-Stop-and-ask conditions, and one fenced `json` contract block that
-`coord_check.py` reads:
+Front matter `id, workstream, title, owner (claude|manus), status
+(draft|issued|accepted|stopped), base_commit, spec_sections,
+depends_on`. Body: Goal, Steps, Gate (numeric conditions), Stop and
+ask, and one fenced `json` contract block:
 
 ```json
 {
   "allowed_paths": ["glob", "..."],
   "required_files": ["committed path that must exist on the branch"],
   "required_metrics": ["key that must appear in the report json"],
-  "compute_budget_cpu_hours": 24
+  "compute_budget_cpu_hours": 24,
+  "protected_symbols": {"path.py": ["def name"]},
+  "review_commands": ["python scripts/x.py --ref {head}"]
 }
 ```
 
+`review_commands` run during review with `{head}` replaced by the task
+branch; a non-zero exit is a failure.
+
 ## Report (Manus writes)
 
-`coord/reports/<id>.json`, machine-read:
+`coord/<ws>/reports/<ID>.json`:
 
 ```json
 {
-  "task": "A01",
+  "task": "<ws>/<ID>",
   "status": "done | blocked | partial",
-  "branch": "manus/A01",
   "started_utc": "...", "finished_utc": "...",
   "compute": {"cpu_hours": 0.0, "gpu_hours": 0.0, "hardware": "..."},
   "metrics": {"<required_metric>": "<value>"},
   "artifacts": [
     {"path": "...", "bytes": 0, "sha256": "...", "committed": false,
-     "regenerate": "python scripts/... --tissue lung"}
+     "regenerate": "python scripts/... --seed 0"}
   ],
   "deviations": ["what differed from the task and why"],
   "questions": []
 }
 ```
 
-`coord/reports/<id>.md`, human-read, sections in order: Summary
-(≤ 10 lines), What ran (commands, in order), Gate numbers (table),
-Deviations, Questions, Artifacts.
+`coord/<ws>/reports/<ID>.md`, sections in order: Summary (≤ 10 lines),
+What ran (commands, in order), Gate numbers (table), Deviations,
+Questions, Artifacts.
 
 ## Rules that bind both sides
 
-* Pre-registered rules in `PREREG_aging_basins.md` are frozen. Only
-  Claude writes amendments, only before the run they govern, dated,
-  with "made before any data run governed by it".
+* Frozen rules (pre-registrations, locked parameters) named in
+  `WORKSTREAM.md` change only by a dated amendment Claude writes
+  before the run it governs.
 * Report what happened. A failed gate, a crash or a negative result is
   a report, not a reason to change a parameter. Never fabricate,
   simulate or impute data.
-* Large files (`*.h5ad`, models, `*.pt`) are gitignored and stay on
-  disk in `~/Documents/scJDO2-manus`; later tasks reuse them there.
-  List them in `artifacts` with size, sha256 and the command that
-  regenerates them. Every script is seeded.
-* Manus's Python environment is `~/Documents/scJDO2-manus/.venv`
-  (gitignored). Nobody installs packages into the user's base or
-  conda environments.
-* Manus never changes files outside the task's `allowed_paths`;
-  `coord_check.py` fails the review if it does.
-* Commit subjects carry the spec section (`aging: §3 scArches shared
-  space`). Manus commits end with
-  `Co-Authored-By: Manus <noreply@manus.im>`.
-* Compute beyond the task's budget needs the user's approval first.
+* Large outputs stay on disk in Manus's folder (gitignored); later
+  tasks reuse them there. List them in `artifacts` with size, sha256
+  and the command that regenerates them. Every script is seeded.
+* Manus's Python environment is `.venv` inside its folder. Nobody
+  installs into the user's base or conda environments.
+* Manus changes only the task's `allowed_paths`; the checker fails the
+  review otherwise.
+* Manus commits end with `Co-Authored-By: Manus <noreply@manus.im>`.
+* Compute beyond a task's budget needs the user's approval first.
