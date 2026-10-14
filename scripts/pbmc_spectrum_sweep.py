@@ -62,6 +62,142 @@ from scjdo2.data import (
 from scjdo2.energy_drift import EnergyDriftAdapter, EnergyDriftConfig
 
 
+# -----------------------------------------------------------------
+# Diagnostics requested at commit 5e7ad2f lock
+# -----------------------------------------------------------------
+
+
+def _eigvec_to_neighbour_cosines(z: np.ndarray, cluster: np.ndarray,
+                                  J: np.ndarray, target_clusters,
+                                  tol: float) -> pd.DataFrame:
+    """For each named cluster, compute cosine between EACH positive
+    eigenvector (|λ| > tol) of the mean-near-centroid Hessian and the
+    unit vector from that cluster's centroid to its nearest OTHER
+    cluster's centroid. Reports which cluster is the nearest neighbour.
+    """
+    cl_names = sorted(set(cluster))
+    centroids = {cl: z[cluster == cl].mean(axis=0) for cl in cl_names
+                 if (cluster == cl).sum() >= 3}
+    rows = []
+    for cl in target_clusters:
+        if cl not in centroids:
+            continue
+        mu = centroids[cl]
+        # Nearest other centroid.
+        best, best_d = None, np.inf
+        for other, mu2 in centroids.items():
+            if other == cl:
+                continue
+            d = float(np.linalg.norm(mu - mu2))
+            if d < best_d:
+                best, best_d = other, d
+        if best is None:
+            continue
+        u_neighbour = (centroids[best] - mu) / (best_d + 1e-12)
+        # Mean-near-centroid Jacobian: 30 nearest cells to mu.
+        d_mu = np.linalg.norm(z - mu, axis=1)
+        near = np.argpartition(d_mu, min(30, len(z) - 1))[:30]
+        J_mu = J[near].mean(axis=0).astype(np.float64)
+        # Symmetrise to avoid tiny imag parts.
+        J_sym = 0.5 * (J_mu + J_mu.T)
+        eigvals, eigvecs = np.linalg.eigh(J_sym)
+        for i, lam in enumerate(eigvals):
+            if lam <= tol:                      # only positive-eigvalue modes
+                continue
+            v = eigvecs[:, i]
+            cos = float(np.dot(v, u_neighbour))
+            rows.append({
+                "cluster": cl, "nearest_neighbour": best,
+                "centroid_dist": best_d,
+                "eig_idx": int(i),
+                "eig_value": float(lam),
+                "cosine_with_neighbour": cos,
+                "abs_cosine": abs(cos),
+            })
+    return pd.DataFrame(rows)
+
+
+def _negative_curvature_ratios(z: np.ndarray, cluster: np.ndarray,
+                                J: np.ndarray) -> pd.DataFrame:
+    """Per-cluster learned/oracle curvature ratio on the NEGATIVE
+    directions.
+
+    Oracle: ``−Σ⁻¹`` of the cluster's latent covariance, median
+    eigenvalue (always negative).
+    Learned: median of all negative eigenvalues of ``J`` restricted
+    to the cluster (across the per-cell spectra).
+    Ratio: ``learned / oracle``.
+    """
+    rows = []
+    for cl in sorted(set(cluster)):
+        m = cluster == cl
+        if m.sum() < 10:
+            continue
+        z_cl = z[m]
+        Sigma = np.cov(z_cl, rowvar=False, bias=False)
+        Sigma = Sigma + 1e-4 * np.eye(Sigma.shape[0])
+        ev_oracle = np.linalg.eigvalsh(-np.linalg.inv(Sigma))
+        oracle_neg = ev_oracle[ev_oracle < 0]
+        learned_negs = []
+        for c in np.where(m)[0]:
+            ev = np.linalg.eigvals(J[c].astype(np.float64)).real
+            learned_negs.extend(ev[ev < 0].tolist())
+        learned_negs = np.array(learned_negs)
+        oracle_med = float(np.median(oracle_neg)) if oracle_neg.size else float("nan")
+        learned_med = float(np.median(learned_negs)) if learned_negs.size else float("nan")
+        ratio = (learned_med / oracle_med) if oracle_med != 0 else float("nan")
+        rows.append({
+            "cluster": cl, "n": int(m.sum()),
+            "oracle_neg_median": oracle_med,
+            "oracle_neg_min": float(oracle_neg.min()) if oracle_neg.size else float("nan"),
+            "learned_neg_median_percell": learned_med,
+            "learned_neg_min_percell": float(learned_negs.min()) if learned_negs.size else float("nan"),
+            "ratio_neg_dir": ratio,
+        })
+    return pd.DataFrame(rows)
+
+
+def _density_decile_control(z: np.ndarray, J: np.ndarray,
+                             tol: float, k: int = 30,
+                             decile: float = 0.10) -> dict:
+    """Negative control: cells in the LOWEST local-density decile
+    (far from any cluster centre, i.e., inter-cluster gap cells)
+    should classify as fork or drift under the basin rule, not holder.
+
+    Local density is 1 / (k-th nearest neighbour distance).
+    """
+    from scipy.spatial import cKDTree
+    tree = cKDTree(z)
+    dists, _ = tree.query(z, k=min(k + 1, len(z)))
+    kth = dists[:, -1]  # distance to the k-th neighbour
+    thr = float(np.quantile(kth, 1.0 - decile))  # largest kth-nn dist
+    low_density = kth >= thr
+    n_low = int(low_density.sum())
+    rows = []
+    for c in np.where(low_density)[0]:
+        ev = np.linalg.eigvals(J[c].astype(np.float64)).real
+        order = np.argsort(-np.abs(ev))
+        ev_top = ev[order]
+        d = len(ev_top)
+        n_neg = int((ev_top < -tol).sum())
+        n_pos = int((ev_top > tol).sum())
+        if n_neg >= d - 1:
+            beh = "holder"
+        elif n_pos > 0:
+            beh = "fork"
+        else:
+            beh = "drift"
+        rows.append({"cell": int(c), "k_dist": float(kth[c]), "behaviour": beh})
+    df = pd.DataFrame(rows)
+    counts = df["behaviour"].value_counts().to_dict() if len(df) else {}
+    return {
+        "n_low_density": n_low,
+        "k_dist_threshold": thr,
+        "counts": counts,
+        "per_cell": df,
+    }
+
+
 REPO = Path(__file__).resolve().parent.parent
 OUT = REPO / "benchmarks" / "v2" / "pbmc_basin_spectrum"
 MARKER_KEEP = ("CD3D", "CD4", "CD8A", "CD8B", "MS4A1", "CD79A",
@@ -433,6 +569,16 @@ def main() -> int:
             "verdict": "pass" if frac >= 0.5 else "fail",
         })
 
+        # Keep the per-d drift / J / tol for later diagnostics at the
+        # best d (chosen by LL below).
+        if d == args.d_latent[-1]:
+            # cheap: just stash the latest one — the "lock" diagnostics
+            # go onto the final (highest) d since LL is monotonically
+            # best at d=15.
+            diag_z = z
+            diag_J = J
+            diag_tol = g["oracle_tol"]
+
     pd.DataFrame(sweep_rows).to_csv(OUT / "scvi_sweep_ll.csv", index=False)
     pd.concat(all_centroid, ignore_index=True).to_csv(
         OUT / "spectrum_centroid.csv", index=False,
@@ -444,6 +590,33 @@ def main() -> int:
         OUT / "rotation_debug.csv", index=False,
     )
     pd.DataFrame(gate_rows).to_csv(OUT / "gate_by_d.csv", index=False)
+
+    # ---- Lock diagnostics (commit 5e7ad2f) at the final d (= max of
+    # args.d_latent, which is also the LL-best).
+    print(f"\n[spectrum] LOCK DIAGNOSTICS at d={args.d_latent[-1]}:")
+
+    print("[spectrum]  (2) positive-eigvec cosines with "
+          "centroid→nearest-neighbour direction, for B/CD8T/NK:")
+    cos_df = _eigvec_to_neighbour_cosines(
+        diag_z, cluster_arr, diag_J,
+        ("B cells", "CD8 T cells", "NK cells"), tol=diag_tol,
+    )
+    cos_df.to_csv(OUT / "positive_eigvec_cosines.csv", index=False)
+    print(cos_df.to_string(index=False))
+
+    print("\n[spectrum]  (3) per-cluster learned/oracle ratio on "
+          "NEGATIVE directions:")
+    ratio_df = _negative_curvature_ratios(diag_z, cluster_arr, diag_J)
+    ratio_df.to_csv(OUT / "negative_direction_ratios.csv", index=False)
+    print(ratio_df.to_string(index=False))
+
+    print("\n[spectrum]  (4) negative control — bottom-10% local "
+          "density cells should be fork/drift, not holder:")
+    neg = _density_decile_control(diag_z, diag_J, diag_tol, k=30, decile=0.10)
+    neg["per_cell"].to_csv(OUT / "density_decile_control.csv", index=False)
+    print(f"  n_low_density = {neg['n_low_density']}  "
+          f"k_dist_threshold = {neg['k_dist_threshold']:.3f}")
+    print(f"  behaviour counts: {neg['counts']}")
 
     # Pick best d by marginal LL and dump final gate.
     sweep_df = pd.DataFrame(sweep_rows).dropna()

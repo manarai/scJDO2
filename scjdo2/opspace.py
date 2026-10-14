@@ -819,6 +819,103 @@ def invariants(
 # ======================================================================
 
 
+def classify_basin_latent(adata: AnnData, tol: float,
+                          use_rep: str = "X_pca",
+                          k_tangent: int = 30,
+                          tangent_floor_frac: float = 0.1) -> None:
+    """Tangent-restricted basin classifier on the latent operator.
+
+    This is the authoritative basin rule adopted at commit ``5e7ad2f``
+    (SUMMARY §5.5-§5.6). It replaces the leading-eigenvalue rule used by
+    :func:`behaviour` for latent-space runs when the question is
+    "is this cell inside a density basin" rather than "what is the
+    leading mode's sign".
+
+    Per cell ``c``:
+
+    1. Compute the local tangent rank ``r_c`` as the number of
+       principal directions of the kNN Σ⁻¹ in ``adata.obsm[use_rep]``
+       whose eigenvalue exceeds ``tangent_floor_frac × max|λ(Σ⁻¹)|``.
+    2. Take the top-``r_c`` eigenvalues of ``J_c`` sorted by
+       magnitude — the per-cell *effective spectrum*.
+    3. Count ``n_neg = sum(λ < -tol)`` and ``n_pos = sum(λ > tol)`` on
+       the top-``r_c`` block.
+    4. Classify:
+         * **basin** (holder) iff ``n_neg ≥ r_c − 1`` — basin with up
+           to one soft direction (the axis toward its nearest related
+           cluster centroid in latent).
+         * **fork** iff a positive eigenvalue has magnitude ``> tol``
+           AND the cell is not a basin.
+         * **drift** otherwise.
+
+    Writes columns:
+        ``op_behaviour_basin``   — "holder" / "fork" / "drift"
+        ``op_tangent_r``         — per-cell tangent rank
+        ``op_n_neg_tangent``     — per-cell negative count in tangent
+        ``op_n_pos_tangent``     — per-cell positive count in tangent
+        ``op_n_soft``            — ``r_c − n_neg`` (soft directions)
+    """
+    uns = adata.uns.get("scjdo2", {})
+    J = uns.get("J_latent")
+    if J is None:
+        J = uns.get("J")
+    if J is None or not hasattr(J, "shape") or np.ndim(J) != 3:
+        raise RuntimeError(
+            "classify_basin_latent needs a dense latent J tensor in "
+            "uns['scjdo2']['J_latent'] or uns['scjdo2']['J']",
+        )
+    J = np.asarray(J)
+    n, d, _ = J.shape
+    if use_rep not in adata.obsm:
+        raise KeyError(f"obsm[{use_rep!r}] missing — needed for tangent rank")
+    z = np.asarray(adata.obsm[use_rep], dtype=np.float32)
+
+    r_arr = np.zeros(n, dtype=np.int32)
+    n_neg_arr = np.zeros(n, dtype=np.int32)
+    n_pos_arr = np.zeros(n, dtype=np.int32)
+    beh = np.full(n, "", dtype=object)
+    k = min(int(k_tangent), n - 1)
+    for c in range(n):
+        d_c = np.linalg.norm(z - z[c], axis=1)
+        idx = np.argpartition(d_c, k)[:k]
+        Sigma = np.cov(z[idx], rowvar=False, bias=False)
+        Sigma = Sigma + 1e-6 * np.eye(d)
+        try:
+            ev_inv = np.abs(np.linalg.eigvalsh(np.linalg.inv(Sigma)))
+            floor = float(tangent_floor_frac) * float(ev_inv.max())
+            r_c = int((ev_inv > floor).sum())
+        except np.linalg.LinAlgError:
+            r_c = d
+        try:
+            ev = np.linalg.eigvals(J[c].astype(np.float64)).real
+        except np.linalg.LinAlgError:
+            r_arr[c] = r_c
+            beh[c] = "drift"
+            continue
+        order = np.argsort(-np.abs(ev))
+        ev_r = ev[order[:r_c]]
+        n_neg = int((ev_r < -tol).sum())
+        n_pos = int((ev_r > tol).sum())
+        r_arr[c] = r_c
+        n_neg_arr[c] = n_neg
+        n_pos_arr[c] = n_pos
+        if n_neg >= max(r_c - 1, 1):
+            beh[c] = "holder"
+        elif n_pos > 0:
+            beh[c] = "fork"
+        else:
+            beh[c] = "drift"
+
+    import pandas as _pd
+    adata.obs["op_behaviour_basin"] = _pd.Categorical(
+        beh, categories=["", "holder", "fork", "drift"],
+    )
+    adata.obs["op_tangent_r"] = r_arr
+    adata.obs["op_n_neg_tangent"] = n_neg_arr
+    adata.obs["op_n_pos_tangent"] = n_pos_arr
+    adata.obs["op_n_soft"] = (r_arr - n_neg_arr).astype(np.int32)
+
+
 def behaviour(adata: AnnData, tol: Optional[float] = None,
               sensitive_pct: float = 90.0,
               sensitive_quantile: Optional[float] = None) -> None:
@@ -831,6 +928,12 @@ def behaviour(adata: AnnData, tol: Optional[float] = None,
     ``sensitive_pct`` is on the 0–100 scale (§1.3). The legacy
     ``sensitive_quantile`` kwarg (0–1 scale) is kept for back-compat;
     when supplied it overrides ``sensitive_pct``.
+
+    This is the leading-eigenvalue rule. For latent-only basin
+    classification (SUMMARY §5.5), prefer
+    :func:`classify_basin_latent`, which reads a basin with one soft
+    direction (e.g. small resting lymphoid subsets shallow along the
+    axis to their nearest relative) as holder rather than fork.
     """
     q = (
         float(sensitive_quantile)
