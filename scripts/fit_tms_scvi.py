@@ -82,8 +82,10 @@ def _reference_weights_max_abs_change(
     `load_query_data` appends new categorical-batch rows to some tensors.  For
     every reference encoder/decoder parameter, compare only the leading slice
     occupied by the original reference tensor.  Thus new rows are excluded but
-    every original reference weight (including original batch columns) is
-    checked exactly.
+    every original weight that scArches freezes is checked exactly. The
+    scArches procedure intentionally leaves the library-size encoder and
+    decoder BatchNorm affine parameters trainable; they are not reference
+    expression weights and are excluded from this audit.
     """
     reference = dict(reference_model.module.named_parameters())
     query = dict(query_model.module.named_parameters())
@@ -91,6 +93,13 @@ def _reference_weights_max_abs_change(
     checked = 0
     for name, ref in reference.items():
         if "encoder" not in name and "decoder" not in name:
+            continue
+        # scvi-tools _set_params_online_update explicitly leaves l_encoder and
+        # decoder BatchNorm affine terms trainable. These are not frozen
+        # reference expression weights under the documented scArches setup.
+        if "l_encoder" in name:
+            continue
+        if "decoder" in name and ".fc_layers." in name and (name.endswith(".1.weight") or name.endswith(".1.bias")):
             continue
         if name not in query:
             raise RuntimeError(f"query model is missing reference parameter {name!r}")
