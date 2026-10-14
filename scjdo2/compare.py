@@ -4,9 +4,10 @@ Four public entry points:
 
   * :func:`match_directions` — pair eigenvectors of two symmetric
     Jacobians by cosine; return matched eigenvalue pairs.
-  * :func:`isotropy_test`    — test whether old/young eigenvalue
-    ratios are anisotropic across matched directions. CV statistic
-    vs shuffled null.
+  * :func:`isotropy_test`    — test whether the old/young operator
+    change departs from uniform across matched directions
+    (``S = max |r_k − median r|``, split-half-within-young null;
+    PREREG §4b).
   * :func:`anticipation_test` — test whether the shared-space
     aging-displacement `d` points along the young soft axis
     `u_young`. |cos| statistic vs random-half-split null.
@@ -19,6 +20,7 @@ the v0.5-basin-lock classification rule.
 
 from __future__ import annotations
 
+import zlib
 from dataclasses import dataclass
 from typing import Optional, Sequence, Tuple
 
@@ -85,80 +87,128 @@ def match_directions(J_a: np.ndarray, J_b: np.ndarray) -> MatchedDirections:
 
 
 # -----------------------------------------------------------------
-# isotropy_test (PREREG §4)
+# isotropy_test (PREREG §4, §4b)
 # -----------------------------------------------------------------
 
 
-@dataclass
-class IsotropyResult:
-    ratios: np.ndarray            # per matched direction (reported, not the stat)
-    rho_lambda: float             # Spearman(|λ_a|, |λ_b|) across cosine-matched pairs
-    null_rho: np.ndarray          # (n_null,)
-    null_q95: float
-    passes: bool                  # observed ρ > null_q95
-    n_valid: int                  # number of pairs used (finite |eig| both sides)
-    cv_ratio: float               # legacy field — reported for provenance only
+def centroid_operator(z: np.ndarray, J_cells: np.ndarray,
+                      n_cells_centroid: int = 30) -> np.ndarray:
+    """Mean per-cell Jacobian over the ``n_cells_centroid`` cells of
+    this set nearest the set's centroid (PREREG §3, §4b)."""
+    z = np.asarray(z, dtype=np.float64)
+    mu = z.mean(axis=0)
+    dist = np.linalg.norm(z - mu, axis=1)
+    k = min(int(n_cells_centroid), len(z))
+    idx = np.argsort(dist, kind="stable")[:k]
+    return np.asarray(J_cells, dtype=np.float64)[idx].mean(axis=0)
 
 
-def isotropy_test(J_a: np.ndarray, J_b: np.ndarray,
-                   n_null: int = 1000, seed: int = 0) -> IsotropyResult:
-    """Direction-coherence of eigenvalue orderings across age
-    (PREREG §4a, amended 2026-10-14 before any aging data run).
+def isotropy_statistic(J_a: np.ndarray, J_b: np.ndarray
+                       ) -> tuple[float, np.ndarray, MatchedDirections]:
+    """``S = max_k |r_k − median(r)|`` with
+    ``r_k = log(|λ_b,k| / |λ_a,k|)`` over cosine-matched pairs.
 
-    **Statistic** — Spearman correlation
-    ``ρ_λ = ρ(|λ_a_i|, |λ_b_j(i)|)`` across cosine-matched pairs
-    ``(i, j(i))``. High ``ρ_λ`` means directions soft in young stay
-    soft in old; stiff stays stiff.
-
-    **Null** — ``n_null`` random pairings of a-eigenvalues to
-    b-eigenvalues (eigenvectors ignored). Compute ``ρ_λ`` per draw.
-
-    **Pass** — ``ρ_λ > q95(null)``.
-
-    The CV-of-ratios statistic used in the original prereg is
-    permutation-invariant, so its "shuffle ratios" null is
-    degenerate; the amendment replaces it with the Spearman
-    coherence test above. ``cv_ratio`` is still reported in the
-    result for provenance only — it does NOT drive ``passes``.
+    ``S ≈ 0`` when every direction changes by the same factor
+    (isotropic); large when one direction departs from the typical
+    change. Returns ``(S, r, matched)``; ``S`` is NaN with fewer than
+    3 valid pairs.
     """
-    from scipy.stats import spearmanr
-
     md = match_directions(J_a, J_b)
     abs_a = np.abs(md.eig_a)
     abs_b = np.abs(md.eig_b)
     mask = np.isfinite(abs_a) & np.isfinite(abs_b) & (abs_a > 0) & (abs_b > 0)
-    a_v = abs_a[mask]
-    b_v = abs_b[mask]
-    if a_v.size < 3:
-        return IsotropyResult(
-            ratios=md.ratios(), rho_lambda=float("nan"),
-            null_rho=np.array([]), null_q95=float("nan"),
-            passes=False, n_valid=int(mask.sum()),
-            cv_ratio=float("nan"),
-        )
-    import warnings
-    from scipy.stats import ConstantInputWarning
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", ConstantInputWarning)
-        rho_obs = float(spearmanr(a_v, b_v).statistic)
-        rng = np.random.default_rng(seed)
-        nulls = np.empty(int(n_null), dtype=np.float64)
-        for k in range(int(n_null)):
-            perm = rng.permutation(b_v.size)
-            nulls[k] = float(spearmanr(a_v, b_v[perm]).statistic)
+    r = np.full(abs_a.shape, np.nan)
+    r[mask] = np.log(abs_b[mask] / abs_a[mask])
+    r_v = r[mask]
+    if r_v.size < 3:
+        return float("nan"), r, md
+    return float(np.max(np.abs(r_v - np.median(r_v)))), r, md
+
+
+@dataclass
+class IsotropyResult:
+    S: float                      # max_k |r_k − median(r)|  (the §4b statistic)
+    log_ratios: np.ndarray        # r_k = log(|λ_old| / |λ_young|) per matched pair
+    null_S: np.ndarray            # (n_null,) split-half-within-young
+    null_q95: float
+    passes: bool                  # S > null_q95
+    n_valid: int                  # matched pairs with finite, non-zero |λ| both sides
+    n_half: int                   # cells per half in the null
+    ratios: np.ndarray            # λ_old / λ_young per matched pair (provenance)
+    rho_lambda: float             # §4a Spearman — provenance only, not a gate
+    cv_ratio: float               # original §4 CV — provenance only, not a gate
+
+
+def isotropy_test(z_a: np.ndarray, J_cells_a: np.ndarray,
+                  z_b: np.ndarray, J_cells_b: np.ndarray,
+                  n_cells_centroid: int = 30,
+                  n_null: int = 1000, seed: int = 0) -> IsotropyResult:
+    """Is the young → old operator change concentrated in specific
+    directions rather than uniform? (PREREG §4b, amended 2026-10-14
+    before any aging data run; replaces §4a.)
+
+    ``z_a``/``J_cells_a`` are young cells of one type (latent
+    positions and per-cell Jacobians from the fixed shared-space
+    drift), ``z_b``/``J_cells_b`` the old cells.
+
+    * Operators: :func:`centroid_operator` of each group.
+    * Statistic: :func:`isotropy_statistic` of (young, old).
+    * Null: ``n_null`` random splits of the young cells into two
+      disjoint halves of ``min(n_old, n_young // 2)`` cells; ``S``
+      between the two halves' centroid operators. Sampling noise
+      under no aging.
+    * Pass: ``S > q95(null)``.
+
+    Uniform (isotropic) softening scales every eigenvalue by the same
+    factor, so ``S`` stays at the null and the test fails, which is
+    the outcome §4 must reject. The §4a Spearman ``ρ`` and the §4 CV
+    are returned for provenance only.
+    """
+    z_a = np.asarray(z_a, dtype=np.float64)
+    z_b = np.asarray(z_b, dtype=np.float64)
+    J_cells_a = np.asarray(J_cells_a, dtype=np.float64)
+    J_cells_b = np.asarray(J_cells_b, dtype=np.float64)
+    if len(z_a) != len(J_cells_a) or len(z_b) != len(J_cells_b):
+        raise ValueError("z and J_cells must have the same number of cells")
+
+    J_a = centroid_operator(z_a, J_cells_a, n_cells_centroid)
+    J_b = centroid_operator(z_b, J_cells_b, n_cells_centroid)
+    S_obs, r, md = isotropy_statistic(J_a, J_b)
+
+    n_a = len(z_a)
+    n_half = max(2, min(len(z_b), n_a // 2))
+    rng = np.random.default_rng(seed)
+    nulls = np.empty(int(n_null), dtype=np.float64)
+    for k in range(int(n_null)):
+        idx = rng.permutation(n_a)
+        h1, h2 = idx[:n_half], idx[n_half:2 * n_half]
+        nulls[k] = isotropy_statistic(
+            centroid_operator(z_a[h1], J_cells_a[h1], n_cells_centroid),
+            centroid_operator(z_a[h2], J_cells_a[h2], n_cells_centroid),
+        )[0]
     valid_null = nulls[np.isfinite(nulls)]
     q95 = (float(np.percentile(valid_null, 95))
            if valid_null.size else float("nan"))
-    # Legacy CV, reported but no gate action.
-    r = md.ratios()
-    r_valid = r[np.isfinite(r) & (r > 0)]
-    cv_legacy = (float(np.std(r_valid) / (abs(np.mean(r_valid)) + 1e-12))
-                 if r_valid.size >= 2 else float("nan"))
+
+    # Provenance: §4a Spearman and §4 CV, no gate action.
+    import warnings
+    from scipy.stats import ConstantInputWarning, spearmanr
+    abs_a, abs_b = np.abs(md.eig_a), np.abs(md.eig_b)
+    mask = np.isfinite(r)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", ConstantInputWarning)
+        rho = (float(spearmanr(abs_a[mask], abs_b[mask]).statistic)
+               if mask.sum() >= 3 else float("nan"))
+    ratios = md.ratios()
+    r_pos = ratios[np.isfinite(ratios) & (ratios > 0)]
+    cv = (float(np.std(r_pos) / (abs(np.mean(r_pos)) + 1e-12))
+          if r_pos.size >= 2 else float("nan"))
+
     return IsotropyResult(
-        ratios=r, rho_lambda=rho_obs, null_rho=nulls, null_q95=q95,
-        passes=bool(np.isfinite(q95) and rho_obs > q95),
-        n_valid=int(mask.sum()),
-        cv_ratio=cv_legacy,
+        S=S_obs, log_ratios=r, null_S=nulls, null_q95=q95,
+        passes=bool(np.isfinite(S_obs) and np.isfinite(q95) and S_obs > q95),
+        n_valid=int(mask.sum()), n_half=int(n_half),
+        ratios=ratios, rho_lambda=rho, cv_ratio=cv,
     )
 
 
@@ -252,6 +302,10 @@ def compare_types(adata, by: str = "cell_type",
     shared space). ``adata.obs[by]`` holds cell-type labels,
     ``adata.obs[group_key]`` holds the two group labels in ``groups``.
 
+    Centroid operators are taken within each (type, group) cell set
+    (:func:`centroid_operator`). ``rho`` and ``cv_ratio`` are
+    provenance columns; ``iso_pass`` is the §4b gate.
+
     Returns a DataFrame with one row per eligible type.
     """
     import numpy as _np
@@ -259,8 +313,8 @@ def compare_types(adata, by: str = "cell_type",
     types = adata.obs[by].astype(str).to_numpy()
     grp = adata.obs[group_key].astype(str).to_numpy()
     z = _np.asarray(adata.obsm[use_rep], dtype=_np.float64)
-    J = _np.asarray(adata.uns["scjdo2"].get("J_latent",
-                                               adata.uns["scjdo2"]["J"]))
+    uns = adata.uns["scjdo2"]
+    J = _np.asarray(uns["J_latent"] if "J_latent" in uns else uns["J"])
 
     rows = []
     for ct in sorted(set(types)):
@@ -269,28 +323,23 @@ def compare_types(adata, by: str = "cell_type",
         n_y, n_o = int(m_y.sum()), int(m_o.sum())
         if n_y < min_cells or n_o < min_cells:
             continue
-        # Centroid operators.
-        mu_y = z[m_y].mean(axis=0); mu_o = z[m_o].mean(axis=0)
-        d_mu_y = _np.linalg.norm(z - mu_y, axis=1)
-        d_mu_o = _np.linalg.norm(z - mu_o, axis=1)
-        idx_y = _np.argpartition(d_mu_y, min(n_cells_centroid, len(z) - 1))[
-            : n_cells_centroid
-        ]
-        idx_o = _np.argpartition(d_mu_o, min(n_cells_centroid, len(z) - 1))[
-            : n_cells_centroid
-        ]
-        J_y = J[idx_y].mean(axis=0); J_o = J[idx_o].mean(axis=0)
-        iso = isotropy_test(J_y, J_o, n_null=n_null, seed=seed + hash(ct) % 2**31)
+        # Stable per-type seed (builtin hash() of str is salted per process).
+        ct_seed = seed + zlib.crc32(ct.encode("utf-8")) % 2**31
+        iso = isotropy_test(z[m_y], J[m_y], z[m_o], J[m_o],
+                            n_cells_centroid=n_cells_centroid,
+                            n_null=n_null, seed=ct_seed)
+        J_y = centroid_operator(z[m_y], J[m_y], n_cells_centroid)
         ant = anticipation_test(z[m_y], z[m_o], J_y,
-                                 n_null=n_null, seed=seed + hash(ct) % 2**31,
+                                 n_null=n_null, seed=ct_seed,
                                  match_size=True)
         rows.append({
             "cell_type": ct, "n_young": n_y, "n_old": n_o,
-            "rho_lambda": iso.rho_lambda,
+            "S": iso.S,
             "iso_null_q95": iso.null_q95,
             "iso_pass": iso.passes,
             "n_valid_ratios": iso.n_valid,
-            "CV_ratio_legacy": iso.cv_ratio,
+            "rho": iso.rho_lambda,
+            "cv_ratio": iso.cv_ratio,
             "cos_abs_u_young_d": ant.cos_abs,
             "ant_null_q95": ant.null_q95,
             "ant_pass": ant.passes,

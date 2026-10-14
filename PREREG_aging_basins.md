@@ -46,6 +46,17 @@ accessible in a few CPU-hours; the prereg does not promise it.
 * **Donors as replicates:** per-donor shift estimates are reported
   wherever donor information is available in `obs`.
 
+### 2a — Prereg amendment: downsampling direction (2026-10-14, made before any data run governed by it)
+
+§2 says "downsample young cells to the number of old cells per
+donor", but young is the smaller group in both TMS tissues, so the
+rule cannot execute as written. **Rule as executed:** per
+`(donor, cell_type)`, downsample the **larger** age group to the
+size of the smaller one, seed 0; drop `(donor, cell_type)` cells
+with fewer than 20 cells on either side (bookkeeping floor, not a
+gate); then keep only cell types with `≥ 200` cells in **both** age
+groups (the §2 inclusion gate, unchanged).
+
 ## 3 — Operators + per-type measurements
 
 Per `(tissue, cell_type, age_group)`:
@@ -71,6 +82,8 @@ way — directions soft in young remain the softening axis in old,
 not isotropically, not random.
 
 ### 4a — Prereg amendment (2026-10-14, before any run on real data)
+
+> **Superseded by §4b** (same day, before any data run). Kept for the record.
 
 The original §4 statistic "CV of ratios across directions" with a
 "shuffle-ratios null" is mathematically degenerate: any permutation
@@ -109,6 +122,58 @@ Reporting:
 * `null_q95` per type
 * `isotropy_pass` boolean per type (True iff `ρ_λ > null_q95`)
 * **fraction of eligible types passing**
+
+### 4b — Prereg amendment: isotropy statistic (2026-10-14, made before any data run governed by it; replaces §4a)
+
+**Why.** §4a tests the wrong thing. Under uniform (isotropic)
+softening every eigenvalue scales by the same factor, the rank order
+is preserved and `ρ_λ ≈ 1`, so "pass = ρ_λ > null" passes the very
+outcome §4 is meant to reject. Confirmed in
+`tests/test_compare_aging.py::test_isotropic_widening_is_what_spearman_passed`
+(uniform 1.6× widening: `ρ_λ > 0.95`).
+
+**Operators.** Per `(type, age group)`, the centroid operator is the
+mean per-cell `J` over the 30 cells **of that set** nearest the
+set's centroid in the shared space (`compare.centroid_operator`;
+this makes §3's "30 cells nearest the type centroid" explicit).
+
+**Statistic.** For cosine-matched direction pairs `k`
+(greedy, as §4a), `r_k = log(|λ_old,k| / |λ_young,k|)`;
+`S = max_k |r_k − median(r)|`, how far the most-changed direction
+departs from the typical change. Isotropic softening gives `S ≈ 0`;
+single-axis loss gives large `S`.
+
+**Null.** Split-half within young: 1 000 random splits of the young
+cells of the type into two disjoint halves of
+`min(n_old, ⌊n_young / 2⌋)` cells; `S` between the two halves'
+centroid operators, computed from the same fixed shared-space drift.
+Sampling noise under no aging.
+
+**Pass.** `S > null_q95`.
+
+**Provenance, not gates.** `rho` (§4a Spearman) and `cv_ratio`
+(original §4) are reported per type.
+
+**Seeds.** Per-type seed = `seed + crc32(cell_type) mod 2³¹`
+(the previous `hash(cell_type)` is salted per Python process and
+was not reproducible).
+
+**Synthetic checks (must pass before any data run).** Isotropic
+1.6× widening fails; single-axis 3× widening passes; identical
+Gaussians fail. Calibration over 40 seeds each (`n = 400` per group,
+`d = 10`, 200 null draws): false-pass rate 0.075 for identical and for
+uniform 1.6×, power 1.00 for single-axis 3× (median `S = 2.21` vs
+`null_q95 = 0.11`).
+
+**Interpretation (replaces §4a's).**
+* `S > null_q95` → **direction-specific loosening**: at least one
+  direction changed beyond the typical change by more than sampling
+  noise allows.
+* `S ≤ null_q95` → no direction-specific signal: isotropic change
+  or no change.
+
+Reporting per type: `S`, `iso_null_q95`, `iso_pass`, `rho`,
+`cv_ratio`; fraction of eligible types passing.
 
 ## 5 — Test 2 — anticipation (per type)
 
