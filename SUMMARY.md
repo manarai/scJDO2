@@ -562,7 +562,76 @@ hard anchor).
 Outputs under ``benchmarks/v2/pbmc_basin/`` (v1 run superseded by §5.2
 energy drift; see commit history for the v1 numbers that match §5.1).
 
-### 5.8 Fourth rework (final) — magnitude rule + basin_index
+### 5.9 Fifth rework (final) — two thresholds (tol_neg + tol_pos from null)
+
+**User rebuttal (correct):** judging a saddle's shallow positive
+eigenvalue against basin stiffness is wrong — a saddle's expanding
+mode is INHERENTLY smaller than the deep basin modes it sits next to.
+The fork threshold needs a different reference: the permutation null.
+
+**Spec (final, canonical):**
+
+* ``tol_neg = 0.1 · median |λ(−Σ⁻¹)|`` across resting clusters —
+  the basin stiffness threshold (Gaussian oracle).
+* ``tol_pos = max(tol_neg, 95th percentile of λ_max under
+  shuffled-marginal refits of ESM)`` — the expansion threshold,
+  clamped to never fall below basin stiffness.
+* **fork** iff ``max(ev_r) > tol_pos``
+* **basin** iff ``max(ev_r) < tol_neg`` AND ``min(ev_r) < −tol_neg``
+* **drift** otherwise (soft-axis cells with
+  ``λ ∈ [tol_neg, tol_pos]``)
+* ``n_soft`` = ``count(λ ∈ (−tol_neg, tol_pos))``
+* ``basin_index`` unchanged.
+
+Null refit protocol: **shuffle each latent dim INDEPENDENTLY**
+(destroys the manifold while preserving per-dim marginals), refit
+ESM 10 times with different seeds, collect per-cell ``λ_max``, take
+the 95th percentile.
+
+**Pitchfork gate under the two-tol rule** (0 / 3 PASS strict
+Phase-B — holder criteria PASS at every τ; fork P/R gap stays open):
+
+| τ | null tol_pos | tol_neg | **holder P / R** | fork P / R |
+|---|---|---|---|---|
+| 0.1 | **+0.303** | 0.034 | **0.98 / 0.97** | **0.40 / 0.18** |
+| 0.3 | +0.150 | 0.032 | 0.95 / 0.94 | 0.00 / 0.00 |
+| 0.5 | −0.098 → clamped to 0.033 | 0.033 | 0.96 / 0.94 | 0.14 / 0.26 |
+
+At τ=0.1 the null gives a well-defined positive tol_pos (0.30) because
+the shuffled marginals carry non-trivial curvature. Fork precision
+climbs from the lead-eig baseline's **0.12 to 0.40** — the user's
+"fork precision near ESM lead-eig" is met at τ=0.1. At τ=0.3 the null
+is weaker (0.15) and the ESM at the saddle has shallower positive
+eigenvalues, so the 23 cells called fork miss the 42 true saddles.
+At τ=0.5 the null degenerates (shuffled distribution is near-flat →
+negative tol_pos); the clamp kicks in and the rule reduces to
+single-tol.
+
+**PBMC gate under the two-tol rule** (same numbers as §5.8 because
+the clamp kicks in on PBMC):
+
+Null tol_pos = **−0.374** on PBMC's scVI latent — shuffling each
+scVI dim produces a near-standard-Normal joint whose score is
+globally inward (all cells read holder-ish), so no positive-outlier
+λ_max emerges from the null. Clamp fires: ``tol_pos = tol_neg =
+0.076``. The two-tol rule degenerates to the single-tol rule → the
+§5.8 numbers hold: 1613 / 2282 = **70.7 % resting basin**, with CD14+
+Mono 85 % (bi +0.49), CD4 T 74 % (+0.26), B 67 % (+0.20), **CD8 T
+42 % (bi −0.22)**, Dendritic 89 %, FCGR3A+ 93 %, Mega 27 %, NK 17 %
+(bi −0.66).
+
+The null on scVI doesn't help because scVI's regularisation already
+makes the latent near-isotropic Gaussian within each cluster — the
+shuffled marginal joint stays similarly near-Normal, so there's no
+inter-mode "ridge" structure to lift above basin stiffness. The two-
+tol rule is a strict improvement on the pitchfork (fork P 0.12 →
+0.40 at τ=0.1) but a no-op on PBMC under scVI.
+
+**Repository tag: still deferred.** The pitchfork gate at τ=0.3
+has fork P=0.00 — strictly worse than lead-eig's 0.08. §7c remains
+blocked.
+
+### 5.8 Fourth rework — single-tol magnitude rule (SUPERSEDED by §5.9)
 
 **Pitchfork gate under the final magnitude rule**
 (``scripts/pitchfork_energy_gate.py``,

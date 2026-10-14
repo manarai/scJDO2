@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-13 23:36:21",
+  "timestamp": "2026-10-14 00:00:35",
   "args": {
     "tau_crit": [
       0.1,
@@ -92,7 +92,7 @@
           "analytic_lead_re_median": -0.862323417554028
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 35.03829029202461,
+        "fit_seconds": 36.7788131670095,
         "symmetry": {
           "n_sample": 100,
           "median_asym": 9.298963732362608e-08,
@@ -107,11 +107,11 @@
         "n_epochs": 1500,
         "magnitude_rule": {
           "fork_pr": {
-            "tp": 28,
-            "fp": 42,
-            "fn": 17,
+            "tp": 8,
+            "fp": 12,
+            "fn": 37,
             "precision": 0.4,
-            "recall": 0.6222222222222222
+            "recall": 0.17777777777777778
           },
           "holder_pr": {
             "tp": 1105,
@@ -121,15 +121,25 @@
             "recall": 0.9701492537313433
           },
           "beh_counts": {
-            "fork": 70,
+            "drift": 50,
+            "fork": 20,
             "holder": 1130
           },
-          "tol": 0.033670612179577224,
+          "tol_neg": 0.033670612179577224,
+          "tol_pos": 0.30330908915689225,
           "ground_truth": {
             "n_true_fork": 45,
             "n_true_holder": 1139,
             "analytic_lead_re_median": -0.862323417554028
           }
+        },
+        "null_tol_pos": {
+          "tol_pos": 0.30330908915689225,
+          "n_perm": 10,
+          "percentile": 95.0,
+          "n_samples": 12000,
+          "median_lead_max": -0.10533378069432481,
+          "max_lead_max": 0.6590593886545904
         }
       }
     },
@@ -206,7 +216,7 @@
           "analytic_lead_re_median": -0.7905196417149208
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 34.62331183301285,
+        "fit_seconds": 35.11310687509831,
         "symmetry": {
           "n_sample": 100,
           "median_asym": 8.822823716059247e-08,
@@ -221,11 +231,11 @@
         "n_epochs": 1500,
         "magnitude_rule": {
           "fork_pr": {
-            "tp": 5,
-            "fp": 71,
-            "fn": 37,
-            "precision": 0.06578947368421052,
-            "recall": 0.11904761904761904
+            "tp": 0,
+            "fp": 23,
+            "fn": 42,
+            "precision": 0.0,
+            "recall": 0.0
           },
           "holder_pr": {
             "tp": 1067,
@@ -235,15 +245,25 @@
             "recall": 0.9392605633802817
           },
           "beh_counts": {
-            "fork": 76,
+            "drift": 53,
+            "fork": 23,
             "holder": 1124
           },
-          "tol": 0.03205630797483338,
+          "tol_neg": 0.03205630797483338,
+          "tol_pos": 0.150132290931697,
           "ground_truth": {
             "n_true_fork": 42,
             "n_true_holder": 1136,
             "analytic_lead_re_median": -0.7905196417149208
           }
+        },
+        "null_tol_pos": {
+          "tol_pos": 0.150132290931697,
+          "n_perm": 10,
+          "percentile": 95.0,
+          "n_samples": 12000,
+          "median_lead_max": -0.059934722543899706,
+          "max_lead_max": 0.7442163984799948
         }
       }
     },
@@ -320,7 +340,7 @@
           "analytic_lead_re_median": -0.7980401058391224
         },
         "row": "energy_dsm_equilibrated",
-        "fit_seconds": 35.47109583299607,
+        "fit_seconds": 34.98529795801733,
         "symmetry": {
           "n_sample": 100,
           "median_asym": 7.983158312185878e-08,
@@ -335,29 +355,38 @@
         "n_epochs": 1500,
         "magnitude_rule": {
           "fork_pr": {
-            "tp": 1,
-            "fp": 1,
-            "fn": 45,
-            "precision": 0.5,
-            "recall": 0.021739130434782608
+            "tp": 12,
+            "fp": 71,
+            "fn": 34,
+            "precision": 0.14457831325301204,
+            "recall": 0.2608695652173913
           },
           "holder_pr": {
-            "tp": 1138,
-            "fp": 60,
-            "fn": 1,
-            "precision": 0.9499165275459098,
-            "recall": 0.9991220368744512
+            "tp": 1070,
+            "fp": 47,
+            "fn": 69,
+            "precision": 0.9579230080572964,
+            "recall": 0.9394205443371378
           },
           "beh_counts": {
-            "fork": 2,
-            "holder": 1198
+            "fork": 83,
+            "holder": 1117
           },
-          "tol": 0.03257456742670691,
+          "tol_neg": 0.03257456742670691,
+          "tol_pos": -0.09842120981334959,
           "ground_truth": {
             "n_true_fork": 46,
             "n_true_holder": 1139,
             "analytic_lead_re_median": -0.7980401058391224
           }
+        },
+        "null_tol_pos": {
+          "tol_pos": -0.09842120981334959,
+          "n_perm": 10,
+          "percentile": 95.0,
+          "n_samples": 12000,
+          "median_lead_max": -0.18242907214762083,
+          "max_lead_max": -0.045710157715245
         }
       }
     }

@@ -36,17 +36,20 @@ from equilibrated_gate import (                               # type: ignore
 )
 from scjdo2.data import generate_pitchfork_equilibrated
 from scjdo2.energy_drift import EnergyDriftAdapter, EnergyDriftConfig
-from scjdo2.opspace import classify_basin_latent
+from scjdo2.opspace import classify_basin_latent, null_tol_pos
 
 
 REPO = Path(__file__).resolve().parent.parent
 
 
-def _gate_magnitude_rule(adata, tau_crit: float, tol: float) -> dict:
-    """Apply the magnitude-rule classifier (opspace.classify_basin_latent)
-    to the latent J and score fork/holder P/R against the dynamic
-    ground truth (sign of the analytic 2D J)."""
-    classify_basin_latent(adata, tol=float(tol), use_rep="X_pca")
+def _gate_magnitude_rule(adata, tau_crit: float, tol: float,
+                          tol_pos: float) -> dict:
+    """Apply the two-threshold classifier
+    (``opspace.classify_basin_latent`` with ``tol_pos`` from the
+    permutation null) and score P/R against the dynamic ground
+    truth."""
+    classify_basin_latent(adata, tol=float(tol), tol_pos=float(tol_pos),
+                           use_rep="X_pca")
     beh = adata.obs["op_behaviour_basin"].astype(str).to_numpy()
     pred_fork = beh == "fork"
     pred_holder = beh == "holder"
@@ -55,7 +58,7 @@ def _gate_magnitude_rule(adata, tau_crit: float, tol: float) -> dict:
         "fork_pr": _pr(pred_fork, true_fork),
         "holder_pr": _pr(pred_holder, true_holder),
         "beh_counts": {b: int(np.sum(beh == b)) for b in np.unique(beh) if b},
-        "tol": float(tol),
+        "tol_neg": float(tol), "tol_pos": float(tol_pos),
         "ground_truth": {
             "n_true_fork": int(true_fork.sum()),
             "n_true_holder": int(true_holder.sum()),
@@ -143,21 +146,44 @@ def run_tau(tau_crit: float, n_cells: int, n_alpha: int, n_epochs: int,
           f"n_true_fork={r_energy['ground_truth']['n_true_fork']}  "
           f"n_true_holder={r_energy['ground_truth']['n_true_holder']}")
 
-    # Magnitude-rule classifier — the FINAL spec adopted post-lock.
-    # Tol derived from the per-cell ground-truth lead_re distribution:
-    # analytic_tol = 0.1 × std(analytic_lead_re) (same scheme the
-    # oracle uses).
+    # Two-threshold magnitude rule — the FINAL spec.
+    # tol_neg from oracle (0.1 × median |λ(-Σ⁻¹)|); tol_pos from
+    # permutation null (95th percentile of per-cell λ_max under 10
+    # shuffled-marginal refits).
     _tf, _th, analytic_lead = _dynamic_labels(adata)
     finite = analytic_lead[np.isfinite(analytic_lead)]
-    tol_mag = float(0.1 * np.nanstd(finite)) if finite.size else 0.1
-    r_mag = _gate_magnitude_rule(adata, tau_crit, tol=tol_mag)
-    print(f"  [energy_mag]  (magnitude rule, tol={tol_mag:.4f})  "
+    tol_neg = float(0.1 * np.nanstd(finite)) if finite.size else 0.1
+
+    z_main = np.asarray(adata.obsm["X_pca"], dtype=np.float32)
+
+    def _fit_fn(z_in, s):
+        return EnergyDriftAdapter(dim=z_in.shape[1], config=EnergyDriftConfig(
+            hidden=128, depth=3, n_epochs=max(500, n_epochs // 3),
+            seed=int(s), batch_size=256, loss=loss, beta=beta,
+            esm_laplacian="exact" if z_in.shape[1] <= 20 else "hutchinson",
+        )).fit(z_in, verbose=False)
+
+    print(f"  [null] fitting shuffled-marginal perm refits "
+          f"(n_perm=10, 95pct)")
+    tnull = time.monotonic()
+    null = null_tol_pos(z_main, _fit_fn, n_perm=10, percentile=95.0,
+                         seed=seed)
+    print(f"  [null] tol_pos = {null['tol_pos']:.4f}  "
+          f"(median λ_max under null = {null['median_lead_max']:.4f}, "
+          f"max = {null['max_lead_max']:.4f})  "
+          f"{time.monotonic()-tnull:.1f}s")
+
+    r_mag = _gate_magnitude_rule(adata, tau_crit, tol=tol_neg,
+                                   tol_pos=null["tol_pos"])
+    print(f"  [energy_mag]  (two-tol, tol_neg={tol_neg:.4f}, "
+          f"tol_pos={null['tol_pos']:.4f})  "
           f"fork P={r_mag['fork_pr']['precision']:.2f} "
           f"R={r_mag['fork_pr']['recall']:.2f}  "
           f"holder P={r_mag['holder_pr']['precision']:.2f} "
           f"R={r_mag['holder_pr']['recall']:.2f}  "
           f"beh={r_mag['beh_counts']}")
     r_energy["magnitude_rule"] = r_mag
+    r_energy["null_tol_pos"] = null
 
     # Gate verdict uses the MAGNITUDE RULE now (user spec).
     hp = r_mag["holder_pr"]

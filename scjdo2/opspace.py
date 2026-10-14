@@ -819,39 +819,87 @@ def invariants(
 # ======================================================================
 
 
+def null_tol_pos(z: np.ndarray, fit_drift_fn, n_perm: int = 10,
+                 percentile: float = 95.0, seed: int = 0) -> dict:
+    """95th-percentile ``λ_max`` under shuffled-marginal refits.
+
+    Shuffle each latent dimension INDEPENDENTLY (destroys the
+    manifold while preserving per-dim marginals), fit the drift,
+    compute per-cell ``λ_max`` of the Jacobian, aggregate across
+    ``n_perm`` refits, return the ``percentile``-th quantile as
+    ``tol_pos``.
+
+    ``fit_drift_fn(z_perm, seed) -> drift`` must return a drift
+    adapter with ``.jacobian_autodiff(z)`` returning ``(n, d, d)``.
+    """
+    rng = np.random.default_rng(seed)
+    all_lead_max = []
+    for p in range(int(n_perm)):
+        z_perm = z.copy()
+        for j in range(z_perm.shape[1]):
+            rng.shuffle(z_perm[:, j])
+        drift = fit_drift_fn(z_perm, int(seed + 100 + p))
+        J = drift.jacobian_autodiff(z_perm)
+        for Jc in J:
+            try:
+                lam = float(np.linalg.eigvals(Jc.astype(np.float64)).real.max())
+            except np.linalg.LinAlgError:
+                continue
+            all_lead_max.append(lam)
+    arr = np.array(all_lead_max, dtype=np.float64)
+    arr = arr[np.isfinite(arr)]
+    pct = float(np.percentile(arr, percentile)) if arr.size else float("nan")
+    return {
+        "tol_pos": pct, "n_perm": int(n_perm), "percentile": float(percentile),
+        "n_samples": int(arr.size),
+        "median_lead_max": float(np.median(arr)) if arr.size else float("nan"),
+        "max_lead_max": float(np.max(arr)) if arr.size else float("nan"),
+    }
+
+
 def classify_basin_latent(adata: AnnData, tol: float,
                           use_rep: str = "X_pca",
                           k_tangent: int = 30,
-                          tangent_floor_frac: float = 0.1) -> None:
-    """Magnitude-based tangent-restricted basin classifier.
+                          tangent_floor_frac: float = 0.1,
+                          tol_pos: Optional[float] = None) -> None:
+    """Two-threshold magnitude classifier on the Σ-tangent block.
 
-    Final locked rule (user, 2026-10, replacing the earlier
-    ``n_neg >= r-1`` rule which could not distinguish a saddle in a
-    high-D embedding from a basin with a soft axis):
+    Final locked rule (user, 2026-10, after retiring the single-tol
+    magnitude rule which judged a saddle's shallow positive
+    eigenvalue against basin stiffness — the wrong reference):
+
+    * ``tol`` (= ``tol_neg``) — basin stiffness threshold,
+      ``0.1 × median |λ(−Σ⁻¹)|`` from the Gaussian oracle.
+    * ``tol_pos`` — expansion threshold from the permutation null
+      (95th percentile of per-cell ``λ_max`` under shuffled-marginal
+      refits). If ``None``, falls back to the legacy single-tol rule
+      (``tol_pos = tol``) so pre-null callers still work.
 
     Per cell ``c``:
 
-    1. Compute the local tangent rank ``r_c`` from the kNN Σ⁻¹
-       eigenvalues of ``adata.obsm[use_rep]`` above
-       ``tangent_floor_frac × max |λ(Σ⁻¹)|``.
-    2. Take the top-``r_c`` eigenvalues of ``J_c`` sorted by magnitude.
-    3. Classify (checked in this order):
-         * **fork** iff ``max(ev_r) > +tol``
-         * **drift** iff ``all |ev_r| < tol``
-         * **basin** (holder) iff ``max(ev_r) < +tol`` AND
-           ``min(ev_r) < -tol`` (negative definite above noise with
-           no positive eigenvalue above tol).
-    4. Report ``n_soft = count(|ev_r| < tol)`` and a continuous
-       **basin index** ``bi = -max(ev_r) / median|ev_r_neg|``, which
-       is positive for basins (deeper = larger) and negative for
-       forks (saddle → bi < 0 since λ_max > 0).
+    1. Local kNN **Σ** eigenvectors (NOT Σ⁻¹) above the magnitude
+       floor are the tangent subspace ``V``.
+    2. Tangent-restricted eigenvalues ``ev_r = eigvals(Vᵀ J V)``.
+    3. Classify:
+         * **fork** iff ``max(ev_r) > tol_pos``
+         * **basin** iff ``max(ev_r) < tol_neg`` AND
+           ``min(ev_r) < −tol_neg`` (contractive, no even weakly
+           expanding mode)
+         * **drift** otherwise (includes soft-axis cells with
+           ``λ ∈ [tol_neg, tol_pos]`` — their soft modes are below
+           null and above basin stiffness, so neither call fires)
+    4. ``n_soft`` = ``count(λ in (−tol_neg, tol_pos))`` — the user's
+       "soft axis" dimension count.
+    5. ``basin_index`` = ``−max(ev_r) / median |ev_r_neg|`` —
+       continuous shallowness index (positive = basin, deeper → bigger;
+       negative = fork).
 
     Columns written:
-        ``op_behaviour_basin``   — "holder" / "fork" / "drift"
+        ``op_behaviour_basin``   — "fork" / "basin" / "drift"
         ``op_tangent_r``         — per-cell tangent rank
-        ``op_n_neg_tangent``     — per-cell negative count in tangent
-        ``op_n_pos_tangent``     — per-cell positive count in tangent
-        ``op_n_soft``            — ``count(|ev| < tol)``
+        ``op_n_neg_tangent``     — count ``λ < −tol_neg``
+        ``op_n_pos_tangent``     — count ``λ > tol_pos``
+        ``op_n_soft``            — count ``λ in (−tol_neg, tol_pos)``
         ``op_basin_index``       — continuous shallowness index
     """
     uns = adata.uns.get("scjdo2", {})
@@ -868,6 +916,15 @@ def classify_basin_latent(adata: AnnData, tol: float,
     if use_rep not in adata.obsm:
         raise KeyError(f"obsm[{use_rep!r}] missing — needed for tangent rank")
     z = np.asarray(adata.obsm[use_rep], dtype=np.float32)
+
+    tol_neg = float(tol)
+    # Clamp tol_pos ≥ tol_neg: if the null's 95th percentile of λ_max is
+    # below basin stiffness (happens when the shuffled-marginal fit
+    # produces an all-negative Jacobian field — e.g. late-stage
+    # equilibrated pitchfork with well-separated basins), fall back to
+    # tol_neg so the fork call stays conservative.
+    tol_pos_val = (max(float(tol_pos), tol_neg)
+                   if tol_pos is not None else tol_neg)
 
     r_arr = np.zeros(n, dtype=np.int32)
     n_neg_arr = np.zeros(n, dtype=np.int32)
@@ -910,24 +967,26 @@ def classify_basin_latent(adata: AnnData, tol: float,
             r_arr[c] = r_c
             beh[c] = "drift"
             continue
-        n_neg = int((ev_r < -tol).sum())
-        n_pos = int((ev_r > tol).sum())
-        n_soft = int((np.abs(ev_r) < tol).sum())
+        n_neg = int((ev_r < -tol_neg).sum())
+        n_pos = int((ev_r > tol_pos_val).sum())
+        n_soft = int(((ev_r > -tol_neg) & (ev_r < tol_pos_val)).sum())
         r_arr[c] = r_c
         n_neg_arr[c] = n_neg
         n_pos_arr[c] = n_pos
         n_soft_arr[c] = n_soft
         lam_max = float(ev_r.max())
-        neg = ev_r[ev_r < -tol]
+        neg = ev_r[ev_r < -tol_neg]
         med_neg = float(np.median(neg)) if neg.size else float("nan")
         if np.isfinite(med_neg) and abs(med_neg) > 0:
             basin_idx_arr[c] = -lam_max / abs(med_neg)
-        # Classification (user spec: magnitude rule).
-        if lam_max > tol:
+        # Two-threshold classification (user spec, 2026-10 final):
+        #   fork iff any λ > tol_pos  (above the permutation-null ceiling)
+        #   basin iff max λ < tol_neg AND some λ < -tol_neg
+        #   drift otherwise (includes soft-axis cells where
+        #       λ ∈ [tol_neg, tol_pos] — not fork, not basin)
+        if lam_max > tol_pos_val:
             beh[c] = "fork"
-        elif np.all(np.abs(ev_r) < tol):
-            beh[c] = "drift"
-        elif neg.size > 0:
+        elif lam_max < tol_neg and neg.size > 0:
             beh[c] = "holder"
         else:
             beh[c] = "drift"

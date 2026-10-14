@@ -27,7 +27,7 @@ from scjdo2.data import (
     load_pbmc3k,
 )
 from scjdo2.energy_drift import EnergyDriftAdapter, EnergyDriftConfig
-from scjdo2.opspace import classify_basin_latent
+from scjdo2.opspace import classify_basin_latent, null_tol_pos
 
 
 REPO = Path(__file__).resolve().parent.parent
@@ -106,10 +106,31 @@ def main() -> int:
     a.uns.setdefault("scjdo2", {})["J_latent"] = J
     a.uns["scjdo2"]["J"] = J
     cluster = a.obs["cluster"].astype(str).to_numpy()
-    tol = _oracle_tol(z, cluster, RESTING_TYPES)
-    print(f"[pbmc-mag] oracle_tol = {tol:.4f}  sym_median = {sym['median_asym']:.3e}")
+    tol_neg = _oracle_tol(z, cluster, RESTING_TYPES)
 
-    classify_basin_latent(a, tol=tol, use_rep="X_scVI")
+    # tol_pos from permutation null: shuffle each latent dim
+    # independently, refit ESM, 95th percentile of per-cell λ_max.
+    def _fit_fn(z_in, s):
+        return EnergyDriftAdapter(dim=z_in.shape[1], config=EnergyDriftConfig(
+            hidden=96, depth=3, n_epochs=max(500, args.drift_epochs // 3),
+            seed=int(s), batch_size=256, loss="esm", lr=5e-4, beta=1.0,
+            esm_laplacian="exact" if z_in.shape[1] <= 20 else "hutchinson",
+        )).fit(z_in, verbose=False)
+    t0 = time.monotonic()
+    print(f"[pbmc-mag] null tol_pos — 10 shuffled-marginal refits")
+    null = null_tol_pos(z, _fit_fn, n_perm=10, percentile=95.0,
+                         seed=args.seed)
+    print(f"[pbmc-mag]   null tol_pos = {null['tol_pos']:.4f}  "
+          f"(median λ_max under null = {null['median_lead_max']:.4f}, "
+          f"max = {null['max_lead_max']:.4f})  "
+          f"{time.monotonic()-t0:.1f}s")
+    print(f"[pbmc-mag] oracle_tol_neg = {tol_neg:.4f}  "
+          f"sym_median = {sym['median_asym']:.3e}")
+
+    classify_basin_latent(a, tol=tol_neg, tol_pos=null["tol_pos"],
+                           use_rep="X_scVI")
+    # Keep legacy `tol` name for the output JSON.
+    tol = tol_neg
     beh = a.obs["op_behaviour_basin"].astype(str).to_numpy()
     bi = a.obs["op_basin_index"].to_numpy(dtype=np.float64)
     rr = a.obs["op_tangent_r"].to_numpy(dtype=np.int32)
@@ -150,9 +171,10 @@ def main() -> int:
           f"({n_hold/n_rest:.2%})")
 
     gate = {
-        "classifier": "magnitude_rule_tangent_restricted (opspace.classify_basin_latent, post-5e7ad2f)",
+        "classifier": "two_threshold_magnitude_rule (opspace.classify_basin_latent, final spec)",
         "d_latent": int(args.d_latent),
-        "oracle_tol": tol,
+        "oracle_tol_neg": tol_neg,
+        "null_tol_pos": null,
         "symmetry": sym,
         "n_resting_cells": n_rest,
         "n_resting_holders": n_hold,
