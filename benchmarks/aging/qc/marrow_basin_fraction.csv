@@ -1,0 +1,25 @@
+fit,cell_type,age_group,n,basin_fraction
+shared,granulocyte,old,704,0.8025568181818182
+shared,granulocyte,young,704,0.6860795454545454
+shared,granulocytopoietic cell,old,727,0.4360385144429161
+shared,granulocytopoietic cell,young,727,0.1953232462173315
+shared,hematopoietic precursor cell,old,285,0.13333333333333333
+shared,hematopoietic precursor cell,young,285,0.1368421052631579
+shared,monocyte,old,488,0.05122950819672131
+shared,monocyte,young,488,0.06147540983606557
+shared,precursor B cell,old,259,0.10810810810810811
+shared,precursor B cell,young,259,0.22007722007722008
+shared,promonocyte,old,231,0.017316017316017316
+shared,promonocyte,young,231,0.08225108225108226
+standalone_young,granulocyte,young,704,0.7045454545454546
+standalone_young,granulocytopoietic cell,young,727,0.16506189821182943
+standalone_young,hematopoietic precursor cell,young,285,0.13333333333333333
+standalone_young,monocyte,young,488,0.0942622950819672
+standalone_young,precursor B cell,young,259,0.04633204633204633
+standalone_young,promonocyte,young,231,0.05627705627705628
+standalone_old,granulocyte,old,704,0.7514204545454546
+standalone_old,granulocytopoietic cell,old,727,0.10729023383768914
+standalone_old,hematopoietic precursor cell,old,285,0.042105263157894736
+standalone_old,monocyte,old,488,0.06352459016393443
+standalone_old,precursor B cell,old,259,0.015444015444015444
+standalone_old,promonocyte,old,231,0.341991341991342

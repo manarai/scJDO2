@@ -1,0 +1,4 @@
+fit,epochs_run,best_val_elbo,mapping_path
+reference_young,364,945.7916259765625,young_reference
+query_shared,130,922.0484008789062,scvi.model.SCVI.load_query_data
+standalone_old,264,904.7356567382812,standalone_old

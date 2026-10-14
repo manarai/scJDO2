@@ -51,3 +51,26 @@ The A01 feasibility gate passes for both tissues: lung has 2 eligible types
 (`fibroblast of lung`, `natural killer cell`), and marrow has 6 (`granulocyte`,
 `granulocytopoietic cell`, `hematopoietic precursor cell`, `monocyte`,
 `precursor B cell`, `promonocyte`). No model was fitted in A01.
+## §3 Mapping path
+A02 fitted the required 15-dimensional, two-layer negative-binomial scVI models
+on CPU with `batch_key="donor_id"`, seed 0, `max_epochs=400`, and early stopping
+(patience 30). Each tissue used a young-only reference, old query data mapped with
+`scvi.model.SCVI.load_query_data`, and a standalone-old control. Query fitting
+used the scArches online-update procedure with `weight_decay=0.0`; all reference
+encoder/decoder expression parameters that procedure freezes were checked after
+query training. The maximum absolute change was exactly 0 for both tissues.
+
+| Tissue | Fit | Epochs run | Best validation ELBO | Wall time (s) | Mapping path |
+|---|---|---:|---:|---:|---|
+| Lung | young reference | 45 | 1052.336 | 2.904 | young reference |
+| Lung | old query/shared | 167 | 939.062 | 8.716 | `scvi.model.SCVI.load_query_data` |
+| Lung | standalone old | 43 | 990.037 | 2.938 | standalone old |
+| Marrow | young reference | 364 | 945.792 | 91.375 | young reference |
+| Marrow | old query/shared | 130 | 922.048 | 25.011 | `scvi.model.SCVI.load_query_data` |
+| Marrow | standalone old | 264 | 904.736 | 64.046 | standalone old |
+
+The local, gitignored `benchmarks/aging/{lung,marrow}_shared.h5ad` objects retain
+all balanced cells and three embeddings: `X_scVI_young` (young cells),
+`X_scVI_old` (old cells), and `X_scVI_shared` (both ages in the young-reference
+space). The frozen-reference audits covered 1,070,606 lung and 1,070,094 marrow
+parameters; `{lung,marrow}_ref_weights_max_abs_change = 0.0`.

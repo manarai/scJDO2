@@ -1,0 +1,146 @@
+{
+  "task": "aging/A02",
+  "status": "done",
+  "started_utc": "2026-10-14T21:11:59Z",
+  "finished_utc": "2026-10-14T23:03:36Z",
+  "compute": {
+    "cpu_hours": 0.24,
+    "gpu_hours": 0.0,
+    "hardware": "MacBook Pro (Apple M3 Max); CPU-only scVI and energy-drift execution; PyTorch MPS was available but not used"
+  },
+  "metrics": {
+    "mapping_path": "scvi.model.SCVI.load_query_data",
+    "max_epochs_used": 400,
+    "gpu": false,
+    "lung_ref_weights_max_abs_change": 0.0,
+    "marrow_ref_weights_max_abs_change": 0.0,
+    "lung_sym_max": 2.5188313657054096e-07,
+    "marrow_sym_max": 1.4589845420687197e-07,
+    "seed": 0,
+    "n_latent": 15,
+    "n_layers": 2,
+    "gene_likelihood": "nb",
+    "early_stopping_patience": 30,
+    "lung_scvi_epochs": {
+      "reference_young": 45,
+      "query_shared": 167,
+      "standalone_old": 43
+    },
+    "marrow_scvi_epochs": {
+      "reference_young": 364,
+      "query_shared": 130,
+      "standalone_old": 264
+    },
+    "lung_drift_sym_max_by_fit": {
+      "shared": 2.5188313657054096e-07,
+      "standalone_young": 1.9233760895076557e-07,
+      "standalone_old": 2.0218440965891205e-07
+    },
+    "marrow_drift_sym_max_by_fit": {
+      "shared": 1.4589845420687197e-07,
+      "standalone_young": 1.1729920856851098e-07,
+      "standalone_old": 8.866610556879095e-08
+    }
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/aging/lung_shared.h5ad",
+      "bytes": 34118884,
+      "sha256": "ce6878276a09fdaf8981116ea8c916e156f940b1d56ce847fd2d1ced3c26df3d",
+      "committed": false,
+      "regenerate": "python scripts/fit_tms_scvi.py --tissue lung --seed 0 && python scripts/fit_tms_drift.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/lung_standalone_young.h5ad",
+      "bytes": 21850260,
+      "sha256": "5084309e621f3b955b74350168451c4fbb15e5babed8b020eea9f30e908e4f0f",
+      "committed": false,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/lung_standalone_old.h5ad",
+      "bytes": 21693588,
+      "sha256": "08db76e2927975d67da20fa26cecfe9d75b82ddf66aca34d822273069ed52c2c",
+      "committed": false,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/marrow_shared.h5ad",
+      "bytes": 128941060,
+      "sha256": "290baa51be2881a530d3b8add89595af94b05a11f185f4d3ab4798de34790cb8",
+      "committed": false,
+      "regenerate": "python scripts/fit_tms_scvi.py --tissue marrow --seed 0 && python scripts/fit_tms_drift.py --tissue marrow --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/marrow_standalone_young.h5ad",
+      "bytes": 72172454,
+      "sha256": "885b0ac34833c6e840af6302b0859463dbe782fdebcb906852119d6517685994",
+      "committed": false,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue marrow --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/marrow_standalone_old.h5ad",
+      "bytes": 66198598,
+      "sha256": "836cc4c0ab8c0f1be7983167a155d1154cb070bec7acf5fbb02ba993d8d8fbd8",
+      "committed": false,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue marrow --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/qc/lung_scvi_metrics.csv",
+      "bytes": 212,
+      "sha256": "25276517e8ec8d6f02888eab3a911bca549f5657a055253f2ac3a0a519caaa8d",
+      "committed": true,
+      "regenerate": "python scripts/fit_tms_scvi.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/qc/marrow_scvi_metrics.csv",
+      "bytes": 215,
+      "sha256": "7b4cab9b3889cb786e1d6a4398c8661dff0613357b44f344b27513a9e4408457",
+      "committed": true,
+      "regenerate": "python scripts/fit_tms_scvi.py --tissue marrow --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/qc/lung_drift_metrics.csv",
+      "bytes": 269,
+      "sha256": "f4d18c225480bbec0f4b423e79b1bdaac96d9ea14e767f0c3755a871cdbb6343",
+      "committed": true,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/qc/marrow_drift_metrics.csv",
+      "bytes": 267,
+      "sha256": "22d9f84c0989f03506b72099755087a55dd6e95735e68feeb06e6fafe65b84d8",
+      "committed": true,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue marrow --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/qc/lung_basin_fraction.csv",
+      "bytes": 512,
+      "sha256": "f56d54e2131a553610cbeedff783a524acdd5c6a1f35259589b8765734fc2e9a",
+      "committed": true,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/qc/marrow_basin_fraction.csv",
+      "bytes": 1418,
+      "sha256": "6917cdedb8560daecac4e2e51182a28c053f1d90b5e9932d2c08a241832df9d6",
+      "committed": true,
+      "regenerate": "python scripts/fit_tms_drift.py --tissue marrow --seed 0"
+    }
+  ],
+  "deviations": [
+    "No frozen analysis parameter or hardware deviation occurred. Two implementation faults were found in discarded initial attempts: disabled scVI logging prevented validation-ELBO capture, and the first audit included decoder BatchNorm affine parameters that scArches intentionally keeps trainable. The implementation was corrected, all final maps were regenerated from seed 0, and the final audit covers exactly the frozen reference expression parameters specified by the task.",
+    "The method specification's general CPU fallback says 200 epochs, but the A02 task's explicit Hardware rule supersedes it and required max_epochs=400; all final scVI fits used 400 maximum epochs with early stopping."
+  ],
+  "questions": [],
+  "observations": [
+    "The frozen-reference maximum absolute parameter change was exactly 0.0 for lung and marrow after query training.",
+    "All six energy-drift fits had symmetry maxima between 8.87e-08 and 2.52e-07, below the 1e-4 implementation gate.",
+    "Lung shared-space holder fractions were high for both retained types, while marrow shared-space holder fractions varied substantially by annotated cell type.",
+    "All scVI fits stopped before the 400-epoch cap; marrow young-reference training ran longest at 364 epochs."
+  ],
+  "suggestions": [
+    "The next per-type comparison should explicitly test the preregistered correction-artifact rule because shared and standalone basin fractions differ for several type-age strata.",
+    "Future interpretation should retain the A01 caveat about limited young-donor replication, especially for marrow with two young donors."
+  ]
+}
