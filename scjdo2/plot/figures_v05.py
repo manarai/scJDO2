@@ -77,8 +77,14 @@ def spectrum_ladder(adata: AnnData,
                      oracle: bool = True,
                      use_rep: Optional[str] = None,
                      n_cells_centroid: int = 30,
-                     out: Optional[str | Path] = None) -> Figure:
+                     out: Optional[str | Path] = None,
+                     groups: Optional[Sequence[str]] = None,
+                     group_key: str = "age_group") -> Figure:
     """Per-cluster centroid-operator eigenvalue ladder + Gaussian oracle.
+
+    When ``groups`` is given (e.g. ``("young", "old")``), draw two
+    ladders side-by-side per cluster, one per group label in
+    ``adata.obs[group_key]``. Oracle markers are per-group.
 
     Vertical ladders: for each cluster (``adata.obs[by]``) the eigenvalues
     of the per-cell latent ``J`` averaged over the ``n_cells_centroid``
@@ -118,40 +124,72 @@ def spectrum_ladder(adata: AnnData,
     with style():
         fig, ax = plt.subplots(figsize=(1.0 + 0.6 * len(clusters), 4.5))
         xs = np.arange(len(clusters))
-        for i, cl in enumerate(clusters):
-            m = cluster == cl
-            if m.sum() < 10:
-                continue
-            mu = z[m].mean(axis=0)
-            d_mu = np.linalg.norm(z - mu, axis=1)
-            idx = np.argpartition(d_mu, min(n_cells_centroid, len(z) - 1))[
-                : n_cells_centroid
-            ]
-            J_mu = J[idx].mean(axis=0)
-            ev = np.linalg.eigvalsh(0.5 * (J_mu + J_mu.T))
-            # Soft shading in [-tol, +tol].
-            ax.axvspan(i - 0.3, i + 0.3, ymin=0, ymax=1, color="none")
-            # Learned ladder.
-            ax.scatter(np.full(ev.size, i), ev, marker="_", s=90,
-                        color=BEHAVIOUR_COLOURS["fork"] if ev.max() > tol
-                        else BEHAVIOUR_COLOURS["holder"],
-                        linewidths=1.3, zorder=3)
-            # Oracle (hollow markers).
-            if oracle and cl in oracle_specs:
-                ax.scatter(np.full(oracle_specs[cl].size, i + 0.17),
-                            oracle_specs[cl], marker="o",
-                            facecolors="none", edgecolors="black",
-                            linewidths=0.8, s=20, zorder=4)
-            # Curvature ratio on negative directions.
-            neg_learned = ev[ev < -tol]
-            ratio = float("nan")
-            if cl in oracle_specs:
-                neg_or = oracle_specs[cl][oracle_specs[cl] < 0]
-                if neg_or.size and neg_learned.size:
-                    ratio = float(np.median(neg_learned) / np.median(neg_or))
-            n_soft = int((np.abs(ev) < tol).sum())
-            rows_annot.append({"cluster": cl, "n_soft": n_soft,
-                                "ratio_neg": ratio})
+        if groups is None:
+            group_list = [None]
+            offsets = [0.0]
+            colors_group = {None: None}
+        else:
+            group_list = list(groups)
+            # Spread two groups ±0.18 around the cluster x.
+            if len(group_list) == 1:
+                offsets = [0.0]
+            else:
+                offsets = np.linspace(-0.18, 0.18, len(group_list)).tolist()
+            group_cmap = [BEHAVIOUR_COLOURS["holder"], BEHAVIOUR_COLOURS["fork"],
+                           BEHAVIOUR_COLOURS["drift"]][: len(group_list)]
+            colors_group = dict(zip(group_list, group_cmap))
+
+        grp_arr = adata.obs[group_key].astype(str).to_numpy() \
+            if (groups is not None and group_key in adata.obs) \
+            else None
+        for gi, g in enumerate(group_list):
+            dx = offsets[gi]
+            for i, cl in enumerate(clusters):
+                m = cluster == cl
+                if g is not None and grp_arr is not None:
+                    m = m & (grp_arr == g)
+                if m.sum() < 10:
+                    continue
+                mu = z[m].mean(axis=0)
+                d_mu = np.linalg.norm(z - mu, axis=1)
+                idx = np.argpartition(
+                    d_mu, min(n_cells_centroid, len(z) - 1),
+                )[: n_cells_centroid]
+                J_mu = J[idx].mean(axis=0)
+                ev = np.linalg.eigvalsh(0.5 * (J_mu + J_mu.T))
+                col = (colors_group.get(g)
+                        or (BEHAVIOUR_COLOURS["fork"] if ev.max() > tol
+                            else BEHAVIOUR_COLOURS["holder"]))
+                ax.scatter(np.full(ev.size, i + dx), ev,
+                            marker="_", s=90, color=col,
+                            linewidths=1.3, zorder=3,
+                            label=g if (gi >= 0 and i == 0 and g is not None)
+                                    else None)
+                # Oracle hollow markers for this group's spectrum.
+                if oracle:
+                    # Rebuild oracle per group (so Σ changes with the
+                    # cluster × group subset).
+                    if m.sum() >= 10:
+                        Sigma_g = (np.cov(z[m], rowvar=False, bias=False)
+                                    + 1e-4 * np.eye(z.shape[1]))
+                        ev_or_g = np.linalg.eigvalsh(-np.linalg.inv(Sigma_g))
+                        ax.scatter(np.full(ev_or_g.size, i + dx + 0.07),
+                                    ev_or_g, marker="o",
+                                    facecolors="none", edgecolors="black",
+                                    linewidths=0.8, s=18, zorder=4)
+                    else:
+                        ev_or_g = np.array([])
+                else:
+                    ev_or_g = np.array([])
+                neg_learned = ev[ev < -tol]
+                ratio = float("nan")
+                if ev_or_g.size:
+                    neg_or = ev_or_g[ev_or_g < 0]
+                    if neg_or.size and neg_learned.size:
+                        ratio = float(np.median(neg_learned) / np.median(neg_or))
+                n_soft = int((np.abs(ev) < tol).sum())
+                rows_annot.append({"cluster": cl, "group": g,
+                                    "n_soft": n_soft, "ratio_neg": ratio})
 
         # Tol shaded band.
         ax.axhspan(-tol, +tol, color="0.9", alpha=0.4, zorder=0,

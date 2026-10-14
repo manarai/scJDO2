@@ -66,22 +66,48 @@ pass fractions.
 
 ## 4 — Test 1 — isotropy (per type)
 
-**Hypothesis:** aging increases operator stiffness anisotropically
-(some directions soften more than others). Null = isotropic
-loosening (every direction's ratio ~ equal).
+**Hypothesis:** aging widens the operator in a direction-coherent
+way — directions soft in young remain the softening axis in old,
+not isotropically, not random.
 
-**Statistic:** per matched direction `i`, ratio
-`r_i = λ_i^(old) / λ_i^(young)` where directions are matched by
-eigenvector cosine (Hungarian / greedy, highest-cosine pairs).
-**CV(ratio across directions)** is the per-type statistic.
+### 4a — Prereg amendment (2026-10-14, before any run on real data)
 
-**Null:** 1 000 shuffles of the ratios across directions. Pass =
-observed CV above the 95th percentile of the shuffled distribution.
+The original §4 statistic "CV of ratios across directions" with a
+"shuffle-ratios null" is mathematically degenerate: any permutation
+of a vector preserves its CV, so the null distribution collapses to
+a single point and no observed CV ever beats its own 95th percentile.
+Confirmed by two synthetic cases (`tests/test_compare_aging.py`):
+isotropic widening → CV=0 vs null_q95=0 (undefined pass); gradient
+widening (log-spaced 1×→10×) → CV=1.239 vs null_q95=1.239 (equal
+by invariance).
+
+**Replacement (frozen BEFORE any aging data run):**
+
+**Statistic:** Spearman correlation
+`ρ_λ = ρ(|λ_a_i|, |λ_b_j(i)|)` across cosine-matched pairs
+`(i, j(i))`, where matching is greedy by eigenvector cosine. A
+measure of whether the eigenvalue ordering is preserved across age
+within the SAME direction family.
+
+**Null:** 1 000 random pairings of a-eigenvalues to b-eigenvalues
+(eigenvectors ignored). Compute `ρ_λ` per draw.
+
+**Pass:** observed `ρ_λ > null_q95` → eigenvalue orderings coherent
+with the matched-direction structure.
+
+**Interpretation (frozen):**
+* `ρ_λ > null_q95`  → **direction-coherent widening** (specific
+  axes widen more than others, and the same axes remain soft in
+  old as in young).
+* `ρ_λ ≤ null_q95`  → either isotropic (uniform widening, ρ_λ ill-
+  defined on tied spectra) or incoherent across age (no stable
+  axis identity) — both cases count as **no direction-specific
+  loosening signal**.
 
 Reporting:
-* `CV_r` per type
+* `rho_lambda` per type
 * `null_q95` per type
-* `isotropy_pass` boolean per type
+* `isotropy_pass` boolean per type (True iff `ρ_λ > null_q95`)
 * **fraction of eligible types passing**
 
 ## 5 — Test 2 — anticipation (per type)
