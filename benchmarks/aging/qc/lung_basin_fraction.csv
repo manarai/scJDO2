@@ -1,0 +1,9 @@
+fit,cell_type,age_group,n,basin_fraction
+shared,fibroblast of lung,old,263,0.9771863117870723
+shared,fibroblast of lung,young,263,0.9125475285171103
+shared,natural killer cell,old,385,0.9012987012987013
+shared,natural killer cell,young,385,0.9142857142857143
+standalone_young,fibroblast of lung,young,263,0.9695817490494296
+standalone_young,natural killer cell,young,385,0.9090909090909091
+standalone_old,fibroblast of lung,old,263,0.9011406844106464
+standalone_old,natural killer cell,old,385,0.935064935064935
