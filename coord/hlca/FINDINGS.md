@@ -70,3 +70,19 @@ isotropy and anticipation calls fail on both sides.
 **Meaning.** Mouse and human agree on the two matched types: no aging
 change in operator shape or stiffness beyond a few percent.
 **Next.** HX01, HX02 proposed (exploratory), awaiting the user.
+
+## 2026-10-15 — hlca/HX02 (EXPLORATORY, ACCEPT) — power
+
+**Result.** Minimum detectable effects at 80 % power, ages 10–76:
+uniform softening median ×1.5 (all 13 types detectable); drift along the
+young soft axis median 2 σ (all 13); single-axis softening > ×8 in 12 of
+13 types (AT2 ×3).
+**Meaning.** The human null is informative for **uniform stiffness loss
+(≥ 1.5-fold excluded in most types)** and moderately for drift, but
+**not for single-axis loosening**: the log-eigenvalue isotropy statistic
+loses power when the soft eigenvalue is near zero or positive, which it
+is in most human types. The headline must say so.
+**Caveats.** Baseline rows contain H04's borderline real signals (T cell
+0.96), so those types' MDEs are optimistic.
+**Next.** Proposed: a fixed-axis curvature statistic, validated on the
+HX02 injections (exploratory); HX01.

@@ -41,7 +41,7 @@ Live status: `python coord/coord_check.py board`.
 | hlca/H03 | manus | accepted | scArches shared space + drift on HLCA | ACCEPT |
 | hlca/H04 | manus | accepted | Per-type tests and outcome, human lung | ACCEPT |
 | hlca/H05 | manus | accepted | Figures, mouse–human comparison | ACCEPT |
-| hlca/HX02 | manus | issued | EXPLORATORY: power analysis (MDE per type) | — |
+| hlca/HX02 | manus | accepted | EXPLORATORY: power analysis (MDE per type) | ACCEPT |
 
 * 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
 * 2026-10-14 — H01 re-issued on current aging-basins after the mouse arm closed.
@@ -54,3 +54,4 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — hlca/H05 issued (figures, mouse–human comparison, notebook).
 * 2026-10-15 — hlca/H05 accepted (db09352), merged. Human arm H01–H05 complete.
 * 2026-10-15 — user approved HX02 (exploratory power analysis); issued after a one-type design probe.
+* 2026-10-15 — hlca/HX02 accepted (aec59d9): uniform MDE x1.5, drift 2 sigma, single-axis >x8 in 12/13 (statistic insensitive near-zero soft eigenvalues).
