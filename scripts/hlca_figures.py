@@ -229,6 +229,14 @@ def plot_ec_capillary_anticipation(operators: pd.DataFrame) -> plt.Figure:
     return fig
 
 
+def shared_seed_call(minimum: float, maximum: float) -> str:
+    if float(minimum) == 1.0 and float(maximum) == 1.0:
+        return "pass"
+    if float(minimum) == 0.0 and float(maximum) == 0.0:
+        return "fail"
+    return "mixed"
+
+
 def mouse_human_table(primary: pd.DataFrame, sensitivity: pd.DataFrame) -> pd.DataFrame:
     a03 = pd.read_csv(MOUSE_A03)
     x04 = pd.read_csv(MOUSE_X04)
@@ -248,6 +256,8 @@ def mouse_human_table(primary: pd.DataFrame, sensitivity: pd.DataFrame) -> pd.Da
             "mouse_x04_shared_stiffness_max": float(map_row["stiff_ratio_max"]),
             "human_two_group_stiffness_ratio": float(np.exp(h2["stiff_slope"])),
             "mouse_a03_iso_pass": bool(mouse_row["iso_pass"]), "mouse_a03_ant_pass": bool(mouse_row["ant_pass"]),
+            "mouse_x04_shared_iso_call": shared_seed_call(map_row["iso_pass_min"], map_row["iso_pass_max"]),
+            "mouse_x04_shared_ant_call": shared_seed_call(map_row["ant_pass_min"], map_row["ant_pass_max"]),
             "human_primary_iso_pass": bool(hp["iso_pass"]), "human_primary_ant_pass": bool(hp["ant_pass"]),
             "human_two_group_iso_pass": bool(h2["iso_pass"]), "human_two_group_ant_pass": bool(h2["ant_pass"]),
         })
@@ -270,8 +280,8 @@ def plot_mouse_human(table: pd.DataFrame) -> plt.Figure:
         ax.set_ylim(min(.85, lo, human) * .95, max(1.2, hi, human) * 1.06)
         ax.set_title(f"{row.mouse_cell_type}\n↔ {row.human_ann_level_3}", fontsize=10)
         ax.set_ylabel("old / young stiffness ratio")
-        mouse_calls = f"A03 calls\nisotropy: {'pass' if row.mouse_a03_iso_pass else 'fail'}\nanticipation: {'pass' if row.mouse_a03_ant_pass else 'fail'}"
-        human_calls = f"H04 §7f calls\nisotropy: {'pass' if row.human_two_group_iso_pass else 'fail'}\nanticipation: {'pass' if row.human_two_group_ant_pass else 'fail'}"
+        mouse_calls = f"A03 / X04 shared\nisotropy: {'pass' if row.mouse_a03_iso_pass else 'fail'} / {row.mouse_x04_shared_iso_call}\nanticipation: {'pass' if row.mouse_a03_ant_pass else 'fail'} / {row.mouse_x04_shared_ant_call}"
+        human_calls = f"H04 primary / §7f\nisotropy: {'pass' if row.human_primary_iso_pass else 'fail'} / {'pass' if row.human_two_group_iso_pass else 'fail'}\nanticipation: {'pass' if row.human_primary_ant_pass else 'fail'} / {'pass' if row.human_two_group_ant_pass else 'fail'}"
         ax.text(.03, .035, mouse_calls, transform=ax.transAxes, ha="left", va="bottom", fontsize=7)
         ax.text(.97, .035, human_calls, transform=ax.transAxes, ha="right", va="bottom", fontsize=7)
         ax.grid(axis="y", color="0.9")

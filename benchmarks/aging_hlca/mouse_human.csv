@@ -1,3 +1,3 @@
-mouse_tissue,mouse_cell_type,human_ann_level_3,mouse_a03_stiffness_ratio,mouse_x04_shared_stiffness_min,mouse_x04_shared_stiffness_max,human_two_group_stiffness_ratio,mouse_a03_iso_pass,mouse_a03_ant_pass,human_primary_iso_pass,human_primary_ant_pass,human_two_group_iso_pass,human_two_group_ant_pass
-lung,fibroblast of lung,Fibroblasts,1.0102743535631424,1.010274353563139,1.1843087098058134,1.0731172742771002,False,False,False,False,False,False
-lung,natural killer cell,Innate lymphoid cell NK,0.9972599991614937,0.9972599991614906,0.9995667681318052,0.9817285362735377,False,False,False,False,False,False
+mouse_tissue,mouse_cell_type,human_ann_level_3,mouse_a03_stiffness_ratio,mouse_x04_shared_stiffness_min,mouse_x04_shared_stiffness_max,human_two_group_stiffness_ratio,mouse_a03_iso_pass,mouse_a03_ant_pass,mouse_x04_shared_iso_call,mouse_x04_shared_ant_call,human_primary_iso_pass,human_primary_ant_pass,human_two_group_iso_pass,human_two_group_ant_pass
+lung,fibroblast of lung,Fibroblasts,1.0102743535631424,1.010274353563139,1.1843087098058134,1.0731172742771002,False,False,fail,fail,False,False,False,False
+lung,natural killer cell,Innate lymphoid cell NK,0.9972599991614937,0.9972599991614906,0.9995667681318052,0.9817285362735377,False,False,fail,fail,False,False,False,False
