@@ -1,0 +1,169 @@
+{
+  "artifacts": [
+    {
+      "bytes": 12542,
+      "committed": true,
+      "path": "scripts/fetch_hlca.py",
+      "regenerate": "python scripts/fetch_hlca.py --phase core",
+      "sha256": "5822bc8aa06762c96f8d75ff2455efea74f5d53dadcb219c26cf7579bc574fb4"
+    },
+    {
+      "bytes": 16226,
+      "committed": true,
+      "path": "scripts/inventory_hlca.py",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "797f1bafd71bcd73fca14b5a325cc21b4bc423752b39333246c975861a6eab64"
+    },
+    {
+      "bytes": 7454,
+      "committed": true,
+      "path": "scripts/hlca_scarches_smoke.py",
+      "regenerate": "python scripts/hlca_scarches_smoke.py --seed 0 --n-cells 5000 --epochs 20",
+      "sha256": "e900ce2e1e2a987f4fc0ec83db82ec1f130b64e63adead701db6f582e3bd8a91"
+    },
+    {
+      "bytes": 731,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/ENV.md",
+      "regenerate": "python -m pytest tests/test_compare_aging.py -q",
+      "sha256": "cf82b3262624964db003e565738b97ae1a18c92413abc974ed043c75520b2178"
+    },
+    {
+      "bytes": 6839,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/obs_columns.csv",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "0676393ac5f718e94ee5e805c19a21aed65aed4bda4c5234311b148da41b56b2"
+    },
+    {
+      "bytes": 31911,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/donors.csv",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "352e28fb0cffca45c530c3579d664f89e5755f7ad3d286b179c6976a298b3d0b"
+    },
+    {
+      "bytes": 740,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/age_by_study.csv",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "27775a5fd28842356f1a9e88fc6d76146b70b92db6370f9f60b76d35d6af3518"
+    },
+    {
+      "bytes": 19925,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/celltype_by_agebin.csv",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "59491a41429fc54464c6989fd36522602fabb2e273fb2b2b1ecad32b30052fa0"
+    },
+    {
+      "bytes": 3390,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/confounds.csv",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "02490d38c0bb9fc505b554f89e6180f510bc29eba466f5e85032fefa6aa064f6"
+    },
+    {
+      "bytes": 33464,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/within_study_contrast.csv",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "17f97ee077ccf371ca1170ca84e1c5e34cb7f0db5191a4dc2ddf9d6d2a342ffd"
+    },
+    {
+      "bytes": 1564,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/inventory_decisions.json",
+      "regenerate": "python scripts/inventory_hlca.py",
+      "sha256": "8ceef3bb91829fdc235b8da37ad357bd04b35880f72bc130658945d80033371e"
+    },
+    {
+      "bytes": 594,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/inventory/scarches_smoke.json",
+      "regenerate": "python scripts/hlca_scarches_smoke.py --seed 0 --n-cells 5000 --epochs 20",
+      "sha256": "95fd36755c2af5134a27e07dd816d33d7e1532b7bc1b699069cac3f7fad6502f"
+    },
+    {
+      "bytes": 3837,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/manifest.json",
+      "regenerate": "python scripts/fetch_hlca.py --phase core",
+      "sha256": "28a69778ff9bc2fa31c8aecaf94fec977652336524d617755f92492b5cbae3ac"
+    },
+    {
+      "bytes": 5873641828,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/hlca_core_full_metadata.h5ad",
+      "regenerate": "python scripts/fetch_hlca.py --phase core",
+      "sha256": "de2e00d1cb7f95098ab207af949fd93b2c038fa2882a29b85f23853267831356"
+    },
+    {
+      "bytes": 9221901045,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/hlca_core_raw_counts.h5ad",
+      "regenerate": "python scripts/fetch_hlca.py --phase core",
+      "sha256": "ed258cbda8cc7a7fea35096b99264e0e34310b45c84e1fabb3bf5b05860e576f"
+    },
+    {
+      "bytes": 10645939,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/HLCA_reference_model.zip",
+      "regenerate": "python scripts/fetch_hlca.py --phase reference",
+      "sha256": "a7cd60f4342292b3cba54545bcd8a34decdc8e6b82163f009273d543e7e3910e"
+    },
+    {
+      "bytes": 2369348547,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/HLCA_full_v1.1_emb.h5ad",
+      "regenerate": "python scripts/fetch_hlca.py --phase reference",
+      "sha256": "3e2c4da281b6883464b2a70bcc1562d1c4246de32093e7b08090673fbad56a97"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.14,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; MPS detected but intentionally unused for the smoke test"
+  },
+  "deviations": [
+    "The initial Census-export AnnData had generic CELLxGENE schema only (no HLCA ann_level_3/ann_level_4, smoking_status, or BMI). The final canonical inventory therefore uses the official CZI H5AD URL recorded in that Census catalogue; it retains adata.raw.X and the complete HLCA metadata.",
+    "Zenodo API delivery stalled during the 2.3 GB embedding transfer. The same official Zenodo record, filename, and byte length were retrieved through resumable 8 MiB HTTP ranges; source content, model, seed, epochs, and analysis scope were unchanged.",
+    "One of 107 donor IDs has no parseable age (3,427 cells); all donor rows remain in donors.csv and age-stratified tables use the 106 donors with a stated numeric age."
+  ],
+  "finished_utc": "2026-10-15T11:14:14.387789+00:00",
+  "metrics": {
+    "age_field": "age_or_mean_of_age_range",
+    "age_max": 76.0,
+    "age_min": 10.0,
+    "disk_gb_used": 17.521206017,
+    "hlca_dataset_id": "066943a2-fdac-4b29-b348-40cede398e4e",
+    "hlca_source": "CZ CELLxGENE Census 2025-11-08 catalogue plus CZI full-metadata core H5AD; Zenodo record 7599104 reference assets",
+    "n_cells": 584944,
+    "n_celltypes_ge200_both_sides_pooled": 70,
+    "n_donors": 107,
+    "n_donors_ge60": 17,
+    "n_donors_lt45": 48,
+    "n_studies_with_within_study_contrast": 6,
+    "reference_model_source": "https://zenodo.org/records/7599104",
+    "smoke_ref_weights_max_abs_change": 0.0,
+    "smoke_sec_per_10k_cells": 35.2353392499499,
+    "smoke_test_ok": true,
+    "tests_passed": true
+  },
+  "observations": [
+    "The canonical CZI H5AD contains 584,944 cells, 107 donor IDs, raw counts at adata.raw.X with 27,402 genes, and the HLCA-specific ann_level_3, ann_level_4, smoking_status, BMI, anatomical_region_ccf_score, assay, and dataset fields.",
+    "age_or_mean_of_age_range is numeric for 581,517 cells and was selected over less complete alternative age fields; observed donor ages range from 10.0 to 76.0 years.",
+    "There are 48 age-annotated donors younger than 45 years and 17 aged 60 years or older; six studies have donors on both sides of that contrast, and 70 pooled annotation-level/cell-type rows have at least 200 cells on both sides.",
+    "The scArches surgery smoke test mapped 5,000 Banovich_Kropski_2020 cells for 20 CPU epochs through SCANVI.prepare_query_anndata plus SCANVI.load_query_data; 858,156 frozen reference parameters had maximum absolute change 0.0.",
+    "The inventory supports a young-only reference with older queries mapped in, within-study younger-versus-older contrasts, and age as a continuous covariate. H01 does not select among these designs."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-15T02:34:17+00:00",
+  "status": "done",
+  "suggestions": [
+    "In H02, choose the primary human design before any fit and state how the one donor without a parseable age is excluded from age-based analyses.",
+    "In H02, pre-specify treatment of study, smoking, anatomical region, assay, sex, and BMI because all are present and their distributions are tabulated by age bin in confounds.csv.",
+    "Consider a within-study contrast sensitivity analysis for the six qualifying studies, because this design limits broad study-level age confounding while preserving cell-type eligibility information."
+  ],
+  "task": "hlca/H01"
+}

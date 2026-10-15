@@ -1,0 +1,521 @@
+study_or_dataset,annotation_level,cell_type,n_donors_lt45,n_donors_ge60,n_cells_lt45,n_cells_ge60,meets_200_cells_both_sides
+Banovich_Kropski_2020,ann_level_3,AT1,17,5,1943,974,True
+Banovich_Kropski_2020,ann_level_3,AT2,17,5,10145,4279,True
+Banovich_Kropski_2020,ann_level_3,B cell lineage,17,5,525,151,False
+Banovich_Kropski_2020,ann_level_3,Basal,17,5,127,53,False
+Banovich_Kropski_2020,ann_level_3,Dendritic cells,17,5,743,290,True
+Banovich_Kropski_2020,ann_level_3,EC arterial,17,5,1288,1030,True
+Banovich_Kropski_2020,ann_level_3,EC capillary,17,5,3499,1997,True
+Banovich_Kropski_2020,ann_level_3,EC venous,17,5,1049,1010,True
+Banovich_Kropski_2020,ann_level_3,Fibroblasts,17,5,1301,792,True
+Banovich_Kropski_2020,ann_level_3,Innate lymphoid cell NK,17,5,1898,1734,True
+Banovich_Kropski_2020,ann_level_3,Lymphatic EC differentiating,17,5,45,19,False
+Banovich_Kropski_2020,ann_level_3,Lymphatic EC mature,17,5,677,451,True
+Banovich_Kropski_2020,ann_level_3,Lymphatic EC proliferating,17,5,4,0,False
+Banovich_Kropski_2020,ann_level_3,Macrophages,17,5,17066,2111,True
+Banovich_Kropski_2020,ann_level_3,Mast cells,17,5,254,71,False
+Banovich_Kropski_2020,ann_level_3,Monocytes,17,5,4922,1395,True
+Banovich_Kropski_2020,ann_level_3,Multiciliated lineage,17,5,2268,631,True
+Banovich_Kropski_2020,ann_level_3,Myofibroblasts,17,5,55,42,False
+Banovich_Kropski_2020,ann_level_3,None,17,5,229,172,False
+Banovich_Kropski_2020,ann_level_3,Rare,17,5,18,3,False
+Banovich_Kropski_2020,ann_level_3,Secretory,17,5,1317,570,True
+Banovich_Kropski_2020,ann_level_3,Smooth muscle FAM83D+,17,5,4,4,False
+Banovich_Kropski_2020,ann_level_3,Submucosal Secretory,17,5,0,1,False
+Banovich_Kropski_2020,ann_level_3,T cell lineage,17,5,6514,3892,True
+Meyer_2019,ann_level_3,AT1,1,1,87,2,False
+Meyer_2019,ann_level_3,AT2,1,1,1474,1227,True
+Meyer_2019,ann_level_3,B cell lineage,1,1,680,241,True
+Meyer_2019,ann_level_3,Basal,1,1,2,8,False
+Meyer_2019,ann_level_3,Dendritic cells,1,1,978,340,True
+Meyer_2019,ann_level_3,EC arterial,1,1,9,109,False
+Meyer_2019,ann_level_3,EC capillary,1,1,73,38,False
+Meyer_2019,ann_level_3,EC venous,1,1,74,202,False
+Meyer_2019,ann_level_3,Fibroblasts,1,1,309,816,True
+Meyer_2019,ann_level_3,Innate lymphoid cell NK,1,1,4000,2720,True
+Meyer_2019,ann_level_3,Lymphatic EC differentiating,1,1,3,3,False
+Meyer_2019,ann_level_3,Lymphatic EC mature,1,1,14,92,False
+Meyer_2019,ann_level_3,Macrophages,1,1,984,377,True
+Meyer_2019,ann_level_3,Mast cells,1,1,20,2185,False
+Meyer_2019,ann_level_3,Monocytes,1,1,1834,921,True
+Meyer_2019,ann_level_3,Multiciliated lineage,1,1,67,25,False
+Meyer_2019,ann_level_3,Myofibroblasts,1,1,5,53,False
+Meyer_2019,ann_level_3,None,1,1,92,77,False
+Meyer_2019,ann_level_3,SM activated stress response,1,1,2,122,False
+Meyer_2019,ann_level_3,Secretory,1,1,17,44,False
+Meyer_2019,ann_level_3,Smooth muscle FAM83D+,1,1,2,23,False
+Meyer_2019,ann_level_3,T cell lineage,1,1,2831,5103,True
+Misharin_Budinger_2018,ann_level_3,AT1,3,1,388,51,False
+Misharin_Budinger_2018,ann_level_3,AT2,3,1,6234,2469,True
+Misharin_Budinger_2018,ann_level_3,B cell lineage,3,1,200,21,False
+Misharin_Budinger_2018,ann_level_3,Basal,3,1,12,0,False
+Misharin_Budinger_2018,ann_level_3,Dendritic cells,3,1,154,42,False
+Misharin_Budinger_2018,ann_level_3,EC arterial,3,1,61,12,False
+Misharin_Budinger_2018,ann_level_3,EC capillary,3,1,17,8,False
+Misharin_Budinger_2018,ann_level_3,EC venous,3,1,87,42,False
+Misharin_Budinger_2018,ann_level_3,Fibroblasts,3,1,53,2,False
+Misharin_Budinger_2018,ann_level_3,Innate lymphoid cell NK,3,1,11,2,False
+Misharin_Budinger_2018,ann_level_3,Lymphatic EC differentiating,3,1,2,0,False
+Misharin_Budinger_2018,ann_level_3,Lymphatic EC mature,3,1,34,21,False
+Misharin_Budinger_2018,ann_level_3,Lymphatic EC proliferating,3,1,3,0,False
+Misharin_Budinger_2018,ann_level_3,Macrophages,3,1,6107,2567,True
+Misharin_Budinger_2018,ann_level_3,Mast cells,3,1,8,29,False
+Misharin_Budinger_2018,ann_level_3,Monocytes,3,1,503,62,False
+Misharin_Budinger_2018,ann_level_3,Multiciliated lineage,3,1,96,24,False
+Misharin_Budinger_2018,ann_level_3,Myofibroblasts,3,1,1,2,False
+Misharin_Budinger_2018,ann_level_3,None,3,1,11,5,False
+Misharin_Budinger_2018,ann_level_3,Secretory,3,1,190,14,False
+Misharin_Budinger_2018,ann_level_3,Smooth muscle FAM83D+,3,1,2,0,False
+Misharin_Budinger_2018,ann_level_3,T cell lineage,3,1,110,17,False
+Nawijn_2021,ann_level_3,B cell lineage,1,2,0,49,False
+Nawijn_2021,ann_level_3,Basal,1,2,341,1965,True
+Nawijn_2021,ann_level_3,Dendritic cells,1,2,8,82,False
+Nawijn_2021,ann_level_3,EC arterial,1,2,0,14,False
+Nawijn_2021,ann_level_3,EC capillary,1,2,0,6,False
+Nawijn_2021,ann_level_3,EC venous,1,2,17,134,False
+Nawijn_2021,ann_level_3,Fibroblasts,1,2,0,44,False
+Nawijn_2021,ann_level_3,Innate lymphoid cell NK,1,2,0,60,False
+Nawijn_2021,ann_level_3,Lymphatic EC differentiating,1,2,0,1,False
+Nawijn_2021,ann_level_3,Macrophages,1,2,3,11,False
+Nawijn_2021,ann_level_3,Mast cells,1,2,2,23,False
+Nawijn_2021,ann_level_3,Monocytes,1,2,0,232,False
+Nawijn_2021,ann_level_3,Multiciliated lineage,1,2,315,1470,True
+Nawijn_2021,ann_level_3,Myofibroblasts,1,2,0,1,False
+Nawijn_2021,ann_level_3,None,1,2,3,7,False
+Nawijn_2021,ann_level_3,Rare,1,2,0,7,False
+Nawijn_2021,ann_level_3,SM activated stress response,1,2,0,3,False
+Nawijn_2021,ann_level_3,Secretory,1,2,184,483,False
+Nawijn_2021,ann_level_3,Submucosal Secretory,1,2,12,28,False
+Nawijn_2021,ann_level_3,T cell lineage,1,2,2,982,False
+Seibold_2020_10Xv3,ann_level_3,AT1,2,5,1,1,False
+Seibold_2020_10Xv3,ann_level_3,AT2,2,5,4,3,False
+Seibold_2020_10Xv3,ann_level_3,B cell lineage,2,5,0,1,False
+Seibold_2020_10Xv3,ann_level_3,Basal,2,5,4563,10608,True
+Seibold_2020_10Xv3,ann_level_3,EC venous,2,5,1,0,False
+Seibold_2020_10Xv3,ann_level_3,Innate lymphoid cell NK,2,5,0,1,False
+Seibold_2020_10Xv3,ann_level_3,Lymphatic EC mature,2,5,0,1,False
+Seibold_2020_10Xv3,ann_level_3,Macrophages,2,5,0,2,False
+Seibold_2020_10Xv3,ann_level_3,Mast cells,2,5,1,2,False
+Seibold_2020_10Xv3,ann_level_3,Multiciliated lineage,2,5,341,594,True
+Seibold_2020_10Xv3,ann_level_3,Rare,2,5,47,96,False
+Seibold_2020_10Xv3,ann_level_3,Secretory,2,5,610,1014,True
+Seibold_2020_10Xv3,ann_level_3,Submucosal Secretory,2,5,96,177,False
+Seibold_2020_10Xv3,ann_level_3,T cell lineage,2,5,0,7,False
+Teichmann_Meyer_2019,ann_level_3,AT1,2,1,8,14,False
+Teichmann_Meyer_2019,ann_level_3,AT2,2,1,2236,89,False
+Teichmann_Meyer_2019,ann_level_3,B cell lineage,2,1,5,10,False
+Teichmann_Meyer_2019,ann_level_3,Basal,2,1,3,2,False
+Teichmann_Meyer_2019,ann_level_3,Dendritic cells,2,1,231,221,True
+Teichmann_Meyer_2019,ann_level_3,EC arterial,2,1,11,0,False
+Teichmann_Meyer_2019,ann_level_3,EC capillary,2,1,5,0,False
+Teichmann_Meyer_2019,ann_level_3,EC venous,2,1,42,0,False
+Teichmann_Meyer_2019,ann_level_3,Fibroblasts,2,1,355,48,False
+Teichmann_Meyer_2019,ann_level_3,Innate lymphoid cell NK,2,1,1,30,False
+Teichmann_Meyer_2019,ann_level_3,Lymphatic EC differentiating,2,1,1,0,False
+Teichmann_Meyer_2019,ann_level_3,Lymphatic EC mature,2,1,72,0,False
+Teichmann_Meyer_2019,ann_level_3,Lymphatic EC proliferating,2,1,3,0,False
+Teichmann_Meyer_2019,ann_level_3,Macrophages,2,1,3710,44,False
+Teichmann_Meyer_2019,ann_level_3,Mast cells,2,1,4,60,False
+Teichmann_Meyer_2019,ann_level_3,Monocytes,2,1,360,1209,True
+Teichmann_Meyer_2019,ann_level_3,Multiciliated lineage,2,1,7,46,False
+Teichmann_Meyer_2019,ann_level_3,Myofibroblasts,2,1,1,0,False
+Teichmann_Meyer_2019,ann_level_3,None,2,1,28,1,False
+Teichmann_Meyer_2019,ann_level_3,Secretory,2,1,19,39,False
+Teichmann_Meyer_2019,ann_level_3,T cell lineage,2,1,11,178,False
+Banovich_Kropski_2020,ann_level_4,AT2 proliferating,17,5,200,98,False
+Banovich_Kropski_2020,ann_level_4,Adventitial fibroblasts,17,5,490,440,True
+Banovich_Kropski_2020,ann_level_4,Alveolar fibroblasts,17,5,524,142,False
+Banovich_Kropski_2020,ann_level_4,Alveolar macrophages,17,5,11084,667,True
+Banovich_Kropski_2020,ann_level_4,B cells,17,5,351,140,False
+Banovich_Kropski_2020,ann_level_4,Basal resting,17,5,45,16,False
+Banovich_Kropski_2020,ann_level_4,CD4 T cells,17,5,2846,2513,True
+Banovich_Kropski_2020,ann_level_4,CD8 T cells,17,5,3417,1366,True
+Banovich_Kropski_2020,ann_level_4,Classical monocytes,17,5,2654,787,True
+Banovich_Kropski_2020,ann_level_4,Club,17,5,321,38,False
+Banovich_Kropski_2020,ann_level_4,DC1,17,5,18,15,False
+Banovich_Kropski_2020,ann_level_4,DC2,17,5,696,254,True
+Banovich_Kropski_2020,ann_level_4,Deuterosomal,17,5,101,7,False
+Banovich_Kropski_2020,ann_level_4,EC aerocyte capillary,17,5,1241,334,True
+Banovich_Kropski_2020,ann_level_4,EC general capillary,17,5,2258,1663,True
+Banovich_Kropski_2020,ann_level_4,EC venous pulmonary,17,5,860,949,True
+Banovich_Kropski_2020,ann_level_4,EC venous systemic,17,5,189,61,False
+Banovich_Kropski_2020,ann_level_4,Goblet,17,5,77,16,False
+Banovich_Kropski_2020,ann_level_4,Interstitial macrophages,17,5,5982,1444,True
+Banovich_Kropski_2020,ann_level_4,Ionocyte,17,5,13,2,False
+Banovich_Kropski_2020,ann_level_4,Migratory DCs,17,5,18,8,False
+Banovich_Kropski_2020,ann_level_4,Multiciliated,17,5,2167,624,True
+Banovich_Kropski_2020,ann_level_4,NK cells,17,5,1898,1734,True
+Banovich_Kropski_2020,ann_level_4,Neuroendocrine,17,5,3,0,False
+Banovich_Kropski_2020,ann_level_4,Non-classical monocytes,17,5,2268,608,True
+Banovich_Kropski_2020,ann_level_4,None,17,5,14444,6944,True
+Banovich_Kropski_2020,ann_level_4,Peribronchial fibroblasts,17,5,83,34,False
+Banovich_Kropski_2020,ann_level_4,Pericytes,17,5,193,173,False
+Banovich_Kropski_2020,ann_level_4,Plasma cells,17,5,174,11,False
+Banovich_Kropski_2020,ann_level_4,Plasmacytoid DCs,17,5,11,13,False
+Banovich_Kropski_2020,ann_level_4,SMG duct,17,5,0,1,False
+Banovich_Kropski_2020,ann_level_4,Subpleural fibroblasts,17,5,11,3,False
+Banovich_Kropski_2020,ann_level_4,Suprabasal,17,5,82,37,False
+Banovich_Kropski_2020,ann_level_4,T cells proliferating,17,5,251,13,False
+Banovich_Kropski_2020,ann_level_4,Transitional Club-AT2,17,5,919,516,True
+Banovich_Kropski_2020,ann_level_4,Tuft,17,5,2,1,False
+Meyer_2019,ann_level_4,AT2 proliferating,1,1,34,21,False
+Meyer_2019,ann_level_4,Adventitial fibroblasts,1,1,199,271,False
+Meyer_2019,ann_level_4,Alveolar fibroblasts,1,1,16,531,False
+Meyer_2019,ann_level_4,Alveolar macrophages,1,1,507,95,False
+Meyer_2019,ann_level_4,B cells,1,1,608,210,True
+Meyer_2019,ann_level_4,Basal resting,1,1,1,6,False
+Meyer_2019,ann_level_4,CD4 T cells,1,1,1951,1422,True
+Meyer_2019,ann_level_4,CD8 T cells,1,1,846,3677,True
+Meyer_2019,ann_level_4,Classical monocytes,1,1,1617,862,True
+Meyer_2019,ann_level_4,Club,1,1,2,2,False
+Meyer_2019,ann_level_4,DC1,1,1,18,54,False
+Meyer_2019,ann_level_4,DC2,1,1,937,219,True
+Meyer_2019,ann_level_4,EC aerocyte capillary,1,1,32,8,False
+Meyer_2019,ann_level_4,EC general capillary,1,1,41,30,False
+Meyer_2019,ann_level_4,EC venous pulmonary,1,1,6,94,False
+Meyer_2019,ann_level_4,EC venous systemic,1,1,68,108,False
+Meyer_2019,ann_level_4,Interstitial macrophages,1,1,477,282,True
+Meyer_2019,ann_level_4,Migratory DCs,1,1,15,58,False
+Meyer_2019,ann_level_4,Multiciliated,1,1,67,25,False
+Meyer_2019,ann_level_4,NK cells,1,1,4000,2720,True
+Meyer_2019,ann_level_4,Non-classical monocytes,1,1,217,59,False
+Meyer_2019,ann_level_4,None,1,1,1674,3872,True
+Meyer_2019,ann_level_4,Peribronchial fibroblasts,1,1,15,10,False
+Meyer_2019,ann_level_4,Pericytes,1,1,0,2,False
+Meyer_2019,ann_level_4,Plasma cells,1,1,72,31,False
+Meyer_2019,ann_level_4,Plasmacytoid DCs,1,1,8,9,False
+Meyer_2019,ann_level_4,Subpleural fibroblasts,1,1,79,2,False
+Meyer_2019,ann_level_4,Suprabasal,1,1,1,2,False
+Meyer_2019,ann_level_4,T cells proliferating,1,1,34,4,False
+Meyer_2019,ann_level_4,Transitional Club-AT2,1,1,15,42,False
+Misharin_Budinger_2018,ann_level_4,AT2 proliferating,3,1,98,2,False
+Misharin_Budinger_2018,ann_level_4,Adventitial fibroblasts,3,1,6,0,False
+Misharin_Budinger_2018,ann_level_4,Alveolar fibroblasts,3,1,47,2,False
+Misharin_Budinger_2018,ann_level_4,Alveolar macrophages,3,1,5777,2419,True
+Misharin_Budinger_2018,ann_level_4,B cells,3,1,18,5,False
+Misharin_Budinger_2018,ann_level_4,Basal resting,3,1,10,0,False
+Misharin_Budinger_2018,ann_level_4,CD4 T cells,3,1,92,10,False
+Misharin_Budinger_2018,ann_level_4,CD8 T cells,3,1,17,7,False
+Misharin_Budinger_2018,ann_level_4,Classical monocytes,3,1,361,44,False
+Misharin_Budinger_2018,ann_level_4,Club,3,1,3,0,False
+Misharin_Budinger_2018,ann_level_4,DC1,3,1,3,0,False
+Misharin_Budinger_2018,ann_level_4,DC2,3,1,150,42,False
+Misharin_Budinger_2018,ann_level_4,Deuterosomal,3,1,0,2,False
+Misharin_Budinger_2018,ann_level_4,EC aerocyte capillary,3,1,3,2,False
+Misharin_Budinger_2018,ann_level_4,EC general capillary,3,1,14,6,False
+Misharin_Budinger_2018,ann_level_4,EC venous pulmonary,3,1,59,15,False
+Misharin_Budinger_2018,ann_level_4,EC venous systemic,3,1,28,27,False
+Misharin_Budinger_2018,ann_level_4,Goblet,3,1,4,0,False
+Misharin_Budinger_2018,ann_level_4,Interstitial macrophages,3,1,330,148,False
+Misharin_Budinger_2018,ann_level_4,Migratory DCs,3,1,1,0,False
+Misharin_Budinger_2018,ann_level_4,Multiciliated,3,1,96,22,False
+Misharin_Budinger_2018,ann_level_4,NK cells,3,1,11,2,False
+Misharin_Budinger_2018,ann_level_4,Non-classical monocytes,3,1,142,18,False
+Misharin_Budinger_2018,ann_level_4,None,3,1,6646,2587,True
+Misharin_Budinger_2018,ann_level_4,Plasma cells,3,1,182,16,False
+Misharin_Budinger_2018,ann_level_4,Suprabasal,3,1,2,0,False
+Misharin_Budinger_2018,ann_level_4,T cells proliferating,3,1,1,0,False
+Misharin_Budinger_2018,ann_level_4,Transitional Club-AT2,3,1,183,14,False
+Nawijn_2021,ann_level_4,Adventitial fibroblasts,1,2,0,10,False
+Nawijn_2021,ann_level_4,Alveolar fibroblasts,1,2,0,6,False
+Nawijn_2021,ann_level_4,Alveolar macrophages,1,2,2,6,False
+Nawijn_2021,ann_level_4,B cells,1,2,0,40,False
+Nawijn_2021,ann_level_4,Basal resting,1,2,227,1248,True
+Nawijn_2021,ann_level_4,CD4 T cells,1,2,1,205,False
+Nawijn_2021,ann_level_4,CD8 T cells,1,2,1,774,False
+Nawijn_2021,ann_level_4,Classical monocytes,1,2,0,203,False
+Nawijn_2021,ann_level_4,Club,1,2,74,404,False
+Nawijn_2021,ann_level_4,DC1,1,2,0,2,False
+Nawijn_2021,ann_level_4,DC2,1,2,8,77,False
+Nawijn_2021,ann_level_4,Deuterosomal,1,2,4,27,False
+Nawijn_2021,ann_level_4,EC general capillary,1,2,0,6,False
+Nawijn_2021,ann_level_4,EC venous pulmonary,1,2,0,7,False
+Nawijn_2021,ann_level_4,EC venous systemic,1,2,17,127,False
+Nawijn_2021,ann_level_4,Goblet,1,2,110,71,False
+Nawijn_2021,ann_level_4,Hillock-like,1,2,3,0,False
+Nawijn_2021,ann_level_4,Interstitial macrophages,1,2,1,5,False
+Nawijn_2021,ann_level_4,Ionocyte,1,2,0,7,False
+Nawijn_2021,ann_level_4,Multiciliated,1,2,311,1443,True
+Nawijn_2021,ann_level_4,NK cells,1,2,0,60,False
+Nawijn_2021,ann_level_4,Non-classical monocytes,1,2,0,29,False
+Nawijn_2021,ann_level_4,None,1,2,5,49,False
+Nawijn_2021,ann_level_4,Peribronchial fibroblasts,1,2,0,28,False
+Nawijn_2021,ann_level_4,Plasma cells,1,2,0,9,False
+Nawijn_2021,ann_level_4,Plasmacytoid DCs,1,2,0,3,False
+Nawijn_2021,ann_level_4,SMG duct,1,2,4,23,False
+Nawijn_2021,ann_level_4,SMG mucous,1,2,4,2,False
+Nawijn_2021,ann_level_4,SMG serous,1,2,4,3,False
+Nawijn_2021,ann_level_4,Suprabasal,1,2,111,717,False
+Nawijn_2021,ann_level_4,T cells proliferating,1,2,0,3,False
+Nawijn_2021,ann_level_4,Transitional Club-AT2,1,2,0,8,False
+Seibold_2020_10Xv3,ann_level_4,Alveolar macrophages,2,5,0,1,False
+Seibold_2020_10Xv3,ann_level_4,B cells,2,5,0,1,False
+Seibold_2020_10Xv3,ann_level_4,Basal resting,2,5,1278,1579,True
+Seibold_2020_10Xv3,ann_level_4,CD4 T cells,2,5,0,3,False
+Seibold_2020_10Xv3,ann_level_4,CD8 T cells,2,5,0,4,False
+Seibold_2020_10Xv3,ann_level_4,Club,2,5,76,130,False
+Seibold_2020_10Xv3,ann_level_4,Deuterosomal,2,5,23,18,False
+Seibold_2020_10Xv3,ann_level_4,EC venous pulmonary,2,5,1,0,False
+Seibold_2020_10Xv3,ann_level_4,Goblet,2,5,528,879,True
+Seibold_2020_10Xv3,ann_level_4,Hillock-like,2,5,108,1502,False
+Seibold_2020_10Xv3,ann_level_4,Interstitial macrophages,2,5,0,1,False
+Seibold_2020_10Xv3,ann_level_4,Ionocyte,2,5,20,39,False
+Seibold_2020_10Xv3,ann_level_4,Multiciliated,2,5,318,576,True
+Seibold_2020_10Xv3,ann_level_4,NK cells,2,5,0,1,False
+Seibold_2020_10Xv3,ann_level_4,Neuroendocrine,2,5,8,42,False
+Seibold_2020_10Xv3,ann_level_4,None,2,5,6,7,False
+Seibold_2020_10Xv3,ann_level_4,SMG duct,2,5,95,175,False
+Seibold_2020_10Xv3,ann_level_4,SMG serous,2,5,1,2,False
+Seibold_2020_10Xv3,ann_level_4,Suprabasal,2,5,3177,7527,True
+Seibold_2020_10Xv3,ann_level_4,Transitional Club-AT2,2,5,6,5,False
+Seibold_2020_10Xv3,ann_level_4,Tuft,2,5,19,15,False
+Teichmann_Meyer_2019,ann_level_4,AT2 proliferating,2,1,100,0,False
+Teichmann_Meyer_2019,ann_level_4,Adventitial fibroblasts,2,1,249,47,False
+Teichmann_Meyer_2019,ann_level_4,Alveolar fibroblasts,2,1,5,1,False
+Teichmann_Meyer_2019,ann_level_4,Alveolar macrophages,2,1,1804,10,False
+Teichmann_Meyer_2019,ann_level_4,B cells,2,1,3,10,False
+Teichmann_Meyer_2019,ann_level_4,Basal resting,2,1,0,1,False
+Teichmann_Meyer_2019,ann_level_4,CD4 T cells,2,1,9,117,False
+Teichmann_Meyer_2019,ann_level_4,CD8 T cells,2,1,1,61,False
+Teichmann_Meyer_2019,ann_level_4,Classical monocytes,2,1,193,989,False
+Teichmann_Meyer_2019,ann_level_4,Club,2,1,1,2,False
+Teichmann_Meyer_2019,ann_level_4,DC1,2,1,9,10,False
+Teichmann_Meyer_2019,ann_level_4,DC2,2,1,214,205,True
+Teichmann_Meyer_2019,ann_level_4,Deuterosomal,2,1,1,0,False
+Teichmann_Meyer_2019,ann_level_4,EC aerocyte capillary,2,1,1,0,False
+Teichmann_Meyer_2019,ann_level_4,EC general capillary,2,1,4,0,False
+Teichmann_Meyer_2019,ann_level_4,EC venous pulmonary,2,1,17,0,False
+Teichmann_Meyer_2019,ann_level_4,EC venous systemic,2,1,25,0,False
+Teichmann_Meyer_2019,ann_level_4,Goblet,2,1,1,2,False
+Teichmann_Meyer_2019,ann_level_4,Interstitial macrophages,2,1,1906,34,False
+Teichmann_Meyer_2019,ann_level_4,Migratory DCs,2,1,7,5,False
+Teichmann_Meyer_2019,ann_level_4,Multiciliated,2,1,6,46,False
+Teichmann_Meyer_2019,ann_level_4,NK cells,2,1,1,30,False
+Teichmann_Meyer_2019,ann_level_4,Non-classical monocytes,2,1,167,220,False
+Teichmann_Meyer_2019,ann_level_4,None,2,1,2264,164,False
+Teichmann_Meyer_2019,ann_level_4,Peribronchial fibroblasts,2,1,9,0,False
+Teichmann_Meyer_2019,ann_level_4,Plasma cells,2,1,2,0,False
+Teichmann_Meyer_2019,ann_level_4,Plasmacytoid DCs,2,1,1,1,False
+Teichmann_Meyer_2019,ann_level_4,Subpleural fibroblasts,2,1,92,0,False
+Teichmann_Meyer_2019,ann_level_4,Suprabasal,2,1,3,1,False
+Teichmann_Meyer_2019,ann_level_4,T cells proliferating,2,1,1,0,False
+Teichmann_Meyer_2019,ann_level_4,Transitional Club-AT2,2,1,17,35,False
+Banovich_Kropski_2020,cell_type,B cell,17,5,351,140,False
+Banovich_Kropski_2020,cell_type,CD1c-positive myeloid dendritic cell,17,5,696,254,True
+Banovich_Kropski_2020,cell_type,"CD4-positive, alpha-beta T cell",17,5,2846,2513,True
+Banovich_Kropski_2020,cell_type,"CD8-positive, alpha-beta T cell",17,5,3417,1366,True
+Banovich_Kropski_2020,cell_type,T cell,17,5,251,13,False
+Banovich_Kropski_2020,cell_type,acinar cell,17,5,0,1,False
+Banovich_Kropski_2020,cell_type,alveolar adventitial fibroblast,17,5,490,440,True
+Banovich_Kropski_2020,cell_type,alveolar macrophage,17,5,11084,667,True
+Banovich_Kropski_2020,cell_type,alveolar type 1 fibroblast cell,17,5,524,142,False
+Banovich_Kropski_2020,cell_type,bronchial goblet cell,17,5,31,9,False
+Banovich_Kropski_2020,cell_type,bronchus fibroblast of lung,17,5,83,34,False
+Banovich_Kropski_2020,cell_type,brush cell of tracheobronchial tree,17,5,2,1,False
+Banovich_Kropski_2020,cell_type,capillary endothelial cell,17,5,3499,1997,True
+Banovich_Kropski_2020,cell_type,classical monocyte,17,5,2654,787,True
+Banovich_Kropski_2020,cell_type,club cell,17,5,321,38,False
+Banovich_Kropski_2020,cell_type,conventional dendritic cell,17,5,18,15,False
+Banovich_Kropski_2020,cell_type,dendritic cell,17,5,18,8,False
+Banovich_Kropski_2020,cell_type,elicited macrophage,17,5,5537,1310,True
+Banovich_Kropski_2020,cell_type,endothelial cell of lymphatic vessel,17,5,726,470,True
+Banovich_Kropski_2020,cell_type,epithelial cell of lower respiratory tract,17,5,672,456,True
+Banovich_Kropski_2020,cell_type,fibroblast,17,5,11,3,False
+Banovich_Kropski_2020,cell_type,hematopoietic stem cell,17,5,8,2,False
+Banovich_Kropski_2020,cell_type,ionocyte,17,5,13,2,False
+Banovich_Kropski_2020,cell_type,lung macrophage,17,5,445,134,False
+Banovich_Kropski_2020,cell_type,lung pericyte,17,5,193,173,False
+Banovich_Kropski_2020,cell_type,mast cell,17,5,254,71,False
+Banovich_Kropski_2020,cell_type,mesothelial cell,17,5,7,8,False
+Banovich_Kropski_2020,cell_type,multiciliated columnar cell of tracheobronchial tree,17,5,2163,624,True
+Banovich_Kropski_2020,cell_type,multiciliated epithelial cell,17,5,105,7,False
+Banovich_Kropski_2020,cell_type,myofibroblast cell,17,5,55,42,False
+Banovich_Kropski_2020,cell_type,nasal mucosa goblet cell,17,5,43,5,False
+Banovich_Kropski_2020,cell_type,natural killer cell,17,5,1898,1734,True
+Banovich_Kropski_2020,cell_type,non-classical monocyte,17,5,2268,608,True
+Banovich_Kropski_2020,cell_type,plasma cell,17,5,174,11,False
+Banovich_Kropski_2020,cell_type,plasmacytoid dendritic cell,17,5,11,13,False
+Banovich_Kropski_2020,cell_type,pulmonary alveolar epithelial cell,17,5,247,60,False
+Banovich_Kropski_2020,cell_type,pulmonary alveolar type 1 cell,17,5,1943,974,True
+Banovich_Kropski_2020,cell_type,pulmonary alveolar type 2 cell,17,5,10145,4279,True
+Banovich_Kropski_2020,cell_type,pulmonary artery endothelial cell,17,5,1288,1030,True
+Banovich_Kropski_2020,cell_type,pulmonary neuroendocrine cell,17,5,3,0,False
+Banovich_Kropski_2020,cell_type,respiratory basal cell,17,5,127,53,False
+Banovich_Kropski_2020,cell_type,stromal cell,17,5,4,4,False
+Banovich_Kropski_2020,cell_type,tracheobronchial goblet cell,17,5,3,2,False
+Banovich_Kropski_2020,cell_type,tracheobronchial smooth muscle cell,17,5,214,162,False
+Banovich_Kropski_2020,cell_type,vein endothelial cell,17,5,1049,1010,True
+Meyer_2019,cell_type,B cell,1,1,608,210,True
+Meyer_2019,cell_type,CD1c-positive myeloid dendritic cell,1,1,937,219,True
+Meyer_2019,cell_type,"CD4-positive, alpha-beta T cell",1,1,1951,1422,True
+Meyer_2019,cell_type,"CD8-positive, alpha-beta T cell",1,1,846,3677,True
+Meyer_2019,cell_type,T cell,1,1,34,4,False
+Meyer_2019,cell_type,alveolar adventitial fibroblast,1,1,199,271,False
+Meyer_2019,cell_type,alveolar macrophage,1,1,507,95,False
+Meyer_2019,cell_type,alveolar type 1 fibroblast cell,1,1,16,531,False
+Meyer_2019,cell_type,bronchus fibroblast of lung,1,1,15,10,False
+Meyer_2019,cell_type,capillary endothelial cell,1,1,73,38,False
+Meyer_2019,cell_type,classical monocyte,1,1,1617,862,True
+Meyer_2019,cell_type,club cell,1,1,2,2,False
+Meyer_2019,cell_type,conventional dendritic cell,1,1,18,54,False
+Meyer_2019,cell_type,dendritic cell,1,1,15,58,False
+Meyer_2019,cell_type,elicited macrophage,1,1,402,264,True
+Meyer_2019,cell_type,endothelial cell of lymphatic vessel,1,1,17,95,False
+Meyer_2019,cell_type,epithelial cell of lower respiratory tract,1,1,10,40,False
+Meyer_2019,cell_type,fibroblast,1,1,79,2,False
+Meyer_2019,cell_type,hematopoietic stem cell,1,1,29,3,False
+Meyer_2019,cell_type,lung macrophage,1,1,75,18,False
+Meyer_2019,cell_type,lung pericyte,1,1,0,2,False
+Meyer_2019,cell_type,mast cell,1,1,20,2185,False
+Meyer_2019,cell_type,mesothelial cell,1,1,1,0,False
+Meyer_2019,cell_type,multiciliated columnar cell of tracheobronchial tree,1,1,67,25,False
+Meyer_2019,cell_type,myofibroblast cell,1,1,5,53,False
+Meyer_2019,cell_type,natural killer cell,1,1,4000,2720,True
+Meyer_2019,cell_type,non-classical monocyte,1,1,217,59,False
+Meyer_2019,cell_type,plasma cell,1,1,72,31,False
+Meyer_2019,cell_type,plasmacytoid dendritic cell,1,1,8,9,False
+Meyer_2019,cell_type,pulmonary alveolar epithelial cell,1,1,5,2,False
+Meyer_2019,cell_type,pulmonary alveolar type 1 cell,1,1,87,2,False
+Meyer_2019,cell_type,pulmonary alveolar type 2 cell,1,1,1474,1227,True
+Meyer_2019,cell_type,pulmonary artery endothelial cell,1,1,9,109,False
+Meyer_2019,cell_type,respiratory basal cell,1,1,2,8,False
+Meyer_2019,cell_type,smooth muscle cell,1,1,2,122,False
+Meyer_2019,cell_type,stromal cell,1,1,2,23,False
+Meyer_2019,cell_type,tracheobronchial smooth muscle cell,1,1,62,74,False
+Meyer_2019,cell_type,vein endothelial cell,1,1,74,202,False
+Misharin_Budinger_2018,cell_type,B cell,3,1,18,5,False
+Misharin_Budinger_2018,cell_type,CD1c-positive myeloid dendritic cell,3,1,150,42,False
+Misharin_Budinger_2018,cell_type,"CD4-positive, alpha-beta T cell",3,1,92,10,False
+Misharin_Budinger_2018,cell_type,"CD8-positive, alpha-beta T cell",3,1,17,7,False
+Misharin_Budinger_2018,cell_type,T cell,3,1,1,0,False
+Misharin_Budinger_2018,cell_type,alveolar adventitial fibroblast,3,1,6,0,False
+Misharin_Budinger_2018,cell_type,alveolar macrophage,3,1,5777,2419,True
+Misharin_Budinger_2018,cell_type,alveolar type 1 fibroblast cell,3,1,47,2,False
+Misharin_Budinger_2018,cell_type,capillary endothelial cell,3,1,17,8,False
+Misharin_Budinger_2018,cell_type,classical monocyte,3,1,361,44,False
+Misharin_Budinger_2018,cell_type,club cell,3,1,3,0,False
+Misharin_Budinger_2018,cell_type,conventional dendritic cell,3,1,3,0,False
+Misharin_Budinger_2018,cell_type,dendritic cell,3,1,1,0,False
+Misharin_Budinger_2018,cell_type,elicited macrophage,3,1,255,106,False
+Misharin_Budinger_2018,cell_type,endothelial cell of lymphatic vessel,3,1,39,21,False
+Misharin_Budinger_2018,cell_type,epithelial cell of lower respiratory tract,3,1,22,8,False
+Misharin_Budinger_2018,cell_type,hematopoietic stem cell,3,1,2,0,False
+Misharin_Budinger_2018,cell_type,lung macrophage,3,1,75,42,False
+Misharin_Budinger_2018,cell_type,mast cell,3,1,8,29,False
+Misharin_Budinger_2018,cell_type,multiciliated columnar cell of tracheobronchial tree,3,1,96,22,False
+Misharin_Budinger_2018,cell_type,multiciliated epithelial cell,3,1,0,2,False
+Misharin_Budinger_2018,cell_type,myofibroblast cell,3,1,1,2,False
+Misharin_Budinger_2018,cell_type,nasal mucosa goblet cell,3,1,3,0,False
+Misharin_Budinger_2018,cell_type,natural killer cell,3,1,11,2,False
+Misharin_Budinger_2018,cell_type,non-classical monocyte,3,1,142,18,False
+Misharin_Budinger_2018,cell_type,plasma cell,3,1,182,16,False
+Misharin_Budinger_2018,cell_type,pulmonary alveolar epithelial cell,3,1,161,6,False
+Misharin_Budinger_2018,cell_type,pulmonary alveolar type 1 cell,3,1,388,51,False
+Misharin_Budinger_2018,cell_type,pulmonary alveolar type 2 cell,3,1,6234,2469,True
+Misharin_Budinger_2018,cell_type,pulmonary artery endothelial cell,3,1,61,12,False
+Misharin_Budinger_2018,cell_type,respiratory basal cell,3,1,12,0,False
+Misharin_Budinger_2018,cell_type,stromal cell,3,1,2,0,False
+Misharin_Budinger_2018,cell_type,tracheobronchial goblet cell,3,1,1,0,False
+Misharin_Budinger_2018,cell_type,tracheobronchial smooth muscle cell,3,1,9,5,False
+Misharin_Budinger_2018,cell_type,vein endothelial cell,3,1,87,42,False
+Nawijn_2021,cell_type,B cell,1,2,0,40,False
+Nawijn_2021,cell_type,CD1c-positive myeloid dendritic cell,1,2,8,77,False
+Nawijn_2021,cell_type,"CD4-positive, alpha-beta T cell",1,2,1,205,False
+Nawijn_2021,cell_type,"CD8-positive, alpha-beta T cell",1,2,1,774,False
+Nawijn_2021,cell_type,T cell,1,2,0,3,False
+Nawijn_2021,cell_type,acinar cell,1,2,4,23,False
+Nawijn_2021,cell_type,alveolar adventitial fibroblast,1,2,0,10,False
+Nawijn_2021,cell_type,alveolar macrophage,1,2,2,6,False
+Nawijn_2021,cell_type,alveolar type 1 fibroblast cell,1,2,0,6,False
+Nawijn_2021,cell_type,bronchial goblet cell,1,2,1,3,False
+Nawijn_2021,cell_type,bronchus fibroblast of lung,1,2,0,28,False
+Nawijn_2021,cell_type,capillary endothelial cell,1,2,0,6,False
+Nawijn_2021,cell_type,classical monocyte,1,2,0,203,False
+Nawijn_2021,cell_type,club cell,1,2,74,404,False
+Nawijn_2021,cell_type,conventional dendritic cell,1,2,0,2,False
+Nawijn_2021,cell_type,elicited macrophage,1,2,1,1,False
+Nawijn_2021,cell_type,endothelial cell of lymphatic vessel,1,2,0,1,False
+Nawijn_2021,cell_type,epithelial cell of lower respiratory tract,1,2,0,8,False
+Nawijn_2021,cell_type,ionocyte,1,2,0,7,False
+Nawijn_2021,cell_type,lung macrophage,1,2,0,4,False
+Nawijn_2021,cell_type,mast cell,1,2,2,23,False
+Nawijn_2021,cell_type,mucus secreting cell,1,2,4,2,False
+Nawijn_2021,cell_type,multiciliated columnar cell of tracheobronchial tree,1,2,309,1443,True
+Nawijn_2021,cell_type,multiciliated epithelial cell,1,2,6,27,False
+Nawijn_2021,cell_type,myofibroblast cell,1,2,0,1,False
+Nawijn_2021,cell_type,nasal mucosa goblet cell,1,2,109,66,False
+Nawijn_2021,cell_type,natural killer cell,1,2,0,60,False
+Nawijn_2021,cell_type,non-classical monocyte,1,2,0,29,False
+Nawijn_2021,cell_type,plasma cell,1,2,0,9,False
+Nawijn_2021,cell_type,plasmacytoid dendritic cell,1,2,0,3,False
+Nawijn_2021,cell_type,pulmonary artery endothelial cell,1,2,0,14,False
+Nawijn_2021,cell_type,respiratory basal cell,1,2,338,1965,True
+Nawijn_2021,cell_type,respiratory tract hillock cell,1,2,3,0,False
+Nawijn_2021,cell_type,smooth muscle cell,1,2,0,3,False
+Nawijn_2021,cell_type,tracheobronchial goblet cell,1,2,0,2,False
+Nawijn_2021,cell_type,tracheobronchial serous cell,1,2,4,3,False
+Nawijn_2021,cell_type,tracheobronchial smooth muscle cell,1,2,3,7,False
+Nawijn_2021,cell_type,vein endothelial cell,1,2,17,134,False
+Seibold_2020_10Xv3,cell_type,B cell,2,5,0,1,False
+Seibold_2020_10Xv3,cell_type,"CD4-positive, alpha-beta T cell",2,5,0,3,False
+Seibold_2020_10Xv3,cell_type,"CD8-positive, alpha-beta T cell",2,5,0,4,False
+Seibold_2020_10Xv3,cell_type,acinar cell,2,5,95,175,False
+Seibold_2020_10Xv3,cell_type,alveolar macrophage,2,5,0,1,False
+Seibold_2020_10Xv3,cell_type,bronchial goblet cell,2,5,2,96,False
+Seibold_2020_10Xv3,cell_type,brush cell of tracheobronchial tree,2,5,19,15,False
+Seibold_2020_10Xv3,cell_type,club cell,2,5,76,130,False
+Seibold_2020_10Xv3,cell_type,elicited macrophage,2,5,0,1,False
+Seibold_2020_10Xv3,cell_type,endothelial cell of lymphatic vessel,2,5,0,1,False
+Seibold_2020_10Xv3,cell_type,epithelial cell of lower respiratory tract,2,5,6,5,False
+Seibold_2020_10Xv3,cell_type,ionocyte,2,5,20,39,False
+Seibold_2020_10Xv3,cell_type,mast cell,2,5,1,2,False
+Seibold_2020_10Xv3,cell_type,multiciliated columnar cell of tracheobronchial tree,2,5,310,572,True
+Seibold_2020_10Xv3,cell_type,multiciliated epithelial cell,2,5,31,22,False
+Seibold_2020_10Xv3,cell_type,nasal mucosa goblet cell,2,5,519,781,True
+Seibold_2020_10Xv3,cell_type,natural killer cell,2,5,0,1,False
+Seibold_2020_10Xv3,cell_type,pulmonary alveolar type 1 cell,2,5,1,1,False
+Seibold_2020_10Xv3,cell_type,pulmonary alveolar type 2 cell,2,5,4,3,False
+Seibold_2020_10Xv3,cell_type,pulmonary neuroendocrine cell,2,5,8,42,False
+Seibold_2020_10Xv3,cell_type,respiratory basal cell,2,5,4455,9106,True
+Seibold_2020_10Xv3,cell_type,respiratory tract hillock cell,2,5,108,1502,False
+Seibold_2020_10Xv3,cell_type,serous secreting cell,2,5,0,1,False
+Seibold_2020_10Xv3,cell_type,tracheobronchial goblet cell,2,5,7,2,False
+Seibold_2020_10Xv3,cell_type,tracheobronchial serous cell,2,5,1,1,False
+Seibold_2020_10Xv3,cell_type,vein endothelial cell,2,5,1,0,False
+Teichmann_Meyer_2019,cell_type,B cell,2,1,3,10,False
+Teichmann_Meyer_2019,cell_type,CD1c-positive myeloid dendritic cell,2,1,214,205,True
+Teichmann_Meyer_2019,cell_type,"CD4-positive, alpha-beta T cell",2,1,9,117,False
+Teichmann_Meyer_2019,cell_type,"CD8-positive, alpha-beta T cell",2,1,1,61,False
+Teichmann_Meyer_2019,cell_type,T cell,2,1,1,0,False
+Teichmann_Meyer_2019,cell_type,alveolar adventitial fibroblast,2,1,249,47,False
+Teichmann_Meyer_2019,cell_type,alveolar macrophage,2,1,1804,10,False
+Teichmann_Meyer_2019,cell_type,alveolar type 1 fibroblast cell,2,1,5,1,False
+Teichmann_Meyer_2019,cell_type,bronchus fibroblast of lung,2,1,9,0,False
+Teichmann_Meyer_2019,cell_type,capillary endothelial cell,2,1,5,0,False
+Teichmann_Meyer_2019,cell_type,classical monocyte,2,1,193,989,False
+Teichmann_Meyer_2019,cell_type,club cell,2,1,1,2,False
+Teichmann_Meyer_2019,cell_type,conventional dendritic cell,2,1,9,10,False
+Teichmann_Meyer_2019,cell_type,dendritic cell,2,1,7,5,False
+Teichmann_Meyer_2019,cell_type,elicited macrophage,2,1,1735,19,False
+Teichmann_Meyer_2019,cell_type,endothelial cell of lymphatic vessel,2,1,76,0,False
+Teichmann_Meyer_2019,cell_type,epithelial cell of lower respiratory tract,2,1,8,30,False
+Teichmann_Meyer_2019,cell_type,fibroblast,2,1,92,0,False
+Teichmann_Meyer_2019,cell_type,hematopoietic stem cell,2,1,2,0,False
+Teichmann_Meyer_2019,cell_type,lung macrophage,2,1,171,15,False
+Teichmann_Meyer_2019,cell_type,mast cell,2,1,4,60,False
+Teichmann_Meyer_2019,cell_type,mesothelial cell,2,1,22,0,False
+Teichmann_Meyer_2019,cell_type,multiciliated columnar cell of tracheobronchial tree,2,1,6,46,False
+Teichmann_Meyer_2019,cell_type,multiciliated epithelial cell,2,1,1,0,False
+Teichmann_Meyer_2019,cell_type,myofibroblast cell,2,1,1,0,False
+Teichmann_Meyer_2019,cell_type,nasal mucosa goblet cell,2,1,1,2,False
+Teichmann_Meyer_2019,cell_type,natural killer cell,2,1,1,30,False
+Teichmann_Meyer_2019,cell_type,non-classical monocyte,2,1,167,220,False
+Teichmann_Meyer_2019,cell_type,plasma cell,2,1,2,0,False
+Teichmann_Meyer_2019,cell_type,plasmacytoid dendritic cell,2,1,1,1,False
+Teichmann_Meyer_2019,cell_type,pulmonary alveolar epithelial cell,2,1,9,5,False
+Teichmann_Meyer_2019,cell_type,pulmonary alveolar type 1 cell,2,1,8,14,False
+Teichmann_Meyer_2019,cell_type,pulmonary alveolar type 2 cell,2,1,2236,89,False
+Teichmann_Meyer_2019,cell_type,pulmonary artery endothelial cell,2,1,11,0,False
+Teichmann_Meyer_2019,cell_type,respiratory basal cell,2,1,3,2,False
+Teichmann_Meyer_2019,cell_type,tracheobronchial smooth muscle cell,2,1,4,1,False
+Teichmann_Meyer_2019,cell_type,vein endothelial cell,2,1,42,0,False

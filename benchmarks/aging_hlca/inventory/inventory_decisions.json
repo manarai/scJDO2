@@ -1,0 +1,51 @@
+{
+  "age_conversion": "numeric values used directly; two-endpoint ranges converted to midpoint; one-bound thresholds converted to stated boundary; unparseable values missing",
+  "age_field": "age_or_mean_of_age_range",
+  "age_field_candidates": [
+    {
+      "field": "age_or_mean_of_age_range",
+      "n_parseable_cells": 581517,
+      "n_unique_parseable": 52
+    },
+    {
+      "field": "development_stage_ontology_term_id",
+      "n_parseable_cells": 581517,
+      "n_unique_parseable": 49
+    },
+    {
+      "field": "age_range",
+      "n_parseable_cells": 118187,
+      "n_unique_parseable": 6
+    },
+    {
+      "field": "development_stage",
+      "n_parseable_cells": 463330,
+      "n_unique_parseable": 45
+    }
+  ],
+  "age_field_rationale": "Selected the first preferred HLCA age field with parseable donor-level values; numeric values retain their stated years and ranges use deterministic midpoints.",
+  "annotation_levels": [
+    "ann_level_3",
+    "ann_level_4",
+    "cell_type"
+  ],
+  "donor_field": "donor_id",
+  "n_cells": 584944,
+  "n_celltypes_ge200_both_sides_pooled": 70,
+  "n_donors": 107,
+  "n_donors_ge60": 17,
+  "n_donors_lt45": 48,
+  "n_donors_with_age": 106,
+  "n_genes": 27402,
+  "n_studies_with_within_study_contrast": 6,
+  "selected_metadata_fields": {
+    "BMI": "BMI",
+    "assay": "assay",
+    "sampling_site": "anatomical_region_ccf_score",
+    "sex": "sex",
+    "smoking_status": "smoking_status"
+  },
+  "source_h5ad": "benchmarks/aging_hlca/data/hlca_core_full_metadata.h5ad",
+  "study_field": "dataset",
+  "task": "hlca/H01"
+}
