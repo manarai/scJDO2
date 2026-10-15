@@ -126,3 +126,16 @@ with age (×1.5–6.9 across all seeds and both spaces).
 Mouse-to-mouse variation untested (X05). Exploratory throughout.
 **Next.** Proposed: X05 (per-mouse), then hlca/H01; reproducibility
 runner (Claude).
+
+## 2026-10-14 — aging/X05 (EXPLORATORY, REVISE) — per-mouse check, first pass
+
+**Result.** As specified, granulocytopoietic stiffening passed the
+per-mouse rule (p 0.030 / 0.045 / 0.015). Claude's review found the
+per-mouse operators compared ~363-cell young mice with ~73-cell old
+mice; at equal counts young mice look markedly stiffer (seed 0 median
+2.3–2.6 vs 1.7–1.8), so the per-mouse effect was inflated.
+**Meaning.** Not yet decided. Pooled stiffening (equal counts) stands;
+whether it exceeds mouse-to-mouse variation is being recomputed at
+equal counts. Sex does not explain it (old females 3.6–5.4 vs young
+females 1.7–1.8 at full count). One old mouse (24-M-59) is young-like.
+**Next.** X05 revision 1 (equal-count operators), then hlca/H01.
