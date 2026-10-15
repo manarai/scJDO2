@@ -35,7 +35,7 @@ ZENODO_RECORD = "7599104"
 ZENODO_API = f"https://zenodo.org/api/records/{ZENODO_RECORD}"
 ZENODO_CONTENT = f"https://zenodo.org/api/records/{ZENODO_RECORD}/files"
 MODEL_URL = f"{ZENODO_CONTENT}/HLCA_reference_model.zip/content"
-EMBED_URL = f"{ZENODO_CONTENT}/HLCA_full_v1.1_emb.h5ad/content"
+EMBED_URL = f"https://zenodo.org/records/{ZENODO_RECORD}/files/HLCA_full_v1.1_emb.h5ad?download=1"
 MAX_TOTAL_GB = 30.0
 
 
