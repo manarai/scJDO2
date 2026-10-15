@@ -2,18 +2,20 @@
   "task": "aging/X05",
   "status": "done",
   "started_utc": "2026-10-15T01:25:24Z",
-  "finished_utc": "2026-10-15T01:30:18Z",
+  "finished_utc": "2026-10-15T01:46:20Z",
   "compute": {
-    "cpu_hours": 0.01,
+    "cpu_hours": 0.02,
     "gpu_hours": 0.0,
     "hardware": "MacBook Pro (Apple M3 Max); CPU-only stored-latent/Jacobian calculations; no model fitting"
   },
   "metrics": {
-    "x05_verdict": "granulocytopoietic stiffening exceeds mouse-to-mouse variation",
-    "gcp_T_seed0": 0.8490951636251408,
-    "gcp_p_stiffer_seed0": 0.030303030303030304,
-    "gcp_p_stiffer_seed1": 0.045454545454545456,
-    "gcp_p_stiffer_seed2": 0.015151515151515152,
+    "x05_verdict": "not distinguishable from mouse-to-mouse variation",
+    "x05_verdict_fullcount": "granulocytopoietic stiffening exceeds mouse-to-mouse variation",
+    "gcp_n_common": 72,
+    "gcp_T_seed0": 0.5086809774884188,
+    "gcp_p_stiffer_seed0": 0.045454545454545456,
+    "gcp_p_stiffer_seed1": 0.16666666666666666,
+    "gcp_p_stiffer_seed2": 0.25757575757575757,
     "gcp_loo_min_stiff_ratio": 3.021123271595146,
     "n_relabellings_marrow": {
       "granulocyte": 66,
@@ -117,15 +119,15 @@
   "artifacts": [
     {
       "path": "benchmarks/aging/x05/per_mouse.csv",
-      "bytes": 11797,
-      "sha256": "d7395bb48c60e6a0a310b8fdd9fd2ffd53623c45d6903838de78f55d04dde7ff",
+      "bytes": 18738,
+      "sha256": "0ac33fa0ea803ed76f60808a5a429a379eb25acbd3a067350a67dc63c952ca2a",
       "committed": true,
       "regenerate": "python scripts/x05_donor_uncertainty.py"
     },
     {
       "path": "benchmarks/aging/x05/mouse_permutation.csv",
-      "bytes": 2304,
-      "sha256": "9b702a7d19fcb750671e81c1ac55fba8f7d262db8c625a06791cc220f0ca0394",
+      "bytes": 5254,
+      "sha256": "83dd94a5af2e7e78b245f5d095ed03d8ceb7681940ceebe552773708024f974a",
       "committed": true,
       "regenerate": "python scripts/x05_donor_uncertainty.py"
     },
@@ -138,22 +140,22 @@
     },
     {
       "path": "benchmarks/aging/x05/summary.csv",
-      "bytes": 3095,
-      "sha256": "0f912f4b644acd669e1fcc73a05444e612143987d9440ff5a9e506a3e26c30ba",
+      "bytes": 5393,
+      "sha256": "4f8b6ac16f10296094fd1b67de6b774bf905e04aab367d570d6cea02d2ed4889",
       "committed": true,
       "regenerate": "python scripts/x05_donor_uncertainty.py"
     },
     {
       "path": "benchmarks/aging/x05/RESULT_X05.md",
-      "bytes": 2193,
-      "sha256": "a14702286c359ac88e631d7bef875aefaf0fce854ea8d0dfea47b4cd544e9028",
+      "bytes": 2319,
+      "sha256": "207f74fa208f1d42bc969fbbbf63ae57ab87cf9a979c6c525823d05a2029675c",
       "committed": true,
       "regenerate": "python scripts/x05_donor_uncertainty.py"
     },
     {
       "path": "benchmarks/aging/x05/metrics.json",
-      "bytes": 2247,
-      "sha256": "95d6d703f49b413aac6e545544bfce7a43fe609a1b4dbc9ad8b7ae1f0d39384f",
+      "bytes": 2347,
+      "sha256": "f0d6cb698f0f151f98b91b2a7fadc4a9704837a978ec471693e956cd3f032ebc",
       "committed": true,
       "regenerate": "python scripts/x05_donor_uncertainty.py"
     },
@@ -166,15 +168,15 @@
     },
     {
       "path": "benchmarks/figures/aging/x05/per_mouse_stiffness.pdf",
-      "bytes": 29246,
-      "sha256": "2911c9a8b08dfc0cbd7db4f86835274dbe7ff75522d06cf9f22ff0a94d17b2b2",
+      "bytes": 38531,
+      "sha256": "f8d01f0f0ba245ce56abc2d7da52f9989b15a847c7542d9ffdda3d0e36f493db",
       "committed": true,
       "regenerate": "python scripts/x05_donor_uncertainty.py"
     },
     {
       "path": "benchmarks/figures/aging/x05/per_mouse_stiffness.png",
-      "bytes": 335167,
-      "sha256": "8ba099b27f1c553fbd5f96be1a1f9e9e71b766e81d089b2e4a61a84e330f506e",
+      "bytes": 341020,
+      "sha256": "8788c4537c72fc389939529d54915a82b01aa83356d379b87f3544b8d6a7b104",
       "committed": true,
       "regenerate": "python scripts/x05_donor_uncertainty.py"
     },
@@ -195,18 +197,21 @@
   ],
   "deviations": [
     "No frozen statistical parameter, input artifact, or model setting changed. An initial no-fit attempt exposed AnnData view behavior: a custom per-cell Jacobian stored in uns was not automatically subset when an old donor was dropped. The X05-only script now explicitly carries the existing retained-cell Jacobians into the masked view; the same A03 arguments and stored values were then run.",
-    "The 30-cell donor floor leaves no old promonocyte mouse for the exact per-mouse permutation test. Those three seed rows are recorded as NA with status `insufficient_mice_after_30_cell_floor`, as prescribed; pooled leave-one-old-mouse-out comparisons remain available for that type."
+    "The 30-cell donor floor leaves no old promonocyte mouse for the exact per-mouse permutation test. Those three seed rows are recorded as NA with status `insufficient_mice_after_30_cell_floor`, as prescribed; pooled leave-one-old-mouse-out comparisons remain available for that type.",
+    "Revision 1 followed the binding review: 200 deterministic equal-count subsamples per mouse/type (n_common is the smallest count among mice passing the 30-cell floor) replaced the unequal full-count value for the task reading rule. The full-count result remains explicit provenance.",
+    "Revision 1 regenerated the prescribed equal-count per-mouse and permutation outputs. Leave-one-old-mouse-out inputs, arguments, values, and call-stability fractions were kept unchanged; the existing heatmap PDF was retained rather than committing a metadata-only rerender."
   ],
   "questions": [],
   "observations": [
-    "A02 primary and all four X04 seed-replicate input SHA-256 values matched their accepted reports before computation.",
-    "For granulocytopoietic cells, exact mouse-label p_stiffer was 0.0303 (seed 0), 0.0455 (seed 1), and 0.0152 (seed 2), each from 66 relabellings.",
-    "The granulocytopoietic leave-one-old-mouse-out minimum stiffness ratio was 3.021, with 10 of 10 iso calls and 10 of 10 anticipation calls matching A03.",
-    "The output contains 92 primary per-mouse donor/type rows, 24 permutation rows, 72 leave-one-old-mouse-out rows, and 8 per-type summary rows.",
-    "One lung fibroblast leave-one-old-mouse-out comparison is NA because omitting 18-F-51 leaves fewer than 200 old cells; all other listed LOO entries retain their eligibility status in the table."
+    "All six A02/X04 source inputs continued to match accepted SHA-256 values.",
+    "Granulocytopoietic equal-count n_common was 72; p_stiffer was 0.0455, 0.1667, and 0.2576 for seeds 0\u20132.",
+    "The equal-count reading rule verdict was not distinguishable from mouse-to-mouse variation; the retained full-count provenance verdict was granulocytopoietic stiffening exceeds mouse-to-mouse variation.",
+    "Granulocytopoietic leave-one-old-mouse-out minimum stiffness ratio remained 3.021; its iso and anticipation call stability remained 1.00 over 10 eligible drops.",
+    "The updated permutation table has 48 rows: equal-count and full-count provenance rows for 8 types across 3 seeds. The primary per-mouse table has 92 rows with 200-draw intervals.",
+    "Promonocyte remains NA for exact donor permutation because no old mouse meets the 30-cell floor; no value was imputed."
   ],
   "suggestions": [
-    "A prospective donor-level replication with more young mice would increase the exact-label permutation resolution and prevent the 30-cell floor from removing several donor/type comparisons.",
-    "If a follow-up is approved, inspect why granulocyte anticipation and several non-basin A03 calls change under individual old-mouse omissions; this task only records their stability fractions."
+    "A prospective donor-level replication with more young mice would improve exact-label permutation resolution and reduce exclusions caused by the 30-cell floor.",
+    "If separately approved, evaluate whether the old donor 24-M-59 drives the equal-count seed variability; this task applies only its fixed rule and makes no such follow-up analysis."
   ]
 }
