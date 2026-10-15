@@ -1,0 +1,105 @@
+{
+  "artifacts": [
+    {
+      "bytes": 21532,
+      "committed": true,
+      "path": "scripts/hlca_tests.py",
+      "regenerate": "python scripts/hlca_tests.py --seed 0",
+      "sha256": "0e37b4ef9f805c316efdf191424481006cac4573736d5765468c3274fda6686f"
+    },
+    {
+      "bytes": 1574238,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/donor_operators.csv",
+      "regenerate": "python scripts/hlca_tests.py --seed 0",
+      "sha256": "bb2e91a6abd1a114e979b611dc8f1293b4bc0e32ddf0aed91a22eaf773f2016f"
+    },
+    {
+      "bytes": 3012,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/tests_primary.csv",
+      "regenerate": "python scripts/hlca_tests.py --seed 0",
+      "sha256": "2d46a2725eebbeb0f1f5219e13a28493d4f3f4a65c0e08d62ac88f1c93da67f1"
+    },
+    {
+      "bytes": 13958,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/tests_sensitivity.csv",
+      "regenerate": "python scripts/hlca_tests.py --seed 0",
+      "sha256": "39c64dbb15030367ce98aa782b02b5c000e9dc8b5d99ee7d7aec0ea38b59d466"
+    },
+    {
+      "bytes": 15530,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/RESULT.md",
+      "regenerate": "python scripts/hlca_tests.py --seed 0",
+      "sha256": "d757e26e7a7e8f76f3ed6ecffb1663b06a6450010086be10e43f0c57140fb9fa"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.007066666666666667,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; MPS was not used. H04 analysis process: 25.44 user seconds, 1.05 system seconds, 1.156 GB maximum RSS."
+  },
+  "deviations": [],
+  "finished_utc": "2026-10-15T21:22:33.847005+00:00",
+  "metrics": {
+    "ant_pass_count": 1,
+    "iso_pass_count": 0,
+    "n_common": 50,
+    "n_donor_operator_rows": 2820,
+    "n_eligible": 13,
+    "n_equal_count_draws": 100,
+    "n_perm": 1000,
+    "outcome_header": "isotropic noise increase; no aging claim beyond stiffness",
+    "sensitivity_ant_pass_by_analysis": {
+      "a_within_study": 1,
+      "b_banovich": 0,
+      "c_parenchyma": 0,
+      "d_never_smokers": 0,
+      "e_secondary_space": 0,
+      "f_two_group": 0
+    },
+    "sensitivity_iso_pass_by_analysis": {
+      "a_within_study": 1,
+      "b_banovich": 0,
+      "c_parenchyma": 0,
+      "d_never_smokers": 0,
+      "e_secondary_space": 1,
+      "f_two_group": 0
+    },
+    "sensitivity_n_types_by_analysis": {
+      "a_within_study": 13,
+      "b_banovich": 2,
+      "c_parenchyma": 12,
+      "d_never_smokers": 6,
+      "e_secondary_space": 13,
+      "f_two_group": 13
+    },
+    "sensitivity_stiff_loss_by_analysis": {
+      "a_within_study": 0,
+      "b_banovich": 0,
+      "c_parenchyma": 0,
+      "d_never_smokers": 2,
+      "e_secondary_space": 1,
+      "f_two_group": 0
+    },
+    "stiff_gain_count": 0,
+    "stiff_loss_count": 1,
+    "stiffness_qualifier": "\u2014 no majority stiffness change"
+  },
+  "observations": [
+    "All 13 H03-primary eligible types had at least 20 contributing donors in H04 (range 24\u201369); all retained at least 5 donors aged <45 and at least 5 aged \u226560.",
+    "No primary type passed the continuous-age isotropy statistic; EC capillary was the sole primary anticipation pass; T cell lineage was the sole primary stiffness-loss classification.",
+    "The re-applied sensitivity eligibility counts were 13 within-study, 2 Banovich-only, 12 parenchyma-only, 6 never-smoker, 13 secondary-space, and 13 two-group types.",
+    "The generated result record carries one outcome header and qualifier that exactly match the outcome checker re-derivation."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-15T21:19:06Z",
+  "status": "done",
+  "suggestions": [
+    "Use H05 to render the frozen H04 primary and sensitivity tables alongside the two pre-specified mouse\u2013human matched cell types, preserving the rule that sensitivity analyses do not alter the H04 header.",
+    "If a follow-up is requested after H05 review, report study composition and contributor counts alongside any within-study contrast because age coverage differs by source study."
+  ],
+  "task": "hlca/H04"
+}
