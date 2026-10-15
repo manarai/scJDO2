@@ -9,6 +9,7 @@ Live status: `python coord/coord_check.py board`.
 | aging/A02 | manus | accepted | scArches shared space, drift, operators | ACCEPT |
 | aging/A03 | manus | accepted | Per-type compare, artifacts, modes, outcome | ACCEPT |
 | aging/A04 | manus | accepted | Figures, QC set, notebook, RESULT.md | ACCEPT |
+| aging/X04 | manus | issued | EXPLORATORY: mapping-shrinkage check | — |
 
 ## Log
 
@@ -23,6 +24,7 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-14 — aging/A03 accepted (79aeb37): frozen outcome "isotropic noise increase; no aging claim beyond stiffness"; A04 issued.
 * 2026-10-14 — aging/A04 REVISE: saddle marker placement, aging_vectors axis ranges, cosmetics.
 * 2026-10-14 — aging/A04 accepted (40cf3a0), merged. Mouse arm A00–A04 complete.
+* 2026-10-14 — user approved X04 (exploratory); issued. Reading rule fixed before the run.
 
 ## hlca
 
