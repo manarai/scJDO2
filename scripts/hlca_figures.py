@@ -272,8 +272,8 @@ def plot_mouse_human(table: pd.DataFrame) -> plt.Figure:
         ax.set_ylabel("old / young stiffness ratio")
         mouse_calls = f"A03 calls\nisotropy: {'pass' if row.mouse_a03_iso_pass else 'fail'}\nanticipation: {'pass' if row.mouse_a03_ant_pass else 'fail'}"
         human_calls = f"H04 §7f calls\nisotropy: {'pass' if row.human_two_group_iso_pass else 'fail'}\nanticipation: {'pass' if row.human_two_group_ant_pass else 'fail'}"
-        ax.text(0, .03, mouse_calls, transform=ax.get_xaxis_transform(), ha="center", va="bottom", fontsize=7)
-        ax.text(1, .03, human_calls, transform=ax.get_xaxis_transform(), ha="center", va="bottom", fontsize=7)
+        ax.text(.03, .035, mouse_calls, transform=ax.transAxes, ha="left", va="bottom", fontsize=7)
+        ax.text(.97, .035, human_calls, transform=ax.transAxes, ha="right", va="bottom", fontsize=7)
         ax.grid(axis="y", color="0.9")
     axes[0].legend(fontsize=7, loc="upper left", frameon=False)
     fig.suptitle("Pre-registered mouse–human comparison", x=.01, ha="left", fontsize=13, fontweight="bold")
