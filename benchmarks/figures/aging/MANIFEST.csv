@@ -1,0 +1,160 @@
+path,spec_item,tissue,age,source_files
+benchmarks/figures/aging/comparison/aging_vectors.pdf,§7.5 aging_vectors,both,young_old,benchmarks/aging/compare_pooled.csv;benchmarks/aging/aging_modes.csv
+benchmarks/figures/aging/comparison/aging_vectors.png,§7.5 aging_vectors,both,young_old,benchmarks/aging/compare_pooled.csv;benchmarks/aging/aging_modes.csv
+benchmarks/figures/aging/lung/spectrum_ladder_young_old.pdf,§7.1 spectrum_ladder groups,lung,young_old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/spectrum_ladder_young_old.png,§7.1 spectrum_ladder groups,lung,young_old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/soft_axis_map_young_old.pdf,§7.2 soft_axis_map displacement,lung,young_old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/soft_axis_map_young_old.png,§7.2 soft_axis_map displacement,lung,young_old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/basin_index_age_facet.pdf,§7.3 basin_index_by_type,lung,young_old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/basin_index_age_facet.png,§7.3 basin_index_by_type,lung,young_old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/ledger_map.pdf,§7.4 ledger_map,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/ledger_map.png,§7.4 ledger_map,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/operator_space.pdf,§7b figure_operator_space,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/operator_space.png,§7b figure_operator_space,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/ledger_summary.pdf,§7b figure_ledger_summary,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/ledger_summary.png,§7b figure_ledger_summary,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/spectrum_ladder.pdf,§7b spectrum_ladder single group,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/spectrum_ladder.png,§7b spectrum_ladder single group,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/soft_axis_map.pdf,§7b soft_axis_map,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/soft_axis_map.png,§7b soft_axis_map,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/basin_index.pdf,§7b basin_index_by_type single group,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/basin_index.png,§7b basin_index_by_type single group,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/gaussian_oracle_curvature_ratio.pdf,§7b Gaussian-oracle curvature ratio,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/gaussian_oracle_curvature_ratio.png,§7b Gaussian-oracle curvature ratio,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_scvi_elbo_summary.pdf,§7b scVI ELBO QC,lung,young,benchmarks/aging/qc/lung_scvi_metrics.csv
+benchmarks/figures/aging/lung/young/qc_scvi_elbo_summary.png,§7b scVI ELBO QC,lung,young,benchmarks/aging/qc/lung_scvi_metrics.csv
+benchmarks/figures/aging/lung/young/qc_d_latent.pdf,§7b d_latent choice,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_d_latent.png,§7b d_latent choice,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_sigma.pdf,§7b within-cluster σ versus drift scale,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_sigma.png,§7b within-cluster σ versus drift scale,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_symmetry.pdf,§7b symmetry check histogram,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_symmetry.png,§7b symmetry check histogram,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_rank.pdf,§7b tangent-rank distribution,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_rank.png,§7b tangent-rank distribution,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_gap.pdf,§7b inter-cluster gap control,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_gap.png,§7b inter-cluster gap control,lung,young,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/young/qc_donor_type_counts.pdf,§7b donor × type counts,lung,young,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/qc/lung_donor_type_counts_before.csv;benchmarks/aging/qc/lung_donor_type_counts_after.csv
+benchmarks/figures/aging/lung/young/qc_donor_type_counts.png,§7b donor × type counts,lung,young,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/qc/lung_donor_type_counts_before.csv;benchmarks/aging/qc/lung_donor_type_counts_after.csv
+benchmarks/figures/aging/lung/young/qc_shared_standalone_basin_confusion.pdf,§7b standalone-versus-shared basin agreement,lung,young,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/lung_standalone_young.h5ad
+benchmarks/figures/aging/lung/young/qc_shared_standalone_basin_confusion.png,§7b standalone-versus-shared basin agreement,lung,young,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/lung_standalone_young.h5ad
+benchmarks/figures/aging/lung/young/qc_correction_artifacts.pdf,§7b correction_artifact list,lung,young,benchmarks/aging/lung_compare_shared.csv
+benchmarks/figures/aging/lung/young/qc_correction_artifacts.png,§7b correction_artifact list,lung,young,benchmarks/aging/lung_compare_shared.csv
+benchmarks/figures/aging/lung/old/ledger_map.pdf,§7.4 ledger_map,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/ledger_map.png,§7.4 ledger_map,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/operator_space.pdf,§7b figure_operator_space,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/operator_space.png,§7b figure_operator_space,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/ledger_summary.pdf,§7b figure_ledger_summary,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/ledger_summary.png,§7b figure_ledger_summary,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/spectrum_ladder.pdf,§7b spectrum_ladder single group,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/spectrum_ladder.png,§7b spectrum_ladder single group,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/soft_axis_map.pdf,§7b soft_axis_map,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/soft_axis_map.png,§7b soft_axis_map,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/basin_index.pdf,§7b basin_index_by_type single group,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/basin_index.png,§7b basin_index_by_type single group,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/gaussian_oracle_curvature_ratio.pdf,§7b Gaussian-oracle curvature ratio,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/gaussian_oracle_curvature_ratio.png,§7b Gaussian-oracle curvature ratio,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_scvi_elbo_summary.pdf,§7b scVI ELBO QC,lung,old,benchmarks/aging/qc/lung_scvi_metrics.csv
+benchmarks/figures/aging/lung/old/qc_scvi_elbo_summary.png,§7b scVI ELBO QC,lung,old,benchmarks/aging/qc/lung_scvi_metrics.csv
+benchmarks/figures/aging/lung/old/qc_d_latent.pdf,§7b d_latent choice,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_d_latent.png,§7b d_latent choice,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_sigma.pdf,§7b within-cluster σ versus drift scale,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_sigma.png,§7b within-cluster σ versus drift scale,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_symmetry.pdf,§7b symmetry check histogram,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_symmetry.png,§7b symmetry check histogram,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_rank.pdf,§7b tangent-rank distribution,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_rank.png,§7b tangent-rank distribution,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_gap.pdf,§7b inter-cluster gap control,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_gap.png,§7b inter-cluster gap control,lung,old,benchmarks/aging/lung_shared.h5ad
+benchmarks/figures/aging/lung/old/qc_donor_type_counts.pdf,§7b donor × type counts,lung,old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/qc/lung_donor_type_counts_before.csv;benchmarks/aging/qc/lung_donor_type_counts_after.csv
+benchmarks/figures/aging/lung/old/qc_donor_type_counts.png,§7b donor × type counts,lung,old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/qc/lung_donor_type_counts_before.csv;benchmarks/aging/qc/lung_donor_type_counts_after.csv
+benchmarks/figures/aging/lung/old/qc_shared_standalone_basin_confusion.pdf,§7b standalone-versus-shared basin agreement,lung,old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/lung_standalone_old.h5ad
+benchmarks/figures/aging/lung/old/qc_shared_standalone_basin_confusion.png,§7b standalone-versus-shared basin agreement,lung,old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/lung_standalone_old.h5ad
+benchmarks/figures/aging/lung/old/qc_correction_artifacts.pdf,§7b correction_artifact list,lung,old,benchmarks/aging/lung_compare_shared.csv
+benchmarks/figures/aging/lung/old/qc_correction_artifacts.png,§7b correction_artifact list,lung,old,benchmarks/aging/lung_compare_shared.csv
+benchmarks/figures/aging/lung/compare_summary.pdf,§7b compare_summary,lung,young_old,benchmarks/aging/lung_compare_shared.csv;benchmarks/aging/aging_modes.csv
+benchmarks/figures/aging/lung/compare_summary.png,§7b compare_summary,lung,young_old,benchmarks/aging/lung_compare_shared.csv;benchmarks/aging/aging_modes.csv
+benchmarks/figures/aging/lung/standalone_shared_quantities.pdf,§7b standalone-versus-shared quantities,lung,young_old,benchmarks/aging/lung_compare_standalone.csv
+benchmarks/figures/aging/lung/standalone_shared_quantities.png,§7b standalone-versus-shared quantities,lung,young_old,benchmarks/aging/lung_compare_standalone.csv
+benchmarks/figures/aging/lung/energy_transect_fibroblast_of_lung.pdf,§7.6 energy_transect,lung,young_old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/models/lung_shared_drift.pt
+benchmarks/figures/aging/lung/energy_transect_fibroblast_of_lung.png,§7.6 energy_transect,lung,young_old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/models/lung_shared_drift.pt
+benchmarks/figures/aging/lung/energy_transect_natural_killer_cell.pdf,§7.6 energy_transect,lung,young_old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/models/lung_shared_drift.pt
+benchmarks/figures/aging/lung/energy_transect_natural_killer_cell.png,§7.6 energy_transect,lung,young_old,benchmarks/aging/lung_shared.h5ad;benchmarks/aging/models/lung_shared_drift.pt
+benchmarks/figures/aging/marrow/spectrum_ladder_young_old.pdf,§7.1 spectrum_ladder groups,marrow,young_old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/spectrum_ladder_young_old.png,§7.1 spectrum_ladder groups,marrow,young_old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/soft_axis_map_young_old.pdf,§7.2 soft_axis_map displacement,marrow,young_old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/soft_axis_map_young_old.png,§7.2 soft_axis_map displacement,marrow,young_old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/basin_index_age_facet.pdf,§7.3 basin_index_by_type,marrow,young_old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/basin_index_age_facet.png,§7.3 basin_index_by_type,marrow,young_old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/ledger_map.pdf,§7.4 ledger_map,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/ledger_map.png,§7.4 ledger_map,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/operator_space.pdf,§7b figure_operator_space,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/operator_space.png,§7b figure_operator_space,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/ledger_summary.pdf,§7b figure_ledger_summary,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/ledger_summary.png,§7b figure_ledger_summary,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/spectrum_ladder.pdf,§7b spectrum_ladder single group,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/spectrum_ladder.png,§7b spectrum_ladder single group,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/soft_axis_map.pdf,§7b soft_axis_map,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/soft_axis_map.png,§7b soft_axis_map,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/basin_index.pdf,§7b basin_index_by_type single group,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/basin_index.png,§7b basin_index_by_type single group,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/gaussian_oracle_curvature_ratio.pdf,§7b Gaussian-oracle curvature ratio,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/gaussian_oracle_curvature_ratio.png,§7b Gaussian-oracle curvature ratio,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_scvi_elbo_summary.pdf,§7b scVI ELBO QC,marrow,young,benchmarks/aging/qc/marrow_scvi_metrics.csv
+benchmarks/figures/aging/marrow/young/qc_scvi_elbo_summary.png,§7b scVI ELBO QC,marrow,young,benchmarks/aging/qc/marrow_scvi_metrics.csv
+benchmarks/figures/aging/marrow/young/qc_d_latent.pdf,§7b d_latent choice,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_d_latent.png,§7b d_latent choice,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_sigma.pdf,§7b within-cluster σ versus drift scale,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_sigma.png,§7b within-cluster σ versus drift scale,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_symmetry.pdf,§7b symmetry check histogram,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_symmetry.png,§7b symmetry check histogram,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_rank.pdf,§7b tangent-rank distribution,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_rank.png,§7b tangent-rank distribution,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_gap.pdf,§7b inter-cluster gap control,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_gap.png,§7b inter-cluster gap control,marrow,young,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/young/qc_donor_type_counts.pdf,§7b donor × type counts,marrow,young,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/qc/marrow_donor_type_counts_before.csv;benchmarks/aging/qc/marrow_donor_type_counts_after.csv
+benchmarks/figures/aging/marrow/young/qc_donor_type_counts.png,§7b donor × type counts,marrow,young,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/qc/marrow_donor_type_counts_before.csv;benchmarks/aging/qc/marrow_donor_type_counts_after.csv
+benchmarks/figures/aging/marrow/young/qc_shared_standalone_basin_confusion.pdf,§7b standalone-versus-shared basin agreement,marrow,young,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/marrow_standalone_young.h5ad
+benchmarks/figures/aging/marrow/young/qc_shared_standalone_basin_confusion.png,§7b standalone-versus-shared basin agreement,marrow,young,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/marrow_standalone_young.h5ad
+benchmarks/figures/aging/marrow/young/qc_correction_artifacts.pdf,§7b correction_artifact list,marrow,young,benchmarks/aging/marrow_compare_shared.csv
+benchmarks/figures/aging/marrow/young/qc_correction_artifacts.png,§7b correction_artifact list,marrow,young,benchmarks/aging/marrow_compare_shared.csv
+benchmarks/figures/aging/marrow/old/ledger_map.pdf,§7.4 ledger_map,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/ledger_map.png,§7.4 ledger_map,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/operator_space.pdf,§7b figure_operator_space,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/operator_space.png,§7b figure_operator_space,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/ledger_summary.pdf,§7b figure_ledger_summary,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/ledger_summary.png,§7b figure_ledger_summary,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/spectrum_ladder.pdf,§7b spectrum_ladder single group,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/spectrum_ladder.png,§7b spectrum_ladder single group,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/soft_axis_map.pdf,§7b soft_axis_map,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/soft_axis_map.png,§7b soft_axis_map,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/basin_index.pdf,§7b basin_index_by_type single group,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/basin_index.png,§7b basin_index_by_type single group,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/gaussian_oracle_curvature_ratio.pdf,§7b Gaussian-oracle curvature ratio,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/gaussian_oracle_curvature_ratio.png,§7b Gaussian-oracle curvature ratio,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_scvi_elbo_summary.pdf,§7b scVI ELBO QC,marrow,old,benchmarks/aging/qc/marrow_scvi_metrics.csv
+benchmarks/figures/aging/marrow/old/qc_scvi_elbo_summary.png,§7b scVI ELBO QC,marrow,old,benchmarks/aging/qc/marrow_scvi_metrics.csv
+benchmarks/figures/aging/marrow/old/qc_d_latent.pdf,§7b d_latent choice,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_d_latent.png,§7b d_latent choice,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_sigma.pdf,§7b within-cluster σ versus drift scale,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_sigma.png,§7b within-cluster σ versus drift scale,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_symmetry.pdf,§7b symmetry check histogram,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_symmetry.png,§7b symmetry check histogram,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_rank.pdf,§7b tangent-rank distribution,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_rank.png,§7b tangent-rank distribution,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_gap.pdf,§7b inter-cluster gap control,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_gap.png,§7b inter-cluster gap control,marrow,old,benchmarks/aging/marrow_shared.h5ad
+benchmarks/figures/aging/marrow/old/qc_donor_type_counts.pdf,§7b donor × type counts,marrow,old,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/qc/marrow_donor_type_counts_before.csv;benchmarks/aging/qc/marrow_donor_type_counts_after.csv
+benchmarks/figures/aging/marrow/old/qc_donor_type_counts.png,§7b donor × type counts,marrow,old,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/qc/marrow_donor_type_counts_before.csv;benchmarks/aging/qc/marrow_donor_type_counts_after.csv
+benchmarks/figures/aging/marrow/old/qc_shared_standalone_basin_confusion.pdf,§7b standalone-versus-shared basin agreement,marrow,old,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/marrow_standalone_old.h5ad
+benchmarks/figures/aging/marrow/old/qc_shared_standalone_basin_confusion.png,§7b standalone-versus-shared basin agreement,marrow,old,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/marrow_standalone_old.h5ad
+benchmarks/figures/aging/marrow/old/qc_correction_artifacts.pdf,§7b correction_artifact list,marrow,old,benchmarks/aging/marrow_compare_shared.csv
+benchmarks/figures/aging/marrow/old/qc_correction_artifacts.png,§7b correction_artifact list,marrow,old,benchmarks/aging/marrow_compare_shared.csv
+benchmarks/figures/aging/marrow/compare_summary.pdf,§7b compare_summary,marrow,young_old,benchmarks/aging/marrow_compare_shared.csv;benchmarks/aging/aging_modes.csv
+benchmarks/figures/aging/marrow/compare_summary.png,§7b compare_summary,marrow,young_old,benchmarks/aging/marrow_compare_shared.csv;benchmarks/aging/aging_modes.csv
+benchmarks/figures/aging/marrow/standalone_shared_quantities.pdf,§7b standalone-versus-shared quantities,marrow,young_old,benchmarks/aging/marrow_compare_standalone.csv
+benchmarks/figures/aging/marrow/standalone_shared_quantities.png,§7b standalone-versus-shared quantities,marrow,young_old,benchmarks/aging/marrow_compare_standalone.csv
+benchmarks/figures/aging/marrow/energy_transect_granulocyte.pdf,§7.6 energy_transect,marrow,young_old,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/models/marrow_shared_drift.pt
+benchmarks/figures/aging/marrow/energy_transect_granulocyte.png,§7.6 energy_transect,marrow,young_old,benchmarks/aging/marrow_shared.h5ad;benchmarks/aging/models/marrow_shared_drift.pt
+benchmarks/figures/aging/DEVIATIONS.md,§7b figure_archetype_sheet,both,all,no stored archetype weights; A04 prohibits semi-NMF fitting
+benchmarks/figures/aging/DEVIATIONS.md,§7b permutation null of lead_re,both,all,no stored ten-refit permutation null; A04 prohibits refitting
+benchmarks/figures/aging/DEVIATIONS.md,§7b scVI ELBO curves,both,all,no stored epoch histories; final-ELBO summary rendered in place
