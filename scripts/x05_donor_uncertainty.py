@@ -209,7 +209,13 @@ def loo_table(tissue: str, adata: ad.AnnData, use_rep: str, types: list[str], a0
     rows: list[dict] = []
     for dropped in old_donors:
         retained = donor != dropped
-        reduced = adata[retained]
+        # AnnData subsets obsm/obs, but custom per-cell Jacobians in uns need
+        # explicit subsetting to preserve A03's cell-aligned comparison input.
+        reduced = adata[retained].copy()
+        reduced_scj = dict(reduced.uns["scjdo2"])
+        reduced_scj["J"] = jacobians[retained].copy()
+        reduced_scj["J_latent"] = jacobians[retained].copy()
+        reduced.uns["scjdo2"] = reduced_scj
         calls = compare_types(
             reduced, by="cell_type", groups=("young", "old"), group_key="age_group",
             use_rep=use_rep, n_cells_centroid=N_CENTROID, min_cells=MIN_CELLS,
