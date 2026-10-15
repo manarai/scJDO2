@@ -151,11 +151,14 @@ def _census_release() -> tuple[str, dict[str, Any]]:
 
 def fetch_core() -> dict[str, Any]:
     release, release_description = _census_release()
+    print(f"opening CELLxGENE Census release {release}", flush=True)
     with cxc.open_soma(census_version=release) as census:
         datasets = census["census_info"]["datasets"].read().concat().to_pandas()
         selected = _select_core_dataset(datasets)
         dataset_id = str(selected["dataset_id"])
+        print(f"selected HLCA core dataset {dataset_id}: {selected.get('dataset_title', '<unknown>')}", flush=True)
         if not CORE_PATH.exists():
+            print("retrieving HLCA raw count matrix and complete observation metadata from Census", flush=True)
             adata = cxc.get_anndata(
                 census,
                 organism="homo_sapiens",
@@ -175,8 +178,10 @@ def fetch_core() -> dict[str, Any]:
             }
             CORE_PATH.parent.mkdir(parents=True, exist_ok=True)
             temporary = CORE_PATH.with_suffix(".h5ad.part")
+            print(f"writing {adata.n_obs} cells × {adata.n_vars} genes to {temporary.name}", flush=True)
             adata.write_h5ad(temporary)
             temporary.replace(CORE_PATH)
+            print(f"wrote {CORE_PATH.name}", flush=True)
     row = {key: _jsonable(value) for key, value in selected.to_dict().items()}
     return {
         "census_release": release,
