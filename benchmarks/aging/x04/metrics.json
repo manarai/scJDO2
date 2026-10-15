@@ -1,0 +1,29 @@
+{
+  "x04_verdict": "no evidence that mapping hides change",
+  "n_hidden_softening": 0,
+  "n_hidden_displacement": 0,
+  "basin_types_flagged": [],
+  "joint_stiff_ratio_by_type": {
+    "lung|fibroblast of lung": 1.063756544343877,
+    "lung|natural killer cell": 0.9256911011071948,
+    "marrow|granulocyte": 1.0309275734964336,
+    "marrow|granulocytopoietic cell": 2.31510374798062,
+    "marrow|hematopoietic precursor cell": 0.9840975016935686,
+    "marrow|monocyte": 1.0167911392235136,
+    "marrow|precursor B cell": 1.009982822648184,
+    "marrow|promonocyte": 0.997199082421307
+  },
+  "shared_stiff_ratio_by_type": {
+    "lung|fibroblast of lung": 1.0795500498675803,
+    "lung|natural killer cell": 0.9983186273613135,
+    "marrow|granulocyte": 1.0353002305387158,
+    "marrow|granulocytopoietic cell": 4.480698647764112,
+    "marrow|hematopoietic precursor cell": 1.0836996471842004,
+    "marrow|monocyte": 1.1123551565259218,
+    "marrow|precursor B cell": 1.0064078892348223,
+    "marrow|promonocyte": 1.1527113784599585
+  },
+  "seed_range_max_stiff_ratio": 3.7758376822271718,
+  "shared_seed_ref_weights_max_abs_change": 0.0,
+  "sym_max_all_fits": 2.7401372904023447e-07
+}

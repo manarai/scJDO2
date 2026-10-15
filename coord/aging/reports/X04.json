@@ -1,0 +1,187 @@
+{
+  "task": "aging/X04",
+  "status": "done",
+  "started_utc": "2026-10-15T00:29:40Z",
+  "finished_utc": "2026-10-15T01:15:56Z",
+  "compute": {
+    "cpu_hours": 0.45,
+    "gpu_hours": 0.0,
+    "hardware": "MacBook Pro (Apple M3 Max); CPU-only scVI and energy-drift execution"
+  },
+  "metrics": {
+    "x04_verdict": "no evidence that mapping hides change",
+    "n_hidden_softening": 0,
+    "n_hidden_displacement": 0,
+    "basin_types_flagged": [],
+    "joint_stiff_ratio_by_type": {
+      "lung|fibroblast of lung": 1.063756544343877,
+      "lung|natural killer cell": 0.9256911011071948,
+      "marrow|granulocyte": 1.0309275734964336,
+      "marrow|granulocytopoietic cell": 2.31510374798062,
+      "marrow|hematopoietic precursor cell": 0.9840975016935686,
+      "marrow|monocyte": 1.0167911392235136,
+      "marrow|precursor B cell": 1.009982822648184,
+      "marrow|promonocyte": 0.997199082421307
+    },
+    "shared_stiff_ratio_by_type": {
+      "lung|fibroblast of lung": 1.0795500498675803,
+      "lung|natural killer cell": 0.9983186273613135,
+      "marrow|granulocyte": 1.0353002305387158,
+      "marrow|granulocytopoietic cell": 4.480698647764112,
+      "marrow|hematopoietic precursor cell": 1.0836996471842004,
+      "marrow|monocyte": 1.1123551565259218,
+      "marrow|precursor B cell": 1.0064078892348223,
+      "marrow|promonocyte": 1.1527113784599585
+    },
+    "seed_range_max_stiff_ratio": 3.7758376822271718,
+    "shared_seed_ref_weights_max_abs_change": 0.0,
+    "sym_max_all_fits": 2.7401372904023447e-07
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/aging/x04/per_type.csv",
+      "bytes": 11738,
+      "sha256": "b956837871fef137c90eb491860c73df2c1c0b299434947d349544c65b6979c1",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/aging/x04/summary.csv",
+      "bytes": 12641,
+      "sha256": "9ee65363eeb20435cbb9da5e305a6f9f25147e5cbd90321883a11c25b34af72f",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/aging/x04/RESULT_X04.md",
+      "bytes": 2193,
+      "sha256": "3367fed938c35cfbf57ec6ce6a9da7661b891ff86197a2bf201fc02219f089b9",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/aging/x04/metrics.json",
+      "bytes": 1183,
+      "sha256": "a34989a95da9d1a691f8adff313de137fee17c99be644fee47ab692c2ac497ac",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x04/stiff_ratio.pdf",
+      "bytes": 22719,
+      "sha256": "1b11a72cdaa788fe7c035436594c4d2552ca25271c06155ab082b49bbf3ee559",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x04/stiff_ratio.png",
+      "bytes": 105143,
+      "sha256": "8cb7c964e4638a216a94452c0fa820ad8babc5adb83af9ffe4de7a9d5e95e2ce",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x04/offset_z.pdf",
+      "bytes": 21671,
+      "sha256": "eea6a39100acce44f9cace3d09d175d5c081b11ef2991875cb86b015e1d7e783",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x04/offset_z.png",
+      "bytes": 95742,
+      "sha256": "a770bb1208d91fc52169211a7048f7e2f8fb44887e94f2aca730fe8b68e0eb2c",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_joint_s0.h5ad",
+      "bytes": 33970396,
+      "sha256": "c6273219f17793e406fc80fd09e367b4d2d125fcc4df4cc30c8cd788a9d77c59",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_joint_s1.h5ad",
+      "bytes": 33970396,
+      "sha256": "58d70182a585181332f5aa893b713010d52ab35b8d1fcb2677e9421bdb652bd3",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue lung --seed 1"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_joint_s2.h5ad",
+      "bytes": 33970396,
+      "sha256": "ec935532bbe7d6a1d84d3ac34dc4ce41e8451ea5cb1919047da14a167736dc94",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue lung --seed 2"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_joint_s0.h5ad",
+      "bytes": 128310468,
+      "sha256": "60c4dfe9d224df9a83323fea6a464c38563237e81296d787368ead09fe6d10dd",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue marrow --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_joint_s1.h5ad",
+      "bytes": 128310468,
+      "sha256": "669e17e67b59bb32d76db1aa4f97f4f86339fcf8550d0b4ba3f3b9c3a3103d3a",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue marrow --seed 1"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_joint_s2.h5ad",
+      "bytes": 128310468,
+      "sha256": "6eaecb9e19dc9998e541bc60bb22597276e1fbde8929238b06df1e74acdd27fa",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue marrow --seed 2"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_shared_s1.h5ad",
+      "bytes": 33972356,
+      "sha256": "8fa2e059b98239da5a1909639e48caf264866a3db294a59b71bcd7425bb86058",
+      "committed": false,
+      "regenerate": "python scripts/x04_shared_seeds.py --tissue lung --seed 1"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_shared_s2.h5ad",
+      "bytes": 33972356,
+      "sha256": "613221b5b44192e4a1b7e6003923e9947937cd213a13a6628fc11143fe97db02",
+      "committed": false,
+      "regenerate": "python scripts/x04_shared_seeds.py --tissue lung --seed 2"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_shared_s1.h5ad",
+      "bytes": 128303492,
+      "sha256": "f98508ec719fc9cb732f4bea35ec9ff0c55fd2d5d237f36ebef8e0eeed7dc7a2",
+      "committed": false,
+      "regenerate": "python scripts/x04_shared_seeds.py --tissue marrow --seed 1"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_shared_s2.h5ad",
+      "bytes": 128303492,
+      "sha256": "e645c8efc6349af3baa20a1b8920b699ae4e315675714db744f4d5f0ce82cc72",
+      "committed": false,
+      "regenerate": "python scripts/x04_shared_seeds.py --tissue marrow --seed 2"
+    }
+  ],
+  "deviations": [
+    "Blocked before any X04 shared-query fit, comparison, figures, or verdict: the current scvi/lightning runtime rejects A02's `device=\"cpu\"` query argument with a CPU `devices` type error. No frozen analysis setting was changed.",
+    "The issued X04 task file cannot be parsed by coord_check.py in this checkout: `no json contract block`; the task file itself is not an allowed Manus edit.",
+    "Revision 1 followed the binding review: `SCVI.load_query_data` now uses A02's exact `accelerator=\"cpu\", device=\"auto\"` call; all frozen model/training settings remained unchanged.",
+    "The first comparison render placed four agent-created uncommitted figures under an incorrect local path. The renderer was corrected to the contracted path, only those four mistaken uncommitted files were removed, and comparison/figure rendering was rerun without any model refit."
+  ],
+  "questions": [],
+  "observations": [
+    "All 10 required X04 drift fits were available: six retained joint fits (seeds 0\u20132) and four new shared fits (seeds 1\u20132).",
+    "Every new shared mapping had reference encoder maximum absolute parameter change 0.0 and reference encoder BatchNorm-buffer maximum absolute change 0.0.",
+    "All 10 fit symmetry residuals were below 1e-4; the maximum was 2.740e-07.",
+    "The per-type table contains 48 rows: 8 eligible types across 2 spaces and 3 seeds.",
+    "The fixed reading rule flagged 0 hidden-softening and 0 hidden-displacement types; no basin types were flagged.",
+    "The largest across-seed stiff-ratio range was 3.776, occurring in the generated summary table."
+  ],
+  "suggestions": [
+    "If further exploratory robustness is desired, issue a separate task to identify which seed-specific operator components drive the largest stiff-ratio range; this X04 task applies only its fixed reading rule.",
+    "Interpret the exploratory verdict alongside the limited young-donor replication documented by A01; no confirmatory outcome was modified here."
+  ]
+}

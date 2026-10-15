@@ -1,0 +1,14 @@
+{
+  "tissue": "marrow",
+  "space": "joint",
+  "seed": 0,
+  "output": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/aging/x04/marrow_joint_s0.h5ad",
+  "epochs_run": 207,
+  "best_validation_elbo": 876.5348510742188,
+  "fit": "joint_s0",
+  "final_loss": -193.19093122233687,
+  "sym_median": 8.511765159369133e-08,
+  "sym_max": 2.467007220730011e-07,
+  "wall_seconds": 35.814448832999915,
+  "lead_eig_tolerance": 0.09342699108383991
+}
