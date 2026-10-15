@@ -1,0 +1,49 @@
+type,kind,F,kappa_power,iso_power_HX02
+AT2,none,1.0,0.0,0.0
+AT2,single_axis,1.25,1.0,0.0
+AT2,single_axis,1.5,1.0,0.0
+AT2,single_axis,2.0,1.0,0.1
+AT2,single_axis,3.0,1.0,0.9
+AT2,single_axis,5.0,1.0,1.0
+AT2,single_axis,8.0,1.0,1.0
+AT2,uniform,2.0,0.0,
+Macrophages,none,1.0,0.0,0.0
+Macrophages,single_axis,1.25,0.0,0.0
+Macrophages,single_axis,1.5,0.0,0.0
+Macrophages,single_axis,2.0,0.04,0.0
+Macrophages,single_axis,3.0,0.86,0.02
+Macrophages,single_axis,5.0,1.0,0.06
+Macrophages,single_axis,8.0,1.0,0.0
+Macrophages,uniform,2.0,0.0,
+Innate lymphoid cell NK,none,1.0,0.0,0.0
+Innate lymphoid cell NK,single_axis,1.25,0.04,0.0
+Innate lymphoid cell NK,single_axis,1.5,0.2,0.0
+Innate lymphoid cell NK,single_axis,2.0,0.2,0.66
+Innate lymphoid cell NK,single_axis,3.0,0.48,0.5
+Innate lymphoid cell NK,single_axis,5.0,1.0,0.56
+Innate lymphoid cell NK,single_axis,8.0,1.0,0.4
+Innate lymphoid cell NK,uniform,2.0,0.0,
+Basal,none,1.0,0.0,0.0
+Basal,single_axis,1.25,0.02,0.02
+Basal,single_axis,1.5,0.02,0.12
+Basal,single_axis,2.0,0.06,0.12
+Basal,single_axis,3.0,0.08,0.08
+Basal,single_axis,5.0,0.16,0.02
+Basal,single_axis,8.0,0.26,0.0
+Basal,uniform,2.0,0.0,
+Fibroblasts,none,1.0,0.0,0.0
+Fibroblasts,single_axis,1.25,0.02,0.0
+Fibroblasts,single_axis,1.5,0.18,0.0
+Fibroblasts,single_axis,2.0,0.88,0.0
+Fibroblasts,single_axis,3.0,1.0,0.0
+Fibroblasts,single_axis,5.0,1.0,0.0
+Fibroblasts,single_axis,8.0,1.0,0.02
+Fibroblasts,uniform,2.0,0.0,
+Multiciliated lineage,none,1.0,0.0,0.2
+Multiciliated lineage,single_axis,1.25,0.0,0.34
+Multiciliated lineage,single_axis,1.5,0.0,0.46
+Multiciliated lineage,single_axis,2.0,0.08,0.5
+Multiciliated lineage,single_axis,3.0,0.78,0.02
+Multiciliated lineage,single_axis,5.0,1.0,0.0
+Multiciliated lineage,single_axis,8.0,1.0,0.0
+Multiciliated lineage,uniform,2.0,0.0,
