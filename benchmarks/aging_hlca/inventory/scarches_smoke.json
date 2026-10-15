@@ -1,0 +1,18 @@
+{
+  "api_path": "sca.models.SCANVI.prepare_query_anndata + sca.models.SCANVI.load_query_data",
+  "epochs": 20,
+  "finished_utc": "2026-10-15T11:12:25.638057+00:00",
+  "frozen_reference_parameters_checked": 858156,
+  "frozen_reference_weights_max_abs_change": 0.0,
+  "n_cells": 5000,
+  "peak_rss_bytes": 2212478976,
+  "query_study": "Banovich_Kropski_2020",
+  "query_study_field": "dataset",
+  "scarches_version": "0.6.1",
+  "scvi_tools_version": "1.5.1",
+  "seconds_per_10000_cells": 35.2353392499499,
+  "seed": 0,
+  "success": true,
+  "task": "hlca/H01",
+  "wall_seconds": 17.61766962497495
+}
