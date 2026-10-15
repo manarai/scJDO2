@@ -1,0 +1,159 @@
+{
+  "task": "hlca/HX01",
+  "status": "done",
+  "started_utc": "2026-10-15T23:35:25Z",
+  "finished_utc": "2026-10-15T23:39:26.709854+00:00",
+  "compute": {
+    "cpu_hours": 0.004616666666666667,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; no GPU. The checksum/join dry run and final fixed-seed analysis used 16.62 user seconds total; final-run peak memory was 2.34 GB."
+  },
+  "metrics": {
+    "verdict_t_cell": "study-driven",
+    "verdict_monocytes": "study-driven",
+    "n_unmatched_cells": 0,
+    "fe_slope_t_cell": -0.0018645876979979227,
+    "fe_slope_monocytes": -0.0013929260165070846,
+    "max_loso_p_t_cell": 0.029970029970029972,
+    "max_loso_p_monocytes": 0.1888111888111888,
+    "n_focus_cells": 7944,
+    "composition_age_p_t_cell": 0.8276968646140282,
+    "composition_age_p_monocytes": 0.1455570811658598,
+    "max_loso_study_t_cell": "Barbry_Leroy_2020",
+    "max_loso_study_monocytes": "Lafyatis_Rojas_2019_10Xv1",
+    "subtype_donors": {
+      "CD4 T cells": 27,
+      "CD8 T cells": 44,
+      "Classical monocytes": 57,
+      "Non-classical monocytes": 19
+    },
+    "n_figures": 3,
+    "input_checksums": "pass"
+  },
+  "artifacts": [
+    {
+      "path": "scripts/hlca_hx01.py",
+      "bytes": 27039,
+      "sha256": "3f8473b3bc428be7cf110c540e74238835472d0fd480eddf81cb6252834ed9a9",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/RESULT_HX01.md",
+      "bytes": 4673,
+      "sha256": "2c8d920ea9ed6083bc96d86c3c63180f55eb1997cecdda5ef5d2b74a6e3629f3",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/composition.csv",
+      "bytes": 24800,
+      "sha256": "19bef370a522c5ed612fc32d71b464d2ea2da4dc83a9a731f3bf9e2726b33073",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/composition_summary.csv",
+      "bytes": 429,
+      "sha256": "466bf78fddec35844bfdfa1ecf99e78459d72d09a8ca9f2531f2ed038a4f84ca",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/input_checksums.json",
+      "bytes": 693,
+      "sha256": "10eedf2b1a980585f9f4391075f51cb8339ff78b5b8292f9751576b71bd75c61",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/leave_one_study_out.csv",
+      "bytes": 3254,
+      "sha256": "e01325a0ca6e3841641317b711aa0003ea0bb825fe327f80c24be5e7c29610a0",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/metrics.json",
+      "bytes": 3091,
+      "sha256": "39bff69597fa9b75f92536eb13f8d4f549502e902673733146eda6064348c2b8",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/study_fixed_effects.csv",
+      "bytes": 233,
+      "sha256": "6fffdbf5651f2f647c767ab1d7981cf955a5318f0d03f364be37089e2a67119b",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/subtype_donor_metrics.csv",
+      "bytes": 22590,
+      "sha256": "15d31d907f38ab5fbd642129fc79e087caaa0b16041ee2ce5f6c3d6e503eb4ec",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/hx01/subtype_stiffness.csv",
+      "bytes": 556,
+      "sha256": "f4c6e1673d1e8ec13725f352d1aede03965a9147fa409c3f54e2bdc5824f1272",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/hx01/composition_vs_age.pdf",
+      "bytes": 48729,
+      "sha256": "3c5a39dc580682b9533ebb105d53edfd3545770b389ec22dce08bcc833d9e62e",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/hx01/composition_vs_age.png",
+      "bytes": 209323,
+      "sha256": "57d1c96a0a87f41be87c87d5e6b2c4cee563b6929bf61819cab48a467a2519dd",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/hx01/leave_one_study_out.pdf",
+      "bytes": 31350,
+      "sha256": "a607ef4bcff5f0cf9b7fa646ab532b98612a9266bdda72de4948d90905a836bd",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/hx01/leave_one_study_out.png",
+      "bytes": 145361,
+      "sha256": "d4d0b0e971c34ac173d15354a4a90f73c601a1c110a6497eca79e402f57f6975",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/hx01/subtype_stiffness_vs_age.pdf",
+      "bytes": 56261,
+      "sha256": "8dabe3f6cb199bd99d9f295afe3aca9e071a657a808834445749931c4f02ab7c",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/hx01/subtype_stiffness_vs_age.png",
+      "bytes": 321679,
+      "sha256": "b2075fe13e838321580bf2dee1f3d48b39bf3facb4845d58a9dc9bd0aaa9e3d7",
+      "committed": true,
+      "regenerate": "python scripts/hlca_hx01.py --seed 0"
+    }
+  ],
+  "deviations": [],
+  "observations": [
+    "All 7,944 H03 T-cell-lineage/Monocyte drift-subsample cells matched a full-metadata cell ID; all 118 H04 contributing donor fractions had nonzero denominators.",
+    "T-cell CD8 composition was not associated with age (rho=0.029209442156095843, p=0.8276968646140282). CD4 and CD8 subtype slopes were -0.005362475522139938 (p=0.04395604395604396; 27 donors) and -0.0030367518133572794 (p=0.09490509490509491; 44 donors).",
+    "Monocyte non-classical composition was not associated with age (rho=-0.1901730179901369, p=0.14555708116585986). Classical and non-classical subtype slopes were -0.004911812708118381 (p=0.003996003996003996; 57 donors) and 0.00254319172084781 (p=0.34765234765234765; 19 donors).",
+    "The T-cell fixed-effects slope was -0.0018645876979979227 versus the H04 slope -0.005643985298968762; the Monocyte fixed-effects slope was -0.0013929260165070846 versus -0.0029276271824344364. Both are less than half the H04 slope magnitude.",
+    "The largest leave-one-study-out p values were 0.029970029970029972 for T cell lineage and 0.1888111888111888 for Monocytes. The mechanical reading rule therefore labels both hints study-driven and neither composition-explained."
+  ],
+  "suggestions": [
+    "If an additional exploratory task is approved, stratify the classical/non-classical Monocyte subtype trends by the studies that contribute the older donors; the non-classical 25-cell floor retained 19 donors and its slope has the opposite sign to the classical subtype."
+  ],
+  "questions": []
+}
