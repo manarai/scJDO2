@@ -86,3 +86,14 @@ is in most human types. The headline must say so.
 0.96), so those types' MDEs are optimistic.
 **Next.** Proposed: a fixed-axis curvature statistic, validated on the
 HX02 injections (exploratory); HX01.
+
+## 2026-10-15 — fixed-axis curvature statistic designed (Claude, exploratory)
+
+**Result.** `softaxis_curvature_trend`: synthetic false pass 0.06 under
+null, uniform and drift; power 1.00 single-axis. On HX02's real-data
+injections (6 types) 80 % power at ×1.25 (AT2), ×2 (Fibroblasts),
+×3 (Macrophages), ×5 (NK, Multiciliated); Basal (unstable soft axis)
+none; 0 passes under uniform ×2.
+**Meaning.** A usable test of single-direction loosening for human lung.
+Designed after H04, so anything it finds is exploratory.
+**Next.** HX03: all 13 types, then the real data (reading rule fixed).
