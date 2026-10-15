@@ -117,3 +117,30 @@ def test_stratified_null_removes_study_confounded_age_signal():
             ages.append(a); strata.append(study)
     assert stiffness_trend(ops, ages, n_perm=200, seed=0).passes
     assert not stiffness_trend(ops, ages, n_perm=200, seed=0, strata=strata).passes
+
+
+# ---- softaxis_curvature_trend (exploratory, reviews/HX02.md) -------------
+
+from scjdo2.compare import softaxis_curvature_trend  # noqa: E402
+
+
+def _kappa_run(scenario, seed):
+    ops, cents, ages, ref = simulate(scenario, seed)
+    return softaxis_curvature_trend(ops, ages, ref, n_perm=200, seed=seed)
+
+
+def test_softaxis_null_and_uniform_fail():
+    assert not _kappa_run("none", 10).passes
+    assert not _kappa_run("uniform", 11).passes
+
+
+def test_softaxis_single_axis_passes():
+    r = _kappa_run("single_axis", 12)
+    assert r.passes, f"slope={r.statistic:.5f} p={r.p_value:.3f}"
+
+
+def test_softaxis_uniform_scaling_invariance():
+    ops, cents, ages, ref = simulate("none", 13)
+    a = softaxis_curvature_trend(ops, ages, ref, n_perm=50, seed=0)
+    b = softaxis_curvature_trend([2.5 * o for o in ops], ages, ref, n_perm=50, seed=0)
+    assert np.allclose(a.detail["kappa"], b.detail["kappa"])

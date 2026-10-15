@@ -652,3 +652,31 @@ def stiffness_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
     p = float((1 + np.sum(np.abs(null) >= abs(s_obs))) / (1 + len(null)))
     return TrendResult(s_obs, null, float(np.percentile(np.abs(null), 95)),
                        bool(p <= 0.05), p, {"log_median_abs_lambda": y[:, 0]})
+
+
+def softaxis_curvature_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
+                             ref_op: np.ndarray, n_perm: int = 1000, seed: int = 0,
+                             strata: Optional[Sequence] = None) -> TrendResult:
+    """Does the curvature along the fixed young soft axis change with age
+    relative to the donor's overall stiffness? (Exploratory; proposed in
+    reviews/HX02.md as a replacement for the log-eigenvalue isotropy
+    statistic, which loses power when the soft eigenvalue is near zero
+    or positive.)
+
+    ``u`` = eigenvector of the largest eigenvalue of ``ref_op`` (fixed;
+    no re-matching per donor). Per donor ``κ_d = (uᵀ Op_d u) /
+    median|λ(Op_d)|``. Scaling a donor operator uniformly leaves ``κ_d``
+    unchanged, so uniform softening does not pass. Statistic: |slope| of
+    ``κ_d`` on age. Null: age permutations across donors (within
+    ``strata`` if given). Pass: two-sided p ≤ 0.05.
+    """
+    ages = np.asarray(ages, dtype=np.float64)
+    ev, V = np.linalg.eigh(0.5 * (ref_op + ref_op.T))
+    u = V[:, int(np.argmax(ev))]
+    kappa = np.array([float(u @ op @ u) / np.median(np.abs(np.linalg.eigvalsh(0.5 * (op + op.T))))
+                      for op in donor_ops])[:, None]
+    s_obs = float(_slopes(kappa, ages)[0])
+    null = np.array([float(_slopes(kappa, a)[0]) for a in _perm_ages(ages, n_perm, seed, strata)])
+    p = float((1 + np.sum(np.abs(null) >= abs(s_obs))) / (1 + len(null)))
+    return TrendResult(s_obs, null, float(np.percentile(np.abs(null), 95)), bool(p <= 0.05), p,
+                       {"kappa": kappa[:, 0], "u_ref": u, "ref_soft_eigenvalue": float(ev.max())})
