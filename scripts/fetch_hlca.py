@@ -70,7 +70,7 @@ def download(url: str, destination: Path, expected_bytes: int) -> None:
     legacy_parts = sorted(destination.parent.glob(destination.name + ".*.part"), key=lambda path: path.stat().st_size, reverse=True)
     if not partial.exists() and legacy_parts:
         legacy_parts[0].replace(partial)
-    chunk_bytes = 64 * 1024 * 1024
+    chunk_bytes = 8 * 1024 * 1024
     while True:
         current = partial.stat().st_size if partial.exists() else 0
         if current == expected_bytes:
@@ -222,11 +222,14 @@ def fetch_reference_assets() -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--max-total-gb", type=float, default=MAX_TOTAL_GB)
+    parser.add_argument("--phase", choices=("all", "reference", "core"), default="all")
     args = parser.parse_args()
     if args.max_total_gb != MAX_TOTAL_GB:
         raise ValueError(f"H01 hard limit is {MAX_TOTAL_GB} GB; do not override it")
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     reference = fetch_reference_assets()
+    if args.phase == "reference":
+        return 0
     core = fetch_core()
     total = sum(path.stat().st_size for path in DATA_DIR.rglob("*") if path.is_file())
     if total / 1024**3 > MAX_TOTAL_GB:
