@@ -110,3 +110,49 @@ The header and qualifier above are the fixed §6 rule applied to `tests_primary.
 | f_two_group | Multiciliated lineage | 43 | 32 | 11 | 0.382402 | 0.759436 | 0.338661 | false | 0.0626255 | 0.0266156 | 0.402092 | 0.913087 | false | 0.0492627 | 0.296703 | none |
 | f_two_group | Secretory | 42 | 31 | 11 | 0.391407 | 0.8112 | 0.588412 | false | 0.0624113 | 0.194008 | 0.668324 | 0.725275 | false | 0.05765 | 0.241758 | none |
 | f_two_group | T cell lineage | 34 | 26 | 8 | 0.694331 | 0.929946 | 0.187812 | false | -0.161063 | 0.265498 | 0.637639 | 0.445554 | false | -0.170667 | 0.0559441 | none |
+## §8 Mouse–human comparison
+Descriptive comparison only; no statistic was computed. Mouse stiffness ratio is the stored A03 old/young median-curvature ratio; its X04 range is the stored shared-space seed range. Human ratio is `exp(stiff_slope)` from H04 §7(f).
+
+| mouse_cell_type | human_ann_level_3 | mouse_a03_stiffness_ratio | mouse_x04_shared_stiffness_min | mouse_x04_shared_stiffness_max | human_two_group_stiffness_ratio | mouse_a03_iso_pass | mouse_a03_ant_pass | human_two_group_iso_pass | human_two_group_ant_pass |
+|---|---|---|---|---|---|---|---|---|---|
+| fibroblast of lung | Fibroblasts | 1.0103 | 1.0103 | 1.1843 | 1.0731 | False | False | False | False |
+| natural killer cell | Innate lymphoid cell NK | 0.9973 | 0.9973 | 0.9996 | 0.9817 | False | False | False | False |
+
+## §9 Figures
+- `benchmarks/figures/aging_hlca/tests_overview.pdf` — tests_overview
+- `benchmarks/figures/aging_hlca/tests_overview.png` — tests_overview
+- `benchmarks/figures/aging_hlca/sensitivity_heatmap.pdf` — sensitivity_heatmap
+- `benchmarks/figures/aging_hlca/sensitivity_heatmap.png` — sensitivity_heatmap
+- `benchmarks/figures/aging_hlca/stiffness_vs_age.pdf` — stiffness_vs_age
+- `benchmarks/figures/aging_hlca/stiffness_vs_age.png` — stiffness_vs_age
+- `benchmarks/figures/aging_hlca/ec_capillary_anticipation.pdf` — ec_capillary_anticipation
+- `benchmarks/figures/aging_hlca/ec_capillary_anticipation.png` — ec_capillary_anticipation
+- `benchmarks/figures/aging_hlca/mouse_human.pdf` — mouse_human
+- `benchmarks/figures/aging_hlca/mouse_human.png` — mouse_human
+- `benchmarks/figures/aging_hlca/qc_scvi_history.pdf` — qc_scvi_history
+- `benchmarks/figures/aging_hlca/qc_scvi_history.png` — qc_scvi_history
+- `benchmarks/figures/aging_hlca/qc_query_vs_ref_elbo.pdf` — qc_query_vs_ref_elbo
+- `benchmarks/figures/aging_hlca/qc_query_vs_ref_elbo.png` — qc_query_vs_ref_elbo
+- `benchmarks/figures/aging_hlca/qc_symmetry.pdf` — qc_symmetry
+- `benchmarks/figures/aging_hlca/qc_symmetry.png` — qc_symmetry
+- `benchmarks/figures/aging_hlca/qc_eligibility_counts.pdf` — qc_eligibility_counts
+- `benchmarks/figures/aging_hlca/qc_eligibility_counts.png` — qc_eligibility_counts
+- `benchmarks/figures/aging_hlca/qc_donor_composition.pdf` — qc_donor_composition
+- `benchmarks/figures/aging_hlca/qc_donor_composition.png` — qc_donor_composition
+
+## §10 Limits
+* The frozen outcome reports no direction-specific (0/13) and no
+  majority anticipatory (1/13) change with age in human lung operators,
+  and no majority change in stiffness (1/13 softening).
+* The single stiffness hit (T cell lineage) does not hold within
+  studies (p = 0.19), in parenchyma (p = 0.08) or in the all-ages HLCA
+  space (p = 0.73), and is not significant after correction for 13
+  types. The single anticipation hit (EC capillary, p = 0.047) is
+  borderline in every analysis.
+* 17 donors are aged ≥ 60 and cluster in two studies; age is partly
+  confounded with study, assay and sampling site. Cells of older donors
+  fit the young-only reference less well (validation ELBO ≈ 655 vs
+  ≈ 550). One scVI seed. Effects smaller than about a two-fold change
+  of one direction over the age range are not excluded.
+* The mouse–human comparison covers two matched cell types and is
+  descriptive.

@@ -1,0 +1,216 @@
+{
+  "artifacts": [
+    {
+      "bytes": 26356,
+      "committed": true,
+      "path": "scripts/hlca_figures.py",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "36fbecf929b041863e9baa8f0c42743e019b093b17d44bb6bb6430d71cd2bda4"
+    },
+    {
+      "bytes": 6146,
+      "committed": true,
+      "path": "scripts/make_hlca_notebook.py",
+      "regenerate": "JUPYTER_PATH=\"$PWD/.venv/share/jupyter\" python scripts/make_hlca_notebook.py",
+      "sha256": "9ad48163782ed6757d6033d6a6eb8249b7ae79b126cc9b3f7e58d3e6a522d4cb"
+    },
+    {
+      "bytes": 681,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/mouse_human.csv",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "3a5e372ef15f5dc6ad728a2f9eb8ce62e9eac9dca0a12ccc0c467b36dc9cc0ea"
+    },
+    {
+      "bytes": 18842,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/RESULT.md",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "46c119e796473c32600733526966e4743fbedd34540d6106cdae34468b44023b"
+    },
+    {
+      "bytes": 2821,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/MANIFEST.csv",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "7c4a65d391d3934ef42430a9c251011227e3d2c0bf23a1eba9a502e2db6032b8"
+    },
+    {
+      "bytes": 1964543,
+      "committed": true,
+      "path": "notebooks/aging_hlca.ipynb",
+      "regenerate": "JUPYTER_PATH=\"$PWD/.venv/share/jupyter\" python scripts/make_hlca_notebook.py",
+      "sha256": "db9e1c1e6f17361151f1f11152976be52b114bf17f40578196343aeb6038cbc2"
+    },
+    {
+      "bytes": 36991,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/tests_overview.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "58fa91344393ac02fb379c511278b8f34f10d704df511c5464d924f1d0b2204c"
+    },
+    {
+      "bytes": 188851,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/tests_overview.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "4b328b9b939b27fab3562e03793724c5868210d310e70616854d0e61fb831319"
+    },
+    {
+      "bytes": 28681,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/sensitivity_heatmap.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "db99e2e105ff9f4f2b77ba0c2bee5cea480c2fa13d057b4d472899c0fcb15701"
+    },
+    {
+      "bytes": 184089,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/sensitivity_heatmap.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "a6a42180e5288e8bcf35b5bdf9781025332f7826137a74d3000a6f32eb57dd89"
+    },
+    {
+      "bytes": 99047,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/stiffness_vs_age.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "4a78c3658d3d1c78c96f36e330a2d961ff18c08e8f42769d6b72f3cd28c894d6"
+    },
+    {
+      "bytes": 536819,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/stiffness_vs_age.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "7f12cc79cfc263d9e8c30594c011f5a91f22300c05e3e15e3c2f758d707b9683"
+    },
+    {
+      "bytes": 24593,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/ec_capillary_anticipation.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "60a01febf4e0fe511f4e923930e6c05bb4d6364166bf1cf7fe4bddb83e2f59e1"
+    },
+    {
+      "bytes": 99678,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/ec_capillary_anticipation.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "d62775641a2bde30d02bead239ba461cc5820360845140811da2fc50c619b3f8"
+    },
+    {
+      "bytes": 32164,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/mouse_human.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "450ade75cacb2f059e004410bd3dde738f39b0aebf9740af15889cdc6ee57134"
+    },
+    {
+      "bytes": 115807,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/mouse_human.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "68bdecefe0399f9275c4b73a25b2d6072f48741c5f4f073ccd28fe45dffbfe8a"
+    },
+    {
+      "bytes": 21917,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_scvi_history.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "68b291c24feac2b2ddc942c9e9b113b4ebb6a622b51323a331fcb0a767f63392"
+    },
+    {
+      "bytes": 78768,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_scvi_history.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "7be9e7bd9fa74155c2aa3a03e8fbc5a69fa8572addce08ed066946cd3752845c"
+    },
+    {
+      "bytes": 16563,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_query_vs_ref_elbo.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "fdee3df3f5d8b4c187eafd26d023072ea4db2c959b3e14083bf8b5bcc2a2b889"
+    },
+    {
+      "bytes": 42791,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_query_vs_ref_elbo.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "5a62d972074b920d8b5e99be60cb03dffb48c6692c5252dd45ccf30e739c6457"
+    },
+    {
+      "bytes": 19107,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_symmetry.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "a6bb8126c4edd832e2f61deaa01479be1141557606a29667b53fd108f0bd789a"
+    },
+    {
+      "bytes": 44428,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_symmetry.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "dc08df1d99c46ab071622497831c8bc3de15cd923b1758b8a2061ea5bf2e1f32"
+    },
+    {
+      "bytes": 16552,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_eligibility_counts.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "38e8c4bc4cbfa6469593a1d24dafaed25e9f7d2e3c4f72255feede177cbe12aa"
+    },
+    {
+      "bytes": 43934,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_eligibility_counts.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "70b9be067fd3f7205da276ce33217bb686c8083131519b82b73ee44e78293ab0"
+    },
+    {
+      "bytes": 23299,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_donor_composition.pdf",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "9f3d7fcb2b5f0a6562e773c4e4e77c4573b7d34d5d40645e1d4e8a98793da522"
+    },
+    {
+      "bytes": 111898,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/qc_donor_composition.png",
+      "regenerate": "python scripts/hlca_figures.py",
+      "sha256": "415e067da9a8a2ca0889183e087436dcacc2ee97b10c304e3e49fe21e1663483"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.005,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; H05 renderer used 4.34 user seconds and 0.61 system seconds (maximum RSS 934 MB); no model fit was run."
+  },
+  "deviations": [
+    "H04 persisted stiffness slopes and permutation p-values, but not the stiffness permutation 95% band requested for the overview. The overview explicitly labels the absent band; reconstructing it would have rerun a frozen H04 test, which H05 prohibits. No figure family was skipped."
+  ],
+  "finished_utc": "2026-10-15T21:35:24.574206+00:00",
+  "metrics": {
+    "mouse_human_rows": 2,
+    "n_figures": 10,
+    "n_matched_types": 2,
+    "n_skipped": 0,
+    "notebook_executed": true
+  },
+  "observations": [
+    "All 10 required figure families (20 PDF/PNG paths) are listed in MANIFEST.csv and carry the prescribed footer; mouse_human additionally carries the required descriptive-comparison footer.",
+    "The two fixed pairs are fibroblast of lung \u2194 Fibroblasts and natural killer cell \u2194 Innate lymphoid cell NK. Their stored mouse A03 stiffness ratios are 1.0103 and 0.9973, respectively; their H04 two-group human ratios are 1.0731 and 0.9817.",
+    "Both matched mouse pairs have stored false A03 and X04-shared isotropy/anticipation calls; both human pairs have stored false primary and \u00a77(f) isotropy/anticipation calls.",
+    "The executed notebook contains 28 cells, 14 executed code cells, no retained errors, and accesses the drift H5AD only through HLCA_DATA."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-15T21:26:47Z",
+  "status": "done",
+  "suggestions": [
+    "A future approved task could pre-register additional one-to-one mouse\u2013human cell-type matches before extending the descriptive comparison beyond the two \u00a78 pairs.",
+    "A future approved figure-support task could persist H04 stiffness permutation quantiles alongside slopes if a 95% null band is required in a revised overview, without changing the frozen H04 decision rule."
+  ],
+  "task": "hlca/H05"
+}
