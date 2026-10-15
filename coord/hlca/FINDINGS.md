@@ -97,3 +97,28 @@ none; 0 passes under uniform ×2.
 **Meaning.** A usable test of single-direction loosening for human lung.
 Designed after H04, so anything it finds is exploratory.
 **Next.** HX03: all 13 types, then the real data (reading rule fixed).
+
+## 2026-10-15 — hlca/HX03 (EXPLORATORY, ACCEPT) — fixed-axis statistic on real data
+
+**Result.** No type shows soft-axis change with age (primary 0/13,
+within-study 0/13, all-ages space 1/13 at chance level; 0 robust).
+Power: median MDE ×3; 9/13 types testable by ×8 (AT2 ×1.25; EC
+arterial, Fibroblasts ×2). Reproduced independently to 1e-16.
+**Meaning.** The project's original hypothesis — that aging loosens a
+cell type's basin along one specific direction — is not supported in
+human lung, now with real power: a ≥ 2–3-fold flattening of the soft
+axis across ages 10–76 is excluded in most types.
+
+## Human arm — consolidated conclusion (frozen H04 + exploratory HX02/HX03)
+
+In the HLCA core (106 donors, 13 types), aging does not detectably
+change the operators of lung cell types:
+* uniform stiffness loss ≥ ~1.5-fold is excluded in most types (HX02);
+* single-direction loosening of the soft axis ≥ ~2–3-fold is excluded
+  in 9 of 13 types (HX03; exploratory statistic);
+* drift along the young soft axis ≥ ~2 σ is excluded (HX02);
+* the two isolated hits (T cell stiffness, EC capillary anticipation)
+  do not survive sensitivity checks.
+Limits: 17 donors ≥ 60 clustered in two studies; one scVI seed; four
+types untestable for single-direction change; the single-direction
+statistic was designed after the frozen result.

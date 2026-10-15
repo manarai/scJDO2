@@ -42,7 +42,7 @@ Live status: `python coord/coord_check.py board`.
 | hlca/H04 | manus | accepted | Per-type tests and outcome, human lung | ACCEPT |
 | hlca/H05 | manus | accepted | Figures, mouse–human comparison | ACCEPT |
 | hlca/HX02 | manus | accepted | EXPLORATORY: power analysis (MDE per type) | ACCEPT |
-| hlca/HX03 | manus | issued | EXPLORATORY: fixed-axis curvature statistic (grid + real data) | — |
+| hlca/HX03 | manus | accepted | EXPLORATORY: fixed-axis curvature statistic (grid + real data) | ACCEPT |
 
 * 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
 * 2026-10-14 — H01 re-issued on current aging-basins after the mouse arm closed.
@@ -57,3 +57,4 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — user approved HX02 (exploratory power analysis); issued after a one-type design probe.
 * 2026-10-15 — hlca/HX02 accepted (aec59d9): uniform MDE x1.5, drift 2 sigma, single-axis >x8 in 12/13 (statistic insensitive near-zero soft eigenvalues).
 * 2026-10-15 — Claude designed softaxis_curvature_trend (validated: 6 types, x1.25–x5 MDE, 0 uniform false passes); user approved; HX03 issued.
+* 2026-10-15 — hlca/HX03 accepted (13c43a9): no soft-axis change (0/13 primary), median MDE x3; reproduced to 1e-16.
