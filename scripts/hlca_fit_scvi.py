@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
+import os
 import resource
 import time
 from datetime import datetime, timezone
@@ -15,6 +17,8 @@ import numpy as np
 import pandas as pd
 import scvi
 import torch
+from lightning.pytorch.callbacks import Callback
+from lightning.pytorch.loggers import CSVLogger
 from scipy import sparse
 
 from hlca_preprocess import SOURCE, load_rows_csr
@@ -26,7 +30,9 @@ DATA = OUT / "data"
 HVG_CSV = QC / "hvg_seurat_v3.csv"
 DRIFT_CELLS = OUT / "drift_subsample_cells.csv.gz"
 METRICS = QC / "hlca_scvi_metrics.csv"
-HISTORY = QC / "hlca_scvi_history.csv"
+HISTORY_REFERENCE = QC / "scvi_history_reference.csv"
+HISTORY_QUERY = QC / "scvi_history_query.csv"
+LOG_DIR = DATA / "logs"
 DRIFT_LATENT = DATA / "h03_primary_drift_latent.h5ad"
 SEED = 0
 MAX_EPOCHS = 400
@@ -103,27 +109,100 @@ def make_model(adata: ad.AnnData) -> scvi.model.SCVI:
     return scvi.model.SCVI(adata, n_latent=N_LATENT, n_layers=N_LAYERS, gene_likelihood="nb")
 
 
-def train(model: scvi.model.SCVI, *, plan_kwargs: dict | None = None) -> tuple[dict[str, pd.DataFrame], float]:
+class ELBOHistoryWriter(Callback):
+    """Durably append the two locked ELBO metrics after every validation epoch."""
+
+    def __init__(self, output: Path, fit_name: str) -> None:
+        super().__init__()
+        self.output = output
+        self.fit_name = fit_name
+        self._last_epoch = -1
+
+    @staticmethod
+    def _scalar(trainer, name: str) -> float | None:
+        for metrics in (trainer.callback_metrics, trainer.logged_metrics, trainer.progress_bar_metrics):
+            value = metrics.get(name)
+            if value is None:
+                continue
+            if hasattr(value, "detach"):
+                value = value.detach().cpu().item()
+            value = float(value)
+            if np.isfinite(value):
+                return value
+        return None
+
+    def on_fit_start(self, trainer, pl_module) -> None:
+        self.output.parent.mkdir(parents=True, exist_ok=True)
+        with self.output.open("w", newline="") as handle:
+            csv.writer(handle).writerow(["epoch", "elbo_train", "elbo_validation"])
+            handle.flush()
+            os.fsync(handle.fileno())
+
+    def on_validation_end(self, trainer, pl_module) -> None:
+        if trainer.sanity_checking:
+            return
+        epoch = int(trainer.current_epoch) + 1
+        if epoch <= self._last_epoch:
+            return
+        train = self._scalar(trainer, "elbo_train")
+        validation = self._scalar(trainer, "elbo_validation")
+        if train is None or validation is None:
+            raise RuntimeError(
+                f"{self.fit_name}: neither callback/logger metric view contained both "
+                "per-epoch ELBO values"
+            )
+        with self.output.open("a", newline="") as handle:
+            csv.writer(handle).writerow([epoch, repr(train), repr(validation)])
+            handle.flush()
+            os.fsync(handle.fileno())
+        self._last_epoch = epoch
+        print(
+            f"[{self.fit_name}] epoch={epoch} elbo_train={train:.8g} "
+            f"elbo_validation={validation:.8g}",
+            flush=True,
+        )
+
+    def validate_against_history(self, history: dict[str, pd.DataFrame]) -> None:
+        observed = pd.read_csv(self.output)
+        expected_train = np.asarray(history["elbo_train"].iloc[:, 0], dtype=float)
+        expected_validation = np.asarray(history["elbo_validation"].iloc[:, 0], dtype=float)
+        if len(observed) != len(expected_validation):
+            raise RuntimeError(
+                f"{self.fit_name}: durable ELBO history has {len(observed)} rows, "
+                f"but SCVI history has {len(expected_validation)} validation epochs"
+            )
+        np.testing.assert_allclose(
+            observed["elbo_train"].to_numpy(dtype=float), expected_train, rtol=1e-12, atol=1e-12
+        )
+        np.testing.assert_allclose(
+            observed["elbo_validation"].to_numpy(dtype=float), expected_validation, rtol=1e-12, atol=1e-12
+        )
+
+
+def train(
+    model: scvi.model.SCVI,
+    *,
+    fit_name: str,
+    history_path: Path,
+    plan_kwargs: dict | None = None,
+) -> tuple[dict[str, pd.DataFrame], float]:
+    """Run one uninterrupted frozen fit with durable ELBO rows and CSV logs."""
     kwargs = training_kwargs()
     if plan_kwargs is not None:
         kwargs["plan_kwargs"] = plan_kwargs
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    writer = ELBOHistoryWriter(history_path, fit_name)
+    logger = CSVLogger(save_dir=str(LOG_DIR), name=fit_name, version="run")
+    kwargs["callbacks"] = [writer]
+    kwargs["logger"] = logger
     started = time.monotonic()
     model.train(**kwargs)
     elapsed = time.monotonic() - started
     history = {str(name): value.copy() for name, value in model.history.items()}
     if "elbo_train" not in history or "elbo_validation" not in history:
         raise RuntimeError("H03 requires both train and validation ELBO histories")
+    writer.validate_against_history(history)
     return history, elapsed
-
-
-def history_rows(history: dict[str, pd.DataFrame], fit: str) -> list[dict]:
-    rows: list[dict] = []
-    for metric in ("elbo_train", "elbo_validation"):
-        frame = history[metric]
-        values = np.asarray(frame.iloc[:, 0], dtype=float)
-        for epoch, value in enumerate(values, start=1):
-            rows.append({"fit": fit, "metric": metric, "epoch": epoch, "value": float(value)})
-    return rows
 
 
 def audit_frozen_latent_encoder(reference: scvi.model.SCVI, query: scvi.model.SCVI) -> tuple[float, int, int]:
@@ -207,7 +286,9 @@ def main() -> int:
     scvi.settings.seed = SEED
     young = load_hvg_adata("young")
     reference = make_model(young)
-    ref_history, ref_wall = train(reference)
+    ref_history, ref_wall = train(
+        reference, fit_name="reference", history_path=HISTORY_REFERENCE
+    )
     scvi.settings.seed = SEED
     old = load_hvg_adata("old")
     query = scvi.model.SCVI.load_query_data(
@@ -221,7 +302,9 @@ def main() -> int:
         freeze_batchnorm_encoder=True,
         freeze_batchnorm_decoder=False,
     )
-    query_history, query_wall = train(query, plan_kwargs={"weight_decay": 0.0})
+    query_history, query_wall = train(
+        query, fit_name="query", history_path=HISTORY_QUERY, plan_kwargs={"weight_decay": 0.0}
+    )
     max_change, parameter_count, buffer_count = audit_frozen_latent_encoder(reference, query)
     latent = drift_latents(reference, young, query, old)
     DATA.mkdir(parents=True, exist_ok=True)
@@ -248,9 +331,9 @@ def main() -> int:
         )
     QC.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(records).to_csv(METRICS, index=False)
-    pd.DataFrame(history_rows(ref_history, "young_reference") + history_rows(query_history, "old_query")).to_csv(HISTORY, index=False)
     print(json.dumps({
-        "metrics": str(METRICS), "history": str(HISTORY), "drift_latent": str(DRIFT_LATENT),
+        "metrics": str(METRICS), "history_reference": str(HISTORY_REFERENCE),
+        "history_query": str(HISTORY_QUERY), "drift_latent": str(DRIFT_LATENT),
         "n_drift_cells": int(latent.n_obs), "frozen_latent_encoder_max_abs_change": max_change,
         "peak_rss_bytes": max_rss_bytes(), "wall_seconds": time.monotonic() - started,
         "finished_utc": datetime.now(timezone.utc).isoformat(),
