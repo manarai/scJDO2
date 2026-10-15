@@ -102,7 +102,9 @@ def test_energy_transect_marks_only_a_strict_interior_saddle(tmp_path):
 
     def double_well(z):
         x = np.asarray(z)[:, 0]
-        return (x * (x - 0.45)) ** 2
+        # The old centroid is near t≈0.15, while this maximum lies near t≈0.5;
+        # it proves the saddle search uses the young-to-neighbour endpoints.
+        return (x * (x - 3.0)) ** 2
 
     fig = plot.energy_transect(a, "A", "B", double_well,
                                use_rep="X_scVI_shared", out=tmp_path / "saddle")

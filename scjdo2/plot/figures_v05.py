@@ -771,9 +771,10 @@ def energy_transect(adata: AnnData,
     """Render stored energy along a young soft-axis transect.
 
     The line begins at the young centroid of ``cell_type`` and follows its
-    leading eigendirection, oriented toward ``neighbour``.  Floors, the highest
-    intervening sampled point (saddle proxy), old/young centroid energies, and
-    projected stored cells are shown. ``energy`` is a fitted adapter's method
+    leading eigendirection to the ``neighbour`` centroid.  Those two stored
+    transect endpoints are the floors; the old centroid is separately projected
+    onto that line. A saddle is the highest strict local maximum between the
+    endpoint floors. ``energy`` is a fitted adapter's method
     or an object exposing ``energy(z)``; it is never trained here.
     """
     if by not in adata.obs or group_key not in adata.obs:
@@ -816,7 +817,10 @@ def energy_transect(adata: AnnData,
     old_t = float(np.dot(z_o - z_y, u) / length)
     young_E = float(np.asarray(energy_fn(z_y[None, :])).reshape(-1)[0])
     old_E = float(np.asarray(energy_fn(z_o[None, :])).reshape(-1)[0])
-    lo, hi = sorted((0.0, old_t))
+    neighbour_E = float(np.asarray(energy_fn(z_nb[None, :])).reshape(-1)[0])
+    # The displayed line is the stored young-to-neighbour transect: its floors
+    # are fixed at t=0 and t=1. The old centroid is an overlaid projection.
+    lo, hi = 0.0, 1.0
     strictly_between = (grid_t > lo) & (grid_t < hi)
     local_max = np.zeros_like(strictly_between, dtype=bool)
     local_max[1:-1] = ((curve[1:-1] > curve[:-2]) & (curve[1:-1] > curve[2:]))
@@ -835,13 +839,16 @@ def energy_transect(adata: AnnData,
             show = mask & (cell_t >= -0.3) & (cell_t <= 1.3)
             ax.scatter(cell_t[show], cell_E[show], s=5, alpha=0.22, color=color,
                        edgecolors="none", label=f"{age} projected cells")
-        ax.scatter([0.0, old_t], [young_E, old_E], s=42,
-                   color=["#378ADD", "#D85A30"], zorder=4, label="centroid floors")
+        ax.scatter([0.0, 1.0], [young_E, neighbour_E], s=42,
+                   color=["#378ADD", "#888780"], zorder=4, label="transect endpoint floors")
+        ax.scatter([old_t], [old_E], marker="D", s=32, color="#D85A30", zorder=4,
+                   label="old centroid projection")
         if saddle_idx is not None:
             ax.scatter([grid_t[saddle_idx]], [curve[saddle_idx]], marker="^", s=45,
                        color="#888780", zorder=4, label="intervening saddle")
         ax.axvline(0.0, color="#378ADD", lw=0.6, ls="--")
-        ax.axvline(old_t, color="#D85A30", lw=0.6, ls="--")
+        ax.axvline(1.0, color="#888780", lw=0.6, ls="--")
+        ax.axvline(old_t, color="#D85A30", lw=0.6, ls=":")
         ax.text(0.0, young_E, f"  young λ={float(ev.max()):+.3g}", fontsize=7, va="bottom")
         ax.text(old_t, old_E, f"  old λ={float(old_ev.max()):+.3g}", fontsize=7, va="bottom")
         barrier_text = (f"barrier height = {curve[saddle_idx] - young_E:+.3g}\n"
