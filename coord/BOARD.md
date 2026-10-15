@@ -38,7 +38,7 @@ Live status: `python coord/coord_check.py board`.
 |---|---|---|---|---|
 | hlca/H01 | manus | accepted | HLCA data, reference model, age inventory | ACCEPT |
 | hlca/H02 | claude | accepted | Human pre-registration (from H01 inventory) | ACCEPT |
-| hlca/H03 | manus | issued | scArches shared space + drift on HLCA | REVISE (2) |
+| hlca/H03 | manus | accepted | scArches shared space + drift on HLCA | ACCEPT |
 | hlca/H04 | manus | draft | Per-type tests and outcome, human lung | — |
 | hlca/H05 | manus | draft | Figures, mouse–human comparison | — |
 
@@ -48,3 +48,4 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — PREREG_aging_hlca.md approved by the user and frozen (9c29466); H03 issued.
 * 2026-10-15 — hlca/H03 blocked by the platform's 2-h job limit; REVISE: detached execution, full-data HVG equivalence check.
 * 2026-10-15 — hlca/H03 rev 1: HVG equivalence 2000/2000 (accepted); fit killed by its own logging hook; REVISE 2: non-raising hook, dry run first.
+* 2026-10-15 — hlca/H03 accepted (0ba8886), merged; strata + outcome checker added (Claude); H04 issued.

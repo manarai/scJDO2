@@ -31,3 +31,15 @@ fit: continuous age, donor-level operators at equal counts, age
 permutations across donors, young-only scArches reference primary,
 stiffness qualifier on the header. 13 types expected eligible.
 **Next.** H03 (preprocessing, shared spaces, drift).
+
+## 2026-10-15 — hlca/H03 (planned, ACCEPT, revision 2)
+
+**Result.** Young-only HLCA reference (266 145 cells, 400 epochs) with
+315 372 older-donor cells mapped by scArches; latent encoder frozen
+exactly; drift on 56 904 subsample cells in both spaces, symmetric to
+~1e-7. Eligibility 13 / 12 / 6 / 2 as predicted.
+**Meaning.** Ready for H04. Older donors' cells fit the young model less
+well (ELBO 655 vs 550).
+**Caveats.** scVI weights not saved; frozen check rests on the audit
+code. Banovich-only sensitivity has 2 types.
+**Next.** H04: frozen tests §5–§7.
