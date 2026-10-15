@@ -536,9 +536,23 @@ def _slopes(Y: np.ndarray, ages: np.ndarray) -> np.ndarray:
     return (a @ (Y - Y.mean(axis=0))) / (a @ a)
 
 
-def _perm_ages(ages: np.ndarray, n_perm: int, seed: int) -> np.ndarray:
+def _perm_ages(ages: np.ndarray, n_perm: int, seed: int,
+               strata: Optional[Sequence] = None) -> np.ndarray:
+    """``n_perm`` permutations of ``ages`` across donors; with ``strata``
+    (e.g. study per donor), ages are permuted only within each stratum
+    (PREREG_aging_hlca §7a). ``strata=None`` is the primary test."""
     rng = np.random.default_rng(seed)
-    return np.stack([rng.permutation(ages) for _ in range(int(n_perm))])
+    if strata is None:
+        return np.stack([rng.permutation(ages) for _ in range(int(n_perm))])
+    strata = np.asarray(strata)
+    groups = [np.where(strata == g)[0] for g in np.unique(strata)]
+    out = np.empty((int(n_perm), len(ages)))
+    for k in range(int(n_perm)):
+        a = ages.copy()
+        for idx in groups:
+            a[idx] = ages[idx][rng.permutation(len(idx))]
+        out[k] = a
+    return out
 
 
 @dataclass
@@ -553,7 +567,8 @@ class TrendResult:
 
 def isotropy_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
                    ref_op: np.ndarray, n_perm: int = 1000,
-                   seed: int = 0) -> TrendResult:
+                   seed: int = 0,
+                    strata: Optional[Sequence] = None) -> TrendResult:
     """Continuous analogue of §4b: does aging change some directions more
     than the typical direction?
 
@@ -583,7 +598,7 @@ def isotropy_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
         return float(np.max(np.abs(b - np.median(b))))
 
     s_obs = stat(ages)
-    null = np.array([stat(a) for a in _perm_ages(ages, n_perm, seed)])
+    null = np.array([stat(a) for a in _perm_ages(ages, n_perm, seed, strata)])
     q95 = float(np.percentile(null, 95))
     beta = _slopes(R, ages)
     return TrendResult(s_obs, null, q95, bool(s_obs > q95),
@@ -594,7 +609,8 @@ def isotropy_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
 
 def anticipation_trend(donor_centroids: Sequence[np.ndarray],
                        ages: Sequence[float], ref_op: np.ndarray,
-                       n_perm: int = 1000, seed: int = 0) -> TrendResult:
+                       n_perm: int = 1000, seed: int = 0,
+                    strata: Optional[Sequence] = None) -> TrendResult:
     """Continuous analogue of §5: does the donor centroid move with age
     along the young soft axis?
 
@@ -613,7 +629,7 @@ def anticipation_trend(donor_centroids: Sequence[np.ndarray],
         return abs(float(u @ b) / (np.linalg.norm(b) + 1e-12))
 
     s_obs = stat(ages)
-    null = np.array([stat(a) for a in _perm_ages(ages, n_perm, seed)])
+    null = np.array([stat(a) for a in _perm_ages(ages, n_perm, seed, strata)])
     q95 = float(np.percentile(null, 95))
     return TrendResult(s_obs, null, q95, bool(s_obs > q95),
                        float((1 + np.sum(null >= s_obs)) / (1 + len(null))),
@@ -621,7 +637,8 @@ def anticipation_trend(donor_centroids: Sequence[np.ndarray],
 
 
 def stiffness_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
-                    n_perm: int = 1000, seed: int = 0) -> TrendResult:
+                    n_perm: int = 1000, seed: int = 0,
+                    strata: Optional[Sequence] = None) -> TrendResult:
     """Slope of ``log median |λ|`` of the donor operators on age, with a
     two-sided age-permutation p. Negative slope = softening with age.
     ``passes`` = two-sided p ≤ 0.05. Reported beside the outcome header
@@ -631,7 +648,7 @@ def stiffness_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
     y = np.array([np.log(np.median(np.abs(np.linalg.eigvalsh(op))))
                   for op in donor_ops])[:, None]
     s_obs = float(_slopes(y, ages)[0])
-    null = np.array([float(_slopes(y, a)[0]) for a in _perm_ages(ages, n_perm, seed)])
+    null = np.array([float(_slopes(y, a)[0]) for a in _perm_ages(ages, n_perm, seed, strata)])
     p = float((1 + np.sum(np.abs(null) >= abs(s_obs))) / (1 + len(null)))
     return TrendResult(s_obs, null, float(np.percentile(np.abs(null), 95)),
                        bool(p <= 0.05), p, {"log_median_abs_lambda": y[:, 0]})

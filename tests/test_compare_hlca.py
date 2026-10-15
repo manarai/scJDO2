@@ -87,3 +87,33 @@ def test_donor_operator_equal_count_guard():
     except ValueError:
         return
     raise AssertionError("expected ValueError for n < n_common")
+
+
+def test_strata_none_is_identical_to_primary():
+    ops, cents, ages, ref = simulate("single_axis", 7)
+    a = isotropy_trend(ops, ages, ref, n_perm=100, seed=0)
+    b = isotropy_trend(ops, ages, ref, n_perm=100, seed=0, strata=None)
+    assert a.statistic == b.statistic and np.array_equal(a.null, b.null)
+
+
+def test_stratified_permutation_keeps_ages_within_stratum():
+    from scjdo2.compare import _perm_ages
+    ages = np.array([20., 30., 40., 50., 60., 70.])
+    strata = np.array(["s1", "s1", "s1", "s2", "s2", "s2"])
+    P = _perm_ages(ages, 50, 0, strata)
+    assert np.all(np.sort(P[:, :3], axis=1) == [20., 30., 40.])
+    assert np.all(np.sort(P[:, 3:], axis=1) == [50., 60., 70.])
+
+
+def test_stratified_null_removes_study_confounded_age_signal():
+    """Two studies with different stiffness and different age ranges:
+    unstratified stiffness_trend sees a slope; stratified does not."""
+    rng = np.random.default_rng(8)
+    ops, ages, strata = [], [], []
+    for study, (lo, hi, scale) in {"young_study": (10, 40, 1.0), "old_study": (50, 76, 1.5)}.items():
+        for a in rng.uniform(lo, hi, 15):
+            z, J = _cells(SIG * scale * np.exp(rng.normal(0, 0.03)), np.zeros(D), 60, rng)
+            ops.append(donor_operator(z, J, 50, n_draws=5, seed=int(rng.integers(1 << 31)))[0])
+            ages.append(a); strata.append(study)
+    assert stiffness_trend(ops, ages, n_perm=200, seed=0).passes
+    assert not stiffness_trend(ops, ages, n_perm=200, seed=0, strata=strata).passes
