@@ -29,3 +29,7 @@ data/moignard15/
 # External dataset caches (raw files are too large; keep only CHECKSUMS.txt)
 benchmarks/data/larry/*
 !benchmarks/data/larry/CHECKSUMS.txt
+
+# HLCA downloads (hlca/H01): models, zips, manifests stay local
+benchmarks/aging_hlca/data/
+benchmarks/aging/models/

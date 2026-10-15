@@ -36,7 +36,7 @@ Live status: `python coord/coord_check.py board`.
 
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
-| hlca/H01 | manus | issued | HLCA data, reference model, age inventory | — |
+| hlca/H01 | manus | accepted | HLCA data, reference model, age inventory | ACCEPT |
 | hlca/H02 | claude | draft | Human pre-registration (from H01 inventory) | — |
 | hlca/H03 | manus | draft | scArches shared space + drift on HLCA | — |
 | hlca/H04 | manus | draft | Per-type tests and outcome, human lung | — |
@@ -44,3 +44,4 @@ Live status: `python coord/coord_check.py board`.
 
 * 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
 * 2026-10-14 — H01 re-issued on current aging-basins after the mouse arm closed.
+* 2026-10-15 — hlca/H01 accepted (c036c4c): 107 donors, <45: 48, ≥60: 17; study/assay/site lean old. H02 next (Claude).
