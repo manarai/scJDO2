@@ -43,3 +43,20 @@ well (ELBO 655 vs 550).
 **Caveats.** scVI weights not saved; frozen check rests on the audit
 code. Banovich-only sensitivity has 2 types.
 **Next.** H04: frozen tests §5–§7.
+
+## 2026-10-15 — hlca/H04 (planned, ACCEPT) — the frozen human result
+
+**Result.** **isotropic noise increase; no aging claim beyond stiffness
+— no majority stiffness change.** Isotropy 0/13, anticipation 1/13
+(EC capillary, p = 0.047), stiffness loss 1/13 (T cell lineage,
+p = 0.005). Reproduced independently to 1e-16.
+**Meaning.** No direction-specific or anticipatory aging change in the
+operators of any human lung cell type; the two single hits are fragile
+(T-cell softening disappears within studies and in the all-ages space;
+EC capillary is borderline everywhere). Mouse and human agree: no
+robust aging change in operator shape.
+**Caveats.** 17 old donors clustered in two studies; young-reference
+fit worse for older donors (all-ages space agrees); one scVI seed;
+modest effects not excluded.
+**Next.** H05 issued. Proposed exploratory: HX01 (T cell / monocyte
+follow-up), HX02 (power).

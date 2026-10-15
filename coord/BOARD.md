@@ -39,7 +39,7 @@ Live status: `python coord/coord_check.py board`.
 | hlca/H01 | manus | accepted | HLCA data, reference model, age inventory | ACCEPT |
 | hlca/H02 | claude | accepted | Human pre-registration (from H01 inventory) | ACCEPT |
 | hlca/H03 | manus | accepted | scArches shared space + drift on HLCA | ACCEPT |
-| hlca/H04 | manus | issued | Per-type tests and outcome, human lung | — |
+| hlca/H04 | manus | accepted | Per-type tests and outcome, human lung | ACCEPT |
 | hlca/H05 | manus | draft | Figures, mouse–human comparison | — |
 
 * 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
@@ -49,3 +49,4 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — hlca/H03 blocked by the platform's 2-h job limit; REVISE: detached execution, full-data HVG equivalence check.
 * 2026-10-15 — hlca/H03 rev 1: HVG equivalence 2000/2000 (accepted); fit killed by its own logging hook; REVISE 2: non-raising hook, dry run first.
 * 2026-10-15 — hlca/H03 accepted (0ba8886), merged; strata + outcome checker added (Claude); H04 issued.
+* 2026-10-15 — hlca/H04 accepted (66ea582): "isotropic noise increase; no aging claim beyond stiffness — no majority stiffness change"; reproduced to 1e-16.
