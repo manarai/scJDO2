@@ -10,6 +10,7 @@ Live status: `python coord/coord_check.py board`.
 | aging/A03 | manus | accepted | Per-type compare, artifacts, modes, outcome | ACCEPT |
 | aging/A04 | manus | accepted | Figures, QC set, notebook, RESULT.md | ACCEPT |
 | aging/X04 | manus | accepted | EXPLORATORY: mapping-shrinkage check | ACCEPT |
+| aging/X05 | manus | issued | EXPLORATORY: per-mouse uncertainty | — |
 
 ## Log
 
@@ -27,6 +28,7 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-14 — user approved X04 (exploratory); issued. Reading rule fixed before the run.
 * 2026-10-14 — aging/X04 blocked: contract fence missing (Claude) and device="cpu" vs A02's "auto"; REVISE.
 * 2026-10-14 — aging/X04 accepted (dc648cf): no evidence mapping hides change; A03 isotropy passes not seed-robust; granulocytopoietic stiffening robust.
+* 2026-10-14 — user approved X05 then hlca/H01; X05 issued.
 
 ## hlca
 
