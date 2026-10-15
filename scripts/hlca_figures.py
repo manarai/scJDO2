@@ -382,7 +382,7 @@ def append_result(table: pd.DataFrame, manifest: pd.DataFrame) -> None:
   of one direction over the age range are not excluded.
 * The mouse–human comparison covers two matched cell types and is
   descriptive."""
-    existing += "\n## §8 Mouse–human comparison\n"
+    existing += "## §8 Mouse–human comparison\n"
     existing += "Descriptive comparison only; no statistic was computed. Mouse stiffness ratio is the stored A03 old/young median-curvature ratio; its X04 range is the stored shared-space seed range. Human ratio is `exp(stiff_slope)` from H04 §7(f).\n\n" + "\n".join(lines) + "\n"
     existing += "\n## §9 Figures\n" + paths + "\n"
     existing += "\n## §10 Limits\n" + limits + "\n"

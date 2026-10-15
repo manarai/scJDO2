@@ -110,7 +110,6 @@ The header and qualifier above are the fixed §6 rule applied to `tests_primary.
 | f_two_group | Multiciliated lineage | 43 | 32 | 11 | 0.382402 | 0.759436 | 0.338661 | false | 0.0626255 | 0.0266156 | 0.402092 | 0.913087 | false | 0.0492627 | 0.296703 | none |
 | f_two_group | Secretory | 42 | 31 | 11 | 0.391407 | 0.8112 | 0.588412 | false | 0.0624113 | 0.194008 | 0.668324 | 0.725275 | false | 0.05765 | 0.241758 | none |
 | f_two_group | T cell lineage | 34 | 26 | 8 | 0.694331 | 0.929946 | 0.187812 | false | -0.161063 | 0.265498 | 0.637639 | 0.445554 | false | -0.170667 | 0.0559441 | none |
-
 ## §8 Mouse–human comparison
 Descriptive comparison only; no statistic was computed. Mouse stiffness ratio is the stored A03 old/young median-curvature ratio; its X04 range is the stored shared-space seed range. Human ratio is `exp(stiff_slope)` from H04 §7(f).
 
