@@ -92,7 +92,8 @@
     }
   ],
   "deviations": [
-    "Blocked before any X04 shared-query fit, comparison, figures, or verdict: the current scvi/lightning runtime rejects A02's `device=\"cpu\"` query argument with a CPU `devices` type error. No frozen analysis setting was changed."
+    "Blocked before any X04 shared-query fit, comparison, figures, or verdict: the current scvi/lightning runtime rejects A02's `device=\"cpu\"` query argument with a CPU `devices` type error. No frozen analysis setting was changed.",
+    "The issued X04 task file cannot be parsed by coord_check.py in this checkout: `no json contract block`; the task file itself is not an allowed Manus edit."
   ],
   "questions": [
     "May the X04 shared-query implementation replace the runtime-incompatible `device=\"cpu\"` argument with the current scvi CPU-equivalent `devices=1`, retaining accelerator=\"cpu\" and all frozen model, mapping, and training settings?"
