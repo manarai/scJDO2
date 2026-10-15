@@ -39,7 +39,7 @@ Live status: `python coord/coord_check.py board`.
 | hlca/H01 | manus | accepted | HLCA data, reference model, age inventory | ACCEPT |
 | hlca/H02 | claude | accepted | Human pre-registration (from H01 inventory) | ACCEPT |
 | hlca/H03 | manus | accepted | scArches shared space + drift on HLCA | ACCEPT |
-| hlca/H04 | manus | draft | Per-type tests and outcome, human lung | — |
+| hlca/H04 | manus | issued | Per-type tests and outcome, human lung | — |
 | hlca/H05 | manus | draft | Figures, mouse–human comparison | — |
 
 * 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
