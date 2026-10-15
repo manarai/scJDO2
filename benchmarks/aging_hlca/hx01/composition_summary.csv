@@ -1,0 +1,3 @@
+ann_level_3,fraction_name,n_h04_donors,n_valid_fraction,rho_age,p_age,rho_h04_log_stiffness,p_h04_log_stiffness,n_spearman_age,n_spearman_h04_log_stiffness
+T cell lineage,CD8 / (CD4 + CD8),58,58,0.029209442156095843,0.8276968646140282,-0.023901073548863394,0.8586538063176665,58,58
+Monocytes,Non-classical / (Classical + Non-classical),60,60,-0.1901730179901369,0.14555708116585986,-0.24834676298971942,0.05570812568367208,60,60

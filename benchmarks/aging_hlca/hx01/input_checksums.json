@@ -1,0 +1,20 @@
+[
+  {
+    "path": "benchmarks/aging_hlca/data/hlca_core_full_metadata.h5ad",
+    "bytes": 5873641828,
+    "sha256": "de2e00d1cb7f95098ab207af949fd93b2c038fa2882a29b85f23853267831356",
+    "source_report": "coord/hlca/reports/H01.json"
+  },
+  {
+    "path": "benchmarks/aging_hlca/data/h03_primary_drift.h5ad",
+    "bytes": 115249384,
+    "sha256": "08ab9bfda20e932f2439e72d9ba31afc90b1317d7968f4894cb43bc995c0ffbb",
+    "source_report": "coord/hlca/reports/H03.json"
+  },
+  {
+    "path": "benchmarks/aging_hlca/donor_operators.csv",
+    "bytes": 1574238,
+    "sha256": "bb2e91a6abd1a114e979b611dc8f1293b4bc0e32ddf0aed91a22eaf773f2016f",
+    "source_report": "coord/hlca/reports/H04.json"
+  }
+]
