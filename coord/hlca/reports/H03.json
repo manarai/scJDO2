@@ -1,0 +1,86 @@
+{
+  "artifacts": [
+    {
+      "bytes": 14516,
+      "committed": true,
+      "path": "scripts/hlca_preprocess.py",
+      "regenerate": "python scripts/hlca_preprocess.py --seed 0",
+      "sha256": "7160f24304604e1423499c96852316af0d01326649e324d86664c9955ff1b8d4"
+    },
+    {
+      "bytes": 11347,
+      "committed": true,
+      "path": "scripts/hlca_fit_scvi.py",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0",
+      "sha256": "587aeeda4b622b0879823c547008c11fdfaab8886631f2215880f8d43caa9666"
+    },
+    {
+      "bytes": 639901,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/drift_subsample_cells.csv.gz",
+      "regenerate": "python scripts/hlca_preprocess.py --seed 0",
+      "sha256": "47899582e6deb1290ca9c19516ac6833e47cd200186d9071db4d42047390d32c"
+    },
+    {
+      "bytes": 2371219,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/qc/hvg_seurat_v3.csv",
+      "regenerate": "python scripts/hlca_preprocess.py --seed 0",
+      "sha256": "4c75ac41cf7b316ec85f9ccdd2af726c8205a8d861623330528aba84305e6247"
+    },
+    {
+      "bytes": 413,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/qc/preprocess_summary.csv",
+      "regenerate": "python scripts/hlca_preprocess.py --seed 0",
+      "sha256": "ecd30587e948feb603e65dafc9d547552b25fdc233c07a91d51f0230e88c3178"
+    }
+  ],
+  "compute": {
+    "cpu_hours": null,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU (14 logical CPUs); MPS detected but intentionally unused under the CPU-only pre-registration"
+  },
+  "deviations": [
+    "The installed Scanpy 1.12.4 Seurat-v3 routine cannot index the AnnData 0.11 backed CSR adapter. H03 therefore implemented the same Scanpy per-study formula with Scanpy\u2019s own aggregate and clipped-sum kernels, bounded to one study at a time. On a real 5,000-cell HLCA slice, the selected 2,000 genes matched Scanpy exactly.",
+    "The primary CPU-only scVI reference invocation was terminated externally by the execution platform after its two-hour tracked-background-job wait limit. It produced no model, checkpoint, ELBO history, latent matrix, or query fit. The platform does not provide final process CPU accounting or final peak memory after a forced termination; those metrics, the query audit, drift gates, and eligibility outputs are therefore null.",
+    "No frozen statistical parameter, model architecture, seed, source dataset, donor inclusion rule, or downstream test was changed. The local H01 input checksums and the required pre-data comparison test passed before preprocessing."
+  ],
+  "finished_utc": "2026-10-15T14:07:49.488280+00:00",
+  "metrics": {
+    "eligible_types_primary": null,
+    "n_cells_drift_subsample": 56904,
+    "n_cells_query": 315372,
+    "n_cells_reference": 266145,
+    "n_donors_used": 106,
+    "n_eligible_banovich": null,
+    "n_eligible_never_smokers": null,
+    "n_eligible_parenchyma": null,
+    "n_eligible_primary": null,
+    "peak_ram_gb": null,
+    "ref_weights_max_abs_change": null,
+    "scvi_epochs_query": null,
+    "scvi_epochs_reference": null,
+    "secondary_embedding_dim": 30,
+    "sym_max_primary": null,
+    "sym_max_secondary": null,
+    "wall_hours": 2.1886
+  },
+  "observations": [
+    "Numeric ages retained 581,517 cells from 106 donors: 266,145 cells from donors younger than 45 years and 315,372 cells from donors aged 45 years or older.",
+    "The frozen all-donor Seurat-v3 selection produced exactly 2,000 HVGs across 14 study batches; no Rare cells were removed before HVG selection or scVI training.",
+    "The deterministic drift sample contains 56,904 unique cells across 106 donors and 24 non-Rare ann_level_3 types, with no donor\u00d7type group exceeding 60 cells.",
+    "The full preprocessing pass used a measured maximum resident set size of 7.38 GB, below H03\u2019s approximately 28 GB stop threshold.",
+    "The published HLCA embedding source is 30-dimensional; it was not used for a drift fit before the primary mapping was externally terminated."
+  ],
+  "questions": [
+    "May Claude issue a revised H03 task that authorizes a persistent execution environment (or another explicitly approved execution strategy) for the same frozen CPU-only 400-epoch young-reference and query fits? The current platform terminates the run before it writes a reproducible checkpoint or any mapped output."
+  ],
+  "started_utc": "2026-10-15T11:38:13Z",
+  "status": "blocked",
+  "suggestions": [
+    "Run the unchanged frozen primary mapping in an environment that can retain the local data and model state beyond the platform\u2019s two-hour tracked-job limit, because it is a computational-execution blocker rather than a biological or statistical result.",
+    "If a revised task permits a checkpointing strategy, require a checkpoint and per-epoch history at deterministic intervals so an external interruption can be resumed and audited without discarding the frozen fit."
+  ],
+  "task": "hlca/H03"
+}
