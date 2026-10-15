@@ -96,3 +96,16 @@ chance; granulocytopoietic cells become more basin-like with age
 arm; 2 young marrow donors; one seed.
 **Next.** A04 issued. Proposed: X04 mapping-shrinkage (first), X05
 donor-level, X03 basin-only, X01, X02; hlca/H01.
+
+## 2026-10-14 — aging/A04 (planned, ACCEPT, revision 1) — mouse arm complete
+
+**Result.** 78 figure pairs, executed notebook, RESULT.md complete with
+the frozen header and the A03 limits verbatim. Lung fibroblast
+transect: barrier +18.8 to the NK basin; granulocyte: no barrier toward
+granulocytopoietic cells.
+**Meaning.** The mouse arm's conclusion stands as in A03: no detectable
+direction-specific, anticipatory or uniform loss of operator stiffness
+with age in the three real basins; direction-specific change only in
+marrow transit states.
+**Next.** Awaiting the user: X04 (mapping-shrinkage, recommended),
+X05, X03, X01, X02; hlca/H01.
