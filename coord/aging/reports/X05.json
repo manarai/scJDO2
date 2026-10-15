@@ -1,0 +1,212 @@
+{
+  "task": "aging/X05",
+  "status": "done",
+  "started_utc": "2026-10-15T01:25:24Z",
+  "finished_utc": "2026-10-15T01:30:18Z",
+  "compute": {
+    "cpu_hours": 0.01,
+    "gpu_hours": 0.0,
+    "hardware": "MacBook Pro (Apple M3 Max); CPU-only stored-latent/Jacobian calculations; no model fitting"
+  },
+  "metrics": {
+    "x05_verdict": "granulocytopoietic stiffening exceeds mouse-to-mouse variation",
+    "gcp_T_seed0": 0.8490951636251408,
+    "gcp_p_stiffer_seed0": 0.030303030303030304,
+    "gcp_p_stiffer_seed1": 0.045454545454545456,
+    "gcp_p_stiffer_seed2": 0.015151515151515152,
+    "gcp_loo_min_stiff_ratio": 3.021123271595146,
+    "n_relabellings_marrow": {
+      "granulocyte": 66,
+      "granulocytopoietic cell": 66,
+      "hematopoietic precursor cell": 6,
+      "monocyte": 55,
+      "precursor B cell": 21,
+      "promonocyte": null
+    },
+    "n_relabellings_lung": {
+      "fibroblast of lung": 21,
+      "natural killer cell": 126
+    },
+    "mice_excluded_by_type": {
+      "lung|fibroblast of lung": [
+        "18-F-50",
+        "3-F-56",
+        "3-F-57"
+      ],
+      "lung|natural killer cell": [
+        "18-F-50"
+      ],
+      "marrow|granulocyte": [],
+      "marrow|granulocytopoietic cell": [],
+      "marrow|hematopoietic precursor cell": [
+        "18-F-50",
+        "18-F-51",
+        "18-M-52",
+        "18-M-53",
+        "21-F-54",
+        "21-F-55",
+        "24-M-60",
+        "24-M-61"
+      ],
+      "marrow|monocyte": [
+        "18-M-53"
+      ],
+      "marrow|precursor B cell": [
+        "18-M-53",
+        "21-F-55",
+        "24-M-59",
+        "24-M-60",
+        "24-M-61"
+      ],
+      "marrow|promonocyte": [
+        "18-F-50",
+        "18-F-51",
+        "18-M-52",
+        "18-M-53",
+        "21-F-54",
+        "21-F-55",
+        "24-M-58",
+        "24-M-59",
+        "24-M-60",
+        "24-M-61"
+      ]
+    },
+    "call_stability_by_type": {
+      "lung|fibroblast of lung": {
+        "iso": 1.0,
+        "ant": 1.0,
+        "n_eligible": 5
+      },
+      "lung|natural killer cell": {
+        "iso": 1.0,
+        "ant": 1.0,
+        "n_eligible": 6
+      },
+      "marrow|granulocyte": {
+        "iso": 1.0,
+        "ant": 0.7,
+        "n_eligible": 10
+      },
+      "marrow|granulocytopoietic cell": {
+        "iso": 1.0,
+        "ant": 1.0,
+        "n_eligible": 10
+      },
+      "marrow|hematopoietic precursor cell": {
+        "iso": 0.8,
+        "ant": 1.0,
+        "n_eligible": 10
+      },
+      "marrow|monocyte": {
+        "iso": 1.0,
+        "ant": 1.0,
+        "n_eligible": 10
+      },
+      "marrow|precursor B cell": {
+        "iso": 0.9,
+        "ant": 1.0,
+        "n_eligible": 10
+      },
+      "marrow|promonocyte": {
+        "iso": 1.0,
+        "ant": 0.8,
+        "n_eligible": 10
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/aging/x05/per_mouse.csv",
+      "bytes": 11797,
+      "sha256": "d7395bb48c60e6a0a310b8fdd9fd2ffd53623c45d6903838de78f55d04dde7ff",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/aging/x05/mouse_permutation.csv",
+      "bytes": 2304,
+      "sha256": "9b702a7d19fcb750671e81c1ac55fba8f7d262db8c625a06791cc220f0ca0394",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/aging/x05/loo_old.csv",
+      "bytes": 9062,
+      "sha256": "be715b1ae33a37d4a0797f64c49b5c1ac9a04a67bdc50cfe9d4cf41357fe71b2",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/aging/x05/summary.csv",
+      "bytes": 3095,
+      "sha256": "0f912f4b644acd669e1fcc73a05444e612143987d9440ff5a9e506a3e26c30ba",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/aging/x05/RESULT_X05.md",
+      "bytes": 2193,
+      "sha256": "a14702286c359ac88e631d7bef875aefaf0fce854ea8d0dfea47b4cd544e9028",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/aging/x05/metrics.json",
+      "bytes": 2247,
+      "sha256": "95d6d703f49b413aac6e545544bfce7a43fe609a1b4dbc9ad8b7ae1f0d39384f",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/aging/x05/input_checksums.json",
+      "bytes": 940,
+      "sha256": "f6e0d1bb03d2d710131b28c399e90eb0127118fa25e0ddf14f39f5dafb711852",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x05/per_mouse_stiffness.pdf",
+      "bytes": 29246,
+      "sha256": "2911c9a8b08dfc0cbd7db4f86835274dbe7ff75522d06cf9f22ff0a94d17b2b2",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x05/per_mouse_stiffness.png",
+      "bytes": 335167,
+      "sha256": "8ba099b27f1c553fbd5f96be1a1f9e9e71b766e81d089b2e4a61a84e330f506e",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x05/loo_call_stability.pdf",
+      "bytes": 25174,
+      "sha256": "1c9f0d0cac2ae57063981220248cedc9e72326e38484bbdc2683435fe80df9c5",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    },
+    {
+      "path": "benchmarks/figures/aging/x05/loo_call_stability.png",
+      "bytes": 150857,
+      "sha256": "fe9229db2c33f9f746683b1d57df9095607bd7f6d65581d38940c6f9c8905eb3",
+      "committed": true,
+      "regenerate": "python scripts/x05_donor_uncertainty.py"
+    }
+  ],
+  "deviations": [
+    "No frozen statistical parameter, input artifact, or model setting changed. An initial no-fit attempt exposed AnnData view behavior: a custom per-cell Jacobian stored in uns was not automatically subset when an old donor was dropped. The X05-only script now explicitly carries the existing retained-cell Jacobians into the masked view; the same A03 arguments and stored values were then run.",
+    "The 30-cell donor floor leaves no old promonocyte mouse for the exact per-mouse permutation test. Those three seed rows are recorded as NA with status `insufficient_mice_after_30_cell_floor`, as prescribed; pooled leave-one-old-mouse-out comparisons remain available for that type."
+  ],
+  "questions": [],
+  "observations": [
+    "A02 primary and all four X04 seed-replicate input SHA-256 values matched their accepted reports before computation.",
+    "For granulocytopoietic cells, exact mouse-label p_stiffer was 0.0303 (seed 0), 0.0455 (seed 1), and 0.0152 (seed 2), each from 66 relabellings.",
+    "The granulocytopoietic leave-one-old-mouse-out minimum stiffness ratio was 3.021, with 10 of 10 iso calls and 10 of 10 anticipation calls matching A03.",
+    "The output contains 92 primary per-mouse donor/type rows, 24 permutation rows, 72 leave-one-old-mouse-out rows, and 8 per-type summary rows.",
+    "One lung fibroblast leave-one-old-mouse-out comparison is NA because omitting 18-F-51 leaves fewer than 200 old cells; all other listed LOO entries retain their eligibility status in the table."
+  ],
+  "suggestions": [
+    "A prospective donor-level replication with more young mice would increase the exact-label permutation resolution and prevent the 30-cell floor from removing several donor/type comparisons.",
+    "If a follow-up is approved, inspect why granulocyte anticipation and several non-basin A03 calls change under individual old-mouse omissions; this task only records their stability fractions."
+  ]
+}
