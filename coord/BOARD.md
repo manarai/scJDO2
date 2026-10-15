@@ -11,7 +11,7 @@ Live status: `python coord/coord_check.py board`.
 | aging/A04 | manus | accepted | Figures, QC set, notebook, RESULT.md | ACCEPT |
 | aging/X04 | manus | accepted | EXPLORATORY: mapping-shrinkage check | ACCEPT |
 | aging/X05 | manus | accepted | EXPLORATORY: per-mouse uncertainty | ACCEPT |
-| aging/X06 | manus | issued | EXPLORATORY: fixed-axis statistic on mouse basins | — |
+| aging/X06 | manus | accepted | EXPLORATORY: fixed-axis statistic on mouse basins | ACCEPT |
 
 ## Log
 
@@ -62,3 +62,4 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — hlca/HX03 accepted (13c43a9): no soft-axis change (0/13 primary), median MDE x3; reproduced to 1e-16.
 * 2026-10-15 — user approved aging/X06, hlca/HX01, write-up, GitHub backup; X06 and HX01 issued (run X06 first).
 * 2026-10-15 — hlca/HX01 accepted (74f4209): T cell and monocyte hints study-driven. aging/X06 still queued.
+* 2026-10-15 — aging/X06 accepted (5443446): 0/3 mouse basins show soft-axis change. All planned and approved tasks complete.

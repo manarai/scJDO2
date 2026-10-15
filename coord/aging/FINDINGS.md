@@ -154,3 +154,12 @@ survive mouse-level variation with 2 young mice.
 **Caveats.** Underpowered by design of the data (lung 4, marrow 2
 young mice). A null here is "not detected", not "absent".
 **Next.** hlca/H01: the human lung arm, with ~100 donors.
+
+## 2026-10-15 — aging/X06 (EXPLORATORY, ACCEPT) — fixed-axis statistic on mouse basins
+
+**Result.** 0/3 basins show soft-axis change with age (NK seed 0 only;
+fibroblast seeds 1–2 only at the minimum attainable p; granulocyte none).
+Injected loosening ≥ ×1.25 is detectable in seed 0 for all three.
+Recomputed independently.
+**Meaning.** No single-direction loosening in the three real mouse
+basins; non-zero slopes point the other way. Mouse and human agree.
