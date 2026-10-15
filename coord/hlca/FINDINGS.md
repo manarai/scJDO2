@@ -23,3 +23,11 @@ airway sampling lean old; one study (Banovich_Kropski_2020, 17 vs 5)
 supports a within-study contrast.
 **Caveats.** Metadata only; no fit, no statistic.
 **Next.** H02: human pre-registration (Claude), for user approval.
+
+## 2026-10-15 — hlca/H02 (planned, ACCEPT) — human pre-registration frozen
+
+**Result.** `PREREG_aging_hlca.md` approved and frozen before any human
+fit: continuous age, donor-level operators at equal counts, age
+permutations across donors, young-only scArches reference primary,
+stiffness qualifier on the header. 13 types expected eligible.
+**Next.** H03 (preprocessing, shared spaces, drift).
