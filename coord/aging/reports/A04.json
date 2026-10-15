@@ -2,9 +2,9 @@
   "task": "aging/A04",
   "status": "done",
   "started_utc": "2026-10-15T00:00:00Z",
-  "finished_utc": "2026-10-15T00:09:21Z",
+  "finished_utc": "2026-10-15T00:18:55Z",
   "compute": {
-    "cpu_hours": 0.04,
+    "cpu_hours": 0.06,
     "gpu_hours": 0.0,
     "hardware": "Apple Silicon CPU, local macOS desktop"
   },
@@ -17,8 +17,8 @@
   "artifacts": [
     {
       "path": "scripts/render_aging_figures.py",
-      "bytes": 21142,
-      "sha256": "6d019b69634739b08a7f35df28d53fbc7859cfd7cfb5a04dc31d4a2dd6a15075",
+      "bytes": 25971,
+      "sha256": "ed8818a8d6bb2426d31e2e2b7dad31f50f63f0aa8702b19c169610dfcbbced5c",
       "committed": true,
       "regenerate": "python scripts/render_aging_figures.py"
     },
@@ -32,7 +32,7 @@
     {
       "path": "notebooks/aging_basins.ipynb",
       "bytes": 292695,
-      "sha256": "16d8b64cc3a3c5714a4791999b00b2b0ff24843213cf63b9981c2a5270d23e78",
+      "sha256": "f96e6c0fb266922bc6a4b16861719e4f907703502e5129a41bbf03f8e0f96746",
       "committed": true,
       "regenerate": "JUPYTER_PATH=\"$PWD/.venv/share/jupyter\" .venv/bin/python scripts/make_aging_notebook.py"
     },
@@ -52,8 +52,8 @@
     },
     {
       "path": "benchmarks/figures/aging/input_checksums.json",
-      "bytes": 3352,
-      "sha256": "736d1eaa8538f648ea3094afdcfb57d067c63d4f4127b3609098ef5458b53c08",
+      "bytes": 3437,
+      "sha256": "8eb5920e705dc19cf2f4c34e8e6421f4f6456fb7cc52c19145610bc639bfcaa4",
       "committed": true,
       "regenerate": "python scripts/render_aging_figures.py"
     },
@@ -72,13 +72,124 @@
   ],
   "questions": [],
   "observations": [
-    "All A01\u2013A03 report-listed input artifacts passed SHA-256 verification before rendering.",
     "The manifest contains 78 PDF/PNG figure pairs with no missing file, plus 3 documented deviation rows.",
     "The executed notebook contains 95 cells, 8 executed code cells, 78 inline figure-atlas Markdown cells, and no execution errors.",
-    "All three required stored-energy transects were rendered: lung fibroblast, lung natural killer cell, and marrow granulocyte."
+    "All three required stored-energy transects were rendered: lung fibroblast, lung natural killer cell, and marrow granulocyte.",
+    "All immutable A01\u2013A03 report-listed rendering inputs passed SHA-256 verification; the A04-owned mutable RESULT.md is explicitly excluded from that upstream comparison and its current hash is recorded in input_checksums.json.",
+    "Revision 1 rerendered exactly six requested figure pairs; the manifest paths and stored-input provenance were revalidated and remain unchanged."
   ],
   "suggestions": [
     "A future approved run could persist epoch-level scVI histories so ELBO trajectories, rather than final summaries only, can be inspected.",
     "A future approved analysis could compute and store archetype weights or the permutation-null refits if those diagnostic panels are required."
-  ]
+  ],
+  "revision_1": {
+    "scope": "rendering only; no model refit and no new statistics",
+    "figure_pairs_rerendered": 6,
+    "metrics": {
+      "n_figures": 78,
+      "n_skipped": 3,
+      "notebook_executed": true,
+      "energy_transect_rendered": 3
+    },
+    "checks": [
+      "tests/test_aging_figures.py: 7 passed",
+      "fibroblast and natural-killer transects annotate a barrier height; granulocyte annotates no barrier along this transect",
+      "aging_vectors panels each span at least one decade on both log axes and label old/young stiffness ratios",
+      "marrow compare summary wraps hematopoietic precursor cell",
+      "notebook reexecuted: 95 cells, 8 executed code cells, 78 inline figure cells, no errors"
+    ],
+    "artifacts": [
+      {
+        "path": "benchmarks/figures/aging/comparison/aging_vectors.pdf",
+        "bytes": 25561,
+        "sha256": "a2681481c480f96323951e10f01b0c20cbed695736cf5efd36c6cd26d344daca",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/comparison/aging_vectors.png",
+        "bytes": 111284,
+        "sha256": "4fffd900d3bae4c8e0a03762a069566ed0d8f1d55b83a126a5efa44cd166fd0a",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/lung/compare_summary.pdf",
+        "bytes": 18938,
+        "sha256": "fd899cd76c00d547ef77e2fae8a4e41fb236e085964a501d2cc1e688ada179ab",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/lung/compare_summary.png",
+        "bytes": 52549,
+        "sha256": "0c0e2267eba2454665483742e5c971087b02c5612b803c4ec44826daef5da01f",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/marrow/compare_summary.pdf",
+        "bytes": 20107,
+        "sha256": "6f5a125b03ebc0565628461f0c0c4794bbc485658d9ddbc47b3f6b5e9c53cf98",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/marrow/compare_summary.png",
+        "bytes": 87105,
+        "sha256": "60f8923ac0ebecf23fc237f2af861fee84c5cc4102bd2abc2bf607c6318d3a5d",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/lung/energy_transect_fibroblast_of_lung.pdf",
+        "bytes": 31824,
+        "sha256": "051fcd1010e6a9f9cf6e4410c6920492bd2b0a50212fff1b70deb729cee6073d",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/lung/energy_transect_fibroblast_of_lung.png",
+        "bytes": 119478,
+        "sha256": "524c8f52c94c0d083d58997ef578127334de9da0b49a8409ccb11b4b6f6773fa",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/lung/energy_transect_natural_killer_cell.pdf",
+        "bytes": 35691,
+        "sha256": "ee3ec89d8080aa9bae3c26eead0a732511e22f29bc5e2b9444e84872a591455c",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/lung/energy_transect_natural_killer_cell.png",
+        "bytes": 139730,
+        "sha256": "e3141031874af9deaa4cf122e07dbf2e208402019cff68bc5c37d273c16bb532",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/marrow/energy_transect_granulocyte.pdf",
+        "bytes": 39248,
+        "sha256": "29396fbe865a62984863e5dc095b8efc888e3301ec38772b1efe8c241d067f4a",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "benchmarks/figures/aging/marrow/energy_transect_granulocyte.png",
+        "bytes": 175712,
+        "sha256": "2ea2edd3b95c79cb009103c71cc955cf503d6d6430c8dbe23078281e645102d2",
+        "committed": true,
+        "regenerate": "python scripts/render_aging_figures.py --affected-only"
+      },
+      {
+        "path": "notebooks/aging_basins.ipynb",
+        "bytes": 292695,
+        "sha256": "f96e6c0fb266922bc6a4b16861719e4f907703502e5129a41bbf03f8e0f96746",
+        "committed": true,
+        "regenerate": "JUPYTER_PATH=\"$PWD/.venv/share/jupyter\" .venv/bin/python scripts/make_aging_notebook.py"
+      }
+    ]
+  }
 }
