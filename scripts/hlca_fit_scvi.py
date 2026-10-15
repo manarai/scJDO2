@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""H03 §3 primary space: young SCVI reference and frozen old scArches query."""
+"""H03 §3 primary space: young SCVI reference and frozen old scArches query.
+
+``--dry-run`` validates only the execution plumbing: two deterministic 2,000-cell
+fits at two epochs.  It never writes H03 result artifacts and writes all of its
+logs, audit trails, and model histories under the gitignored data/logs/dryrun/.
+"""
 from __future__ import annotations
 
 import argparse
@@ -7,6 +12,7 @@ import csv
 import json
 import os
 import resource
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -18,7 +24,6 @@ import pandas as pd
 import scvi
 import torch
 from lightning.pytorch.callbacks import Callback
-from lightning.pytorch.loggers import CSVLogger
 from scipy import sparse
 
 from hlca_preprocess import SOURCE, load_rows_csr
@@ -33,12 +38,15 @@ METRICS = QC / "hlca_scvi_metrics.csv"
 HISTORY_REFERENCE = QC / "scvi_history_reference.csv"
 HISTORY_QUERY = QC / "scvi_history_query.csv"
 LOG_DIR = DATA / "logs"
+DRYRUN_DIR = LOG_DIR / "dryrun"
 DRIFT_LATENT = DATA / "h03_primary_drift_latent.h5ad"
 SEED = 0
 MAX_EPOCHS = 400
 PATIENCE = 30
 N_LATENT = 15
 N_LAYERS = 2
+DRYRUN_CELLS = 2_000
+DRYRUN_EPOCHS = 2
 
 
 def max_rss_bytes() -> int:
@@ -46,9 +54,9 @@ def max_rss_bytes() -> int:
     return value if Path("/System").exists() else value * 1024
 
 
-def training_kwargs() -> dict:
+def training_kwargs(max_epochs: int) -> dict:
     return {
-        "max_epochs": MAX_EPOCHS,
+        "max_epochs": int(max_epochs),
         "accelerator": "cpu",
         "devices": 1,
         "early_stopping": True,
@@ -65,7 +73,7 @@ def load_hvg_adata(age_kind: str) -> ad.AnnData:
         raise ValueError(age_kind)
     hvg = pd.read_csv(HVG_CSV)
     genes = hvg.loc[hvg["highly_variable"], "gene_id"].astype(str).tolist()
-    if len(genes) != N_LATENT * 0 + 2_000 or len(set(genes)) != 2_000:
+    if len(genes) != 2_000 or len(set(genes)) != 2_000:
         raise RuntimeError("H03 requires exactly 2,000 unique frozen HVGs")
     source = ad.read_h5ad(SOURCE, backed="r")
     try:
@@ -83,8 +91,6 @@ def load_hvg_adata(age_kind: str) -> ad.AnnData:
         positions = raw_var_names.get_indexer(genes)
         if (positions < 0).any():
             raise RuntimeError("frozen HVG list is not contained in the H01 raw matrix")
-        # Keep the source gene order for the sparse column slice; reindex to the
-        # deterministic Seurat-v3 list afterwards so reference and query agree.
         source_order = np.sort(positions)
         source_to_output = np.searchsorted(source_order, positions)
         with h5py.File(SOURCE, "r") as handle:
@@ -98,10 +104,17 @@ def load_hvg_adata(age_kind: str) -> ad.AnnData:
     finally:
         source.file.close()
     adata = ad.AnnData(X=counts, obs=work_obs, var=var)
-    # Raw counts are intentionally retained as the model layer; X is its alias
-    # to avoid a second multi-gigabyte sparse allocation.
+    # Raw counts stay in the model layer; X is its alias to avoid a second sparse allocation.
     adata.layers["counts"] = adata.X
     return adata
+
+
+def subsample_for_dry_run(adata: ad.AnnData, age_kind: str) -> ad.AnnData:
+    if adata.n_obs < DRYRUN_CELLS:
+        raise RuntimeError(f"dry run {age_kind} set has only {adata.n_obs} cells")
+    rng = np.random.default_rng(SEED)
+    index = np.sort(rng.choice(adata.n_obs, size=DRYRUN_CELLS, replace=False))
+    return adata[index].copy()
 
 
 def make_model(adata: ad.AnnData) -> scvi.model.SCVI:
@@ -109,17 +122,30 @@ def make_model(adata: ad.AnnData) -> scvi.model.SCVI:
     return scvi.model.SCVI(adata, n_latent=N_LATENT, n_layers=N_LAYERS, gene_likelihood="nb")
 
 
-class ELBOHistoryWriter(Callback):
-    """Durably append the two locked ELBO metrics after every validation epoch."""
+class ELBOAuditTrail(Callback):
+    """Non-authoritative per-hook metric stream for crash diagnosis only.
+
+    Lightning presents train and validation metrics at distinct hook times.  The
+    trail therefore records whichever scalar values exist; model.history saved
+    after a successful fit is the only authoritative training history.
+    """
 
     def __init__(self, output: Path, fit_name: str) -> None:
         super().__init__()
         self.output = output
         self.fit_name = fit_name
-        self._last_epoch = -1
+        self.exception_count = 0
+
+    def _exception(self, hook: str, exc: Exception) -> None:
+        self.exception_count += 1
+        print(
+            f"[{self.fit_name}] audit hook {hook} ignored {type(exc).__name__}: {exc}",
+            file=sys.stderr,
+            flush=True,
+        )
 
     @staticmethod
-    def _scalar(trainer, name: str) -> float | None:
+    def _scalar(trainer, name: str) -> float:
         for metrics in (trainer.callback_metrics, trainer.logged_metrics, trainer.progress_bar_metrics):
             value = metrics.get(name)
             if value is None:
@@ -129,84 +155,98 @@ class ELBOHistoryWriter(Callback):
             value = float(value)
             if np.isfinite(value):
                 return value
-        return None
+        return float("nan")
 
     def on_fit_start(self, trainer, pl_module) -> None:
-        self.output.parent.mkdir(parents=True, exist_ok=True)
-        with self.output.open("w", newline="") as handle:
-            csv.writer(handle).writerow(["epoch", "elbo_train", "elbo_validation"])
-            handle.flush()
-            os.fsync(handle.fileno())
+        try:
+            self.output.parent.mkdir(parents=True, exist_ok=True)
+            with self.output.open("w", newline="") as handle:
+                csv.writer(handle).writerow(["epoch", "hook", "elbo_train", "elbo_validation"])
+                handle.flush()
+                os.fsync(handle.fileno())
+        except Exception as exc:  # The audit path must never stop a frozen fit.
+            self._exception("on_fit_start", exc)
+
+    def _append(self, trainer, hook: str) -> None:
+        try:
+            if trainer.sanity_checking:
+                return
+            epoch = int(trainer.current_epoch) + 1
+            train = self._scalar(trainer, "elbo_train")
+            validation = self._scalar(trainer, "elbo_validation")
+            with self.output.open("a", newline="") as handle:
+                csv.writer(handle).writerow([epoch, hook, repr(train), repr(validation)])
+                handle.flush()
+                os.fsync(handle.fileno())
+            print(
+                f"[{self.fit_name}] {hook} epoch={epoch} "
+                f"elbo_train={train:.8g} elbo_validation={validation:.8g}",
+                flush=True,
+            )
+        except Exception as exc:  # The audit path must never stop a frozen fit.
+            self._exception(hook, exc)
+            return
 
     def on_validation_end(self, trainer, pl_module) -> None:
-        if trainer.sanity_checking:
-            return
-        epoch = int(trainer.current_epoch) + 1
-        if epoch <= self._last_epoch:
-            return
-        train = self._scalar(trainer, "elbo_train")
-        validation = self._scalar(trainer, "elbo_validation")
-        if train is None or validation is None:
-            raise RuntimeError(
-                f"{self.fit_name}: neither callback/logger metric view contained both "
-                "per-epoch ELBO values"
-            )
-        with self.output.open("a", newline="") as handle:
-            csv.writer(handle).writerow([epoch, repr(train), repr(validation)])
-            handle.flush()
-            os.fsync(handle.fileno())
-        self._last_epoch = epoch
-        print(
-            f"[{self.fit_name}] epoch={epoch} elbo_train={train:.8g} "
-            f"elbo_validation={validation:.8g}",
-            flush=True,
-        )
+        self._append(trainer, "on_validation_end")
 
-    def validate_against_history(self, history: dict[str, pd.DataFrame]) -> None:
-        observed = pd.read_csv(self.output)
-        expected_train = np.asarray(history["elbo_train"].iloc[:, 0], dtype=float)
-        expected_validation = np.asarray(history["elbo_validation"].iloc[:, 0], dtype=float)
-        if len(observed) != len(expected_validation):
-            raise RuntimeError(
-                f"{self.fit_name}: durable ELBO history has {len(observed)} rows, "
-                f"but SCVI history has {len(expected_validation)} validation epochs"
-            )
-        np.testing.assert_allclose(
-            observed["elbo_train"].to_numpy(dtype=float), expected_train, rtol=1e-12, atol=1e-12
-        )
-        np.testing.assert_allclose(
-            observed["elbo_validation"].to_numpy(dtype=float), expected_validation, rtol=1e-12, atol=1e-12
-        )
+    def on_train_epoch_end(self, trainer, pl_module) -> None:
+        self._append(trainer, "on_train_epoch_end")
+
+
+def history_frame(history: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    if "elbo_train" not in history or "elbo_validation" not in history:
+        raise RuntimeError("H03 requires both train and validation ELBO histories")
+    frames: list[pd.DataFrame] = []
+    for name, frame in history.items():
+        if not isinstance(frame, pd.DataFrame) or frame.shape[1] != 1:
+            raise RuntimeError(f"unexpected SCVI history table for {name!r}")
+        values = frame.iloc[:, 0].rename(str(name))
+        frames.append(values)
+    result = pd.concat(frames, axis=1)
+    result.index = pd.RangeIndex(start=1, stop=len(result) + 1, name="epoch")
+    return result
+
+
+def require_complete_history(history: pd.DataFrame, *, expected_epochs: int | None = None) -> None:
+    required = ["elbo_train", "elbo_validation"]
+    if any(name not in history for name in required):
+        raise RuntimeError(f"model.history missing required columns: {required}")
+    if expected_epochs is not None and len(history) != expected_epochs:
+        raise RuntimeError(f"expected {expected_epochs} completed epochs, got {len(history)}")
+    for name in required:
+        values = history[name].to_numpy(dtype=float)
+        if not np.isfinite(values).all():
+            raise RuntimeError(f"model.history contains non-finite {name}")
 
 
 def train(
     model: scvi.model.SCVI,
     *,
     fit_name: str,
+    audit_path: Path,
     history_path: Path,
+    max_epochs: int,
     plan_kwargs: dict | None = None,
-) -> tuple[dict[str, pd.DataFrame], float]:
-    """Run one uninterrupted frozen fit with durable ELBO rows and CSV logs."""
-    kwargs = training_kwargs()
+) -> tuple[pd.DataFrame, float, int]:
+    """Run one fit and save its authoritative, post-fit SCVI history."""
+    kwargs = training_kwargs(max_epochs)
     if plan_kwargs is not None:
         kwargs["plan_kwargs"] = plan_kwargs
-    LOG_DIR.mkdir(parents=True, exist_ok=True)
-    writer = ELBOHistoryWriter(history_path, fit_name)
-    logger = CSVLogger(save_dir=str(LOG_DIR), name=fit_name, version="run")
-    kwargs["callbacks"] = [writer]
-    kwargs["logger"] = logger
+    audit = ELBOAuditTrail(audit_path, fit_name)
+    kwargs["callbacks"] = [audit]
     started = time.monotonic()
     model.train(**kwargs)
     elapsed = time.monotonic() - started
-    history = {str(name): value.copy() for name, value in model.history.items()}
-    if "elbo_train" not in history or "elbo_validation" not in history:
-        raise RuntimeError("H03 requires both train and validation ELBO histories")
-    writer.validate_against_history(history)
-    return history, elapsed
+    history = history_frame({str(name): value.copy() for name, value in model.history.items()})
+    require_complete_history(history, expected_epochs=max_epochs if max_epochs == DRYRUN_EPOCHS else None)
+    history_path.parent.mkdir(parents=True, exist_ok=True)
+    history.to_csv(history_path, index_label="epoch")
+    return history, elapsed, audit.exception_count
 
 
 def audit_frozen_latent_encoder(reference: scvi.model.SCVI, query: scvi.model.SCVI) -> tuple[float, int, int]:
-    """Assert every reference z_encoder parameter/buffer is unchanged exactly."""
+    """Assert every reference z_encoder parameter and BatchNorm buffer is unchanged."""
     reference_state = reference.module.state_dict()
     query_state = query.module.state_dict()
     parameter_names = {name for name, _ in reference.module.named_parameters()}
@@ -239,12 +279,7 @@ def audit_frozen_latent_encoder(reference: scvi.model.SCVI, query: scvi.model.SC
     return max_change, parameter_count, buffer_count
 
 
-def drift_latents(
-    reference: scvi.model.SCVI,
-    young: ad.AnnData,
-    query: scvi.model.SCVI,
-    old: ad.AnnData,
-) -> ad.AnnData:
+def drift_latents(reference: scvi.model.SCVI, young: ad.AnnData, query: scvi.model.SCVI, old: ad.AnnData) -> ad.AnnData:
     requested = pd.read_csv(DRIFT_CELLS, compression="gzip")
     wanted = pd.Index(requested["cell_id"].astype(str))
     pieces: list[ad.AnnData] = []
@@ -266,31 +301,43 @@ def drift_latents(
         raise RuntimeError("one or more frozen drift cells are missing from primary mapping")
     combined = combined[order].copy()
     latent = latent[order]
-    # Do not retain the count matrix in this local output; it contains only the
-    # per-cell shared-space input required for the two H03 drift fits.
     result = ad.AnnData(X=np.zeros((combined.n_obs, 0), dtype=np.float32), obs=combined.obs.copy())
     result.obsm["X_scVI_primary"] = latent
     result.uns["h03_primary"] = {"representation": "X_scVI_primary", "n_latent": N_LATENT, "seed": SEED}
     return result
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--seed", type=int, default=SEED)
-    args = parser.parse_args()
-    if args.seed != SEED:
-        raise ValueError("H03 primary mapping is frozen at seed 0")
+def run(*, dry_run: bool) -> dict:
     if not HVG_CSV.exists() or not DRIFT_CELLS.exists():
         raise FileNotFoundError("run scripts/hlca_preprocess.py first")
     started = time.monotonic()
+    if dry_run:
+        run_dir = DRYRUN_DIR
+        max_epochs = DRYRUN_EPOCHS
+        ref_history_path = run_dir / "scvi_history_reference.csv"
+        query_history_path = run_dir / "scvi_history_query.csv"
+    else:
+        run_dir = LOG_DIR
+        max_epochs = MAX_EPOCHS
+        ref_history_path = HISTORY_REFERENCE
+        query_history_path = HISTORY_QUERY
+    run_dir.mkdir(parents=True, exist_ok=True)
     scvi.settings.seed = SEED
     young = load_hvg_adata("young")
+    if dry_run:
+        young = subsample_for_dry_run(young, "young")
     reference = make_model(young)
-    ref_history, ref_wall = train(
-        reference, fit_name="reference", history_path=HISTORY_REFERENCE
+    ref_history, ref_wall, ref_exceptions = train(
+        reference,
+        fit_name="reference",
+        audit_path=run_dir / "reference_audit.csv",
+        history_path=ref_history_path,
+        max_epochs=max_epochs,
     )
     scvi.settings.seed = SEED
     old = load_hvg_adata("old")
+    if dry_run:
+        old = subsample_for_dry_run(old, "old")
     query = scvi.model.SCVI.load_query_data(
         old,
         reference,
@@ -302,16 +349,42 @@ def main() -> int:
         freeze_batchnorm_encoder=True,
         freeze_batchnorm_decoder=False,
     )
-    query_history, query_wall = train(
-        query, fit_name="query", history_path=HISTORY_QUERY, plan_kwargs={"weight_decay": 0.0}
+    query_history, query_wall, query_exceptions = train(
+        query,
+        fit_name="query",
+        audit_path=run_dir / "query_audit.csv",
+        history_path=query_history_path,
+        max_epochs=max_epochs,
+        plan_kwargs={"weight_decay": 0.0},
     )
     max_change, parameter_count, buffer_count = audit_frozen_latent_encoder(reference, query)
+    output = {
+        "dry_run": bool(dry_run),
+        "reference_history": str(ref_history_path),
+        "query_history": str(query_history_path),
+        "reference_audit": str(run_dir / "reference_audit.csv"),
+        "query_audit": str(run_dir / "query_audit.csv"),
+        "reference_epochs": int(len(ref_history)),
+        "query_epochs": int(len(query_history)),
+        "logging_hook_exceptions": int(ref_exceptions + query_exceptions),
+        "frozen_latent_encoder_max_abs_change": max_change,
+        "frozen_latent_encoder_parameter_count": parameter_count,
+        "frozen_latent_encoder_buffer_count": buffer_count,
+        "reference_wall_seconds": float(ref_wall),
+        "query_wall_seconds": float(query_wall),
+        "peak_rss_bytes": max_rss_bytes(),
+        "wall_seconds": time.monotonic() - started,
+        "finished_utc": datetime.now(timezone.utc).isoformat(),
+    }
+    if dry_run:
+        (run_dir / "dryrun_summary.json").write_text(json.dumps(output, indent=2, sort_keys=True) + "\n")
+        return output
     latent = drift_latents(reference, young, query, old)
     DATA.mkdir(parents=True, exist_ok=True)
     latent.write_h5ad(DRIFT_LATENT)
     records = []
     for fit, data, history, wall in (("young_reference", young, ref_history, ref_wall), ("old_query", old, query_history, query_wall)):
-        validation = np.asarray(history["elbo_validation"].iloc[:, 0], dtype=float)
+        validation = history["elbo_validation"].to_numpy(dtype=float)
         records.append(
             {
                 "fit": fit,
@@ -327,17 +400,23 @@ def main() -> int:
                 "frozen_latent_encoder_max_abs_change": max_change if fit == "old_query" else 0.0,
                 "frozen_latent_encoder_parameter_count": parameter_count if fit == "old_query" else 0,
                 "frozen_latent_encoder_buffer_count": buffer_count if fit == "old_query" else 0,
+                "logging_hook_exceptions": int(ref_exceptions + query_exceptions),
             }
         )
     QC.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(records).to_csv(METRICS, index=False)
-    print(json.dumps({
-        "metrics": str(METRICS), "history_reference": str(HISTORY_REFERENCE),
-        "history_query": str(HISTORY_QUERY), "drift_latent": str(DRIFT_LATENT),
-        "n_drift_cells": int(latent.n_obs), "frozen_latent_encoder_max_abs_change": max_change,
-        "peak_rss_bytes": max_rss_bytes(), "wall_seconds": time.monotonic() - started,
-        "finished_utc": datetime.now(timezone.utc).isoformat(),
-    }, sort_keys=True), flush=True)
+    output.update({"metrics": str(METRICS), "drift_latent": str(DRIFT_LATENT), "n_drift_cells": int(latent.n_obs)})
+    return output
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--seed", type=int, default=SEED)
+    parser.add_argument("--dry-run", action="store_true")
+    args = parser.parse_args()
+    if args.seed != SEED:
+        raise ValueError("H03 primary mapping is frozen at seed 0")
+    print(json.dumps(run(dry_run=bool(args.dry_run)), sort_keys=True), flush=True)
     return 0
 
 
