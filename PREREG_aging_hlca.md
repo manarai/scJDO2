@@ -1,11 +1,11 @@
 # Pre-registration — human lung aging arm (HLCA)
 
 **Workstream:** `hlca` (branch `aging-basins`).
-**Status:** DRAFT for the user's approval. Frozen when committed with
-the line "Approved by the user on <date>" below. Written 2026-10-15
-from the hlca/H01 **metadata inventory only** (donor ages, studies,
-covariates, cell counts). No model has been fitted to human data and
-no statistic has been computed on it.
+**Status:** FROZEN. Approved by the user on 2026-10-15, before any model
+fit or statistic on human data. Written 2026-10-15 from the hlca/H01
+**metadata inventory only** (donor ages, studies, covariates, cell
+counts). Changes from here on are dated amendments made before the run
+they govern.
 
 **Design choices made by the user (2026-10-15):** age as a continuous
 variable; a young-only reference as the primary shared space; all
