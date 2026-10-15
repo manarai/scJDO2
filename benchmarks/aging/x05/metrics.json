@@ -1,9 +1,11 @@
 {
-  "x05_verdict": "granulocytopoietic stiffening exceeds mouse-to-mouse variation",
-  "gcp_T_seed0": 0.8490951636251408,
-  "gcp_p_stiffer_seed0": 0.030303030303030304,
-  "gcp_p_stiffer_seed1": 0.045454545454545456,
-  "gcp_p_stiffer_seed2": 0.015151515151515152,
+  "x05_verdict": "not distinguishable from mouse-to-mouse variation",
+  "x05_verdict_fullcount": "granulocytopoietic stiffening exceeds mouse-to-mouse variation",
+  "gcp_n_common": 72,
+  "gcp_T_seed0": 0.5086809774884188,
+  "gcp_p_stiffer_seed0": 0.045454545454545456,
+  "gcp_p_stiffer_seed1": 0.16666666666666666,
+  "gcp_p_stiffer_seed2": 0.25757575757575757,
   "gcp_loo_min_stiff_ratio": 3.021123271595146,
   "n_relabellings_marrow": {
     "granulocyte": 66,
