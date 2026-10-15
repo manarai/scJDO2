@@ -1,0 +1,103 @@
+{
+  "seed": 0,
+  "n_focus_cells": 7944,
+  "n_unmatched_cells": 0,
+  "n_common": 25,
+  "n_draws": 100,
+  "n_perm": 1000,
+  "subtypes": [
+    "CD4 T cells",
+    "CD8 T cells",
+    "Classical monocytes",
+    "Non-classical monocytes"
+  ],
+  "h04_primary_donors": {
+    "T cell lineage": 58,
+    "Monocytes": 60
+  },
+  "verdict_t_cell": "study-driven",
+  "verdict_monocytes": "study-driven",
+  "fe_slope_t_cell": -0.0018645876979979227,
+  "fe_slope_monocytes": -0.0013929260165070846,
+  "max_loso_p_t_cell": 0.029970029970029972,
+  "max_loso_p_monocytes": 0.1888111888111888,
+  "composition": {
+    "T cell lineage": {
+      "fraction_name": "CD8 / (CD4 + CD8)",
+      "n_h04_donors": 58,
+      "n_valid_fraction": 58,
+      "rho_age": 0.029209442156095843,
+      "p_age": 0.8276968646140282,
+      "rho_h04_log_stiffness": -0.023901073548863394,
+      "p_h04_log_stiffness": 0.8586538063176665,
+      "n_spearman_age": 58,
+      "n_spearman_h04_log_stiffness": 58
+    },
+    "Monocytes": {
+      "fraction_name": "Non-classical / (Classical + Non-classical)",
+      "n_h04_donors": 60,
+      "n_valid_fraction": 60,
+      "rho_age": -0.1901730179901369,
+      "p_age": 0.14555708116585986,
+      "rho_h04_log_stiffness": -0.24834676298971942,
+      "p_h04_log_stiffness": 0.05570812568367208,
+      "n_spearman_age": 60,
+      "n_spearman_h04_log_stiffness": 60
+    }
+  },
+  "subtype_stiffness": {
+    "CD4 T cells": {
+      "ann_level_3": "T cell lineage",
+      "n_donors": 27,
+      "stiff_slope": -0.005362475522139938,
+      "stiff_p": 0.04395604395604396,
+      "passes": true,
+      "null_q95_abs_slope": 0.005140360467924038,
+      "n_common": 25,
+      "n_draws": 100,
+      "n_perm": 1000
+    },
+    "CD8 T cells": {
+      "ann_level_3": "T cell lineage",
+      "n_donors": 44,
+      "stiff_slope": -0.0030367518133572794,
+      "stiff_p": 0.09490509490509491,
+      "passes": false,
+      "null_q95_abs_slope": 0.0035366855682386483,
+      "n_common": 25,
+      "n_draws": 100,
+      "n_perm": 1000
+    },
+    "Classical monocytes": {
+      "ann_level_3": "Monocytes",
+      "n_donors": 57,
+      "stiff_slope": -0.004911812708118381,
+      "stiff_p": 0.003996003996003996,
+      "passes": true,
+      "null_q95_abs_slope": 0.003097893783060311,
+      "n_common": 25,
+      "n_draws": 100,
+      "n_perm": 1000
+    },
+    "Non-classical monocytes": {
+      "ann_level_3": "Monocytes",
+      "n_donors": 19,
+      "stiff_slope": 0.00254319172084781,
+      "stiff_p": 0.34765234765234765,
+      "passes": false,
+      "null_q95_abs_slope": 0.005120604912401745,
+      "n_common": 25,
+      "n_draws": 100,
+      "n_perm": 1000
+    }
+  },
+  "n_figures": 3,
+  "figure_paths": [
+    "benchmarks/figures/aging_hlca/hx01/composition_vs_age.pdf",
+    "benchmarks/figures/aging_hlca/hx01/composition_vs_age.png",
+    "benchmarks/figures/aging_hlca/hx01/subtype_stiffness_vs_age.pdf",
+    "benchmarks/figures/aging_hlca/hx01/subtype_stiffness_vs_age.png",
+    "benchmarks/figures/aging_hlca/hx01/leave_one_study_out.pdf",
+    "benchmarks/figures/aging_hlca/hx01/leave_one_study_out.png"
+  ]
+}
