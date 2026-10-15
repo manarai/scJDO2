@@ -1,0 +1,94 @@
+[
+  {
+    "path": "benchmarks/aging/data/lung.h5ad",
+    "sha256": "3acef69bfed67ab45ff86d244b4aaf17634f94e431a02c51f378e6f210d0d796"
+  },
+  {
+    "path": "benchmarks/aging/data/marrow.h5ad",
+    "sha256": "e9b711e8411ea9a0238bd39efdcf05fc42512ef270b47689fe3e07b121baf03c"
+  },
+  {
+    "path": "benchmarks/aging/data/lung_processed.h5ad",
+    "sha256": "0514ae0b664b2105afee255807ced1d77bb050c87133f9495f4262d1ef6a9c41"
+  },
+  {
+    "path": "benchmarks/aging/data/marrow_processed.h5ad",
+    "sha256": "842d352ab4ee204279dcd3d5d45a4d40ac6143a1e9124a3e84032243ea9df140"
+  },
+  {
+    "path": "benchmarks/aging/lung_shared.h5ad",
+    "sha256": "ce6878276a09fdaf8981116ea8c916e156f940b1d56ce847fd2d1ced3c26df3d"
+  },
+  {
+    "path": "benchmarks/aging/lung_standalone_young.h5ad",
+    "sha256": "5084309e621f3b955b74350168451c4fbb15e5babed8b020eea9f30e908e4f0f"
+  },
+  {
+    "path": "benchmarks/aging/lung_standalone_old.h5ad",
+    "sha256": "08db76e2927975d67da20fa26cecfe9d75b82ddf66aca34d822273069ed52c2c"
+  },
+  {
+    "path": "benchmarks/aging/marrow_shared.h5ad",
+    "sha256": "290baa51be2881a530d3b8add89595af94b05a11f185f4d3ab4798de34790cb8"
+  },
+  {
+    "path": "benchmarks/aging/marrow_standalone_young.h5ad",
+    "sha256": "885b0ac34833c6e840af6302b0859463dbe782fdebcb906852119d6517685994"
+  },
+  {
+    "path": "benchmarks/aging/marrow_standalone_old.h5ad",
+    "sha256": "836cc4c0ab8c0f1be7983167a155d1154cb070bec7acf5fbb02ba993d8d8fbd8"
+  },
+  {
+    "path": "benchmarks/aging/qc/lung_scvi_metrics.csv",
+    "sha256": "25276517e8ec8d6f02888eab3a911bca549f5657a055253f2ac3a0a519caaa8d"
+  },
+  {
+    "path": "benchmarks/aging/qc/marrow_scvi_metrics.csv",
+    "sha256": "7b4cab9b3889cb786e1d6a4398c8661dff0613357b44f344b27513a9e4408457"
+  },
+  {
+    "path": "benchmarks/aging/qc/lung_drift_metrics.csv",
+    "sha256": "f4d18c225480bbec0f4b423e79b1bdaac96d9ea14e767f0c3755a871cdbb6343"
+  },
+  {
+    "path": "benchmarks/aging/qc/marrow_drift_metrics.csv",
+    "sha256": "22d9f84c0989f03506b72099755087a55dd6e95735e68feeb06e6fafe65b84d8"
+  },
+  {
+    "path": "benchmarks/aging/qc/lung_basin_fraction.csv",
+    "sha256": "f56d54e2131a553610cbeedff783a524acdd5c6a1f35259589b8765734fc2e9a"
+  },
+  {
+    "path": "benchmarks/aging/qc/marrow_basin_fraction.csv",
+    "sha256": "6917cdedb8560daecac4e2e51182a28c053f1d90b5e9932d2c08a241832df9d6"
+  },
+  {
+    "path": "benchmarks/aging/lung_compare_shared.csv",
+    "sha256": "6a08c76ccc17bd56b3d9a9f0ca6d60f42a4ab95d6a1c955880c4d75ca264dec5"
+  },
+  {
+    "path": "benchmarks/aging/lung_compare_standalone.csv",
+    "sha256": "90733e28bf0584ee46d8513d0d55635859085f3bc26f4bba4c7c53c188d8e61d"
+  },
+  {
+    "path": "benchmarks/aging/marrow_compare_shared.csv",
+    "sha256": "f8b83d329bfb49ba705fa3fc1e4fcb6183d105a65f5995dbd8d215dc33aaf4e9"
+  },
+  {
+    "path": "benchmarks/aging/marrow_compare_standalone.csv",
+    "sha256": "59648c452b4fb66ca35504a2d43b141b2737e6259efa9cca52759f9ee475262d"
+  },
+  {
+    "path": "benchmarks/aging/compare_pooled.csv",
+    "sha256": "aa58e3723591f555f81b139de630d4581884086826e3401361a1dd242c5be214"
+  },
+  {
+    "path": "benchmarks/aging/aging_modes.csv",
+    "sha256": "1d8ec9cad99553b84f3f36f87f1aba6d18d3eff9be403a1cf5d7ce75d6a6f8c4"
+  },
+  {
+    "path": "benchmarks/aging/RESULT.md",
+    "sha256": "b26be332433974115e73e42b243aa389733b2d1dbb1977c1f97f9d874413356d"
+  }
+]
