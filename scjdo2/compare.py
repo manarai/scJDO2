@@ -492,3 +492,146 @@ def aging_modes(per_type: pd.DataFrame, *, seed: int = 0) -> pd.DataFrame:
         },
         index=per_type.index,
     )
+
+
+# -----------------------------------------------------------------
+# Continuous-age, donor-level tests (PREREG_aging_hlca.md §4–§6)
+# -----------------------------------------------------------------
+#
+# The two-group tests above use a cell-level split-half null, which does
+# not see donor-to-donor variation (aging/X05). The human arm treats age
+# as continuous and makes the donor the unit: one equal-count operator
+# per donor, statistics are slopes against age, and the null permutes
+# ages across donors.
+
+
+def donor_operator(z: np.ndarray, J_cells: np.ndarray, n_common: int,
+                   n_draws: int = 100, n_cells_centroid: int = 30,
+                   seed: int = 0) -> tuple[np.ndarray, np.ndarray]:
+    """Equal-count operator and centroid for one donor × type.
+
+    Draws ``n_draws`` subsamples of ``n_common`` cells without
+    replacement; for each, :func:`centroid_operator` (``n_cells_centroid``
+    cells). Returns the mean operator over draws and the mean centroid
+    of the draws. Equal counts across donors keep the 30-nearest-cell
+    operator comparable (aging/X05).
+    """
+    z = np.asarray(z, dtype=np.float64)
+    J_cells = np.asarray(J_cells, dtype=np.float64)
+    if len(z) < n_common:
+        raise ValueError(f"donor has {len(z)} cells < n_common={n_common}")
+    rng = np.random.default_rng(seed)
+    ops, cents = [], []
+    for _ in range(int(n_draws)):
+        s = rng.choice(len(z), int(n_common), replace=False)
+        ops.append(centroid_operator(z[s], J_cells[s], n_cells_centroid))
+        cents.append(z[s].mean(axis=0))
+    op = np.mean(ops, axis=0)
+    return 0.5 * (op + op.T), np.mean(cents, axis=0)
+
+
+def _slopes(Y: np.ndarray, ages: np.ndarray) -> np.ndarray:
+    """OLS slope of each column of ``Y`` (donors × k) on ``ages``."""
+    a = ages - ages.mean()
+    return (a @ (Y - Y.mean(axis=0))) / (a @ a)
+
+
+def _perm_ages(ages: np.ndarray, n_perm: int, seed: int) -> np.ndarray:
+    rng = np.random.default_rng(seed)
+    return np.stack([rng.permutation(ages) for _ in range(int(n_perm))])
+
+
+@dataclass
+class TrendResult:
+    statistic: float
+    null: np.ndarray
+    null_q95: float
+    passes: bool
+    p_value: float
+    detail: dict
+
+
+def isotropy_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
+                   ref_op: np.ndarray, n_perm: int = 1000,
+                   seed: int = 0) -> TrendResult:
+    """Continuous analogue of §4b: does aging change some directions more
+    than the typical direction?
+
+    For each donor ``d`` and each reference direction ``k`` (cosine
+    matching to ``ref_op``, the pooled-young operator),
+    ``r_dk = log(|λ_dk| / |λ_ref,k|)``. ``β_k`` = slope of ``r_dk`` on
+    age. Statistic ``S = max_k |β_k − median(β)|``: ≈ 0 when every
+    direction changes at the same rate with age (isotropic), large when
+    one direction changes faster. Null: ``n_perm`` permutations of age
+    across donors. Pass: ``S > q95(null)``.
+    """
+    ages = np.asarray(ages, dtype=np.float64)
+    R = []
+    for op in donor_ops:
+        md = match_directions(ref_op, op)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            R.append(np.log(np.abs(md.eig_b) / np.abs(md.eig_a)))
+    R = np.asarray(R)
+    keep = np.all(np.isfinite(R), axis=0)
+    R = R[:, keep]
+    if R.shape[1] < 3 or len(ages) < 4:
+        return TrendResult(float("nan"), np.array([]), float("nan"), False,
+                           float("nan"), {"n_directions": int(R.shape[1])})
+
+    def stat(a):
+        b = _slopes(R, a)
+        return float(np.max(np.abs(b - np.median(b))))
+
+    s_obs = stat(ages)
+    null = np.array([stat(a) for a in _perm_ages(ages, n_perm, seed)])
+    q95 = float(np.percentile(null, 95))
+    beta = _slopes(R, ages)
+    return TrendResult(s_obs, null, q95, bool(s_obs > q95),
+                       float((1 + np.sum(null >= s_obs)) / (1 + len(null))),
+                       {"beta": beta, "median_beta": float(np.median(beta)),
+                        "n_directions": int(R.shape[1])})
+
+
+def anticipation_trend(donor_centroids: Sequence[np.ndarray],
+                       ages: Sequence[float], ref_op: np.ndarray,
+                       n_perm: int = 1000, seed: int = 0) -> TrendResult:
+    """Continuous analogue of §5: does the donor centroid move with age
+    along the young soft axis?
+
+    ``u`` = eigenvector of the largest (least negative) eigenvalue of
+    ``ref_op``. ``b`` = per-dimension slope of donor centroids on age.
+    Statistic ``|cos(u, b)|``. Null: permutations of age across donors.
+    Pass: statistic > q95(null).
+    """
+    ages = np.asarray(ages, dtype=np.float64)
+    C = np.asarray(donor_centroids, dtype=np.float64)
+    ev, V = np.linalg.eigh(0.5 * (ref_op + ref_op.T))
+    u = V[:, int(np.argmax(ev))]
+
+    def stat(a):
+        b = _slopes(C, a)
+        return abs(float(u @ b) / (np.linalg.norm(b) + 1e-12))
+
+    s_obs = stat(ages)
+    null = np.array([stat(a) for a in _perm_ages(ages, n_perm, seed)])
+    q95 = float(np.percentile(null, 95))
+    return TrendResult(s_obs, null, q95, bool(s_obs > q95),
+                       float((1 + np.sum(null >= s_obs)) / (1 + len(null))),
+                       {"u_ref": u, "slope_vector": _slopes(C, ages)})
+
+
+def stiffness_trend(donor_ops: Sequence[np.ndarray], ages: Sequence[float],
+                    n_perm: int = 1000, seed: int = 0) -> TrendResult:
+    """Slope of ``log median |λ|`` of the donor operators on age, with a
+    two-sided age-permutation p. Negative slope = softening with age.
+    ``passes`` = two-sided p ≤ 0.05. Reported beside the outcome header
+    (PREREG_aging_hlca §6), not a header gate.
+    """
+    ages = np.asarray(ages, dtype=np.float64)
+    y = np.array([np.log(np.median(np.abs(np.linalg.eigvalsh(op))))
+                  for op in donor_ops])[:, None]
+    s_obs = float(_slopes(y, ages)[0])
+    null = np.array([float(_slopes(y, a)[0]) for a in _perm_ages(ages, n_perm, seed)])
+    p = float((1 + np.sum(np.abs(null) >= abs(s_obs))) / (1 + len(null)))
+    return TrendResult(s_obs, null, float(np.percentile(np.abs(null), 95)),
+                       bool(p <= 0.05), p, {"log_median_abs_lambda": y[:, 0]})
