@@ -1,0 +1,38 @@
+[
+  {
+    "path": "benchmarks/aging/lung_shared.h5ad",
+    "bytes": 34118884,
+    "sha256": "ce6878276a09fdaf8981116ea8c916e156f940b1d56ce847fd2d1ced3c26df3d",
+    "source_report": "coord/aging/reports/A02.json"
+  },
+  {
+    "path": "benchmarks/aging/marrow_shared.h5ad",
+    "bytes": 128941060,
+    "sha256": "290baa51be2881a530d3b8add89595af94b05a11f185f4d3ab4798de34790cb8",
+    "source_report": "coord/aging/reports/A02.json"
+  },
+  {
+    "path": "benchmarks/aging/x04/lung_shared_s1.h5ad",
+    "bytes": 33972356,
+    "sha256": "8fa2e059b98239da5a1909639e48caf264866a3db294a59b71bcd7425bb86058",
+    "source_report": "coord/aging/reports/X04.json"
+  },
+  {
+    "path": "benchmarks/aging/x04/lung_shared_s2.h5ad",
+    "bytes": 33972356,
+    "sha256": "613221b5b44192e4a1b7e6003923e9947937cd213a13a6628fc11143fe97db02",
+    "source_report": "coord/aging/reports/X04.json"
+  },
+  {
+    "path": "benchmarks/aging/x04/marrow_shared_s1.h5ad",
+    "bytes": 128303492,
+    "sha256": "f98508ec719fc9cb732f4bea35ec9ff0c55fd2d5d237f36ebef8e0eeed7dc7a2",
+    "source_report": "coord/aging/reports/X04.json"
+  },
+  {
+    "path": "benchmarks/aging/x04/marrow_shared_s2.h5ad",
+    "bytes": 128303492,
+    "sha256": "e645c8efc6349af3baa20a1b8920b699ae4e315675714db744f4d5f0ce82cc72",
+    "source_report": "coord/aging/reports/X04.json"
+  }
+]
