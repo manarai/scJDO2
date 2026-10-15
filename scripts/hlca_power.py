@@ -260,7 +260,7 @@ def run(dry_run: bool) -> dict[str, object]:
                 power=test_power(item,kind,ops,cents)
                 rows.append({"ann_level_3":cell_type,"kind":kind,"size":float(size),"power":power,"n_donors_per_replicate":int(item["n_sub"]),"is_null":bool(is_null)})
                 print(f"[{done:03d}/{n_rows}] {cell_type} {kind} size={size:g} power={power:.2f} elapsed={time.monotonic()-start:.1f}s",flush=True)
-    grid=pd.DataFrame(rows); grid["_t"]=grid.ann_level_3.map({x:i for i,x in enumerate(types)}); grid["_k"]=grid.kind.map({x:i for i,x in enumerate(KINDS)}); grid=grid.sort_values(["_t","_k","size"],kind="stable").drop(columns=["_t","_k"]).reset_index(drop=True); grid.to_csv(GRID,index=False)
+    grid=pd.DataFrame(rows); grid["_t"]=grid.ann_level_3.map({x:i for i,x in enumerate(types)}); grid["_k"]=grid.kind.map({x:i for i,x in enumerate(KINDS)}); grid=grid.sort_values(["_t","_k","size"],kind="stable").drop(columns=["_t","_k"]).reset_index(drop=True); grid.loc[:, ["ann_level_3", "kind", "size", "power", "n_donors_per_replicate"]].to_csv(GRID,index=False)
     mde_rows=[]
     for cell_type in types:
         one=grid[grid.ann_level_3==cell_type]
