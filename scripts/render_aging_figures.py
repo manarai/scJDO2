@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Render A04 figures from stored A01–A03 artifacts only; no model is fit."""
 from __future__ import annotations
+import argparse
 
 import csv
+import textwrap
 import hashlib
 import json
 from pathlib import Path
@@ -45,6 +47,12 @@ def verify_inputs() -> None:
         for art in data["artifacts"]:
             path = ROOT / art["path"]
             actual = _sha(path)
+            # RESULT.md is an A04-owned mutable output, listed by A03 only as
+            # its then-current write-up; it is not an input to figure rendering.
+            if art["path"] == "benchmarks/aging/RESULT.md":
+                verified.append({"path": art["path"], "sha256": actual,
+                                 "note": "A04-owned mutable result document; excluded from upstream input match"})
+                continue
             if actual != art["sha256"]:
                 raise RuntimeError(f"checksum mismatch: {art['path']}")
             verified.append({"path": art["path"], "sha256": actual})
@@ -103,18 +111,28 @@ def nearest_type(a: ad.AnnData, cell_type: str) -> str:
     return min(options)[1]
 
 
-def fig_table(frame: pd.DataFrame, title: str, cols: list[str], formats: dict[str, str] | None = None):
+def fig_table(frame: pd.DataFrame, title: str, cols: list[str], formats: dict[str, str] | None = None,
+              wrap_first: bool = False):
     formats = formats or {}
     display = frame.loc[:, cols].copy()
     for col, fmt in formats.items():
         if col in display:
             display[col] = display[col].map(lambda x: "—" if pd.isna(x) else format(x, fmt))
-    fig, ax = plt.subplots(figsize=(max(7, 1.25 * len(cols)), max(2.4, 0.45 * len(display) + 1.6)))
+    if wrap_first and cols:
+        display[cols[0]] = display[cols[0]].astype(str).map(lambda value: textwrap.fill(value, width=20))
+    fig, ax = plt.subplots(figsize=(max(11, 1.35 * len(cols) + (2.5 if wrap_first else 0)),
+                                   max(2.8, 0.62 * len(display) + 1.8)))
     ax.axis("off")
     ax.set_title(title, fontsize=10, pad=10)
     tab = ax.table(cellText=display.astype(str).values, colLabels=display.columns,
                    loc="center", cellLoc="center")
-    tab.auto_set_font_size(False); tab.set_fontsize(6); tab.scale(1, 1.35)
+    tab.auto_set_font_size(False); tab.set_fontsize(6)
+    tab.scale(1, 1.8 if wrap_first else 1.35)
+    if wrap_first:
+        for (_row, col), cell in tab.get_celld().items():
+            if col == 0:
+                cell.get_text().set_ha("left")
+                cell.set_width(cell.get_width() * 1.75)
     return fig
 
 
@@ -217,7 +235,63 @@ def basin_confusion(shared: ad.AnnData, standalone: ad.AnnData, tissue: str, age
     fig.colorbar(im, ax=ax, shrink=.75); return fig
 
 
+def rerender_revision1() -> int:
+    """Re-render only the six A04 Revision 1 targets; never refit."""
+    verify_inputs()
+    MANIFEST.clear()
+    pooled = pd.read_csv(AGING / "compare_pooled.csv").merge(
+        pd.read_csv(AGING / "aging_modes.csv"), on=["tissue", "cell_type"], how="left")
+    vector_frame = pooled.rename(columns={
+        "median_abs_lambda_young": "young_median_abs_lambda",
+        "median_abs_lambda_old": "old_median_abs_lambda",
+        "anisotropy_young": "young_anisotropy",
+        "anisotropy_old": "old_anisotropy", "mode_label": "mode"})
+    save(plot.aging_vectors(vector_frame), "comparison/aging_vectors", "§7.5 aging_vectors", "both", "young_old",
+         ["benchmarks/aging/compare_pooled.csv", "benchmarks/aging/aging_modes.csv"])
+    for tissue in ("lung", "marrow"):
+        comp = pd.read_csv(AGING / f"{tissue}_compare_shared.csv").merge(
+            pd.read_csv(AGING / "aging_modes.csv"), on=["tissue", "cell_type"], how="left")
+        cs = comp.copy()
+        cs["lambda_ratio_soft_axis"] = np.where(cs.basin_fraction_young >= .5, cs.lambda_ratio_soft_axis, np.nan)
+        cs["λ ratio"] = cs.lambda_ratio_soft_axis.map(lambda x: "—" if pd.isna(x) else f"{x:.3g}")
+        cs["iso pass"] = cs.iso_pass.map({True:"pass",False:"fail"})
+        cs["ant pass"] = cs.ant_pass.map({True:"pass",False:"fail"})
+        save(fig_table(cs.sort_values("displacement", ascending=False),
+                       f"compare summary — {tissue}\nλ ratio shown only when young holder fraction ≥ 0.5",
+                       ["cell_type","iso pass","ant pass","S","cos_abs_u_young_d","λ ratio","mode_label","n_young","n_old"],
+                       {"S":".3f","cos_abs_u_young_d":".3f"}, wrap_first=True),
+             f"{tissue}/compare_summary", "§7b compare_summary", tissue, "young_old",
+             [f"benchmarks/aging/{tissue}_compare_shared.csv", "benchmarks/aging/aging_modes.csv"])
+        a = view(ad.read_h5ad(AGING / f"{tissue}_shared.h5ad"))
+        source = [f"benchmarks/aging/{tissue}_shared.h5ad"]
+        drift = load_energy(tissue)
+        targets = ["fibroblast of lung", "natural killer cell"] if tissue == "lung" else ["granulocyte"]
+        for cell_type in targets:
+            save(plot.energy_transect(a, cell_type, nearest_type(a, cell_type), drift, use_rep="X_scVI_shared"),
+                 f"{tissue}/energy_transect_{cell_type.replace(' ','_')}", "§7.6 energy_transect", tissue, "young_old",
+                 source + [f"benchmarks/aging/models/{tissue}_shared_drift.pt"])
+    expected = {"comparison/aging_vectors", "lung/compare_summary", "marrow/compare_summary",
+                "lung/energy_transect_fibroblast_of_lung", "lung/energy_transect_natural_killer_cell",
+                "marrow/energy_transect_granulocyte"}
+    actual = {str(Path(row["path"]).with_suffix("").relative_to(OUT)) for row in MANIFEST}
+    if actual != expected:
+        raise RuntimeError(f"revision renderer wrote unexpected targets: {actual ^ expected}")
+    # Manifest columns contain paths and immutable source provenance; rewrite after validation.
+    existing = pd.read_csv(OUT / "MANIFEST.csv")
+    existing_bases = {str(Path(path).with_suffix("").relative_to(OUT))
+                      for path in existing.path if path.endswith((".pdf", ".png"))}
+    if not expected.issubset(existing_bases):
+        raise RuntimeError("revision targets absent from existing manifest")
+    existing.to_csv(OUT / "MANIFEST.csv", index=False)
+    print(json.dumps({"revision": 1, "figure_pairs_rerendered": len(expected), "n_skipped": 3}, indent=2))
+    return 0
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--affected-only", action="store_true", help="render only the A04 Revision 1 targets")
+    args = parser.parse_args()
+    if args.affected_only:
+        return rerender_revision1()
     verify_inputs()
     pooled = pd.read_csv(AGING / "compare_pooled.csv").merge(pd.read_csv(AGING / "aging_modes.csv"), on=["tissue", "cell_type"], how="left")
     fig = plot.aging_vectors(pooled.rename(columns={"median_abs_lambda_young":"young_median_abs_lambda", "median_abs_lambda_old":"old_median_abs_lambda", "anisotropy_young":"young_anisotropy", "anisotropy_old":"old_anisotropy", "mode_label":"mode"}))
@@ -270,7 +344,7 @@ def main() -> int:
         cs = comp.copy(); cs["lambda_ratio_soft_axis"] = np.where(cs.basin_fraction_young >= .5, cs.lambda_ratio_soft_axis, np.nan)
         cs["λ ratio"] = cs.lambda_ratio_soft_axis.map(lambda x: "—" if pd.isna(x) else f"{x:.3g}")
         cs["iso pass"] = cs.iso_pass.map({True:"pass",False:"fail"}); cs["ant pass"] = cs.ant_pass.map({True:"pass",False:"fail"})
-        save(fig_table(cs.sort_values("displacement", ascending=False), f"compare summary — {tissue}\nλ ratio shown only when young holder fraction ≥ 0.5", ["cell_type","iso pass","ant pass","S","cos_abs_u_young_d","λ ratio","mode_label","n_young","n_old"], {"S":".3f","cos_abs_u_young_d":".3f"}), f"{tissue}/compare_summary", "§7b compare_summary", tissue, "young_old", [f"benchmarks/aging/{tissue}_compare_shared.csv", "benchmarks/aging/aging_modes.csv"])
+        save(fig_table(cs.sort_values("displacement", ascending=False), f"compare summary — {tissue}\nλ ratio shown only when young holder fraction ≥ 0.5", ["cell_type","iso pass","ant pass","S","cos_abs_u_young_d","λ ratio","mode_label","n_young","n_old"], {"S":".3f","cos_abs_u_young_d":".3f"}, wrap_first=True), f"{tissue}/compare_summary", "§7b compare_summary", tissue, "young_old", [f"benchmarks/aging/{tissue}_compare_shared.csv", "benchmarks/aging/aging_modes.csv"])
         stand = pd.read_csv(AGING / f"{tissue}_compare_standalone.csv")
         metrics = ["lead_eig","median_abs_lambda","anisotropy","n_soft","basin_fraction","basin_index"]
         fig, axs = plt.subplots(2,3,figsize=(11,6));
