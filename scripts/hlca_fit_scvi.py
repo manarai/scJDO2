@@ -17,7 +17,7 @@ import scvi
 import torch
 from scipy import sparse
 
-from scripts.hlca_preprocess import SOURCE, load_rows_csr
+from hlca_preprocess import SOURCE, load_rows_csr
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "benchmarks" / "aging_hlca"
