@@ -27,7 +27,8 @@ import cellxgene_census as cxc
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "benchmarks" / "aging_hlca" / "data"
 MANIFEST = DATA_DIR / "manifest.json"
-CORE_PATH = DATA_DIR / "hlca_core_raw_counts.h5ad"
+CENSUS_RAW_PATH = DATA_DIR / "hlca_core_raw_counts.h5ad"
+CORE_PATH = DATA_DIR / "hlca_core_full_metadata.h5ad"
 MODEL_ZIP = DATA_DIR / "HLCA_reference_model.zip"
 MODEL_DIR = DATA_DIR / "HLCA_reference_model"
 EMBED_PATH = DATA_DIR / "HLCA_full_v1.1_emb.h5ad"
@@ -58,7 +59,7 @@ def file_record(path: Path, source_url: str | None = None) -> dict[str, Any]:
     return record
 
 
-def download(url: str, destination: Path, expected_bytes: int) -> None:
+def download(url: str, destination: Path, expected_bytes: int, *, chunk_bytes: int = 8 * 1024 * 1024) -> None:
     """Resume a public asset in bounded byte ranges with exact size checks."""
     if destination.exists() and destination.stat().st_size == expected_bytes:
         print(f"reusing verified {destination.name} ({expected_bytes} bytes)", flush=True)
@@ -70,7 +71,6 @@ def download(url: str, destination: Path, expected_bytes: int) -> None:
     legacy_parts = sorted(destination.parent.glob(destination.name + ".*.part"), key=lambda path: path.stat().st_size, reverse=True)
     if not partial.exists() and legacy_parts:
         legacy_parts[0].replace(partial)
-    chunk_bytes = 8 * 1024 * 1024
     while True:
         current = partial.stat().st_size if partial.exists() else 0
         if current == expected_bytes:
@@ -148,47 +148,53 @@ def _census_release() -> tuple[str, dict[str, Any]]:
     return release, _jsonable(description)
 
 
+def remote_size(url: str) -> int:
+    request = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "scJDO2-HLCA-H01/1.0"})
+    with urllib.request.urlopen(request, timeout=90) as response:
+        size = response.headers.get("Content-Length")
+    if size is None or not str(size).isdigit():
+        raise RuntimeError(f"remote source did not provide a numeric Content-Length: {url}")
+    return int(size)
+
+
 def fetch_core() -> dict[str, Any]:
+    """Fetch the CZI-distributed HLCA core H5AD retaining full original metadata."""
     release, release_description = _census_release()
     print(f"opening CELLxGENE Census release {release}", flush=True)
     with cxc.open_soma(census_version=release) as census:
         datasets = census["census_info"]["datasets"].read().concat().to_pandas()
         selected = _select_core_dataset(datasets)
-        dataset_id = str(selected["dataset_id"])
-        print(f"selected HLCA core dataset {dataset_id}: {selected.get('dataset_title', '<unknown>')}", flush=True)
-        if not CORE_PATH.exists():
-            print("retrieving HLCA raw count matrix and complete observation metadata from Census", flush=True)
-            adata = cxc.get_anndata(
-                census,
-                organism="homo_sapiens",
-                measurement_name="RNA",
-                X_name="raw",
-                obs_value_filter=f"dataset_id == '{dataset_id}'",
-                obs_column_names=None,
-                var_column_names=None,
-            )
-            if adata.n_obs == 0 or adata.n_vars == 0:
-                raise RuntimeError("Census returned an empty HLCA core AnnData object")
-            adata.uns["hlca_h01_fetch"] = {
-                "source": "CZ CELLxGENE Census",
-                "census_release": release,
-                "dataset_id": dataset_id,
-                "matrix": "X_name=raw",
-            }
-            CORE_PATH.parent.mkdir(parents=True, exist_ok=True)
-            temporary = CORE_PATH.with_suffix(".h5ad.part")
-            print(f"writing {adata.n_obs} cells × {adata.n_vars} genes to {temporary.name}", flush=True)
-            adata.write_h5ad(temporary)
-            temporary.replace(CORE_PATH)
-            print(f"wrote {CORE_PATH.name}", flush=True)
+    dataset_id = str(selected["dataset_id"])
+    dataset_version_id = str(selected["dataset_version_id"])
+    source_url = f"https://datasets.cellxgene.cziscience.com/{dataset_version_id}.h5ad"
+    source_bytes = remote_size(source_url)
+    print(f"selected HLCA core dataset {dataset_id}: {selected.get('dataset_title', '<unknown>')}", flush=True)
+    print(f"retrieving full-metadata HLCA core H5AD ({source_bytes} bytes) from CZI", flush=True)
+    download(source_url, CORE_PATH, source_bytes, chunk_bytes=64 * 1024 * 1024)
+    core = ad.read_h5ad(CORE_PATH, backed="r")
+    try:
+        if core.n_obs == 0 or core.n_vars == 0:
+            raise RuntimeError("CZI HLCA core AnnData object is empty")
+        if core.raw is None:
+            raise RuntimeError("CZI HLCA core H5AD lacks adata.raw.X required by H01")
+        raw_shape = [int(core.raw.n_obs), int(core.raw.n_vars)]
+        n_cells = int(core.n_obs)
+    finally:
+        core.file.close()
     row = {key: _jsonable(value) for key, value in selected.to_dict().items()}
+    census_raw = file_record(CENSUS_RAW_PATH) if CENSUS_RAW_PATH.exists() else None
     return {
         "census_release": release,
         "census_release_description": release_description,
         "dataset": row,
         "dataset_id": dataset_id,
-        "core": file_record(CORE_PATH),
-        "n_cells": int(ad.read_h5ad(CORE_PATH, backed="r").n_obs),
+        "dataset_version_id": dataset_version_id,
+        "source_url": source_url,
+        "core": file_record(CORE_PATH, source_url),
+        "raw_counts_location": "hlca_core_full_metadata.h5ad:adata.raw.X",
+        "raw_counts_shape": raw_shape,
+        "previous_census_raw_matrix": census_raw,
+        "n_cells": n_cells,
     }
 
 
@@ -202,8 +208,8 @@ def fetch_reference_assets() -> dict[str, Any]:
     total_public_bytes = expected[MODEL_ZIP.name] + expected[EMBED_PATH.name]
     if total_public_bytes / 1024**3 > MAX_TOTAL_GB:
         raise RuntimeError(f"reference download would exceed {MAX_TOTAL_GB} GB")
-    download(MODEL_URL, MODEL_ZIP, expected[MODEL_ZIP.name])
-    download(EMBED_URL, EMBED_PATH, expected[EMBED_PATH.name])
+    download(MODEL_URL, MODEL_ZIP, expected[MODEL_ZIP.name], chunk_bytes=8 * 1024 * 1024)
+    download(EMBED_URL, EMBED_PATH, expected[EMBED_PATH.name], chunk_bytes=8 * 1024 * 1024)
     if MODEL_ZIP.stat().st_size != expected[MODEL_ZIP.name]:
         raise RuntimeError("HLCA reference model zip byte count does not match Zenodo metadata")
     if EMBED_PATH.stat().st_size != expected[EMBED_PATH.name]:
@@ -242,7 +248,7 @@ def main() -> int:
         "task": "hlca/H01",
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "hlca_source": "CZ CELLxGENE Census raw matrix plus Zenodo HLCA scArches assets",
-        "raw_counts_location": "hlca_core_raw_counts.h5ad:X (Census X_name=raw)",
+        "raw_counts_location": core["raw_counts_location"],
         "reference": reference,
         "core": core,
         "disk_bytes": total,

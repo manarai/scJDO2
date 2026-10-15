@@ -18,7 +18,7 @@ import pandas as pd
 from scipy.stats import spearmanr
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA_PATH = ROOT / "benchmarks" / "aging_hlca" / "data" / "hlca_core_raw_counts.h5ad"
+DATA_PATH = ROOT / "benchmarks" / "aging_hlca" / "data" / "hlca_core_full_metadata.h5ad"
 OUT = ROOT / "benchmarks" / "aging_hlca" / "inventory"
 AGE_BINS = ["<30", "30–44", "45–59", "≥60"]
 

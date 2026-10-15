@@ -22,7 +22,7 @@ import scvi
 import torch
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "benchmarks" / "aging_hlca" / "data" / "hlca_core_raw_counts.h5ad"
+DATA = ROOT / "benchmarks" / "aging_hlca" / "data" / "hlca_core_full_metadata.h5ad"
 MODEL = ROOT / "benchmarks" / "aging_hlca" / "data" / "HLCA_reference_model"
 OUT = ROOT / "benchmarks" / "aging_hlca" / "inventory" / "scarches_smoke.json"
 N_CELLS = 5_000
@@ -92,7 +92,11 @@ def main() -> int:
         raise RuntimeError(f"largest HLCA study {study!r} has only {len(candidates)} cells; requires {N_CELLS}")
     rng = np.random.default_rng(SEED)
     selected = np.sort(rng.choice(candidates, size=N_CELLS, replace=False))
-    query = source[selected].to_memory()
+    subset = source[selected].to_memory()
+    raw = subset.raw.to_adata()
+    raw.obs = subset.obs.copy()
+    raw.var = subset.raw.var.copy()
+    query = raw
     source.file.close()
     query.obs["dataset"] = "H01_smoke_query"
     query.obs["scanvi_label"] = "unlabeled"
