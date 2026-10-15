@@ -29,7 +29,7 @@ def run_tissue(tissue: str, seed: int) -> dict:
     _snapshot_model(reference, MODELS / f"{tissue}_shared_s{seed}_reference.pt")
     scvi.settings.seed = int(seed)
     query = scvi.model.SCVI.load_query_data(
-        old, reference, accelerator="cpu", device="cpu", unfrozen=False,
+        old, reference, accelerator="cpu", device="auto", unfrozen=False,
         freeze_expression=True, freeze_decoder_first_layer=True,
         freeze_batchnorm_encoder=True, freeze_batchnorm_decoder=False,
     )
