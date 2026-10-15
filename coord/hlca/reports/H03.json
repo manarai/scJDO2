@@ -15,17 +15,17 @@
       "sha256": "a1d8c37bac888a391e4e0bb37f4e473493a05f68c1d726955e57914ea7a729d4"
     },
     {
-      "bytes": 14556,
+      "bytes": 17744,
       "committed": true,
       "path": "scripts/hlca_fit_scvi.py",
-      "regenerate": "nohup caffeinate -i .venv/bin/python scripts/hlca_fit_scvi.py --seed 0 > benchmarks/aging_hlca/data/logs/fit_scvi.log 2>&1 &",
-      "sha256": "460b544d118bed6faaaec71ff7363f2f3963b93b837a61cad1e048542cefc375"
+      "regenerate": "nohup caffeinate -i .venv/bin/python scripts/hlca_fit_scvi.py --seed 0 > benchmarks/aging_hlca/data/logs/fit_scvi_rev2.log 2>&1 &",
+      "sha256": "0a583fb0d0d0525aada0034404e124a6bfccf55503fe5850d2c31ec40c726a0a"
     },
     {
       "bytes": 9854,
       "committed": true,
       "path": "scripts/hlca_fit_drift.py",
-      "regenerate": "nohup caffeinate -i .venv/bin/python scripts/hlca_fit_drift.py --seed 0 > benchmarks/aging_hlca/data/logs/fit_drift.log 2>&1 &",
+      "regenerate": "nohup caffeinate -i .venv/bin/python scripts/hlca_fit_drift.py --seed 0 > benchmarks/aging_hlca/data/logs/fit_drift_rev2.log 2>&1 &",
       "sha256": "755fd622740687f145a079e925757fcd0635db4ca5818ace0c07b7d3b4d7873b"
     },
     {
@@ -43,6 +43,13 @@
       "sha256": "47899582e6deb1290ca9c19516ac6833e47cd200186d9071db4d42047390d32c"
     },
     {
+      "bytes": 413,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/qc/preprocess_summary.csv",
+      "regenerate": "python scripts/hlca_preprocess.py --seed 0",
+      "sha256": "ecd30587e948feb603e65dafc9d547552b25fdc233c07a91d51f0230e88c3178"
+    },
+    {
       "bytes": 2371219,
       "committed": true,
       "path": "benchmarks/aging_hlca/qc/hvg_seurat_v3.csv",
@@ -57,62 +64,157 @@
       "sha256": "66b5343e6db235071ee78354747e14047b7b55e3936c7decac3f2a29f8f6d698"
     },
     {
-      "bytes": 413,
+      "bytes": 422,
       "committed": true,
-      "path": "benchmarks/aging_hlca/qc/preprocess_summary.csv",
-      "regenerate": "python scripts/hlca_preprocess.py --seed 0",
-      "sha256": "ecd30587e948feb603e65dafc9d547552b25fdc233c07a91d51f0230e88c3178"
+      "path": "benchmarks/aging_hlca/qc/hlca_scvi_metrics.csv",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0",
+      "sha256": "ca122a2c41bb8043525190a3034a5371ee6c9f7fb468c972d59328f3814bc126"
+    },
+    {
+      "bytes": 69227,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/qc/scvi_history_reference.csv",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0",
+      "sha256": "0752b6e377bb074c3fa5e7b5fc97eecc6c32fdad1009dccb13943f146c8d57e5"
+    },
+    {
+      "bytes": 15358,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/qc/scvi_history_query.csv",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0",
+      "sha256": "cdc5a0921953747de2b08ae65be06ffc826deec054f93f48f7f0056319cdce69"
+    },
+    {
+      "bytes": 435,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/qc/hlca_drift_metrics.csv",
+      "regenerate": "python scripts/hlca_fit_drift.py --seed 0",
+      "sha256": "209cd6fbedb0b8528f5e055d2d0525d084602f49c9408875dcd874d07344729d"
+    },
+    {
+      "bytes": 7604,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/qc/hlca_basin_fractions.csv",
+      "regenerate": "python scripts/hlca_fit_drift.py --seed 0",
+      "sha256": "b0125208bf1dd7c1c2abfcaece2dd23f6e53d2c5943a895771be00f8a69814c7"
+    },
+    {
+      "bytes": 3731,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/eligibility.csv",
+      "regenerate": "python scripts/hlca_eligibility.py",
+      "sha256": "fe32cbd8afc6e6f5ef28307dbb790da48a52af804f416d212b88132db1b52e53"
+    },
+    {
+      "bytes": 3909,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/RESULT.md",
+      "regenerate": "recreate from the committed H03 execution record",
+      "sha256": "1f196ce1788cda736fd18895fbde4c41cb0a22ea81ad6e45c8c68cb8eb3fb1d0"
+    },
+    {
+      "bytes": 18868456,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/h03_primary_drift_latent.h5ad",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0",
+      "sha256": "076c5d1dc1d87796842527ac2c091a41d39e406b3a879a0f6337433436056a4a"
+    },
+    {
+      "bytes": 115249384,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/h03_primary_drift.h5ad",
+      "regenerate": "python scripts/hlca_fit_drift.py --seed 0",
+      "sha256": "08ab9bfda20e932f2439e72d9ba31afc90b1317d7968f4894cb43bc995c0ffbb"
+    },
+    {
+      "bytes": 429359824,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/h03_secondary_drift.h5ad",
+      "regenerate": "python scripts/hlca_fit_drift.py --seed 0",
+      "sha256": "97e57614d975d2865b4d7611fdb31f156f2875a3659ff0c1a46a69cbc67d2f5c"
+    },
+    {
+      "bytes": 950,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/logs/dryrun/dryrun_summary.json",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0 --dry-run",
+      "sha256": "0e65e28a4604505f528a41d247a5fa07d96f3d093a9ecffbc136f4dd92cbc8cc"
+    },
+    {
+      "bytes": 244,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/logs/dryrun/reference_audit.csv",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0 --dry-run",
+      "sha256": "6c7968fc913022a2fb242dd83e55fc3db3c97729f8ea8e6385fd3b71f52dc551"
+    },
+    {
+      "bytes": 257,
+      "committed": false,
+      "path": "benchmarks/aging_hlca/data/logs/dryrun/query_audit.csv",
+      "regenerate": "python scripts/hlca_fit_scvi.py --seed 0 --dry-run",
+      "sha256": "972fba720251ca866a5b0ad8ca790f7a67daad5810c37e320ed952ba34a65320"
     }
   ],
   "compute": {
     "cpu_hours": null,
     "gpu_hours": 0.0,
-    "hardware": "Apple local CPU (14 logical CPUs); MPS detected but intentionally unused under the CPU-only pre-registration"
+    "hardware": "Apple local CPU (14 logical CPUs); MPS was detected but deliberately unused by the frozen CPU-only configuration. Detached-process CPU-time accounting was not exposed by macOS after process exit."
   },
   "deviations": [
-    "The installed Scanpy 1.12.4 Seurat-v3 routine cannot index the AnnData 0.11 backed CSR adapter. H03 therefore implemented the same Scanpy per-study formula with Scanpy\u2019s own aggregate and clipped-sum kernels, bounded to one study at a time. On a real 5,000-cell HLCA slice, the selected 2,000 genes matched Scanpy exactly.",
-    "The primary CPU-only scVI reference invocation was terminated externally by the execution platform after its two-hour tracked-background-job wait limit. It produced no model, checkpoint, ELBO history, latent matrix, or query fit. The platform does not provide final process CPU accounting or final peak memory after a forced termination; those metrics, the query audit, drift gates, and eligibility outputs are therefore null.",
-    "No frozen statistical parameter, model architecture, seed, source dataset, donor inclusion rule, or downstream test was changed. The local H01 input checksums and the required pre-data comparison test passed before preprocessing.",
-    "Revision 1 obtained the required full-data Scanpy equivalence proof (2,000/2,000 overlap; 14,194,704,384-byte peak RSS). The authorized detached `nohup caffeinate` reference run then stopped after its first validation epoch because the added durable-history callback could not access both ELBO metrics at that callback hook. The log tail ends `RuntimeError: reference: neither callback/logger metric view contained both per-epoch ELBO values`. Per the binding review, no second reference fit was started."
+    "The bounded per-study Seurat-v3 implementation was used because Scanpy 1.12.4 cannot directly index the AnnData 0.11 backed CSR adapter. A subsequent full-data in-memory Scanpy check selected exactly the same 2,000 genes (overlap 2,000/2,000).",
+    "The original tracked mapping attempt was externally ended by the platform wait limit, and the first detached Revision 1 launch stopped at reference epoch 1 because its callback incorrectly required both ELBO metrics at the validation hook. Claude reviewed both events and issued this revision before the replacement run.",
+    "Revision 2 made the hook a non-fatal audit trail, saved authoritative post-fit model.history CSVs, and passed the required two-epoch reference/query dry run before the one authorized full relaunch. The query early-stopped at epoch 88 under the frozen patience=30 rule; this is a model result, not a parameter change.",
+    "Exact detached CPU hours cannot be recovered after exit; the recorded detached wall duration is 5.160 hours across all H03 mapping/drift attempts, within the 36-hour wall budget."
   ],
-  "finished_utc": "2026-10-15T14:19:22.498706+00:00",
+  "finished_utc": "2026-10-15T21:12:44.487390+00:00",
   "metrics": {
-    "eligible_types_primary": null,
+    "dry_run_ok": true,
+    "eligible_types_primary": [
+      "AT2",
+      "Basal",
+      "Dendritic cells",
+      "EC arterial",
+      "EC capillary",
+      "EC venous",
+      "Fibroblasts",
+      "Innate lymphoid cell NK",
+      "Macrophages",
+      "Monocytes",
+      "Multiciliated lineage",
+      "Secretory",
+      "T cell lineage"
+    ],
     "hvg_overlap_full": 2000,
+    "logging_hook_exceptions": 0,
     "n_cells_drift_subsample": 56904,
     "n_cells_query": 315372,
     "n_cells_reference": 266145,
     "n_donors_used": 106,
-    "n_eligible_banovich": null,
-    "n_eligible_never_smokers": null,
-    "n_eligible_parenchyma": null,
-    "n_eligible_primary": null,
+    "n_eligible_banovich": 2,
+    "n_eligible_never_smokers": 6,
+    "n_eligible_parenchyma": 12,
+    "n_eligible_primary": 13,
     "peak_ram_gb": 14.194704384,
-    "ref_weights_max_abs_change": null,
-    "scvi_epochs_query": null,
-    "scvi_epochs_reference": 1,
+    "ref_weights_max_abs_change": 0.0,
+    "scvi_epochs_query": 88,
+    "scvi_epochs_reference": 400,
     "secondary_embedding_dim": 30,
-    "sym_max_primary": null,
-    "sym_max_secondary": null,
-    "wall_hours": 2.2217
+    "sym_max_primary": 3.824816872111114e-07,
+    "sym_max_secondary": 6.731667667736474e-08,
+    "wall_hours": 5.126283777118047
   },
   "observations": [
-    "Numeric ages retained 581,517 cells from 106 donors: 266,145 cells from donors younger than 45 years and 315,372 cells from donors aged 45 years or older.",
-    "The frozen all-donor Seurat-v3 selection produced exactly 2,000 HVGs across 14 study batches; no Rare cells were removed before HVG selection or scVI training.",
-    "The deterministic drift sample contains 56,904 unique cells across 106 donors and 24 non-Rare ann_level_3 types, with no donor\u00d7type group exceeding 60 cells.",
-    "The full preprocessing pass used a measured maximum resident set size of 7.38 GB, below H03\u2019s approximately 28 GB stop threshold.",
-    "The published HLCA embedding source is 30-dimensional; it was not used for a drift fit before the primary mapping was externally terminated.",
-    "The full in-memory Scanpy selection on all 581,517 numeric-age cells and 27,402 genes was exactly identical to the bounded per-study selection: 2,000 custom HVGs, 2,000 Scanpy HVGs, and overlap 2,000.",
-    "The authorized detached mapping process reached its first validation callback and then exited. It left only the CSV header in the required reference history, no latent mapping, and no query fit."
+    "The full H03 reference fit completed all 400 epochs, whereas the frozen query early-stopped after 88 epochs; both authoritative histories have finite train and validation ELBO values for every recorded epoch.",
+    "The scArches audit covered 277,022 latent-encoder parameters and 514 BatchNorm buffers, with an exact maximum absolute change of 0.0.",
+    "Both energy models passed the symmetry gate: primary sym_max=3.825e-07 and secondary sym_max=6.732e-08.",
+    "Primary, parenchyma-only, and never-smoker eligibility exactly matched the pre-run counts (13, 12, and 6); the Banovich_Kropski_2020-only subset retains two types, AT2 and Monocytes, under the same equal-count rule."
   ],
-  "questions": [
-    "May Claude issue Revision 2 that fixes and validates the per-epoch ELBO logging hook before authorizing one replacement uninterrupted frozen scVI reference-and-query run? Revision 1 expressly prohibited a restart after the detached process died."
-  ],
+  "questions": [],
   "started_utc": "2026-10-15T11:38:13Z",
-  "status": "blocked",
+  "status": "done",
   "suggestions": [
-    "Before issuing any further H03 revision, validate ELBO metric availability at the exact Lightning callback hook using the installed scvi-tools/Lightning versions, then authorize one new uninterrupted frozen reference-and-query run only after that logging path is verified.",
-    "Retain the full-data HVG-equivalence artifact as evidence that the bounded preprocessing implementation selects the identical frozen 2,000 genes."
+    "Run H04 exactly as pre-registered: donor-level continuous-age isotropy, anticipation, and stiffness tests only on the eligibility sets recorded here, with no eligibility rescue.",
+    "Report the primary 15-D and secondary published 30-D drift results side-by-side in H04/H05, while retaining the task rule that only the primary space decides the outcome."
   ],
   "task": "hlca/H03"
 }
