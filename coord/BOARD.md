@@ -43,7 +43,7 @@ Live status: `python coord/coord_check.py board`.
 | hlca/H04 | manus | accepted | Per-type tests and outcome, human lung | ACCEPT |
 | hlca/H05 | manus | accepted | Figures, mouse–human comparison | ACCEPT |
 | hlca/HX02 | manus | accepted | EXPLORATORY: power analysis (MDE per type) | ACCEPT |
-| hlca/HX01 | manus | issued | EXPLORATORY: T cell / monocyte follow-up | — |
+| hlca/HX01 | manus | accepted | EXPLORATORY: T cell / monocyte follow-up | ACCEPT |
 | hlca/HX03 | manus | accepted | EXPLORATORY: fixed-axis curvature statistic (grid + real data) | ACCEPT |
 
 * 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
@@ -61,3 +61,4 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — Claude designed softaxis_curvature_trend (validated: 6 types, x1.25–x5 MDE, 0 uniform false passes); user approved; HX03 issued.
 * 2026-10-15 — hlca/HX03 accepted (13c43a9): no soft-axis change (0/13 primary), median MDE x3; reproduced to 1e-16.
 * 2026-10-15 — user approved aging/X06, hlca/HX01, write-up, GitHub backup; X06 and HX01 issued (run X06 first).
+* 2026-10-15 — hlca/HX01 accepted (74f4209): T cell and monocyte hints study-driven. aging/X06 still queued.

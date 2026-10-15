@@ -122,3 +122,13 @@ change the operators of lung cell types:
 Limits: 17 donors ≥ 60 clustered in two studies; one scVI seed; four
 types untestable for single-direction change; the single-direction
 statistic was designed after the frozen result.
+
+## 2026-10-15 — hlca/HX01 (EXPLORATORY, ACCEPT) — T cell and monocyte hints
+
+**Result.** Both study-driven, neither composition-explained. Study
+fixed effects cut the T cell slope from −0.0056 to −0.0019 per year and
+the monocyte slope from −0.0029 to −0.0014; CD8 fraction is unrelated to
+age (p = 0.83). Recomputed independently.
+**Meaning.** The two softening hints from H04 reflect differences
+between studies, not aging within them. The consolidated human
+conclusion is unchanged.
