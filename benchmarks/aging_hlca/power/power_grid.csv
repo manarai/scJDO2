@@ -1,0 +1,261 @@
+ann_level_3,kind,size,power,n_donors_per_replicate
+AT2,single_axis,1.0,0.0,40
+AT2,single_axis,1.25,0.0,40
+AT2,single_axis,1.5,0.0,40
+AT2,single_axis,2.0,0.1,40
+AT2,single_axis,3.0,0.9,40
+AT2,single_axis,5.0,1.0,40
+AT2,single_axis,8.0,1.0,40
+AT2,uniform,1.0,0.0,40
+AT2,uniform,1.1,0.9,40
+AT2,uniform,1.25,1.0,40
+AT2,uniform,1.5,1.0,40
+AT2,uniform,2.0,1.0,40
+AT2,uniform,3.0,1.0,40
+AT2,drift,0.0,0.02,40
+AT2,drift,0.5,0.0,40
+AT2,drift,1.0,0.04,40
+AT2,drift,2.0,0.88,40
+AT2,drift,4.0,1.0,40
+AT2,drift,8.0,1.0,40
+AT2,drift,16.0,1.0,40
+Basal,single_axis,1.0,0.0,34
+Basal,single_axis,1.25,0.02,34
+Basal,single_axis,1.5,0.12,34
+Basal,single_axis,2.0,0.12,34
+Basal,single_axis,3.0,0.08,34
+Basal,single_axis,5.0,0.02,34
+Basal,single_axis,8.0,0.0,34
+Basal,uniform,1.0,0.0,34
+Basal,uniform,1.1,0.0,34
+Basal,uniform,1.25,0.68,34
+Basal,uniform,1.5,1.0,34
+Basal,uniform,2.0,1.0,34
+Basal,uniform,3.0,1.0,34
+Basal,drift,0.0,0.04,34
+Basal,drift,0.5,0.0,34
+Basal,drift,1.0,0.0,34
+Basal,drift,2.0,0.0,34
+Basal,drift,4.0,0.96,34
+Basal,drift,8.0,1.0,34
+Basal,drift,16.0,1.0,34
+Dendritic cells,single_axis,1.0,0.0,42
+Dendritic cells,single_axis,1.25,0.08,42
+Dendritic cells,single_axis,1.5,0.04,42
+Dendritic cells,single_axis,2.0,0.0,42
+Dendritic cells,single_axis,3.0,0.02,42
+Dendritic cells,single_axis,5.0,0.04,42
+Dendritic cells,single_axis,8.0,0.02,42
+Dendritic cells,uniform,1.0,0.0,42
+Dendritic cells,uniform,1.1,0.08,42
+Dendritic cells,uniform,1.25,1.0,42
+Dendritic cells,uniform,1.5,1.0,42
+Dendritic cells,uniform,2.0,1.0,42
+Dendritic cells,uniform,3.0,1.0,42
+Dendritic cells,drift,0.0,0.02,42
+Dendritic cells,drift,0.5,0.64,42
+Dendritic cells,drift,1.0,0.94,42
+Dendritic cells,drift,2.0,1.0,42
+Dendritic cells,drift,4.0,1.0,42
+Dendritic cells,drift,8.0,1.0,42
+Dendritic cells,drift,16.0,1.0,42
+EC arterial,single_axis,1.0,0.0,20
+EC arterial,single_axis,1.25,0.0,20
+EC arterial,single_axis,1.5,0.0,20
+EC arterial,single_axis,2.0,0.0,20
+EC arterial,single_axis,3.0,0.02,20
+EC arterial,single_axis,5.0,0.06,20
+EC arterial,single_axis,8.0,0.48,20
+EC arterial,uniform,1.0,0.0,20
+EC arterial,uniform,1.1,0.0,20
+EC arterial,uniform,1.25,0.1,20
+EC arterial,uniform,1.5,0.94,20
+EC arterial,uniform,2.0,1.0,20
+EC arterial,uniform,3.0,1.0,20
+EC arterial,drift,0.0,0.0,20
+EC arterial,drift,0.5,0.02,20
+EC arterial,drift,1.0,0.4,20
+EC arterial,drift,2.0,0.98,20
+EC arterial,drift,4.0,1.0,20
+EC arterial,drift,8.0,1.0,20
+EC arterial,drift,16.0,1.0,20
+EC capillary,single_axis,1.0,0.02,19
+EC capillary,single_axis,1.25,0.0,19
+EC capillary,single_axis,1.5,0.0,19
+EC capillary,single_axis,2.0,0.0,19
+EC capillary,single_axis,3.0,0.0,19
+EC capillary,single_axis,5.0,0.0,19
+EC capillary,single_axis,8.0,0.0,19
+EC capillary,uniform,1.0,0.0,19
+EC capillary,uniform,1.1,0.0,19
+EC capillary,uniform,1.25,0.0,19
+EC capillary,uniform,1.5,0.0,19
+EC capillary,uniform,2.0,0.84,19
+EC capillary,uniform,3.0,1.0,19
+EC capillary,drift,0.0,0.34,19
+EC capillary,drift,0.5,0.9,19
+EC capillary,drift,1.0,1.0,19
+EC capillary,drift,2.0,1.0,19
+EC capillary,drift,4.0,1.0,19
+EC capillary,drift,8.0,1.0,19
+EC capillary,drift,16.0,1.0,19
+EC venous,single_axis,1.0,0.0,33
+EC venous,single_axis,1.25,0.02,33
+EC venous,single_axis,1.5,0.0,33
+EC venous,single_axis,2.0,0.02,33
+EC venous,single_axis,3.0,0.28,33
+EC venous,single_axis,5.0,0.12,33
+EC venous,single_axis,8.0,0.04,33
+EC venous,uniform,1.0,0.24,33
+EC venous,uniform,1.1,0.92,33
+EC venous,uniform,1.25,1.0,33
+EC venous,uniform,1.5,1.0,33
+EC venous,uniform,2.0,1.0,33
+EC venous,uniform,3.0,1.0,33
+EC venous,drift,0.0,0.0,33
+EC venous,drift,0.5,0.0,33
+EC venous,drift,1.0,0.0,33
+EC venous,drift,2.0,0.04,33
+EC venous,drift,4.0,0.94,33
+EC venous,drift,8.0,1.0,33
+EC venous,drift,16.0,1.0,33
+Fibroblasts,single_axis,1.0,0.0,25
+Fibroblasts,single_axis,1.25,0.0,25
+Fibroblasts,single_axis,1.5,0.0,25
+Fibroblasts,single_axis,2.0,0.0,25
+Fibroblasts,single_axis,3.0,0.0,25
+Fibroblasts,single_axis,5.0,0.0,25
+Fibroblasts,single_axis,8.0,0.02,25
+Fibroblasts,uniform,1.0,0.0,25
+Fibroblasts,uniform,1.1,0.0,25
+Fibroblasts,uniform,1.25,0.0,25
+Fibroblasts,uniform,1.5,0.02,25
+Fibroblasts,uniform,2.0,0.76,25
+Fibroblasts,uniform,3.0,1.0,25
+Fibroblasts,drift,0.0,0.0,25
+Fibroblasts,drift,0.5,0.0,25
+Fibroblasts,drift,1.0,0.28,25
+Fibroblasts,drift,2.0,1.0,25
+Fibroblasts,drift,4.0,1.0,25
+Fibroblasts,drift,8.0,1.0,25
+Fibroblasts,drift,16.0,1.0,25
+Innate lymphoid cell NK,single_axis,1.0,0.0,23
+Innate lymphoid cell NK,single_axis,1.25,0.0,23
+Innate lymphoid cell NK,single_axis,1.5,0.0,23
+Innate lymphoid cell NK,single_axis,2.0,0.66,23
+Innate lymphoid cell NK,single_axis,3.0,0.5,23
+Innate lymphoid cell NK,single_axis,5.0,0.56,23
+Innate lymphoid cell NK,single_axis,8.0,0.4,23
+Innate lymphoid cell NK,uniform,1.0,0.0,23
+Innate lymphoid cell NK,uniform,1.1,0.04,23
+Innate lymphoid cell NK,uniform,1.25,0.36,23
+Innate lymphoid cell NK,uniform,1.5,0.94,23
+Innate lymphoid cell NK,uniform,2.0,1.0,23
+Innate lymphoid cell NK,uniform,3.0,1.0,23
+Innate lymphoid cell NK,drift,0.0,0.06,23
+Innate lymphoid cell NK,drift,0.5,0.62,23
+Innate lymphoid cell NK,drift,1.0,0.96,23
+Innate lymphoid cell NK,drift,2.0,1.0,23
+Innate lymphoid cell NK,drift,4.0,1.0,23
+Innate lymphoid cell NK,drift,8.0,1.0,23
+Innate lymphoid cell NK,drift,16.0,1.0,23
+Macrophages,single_axis,1.0,0.0,52
+Macrophages,single_axis,1.25,0.0,52
+Macrophages,single_axis,1.5,0.0,52
+Macrophages,single_axis,2.0,0.0,52
+Macrophages,single_axis,3.0,0.02,52
+Macrophages,single_axis,5.0,0.06,52
+Macrophages,single_axis,8.0,0.0,52
+Macrophages,uniform,1.0,0.0,52
+Macrophages,uniform,1.1,0.0,52
+Macrophages,uniform,1.25,0.62,52
+Macrophages,uniform,1.5,1.0,52
+Macrophages,uniform,2.0,1.0,52
+Macrophages,uniform,3.0,1.0,52
+Macrophages,drift,0.0,0.08,52
+Macrophages,drift,0.5,0.0,52
+Macrophages,drift,1.0,0.0,52
+Macrophages,drift,2.0,0.24,52
+Macrophages,drift,4.0,1.0,52
+Macrophages,drift,8.0,1.0,52
+Macrophages,drift,16.0,1.0,52
+Monocytes,single_axis,1.0,0.0,48
+Monocytes,single_axis,1.25,0.02,48
+Monocytes,single_axis,1.5,0.0,48
+Monocytes,single_axis,2.0,0.0,48
+Monocytes,single_axis,3.0,0.04,48
+Monocytes,single_axis,5.0,0.32,48
+Monocytes,single_axis,8.0,0.0,48
+Monocytes,uniform,1.0,0.22,48
+Monocytes,uniform,1.1,0.74,48
+Monocytes,uniform,1.25,0.98,48
+Monocytes,uniform,1.5,1.0,48
+Monocytes,uniform,2.0,1.0,48
+Monocytes,uniform,3.0,1.0,48
+Monocytes,drift,0.0,0.0,48
+Monocytes,drift,0.5,0.0,48
+Monocytes,drift,1.0,0.08,48
+Monocytes,drift,2.0,0.62,48
+Monocytes,drift,4.0,1.0,48
+Monocytes,drift,8.0,1.0,48
+Monocytes,drift,16.0,1.0,48
+Multiciliated lineage,single_axis,1.0,0.2,55
+Multiciliated lineage,single_axis,1.25,0.34,55
+Multiciliated lineage,single_axis,1.5,0.46,55
+Multiciliated lineage,single_axis,2.0,0.5,55
+Multiciliated lineage,single_axis,3.0,0.02,55
+Multiciliated lineage,single_axis,5.0,0.0,55
+Multiciliated lineage,single_axis,8.0,0.0,55
+Multiciliated lineage,uniform,1.0,0.0,55
+Multiciliated lineage,uniform,1.1,0.0,55
+Multiciliated lineage,uniform,1.25,0.54,55
+Multiciliated lineage,uniform,1.5,1.0,55
+Multiciliated lineage,uniform,2.0,1.0,55
+Multiciliated lineage,uniform,3.0,1.0,55
+Multiciliated lineage,drift,0.0,0.0,55
+Multiciliated lineage,drift,0.5,0.04,55
+Multiciliated lineage,drift,1.0,0.4,55
+Multiciliated lineage,drift,2.0,1.0,55
+Multiciliated lineage,drift,4.0,1.0,55
+Multiciliated lineage,drift,8.0,1.0,55
+Multiciliated lineage,drift,16.0,1.0,55
+Secretory,single_axis,1.0,0.0,49
+Secretory,single_axis,1.25,0.0,49
+Secretory,single_axis,1.5,0.0,49
+Secretory,single_axis,2.0,0.14,49
+Secretory,single_axis,3.0,0.0,49
+Secretory,single_axis,5.0,0.0,49
+Secretory,single_axis,8.0,0.0,49
+Secretory,uniform,1.0,0.0,49
+Secretory,uniform,1.1,0.0,49
+Secretory,uniform,1.25,0.74,49
+Secretory,uniform,1.5,1.0,49
+Secretory,uniform,2.0,1.0,49
+Secretory,uniform,3.0,1.0,49
+Secretory,drift,0.0,0.0,49
+Secretory,drift,0.5,0.0,49
+Secretory,drift,1.0,0.02,49
+Secretory,drift,2.0,0.6,49
+Secretory,drift,4.0,1.0,49
+Secretory,drift,8.0,1.0,49
+Secretory,drift,16.0,1.0,49
+T cell lineage,single_axis,1.0,0.0,46
+T cell lineage,single_axis,1.25,0.0,46
+T cell lineage,single_axis,1.5,0.0,46
+T cell lineage,single_axis,2.0,0.0,46
+T cell lineage,single_axis,3.0,0.3,46
+T cell lineage,single_axis,5.0,0.14,46
+T cell lineage,single_axis,8.0,0.0,46
+T cell lineage,uniform,1.0,0.96,46
+T cell lineage,uniform,1.1,1.0,46
+T cell lineage,uniform,1.25,1.0,46
+T cell lineage,uniform,1.5,1.0,46
+T cell lineage,uniform,2.0,1.0,46
+T cell lineage,uniform,3.0,1.0,46
+T cell lineage,drift,0.0,0.0,46
+T cell lineage,drift,0.5,0.0,46
+T cell lineage,drift,1.0,0.0,46
+T cell lineage,drift,2.0,0.48,46
+T cell lineage,drift,4.0,1.0,46
+T cell lineage,drift,8.0,1.0,46
+T cell lineage,drift,16.0,1.0,46

@@ -1,0 +1,146 @@
+{
+  "n_types": 13,
+  "n_grid_rows_expected": 260,
+  "n_operator_builds_expected": 11034,
+  "n_test_evaluations_expected": 13000,
+  "n_permutations_per_test": 200,
+  "n_donors_per_replicate": {
+    "AT2": 40,
+    "Basal": 34,
+    "Dendritic cells": 42,
+    "EC arterial": 20,
+    "EC capillary": 19,
+    "EC venous": 33,
+    "Fibroblasts": 25,
+    "Innate lymphoid cell NK": 23,
+    "Macrophages": 52,
+    "Monocytes": 48,
+    "Multiciliated lineage": 55,
+    "Secretory": 49,
+    "T cell lineage": 46
+  },
+  "seed": 0,
+  "n_grid_rows": 260,
+  "n_figures": 4,
+  "median_mde_single_axis_F": ">8",
+  "median_mde_uniform_F": "1.5",
+  "median_mde_drift_D": "2",
+  "n_types_mde_beyond_grid": 12,
+  "max_null_pass_rate": 0.96,
+  "mde_by_type": {
+    "AT2": {
+      "mde_single_axis_F": 3.0,
+      "mde_uniform_F": 1.1,
+      "mde_drift_D": 2.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.02
+    },
+    "Basal": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.5,
+      "mde_drift_D": 4.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.04
+    },
+    "Dendritic cells": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.25,
+      "mde_drift_D": 1.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.02
+    },
+    "EC arterial": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.5,
+      "mde_drift_D": 2.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.0
+    },
+    "EC capillary": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 2.0,
+      "mde_drift_D": 0.5,
+      "null_pass_rate_iso": 0.02,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.34
+    },
+    "EC venous": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.1,
+      "mde_drift_D": 4.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.24,
+      "null_pass_rate_ant": 0.0
+    },
+    "Fibroblasts": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 3.0,
+      "mde_drift_D": 2.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.0
+    },
+    "Innate lymphoid cell NK": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.5,
+      "mde_drift_D": 1.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.06
+    },
+    "Macrophages": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.5,
+      "mde_drift_D": 4.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.08
+    },
+    "Monocytes": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.25,
+      "mde_drift_D": 4.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.22,
+      "null_pass_rate_ant": 0.0
+    },
+    "Multiciliated lineage": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.5,
+      "mde_drift_D": 2.0,
+      "null_pass_rate_iso": 0.2,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.0
+    },
+    "Secretory": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.5,
+      "mde_drift_D": 4.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.0,
+      "null_pass_rate_ant": 0.0
+    },
+    "T cell lineage": {
+      "mde_single_axis_F": "> max",
+      "mde_uniform_F": 1.1,
+      "mde_drift_D": 4.0,
+      "null_pass_rate_iso": 0.0,
+      "null_pass_rate_stiff": 0.96,
+      "null_pass_rate_ant": 0.0
+    }
+  },
+  "figure_paths": [
+    "benchmarks/figures/aging_hlca/power/power_curve_single_axis.pdf",
+    "benchmarks/figures/aging_hlca/power/power_curve_single_axis.png",
+    "benchmarks/figures/aging_hlca/power/power_curve_uniform.pdf",
+    "benchmarks/figures/aging_hlca/power/power_curve_uniform.png",
+    "benchmarks/figures/aging_hlca/power/power_curve_drift.pdf",
+    "benchmarks/figures/aging_hlca/power/power_curve_drift.png",
+    "benchmarks/figures/aging_hlca/power/mde_heatmap.pdf",
+    "benchmarks/figures/aging_hlca/power/mde_heatmap.png"
+  ]
+}
