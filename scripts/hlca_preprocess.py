@@ -22,9 +22,10 @@ import anndata as ad
 import h5py
 import numpy as np
 import pandas as pd
+import scanpy as sc
 from scipy import sparse
 from skmisc.loess import loess
-from scanpy.preprocessing._highly_variable_genes import _sum_and_sum_squares_clipped, stats
+from scanpy.preprocessing._highly_variable_genes import _sum_and_sum_squares_clipped
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "benchmarks" / "aging_hlca" / "data" / "hlca_core_full_metadata.h5ad"
@@ -174,7 +175,18 @@ def seurat_v3_streamed(handle: h5py.File, obs: pd.DataFrame, var_names: pd.Index
     variances: list[np.ndarray] = []
     for batch_name, rows in rows_by_batch.items():
         matrix = load_rows_csr(handle, rows, n_vars)
-        mean, variance = stats.mean_var(matrix, axis=0, correction=1)
+        # This is Scanpy's own aggregate kernel used by highly_variable_genes;
+        # using it retains bitwise-equivalent per-batch moments without holding
+        # the other 13 study matrices in memory.
+        batch_adata = ad.AnnData(
+            X=matrix,
+            obs=pd.DataFrame({"_hvg_batch": ["one"] * matrix.shape[0]}),
+            var=pd.DataFrame(index=var_names),
+        )
+        aggregate = sc.get.aggregate(batch_adata, by="_hvg_batch", func=["mean", "var"])
+        mean = np.asarray(aggregate.layers["mean"][0], dtype=np.float64).ravel()
+        variance = np.asarray(aggregate.layers["var"][0], dtype=np.float64).ravel()
+        del aggregate, batch_adata
         estimat_var = np.zeros(n_vars, dtype=np.float64)
         not_const = variance > 0
         if not_const.any():
