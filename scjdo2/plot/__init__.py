@@ -28,7 +28,10 @@ from .figures import (
     plot_drivers,
 )
 from .figures_v05 import (
+    add_aging_footer,
+    aging_vectors,
     basin_index_by_type,
+    energy_transect,
     ledger_map,
     oracle_agreement,
     perturb_paired,
@@ -56,6 +59,9 @@ __all__ = [
     # v0.5 symmetric-operator figures (snapshot defaults)
     "spectrum_ladder",
     "soft_axis_map",
+    "aging_vectors",
+    "energy_transect",
+    "add_aging_footer",
     "ledger_map",
     "oracle_agreement",
     "perturb_paired",
