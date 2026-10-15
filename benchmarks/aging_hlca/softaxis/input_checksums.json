@@ -1,0 +1,26 @@
+[
+  {
+    "path": "benchmarks/aging_hlca/data/h03_primary_drift.h5ad",
+    "bytes": 115249384,
+    "sha256": "08ab9bfda20e932f2439e72d9ba31afc90b1317d7968f4894cb43bc995c0ffbb",
+    "source": "coord/hlca/reports/H03.json; benchmarks/aging_hlca/power/input_checksums.json (coord/hlca/reports/H03.json)"
+  },
+  {
+    "path": "benchmarks/aging_hlca/data/h03_secondary_drift.h5ad",
+    "bytes": 429359824,
+    "sha256": "97e57614d975d2865b4d7611fdb31f156f2875a3659ff0c1a46a69cbc67d2f5c",
+    "source": "coord/hlca/reports/H03.json"
+  },
+  {
+    "path": "benchmarks/aging_hlca/power/power_grid.csv",
+    "bytes": 8606,
+    "sha256": "d13016e21a3cfc6135fd22c229eaa28b66a06021656ff2e4617d51cfe7e7fc08",
+    "source": "coord/hlca/reports/HX02.json"
+  },
+  {
+    "path": "benchmarks/aging_hlca/tests_primary.csv",
+    "bytes": 3012,
+    "sha256": "2d46a2725eebbeb0f1f5219e13a28493d4f3f4a65c0e08d62ac88f1c93da67f1",
+    "source": "benchmarks/aging_hlca/power/input_checksums.json (coord/hlca/reports/H04.json)"
+  }
+]

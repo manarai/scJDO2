@@ -1,0 +1,131 @@
+ann_level_3,kind,size,power
+AT2,none,1.0,0.0
+AT2,single_axis,1.25,1.0
+AT2,single_axis,1.5,1.0
+AT2,single_axis,2.0,1.0
+AT2,single_axis,3.0,1.0
+AT2,single_axis,5.0,1.0
+AT2,single_axis,8.0,1.0
+AT2,uniform,1.5,0.0
+AT2,uniform,2.0,0.0
+AT2,uniform,3.0,0.0
+Basal,none,1.0,0.0
+Basal,single_axis,1.25,0.02
+Basal,single_axis,1.5,0.02
+Basal,single_axis,2.0,0.06
+Basal,single_axis,3.0,0.08
+Basal,single_axis,5.0,0.16
+Basal,single_axis,8.0,0.26
+Basal,uniform,1.5,0.0
+Basal,uniform,2.0,0.0
+Basal,uniform,3.0,0.0
+Dendritic cells,none,1.0,0.0
+Dendritic cells,single_axis,1.25,0.0
+Dendritic cells,single_axis,1.5,0.0
+Dendritic cells,single_axis,2.0,0.0
+Dendritic cells,single_axis,3.0,0.12
+Dendritic cells,single_axis,5.0,0.64
+Dendritic cells,single_axis,8.0,0.98
+Dendritic cells,uniform,1.5,0.0
+Dendritic cells,uniform,2.0,0.0
+Dendritic cells,uniform,3.0,0.0
+EC arterial,none,1.0,0.0
+EC arterial,single_axis,1.25,0.0
+EC arterial,single_axis,1.5,0.14
+EC arterial,single_axis,2.0,0.9
+EC arterial,single_axis,3.0,1.0
+EC arterial,single_axis,5.0,1.0
+EC arterial,single_axis,8.0,1.0
+EC arterial,uniform,1.5,0.0
+EC arterial,uniform,2.0,0.0
+EC arterial,uniform,3.0,0.0
+EC capillary,none,1.0,0.0
+EC capillary,single_axis,1.25,0.0
+EC capillary,single_axis,1.5,0.0
+EC capillary,single_axis,2.0,0.0
+EC capillary,single_axis,3.0,0.0
+EC capillary,single_axis,5.0,0.0
+EC capillary,single_axis,8.0,0.0
+EC capillary,uniform,1.5,0.0
+EC capillary,uniform,2.0,0.0
+EC capillary,uniform,3.0,0.0
+EC venous,none,1.0,0.0
+EC venous,single_axis,1.25,0.0
+EC venous,single_axis,1.5,0.0
+EC venous,single_axis,2.0,0.0
+EC venous,single_axis,3.0,0.02
+EC venous,single_axis,5.0,0.22
+EC venous,single_axis,8.0,0.62
+EC venous,uniform,1.5,0.0
+EC venous,uniform,2.0,0.0
+EC venous,uniform,3.0,0.0
+Fibroblasts,none,1.0,0.0
+Fibroblasts,single_axis,1.25,0.02
+Fibroblasts,single_axis,1.5,0.18
+Fibroblasts,single_axis,2.0,0.88
+Fibroblasts,single_axis,3.0,1.0
+Fibroblasts,single_axis,5.0,1.0
+Fibroblasts,single_axis,8.0,1.0
+Fibroblasts,uniform,1.5,0.0
+Fibroblasts,uniform,2.0,0.0
+Fibroblasts,uniform,3.0,0.0
+Innate lymphoid cell NK,none,1.0,0.0
+Innate lymphoid cell NK,single_axis,1.25,0.04
+Innate lymphoid cell NK,single_axis,1.5,0.2
+Innate lymphoid cell NK,single_axis,2.0,0.2
+Innate lymphoid cell NK,single_axis,3.0,0.48
+Innate lymphoid cell NK,single_axis,5.0,1.0
+Innate lymphoid cell NK,single_axis,8.0,1.0
+Innate lymphoid cell NK,uniform,1.5,0.0
+Innate lymphoid cell NK,uniform,2.0,0.0
+Innate lymphoid cell NK,uniform,3.0,0.0
+Macrophages,none,1.0,0.0
+Macrophages,single_axis,1.25,0.0
+Macrophages,single_axis,1.5,0.0
+Macrophages,single_axis,2.0,0.04
+Macrophages,single_axis,3.0,0.86
+Macrophages,single_axis,5.0,1.0
+Macrophages,single_axis,8.0,1.0
+Macrophages,uniform,1.5,0.0
+Macrophages,uniform,2.0,0.0
+Macrophages,uniform,3.0,0.0
+Monocytes,none,1.0,0.18
+Monocytes,single_axis,1.25,0.02
+Monocytes,single_axis,1.5,0.0
+Monocytes,single_axis,2.0,0.0
+Monocytes,single_axis,3.0,0.02
+Monocytes,single_axis,5.0,0.6
+Monocytes,single_axis,8.0,0.92
+Monocytes,uniform,1.5,0.18
+Monocytes,uniform,2.0,0.18
+Monocytes,uniform,3.0,0.18
+Multiciliated lineage,none,1.0,0.0
+Multiciliated lineage,single_axis,1.25,0.0
+Multiciliated lineage,single_axis,1.5,0.0
+Multiciliated lineage,single_axis,2.0,0.08
+Multiciliated lineage,single_axis,3.0,0.78
+Multiciliated lineage,single_axis,5.0,1.0
+Multiciliated lineage,single_axis,8.0,1.0
+Multiciliated lineage,uniform,1.5,0.0
+Multiciliated lineage,uniform,2.0,0.0
+Multiciliated lineage,uniform,3.0,0.0
+Secretory,none,1.0,0.0
+Secretory,single_axis,1.25,0.0
+Secretory,single_axis,1.5,0.0
+Secretory,single_axis,2.0,0.0
+Secretory,single_axis,3.0,0.0
+Secretory,single_axis,5.0,0.0
+Secretory,single_axis,8.0,0.0
+Secretory,uniform,1.5,0.0
+Secretory,uniform,2.0,0.0
+Secretory,uniform,3.0,0.0
+T cell lineage,none,1.0,0.0
+T cell lineage,single_axis,1.25,0.0
+T cell lineage,single_axis,1.5,0.0
+T cell lineage,single_axis,2.0,0.26
+T cell lineage,single_axis,3.0,0.86
+T cell lineage,single_axis,5.0,1.0
+T cell lineage,single_axis,8.0,1.0
+T cell lineage,uniform,1.5,0.0
+T cell lineage,uniform,2.0,0.0
+T cell lineage,uniform,3.0,0.0
