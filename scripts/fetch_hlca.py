@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 import shutil
+import subprocess
 import tempfile
 import urllib.request
 import zipfile
@@ -57,24 +58,46 @@ def file_record(path: Path, source_url: str | None = None) -> dict[str, Any]:
     return record
 
 
-def download(url: str, destination: Path) -> None:
-    """Stream a URL to an atomic temporary file, retaining valid downloads."""
-    if destination.exists() and destination.stat().st_size > 0:
+def download(url: str, destination: Path, expected_bytes: int) -> None:
+    """Resume a public asset with bounded retries and observable progress."""
+    if destination.exists() and destination.stat().st_size == expected_bytes:
+        print(f"reusing verified {destination.name} ({expected_bytes} bytes)", flush=True)
         return
+    if destination.exists() and destination.stat().st_size != expected_bytes:
+        raise RuntimeError(f"existing {destination} has unexpected size; remove it manually before retrying")
     destination.parent.mkdir(parents=True, exist_ok=True)
-    fd, temp_name = tempfile.mkstemp(prefix=destination.name + ".", suffix=".part", dir=destination.parent)
-    os.close(fd)
-    temporary = Path(temp_name)
-    try:
-        request = urllib.request.Request(url, headers={"User-Agent": "scJDO2-HLCA-H01/1.0"})
-        with urllib.request.urlopen(request, timeout=180) as response, temporary.open("wb") as output:
-            shutil.copyfileobj(response, output, length=8 * 1024 * 1024)
-        if temporary.stat().st_size == 0:
-            raise RuntimeError(f"empty response while downloading {url}")
-        temporary.replace(destination)
-    except Exception:
-        temporary.unlink(missing_ok=True)
-        raise
+    partial = destination.with_suffix(destination.suffix + ".part")
+    legacy_parts = sorted(destination.parent.glob(destination.name + ".*.part"), key=lambda path: path.stat().st_size, reverse=True)
+    if not partial.exists() and legacy_parts:
+        legacy_parts[0].replace(partial)
+    for attempt in range(1, 7):
+        current = partial.stat().st_size if partial.exists() else 0
+        if current > expected_bytes:
+            raise RuntimeError(f"partial {partial} exceeds expected Zenodo size")
+        print(
+            f"download attempt {attempt}/6: {destination.name}; resuming at {current}/{expected_bytes} bytes",
+            flush=True,
+        )
+        result = subprocess.run(
+            [
+                "curl", "--fail", "--location", "--continue-at", "-", "--output", str(partial),
+                "--retry", "3", "--retry-delay", "5", "--retry-all-errors",
+                "--speed-limit", "1024", "--speed-time", "120", "--progress-bar", url,
+            ],
+            check=False,
+        )
+        current = partial.stat().st_size if partial.exists() else 0
+        if result.returncode == 0 and current == expected_bytes:
+            partial.replace(destination)
+            print(f"completed {destination.name} ({expected_bytes} bytes)", flush=True)
+            return
+        if current > expected_bytes:
+            raise RuntimeError(f"downloaded {current} bytes for {destination.name}, expected {expected_bytes}")
+        print(
+            f"attempt {attempt}/6 ended with curl={result.returncode}; retained {current}/{expected_bytes} bytes",
+            flush=True,
+        )
+    raise RuntimeError(f"unable to complete {destination.name} after resumable retries")
 
 
 def _jsonable(value: Any) -> Any:
@@ -165,8 +188,8 @@ def fetch_reference_assets() -> dict[str, Any]:
     total_public_bytes = expected[MODEL_ZIP.name] + expected[EMBED_PATH.name]
     if total_public_bytes / 1024**3 > MAX_TOTAL_GB:
         raise RuntimeError(f"reference download would exceed {MAX_TOTAL_GB} GB")
-    download(MODEL_URL, MODEL_ZIP)
-    download(EMBED_URL, EMBED_PATH)
+    download(MODEL_URL, MODEL_ZIP, expected[MODEL_ZIP.name])
+    download(EMBED_URL, EMBED_PATH, expected[EMBED_PATH.name])
     if MODEL_ZIP.stat().st_size != expected[MODEL_ZIP.name]:
         raise RuntimeError("HLCA reference model zip byte count does not match Zenodo metadata")
     if EMBED_PATH.stat().st_size != expected[EMBED_PATH.name]:
