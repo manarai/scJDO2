@@ -60,3 +60,13 @@ fit worse for older donors (all-ages space agrees); one scVI seed;
 modest effects not excluded.
 **Next.** H05 issued. Proposed exploratory: HX01 (T cell / monocyte
 follow-up), HX02 (power).
+
+## 2026-10-15 — hlca/H05 (planned, ACCEPT) — human arm complete
+
+**Result.** Figures, executed notebook and RESULT.md complete; the
+pre-registered mouse–human comparison: fibroblasts mouse ×1.01 (seed
+range 1.01–1.18) vs human ×1.07; NK mouse ×1.00 vs human ×0.98; all
+isotropy and anticipation calls fail on both sides.
+**Meaning.** Mouse and human agree on the two matched types: no aging
+change in operator shape or stiffness beyond a few percent.
+**Next.** HX01, HX02 proposed (exploratory), awaiting the user.

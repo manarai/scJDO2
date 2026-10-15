@@ -40,7 +40,7 @@ Live status: `python coord/coord_check.py board`.
 | hlca/H02 | claude | accepted | Human pre-registration (from H01 inventory) | ACCEPT |
 | hlca/H03 | manus | accepted | scArches shared space + drift on HLCA | ACCEPT |
 | hlca/H04 | manus | accepted | Per-type tests and outcome, human lung | ACCEPT |
-| hlca/H05 | manus | issued | Figures, mouse–human comparison | — |
+| hlca/H05 | manus | accepted | Figures, mouse–human comparison | ACCEPT |
 
 * 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
 * 2026-10-14 — H01 re-issued on current aging-basins after the mouse arm closed.
@@ -51,3 +51,4 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — hlca/H03 accepted (0ba8886), merged; strata + outcome checker added (Claude); H04 issued.
 * 2026-10-15 — hlca/H04 accepted (66ea582): "isotropic noise increase; no aging claim beyond stiffness — no majority stiffness change"; reproduced to 1e-16.
 * 2026-10-15 — hlca/H05 issued (figures, mouse–human comparison, notebook).
+* 2026-10-15 — hlca/H05 accepted (db09352), merged. Human arm H01–H05 complete.
