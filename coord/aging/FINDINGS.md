@@ -109,3 +109,20 @@ with age in the three real basins; direction-specific change only in
 marrow transit states.
 **Next.** Awaiting the user: X04 (mapping-shrinkage, recommended),
 X05, X03, X01, X02; hlca/H01.
+
+## 2026-10-14 — aging/X04 (EXPLORATORY, ACCEPT) — mapping-shrinkage check
+
+**Result.** Reading rule: **no evidence that mapping hides change** (0/8
+types, 0/3 basins). Old–young offsets are smaller in a joint young+old
+space than in the scArches shared space. Over 3 scVI seeds, A03's
+isotropy passes are unstable (HPC 1/3, pre-B 2/3, granulocytopoietic
+2/3 in the shared space; 0–1/3 in the joint space).
+**Meaning.** The frozen A03 conclusion of no stiffness loss is not an
+artifact of reference mapping. The A03 "direction-specific change in
+marrow transit states" lead does not survive seed replication and is
+dropped. The one robust effect is that granulocytopoietic cells stiffen
+with age (×1.5–6.9 across all seeds and both spaces).
+**Caveats.** Embedding seed noise ≈ ±10 % on stiffness ratios.
+Mouse-to-mouse variation untested (X05). Exploratory throughout.
+**Next.** Proposed: X05 (per-mouse), then hlca/H01; reproducibility
+runner (Claude).
