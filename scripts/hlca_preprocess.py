@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 from scipy import sparse
 from skmisc.loess import loess
-from scanpy.preprocessing._highly_variable_genes import _sum_and_sum_squares_clipped
+from scanpy.preprocessing._highly_variable_genes import _sum_and_sum_squares_clipped, stats
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "benchmarks" / "aging_hlca" / "data" / "hlca_core_full_metadata.h5ad"
@@ -84,6 +84,42 @@ def iter_csr_rows(
             )
 
 
+def load_rows_csr(handle: h5py.File, rows: np.ndarray, n_vars: int) -> sparse.csr_matrix:
+    """Load one study as CSR, with a bounded peak below the full matrix size.
+
+    Scanpy's public Seurat-v3 implementation does not support backed CSR in the
+    installed version.  Loading one study at a time keeps the exact Scanpy
+    numeric kernel while avoiding a full 584,944-cell materialization.
+    """
+    if rows.size == 0:
+        return sparse.csr_matrix((0, n_vars), dtype=np.float32)
+    group = handle["raw"]["X"]
+    source_indptr = np.asarray(group["indptr"], dtype=np.int64)
+    counts = source_indptr[rows + 1] - source_indptr[rows]
+    total_nnz = int(counts.sum())
+    data_out = np.empty(total_nnz, dtype=group["data"].dtype)
+    indices_out = np.empty(total_nnz, dtype=group["indices"].dtype)
+    indptr_out = np.empty(len(rows) + 1, dtype=np.int64)
+    indptr_out[0] = 0
+    row_cursor = 0
+    nnz_cursor = 0
+    for run_start, run_stop in contiguous_runs(rows):
+        for start in range(run_start, run_stop, ROW_CHUNK):
+            stop = min(start + ROW_CHUNK, run_stop)
+            p0 = int(source_indptr[start])
+            p1 = int(source_indptr[stop])
+            width = p1 - p0
+            data_out[nnz_cursor : nnz_cursor + width] = group["data"][p0:p1]
+            indices_out[nnz_cursor : nnz_cursor + width] = group["indices"][p0:p1]
+            local_counts = np.diff(source_indptr[start : stop + 1])
+            indptr_out[row_cursor + 1 : row_cursor + 1 + len(local_counts)] = nnz_cursor + np.cumsum(local_counts)
+            row_cursor += len(local_counts)
+            nnz_cursor += width
+    if row_cursor != len(rows) or nnz_cursor != total_nnz:
+        raise RuntimeError("failed to assemble the requested exact raw-count rows")
+    return sparse.csr_matrix((data_out, indices_out, indptr_out), shape=(len(rows), n_vars))
+
+
 def mean_var_stream(handle: h5py.File, rows: np.ndarray, n_vars: int) -> tuple[np.ndarray, np.ndarray]:
     """Unbiased per-gene moments matching the Seurat-v3 input moments."""
     total = np.zeros(n_vars, dtype=np.float64)
@@ -125,7 +161,7 @@ def clipped_sums_stream(
 
 
 def seurat_v3_streamed(handle: h5py.File, obs: pd.DataFrame, var_names: pd.Index) -> pd.DataFrame:
-    """Apply Scanpy 1.12.4 Seurat-v3 ranking with the frozen span and batches."""
+    """Apply Scanpy 1.12.4 Seurat-v3 exactly, one study matrix at a time."""
     n_vars = len(var_names)
     batch = obs["study_or_dataset"].astype(str).to_numpy()
     source_rows = obs["_source_row"].to_numpy(dtype=np.int64)
@@ -137,7 +173,8 @@ def seurat_v3_streamed(handle: h5py.File, obs: pd.DataFrame, var_names: pd.Index
     means: list[np.ndarray] = []
     variances: list[np.ndarray] = []
     for batch_name, rows in rows_by_batch.items():
-        mean, variance = mean_var_stream(handle, rows, n_vars)
+        matrix = load_rows_csr(handle, rows, n_vars)
+        mean, variance = stats.mean_var(matrix, axis=0, correction=1)
         estimat_var = np.zeros(n_vars, dtype=np.float64)
         not_const = variance > 0
         if not_const.any():
@@ -145,15 +182,22 @@ def seurat_v3_streamed(handle: h5py.File, obs: pd.DataFrame, var_names: pd.Index
             model.fit()
             estimat_var[not_const] = model.outputs.fitted_values
         reg_std = np.sqrt(np.power(10.0, estimat_var))
-        clip_val = reg_std * np.sqrt(len(rows)) + mean
-        squared_sum, count_sum = clipped_sums_stream(handle, rows, n_vars, clip_val)
-        norm_var = (1.0 / ((len(rows) - 1) * np.square(reg_std))) * (
-            len(rows) * np.square(mean) + squared_sum - 2.0 * count_sum * mean
+        clip_val = reg_std * np.sqrt(matrix.shape[0]) + mean
+        squared_sum, count_sum = _sum_and_sum_squares_clipped(
+            matrix.indices,
+            matrix.data,
+            n_cols=n_vars,
+            clip_val=clip_val,
+            nnz=matrix.nnz,
+        )
+        norm_var = (1.0 / ((matrix.shape[0] - 1) * np.square(reg_std))) * (
+            matrix.shape[0] * np.square(mean) + squared_sum - 2.0 * count_sum * mean
         )
         normalized.append(norm_var)
         means.append(mean)
         variances.append(variance)
-        print(f"HVG batch {batch_name}: {len(rows)} cells", flush=True)
+        print(f"HVG batch {batch_name}: {matrix.shape[0]} cells, {matrix.nnz} nonzeros", flush=True)
+        del matrix
     norm = np.vstack(normalized)
     ranks = np.argsort(np.argsort(-norm, axis=1), axis=1).astype(np.float32)
     n_batch_hvg = np.sum(ranks < N_HVGS, axis=0)
