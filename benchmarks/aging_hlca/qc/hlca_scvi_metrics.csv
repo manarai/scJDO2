@@ -1,0 +1,3 @@
+fit,n_cells,n_donors,epochs_run,best_validation_elbo,wall_seconds,n_latent,n_layers,gene_likelihood,accelerator,frozen_latent_encoder_max_abs_change,frozen_latent_encoder_parameter_count,frozen_latent_encoder_buffer_count,logging_hook_exceptions
+young_reference,266145,48,400,550.031005859375,8604.433073124965,15,2,nb,cpu,0.0,0,0,0
+old_query,315372,58,88,655.2349243164062,1703.0685245000059,15,2,nb,cpu,0.0,277022,514,0
