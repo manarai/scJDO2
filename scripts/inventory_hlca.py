@@ -234,7 +234,7 @@ def main() -> int:
 
     confound_rows: list[dict[str, object]] = []
     for covariate in ("smoking_status", "sex", "sampling_sites", "assay"):
-        for (bin_name, level), count in donors_with_age.assign(_level=donors_with_age[covariate].fillna("MISSING").astype(str)).groupby(
+        for (bin_name, level), count in donors_with_age.assign(_level=donors_with_age[covariate].astype("string").fillna("MISSING").astype(str)).groupby(
             ["age_bin", "_level"], observed=True
         ).size().items():
             confound_rows.append(
@@ -315,6 +315,7 @@ def main() -> int:
         "n_genes": int(adata.n_vars),
         "donor_field": donor_field,
         "age_field": age_field,
+        "age_field_rationale": "Selected the first preferred HLCA age field with parseable donor-level values; numeric values retain their stated years and ranges use deterministic midpoints.",
         "age_field_candidates": age_audit,
         "age_conversion": conversion_rule,
         "study_field": study_field,
