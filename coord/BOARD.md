@@ -8,7 +8,7 @@ Live status: `python coord/coord_check.py board`.
 | aging/A01 | manus | accepted | Environment, TMS fetch, preprocessing | ACCEPT |
 | aging/A02 | manus | accepted | scArches shared space, drift, operators | ACCEPT |
 | aging/A03 | manus | accepted | Per-type compare, artifacts, modes, outcome | ACCEPT |
-| aging/A04 | manus | issued | Figures, QC set, notebook, RESULT.md | — |
+| aging/A04 | manus | issued | Figures, QC set, notebook, RESULT.md | REVISE (1) |
 
 ## Log
 
@@ -21,6 +21,7 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-14 — aging/A01 accepted (d4eb2fe), merged; A02 issued.
 * 2026-10-14 — aging/A02 accepted (6699362), merged; A03 issued with shared-space-only tests clarified.
 * 2026-10-14 — aging/A03 accepted (79aeb37): frozen outcome "isotropic noise increase; no aging claim beyond stiffness"; A04 issued.
+* 2026-10-14 — aging/A04 REVISE: saddle marker placement, aging_vectors axis ranges, cosmetics.
 
 ## hlca
 
