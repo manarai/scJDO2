@@ -54,8 +54,11 @@ print({'primary_types': len(primary), 'sensitivity_rows': len(sensitivity), 'mat
     cells += figure_cell("stiffness_vs_age", "## Donor stiffness against age\n\nShows stored primary donor-level `log median |λ|` values against age, coloured by `study_or_dataset`, with a display-only OLS line. T cell lineage and Monocytes carry the mandated H04-review lead flag.")
     cells += [
         markdown("## EC-capillary anticipation display\n\nShows primary stored donor centroids projected onto the young-reference soft axis against age. The source H5AD is accessed only via `HLCA_DATA`, as specified."),
-        code("""with ad.read_h5ad(HLCA_DATA / 'h03_primary_drift.h5ad', backed='r') as drift:
+        code("""drift = ad.read_h5ad(HLCA_DATA / 'h03_primary_drift.h5ad', backed='r')
+try:
     print({'stored_drift_cells': drift.n_obs, 'representation': list(drift.obsm.keys())})
+finally:
+    drift.file.close()
 display(Image(filename=str(FIGURE_DIR / 'ec_capillary_anticipation.png'), width=1000))"""),
     ]
     cells += figure_cell("mouse_human", "## Pre-registered mouse–human comparison\n\nShows only the two §8 matched pairs. Mouse points are the stored A03 old/young stiffness ratio with the X04 shared-seed range; human points are `exp(stiff_slope)` from H04 §7(f). Calls are text only. This is descriptive; no statistic is computed.")
@@ -65,8 +68,11 @@ display(Image(filename=str(FIGURE_DIR / 'ec_capillary_anticipation.png'), width=
     cells += figure_cell("qc_eligibility_counts", "## QC: eligibility counts\n\nShows the stored H03/H04 count of eligible types for primary, Banovich-only, parenchyma-only, and never-smoker analyses.")
     cells += [
         markdown("## QC: donor composition\n\nShows unique donors by age bin and study. The figure is derived from stored H03 drift metadata through the `HLCA_DATA` path variable."),
-        code("""with ad.read_h5ad(HLCA_DATA / 'h03_primary_drift.h5ad', backed='r') as drift:
+        code("""drift = ad.read_h5ad(HLCA_DATA / 'h03_primary_drift.h5ad', backed='r')
+try:
     donor_meta = drift.obs[['donor_id', 'age', 'study_or_dataset']].drop_duplicates('donor_id')
+finally:
+    drift.file.close()
 print({'unique_donors_in_drift_sample': len(donor_meta), 'donors_age_ge_60': int((donor_meta['age'] >= 60).sum())})
 display(Image(filename=str(FIGURE_DIR / 'qc_donor_composition.png'), width=1000))"""),
     ]
