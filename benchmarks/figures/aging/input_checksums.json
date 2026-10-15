@@ -89,6 +89,7 @@
   },
   {
     "path": "benchmarks/aging/RESULT.md",
-    "sha256": "b26be332433974115e73e42b243aa389733b2d1dbb1977c1f97f9d874413356d"
+    "sha256": "8b746b87cbe1d97389ea0eddd7bcbc5085ec0d9407a50f8def7c63243b9dfc72",
+    "note": "A04-owned mutable result document; excluded from upstream input match"
   }
 ]
