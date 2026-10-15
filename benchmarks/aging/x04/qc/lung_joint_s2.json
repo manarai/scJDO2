@@ -1,0 +1,14 @@
+{
+  "tissue": "lung",
+  "space": "joint",
+  "seed": 2,
+  "output": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/aging/x04/lung_joint_s2.h5ad",
+  "epochs_run": 261,
+  "best_validation_elbo": 920.9443969726562,
+  "fit": "joint_s2",
+  "final_loss": -277.4066380895284,
+  "sym_median": 1.0368206915245537e-07,
+  "sym_max": 2.7401372904023447e-07,
+  "wall_seconds": 38.01112016593106,
+  "lead_eig_tolerance": 0.08018785830439822
+}

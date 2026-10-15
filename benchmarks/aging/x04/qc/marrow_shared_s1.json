@@ -1,0 +1,16 @@
+{
+  "tissue": "marrow",
+  "space": "shared",
+  "seed": 1,
+  "output": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/aging/x04/marrow_shared_s1.h5ad",
+  "reference_encoder_weights_max_abs_change": 0.0,
+  "reference_encoder_parameters_checked": 533664,
+  "reference_encoder_batchnorm_buffers_max_abs_change": 0.0,
+  "reference_encoder_batchnorm_buffers_checked": 771,
+  "fit": "shared_s1",
+  "final_loss": -418.26591631046443,
+  "sym_median": 5.4935936688593756e-08,
+  "sym_max": 1.3272402554775908e-07,
+  "wall_seconds": 51.22915291704703,
+  "lead_eig_tolerance": 0.12816521700759562
+}
