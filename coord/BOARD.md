@@ -10,7 +10,7 @@ Live status: `python coord/coord_check.py board`.
 | aging/A03 | manus | accepted | Per-type compare, artifacts, modes, outcome | ACCEPT |
 | aging/A04 | manus | accepted | Figures, QC set, notebook, RESULT.md | ACCEPT |
 | aging/X04 | manus | accepted | EXPLORATORY: mapping-shrinkage check | ACCEPT |
-| aging/X05 | manus | issued | EXPLORATORY: per-mouse uncertainty | REVISE (1) |
+| aging/X05 | manus | accepted | EXPLORATORY: per-mouse uncertainty | ACCEPT |
 
 ## Log
 
@@ -30,6 +30,7 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-14 — aging/X04 accepted (dc648cf): no evidence mapping hides change; A03 isotropy passes not seed-robust; granulocytopoietic stiffening robust.
 * 2026-10-14 — user approved X05 then hlca/H01; X05 issued.
 * 2026-10-14 — aging/X05 REVISE: per-mouse operators must use equal cell counts (task design flaw, Claude).
+* 2026-10-14 — aging/X05 accepted (f1b9538): equal-count verdict "not distinguishable from mouse-to-mouse variation". Mouse arm closed.
 
 ## hlca
 
@@ -41,4 +42,5 @@ Live status: `python coord/coord_check.py board`.
 | hlca/H04 | manus | draft | Per-type tests and outcome, human lung | — |
 | hlca/H05 | manus | draft | Figures, mouse–human comparison | — |
 
-* 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 issued. Manus runs aging/A01 first, then hlca/H01.
+* 2026-10-14 — hlca workstream created (HLCA core + scArches); H01 drafted.
+* 2026-10-14 — H01 re-issued on current aging-basins after the mouse arm closed.

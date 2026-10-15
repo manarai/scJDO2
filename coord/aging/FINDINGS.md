@@ -139,3 +139,18 @@ whether it exceeds mouse-to-mouse variation is being recomputed at
 equal counts. Sex does not explain it (old females 3.6–5.4 vs young
 females 1.7–1.8 at full count). One old mouse (24-M-59) is young-like.
 **Next.** X05 revision 1 (equal-count operators), then hlca/H01.
+
+## 2026-10-14 — aging/X05 (EXPLORATORY, ACCEPT, revision 1)
+
+**Result.** Equal-count per-mouse test: p_stiffer 0.045 / 0.167 / 0.258
+(seeds 0/1/2) → **not distinguishable from mouse-to-mouse variation**.
+(The full-count first pass said otherwise; superseded, kept as
+provenance.)
+**Meaning — mouse arm overall.** No robust aging change in operator
+shape or stiffness in TMS lung or marrow: the frozen tests fail in the
+majority, the passes are seed-fragile, mapping does not hide change,
+and the one pooled effect (granulocytopoietic stiffening) does not
+survive mouse-level variation with 2 young mice.
+**Caveats.** Underpowered by design of the data (lung 4, marrow 2
+young mice). A null here is "not detected", not "absent".
+**Next.** hlca/H01: the human lung arm, with ~100 donors.
