@@ -297,8 +297,8 @@ def plot_power(power: pd.DataFrame, types: tuple[str, ...]) -> list[Path]:
     for color, cell_type in zip(colours, types, strict=True):
         current = power[(power.ann_level_3 == cell_type) & (power.kind == "single_axis")].sort_values("size")
         hx02 = old[(old.ann_level_3 == cell_type) & (old.kind == "single_axis") & (old.size > 1)].sort_values("size")
-        ax.plot(current.size, current.power, color=color, marker="o", linewidth=1.35, markersize=3.5, label=cell_type)
-        ax.plot(hx02.size, hx02.power, color=color, linestyle="--", linewidth=.95, alpha=.72)
+        ax.plot(current["size"], current["power"], color=color, marker="o", linewidth=1.35, markersize=3.5, label=cell_type)
+        ax.plot(hx02["size"], hx02["power"], color=color, linestyle="--", linewidth=.95, alpha=.72)
     ax.axhline(.8, color="#c94c4c", linestyle=":", linewidth=1.3, label="80% power")
     ax.set_xscale("log", base=2); ax.set_ylim(-.02, 1.04); ax.grid(color=".90")
     ax.set_xlabel("single-axis softening fold F"); ax.set_ylabel("power across 50 donor subsamples")
