@@ -128,3 +128,109 @@ This amendment was made before any aging data run. For each type, the statistic 
 **isotropic noise increase; no aging claim beyond stiffness**
 
 Pooled non-artifact majorities were assessed over 8 types: isotropy 0.375 and anticipation 0.125. Neither exceeds the strict `> 0.5` majority rule. Per tissue, lung was 0/2 for both tests; marrow was 3/6 for isotropy and 1/6 for anticipation. The header is the frozen §6 row selected from those fractions and does not reinterpret individual type-level results.
+
+## §6 Figure inventory
+Every rendered figure is a 200-dpi PDF/PNG pair under `benchmarks/figures/aging/`; the source-file mapping is the committed `MANIFEST.csv`. The table lists all 78 pairs by path.
+
+| Spec item | Tissue | Age | Paths |
+|---|---|---|---|
+| §7.5 aging_vectors | both | young_old | `benchmarks/figures/aging/comparison/aging_vectors.pdf`; `benchmarks/figures/aging/comparison/aging_vectors.png` |
+| §7.1 spectrum_ladder groups | lung | young_old | `benchmarks/figures/aging/lung/spectrum_ladder_young_old.pdf`; `benchmarks/figures/aging/lung/spectrum_ladder_young_old.png` |
+| §7.2 soft_axis_map displacement | lung | young_old | `benchmarks/figures/aging/lung/soft_axis_map_young_old.pdf`; `benchmarks/figures/aging/lung/soft_axis_map_young_old.png` |
+| §7.3 basin_index_by_type | lung | young_old | `benchmarks/figures/aging/lung/basin_index_age_facet.pdf`; `benchmarks/figures/aging/lung/basin_index_age_facet.png` |
+| §7.4 ledger_map | lung | young | `benchmarks/figures/aging/lung/young/ledger_map.pdf`; `benchmarks/figures/aging/lung/young/ledger_map.png` |
+| §7b figure_operator_space | lung | young | `benchmarks/figures/aging/lung/young/operator_space.pdf`; `benchmarks/figures/aging/lung/young/operator_space.png` |
+| §7b figure_ledger_summary | lung | young | `benchmarks/figures/aging/lung/young/ledger_summary.pdf`; `benchmarks/figures/aging/lung/young/ledger_summary.png` |
+| §7b spectrum_ladder single group | lung | young | `benchmarks/figures/aging/lung/young/spectrum_ladder.pdf`; `benchmarks/figures/aging/lung/young/spectrum_ladder.png` |
+| §7b soft_axis_map | lung | young | `benchmarks/figures/aging/lung/young/soft_axis_map.pdf`; `benchmarks/figures/aging/lung/young/soft_axis_map.png` |
+| §7b basin_index_by_type single group | lung | young | `benchmarks/figures/aging/lung/young/basin_index.pdf`; `benchmarks/figures/aging/lung/young/basin_index.png` |
+| §7b Gaussian-oracle curvature ratio | lung | young | `benchmarks/figures/aging/lung/young/gaussian_oracle_curvature_ratio.pdf`; `benchmarks/figures/aging/lung/young/gaussian_oracle_curvature_ratio.png` |
+| §7b scVI ELBO QC | lung | young | `benchmarks/figures/aging/lung/young/qc_scvi_elbo_summary.pdf`; `benchmarks/figures/aging/lung/young/qc_scvi_elbo_summary.png` |
+| §7b d_latent choice | lung | young | `benchmarks/figures/aging/lung/young/qc_d_latent.pdf`; `benchmarks/figures/aging/lung/young/qc_d_latent.png` |
+| §7b within-cluster σ versus drift scale | lung | young | `benchmarks/figures/aging/lung/young/qc_sigma.pdf`; `benchmarks/figures/aging/lung/young/qc_sigma.png` |
+| §7b symmetry check histogram | lung | young | `benchmarks/figures/aging/lung/young/qc_symmetry.pdf`; `benchmarks/figures/aging/lung/young/qc_symmetry.png` |
+| §7b tangent-rank distribution | lung | young | `benchmarks/figures/aging/lung/young/qc_rank.pdf`; `benchmarks/figures/aging/lung/young/qc_rank.png` |
+| §7b inter-cluster gap control | lung | young | `benchmarks/figures/aging/lung/young/qc_gap.pdf`; `benchmarks/figures/aging/lung/young/qc_gap.png` |
+| §7b donor × type counts | lung | young | `benchmarks/figures/aging/lung/young/qc_donor_type_counts.pdf`; `benchmarks/figures/aging/lung/young/qc_donor_type_counts.png` |
+| §7b standalone-versus-shared basin agreement | lung | young | `benchmarks/figures/aging/lung/young/qc_shared_standalone_basin_confusion.pdf`; `benchmarks/figures/aging/lung/young/qc_shared_standalone_basin_confusion.png` |
+| §7b correction_artifact list | lung | young | `benchmarks/figures/aging/lung/young/qc_correction_artifacts.pdf`; `benchmarks/figures/aging/lung/young/qc_correction_artifacts.png` |
+| §7.4 ledger_map | lung | old | `benchmarks/figures/aging/lung/old/ledger_map.pdf`; `benchmarks/figures/aging/lung/old/ledger_map.png` |
+| §7b figure_operator_space | lung | old | `benchmarks/figures/aging/lung/old/operator_space.pdf`; `benchmarks/figures/aging/lung/old/operator_space.png` |
+| §7b figure_ledger_summary | lung | old | `benchmarks/figures/aging/lung/old/ledger_summary.pdf`; `benchmarks/figures/aging/lung/old/ledger_summary.png` |
+| §7b spectrum_ladder single group | lung | old | `benchmarks/figures/aging/lung/old/spectrum_ladder.pdf`; `benchmarks/figures/aging/lung/old/spectrum_ladder.png` |
+| §7b soft_axis_map | lung | old | `benchmarks/figures/aging/lung/old/soft_axis_map.pdf`; `benchmarks/figures/aging/lung/old/soft_axis_map.png` |
+| §7b basin_index_by_type single group | lung | old | `benchmarks/figures/aging/lung/old/basin_index.pdf`; `benchmarks/figures/aging/lung/old/basin_index.png` |
+| §7b Gaussian-oracle curvature ratio | lung | old | `benchmarks/figures/aging/lung/old/gaussian_oracle_curvature_ratio.pdf`; `benchmarks/figures/aging/lung/old/gaussian_oracle_curvature_ratio.png` |
+| §7b scVI ELBO QC | lung | old | `benchmarks/figures/aging/lung/old/qc_scvi_elbo_summary.pdf`; `benchmarks/figures/aging/lung/old/qc_scvi_elbo_summary.png` |
+| §7b d_latent choice | lung | old | `benchmarks/figures/aging/lung/old/qc_d_latent.pdf`; `benchmarks/figures/aging/lung/old/qc_d_latent.png` |
+| §7b within-cluster σ versus drift scale | lung | old | `benchmarks/figures/aging/lung/old/qc_sigma.pdf`; `benchmarks/figures/aging/lung/old/qc_sigma.png` |
+| §7b symmetry check histogram | lung | old | `benchmarks/figures/aging/lung/old/qc_symmetry.pdf`; `benchmarks/figures/aging/lung/old/qc_symmetry.png` |
+| §7b tangent-rank distribution | lung | old | `benchmarks/figures/aging/lung/old/qc_rank.pdf`; `benchmarks/figures/aging/lung/old/qc_rank.png` |
+| §7b inter-cluster gap control | lung | old | `benchmarks/figures/aging/lung/old/qc_gap.pdf`; `benchmarks/figures/aging/lung/old/qc_gap.png` |
+| §7b donor × type counts | lung | old | `benchmarks/figures/aging/lung/old/qc_donor_type_counts.pdf`; `benchmarks/figures/aging/lung/old/qc_donor_type_counts.png` |
+| §7b standalone-versus-shared basin agreement | lung | old | `benchmarks/figures/aging/lung/old/qc_shared_standalone_basin_confusion.pdf`; `benchmarks/figures/aging/lung/old/qc_shared_standalone_basin_confusion.png` |
+| §7b correction_artifact list | lung | old | `benchmarks/figures/aging/lung/old/qc_correction_artifacts.pdf`; `benchmarks/figures/aging/lung/old/qc_correction_artifacts.png` |
+| §7b compare_summary | lung | young_old | `benchmarks/figures/aging/lung/compare_summary.pdf`; `benchmarks/figures/aging/lung/compare_summary.png` |
+| §7b standalone-versus-shared quantities | lung | young_old | `benchmarks/figures/aging/lung/standalone_shared_quantities.pdf`; `benchmarks/figures/aging/lung/standalone_shared_quantities.png` |
+| §7.6 energy_transect | lung | young_old | `benchmarks/figures/aging/lung/energy_transect_fibroblast_of_lung.pdf`; `benchmarks/figures/aging/lung/energy_transect_fibroblast_of_lung.png` |
+| §7.6 energy_transect | lung | young_old | `benchmarks/figures/aging/lung/energy_transect_natural_killer_cell.pdf`; `benchmarks/figures/aging/lung/energy_transect_natural_killer_cell.png` |
+| §7.1 spectrum_ladder groups | marrow | young_old | `benchmarks/figures/aging/marrow/spectrum_ladder_young_old.pdf`; `benchmarks/figures/aging/marrow/spectrum_ladder_young_old.png` |
+| §7.2 soft_axis_map displacement | marrow | young_old | `benchmarks/figures/aging/marrow/soft_axis_map_young_old.pdf`; `benchmarks/figures/aging/marrow/soft_axis_map_young_old.png` |
+| §7.3 basin_index_by_type | marrow | young_old | `benchmarks/figures/aging/marrow/basin_index_age_facet.pdf`; `benchmarks/figures/aging/marrow/basin_index_age_facet.png` |
+| §7.4 ledger_map | marrow | young | `benchmarks/figures/aging/marrow/young/ledger_map.pdf`; `benchmarks/figures/aging/marrow/young/ledger_map.png` |
+| §7b figure_operator_space | marrow | young | `benchmarks/figures/aging/marrow/young/operator_space.pdf`; `benchmarks/figures/aging/marrow/young/operator_space.png` |
+| §7b figure_ledger_summary | marrow | young | `benchmarks/figures/aging/marrow/young/ledger_summary.pdf`; `benchmarks/figures/aging/marrow/young/ledger_summary.png` |
+| §7b spectrum_ladder single group | marrow | young | `benchmarks/figures/aging/marrow/young/spectrum_ladder.pdf`; `benchmarks/figures/aging/marrow/young/spectrum_ladder.png` |
+| §7b soft_axis_map | marrow | young | `benchmarks/figures/aging/marrow/young/soft_axis_map.pdf`; `benchmarks/figures/aging/marrow/young/soft_axis_map.png` |
+| §7b basin_index_by_type single group | marrow | young | `benchmarks/figures/aging/marrow/young/basin_index.pdf`; `benchmarks/figures/aging/marrow/young/basin_index.png` |
+| §7b Gaussian-oracle curvature ratio | marrow | young | `benchmarks/figures/aging/marrow/young/gaussian_oracle_curvature_ratio.pdf`; `benchmarks/figures/aging/marrow/young/gaussian_oracle_curvature_ratio.png` |
+| §7b scVI ELBO QC | marrow | young | `benchmarks/figures/aging/marrow/young/qc_scvi_elbo_summary.pdf`; `benchmarks/figures/aging/marrow/young/qc_scvi_elbo_summary.png` |
+| §7b d_latent choice | marrow | young | `benchmarks/figures/aging/marrow/young/qc_d_latent.pdf`; `benchmarks/figures/aging/marrow/young/qc_d_latent.png` |
+| §7b within-cluster σ versus drift scale | marrow | young | `benchmarks/figures/aging/marrow/young/qc_sigma.pdf`; `benchmarks/figures/aging/marrow/young/qc_sigma.png` |
+| §7b symmetry check histogram | marrow | young | `benchmarks/figures/aging/marrow/young/qc_symmetry.pdf`; `benchmarks/figures/aging/marrow/young/qc_symmetry.png` |
+| §7b tangent-rank distribution | marrow | young | `benchmarks/figures/aging/marrow/young/qc_rank.pdf`; `benchmarks/figures/aging/marrow/young/qc_rank.png` |
+| §7b inter-cluster gap control | marrow | young | `benchmarks/figures/aging/marrow/young/qc_gap.pdf`; `benchmarks/figures/aging/marrow/young/qc_gap.png` |
+| §7b donor × type counts | marrow | young | `benchmarks/figures/aging/marrow/young/qc_donor_type_counts.pdf`; `benchmarks/figures/aging/marrow/young/qc_donor_type_counts.png` |
+| §7b standalone-versus-shared basin agreement | marrow | young | `benchmarks/figures/aging/marrow/young/qc_shared_standalone_basin_confusion.pdf`; `benchmarks/figures/aging/marrow/young/qc_shared_standalone_basin_confusion.png` |
+| §7b correction_artifact list | marrow | young | `benchmarks/figures/aging/marrow/young/qc_correction_artifacts.pdf`; `benchmarks/figures/aging/marrow/young/qc_correction_artifacts.png` |
+| §7.4 ledger_map | marrow | old | `benchmarks/figures/aging/marrow/old/ledger_map.pdf`; `benchmarks/figures/aging/marrow/old/ledger_map.png` |
+| §7b figure_operator_space | marrow | old | `benchmarks/figures/aging/marrow/old/operator_space.pdf`; `benchmarks/figures/aging/marrow/old/operator_space.png` |
+| §7b figure_ledger_summary | marrow | old | `benchmarks/figures/aging/marrow/old/ledger_summary.pdf`; `benchmarks/figures/aging/marrow/old/ledger_summary.png` |
+| §7b spectrum_ladder single group | marrow | old | `benchmarks/figures/aging/marrow/old/spectrum_ladder.pdf`; `benchmarks/figures/aging/marrow/old/spectrum_ladder.png` |
+| §7b soft_axis_map | marrow | old | `benchmarks/figures/aging/marrow/old/soft_axis_map.pdf`; `benchmarks/figures/aging/marrow/old/soft_axis_map.png` |
+| §7b basin_index_by_type single group | marrow | old | `benchmarks/figures/aging/marrow/old/basin_index.pdf`; `benchmarks/figures/aging/marrow/old/basin_index.png` |
+| §7b Gaussian-oracle curvature ratio | marrow | old | `benchmarks/figures/aging/marrow/old/gaussian_oracle_curvature_ratio.pdf`; `benchmarks/figures/aging/marrow/old/gaussian_oracle_curvature_ratio.png` |
+| §7b scVI ELBO QC | marrow | old | `benchmarks/figures/aging/marrow/old/qc_scvi_elbo_summary.pdf`; `benchmarks/figures/aging/marrow/old/qc_scvi_elbo_summary.png` |
+| §7b d_latent choice | marrow | old | `benchmarks/figures/aging/marrow/old/qc_d_latent.pdf`; `benchmarks/figures/aging/marrow/old/qc_d_latent.png` |
+| §7b within-cluster σ versus drift scale | marrow | old | `benchmarks/figures/aging/marrow/old/qc_sigma.pdf`; `benchmarks/figures/aging/marrow/old/qc_sigma.png` |
+| §7b symmetry check histogram | marrow | old | `benchmarks/figures/aging/marrow/old/qc_symmetry.pdf`; `benchmarks/figures/aging/marrow/old/qc_symmetry.png` |
+| §7b tangent-rank distribution | marrow | old | `benchmarks/figures/aging/marrow/old/qc_rank.pdf`; `benchmarks/figures/aging/marrow/old/qc_rank.png` |
+| §7b inter-cluster gap control | marrow | old | `benchmarks/figures/aging/marrow/old/qc_gap.pdf`; `benchmarks/figures/aging/marrow/old/qc_gap.png` |
+| §7b donor × type counts | marrow | old | `benchmarks/figures/aging/marrow/old/qc_donor_type_counts.pdf`; `benchmarks/figures/aging/marrow/old/qc_donor_type_counts.png` |
+| §7b standalone-versus-shared basin agreement | marrow | old | `benchmarks/figures/aging/marrow/old/qc_shared_standalone_basin_confusion.pdf`; `benchmarks/figures/aging/marrow/old/qc_shared_standalone_basin_confusion.png` |
+| §7b correction_artifact list | marrow | old | `benchmarks/figures/aging/marrow/old/qc_correction_artifacts.pdf`; `benchmarks/figures/aging/marrow/old/qc_correction_artifacts.png` |
+| §7b compare_summary | marrow | young_old | `benchmarks/figures/aging/marrow/compare_summary.pdf`; `benchmarks/figures/aging/marrow/compare_summary.png` |
+| §7b standalone-versus-shared quantities | marrow | young_old | `benchmarks/figures/aging/marrow/standalone_shared_quantities.pdf`; `benchmarks/figures/aging/marrow/standalone_shared_quantities.png` |
+| §7.6 energy_transect | marrow | young_old | `benchmarks/figures/aging/marrow/energy_transect_granulocyte.pdf`; `benchmarks/figures/aging/marrow/energy_transect_granulocyte.png` |
+
+The three instances that cannot be rendered without a prohibited refit or an unavailable stored artifact are recorded in `benchmarks/figures/aging/DEVIATIONS.md` and as manifest rows: the archetype sheet, ten-refit permutation null, and per-epoch scVI ELBO curves. Stored final-ELBO summaries are rendered in place of the unavailable curves.
+
+## §7 Limits
+* The §6 header is the frozen label for "both tests fail in the
+  majority". Stiffness did not decrease (median |λ| old/young 0.997–1.14
+  in seven types, 3.1 in granulocytopoietic cells), so this result
+  reports no detectable direction-specific, anticipatory or uniform
+  loss of operator stiffness with age, not a measured noise increase.
+* Only 3 of the 8 eligible types are basins under the locked rule (lung
+  fibroblast, lung NK, marrow granulocyte); all three are unchanged.
+  The isotropy passes are in marrow transit states.
+* scArches mapping into a young reference may shrink old–young
+  differences; lung rests on 2 types and 648 reference cells; marrow on
+  2 young donors; one scVI seed.
+
+## §8 Reproducibility
+* Input integrity: `scripts/render_aging_figures.py` verifies every A01–A03 report-listed SHA-256 before reading an artifact; its verification list is `benchmarks/figures/aging/input_checksums.json`.
+* Figure generation: `. .venv/bin/activate && python scripts/render_aging_figures.py`. The renderer fits no model and uses only stored H5AD, CSV, and drift-checkpoint artifacts.
+* Executed notebook: `JUPYTER_PATH="$PWD/.venv/share/jupyter" .venv/bin/python scripts/make_aging_notebook.py`, after installing the local `.venv` kernel named `scjdo2-a04`.
+* Environment: Python 3.13.2; anndata 0.11.4, scanpy 1.12.4, scvi-tools 1.5.1, scarches 0.6.1, dynamo-release 1.5.3, numpy 2.5.4, scipy 1.18.1, matplotlib 3.11.2, pandas 2.3.3, torch 2.14.1, nbformat 5.11.1, nbclient 0.11.0.
+* The executed notebook is `notebooks/aging_basins.ipynb`; it contains 95 cells, 8 executed code cells, no execution errors, and 78 inline figure-atlas Markdown cells.
