@@ -273,12 +273,12 @@ def rerender_revision1() -> int:
     expected = {"comparison/aging_vectors", "lung/compare_summary", "marrow/compare_summary",
                 "lung/energy_transect_fibroblast_of_lung", "lung/energy_transect_natural_killer_cell",
                 "marrow/energy_transect_granulocyte"}
-    actual = {str(Path(row["path"]).with_suffix("").relative_to(OUT)) for row in MANIFEST}
+    actual = {str((ROOT / row["path"]).with_suffix("").relative_to(OUT)) for row in MANIFEST}
     if actual != expected:
         raise RuntimeError(f"revision renderer wrote unexpected targets: {actual ^ expected}")
     # Manifest columns contain paths and immutable source provenance; rewrite after validation.
     existing = pd.read_csv(OUT / "MANIFEST.csv")
-    existing_bases = {str(Path(path).with_suffix("").relative_to(OUT))
+    existing_bases = {str((ROOT / path).with_suffix("").relative_to(OUT))
                       for path in existing.path if path.endswith((".pdf", ".png"))}
     if not expected.issubset(existing_bases):
         raise RuntimeError("revision targets absent from existing manifest")
