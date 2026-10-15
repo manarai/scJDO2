@@ -173,7 +173,7 @@ def main() -> int:
         "shared_seed_ref_weights_max_abs_change": float(max(shared_audits)), "sym_max_all_fits": max_sym,
     }
     (OUT / "metrics.json").write_text(json.dumps(metrics, indent=2) + "\n")
-    figures = AGING / "figures" / "x04"
+    figures = AGING.parent / "figures" / "aging" / "x04"
     make_figure(summary, "stiff_ratio", "old / young median |λ|", figures / "stiff_ratio", [(0.90, "--", "joint hidden-softening threshold"), (0.95, ":", "shared threshold")])
     make_figure(summary, "offset_z", "offset z", figures / "offset_z", [])
     rule = '''* the type **shows hidden softening** if joint `stiff_ratio` ≤ 0.90 **and** shared `stiff_ratio` ≥ 0.95 **and** the joint and shared seed ranges do not overlap;
