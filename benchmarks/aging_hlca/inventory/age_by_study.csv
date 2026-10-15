@@ -1,0 +1,15 @@
+study_or_dataset,n_donors,n_donors_lt30,n_donors_30_44,n_donors_45_59,n_donors_ge60,age_min,age_median,age_max
+Banovich_Kropski_2020,38,6,11,16,5,15.0,51.0,71.0
+Barbry_Leroy_2020,10,4,6,0,0,24.0,30.0,35.0
+Jain_Misharin_2021_10Xv1,2,0,1,1,0,41.0,49.0,57.0
+Jain_Misharin_2021_10Xv2,4,2,2,0,0,25.0,28.5,37.0
+Krasnow_2020,3,0,0,2,1,46.0,51.0,75.0
+Lafyatis_Rojas_2019_10Xv1,2,0,0,1,1,56.0,66.0,76.0
+Lafyatis_Rojas_2019_10Xv2,4,2,0,2,0,18.0,39.0,57.0
+Meyer_2019,3,0,1,1,1,42.5,57.5,67.5
+Misharin_2021,2,1,0,1,0,25.0,38.5,52.0
+Misharin_Budinger_2018,8,3,0,4,1,21.0,48.0,63.0
+Nawijn_2021,10,0,1,7,2,41.0,56.5,64.0
+Seibold_2020_10Xv2,6,3,1,2,0,10.0,31.0,59.0
+Seibold_2020_10Xv3,8,0,2,1,5,38.0,62.5,68.0
+Teichmann_Meyer_2019,6,0,2,3,1,32.5,55.0,62.5

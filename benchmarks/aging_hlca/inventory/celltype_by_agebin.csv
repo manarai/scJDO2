@@ -1,0 +1,456 @@
+annotation_level,cell_type,age_bin,n_cells,n_donors
+ann_level_3,AT1,30–44,1032,15
+ann_level_3,AT1,45–59,3452,27
+ann_level_3,AT1,<30,2383,13
+ann_level_3,AT1,≥60,1070,10
+ann_level_3,AT2,30–44,12733,17
+ann_level_3,AT2,45–59,29495,32
+ann_level_3,AT2,<30,11618,13
+ann_level_3,AT2,≥60,8559,11
+ann_level_3,B cell lineage,30–44,1271,22
+ann_level_3,B cell lineage,45–59,3877,35
+ann_level_3,B cell lineage,<30,581,18
+ann_level_3,B cell lineage,≥60,554,12
+ann_level_3,Basal,30–44,30022,22
+ann_level_3,Basal,45–59,27287,35
+ann_level_3,Basal,<30,14546,17
+ann_level_3,Basal,≥60,12713,14
+ann_level_3,Dendritic cells,30–44,3181,24
+ann_level_3,Dendritic cells,45–59,4813,37
+ann_level_3,Dendritic cells,<30,1244,18
+ann_level_3,Dendritic cells,≥60,1070,11
+ann_level_3,EC arterial,30–44,774,19
+ann_level_3,EC arterial,45–59,3549,34
+ann_level_3,EC arterial,<30,1631,14
+ann_level_3,EC arterial,≥60,1437,10
+ann_level_3,EC capillary,30–44,2345,15
+ann_level_3,EC capillary,45–59,14705,32
+ann_level_3,EC capillary,<30,3194,12
+ann_level_3,EC capillary,≥60,2961,11
+ann_level_3,EC venous,30–44,2155,22
+ann_level_3,EC venous,45–59,5685,35
+ann_level_3,EC venous,<30,3461,17
+ann_level_3,EC venous,≥60,1674,11
+ann_level_3,Fibroblasts,30–44,1723,20
+ann_level_3,Fibroblasts,45–59,11834,36
+ann_level_3,Fibroblasts,<30,4806,17
+ann_level_3,Fibroblasts,≥60,1997,12
+ann_level_3,Innate lymphoid cell NK,30–44,4783,17
+ann_level_3,Innate lymphoid cell NK,45–59,5666,32
+ann_level_3,Innate lymphoid cell NK,<30,1543,14
+ann_level_3,Innate lymphoid cell NK,≥60,4986,11
+ann_level_3,Lymphatic EC differentiating,30–44,43,8
+ann_level_3,Lymphatic EC differentiating,45–59,471,15
+ann_level_3,Lymphatic EC differentiating,<30,28,6
+ann_level_3,Lymphatic EC differentiating,≥60,24,7
+ann_level_3,Lymphatic EC mature,30–44,549,15
+ann_level_3,Lymphatic EC mature,45–59,1853,32
+ann_level_3,Lymphatic EC mature,<30,1001,13
+ann_level_3,Lymphatic EC mature,≥60,598,9
+ann_level_3,Lymphatic EC proliferating,30–44,6,3
+ann_level_3,Lymphatic EC proliferating,45–59,15,4
+ann_level_3,Lymphatic EC proliferating,<30,7,3
+ann_level_3,Macrophages,30–44,21198,23
+ann_level_3,Macrophages,45–59,43865,38
+ann_level_3,Macrophages,<30,38080,18
+ann_level_3,Macrophages,≥60,8692,13
+ann_level_3,Mast cells,30–44,439,23
+ann_level_3,Mast cells,45–59,3266,32
+ann_level_3,Mast cells,<30,432,15
+ann_level_3,Mast cells,≥60,2486,11
+ann_level_3,Monocytes,30–44,6340,23
+ann_level_3,Monocytes,45–59,12682,37
+ann_level_3,Monocytes,<30,3370,17
+ann_level_3,Monocytes,≥60,4135,11
+ann_level_3,Multiciliated lineage,30–44,10591,26
+ann_level_3,Multiciliated lineage,45–59,19641,39
+ann_level_3,Multiciliated lineage,<30,7413,19
+ann_level_3,Multiciliated lineage,≥60,2879,17
+ann_level_3,Myofibroblasts,30–44,34,10
+ann_level_3,Myofibroblasts,45–59,487,15
+ann_level_3,Myofibroblasts,<30,76,8
+ann_level_3,Myofibroblasts,≥60,119,8
+ann_level_3,None,30–44,437,20
+ann_level_3,None,45–59,2155,33
+ann_level_3,None,<30,277,14
+ann_level_3,None,≥60,417,12
+ann_level_3,Rare,30–44,245,14
+ann_level_3,Rare,45–59,375,21
+ann_level_3,Rare,<30,148,13
+ann_level_3,Rare,≥60,108,11
+ann_level_3,SM activated stress response,30–44,2,1
+ann_level_3,SM activated stress response,45–59,413,14
+ann_level_3,SM activated stress response,<30,15,3
+ann_level_3,SM activated stress response,≥60,126,3
+ann_level_3,Secretory,30–44,26252,26
+ann_level_3,Secretory,45–59,21378,41
+ann_level_3,Secretory,<30,27710,21
+ann_level_3,Secretory,≥60,2338,17
+ann_level_3,Smooth muscle FAM83D+,30–44,192,8
+ann_level_3,Smooth muscle FAM83D+,45–59,39,8
+ann_level_3,Smooth muscle FAM83D+,<30,77,5
+ann_level_3,Smooth muscle FAM83D+,≥60,27,2
+ann_level_3,Submucosal Secretory,30–44,1256,12
+ann_level_3,Submucosal Secretory,45–59,764,15
+ann_level_3,Submucosal Secretory,<30,2473,9
+ann_level_3,Submucosal Secretory,≥60,206,8
+ann_level_3,T cell lineage,30–44,8627,24
+ann_level_3,T cell lineage,45–59,27488,38
+ann_level_3,T cell lineage,<30,3801,19
+ann_level_3,T cell lineage,≥60,10941,14
+ann_level_4,AT2 proliferating,30–44,298,10
+ann_level_4,AT2 proliferating,45–59,333,21
+ann_level_4,AT2 proliferating,<30,221,11
+ann_level_4,AT2 proliferating,≥60,124,7
+ann_level_4,Adventitial fibroblasts,30–44,765,16
+ann_level_4,Adventitial fibroblasts,45–59,4926,34
+ann_level_4,Adventitial fibroblasts,<30,3714,11
+ann_level_4,Adventitial fibroblasts,≥60,907,11
+ann_level_4,Alveolar fibroblasts,30–44,286,11
+ann_level_4,Alveolar fibroblasts,45–59,3355,32
+ann_level_4,Alveolar fibroblasts,<30,804,10
+ann_level_4,Alveolar fibroblasts,≥60,737,11
+ann_level_4,Alveolar macrophages,30–44,13790,23
+ann_level_4,Alveolar macrophages,45–59,28301,34
+ann_level_4,Alveolar macrophages,<30,30081,15
+ann_level_4,Alveolar macrophages,≥60,6641,11
+ann_level_4,B cells,30–44,993,19
+ann_level_4,B cells,45–59,2769,29
+ann_level_4,B cells,<30,288,16
+ann_level_4,B cells,≥60,460,12
+ann_level_4,Basal resting,30–44,16406,17
+ann_level_4,Basal resting,45–59,12736,29
+ann_level_4,Basal resting,<30,6933,16
+ann_level_4,Basal resting,≥60,2854,14
+ann_level_4,CD4 T cells,30–44,4381,24
+ann_level_4,CD4 T cells,45–59,10882,33
+ann_level_4,CD4 T cells,<30,1653,18
+ann_level_4,CD4 T cells,≥60,4369,13
+ann_level_4,CD8 T cells,30–44,3958,20
+ann_level_4,CD8 T cells,45–59,16429,36
+ann_level_4,CD8 T cells,<30,2133,17
+ann_level_4,CD8 T cells,≥60,6552,12
+ann_level_4,Classical monocytes,30–44,4187,22
+ann_level_4,Classical monocytes,45–59,8137,37
+ann_level_4,Classical monocytes,<30,2258,16
+ann_level_4,Classical monocytes,≥60,3112,11
+ann_level_4,Club,30–44,15564,21
+ann_level_4,Club,45–59,8536,29
+ann_level_4,Club,<30,10766,17
+ann_level_4,Club,≥60,577,14
+ann_level_4,DC1,30–44,41,12
+ann_level_4,DC1,45–59,176,26
+ann_level_4,DC1,<30,18,6
+ann_level_4,DC1,≥60,87,9
+ann_level_4,DC2,30–44,2850,24
+ann_level_4,DC2,45–59,4245,37
+ann_level_4,DC2,<30,1167,18
+ann_level_4,DC2,≥60,860,11
+ann_level_4,Deuterosomal,30–44,367,19
+ann_level_4,Deuterosomal,45–59,406,26
+ann_level_4,Deuterosomal,<30,171,14
+ann_level_4,Deuterosomal,≥60,54,10
+ann_level_4,EC aerocyte capillary,30–44,861,10
+ann_level_4,EC aerocyte capillary,45–59,5016,21
+ann_level_4,EC aerocyte capillary,<30,622,8
+ann_level_4,EC aerocyte capillary,≥60,658,8
+ann_level_4,EC general capillary,30–44,1484,15
+ann_level_4,EC general capillary,45–59,9689,31
+ann_level_4,EC general capillary,<30,2572,12
+ann_level_4,EC general capillary,≥60,2303,11
+ann_level_4,EC venous pulmonary,30–44,522,15
+ann_level_4,EC venous pulmonary,45–59,2645,34
+ann_level_4,EC venous pulmonary,<30,1998,11
+ann_level_4,EC venous pulmonary,≥60,1253,11
+ann_level_4,EC venous systemic,30–44,1633,18
+ann_level_4,EC venous systemic,45–59,3040,30
+ann_level_4,EC venous systemic,<30,1463,16
+ann_level_4,EC venous systemic,≥60,421,11
+ann_level_4,Goblet,30–44,9954,20
+ann_level_4,Goblet,45–59,9283,33
+ann_level_4,Goblet,<30,16197,18
+ann_level_4,Goblet,≥60,968,12
+ann_level_4,Hillock-like,30–44,2264,11
+ann_level_4,Hillock-like,45–59,305,13
+ann_level_4,Hillock-like,<30,407,7
+ann_level_4,Hillock-like,≥60,1517,6
+ann_level_4,Interstitial macrophages,30–44,7408,22
+ann_level_4,Interstitial macrophages,45–59,15564,38
+ann_level_4,Interstitial macrophages,<30,7999,18
+ann_level_4,Interstitial macrophages,≥60,2051,12
+ann_level_4,Ionocyte,30–44,136,12
+ann_level_4,Ionocyte,45–59,272,17
+ann_level_4,Ionocyte,<30,96,11
+ann_level_4,Ionocyte,≥60,48,9
+ann_level_4,Migratory DCs,30–44,50,15
+ann_level_4,Migratory DCs,45–59,144,23
+ann_level_4,Migratory DCs,<30,35,8
+ann_level_4,Migratory DCs,≥60,83,7
+ann_level_4,Multiciliated,30–44,10224,26
+ann_level_4,Multiciliated,45–59,19235,39
+ann_level_4,Multiciliated,<30,7242,19
+ann_level_4,Multiciliated,≥60,2825,17
+ann_level_4,NK cells,30–44,4783,17
+ann_level_4,NK cells,45–59,5666,32
+ann_level_4,NK cells,<30,1543,14
+ann_level_4,NK cells,≥60,4986,11
+ann_level_4,Neuroendocrine,30–44,37,8
+ann_level_4,Neuroendocrine,45–59,66,15
+ann_level_4,Neuroendocrine,<30,12,7
+ann_level_4,Neuroendocrine,≥60,44,6
+ann_level_4,Non-classical monocytes,30–44,2153,20
+ann_level_4,Non-classical monocytes,45–59,4545,35
+ann_level_4,Non-classical monocytes,<30,1112,16
+ann_level_4,Non-classical monocytes,≥60,1023,11
+ann_level_4,None,30–44,15943,26
+ann_level_4,None,45–59,44862,40
+ann_level_4,None,<30,17324,20
+ann_level_4,None,≥60,14739,15
+ann_level_4,Peribronchial fibroblasts,30–44,336,15
+ann_level_4,Peribronchial fibroblasts,45–59,1002,24
+ann_level_4,Peribronchial fibroblasts,<30,146,12
+ann_level_4,Peribronchial fibroblasts,≥60,74,7
+ann_level_4,Pericytes,30–44,160,5
+ann_level_4,Pericytes,45–59,2502,22
+ann_level_4,Pericytes,<30,132,6
+ann_level_4,Pericytes,≥60,238,5
+ann_level_4,Plasma cells,30–44,278,16
+ann_level_4,Plasma cells,45–59,1108,32
+ann_level_4,Plasma cells,<30,293,13
+ann_level_4,Plasma cells,≥60,94,9
+ann_level_4,Plasmacytoid DCs,30–44,240,13
+ann_level_4,Plasmacytoid DCs,45–59,248,19
+ann_level_4,Plasmacytoid DCs,<30,24,6
+ann_level_4,Plasmacytoid DCs,≥60,40,6
+ann_level_4,SMG duct,30–44,235,12
+ann_level_4,SMG duct,45–59,496,14
+ann_level_4,SMG duct,<30,343,9
+ann_level_4,SMG duct,≥60,199,7
+ann_level_4,SMG mucous,30–44,210,6
+ann_level_4,SMG mucous,45–59,75,8
+ann_level_4,SMG mucous,<30,250,4
+ann_level_4,SMG mucous,≥60,2,1
+ann_level_4,SMG serous,30–44,811,7
+ann_level_4,SMG serous,45–59,193,9
+ann_level_4,SMG serous,<30,1880,3
+ann_level_4,SMG serous,≥60,5,3
+ann_level_4,Subpleural fibroblasts,30–44,176,5
+ann_level_4,Subpleural fibroblasts,45–59,49,6
+ann_level_4,Subpleural fibroblasts,<30,10,2
+ann_level_4,Subpleural fibroblasts,≥60,41,4
+ann_level_4,Suprabasal,30–44,11352,21
+ann_level_4,Suprabasal,45–59,14246,27
+ann_level_4,Suprabasal,<30,7206,15
+ann_level_4,Suprabasal,≥60,8342,13
+ann_level_4,T cells proliferating,30–44,288,12
+ann_level_4,T cells proliferating,45–59,177,21
+ann_level_4,T cells proliferating,<30,15,11
+ann_level_4,T cells proliferating,≥60,20,5
+ann_level_4,Transitional Club-AT2,30–44,734,21
+ann_level_4,Transitional Club-AT2,45–59,3559,35
+ann_level_4,Transitional Club-AT2,<30,747,18
+ann_level_4,Transitional Club-AT2,≥60,793,14
+ann_level_4,Tuft,30–44,72,10
+ann_level_4,Tuft,45–59,37,8
+ann_level_4,Tuft,<30,40,8
+ann_level_4,Tuft,≥60,16,4
+cell_type,B cell,30–44,993,19
+cell_type,B cell,45–59,2769,29
+cell_type,B cell,<30,288,16
+cell_type,B cell,≥60,460,12
+cell_type,CD1c-positive myeloid dendritic cell,30–44,2850,24
+cell_type,CD1c-positive myeloid dendritic cell,45–59,4245,37
+cell_type,CD1c-positive myeloid dendritic cell,<30,1167,18
+cell_type,CD1c-positive myeloid dendritic cell,≥60,860,11
+cell_type,"CD4-positive, alpha-beta T cell",30–44,4381,24
+cell_type,"CD4-positive, alpha-beta T cell",45–59,10882,33
+cell_type,"CD4-positive, alpha-beta T cell",<30,1653,18
+cell_type,"CD4-positive, alpha-beta T cell",≥60,4369,13
+cell_type,"CD8-positive, alpha-beta T cell",30–44,3958,20
+cell_type,"CD8-positive, alpha-beta T cell",45–59,16429,36
+cell_type,"CD8-positive, alpha-beta T cell",<30,2133,17
+cell_type,"CD8-positive, alpha-beta T cell",≥60,6552,12
+cell_type,T cell,30–44,288,12
+cell_type,T cell,45–59,177,21
+cell_type,T cell,<30,15,11
+cell_type,T cell,≥60,20,5
+cell_type,acinar cell,30–44,235,12
+cell_type,acinar cell,45–59,496,14
+cell_type,acinar cell,<30,343,9
+cell_type,acinar cell,≥60,199,7
+cell_type,alveolar adventitial fibroblast,30–44,765,16
+cell_type,alveolar adventitial fibroblast,45–59,4926,34
+cell_type,alveolar adventitial fibroblast,<30,3714,11
+cell_type,alveolar adventitial fibroblast,≥60,907,11
+cell_type,alveolar macrophage,30–44,13790,23
+cell_type,alveolar macrophage,45–59,28301,34
+cell_type,alveolar macrophage,<30,30081,15
+cell_type,alveolar macrophage,≥60,6641,11
+cell_type,alveolar type 1 fibroblast cell,30–44,286,11
+cell_type,alveolar type 1 fibroblast cell,45–59,3355,32
+cell_type,alveolar type 1 fibroblast cell,<30,804,10
+cell_type,alveolar type 1 fibroblast cell,≥60,737,11
+cell_type,bronchial goblet cell,30–44,31,11
+cell_type,bronchial goblet cell,45–59,1453,22
+cell_type,bronchial goblet cell,<30,78,11
+cell_type,bronchial goblet cell,≥60,108,10
+cell_type,bronchus fibroblast of lung,30–44,336,15
+cell_type,bronchus fibroblast of lung,45–59,1002,24
+cell_type,bronchus fibroblast of lung,<30,146,12
+cell_type,bronchus fibroblast of lung,≥60,74,7
+cell_type,brush cell of tracheobronchial tree,30–44,72,10
+cell_type,brush cell of tracheobronchial tree,45–59,37,8
+cell_type,brush cell of tracheobronchial tree,<30,40,8
+cell_type,brush cell of tracheobronchial tree,≥60,16,4
+cell_type,capillary endothelial cell,30–44,2345,15
+cell_type,capillary endothelial cell,45–59,14705,32
+cell_type,capillary endothelial cell,<30,3194,12
+cell_type,capillary endothelial cell,≥60,2961,11
+cell_type,classical monocyte,30–44,4187,22
+cell_type,classical monocyte,45–59,8137,37
+cell_type,classical monocyte,<30,2258,16
+cell_type,classical monocyte,≥60,3112,11
+cell_type,club cell,30–44,15564,21
+cell_type,club cell,45–59,8536,29
+cell_type,club cell,<30,10766,17
+cell_type,club cell,≥60,577,14
+cell_type,conventional dendritic cell,30–44,41,12
+cell_type,conventional dendritic cell,45–59,176,26
+cell_type,conventional dendritic cell,<30,18,6
+cell_type,conventional dendritic cell,≥60,87,9
+cell_type,dendritic cell,30–44,50,15
+cell_type,dendritic cell,45–59,144,23
+cell_type,dendritic cell,<30,35,8
+cell_type,dendritic cell,≥60,83,7
+cell_type,elicited macrophage,30–44,6759,22
+cell_type,elicited macrophage,45–59,14037,35
+cell_type,elicited macrophage,<30,5647,18
+cell_type,elicited macrophage,≥60,1774,12
+cell_type,endothelial cell of lymphatic vessel,30–44,598,16
+cell_type,endothelial cell of lymphatic vessel,45–59,2339,32
+cell_type,endothelial cell of lymphatic vessel,<30,1036,13
+cell_type,endothelial cell of lymphatic vessel,≥60,622,10
+cell_type,epithelial cell of lower respiratory tract,30–44,519,21
+cell_type,epithelial cell of lower respiratory tract,45–59,2688,35
+cell_type,epithelial cell of lower respiratory tract,<30,483,18
+cell_type,epithelial cell of lower respiratory tract,≥60,703,14
+cell_type,fibroblast,30–44,176,5
+cell_type,fibroblast,45–59,49,6
+cell_type,fibroblast,<30,10,2
+cell_type,fibroblast,≥60,41,4
+cell_type,hematopoietic stem cell,30–44,39,6
+cell_type,hematopoietic stem cell,45–59,10,9
+cell_type,hematopoietic stem cell,<30,4,4
+cell_type,hematopoietic stem cell,≥60,7,3
+cell_type,ionocyte,30–44,136,12
+cell_type,ionocyte,45–59,272,17
+cell_type,ionocyte,<30,96,11
+cell_type,ionocyte,≥60,48,9
+cell_type,lung macrophage,30–44,649,18
+cell_type,lung macrophage,45–59,1527,35
+cell_type,lung macrophage,<30,2352,14
+cell_type,lung macrophage,≥60,277,11
+cell_type,lung pericyte,30–44,160,5
+cell_type,lung pericyte,45–59,2502,22
+cell_type,lung pericyte,<30,132,6
+cell_type,lung pericyte,≥60,238,5
+cell_type,mast cell,30–44,439,23
+cell_type,mast cell,45–59,3266,32
+cell_type,mast cell,<30,432,15
+cell_type,mast cell,≥60,2486,11
+cell_type,mesothelial cell,30–44,27,6
+cell_type,mesothelial cell,45–59,162,10
+cell_type,mesothelial cell,<30,3,2
+cell_type,mesothelial cell,≥60,38,3
+cell_type,mucus secreting cell,30–44,210,6
+cell_type,mucus secreting cell,45–59,75,8
+cell_type,mucus secreting cell,<30,250,4
+cell_type,mucus secreting cell,≥60,2,1
+cell_type,multiciliated columnar cell of tracheobronchial tree,30–44,9510,26
+cell_type,multiciliated columnar cell of tracheobronchial tree,45–59,15630,39
+cell_type,multiciliated columnar cell of tracheobronchial tree,<30,6697,19
+cell_type,multiciliated columnar cell of tracheobronchial tree,≥60,2821,17
+cell_type,multiciliated epithelial cell,30–44,1081,19
+cell_type,multiciliated epithelial cell,45–59,4011,27
+cell_type,multiciliated epithelial cell,<30,716,15
+cell_type,multiciliated epithelial cell,≥60,58,11
+cell_type,myofibroblast cell,30–44,34,10
+cell_type,myofibroblast cell,45–59,487,15
+cell_type,myofibroblast cell,<30,76,8
+cell_type,myofibroblast cell,≥60,119,8
+cell_type,nasal mucosa goblet cell,30–44,9529,19
+cell_type,nasal mucosa goblet cell,45–59,7815,27
+cell_type,nasal mucosa goblet cell,<30,15566,16
+cell_type,nasal mucosa goblet cell,≥60,854,12
+cell_type,natural killer cell,30–44,4783,17
+cell_type,natural killer cell,45–59,5666,32
+cell_type,natural killer cell,<30,1543,14
+cell_type,natural killer cell,≥60,4986,11
+cell_type,non-classical monocyte,30–44,2153,20
+cell_type,non-classical monocyte,45–59,4545,35
+cell_type,non-classical monocyte,<30,1112,16
+cell_type,non-classical monocyte,≥60,1023,11
+cell_type,plasma cell,30–44,278,16
+cell_type,plasma cell,45–59,1108,32
+cell_type,plasma cell,<30,293,13
+cell_type,plasma cell,≥60,94,9
+cell_type,plasmacytoid dendritic cell,30–44,240,13
+cell_type,plasmacytoid dendritic cell,45–59,248,19
+cell_type,plasmacytoid dendritic cell,<30,24,6
+cell_type,plasmacytoid dendritic cell,≥60,40,6
+cell_type,pulmonary alveolar epithelial cell,30–44,215,11
+cell_type,pulmonary alveolar epithelial cell,45–59,871,24
+cell_type,pulmonary alveolar epithelial cell,<30,264,12
+cell_type,pulmonary alveolar epithelial cell,≥60,90,10
+cell_type,pulmonary alveolar type 1 cell,30–44,1032,15
+cell_type,pulmonary alveolar type 1 cell,45–59,3452,27
+cell_type,pulmonary alveolar type 1 cell,<30,2383,13
+cell_type,pulmonary alveolar type 1 cell,≥60,1070,10
+cell_type,pulmonary alveolar type 2 cell,30–44,12733,17
+cell_type,pulmonary alveolar type 2 cell,45–59,29495,32
+cell_type,pulmonary alveolar type 2 cell,<30,11618,13
+cell_type,pulmonary alveolar type 2 cell,≥60,8559,11
+cell_type,pulmonary artery endothelial cell,30–44,774,19
+cell_type,pulmonary artery endothelial cell,45–59,3549,34
+cell_type,pulmonary artery endothelial cell,<30,1631,14
+cell_type,pulmonary artery endothelial cell,≥60,1437,10
+cell_type,pulmonary neuroendocrine cell,30–44,37,8
+cell_type,pulmonary neuroendocrine cell,45–59,66,15
+cell_type,pulmonary neuroendocrine cell,<30,12,7
+cell_type,pulmonary neuroendocrine cell,≥60,44,6
+cell_type,respiratory basal cell,30–44,27758,22
+cell_type,respiratory basal cell,45–59,26982,34
+cell_type,respiratory basal cell,<30,14139,17
+cell_type,respiratory basal cell,≥60,11196,14
+cell_type,respiratory tract hillock cell,30–44,2264,11
+cell_type,respiratory tract hillock cell,45–59,305,13
+cell_type,respiratory tract hillock cell,<30,407,7
+cell_type,respiratory tract hillock cell,≥60,1517,6
+cell_type,serous secreting cell,30–44,69,2
+cell_type,serous secreting cell,45–59,5,4
+cell_type,serous secreting cell,<30,1397,2
+cell_type,serous secreting cell,≥60,1,1
+cell_type,smooth muscle cell,30–44,2,1
+cell_type,smooth muscle cell,45–59,413,14
+cell_type,smooth muscle cell,<30,15,3
+cell_type,smooth muscle cell,≥60,126,3
+cell_type,stromal cell,30–44,192,8
+cell_type,stromal cell,45–59,39,8
+cell_type,stromal cell,<30,77,5
+cell_type,stromal cell,≥60,27,2
+cell_type,tracheobronchial goblet cell,30–44,394,10
+cell_type,tracheobronchial goblet cell,45–59,15,10
+cell_type,tracheobronchial goblet cell,<30,553,7
+cell_type,tracheobronchial goblet cell,≥60,6,5
+cell_type,tracheobronchial serous cell,30–44,742,7
+cell_type,tracheobronchial serous cell,45–59,188,8
+cell_type,tracheobronchial serous cell,<30,483,3
+cell_type,tracheobronchial serous cell,≥60,4,3
+cell_type,tracheobronchial smooth muscle cell,30–44,371,18
+cell_type,tracheobronchial smooth muscle cell,45–59,1983,31
+cell_type,tracheobronchial smooth muscle cell,<30,270,13
+cell_type,tracheobronchial smooth muscle cell,≥60,372,12
+cell_type,vein endothelial cell,30–44,2155,22
+cell_type,vein endothelial cell,45–59,5685,35
+cell_type,vein endothelial cell,<30,3461,17
+cell_type,vein endothelial cell,≥60,1674,11
