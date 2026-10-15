@@ -59,7 +59,7 @@ def file_record(path: Path, source_url: str | None = None) -> dict[str, Any]:
 
 
 def download(url: str, destination: Path, expected_bytes: int) -> None:
-    """Resume a public asset with bounded retries and observable progress."""
+    """Resume a public asset in bounded byte ranges with exact size checks."""
     if destination.exists() and destination.stat().st_size == expected_bytes:
         print(f"reusing verified {destination.name} ({expected_bytes} bytes)", flush=True)
         return
@@ -70,34 +70,44 @@ def download(url: str, destination: Path, expected_bytes: int) -> None:
     legacy_parts = sorted(destination.parent.glob(destination.name + ".*.part"), key=lambda path: path.stat().st_size, reverse=True)
     if not partial.exists() and legacy_parts:
         legacy_parts[0].replace(partial)
-    for attempt in range(1, 7):
+    chunk_bytes = 64 * 1024 * 1024
+    while True:
         current = partial.stat().st_size if partial.exists() else 0
-        if current > expected_bytes:
-            raise RuntimeError(f"partial {partial} exceeds expected Zenodo size")
-        print(
-            f"download attempt {attempt}/6: {destination.name}; resuming at {current}/{expected_bytes} bytes",
-            flush=True,
-        )
-        result = subprocess.run(
-            [
-                "curl", "--fail", "--location", "--continue-at", "-", "--output", str(partial),
-                "--retry", "3", "--retry-delay", "5", "--retry-all-errors",
-                "--speed-limit", "1024", "--speed-time", "120", "--progress-bar", url,
-            ],
-            check=False,
-        )
-        current = partial.stat().st_size if partial.exists() else 0
-        if result.returncode == 0 and current == expected_bytes:
+        if current == expected_bytes:
             partial.replace(destination)
             print(f"completed {destination.name} ({expected_bytes} bytes)", flush=True)
             return
         if current > expected_bytes:
-            raise RuntimeError(f"downloaded {current} bytes for {destination.name}, expected {expected_bytes}")
-        print(
-            f"attempt {attempt}/6 ended with curl={result.returncode}; retained {current}/{expected_bytes} bytes",
-            flush=True,
-        )
-    raise RuntimeError(f"unable to complete {destination.name} after resumable retries")
+            raise RuntimeError(f"partial {partial} exceeds expected Zenodo size")
+        end = min(current + chunk_bytes - 1, expected_bytes - 1)
+        expected_chunk = end - current + 1
+        temporary = destination.with_suffix(destination.suffix + f".{current}-{end}.part")
+        temporary.unlink(missing_ok=True)
+        for attempt in range(1, 4):
+            print(
+                f"range {current}-{end} ({expected_chunk} bytes), attempt {attempt}/3: {destination.name}",
+                flush=True,
+            )
+            result = subprocess.run(
+                [
+                    "curl", "--fail", "--location", "--range", f"{current}-{end}",
+                    "--connect-timeout", "30", "--max-time", "300", "--retry", "2",
+                    "--retry-delay", "5", "--retry-all-errors", "--speed-limit", "1024",
+                    "--speed-time", "90", "--output", str(temporary), url,
+                ],
+                check=False,
+            )
+            size = temporary.stat().st_size if temporary.exists() else 0
+            if result.returncode == 0 and size == expected_chunk:
+                with partial.open("ab") as output, temporary.open("rb") as input_handle:
+                    shutil.copyfileobj(input_handle, output, length=8 * 1024 * 1024)
+                temporary.unlink(missing_ok=True)
+                print(f"retained {partial.stat().st_size}/{expected_bytes} bytes for {destination.name}", flush=True)
+                break
+            temporary.unlink(missing_ok=True)
+            print(f"range attempt ended curl={result.returncode}, got {size}/{expected_chunk} bytes", flush=True)
+        else:
+            raise RuntimeError(f"unable to retrieve byte range {current}-{end} for {destination.name}")
 
 
 def _jsonable(value: Any) -> Any:
