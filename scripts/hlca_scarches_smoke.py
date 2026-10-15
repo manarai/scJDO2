@@ -16,7 +16,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import anndata as ad
+import h5py
 import numpy as np
+from scipy import sparse
 import scarches as sca
 import scvi
 import torch
@@ -42,6 +44,31 @@ def select_study(obs):
 def max_rss_bytes() -> int:
     value = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
     return value if platform.system() == "Darwin" else value * 1024
+
+
+def read_raw_rows(path: Path, selected: np.ndarray, n_vars: int) -> sparse.csr_matrix:
+    """Read selected rows from an H5AD CSR matrix without AnnData backed slicing.
+
+    AnnData 0.11 on Python 3.13 delegates sparse view selection to an API that
+    the bundled backed CSR class does not implement. Reading the documented
+    HDF5 CSR triplets directly preserves the same selected rows and raw counts.
+    """
+    with h5py.File(path, "r") as handle:
+        group = handle["raw"]["X"]
+        indptr = np.asarray(group["indptr"][:], dtype=np.int64)
+        data_source = group["data"]
+        index_source = group["indices"]
+        data_parts: list[np.ndarray] = []
+        index_parts: list[np.ndarray] = []
+        query_indptr = np.zeros(len(selected) + 1, dtype=np.int64)
+        for output_row, input_row in enumerate(selected):
+            start, end = int(indptr[input_row]), int(indptr[input_row + 1])
+            data_parts.append(np.asarray(data_source[start:end]))
+            index_parts.append(np.asarray(index_source[start:end], dtype=np.int64))
+            query_indptr[output_row + 1] = query_indptr[output_row] + end - start
+    data = np.concatenate(data_parts) if data_parts else np.array([], dtype=np.float32)
+    indices = np.concatenate(index_parts) if index_parts else np.array([], dtype=np.int64)
+    return sparse.csr_matrix((data, indices, query_indptr), shape=(len(selected), n_vars))
 
 
 def frozen_snapshot(model) -> dict[str, torch.Tensor]:
@@ -92,12 +119,11 @@ def main() -> int:
         raise RuntimeError(f"largest HLCA study {study!r} has only {len(candidates)} cells; requires {N_CELLS}")
     rng = np.random.default_rng(SEED)
     selected = np.sort(rng.choice(candidates, size=N_CELLS, replace=False))
-    subset = source[selected].to_memory()
-    raw = subset.raw.to_adata()
-    raw.obs = subset.obs.copy()
-    raw.var = subset.raw.var.copy()
-    query = raw
+    query_obs = source.obs.iloc[selected].copy()
+    query_var = source.raw.var.copy()
+    raw_x = read_raw_rows(DATA, selected, source.raw.n_vars)
     source.file.close()
+    query = ad.AnnData(X=raw_x, obs=query_obs, var=query_var)
     query.obs["dataset"] = "H01_smoke_query"
     query.obs["scanvi_label"] = "unlabeled"
 
