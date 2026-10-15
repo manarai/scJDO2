@@ -77,3 +77,50 @@ def test_energy_transect_renders_stored_energy_surface(tmp_path):
     assert "energy transect" in fig.axes[0].get_title()
     assert any("ΔE" in t.get_text() for t in fig.axes[0].texts)
     plt.close(fig)
+
+
+def test_aging_vectors_spans_a_decade_and_labels_stiffness_ratio(tmp_path):
+    results = pd.DataFrame({
+        "tissue": ["lung"], "cell_type": ["A"], "mode": ["mixed"],
+        "young_median_abs_lambda": [321.7], "old_median_abs_lambda": [325.1],
+        "young_anisotropy": [46.7], "old_anisotropy": [46.6],
+    })
+    fig = plot.aging_vectors(results, out=tmp_path / "vectors_decade")
+    ax = fig.axes[0]
+    assert ax.get_xlim()[1] / ax.get_xlim()[0] >= 10 - 1e-9
+    assert ax.get_ylim()[1] / ax.get_ylim()[0] >= 10 - 1e-9
+    assert any("1.01×" in text.get_text() for text in ax.texts)
+    plt.close(fig)
+
+
+def test_energy_transect_marks_only_a_strict_interior_saddle(tmp_path):
+    a = _toy_adata()
+    # Make the stored leading direction the x-axis, between the two A floors.
+    J = np.tile(np.diag([-0.25, -0.8]).astype(np.float32), (a.n_obs, 1, 1))
+    a.uns["scjdo2"]["J"] = J
+    a.uns["scjdo2"]["J_latent"] = J
+
+    def double_well(z):
+        x = np.asarray(z)[:, 0]
+        return (x * (x - 0.45)) ** 2
+
+    fig = plot.energy_transect(a, "A", "B", double_well,
+                               use_rep="X_scVI_shared", out=tmp_path / "saddle")
+    labels = fig.axes[0].get_legend_handles_labels()[1]
+    assert "intervening saddle" in labels
+    assert any("barrier height" in text.get_text() for text in fig.axes[0].texts)
+    plt.close(fig)
+
+
+def test_energy_transect_omits_triangle_for_monotone_curve(tmp_path):
+    a = _toy_adata()
+
+    def monotone(z):
+        return np.asarray(z)[:, 0]
+
+    fig = plot.energy_transect(a, "A", "B", monotone,
+                               use_rep="X_scVI_shared", out=tmp_path / "monotone")
+    labels = fig.axes[0].get_legend_handles_labels()[1]
+    assert "intervening saddle" not in labels
+    assert any("no barrier along this transect" in text.get_text() for text in fig.axes[0].texts)
+    plt.close(fig)

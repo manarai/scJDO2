@@ -703,12 +703,23 @@ def aging_vectors(results: pd.DataFrame,
     if not tissues:
         raise ValueError("aging_vectors needs at least one tissue")
     colours = {"mixed": "#666666", "softening": "#378ADD", "stiffening": "#D85A30"}
+
+    def _decade_limits(values: np.ndarray) -> tuple[float, float]:
+        """Centre a positive log axis on the geometric mean with ≥1 decade span."""
+        vals = values[np.isfinite(values) & (values > 0)]
+        if not len(vals):
+            return 0.1, 1.0
+        centre = float(np.exp(np.mean(np.log(vals))))
+        half_span = max(0.5, float(np.max(np.abs(np.log10(vals / centre)))) + 0.04)
+        return centre * 10 ** (-half_span), centre * 10 ** half_span
+
     modes = sorted(work[colour_by].astype(str).dropna().unique())
     for i, mode in enumerate(modes):
         colours.setdefault(mode, plt.get_cmap("tab10")(i % 10))
     with style():
         fig, axs = plt.subplots(1, len(tissues), figsize=(5.3 * len(tissues), 4.6),
                                 squeeze=False, sharey=False)
+        fig.subplots_adjust(bottom=0.27, top=0.86)
         for ax, tissue in zip(axs[0], tissues):
             sub = work[work[style_by].astype(str) == tissue]
             for row in sub.itertuples(index=False):
@@ -726,13 +737,20 @@ def aging_vectors(results: pd.DataFrame,
                 ax.scatter([x1], [y1], s=22, color=colour, edgecolor="white",
                            linewidth=0.4, zorder=3)
                 ax.text(x1, y1, f" {d['cell_type']}", fontsize=6, va="center")
+                ax.text(np.sqrt(x0 * x1), np.sqrt(y0 * y1), f"{x1 / x0:.2f}×",
+                        fontsize=5.5, ha="center", va="bottom", color=colour,
+                        bbox=dict(boxstyle="round,pad=0.08", facecolor="white",
+                                  edgecolor="none", alpha=0.75))
+            xvals = sub[[f"young_{x_key}", f"old_{x_key}"]].to_numpy(float).ravel()
+            yvals = sub[[f"young_{y_key}", f"old_{y_key}"]].to_numpy(float).ravel()
             ax.set_xscale("log"); ax.set_yscale("log")
+            ax.set_xlim(*_decade_limits(xvals)); ax.set_ylim(*_decade_limits(yvals))
             ax.set_xlabel("overall stiffness (relative) → stiffer")
             ax.set_ylabel("anisotropy (soft axis / median)")
             ax.set_title(str(tissue))
             ax.grid(True, which="both", lw=0.25, color="0.88")
         fig.suptitle("Aging vectors: young → old by cell type", fontsize=10)
-        fig.text(0.5, 0.035,
+        fig.text(0.5, 0.095,
                  "2-D projection; descriptive modes were clustered on full coordinates.",
                  ha="center", fontsize=6, color="0.35")
         add_aging_footer(fig)
@@ -799,8 +817,11 @@ def energy_transect(adata: AnnData,
     young_E = float(np.asarray(energy_fn(z_y[None, :])).reshape(-1)[0])
     old_E = float(np.asarray(energy_fn(z_o[None, :])).reshape(-1)[0])
     lo, hi = sorted((0.0, old_t))
-    interior = (grid_t >= lo) & (grid_t <= hi)
-    saddle_idx = int(np.argmax(np.where(interior, curve, -np.inf)))
+    strictly_between = (grid_t > lo) & (grid_t < hi)
+    local_max = np.zeros_like(strictly_between, dtype=bool)
+    local_max[1:-1] = ((curve[1:-1] > curve[:-2]) & (curve[1:-1] > curve[2:]))
+    candidates = np.flatnonzero(strictly_between & local_max)
+    saddle_idx = int(candidates[np.argmax(curve[candidates])]) if len(candidates) else None
     old_pool = np.flatnonzero(target_o)
     old_dist = np.linalg.norm(z[old_pool] - z_o, axis=1)
     old_take = min(take, len(old_pool))
@@ -816,13 +837,16 @@ def energy_transect(adata: AnnData,
                        edgecolors="none", label=f"{age} projected cells")
         ax.scatter([0.0, old_t], [young_E, old_E], s=42,
                    color=["#378ADD", "#D85A30"], zorder=4, label="centroid floors")
-        ax.scatter([grid_t[saddle_idx]], [curve[saddle_idx]], marker="^", s=45,
-                   color="#888780", zorder=4, label="intervening saddle")
+        if saddle_idx is not None:
+            ax.scatter([grid_t[saddle_idx]], [curve[saddle_idx]], marker="^", s=45,
+                       color="#888780", zorder=4, label="intervening saddle")
         ax.axvline(0.0, color="#378ADD", lw=0.6, ls="--")
         ax.axvline(old_t, color="#D85A30", lw=0.6, ls="--")
         ax.text(0.0, young_E, f"  young λ={float(ev.max()):+.3g}", fontsize=7, va="bottom")
         ax.text(old_t, old_E, f"  old λ={float(old_ev.max()):+.3g}", fontsize=7, va="bottom")
-        ax.text(0.02, 0.96, f"ΔE(old − young) = {old_E - young_E:+.3g}\n"
+        barrier_text = (f"barrier height = {curve[saddle_idx] - young_E:+.3g}\n"
+                        if saddle_idx is not None else "no barrier along this transect\n")
+        ax.text(0.02, 0.96, barrier_text + f"ΔE(old − young) = {old_E - young_E:+.3g}\n"
                 "ΔE includes abundance in the learned energy",
                 transform=ax.transAxes, va="top", fontsize=7,
                 bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor="0.7"))
