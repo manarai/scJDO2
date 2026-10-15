@@ -198,9 +198,17 @@ def table(frame: pd.DataFrame, columns: list[str]) -> str:
     return "\n".join(lines)
 
 
-def median_value(series: pd.Series) -> str:
+def median_value(series: pd.Series, maximum_grid: float) -> str:
+    """Median respecting right-censored (> max) MDE values."""
+    censored = sum(str(x) == "> max" for x in series)
+    if censored >= (len(series) + 1) // 2:
+        return f">{maximum_grid:g}"
     numbers=[float(x) for x in series if str(x) != "> max"]
-    return f"{np.median(numbers):g}" if numbers else "> max"
+    return f"{np.median(numbers):g}" if numbers else f">{maximum_grid:g}"
+
+
+def fold_phrase(value: str) -> str:
+    return f">{value[1:]}×" if value.startswith(">") else f"×{value}"
 
 
 def write_result(mde_table: pd.DataFrame) -> None:
@@ -222,7 +230,10 @@ Plus a **null row** (no injection, `F = 1`, `D = 0`) for the baseline pass rate.
         for label,value in (("iso",row.null_pass_rate_iso),("stiff",row.null_pass_rate_stiff),("ant",row.null_pass_rate_ant)):
             if value > .20: high.append(f"{row.ann_level_3}/{label}={value:.2f}")
     text="# EXPLORATORY — hlca/HX02 power analysis\n\n## What ran\nReal H03 drift-subsample cells were used with synthetic, known-size injections only; no model was fitted. Each grid row rebuilt deterministic equal-count donor operators (`n_common=50`, 100 draws, 30-cell centroid) and used 50 seeded 80%-donor subsamples with 200 age permutations per target test.\n\n## Definitions\n"+definitions+"\n\n## MDE table\n"+table(mde_table,cols)+"\n\n"
-    text+=f"Across the 13 types, the median MDE was ×{median_value(mde_table.mde_single_axis_F)} for single-axis softening, ×{median_value(mde_table.mde_uniform_F)} for uniform softening, and {median_value(mde_table.mde_drift_D)} σ for drift along the soft axis, over ages 10–76.\n\n"
+    single = median_value(mde_table.mde_single_axis_F, max(SIZES["single_axis"]))
+    uniform = median_value(mde_table.mde_uniform_F, max(SIZES["uniform"]))
+    drift = median_value(mde_table.mde_drift_D, max(SIZES["drift"]))
+    text+=f"Across the 13 types, the median MDE was {fold_phrase(single)} for single-axis softening, {fold_phrase(uniform)} for uniform softening, and {drift} σ for drift along the soft axis, over ages 10–76.\n\n"
     text+="## Null rows\n"+table(mde_table,null_cols)+"\n\n"
     text+=("Null pass rates exceeding 0.20: "+"; ".join(high)+".\n" if high else "No null pass rate exceeded 0.20.\n")
     RESULT.write_text(text)
@@ -255,7 +266,7 @@ def run(dry_run: bool) -> dict[str, object]:
         one=grid[grid.ann_level_3==cell_type]
         mde_rows.append({"ann_level_3":cell_type,"mde_single_axis_F":mde(one[one.kind=="single_axis"]),"mde_uniform_F":mde(one[one.kind=="uniform"]),"mde_drift_D":mde(one[one.kind=="drift"]),"null_pass_rate_iso":float(one[(one.kind=="single_axis")&one.is_null].power.iloc[0]),"null_pass_rate_stiff":float(one[(one.kind=="uniform")&one.is_null].power.iloc[0]),"null_pass_rate_ant":float(one[(one.kind=="drift")&one.is_null].power.iloc[0])})
     mde_table=pd.DataFrame(mde_rows); mde_table.to_csv(MDE,index=False); figure_paths=plot(grid,mde_table,types); write_result(mde_table)
-    out={**plan,"n_grid_rows":len(grid),"n_figures":len(figure_paths)//2,"median_mde_single_axis_F":median_value(mde_table.mde_single_axis_F),"median_mde_uniform_F":median_value(mde_table.mde_uniform_F),"median_mde_drift_D":median_value(mde_table.mde_drift_D),"n_types_mde_beyond_grid":int((mde_table[["mde_single_axis_F","mde_uniform_F","mde_drift_D"]]=="> max").to_numpy().sum()),"max_null_pass_rate":float(mde_table[["null_pass_rate_iso","null_pass_rate_stiff","null_pass_rate_ant"]].to_numpy(float).max()),"mde_by_type":mde_table.set_index("ann_level_3").to_dict(orient="index"),"figure_paths":[str(p.relative_to(ROOT)) for p in figure_paths]}
+    out={**plan,"n_grid_rows":len(grid),"n_figures":len(figure_paths)//2,"median_mde_single_axis_F":median_value(mde_table.mde_single_axis_F,max(SIZES["single_axis"])),"median_mde_uniform_F":median_value(mde_table.mde_uniform_F,max(SIZES["uniform"])),"median_mde_drift_D":median_value(mde_table.mde_drift_D,max(SIZES["drift"])),"n_types_mde_beyond_grid":int((mde_table[["mde_single_axis_F","mde_uniform_F","mde_drift_D"]]=="> max").to_numpy().sum()),"max_null_pass_rate":float(mde_table[["null_pass_rate_iso","null_pass_rate_stiff","null_pass_rate_ant"]].to_numpy(float).max()),"mde_by_type":mde_table.set_index("ann_level_3").to_dict(orient="index"),"figure_paths":[str(p.relative_to(ROOT)) for p in figure_paths]}
     METRICS.write_text(json.dumps(out,indent=2,default=str)+"\n"); print(json.dumps(out,indent=2,default=str,sort_keys=True)); return out
 
 
