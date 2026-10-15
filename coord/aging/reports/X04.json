@@ -1,0 +1,108 @@
+{
+  "task": "aging/X04",
+  "status": "blocked",
+  "started_utc": "2026-10-15T00:29:40Z",
+  "finished_utc": "2026-10-15T00:46:11Z",
+  "compute": {
+    "cpu_hours": 0.29,
+    "gpu_hours": 0.0,
+    "hardware": "MacBook Pro (Apple M3 Max); CPU-only scVI and energy-drift execution"
+  },
+  "metrics": {
+    "x04_verdict": null,
+    "n_hidden_softening": null,
+    "n_hidden_displacement": null,
+    "basin_types_flagged": null,
+    "joint_stiff_ratio_by_type": null,
+    "shared_stiff_ratio_by_type": null,
+    "seed_range_max_stiff_ratio": null,
+    "shared_seed_ref_weights_max_abs_change": null,
+    "sym_max_all_fits": 2.7401372904023447e-07
+  },
+  "artifacts": [
+    {
+      "path": "scripts/x04_common.py",
+      "bytes": 5953,
+      "sha256": "286dccbc3beee599228d00f4f50f5f082430a9aa46b8c601ed7f67805f3aa4fc",
+      "committed": true,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue all --seed 0"
+    },
+    {
+      "path": "scripts/x04_joint_fit.py",
+      "bytes": 2665,
+      "sha256": "eef0ba3efccf3451c785cc048df0d9e4a668b41d77230127a8bf1014980c9623",
+      "committed": true,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue all --seed 0"
+    },
+    {
+      "path": "scripts/x04_shared_seeds.py",
+      "bytes": 3789,
+      "sha256": "2e73998e43b1abc8f3c0be2a29fa4e9c8bbe71072758e5943529791b96dcb7bf",
+      "committed": true,
+      "regenerate": "python scripts/x04_shared_seeds.py --tissue all --seed 1"
+    },
+    {
+      "path": "scripts/x04_compare.py",
+      "bytes": 12637,
+      "sha256": "897b95a1866a858e11e6902fabe8ce6d1f265d9db6260ae4529d35dde356fd0a",
+      "committed": true,
+      "regenerate": "python scripts/x04_compare.py"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_joint_s0.h5ad",
+      "bytes": 33970396,
+      "sha256": "c6273219f17793e406fc80fd09e367b4d2d125fcc4df4cc30c8cd788a9d77c59",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue lung --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_joint_s1.h5ad",
+      "bytes": 33970396,
+      "sha256": "58d70182a585181332f5aa893b713010d52ab35b8d1fcb2677e9421bdb652bd3",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue lung --seed 1"
+    },
+    {
+      "path": "benchmarks/aging/x04/lung_joint_s2.h5ad",
+      "bytes": 33970396,
+      "sha256": "ec935532bbe7d6a1d84d3ac34dc4ce41e8451ea5cb1919047da14a167736dc94",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue lung --seed 2"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_joint_s0.h5ad",
+      "bytes": 128310468,
+      "sha256": "60c4dfe9d224df9a83323fea6a464c38563237e81296d787368ead09fe6d10dd",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue marrow --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_joint_s1.h5ad",
+      "bytes": 128310468,
+      "sha256": "669e17e67b59bb32d76db1aa4f97f4f86339fcf8550d0b4ba3f3b9c3a3103d3a",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue marrow --seed 1"
+    },
+    {
+      "path": "benchmarks/aging/x04/marrow_joint_s2.h5ad",
+      "bytes": 128310468,
+      "sha256": "6eaecb9e19dc9998e541bc60bb22597276e1fbde8929238b06df1e74acdd27fa",
+      "committed": false,
+      "regenerate": "python scripts/x04_joint_fit.py --tissue marrow --seed 2"
+    }
+  ],
+  "deviations": [
+    "Blocked before any X04 shared-query fit, comparison, figures, or verdict: the current scvi/lightning runtime rejects A02's `device=\"cpu\"` query argument with a CPU `devices` type error. No frozen analysis setting was changed."
+  ],
+  "questions": [
+    "May the X04 shared-query implementation replace the runtime-incompatible `device=\"cpu\"` argument with the current scvi CPU-equivalent `devices=1`, retaining accelerator=\"cpu\" and all frozen model, mapping, and training settings?"
+  ],
+  "observations": [
+    "All six joint scVI+drift fits completed for seeds 0\u20132; their maximum symmetry residual was 2.740e-07, below 1e-4.",
+    "The seed-1 lung young-reference model stopped normally by the locked early-stopping criterion before the query-construction error.",
+    "The failure occurred inside SCVI.load_query_data before query training, frozen-reference auditing, drift fitting, or any per-type quantity was computed."
+  ],
+  "suggestions": [
+    "Resolve the runtime API incompatibility explicitly before resuming; then rerun only the failed shared seed-1 step and continue the prescribed remaining seeds."
+  ]
+}
