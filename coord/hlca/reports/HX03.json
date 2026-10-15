@@ -1,0 +1,301 @@
+{
+  "task": "hlca/HX03",
+  "status": "done",
+  "started_utc": "2026-10-15T22:51:21Z",
+  "finished_utc": "2026-10-15T22:53:13Z",
+  "artifacts": [
+    {
+      "path": "scripts/hlca_softaxis.py",
+      "bytes": 25317,
+      "sha256": "087c254de022f0806cee79eabdac31e36d3ba0a39e615f914a9a0de5a38ba556",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/softaxis/RESULT_HX03.md",
+      "bytes": 5297,
+      "sha256": "1004e9535c6d280993adde1785c41395c1862377539f8676f2b39ccf276daef9",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/softaxis/input_checksums.json",
+      "bytes": 1006,
+      "sha256": "115e8dde4adf8de797214f5dbfb7db4ae81702ec05e084eec61a52890be8b35d",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/softaxis/mde.csv",
+      "bytes": 616,
+      "sha256": "44c56fdebd2cf9d64647bd10d764b053675d2ee90ffa5c3769a87e2c8cbae001",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/softaxis/metrics.json",
+      "bytes": 2734,
+      "sha256": "d44877c1a4992506b89f967dc470471bd768d1e2e2a167eb2a39ec7108cd5e49",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/softaxis/power_grid.csv",
+      "bytes": 4085,
+      "sha256": "f39757c1b404f7a3fb136e00aedceaa89c4c09347a27b3bcc176151cf79fcacc",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/softaxis/real.csv",
+      "bytes": 4060,
+      "sha256": "cc43fcb5d73d88b4cf74f8928e76cbc502f0ed4f60ae46d3352d2a1e2fb8d9bc",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging_hlca/softaxis/summary.csv",
+      "bytes": 242,
+      "sha256": "6db5081c3ee779e365d8de7ad475c0ab73f52472c241a3602530468bc02f26b6",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_at2.pdf",
+      "bytes": 38919,
+      "sha256": "4845fac1cdab8b92def0279ab8bef18280ac580c25c55923a6fc31b7a707280a",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_at2.png",
+      "bytes": 103383,
+      "sha256": "5f2367f5f495d1844792cbb80a998706ac68688af912e6a1e8b222c3567f9198",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_basal.pdf",
+      "bytes": 38671,
+      "sha256": "880d0b8956b9d3ceccf79bb691dc48f2130d8e2a3bbe49a2daaf60ae9627e06d",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_basal.png",
+      "bytes": 107826,
+      "sha256": "d54a342689a2d974de7f2df98bb9df8e3568e10f33e8d94f928f53085d324a22",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_dendritic_cells.pdf",
+      "bytes": 41622,
+      "sha256": "ca3b72b7aa46a242d8010d567d261863ff2fa34d89af921759c837ff519673ea",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_dendritic_cells.png",
+      "bytes": 123584,
+      "sha256": "ae50ce49bb756fdc74f44a2c4cd54e4714599ebbee9677743843c41375715e52",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_ec_arterial.pdf",
+      "bytes": 38018,
+      "sha256": "bf4eb5e776ca45f8075c80258ba8193d13ff29f63c012315a3dc8b92d3421e9a",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_ec_arterial.png",
+      "bytes": 91967,
+      "sha256": "74aea41afc81b6ac6d7788af99bfc9e4371d36ed553783c590c46cfa73806032",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_ec_capillary.pdf",
+      "bytes": 37278,
+      "sha256": "abd1e6635229e25efd2e26ed9c58f86b997855daf240342dd18800ef60e44357",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_ec_capillary.png",
+      "bytes": 97383,
+      "sha256": "4e6b900bc7f5730e3a2e085c05b615a9d555f1d1e03401206ce5f69956cc0672",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_ec_venous.pdf",
+      "bytes": 39820,
+      "sha256": "c8edced3331754e1f9cb946d9e4cd3dcb2b94c91a9929b32ddb6cec6871d9cac",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_ec_venous.png",
+      "bytes": 105151,
+      "sha256": "abb5fadcc0ce03ef40cf2332d5befcd579f3dedb0b74103eb6e40f0211991e4e",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_fibroblasts.pdf",
+      "bytes": 38943,
+      "sha256": "92a47d4f23eab64f4b17da2f0aa5cd3b66bbdf99f985c8d59399baf17e7fcae3",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_fibroblasts.png",
+      "bytes": 103179,
+      "sha256": "d304a7d3fdfa522521039e3901ab40c81331ee5602930b3be5ac19d5c1572a93",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_innate_lymphoid_cell_nk.pdf",
+      "bytes": 39211,
+      "sha256": "498fe551e70896c9601f48e804a14ec74660270c8c85b4baecb0b0e27046033a",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_innate_lymphoid_cell_nk.png",
+      "bytes": 93338,
+      "sha256": "e33ed02e25fd0e49f444406fa13ee57db27f9b4495cc2efa0fa996c94978e83c",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_macrophages.pdf",
+      "bytes": 40825,
+      "sha256": "620bdc73b2015aa17b7df30ed6cf585a82e192fe9e26dcfc4b9195daf778340b",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_macrophages.png",
+      "bytes": 122647,
+      "sha256": "237cd406f6fec8ff0b50d87275d2b586c030a991c2cfdfbbbd3ea22fc1194501",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_monocytes.pdf",
+      "bytes": 41753,
+      "sha256": "18da2f79dc28e544a4ceff920961599f032dba6f1484bf0a13c631120dae6502",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_monocytes.png",
+      "bytes": 123691,
+      "sha256": "b5dea38aa3dfb0e69077f073d13d94f0c78a518fb01e48113b2a3f83f3c5cb68",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_multiciliated_lineage.pdf",
+      "bytes": 43087,
+      "sha256": "dcbde5f581fecc4bd797a52a7cc4d001b265f46d855e8b1563ddc5b883540ec3",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_multiciliated_lineage.png",
+      "bytes": 137487,
+      "sha256": "5971143473f6feed0ecf677d25d82e780dcb4114c1e1a820a3d07419dade4d2f",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_secretory.pdf",
+      "bytes": 42295,
+      "sha256": "6b3c4a1e57ac550ccb7c55bfc1577941fa329ad6d209e24e38fe492d42626393",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_secretory.png",
+      "bytes": 129792,
+      "sha256": "f8a72983a3fc5ce5ae460a7a6bfc39a962a9bf4745738c5b1e3601c0b4bc84d8",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_t_cell_lineage.pdf",
+      "bytes": 42234,
+      "sha256": "abeaffa9a79ec084a25a528f053605ff6a99cc89256c4c736566c96b14c7249e",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/kappa_t_cell_lineage.png",
+      "bytes": 124564,
+      "sha256": "e6f4bf90d6419dc9e89993b096c5f1f8bbafaf352af37feb5b3754ce7aaf42c3",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/power_curves.pdf",
+      "bytes": 36477,
+      "sha256": "de78476101d145392f027da767195e544faea10b8aefcb571951b7472e598529",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    },
+    {
+      "path": "benchmarks/figures/aging_hlca/softaxis/power_curves.png",
+      "bytes": 431635,
+      "sha256": "99776c067fae6ec1f3afe2035e2360685b36572de996eb14841d8ffdc7ad4e42",
+      "committed": true,
+      "regenerate": "python scripts/hlca_softaxis.py --seed 0"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.022477777777777777,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; no GPU. Two same-seed full executions used 80.92 user seconds total; final-run peak memory was 1.28 GB."
+  },
+  "metrics": {
+    "seed": 0,
+    "power_grid_rows": 130,
+    "n_types": 13,
+    "n_replicates": 50,
+    "n_perm_power": 200,
+    "n_perm_real": 1000,
+    "median_mde_single_axis_F": "3",
+    "n_types_mde_beyond_grid": 4,
+    "n_types_failing_uniform_gate": 0,
+    "types_failing_uniform_gate": [],
+    "max_uniform_pass_rate": 0.18,
+    "types_in_application": 13,
+    "n_pass_primary": 0,
+    "n_pass_primary_corrected": 0,
+    "n_pass_within_study": 0,
+    "n_pass_secondary": 1,
+    "robust_types": [],
+    "n_robust": 0,
+    "secondary_nominal_pass_types": [
+      "Macrophages"
+    ],
+    "n_figures": 14,
+    "input_checksums": "pass"
+  },
+  "observations": [
+    "The fixed-axis grid has 130 rows across 13 types; the median single-axis MDE is F=3 and four types did not reach 80% power through F=8.",
+    "All 13 types passed the pre-specified uniform-scaling specificity gate. The largest uniform pass rate was 0.18 for Monocytes, below the 0.20 exclusion threshold.",
+    "All 13 types therefore entered all three real-data analyses. Primary and within-study analyses had zero p\u22640.05 results and zero primary results after correction (0.05/13).",
+    "The only nominal p\u22640.05 result was Macrophages in e_secondary_space (slope=-0.0023724784507874208, p=0.026973026973026972); no type met the robust rule."
+  ],
+  "deviations": [
+    "The first full seed-zero execution completed all 130 power rows and real-data calculations but stopped while rendering power_curves because pandas DataFrame.size shadowed the size column. The accessor was changed to bracketed column access and the complete grid/application were rerun with identical seed, inputs, injections, donor draws, operators, and permutation settings. No model was fitted and no frozen H04 output changed."
+  ],
+  "suggestions": [],
+  "questions": []
+}
