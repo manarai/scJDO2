@@ -1,0 +1,4 @@
+stage,n_cells,n_donors,n_ann_level_3,n_hvgs,details
+numeric_age_filter,581517,106,25,,excluded exactly the donor without a numeric age; retained Rare for HVG and scVI
+seurat_v3_hvg,581517,106,25,2000.0,flavor=seurat_v3; batch_key=study_or_dataset; span=1.0; n_top_genes=2000
+drift_subsample,56904,106,24,,at most 60 cells per donor×type; crc32(donor|type); Rare excluded from drift (876 training cells retained)
