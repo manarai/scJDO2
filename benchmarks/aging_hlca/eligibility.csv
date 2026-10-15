@@ -1,0 +1,97 @@
+analysis,ann_level_3,n_donors,n_lt45,n_ge60,eligible
+primary,AT1,27,10,4,False
+primary,AT2,51,20,9,True
+primary,B cell lineage,20,6,3,False
+primary,Basal,43,21,8,True
+primary,Dendritic cells,53,22,6,True
+primary,EC arterial,25,7,5,True
+primary,EC capillary,24,10,5,True
+primary,EC venous,42,18,6,True
+primary,Fibroblasts,32,13,5,True
+primary,Innate lymphoid cell NK,29,9,8,True
+primary,Lymphatic EC differentiating,2,0,0,False
+primary,Lymphatic EC mature,19,8,4,False
+primary,Lymphatic EC proliferating,0,0,0,False
+primary,Macrophages,65,31,8,True
+primary,Mast cells,18,5,3,False
+primary,Monocytes,60,21,11,True
+primary,Multiciliated lineage,69,32,11,True
+primary,Myofibroblasts,3,0,1,False
+primary,SM activated stress response,2,0,1,False
+primary,Secretory,62,31,11,True
+primary,Smooth muscle FAM83D+,1,1,0,False
+primary,Submucosal Secretory,13,7,1,False
+primary,T cell lineage,58,26,8,True
+primary,nan,18,6,3,False
+banovich,AT1,15,5,3,False
+banovich,AT2,25,11,5,True
+banovich,B cell lineage,6,2,1,False
+banovich,Basal,0,0,0,False
+banovich,Dendritic cells,16,6,2,False
+banovich,EC arterial,13,4,3,False
+banovich,EC capillary,15,6,4,False
+banovich,EC venous,14,5,3,False
+banovich,Fibroblasts,13,6,3,False
+banovich,Innate lymphoid cell NK,14,6,4,False
+banovich,Lymphatic EC differentiating,1,0,0,False
+banovich,Lymphatic EC mature,10,4,3,False
+banovich,Lymphatic EC proliferating,0,0,0,False
+banovich,Macrophages,31,15,4,False
+banovich,Mast cells,3,1,0,False
+banovich,Monocytes,29,12,5,True
+banovich,Multiciliated lineage,17,6,4,False
+banovich,Myofibroblasts,0,0,0,False
+banovich,SM activated stress response,0,0,0,False
+banovich,Secretory,14,6,4,False
+banovich,Smooth muscle FAM83D+,0,0,0,False
+banovich,Submucosal Secretory,0,0,0,False
+banovich,T cell lineage,20,11,3,False
+banovich,nan,5,2,1,False
+parenchyma,AT1,25,10,4,False
+parenchyma,AT2,49,20,9,True
+parenchyma,B cell lineage,13,5,3,False
+parenchyma,Basal,1,0,1,False
+parenchyma,Dendritic cells,32,13,5,True
+parenchyma,EC arterial,22,7,5,True
+parenchyma,EC capillary,23,10,5,True
+parenchyma,EC venous,23,9,5,True
+parenchyma,Fibroblasts,25,12,5,True
+parenchyma,Innate lymphoid cell NK,24,9,7,True
+parenchyma,Lymphatic EC differentiating,2,0,0,False
+parenchyma,Lymphatic EC mature,17,8,4,False
+parenchyma,Lymphatic EC proliferating,0,0,0,False
+parenchyma,Macrophages,55,24,8,True
+parenchyma,Mast cells,9,3,3,False
+parenchyma,Monocytes,50,20,10,True
+parenchyma,Multiciliated lineage,28,11,5,True
+parenchyma,Myofibroblasts,2,0,1,False
+parenchyma,SM activated stress response,2,0,1,False
+parenchyma,Secretory,20,9,5,True
+parenchyma,Smooth muscle FAM83D+,0,0,0,False
+parenchyma,Submucosal Secretory,0,0,0,False
+parenchyma,T cell lineage,36,15,7,True
+parenchyma,nan,13,5,3,False
+never_smokers,AT1,15,5,4,False
+never_smokers,AT2,22,7,6,True
+never_smokers,B cell lineage,11,3,2,False
+never_smokers,Basal,26,13,4,False
+never_smokers,Dendritic cells,23,8,3,False
+never_smokers,EC arterial,12,2,4,False
+never_smokers,EC capillary,14,5,3,False
+never_smokers,EC venous,25,11,4,False
+never_smokers,Fibroblasts,15,3,4,False
+never_smokers,Innate lymphoid cell NK,16,4,5,False
+never_smokers,Lymphatic EC differentiating,0,0,0,False
+never_smokers,Lymphatic EC mature,9,2,4,False
+never_smokers,Lymphatic EC proliferating,0,0,0,False
+never_smokers,Macrophages,27,12,7,True
+never_smokers,Mast cells,8,1,1,False
+never_smokers,Monocytes,28,9,7,True
+never_smokers,Multiciliated lineage,36,16,8,True
+never_smokers,Myofibroblasts,2,0,1,False
+never_smokers,SM activated stress response,1,0,1,False
+never_smokers,Secretory,35,16,7,True
+never_smokers,Smooth muscle FAM83D+,0,0,0,False
+never_smokers,Submucosal Secretory,7,5,0,False
+never_smokers,T cell lineage,30,12,5,True
+never_smokers,nan,9,2,2,False

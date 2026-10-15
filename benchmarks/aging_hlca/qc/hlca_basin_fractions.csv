@@ -1,0 +1,139 @@
+fit,ann_level_3,behaviour,n_cells,fraction
+primary,AT1,drift,331,0.00581681428370589
+primary,AT1,fork,788,0.013847884155771123
+primary,AT1,holder,891,0.01565795023196963
+primary,AT2,drift,341,0.0059925488542106
+primary,AT2,fork,1220,0.021439617601574583
+primary,AT2,holder,1816,0.03191339800365528
+primary,B cell lineage,drift,303,0.005324757486292703
+primary,B cell lineage,fork,1111,0.019524110783073246
+primary,B cell lineage,holder,951,0.01671235765499789
+primary,Basal,drift,171,0.0030050611556305356
+primary,Basal,fork,2647,0.046516940812596656
+primary,Basal,holder,155,0.0027238858428230003
+primary,Dendritic cells,drift,713,0.0125298748769858
+primary,Dendritic cells,fork,3078,0.05409110080134964
+primary,Dendritic cells,holder,189,0.0033213833825390133
+primary,EC arterial,drift,168,0.0029523407844791226
+primary,EC arterial,fork,1392,0.02446225221425559
+primary,EC arterial,holder,697,0.012248699564178265
+primary,EC capillary,drift,117,0.002056094474905103
+primary,EC capillary,fork,1525,0.026799522001968227
+primary,EC capillary,holder,405,0.007117250105440742
+primary,EC venous,drift,417,0.007328131590046394
+primary,EC venous,fork,2317,0.040717699985941234
+primary,EC venous,holder,527,0.0092612118655982
+primary,Fibroblasts,drift,243,0.004270350063264446
+primary,Fibroblasts,fork,2484,0.043652467313369886
+primary,Fibroblasts,holder,73,0.0012828623646843806
+primary,Innate lymphoid cell NK,drift,217,0.0038134401799522002
+primary,Innate lymphoid cell NK,fork,1267,0.022265570082946717
+primary,Innate lymphoid cell NK,holder,1000,0.01757345705047097
+primary,Lymphatic EC differentiating,drift,29,0.0005096302544636581
+primary,Lymphatic EC differentiating,fork,132,0.002319696330662168
+primary,Lymphatic EC differentiating,holder,78,0.0013707296499367355
+primary,Lymphatic EC mature,drift,94,0.001651904962744271
+primary,Lymphatic EC mature,fork,492,0.008646140868831717
+primary,Lymphatic EC mature,holder,1013,0.017801911992127092
+primary,Lymphatic EC proliferating,fork,28,0.0004920567974131871
+primary,Macrophages,drift,1040,0.018276395332489807
+primary,Macrophages,fork,2579,0.04532194573316463
+primary,Macrophages,holder,681,0.01196752425137073
+primary,Mast cells,drift,56,0.0009841135948263741
+primary,Mast cells,fork,423,0.00743357233234922
+primary,Mast cells,holder,1529,0.02686981583017011
+primary,Monocytes,drift,1063,0.01868058484465064
+primary,Monocytes,fork,2002,0.03518206101504288
+primary,Monocytes,holder,1001,0.01759103050752144
+primary,Multiciliated lineage,drift,579,0.01017503163222269
+primary,Multiciliated lineage,fork,3291,0.057834247153099955
+primary,Multiciliated lineage,holder,895,0.015728244060171516
+primary,Myofibroblasts,drift,29,0.0005096302544636581
+primary,Myofibroblasts,fork,358,0.006291297624068607
+primary,Myofibroblasts,holder,61,0.001071980880078729
+primary,SM activated stress response,drift,21,0.00036904259805989033
+primary,SM activated stress response,fork,79,0.0013883031069872064
+primary,SM activated stress response,holder,141,0.0024778574441164064
+primary,Secretory,drift,488,0.008575847040629832
+primary,Secretory,fork,2846,0.05001405876564038
+primary,Secretory,holder,1108,0.01947139041192183
+primary,Smooth muscle FAM83D+,drift,4,7.029382820188388e-05
+primary,Smooth muscle FAM83D+,fork,38,0.0006677913679178968
+primary,Smooth muscle FAM83D+,holder,263,0.004621819204273864
+primary,Submucosal Secretory,drift,426,0.007486292703500633
+primary,Submucosal Secretory,fork,541,0.009507240264304793
+primary,Submucosal Secretory,holder,373,0.006554899479825672
+primary,T cell lineage,drift,203,0.0035674117812456068
+primary,T cell lineage,fork,3035,0.05333544214817939
+primary,T cell lineage,holder,640,0.01124701251230142
+primary,nan,drift,149,0.0026184451005201743
+primary,nan,fork,650,0.01142274708280613
+primary,nan,holder,892,0.015675523689020105
+secondary,AT1,drift,435,0.007644453816954872
+secondary,AT1,fork,1418,0.024919162097567834
+secondary,AT1,holder,157,0.002759032756923942
+secondary,AT2,drift,340,0.005974975397160129
+secondary,AT2,fork,2834,0.04980317728103473
+secondary,AT2,holder,203,0.0035674117812456068
+secondary,B cell lineage,drift,203,0.0035674117812456068
+secondary,B cell lineage,fork,1116,0.0196119780683256
+secondary,B cell lineage,holder,1046,0.018381836074792633
+secondary,Basal,drift,157,0.002759032756923942
+secondary,Basal,fork,2702,0.04748348095037256
+secondary,Basal,holder,114,0.0020033741037536906
+secondary,Dendritic cells,drift,183,0.0032159426402361873
+secondary,Dendritic cells,fork,3363,0.05909953606073387
+secondary,Dendritic cells,holder,434,0.0076268803599044005
+secondary,EC arterial,drift,72,0.0012652889076339097
+secondary,EC arterial,fork,33,0.000579924082665542
+secondary,EC arterial,holder,2152,0.037818079572613524
+secondary,EC capillary,drift,106,0.0018627864473499227
+secondary,EC capillary,fork,146,0.0025657247293687613
+secondary,EC capillary,holder,1795,0.03154435540559539
+secondary,EC venous,drift,90,0.0015816111345423871
+secondary,EC venous,fork,160,0.002811753128075355
+secondary,EC venous,holder,3011,0.05291367917896809
+secondary,Fibroblasts,drift,446,0.007837761844510053
+secondary,Fibroblasts,fork,942,0.016554196541543654
+secondary,Fibroblasts,holder,1412,0.02481372135526501
+secondary,Innate lymphoid cell NK,drift,80,0.0014058765640376776
+secondary,Innate lymphoid cell NK,fork,104,0.0018276395332489808
+secondary,Innate lymphoid cell NK,holder,2300,0.04041895121608323
+secondary,Lymphatic EC differentiating,drift,37,0.0006502179108674259
+secondary,Lymphatic EC differentiating,fork,112,0.0019682271896527483
+secondary,Lymphatic EC differentiating,holder,90,0.0015816111345423871
+secondary,Lymphatic EC mature,drift,193,0.003391677210740897
+secondary,Lymphatic EC mature,fork,788,0.013847884155771123
+secondary,Lymphatic EC mature,holder,618,0.010860396457191059
+secondary,Lymphatic EC proliferating,fork,28,0.0004920567974131871
+secondary,Macrophages,drift,182,0.003198369183185716
+secondary,Macrophages,fork,3852,0.06769295655841417
+secondary,Macrophages,holder,266,0.004674539575425278
+secondary,Mast cells,drift,105,0.0018452129902994518
+secondary,Mast cells,fork,156,0.002741459299873471
+secondary,Mast cells,holder,1747,0.030700829467172782
+secondary,Monocytes,drift,771,0.013549135385913116
+secondary,Monocytes,fork,2454,0.04312526360185576
+secondary,Monocytes,holder,841,0.014779277379446084
+secondary,Multiciliated lineage,drift,284,0.004990861802333755
+secondary,Multiciliated lineage,fork,3761,0.06609377196682131
+secondary,Multiciliated lineage,holder,720,0.012652889076339097
+secondary,Myofibroblasts,drift,32,0.000562350625615071
+secondary,Myofibroblasts,fork,199,0.0034971179530437226
+secondary,Myofibroblasts,holder,217,0.0038134401799522002
+secondary,SM activated stress response,drift,6,0.00010544074230282581
+secondary,SM activated stress response,fork,6,0.00010544074230282581
+secondary,SM activated stress response,holder,229,0.004024321664557851
+secondary,Secretory,drift,368,0.006467032194573317
+secondary,Secretory,fork,3809,0.06693729790524391
+secondary,Secretory,holder,265,0.004656966118374807
+secondary,Smooth muscle FAM83D+,holder,305,0.005359904400393646
+secondary,Submucosal Secretory,drift,130,0.002284549416561226
+secondary,Submucosal Secretory,fork,1077,0.018926613243357232
+secondary,Submucosal Secretory,holder,133,0.002337269787712639
+secondary,T cell lineage,drift,111,0.0019506537326022776
+secondary,T cell lineage,fork,216,0.003795866722901729
+secondary,T cell lineage,holder,3551,0.06240334598622241
+secondary,nan,drift,51,0.0008962463095740194
+secondary,nan,fork,283,0.004973288345283284
+secondary,nan,holder,1357,0.023847181217489105
