@@ -1,0 +1,14 @@
+ann_level_3,mde_single_axis_F,mde_uniform_F,mde_drift_D,null_pass_rate_iso,null_pass_rate_stiff,null_pass_rate_ant
+AT2,3.0,1.1,2.0,0.0,0.0,0.02
+Basal,> max,1.5,4.0,0.0,0.0,0.04
+Dendritic cells,> max,1.25,1.0,0.0,0.0,0.02
+EC arterial,> max,1.5,2.0,0.0,0.0,0.0
+EC capillary,> max,2.0,0.5,0.02,0.0,0.34
+EC venous,> max,1.1,4.0,0.0,0.24,0.0
+Fibroblasts,> max,3.0,2.0,0.0,0.0,0.0
+Innate lymphoid cell NK,> max,1.5,1.0,0.0,0.0,0.06
+Macrophages,> max,1.5,4.0,0.0,0.0,0.08
+Monocytes,> max,1.25,4.0,0.0,0.22,0.0
+Multiciliated lineage,> max,1.5,2.0,0.2,0.0,0.0
+Secretory,> max,1.5,4.0,0.0,0.0,0.0
+T cell lineage,> max,1.1,4.0,0.0,0.96,0.0

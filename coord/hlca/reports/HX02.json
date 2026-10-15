@@ -1,0 +1,238 @@
+{
+  "artifacts": [
+    {
+      "bytes": 17973,
+      "committed": true,
+      "path": "scripts/hlca_power.py",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "6df315c274bcc1c4a83ebaabb8d78d293eb26825d570553b40b97db1ce9bb067"
+    },
+    {
+      "bytes": 450,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/power/input_checksums.json",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "54b6c8cf94733acf437050751d559211198d92cc181de800a4344551db3d5044"
+    },
+    {
+      "bytes": 8606,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/power/power_grid.csv",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "d13016e21a3cfc6135fd22c229eaa28b66a06021656ff2e4617d51cfe7e7fc08"
+    },
+    {
+      "bytes": 629,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/power/mde.csv",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "7dbfd534fa2a03c962513849c8d56e5d3ba5693a2f547bfde7247eb514a87fc7"
+    },
+    {
+      "bytes": 3023,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/power/RESULT_HX02.md",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "3912d06f0e4afc9ce8726d312f23eeae1c49a9c62683b1fab7793e8cc313a990"
+    },
+    {
+      "bytes": 4144,
+      "committed": true,
+      "path": "benchmarks/aging_hlca/power/metrics.json",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "abde70513ca114bf541be2ce0ec9a6a0ed8efe882fd075e2a7a02ef8ee75e5d2"
+    },
+    {
+      "bytes": 33336,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/power_curve_single_axis.pdf",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "2391176882c2bc4f7786f64cba154d996340fe55701311e5b57813fc44732db8"
+    },
+    {
+      "bytes": 250158,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/power_curve_single_axis.png",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "4989d024d03d899c2f074f34e399310050598a355bd225a9dca2e6b67d9cc0d2"
+    },
+    {
+      "bytes": 31877,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/power_curve_uniform.pdf",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "a3669aa3ef2b4b8cca35846ddb452d11120aa425bd3de58b74f367c613fb6830"
+    },
+    {
+      "bytes": 243211,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/power_curve_uniform.png",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "2f8ef0c072130c86c57f22aa11583e4d71e5d1139bb58c582c1c1b35872ab518"
+    },
+    {
+      "bytes": 35228,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/power_curve_drift.pdf",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "2f3eb9fc6c5b3914a43e134589cf13162c98623e905fa3a68df2d1a1ce80e5cc"
+    },
+    {
+      "bytes": 279357,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/power_curve_drift.png",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "071a7c7b8367ad2ad238468517a3d7522d96acdd7f6eff32a94323b8ed89e522"
+    },
+    {
+      "bytes": 37053,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/mde_heatmap.pdf",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "3adf8a0956094cec7cc500d0627bcb4f56ccde878922154e82b72772d147c4d1"
+    },
+    {
+      "bytes": 140870,
+      "committed": true,
+      "path": "benchmarks/figures/aging_hlca/power/mde_heatmap.png",
+      "regenerate": "python scripts/hlca_power.py --seed 0",
+      "sha256": "ebf36993b431fc208290e751ddc9b1da5f80f767d886c59c69ef5a18e805ba59"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.06371111111111111,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; no GPU. Three deterministic seed-zero executions used 75.99, 76.53, and 76.84 user seconds (final-run maximum RSS 1.02 GB)."
+  },
+  "deviations": [
+    "EXPLORATORY task. The first successful execution exposed a reporting-only error: a cross-type median ignored right-censored `> max` values, and power_grid.csv included an extra helper column. The code was corrected and rerun twice with the same frozen seed, injections, operators, replicate draws, and test settings. Final power_grid.csv has exactly the five specified columns; final censored single-axis median is >8\u00d7. No model or frozen H04 file was changed."
+  ],
+  "finished_utc": "2026-10-15T22:16:05.229317+00:00",
+  "metrics": {
+    "max_null_pass_rate": 0.96,
+    "mde_by_type": {
+      "AT2": {
+        "mde_drift_D": 2.0,
+        "mde_single_axis_F": 3.0,
+        "mde_uniform_F": 1.1,
+        "null_pass_rate_ant": 0.02,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "Basal": {
+        "mde_drift_D": 4.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.5,
+        "null_pass_rate_ant": 0.04,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "Dendritic cells": {
+        "mde_drift_D": 1.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.25,
+        "null_pass_rate_ant": 0.02,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "EC arterial": {
+        "mde_drift_D": 2.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.5,
+        "null_pass_rate_ant": 0.0,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "EC capillary": {
+        "mde_drift_D": 0.5,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 2.0,
+        "null_pass_rate_ant": 0.34,
+        "null_pass_rate_iso": 0.02,
+        "null_pass_rate_stiff": 0.0
+      },
+      "EC venous": {
+        "mde_drift_D": 4.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.1,
+        "null_pass_rate_ant": 0.0,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.24
+      },
+      "Fibroblasts": {
+        "mde_drift_D": 2.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 3.0,
+        "null_pass_rate_ant": 0.0,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "Innate lymphoid cell NK": {
+        "mde_drift_D": 1.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.5,
+        "null_pass_rate_ant": 0.06,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "Macrophages": {
+        "mde_drift_D": 4.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.5,
+        "null_pass_rate_ant": 0.08,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "Monocytes": {
+        "mde_drift_D": 4.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.25,
+        "null_pass_rate_ant": 0.0,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.22
+      },
+      "Multiciliated lineage": {
+        "mde_drift_D": 2.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.5,
+        "null_pass_rate_ant": 0.0,
+        "null_pass_rate_iso": 0.2,
+        "null_pass_rate_stiff": 0.0
+      },
+      "Secretory": {
+        "mde_drift_D": 4.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.5,
+        "null_pass_rate_ant": 0.0,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.0
+      },
+      "T cell lineage": {
+        "mde_drift_D": 4.0,
+        "mde_single_axis_F": "> max",
+        "mde_uniform_F": 1.1,
+        "null_pass_rate_ant": 0.0,
+        "null_pass_rate_iso": 0.0,
+        "null_pass_rate_stiff": 0.96
+      }
+    },
+    "median_mde_drift_D": "2",
+    "median_mde_single_axis_F": ">8",
+    "median_mde_uniform_F": "1.5",
+    "n_types_mde_beyond_grid": 12
+  },
+  "observations": [
+    "Single-axis softening reached 80% power only for AT2 (F=3); the other 12 of 13 types did not reach 80% on the specified grid through F=8.",
+    "All 13 types reached 80% power for uniform softening; their MDEs range from F=1.1 to F=3 (median F=1.5).",
+    "All 13 types reached 80% power for soft-axis drift; their MDEs range from D=0.5\u03c3 to D=4\u03c3 (median D=2\u03c3).",
+    "The largest null-row pass rate was 0.96 for T cell lineage stiffness; EC capillary anticipation was 0.34, EC venous stiffness 0.24, and Monocytes stiffness 0.22."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-15T21:49:47Z",
+  "status": "done",
+  "suggestions": [
+    "If an additional exploratory task is approved, inspect the 12 single-axis censored response curves and the non-monotone powers under the fixed cosine-matching statistic before extending the F grid; this would characterize the test behavior without changing H04.",
+    "If a future design study is approved, vary donor composition or age/study balance rather than the frozen H04 analysis to quantify how the observed elevated null-row rates track the existing exploratory leads."
+  ],
+  "task": "hlca/HX02"
+}
