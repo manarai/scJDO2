@@ -1,0 +1,96 @@
+{
+  "task": "aging/X06",
+  "status": "done",
+  "started_utc": "2026-10-15T23:42:51Z",
+  "finished_utc": "2026-10-15T23:45:36.809166+00:00",
+  "compute": {
+    "cpu_hours": 0.0011805555555555556,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; no GPU. Dry run plus final fixed-seed analysis used 4.25 user seconds total; final-run peak memory was 1.00 GB."
+  },
+  "metrics": {
+    "verdict_by_type": {
+      "lung fibroblast": "no soft-axis change with age",
+      "lung NK": "no soft-axis change with age",
+      "marrow granulocyte": "no soft-axis change with age"
+    },
+    "mde_by_type": {
+      "lung fibroblast": 1.25,
+      "lung NK": 1.25,
+      "marrow granulocyte": 1.25
+    },
+    "uniform_x2_passes_by_type": {
+      "lung fibroblast": false,
+      "lung NK": true,
+      "marrow granulocyte": false
+    },
+    "min_attainable_p_by_type": {
+      "lung fibroblast": 0.047619047619047616,
+      "lung NK": 0.007936507936507936,
+      "marrow granulocyte": 0.015151515151515152
+    },
+    "n_types_showing_change": 0
+  },
+  "artifacts": [
+    {
+      "path": "scripts/x06_softaxis_mouse.py",
+      "bytes": 16610,
+      "sha256": "d7567c9c381acc08f18b7f45801fdc6338850661db9cb8ab0a55b0d5c7c2070e",
+      "committed": true,
+      "regenerate": "python scripts/x06_softaxis_mouse.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x06/RESULT_X06.md",
+      "bytes": 3794,
+      "sha256": "2bc6ced26bb72e8aea5300fbdc41045ccb9dc2455ca22d5d62069c7b41775716",
+      "committed": true,
+      "regenerate": "python scripts/x06_softaxis_mouse.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x06/input_checksums.json",
+      "bytes": 1330,
+      "sha256": "5141ebe58370711764d24fcf230564dd8aaf00a688db7b46c6d26a481f232ade",
+      "committed": true,
+      "regenerate": "python scripts/x06_softaxis_mouse.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x06/metrics.json",
+      "bytes": 704,
+      "sha256": "946b400e8f4e815be75ab048f8a081aa1c39e44658a697ecead2f4d46d2d63fa",
+      "committed": true,
+      "regenerate": "python scripts/x06_softaxis_mouse.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x06/power.csv",
+      "bytes": 4765,
+      "sha256": "85e9fb5120fc446960744061863e12d440b4b95517707f058366ae0909098551",
+      "committed": true,
+      "regenerate": "python scripts/x06_softaxis_mouse.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x06/real.csv",
+      "bytes": 2330,
+      "sha256": "afc5fd764bd91bc435137a8b1ca67e03fde669faa94631150c30dddec27cf7a8",
+      "committed": true,
+      "regenerate": "python scripts/x06_softaxis_mouse.py --seed 0"
+    },
+    {
+      "path": "benchmarks/aging/x06/summary.csv",
+      "bytes": 919,
+      "sha256": "f1b4f2f9972b1bf6ab64c3816530872547b68c8e2effc944e36e8feca165cb8d",
+      "committed": true,
+      "regenerate": "python scripts/x06_softaxis_mouse.py --seed 0"
+    }
+  ],
+  "deviations": [],
+  "observations": [
+    "Contributor counts matched the task: lung fibroblast 2 young/5 old (n_common=36; 21 labels; minimum attainable p=1/21), lung NK 4/5 (35; 126; 1/126), and marrow granulocyte 2/10 (70; 66; 1/66), identically across shared seeds 0\u20132.",
+    "No type met the fixed reading rule: lung fibroblast failed in seed 0 (p=0.1838161838161838) despite seed 1/2 p=0.04595404595404595; lung NK passed only in seed 0 (p=0.012987012987012988); marrow granulocyte failed in all seeds (p=0.13786213786213786, 0.32167832167832167, 0.4775224775224775).",
+    "All three single-axis injection grids first passed at F=1.25 (the stated MDE).",
+    "The uniform \u00d72 control was false for lung fibroblast and marrow granulocyte but true for lung NK. Its slope and p exactly equal the lung-NK seed-0 real-data result (-0.0017878945499050205; p=0.012987012987012988), confirming scale invariance of the injection and identifying an inherited, unreplicated seed-0 baseline pass rather than a uniform-scaling effect."
+  ],
+  "suggestions": [
+    "If an additional exploratory task is approved, enumerate the finite two-group label sets for the three basin types to characterize Monte Carlo threshold sensitivity at the low-label lung-fibroblast setting (21 distinct labels), without changing the frozen X06 result."
+  ],
+  "questions": []
+}
