@@ -1,0 +1,106 @@
+{
+  "x05_verdict": "granulocytopoietic stiffening exceeds mouse-to-mouse variation",
+  "gcp_T_seed0": 0.8490951636251408,
+  "gcp_p_stiffer_seed0": 0.030303030303030304,
+  "gcp_p_stiffer_seed1": 0.045454545454545456,
+  "gcp_p_stiffer_seed2": 0.015151515151515152,
+  "gcp_loo_min_stiff_ratio": 3.021123271595146,
+  "n_relabellings_marrow": {
+    "granulocyte": 66,
+    "granulocytopoietic cell": 66,
+    "hematopoietic precursor cell": 6,
+    "monocyte": 55,
+    "precursor B cell": 21,
+    "promonocyte": null
+  },
+  "n_relabellings_lung": {
+    "fibroblast of lung": 21,
+    "natural killer cell": 126
+  },
+  "mice_excluded_by_type": {
+    "lung|fibroblast of lung": [
+      "18-F-50",
+      "3-F-56",
+      "3-F-57"
+    ],
+    "lung|natural killer cell": [
+      "18-F-50"
+    ],
+    "marrow|granulocyte": [],
+    "marrow|granulocytopoietic cell": [],
+    "marrow|hematopoietic precursor cell": [
+      "18-F-50",
+      "18-F-51",
+      "18-M-52",
+      "18-M-53",
+      "21-F-54",
+      "21-F-55",
+      "24-M-60",
+      "24-M-61"
+    ],
+    "marrow|monocyte": [
+      "18-M-53"
+    ],
+    "marrow|precursor B cell": [
+      "18-M-53",
+      "21-F-55",
+      "24-M-59",
+      "24-M-60",
+      "24-M-61"
+    ],
+    "marrow|promonocyte": [
+      "18-F-50",
+      "18-F-51",
+      "18-M-52",
+      "18-M-53",
+      "21-F-54",
+      "21-F-55",
+      "24-M-58",
+      "24-M-59",
+      "24-M-60",
+      "24-M-61"
+    ]
+  },
+  "call_stability_by_type": {
+    "lung|fibroblast of lung": {
+      "iso": 1.0,
+      "ant": 1.0,
+      "n_eligible": 5
+    },
+    "lung|natural killer cell": {
+      "iso": 1.0,
+      "ant": 1.0,
+      "n_eligible": 6
+    },
+    "marrow|granulocyte": {
+      "iso": 1.0,
+      "ant": 0.7,
+      "n_eligible": 10
+    },
+    "marrow|granulocytopoietic cell": {
+      "iso": 1.0,
+      "ant": 1.0,
+      "n_eligible": 10
+    },
+    "marrow|hematopoietic precursor cell": {
+      "iso": 0.8,
+      "ant": 1.0,
+      "n_eligible": 10
+    },
+    "marrow|monocyte": {
+      "iso": 1.0,
+      "ant": 1.0,
+      "n_eligible": 10
+    },
+    "marrow|precursor B cell": {
+      "iso": 0.9,
+      "ant": 1.0,
+      "n_eligible": 10
+    },
+    "marrow|promonocyte": {
+      "iso": 1.0,
+      "ant": 0.8,
+      "n_eligible": 10
+    }
+  }
+}
