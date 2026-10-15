@@ -120,22 +120,21 @@ def _jsonable(value: Any) -> Any:
 
 def _select_core_dataset(datasets):
     """Identify the single healthy HLCA core dataset from Census metadata."""
-    required = {"dataset_id", "dataset_title"}
+    required = {"dataset_id", "dataset_title", "collection_name"}
     missing = required.difference(datasets.columns)
     if missing:
         raise RuntimeError(f"Census dataset catalog lacks required columns: {sorted(missing)}")
     title = datasets["dataset_title"].astype(str).str.lower()
-    collection = datasets.get("collection_name", "").astype(str).str.lower()
-    matches = datasets[title.str.contains("integrated cell atlas of the lung", na=False)].copy()
-    if matches.empty:
-        matches = datasets[(title.str.contains("lung", na=False)) & collection.str.contains("lung", na=False)].copy()
-    core = matches[title.loc[matches.index].str.contains("core", na=False)].copy()
+    collection = datasets["collection_name"].astype(str).str.lower()
+    hlca = datasets[
+        collection.str.contains("integrated human lung cell atlas", na=False)
+        | title.str.contains("integrated cell atlas of the human lung in health and disease", na=False)
+    ].copy()
+    core = hlca[hlca["dataset_title"].astype(str).str.lower().str.contains(r"\(core\)", regex=True, na=False)].copy()
     if len(core) == 1:
         return core.iloc[0]
-    if len(matches) == 1:
-        return matches.iloc[0]
-    candidate_columns = [column for column in ("dataset_id", "dataset_title", "collection_id", "collection_name", "dataset_total_cell_count") if column in matches]
-    candidates = matches[candidate_columns].to_dict(orient="records")
+    candidate_columns = [column for column in ("dataset_id", "dataset_title", "collection_id", "collection_name", "dataset_total_cell_count") if column in hlca]
+    candidates = hlca[candidate_columns].to_dict(orient="records")
     raise RuntimeError(
         "unable to resolve exactly one HLCA core Census dataset; candidates=" + json.dumps(candidates, sort_keys=True)
     )
