@@ -63,3 +63,15 @@ Live status: `python coord/coord_check.py board`.
 * 2026-10-15 — user approved aging/X06, hlca/HX01, write-up, GitHub backup; X06 and HX01 issued (run X06 first).
 * 2026-10-15 — hlca/HX01 accepted (74f4209): T cell and monocyte hints study-driven. aging/X06 still queued.
 * 2026-10-15 — aging/X06 accepted (5443446): 0/3 mouse basins show soft-axis change. All planned and approved tasks complete.
+
+## Paused (2026-10-15)
+
+Aging workstreams (`aging`, `hlca`) are **paused by the user** pending
+scOpAlign. The goal behind them is an operator-based reference atlas;
+aging was a test application. No tasks are open. Resume points:
+* end-to-end positive control (expression-level injection through the
+  full pipeline) before any further aging claim;
+* operator-space question (aging vectors: one mode or many, vulnerable
+  types, systemic vs local) — answerable from stored results;
+* linear shared-space design (per-type young-referenced PCA/FA, within-
+  study permutation) — candidate baseline for operator alignment.

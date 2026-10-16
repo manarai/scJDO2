@@ -132,3 +132,13 @@ age (p = 0.83). Recomputed independently.
 **Meaning.** The two softening hints from H04 reflect differences
 between studies, not aging within them. The consolidated human
 conclusion is unchanged.
+
+## 2026-10-15 — paused
+
+Paused by the user pending scOpAlign; the underlying goal is an
+operator-based reference atlas. Reusable for it: HLCA donor-level
+operators and drift fits (`benchmarks/aging_hlca/`), the fixed-axis
+statistic, and the lesson that per-batch-adaptive encoders can absorb
+the differences an operator reference must keep. Open threats to the
+aging null (batch absorption, density-shape interpretation) are listed
+in the write-up's limits and are untested.
