@@ -5,6 +5,27 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Landscape API + tutorial 06 — 2026-10-17
+
+- **``scjdo2.landscape``** (new module): ``analyse(adata, cluster_key,
+  drift=None, motifs=False, tissue_key=None, replicate_key=None, …)``
+  runs oracle tol → invariants → lead-eig basin classes → eigenvalue-
+  sign fractions → well stiffness → energy → motifs in order and writes
+  everything to the AnnData; ``figures(adata, out_dir, …)`` renders
+  every figure the stored state supports (operator_space, landscape,
+  landscape_3d, ternary, energy, motifs), skipping those whose inputs
+  are missing, and returns ``{name: path}``. Every step remains a
+  public function elsewhere; this module only fixes order and defaults.
+- **``notebooks/06_behaviour_landscape.ipynb``** (built by
+  ``notebooks/make_tutorial_06.py``, executed and committed with
+  outputs): equilibrated pitchfork (τ=0.3, 20-D PCA) → energy drift
+  (2000 epochs; median asymmetry 9e-8) → ``landscape.analyse`` →
+  marginal-shuffle null (2 perms) → all six figures. Learned ``lead_re``
+  vs analytic: Spearman 0.67; the saddle region carries the largest
+  fork share. The ternary shows the PCA tangent-rank ceiling directly
+  (2-D system in 20 dims → fractions pile at the holder corner).
+- **Tests**: ``tests/test_landscape_api.py``.
+
 ### Behaviour-landscape figures — operator-space occupancy — 2026-10-17
 
 Two figures that ask which operator behaviours a population occupies,
