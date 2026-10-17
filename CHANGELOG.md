@@ -65,6 +65,26 @@ the Hessian of a density and the null must be ``mode="marginal"``.
   (the footer says so). ``scjdo2.opspace.store_energy(adata, drift)``
   writes ``obs['energy']`` from an ``EnergyDriftAdapter``; the run
   scripts need that one call after the fit.
+- **``scjdo2.motifs``** (new module, atlas arm) — recurrent operator
+  motifs across contexts. ``motif_coordinates`` (sorted real spectrum
+  + Henrici + well stiffness; eigenvalue block scaled by ONE shared
+  scalar so noise columns are not inflated), ``fit_motifs`` (KMeans;
+  ``K`` = best silhouette among the ``K`` reproducible across
+  held-out replicates, ARI ≥ 0.9; writes ``obs['op_motif']`` and a
+  raw-unit per-motif summary), ``motif_occurrence`` (per-(motif,
+  context) occupancy vs a null that shuffles context labels within
+  tissue at the replicate level; enrichment flag; recurrence = number
+  of enriched contexts), ``motif_driver_similarity`` (cosine of each
+  context's mean lifted driver vector to the motif consensus).
+- **``scjdo2.plot.figure_motif_matrix``** — rows = motifs, columns =
+  cell type × tissue grouped by tissue, filled where enriched above
+  the null, recurrence bar at the right, driver-similarity twin panel
+  when available. Footer states the batch caveat: pooled operators
+  carry batch unless aligned (scOpAlign); run within-dataset first.
+- **Tests**: ``tests/test_motifs.py`` plants a universal basin, a
+  tissue-local shallow basin and a saddle recurring only at progenitor
+  contexts across three tissues × three donors; checks K, the three
+  enrichment patterns, recurrence ordering, driver cosines, figure.
 - **CLI**: ``scjdo2 figure energy --input <run> --out <dir> [--use-rep
   X_umap] [--energy-key energy] [--colour-by op_behaviour_basin]``.
 - **CLI**: ``scjdo2 figure landscape --input <run> --out <dir> [--y

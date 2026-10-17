@@ -38,6 +38,7 @@ from .landscape import (
     figure_behaviour_ternary,
     figure_energy_landscape,
 )
+from .motifs import figure_motif_matrix
 from .figures_v05 import (
     add_aging_footer,
     aging_vectors,
@@ -83,4 +84,5 @@ __all__ = [
     "figure_behaviour_ternary",
     "behaviour_composition",
     "figure_energy_landscape",
+    "figure_motif_matrix",
 ]
