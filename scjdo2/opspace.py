@@ -857,6 +857,224 @@ def null_tol_pos(z: np.ndarray, fit_drift_fn, n_perm: int = 10,
     }
 
 
+# ======================================================================
+# Behaviour landscape helpers — coordinates, weights, tolerance, null
+# ======================================================================
+#
+# These feed ``scjdo2.plot.figure_behaviour_landscape`` and
+# ``figure_behaviour_ternary``. All coordinates are operator-space
+# descriptors (eigenvalue sign fractions, lead_re, spectral_gap,
+# henrici), never the raw J entries or archetype weights, so the maps
+# are free of the embedding's orientation and comparable across runs.
+
+
+def _dense_latent_J(adata: AnnData) -> np.ndarray:
+    """Return the dense latent Jacobian tensor ``(n, d, d)`` from
+    ``uns['scjdo2']['J_latent']`` (Phase C) or ``uns['scjdo2']['J']``
+    (Phase B). Raises if only the sparse gene-space list is stored."""
+    uns = adata.uns.get("scjdo2", {})
+    J = uns.get("J_latent")
+    if J is None:
+        J = uns.get("J")
+    if J is None or not hasattr(J, "shape") or np.ndim(J) != 3:
+        raise RuntimeError(
+            "need a dense latent J tensor in uns['scjdo2']['J_latent'] "
+            "or uns['scjdo2']['J']",
+        )
+    return np.asarray(J)
+
+
+def fisher_mass(adata: AnnData) -> np.ndarray:
+    """Per-cell Fisher mass ``Σ`` of the ledger entries at that cell.
+
+    Returns ones when no Fisher ledger is stored (Phase B, latent only)
+    so callers can always use the result as a density weight. Cells
+    whose mass is non-finite or ``≤ 0`` are also set to 1 — a cell with
+    no measurable entries should not vanish from a density map, it
+    should carry the same weight as an unmeasured run.
+    """
+    n = adata.n_obs
+    ledger = _get_ledger(adata)
+    F_list = _ledger_fisher_list(ledger) if ledger is not None else None
+    if F_list is None or len(F_list) != n:
+        return np.ones(n, dtype=np.float64)
+    mass = np.array(
+        [float(np.sum(F.data)) if issparse(F) else float(np.sum(F))
+         for F in F_list],
+        dtype=np.float64,
+    )
+    return np.where(np.isfinite(mass) & (mass > 0), mass, 1.0)
+
+
+def oracle_tol(
+    adata: AnnData,
+    use_rep: str = "X_pca",
+    cluster_key: str = "cluster",
+    resting_types: Optional[Sequence[str]] = None,
+    min_cells: int = 10,
+    frac: float = 0.1,
+) -> float:
+    """``frac × median |λ_max(−Σ⁻¹)|`` across clusters — the Gaussian
+    oracle tolerance from SUMMARY §5.7 / ``scripts/basin_classify_latent``.
+
+    For each cluster (restricted to ``resting_types`` when given) fit a
+    Gaussian to the latent positions; the Hessian of its log density is
+    ``−Σ⁻¹``, whose least-negative eigenvalue is the stiffness of the
+    softest axis of a perfect basin. ``tol`` is a tenth of the median
+    of those across clusters. Unlike ``0.1 × std(lead_re)`` it does not
+    rescale with the spread of the fitted operators, so two datasets
+    (young vs aged, say) classified with the same oracle are comparable.
+    """
+    if use_rep not in adata.obsm:
+        raise KeyError(f"obsm[{use_rep!r}] missing")
+    if cluster_key not in adata.obs:
+        raise KeyError(f"obs[{cluster_key!r}] missing")
+    z = np.asarray(adata.obsm[use_rep], dtype=np.float64)
+    cluster = adata.obs[cluster_key].astype(str).to_numpy()
+    pool = set(map(str, resting_types)) if resting_types else set(cluster)
+    leads: list[float] = []
+    for cl in sorted(set(cluster)):
+        if cl not in pool:
+            continue
+        m = cluster == cl
+        if int(m.sum()) < int(min_cells):
+            continue
+        Sigma = np.cov(z[m], rowvar=False, bias=False)
+        Sigma = np.atleast_2d(Sigma) + 1e-4 * np.eye(z.shape[1])
+        ev = np.linalg.eigvalsh(-np.linalg.inv(Sigma))
+        leads.append(abs(float(ev.max())))
+    if not leads:
+        raise RuntimeError(
+            "oracle_tol: no cluster with enough cells to fit a Gaussian",
+        )
+    tol = float(frac) * float(np.median(leads))
+    adata.uns.setdefault("scjdo2", {})["oracle_tol"] = tol
+    return tol
+
+
+def behaviour_fractions(adata: AnnData, tol: float) -> pd.DataFrame:
+    """Per-cell fraction of latent eigenvalues below ``−tol``, within
+    ``±tol`` and above ``+tol`` — the exact ternary coordinates
+    (holder / drift / fork corners).
+
+    Computed straight from each cell's spectrum: no decomposition, no
+    ``K``, and no dependence on the embedding's axis orientation. For
+    a symmetric J the three fractions sum to 1 by construction; for a
+    non-symmetric J the real parts are used, so they still do.
+
+    Writes ``obs['op_frac_neg']``, ``obs['op_frac_zero']``,
+    ``obs['op_frac_pos']`` and ``uns['scjdo2']['behaviour_fractions_tol']``.
+    Returns the three columns as a DataFrame.
+    """
+    J = _dense_latent_J(adata)
+    n, d, _ = J.shape
+    tol = float(tol)
+    neg = np.full(n, np.nan, dtype=np.float32)
+    zero = np.full(n, np.nan, dtype=np.float32)
+    pos = np.full(n, np.nan, dtype=np.float32)
+    for c in range(n):
+        Jc = J[c].astype(np.float64)
+        if not np.all(np.isfinite(Jc)):
+            continue
+        try:
+            ev = np.linalg.eigvals(Jc).real
+        except np.linalg.LinAlgError:
+            continue
+        neg[c] = float(np.mean(ev < -tol))
+        pos[c] = float(np.mean(ev > tol))
+        zero[c] = 1.0 - neg[c] - pos[c]
+    adata.obs["op_frac_neg"] = neg
+    adata.obs["op_frac_zero"] = zero
+    adata.obs["op_frac_pos"] = pos
+    adata.uns.setdefault("scjdo2", {})["behaviour_fractions_tol"] = tol
+    return adata.obs[["op_frac_neg", "op_frac_zero", "op_frac_pos"]].copy()
+
+
+def landscape_descriptors(J: np.ndarray) -> dict[str, np.ndarray]:
+    """Per-cell ``lead_re``, ``spectral_gap`` and ``henrici`` from a dense
+    ``(n, d, d)`` tensor. Shared by :func:`invariants` consumers and the
+    flow-scrambled null so real and null are scored by the same code."""
+    n = J.shape[0]
+    lead_re = np.full(n, np.nan)
+    gap = np.full(n, np.nan)
+    hen = np.full(n, np.nan)
+    for c in range(n):
+        Jc = J[c].astype(np.float64)
+        if not np.all(np.isfinite(Jc)):
+            continue
+        try:
+            ev = np.linalg.eigvals(Jc)
+        except np.linalg.LinAlgError:
+            continue
+        order = np.argsort(-ev.real)
+        ev = ev[order]
+        lead_re[c] = float(ev[0].real)
+        gap[c] = float(ev[0].real - ev[1].real) if ev.size > 1 else 0.0
+        hen[c] = _henrici(Jc, ev)
+    return {"lead_re": lead_re, "spectral_gap": gap, "henrici": hen}
+
+
+def flow_scrambled_null(
+    z: np.ndarray,
+    v: Optional[np.ndarray],
+    fit_fn,
+    n_perm: int = 10,
+    mode: Literal["flow", "marginal"] = "flow",
+    seed: int = 0,
+    fisher_weights: Optional[np.ndarray] = None,
+) -> dict:
+    """Operator-space descriptors under a scrambled-flow refit.
+
+    ``mode="flow"`` (measured-flow arms: pitchfork truth, scNT-seq,
+    LARRY): permute the rows of ``v`` across cells, so every cell keeps
+    its position and the population keeps its velocity marginal, but
+    the map ``z → v`` is destroyed. ``fit_fn(z, v_perm, seed)`` must
+    return an adapter with ``.jacobian_autodiff(z)`` → ``(n, d, d)``.
+
+    ``mode="marginal"`` (snapshot arm, where there is no ``v`` to
+    scramble): shuffle each latent dimension independently, as in
+    :func:`null_tol_pos`, and call ``fit_fn(z_perm, seed)``.
+
+    Returns a dict with pooled per-cell-per-perm arrays ``lead_re``,
+    ``spectral_gap``, ``henrici``, ``weight`` (Fisher weights tiled per
+    perm, ones if not given), ``perm`` (perm index), plus ``n_perm``
+    and ``mode``. Pass the dict as ``null=`` to
+    :func:`scjdo2.plot.figure_behaviour_landscape`.
+    """
+    rng = np.random.default_rng(seed)
+    n = z.shape[0]
+    w = (np.ones(n) if fisher_weights is None
+         else np.asarray(fisher_weights, dtype=np.float64))
+    pooled: dict[str, list[np.ndarray]] = {
+        "lead_re": [], "spectral_gap": [], "henrici": [], "weight": [], "perm": [],
+    }
+    for p in range(int(n_perm)):
+        s = int(seed + 100 + p)
+        if mode == "flow":
+            if v is None:
+                raise ValueError("mode='flow' needs the measured velocity array v")
+            v_perm = np.asarray(v)[rng.permutation(n)]
+            drift = fit_fn(z, v_perm, s)
+            J = np.asarray(drift.jacobian_autodiff(z))
+        elif mode == "marginal":
+            z_perm = np.asarray(z).copy()
+            for j in range(z_perm.shape[1]):
+                rng.shuffle(z_perm[:, j])
+            drift = fit_fn(z_perm, s)
+            J = np.asarray(drift.jacobian_autodiff(z_perm))
+        else:
+            raise ValueError(f"unknown mode {mode!r}")
+        desc = landscape_descriptors(J)
+        for k in ("lead_re", "spectral_gap", "henrici"):
+            pooled[k].append(desc[k])
+        pooled["weight"].append(w)
+        pooled["perm"].append(np.full(n, p, dtype=np.int32))
+    out: dict[str, Any] = {k: np.concatenate(vv) for k, vv in pooled.items()}
+    out["n_perm"] = int(n_perm)
+    out["mode"] = mode
+    return out
+
+
 def classify_basin_latent(adata: AnnData, tol: float,
                           use_rep: str = "X_pca",
                           k_tangent: int = 30,

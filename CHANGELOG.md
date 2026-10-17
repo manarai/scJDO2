@@ -5,6 +5,58 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Behaviour-landscape figures — operator-space occupancy — 2026-10-17
+
+Two figures that ask which operator behaviours a population occupies,
+and how densely, on coordinates that are free of the embedding's axis
+orientation (operator-space descriptors, never raw ``J`` entries or
+semi-NMF archetype weights). Targeted first at the measured-flow arms
+(pitchfork truth, scNT-seq, LARRY); on a snapshot run the landscape is
+the Hessian of a density and the null must be ``mode="marginal"``.
+
+- **``scjdo2.opspace.behaviour_fractions(adata, tol)``** — per-cell
+  fraction of latent eigenvalues ``< −tol``, ``|λ| ≤ tol``, ``> tol``
+  (``obs['op_frac_neg' / 'op_frac_zero' / 'op_frac_pos']``). Exact
+  ternary coordinates with holder / drift / fork at the corners; no
+  ``K`` to choose, no decomposition, no orientation dependence.
+- **``scjdo2.opspace.oracle_tol(adata, ...)``** — the Gaussian-oracle
+  tolerance (``0.1 × median |λ_max(−Σ⁻¹)|`` over resting clusters)
+  promoted from ``scripts/basin_classify_latent.py`` into the package,
+  stored at ``uns['scjdo2']['oracle_tol']``. Used in place of
+  ``0.1 × std(lead_re)`` because the latter rescales per dataset and
+  makes young vs aged non-comparable.
+- **``scjdo2.opspace.fisher_mass(adata)``** — per-cell Fisher mass from
+  the ledger (ones without a ledger), the density weight in both figures.
+- **``scjdo2.opspace.landscape_descriptors(J)``** — ``lead_re``,
+  ``spectral_gap``, ``henrici`` from a dense tensor; shared by the null
+  so real and null are scored by the same code.
+- **``scjdo2.opspace.flow_scrambled_null(z, v, fit_fn, ...)``** —
+  ``mode="flow"`` permutes the measured ``v`` across cells and refits
+  (destroys ``z → v``, keeps both marginals); ``mode="marginal"`` is the
+  shuffled-marginal refit from ``null_tol_pos``. Returns pooled
+  per-cell-per-perm descriptor arrays for the landscape overlay.
+- **``scjdo2.plot.figure_behaviour_landscape``** — Fisher-weighted KDE
+  on ``(lead_re, spectral_gap | henrici)`` drawn as contours; null
+  overlaid as dashed grey contours or subtracted
+  (``subtract=True`` → ``max(real − null, 0)``). ``(relative)`` on the
+  eigenvalue axes unless clock-calibrated.
+- **``scjdo2.plot.figure_behaviour_ternary``** — Panel A: ternary of
+  the sign fractions, hexbin density (Fisher-weighted) behind dots
+  coloured by cell type; Panel B: stacked composition bars per type
+  split by condition (young vs aged). ``behaviour_composition`` returns
+  the tidy table behind Panel B.
+- **CLI**: ``scjdo2 figure landscape --input <run> --out <dir> [--y
+  spectral_gap|henrici] [--null <npz>] [--subtract]`` and
+  ``scjdo2 figure ternary --input <run> --out <dir> [--color-key
+  cluster] [--condition-key age] [--tol <float>]`` (default tol: the
+  stored oracle tol, else computed on ``--color-key`` clusters).
+- **Tests**: ``tests/test_behaviour_landscape.py`` plants basin /
+  saddle / flat operators across young and aged conditions and checks
+  the fractions, the scale-free oracle, the ledger mass, that the
+  scrambled null erases the planted separation, and that both figures
+  write PDF+PNG with labelled axes and show the planted young→aged
+  shift in the right type only.
+
 ### R16 — anchor-cap reason + SNR-ranked live columns — 2026-10-13
 
 Fixes the Paul15 2000-gene anchor run's false ``no_variation`` verdict
