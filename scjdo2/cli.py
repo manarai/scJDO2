@@ -120,6 +120,15 @@ def _build_parser() -> argparse.ArgumentParser:
                         help="3-D height channel: stiffness (default), lambda_min, "
                              "basin_index (warned: a plane), energy (warned), or an obs column")
 
+    f_energy = fig_sub.add_parser(
+        "energy",
+        help="energy landscape: E(z) as a surface over the embedding (UMAP by default)")
+    f_energy.add_argument("--input", required=True)
+    f_energy.add_argument("--out", required=True)
+    f_energy.add_argument("--use-rep", default="X_umap")
+    f_energy.add_argument("--energy-key", default="energy")
+    f_energy.add_argument("--colour-by", default="op_behaviour_basin")
+
     f_tern = fig_sub.add_parser(
         "ternary",
         help="eigenvalue-sign ternary (holder/drift/fork) + per-type composition bars")
@@ -292,6 +301,20 @@ def _cmd_fig_landscape(args) -> int:
     return 0
 
 
+def _cmd_fig_energy(args) -> int:
+    from .plot import figure_energy_landscape
+
+    adata = _load_adata(args.input)
+    _require(adata, obs_keys=(args.energy_key,),
+             producer="scjdo2.opspace.store_energy (after the energy-drift fit)")
+    out = Path(args.out) / f"energy_landscape_{args.use_rep.replace('X_', '')}"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    figure_energy_landscape(adata, use_rep=args.use_rep, energy_key=args.energy_key,
+                            colour_by=args.colour_by, out=out)
+    print(f"figure: wrote {out}.pdf and {out}.png")
+    return 0
+
+
 def _cmd_fig_ternary(args) -> int:
     from . import opspace
     from .plot import figure_behaviour_ternary
@@ -382,6 +405,8 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_fig_landscape(args)
         if args.fig_cmd == "ternary":
             return _cmd_fig_ternary(args)
+        if args.fig_cmd == "energy":
+            return _cmd_fig_energy(args)
     return 1
 
 

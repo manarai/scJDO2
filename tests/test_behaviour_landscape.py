@@ -229,3 +229,31 @@ def test_figure_3d_writes_and_warns():
             warnings.simplefilter("always")
             figure_behaviour_landscape_3d(ad, height="basin_index")
         assert any("plane" in str(r.message) for r in rec)
+
+
+def test_energy_landscape_writes():
+    from scjdo2.plot import figure_energy_landscape
+
+    ad = _planted_adata()
+    rng = np.random.default_rng(3)
+    n = ad.n_obs
+    # two-valley toy embedding + an energy that is low where cells are dense
+    umap = np.concatenate([rng.normal((0, 0), 0.4, (n // 2, 2)),
+                           rng.normal((3, 1), 0.4, (n - n // 2, 2))])
+    ad.obsm["X_umap"] = umap.astype(np.float32)
+
+    class _E:
+        def energy(self, z):
+            return -np.exp(-np.sum(z[:, :2] ** 2, axis=1)) - np.exp(
+                -np.sum((z[:, :2] - np.array([3.0, 1.0])) ** 2, axis=1))
+
+    with pytest.raises(TypeError):
+        opspace.store_energy(ad, object(), use_rep="X_umap")
+    E = opspace.store_energy(ad, _E(), use_rep="X_umap")
+    assert E.shape == (n,) and "energy" in ad.obs
+    opspace.classify_basin_latent(ad, tol=0.1, use_rep="X_pca")
+    with TemporaryDirectory() as tmp:
+        out = Path(tmp) / "energy"
+        fig = figure_energy_landscape(ad, use_rep="X_umap", out=out)
+        assert out.with_suffix(".pdf").exists() and out.with_suffix(".png").exists()
+        assert fig.axes[0].get_zlabel() == "energy E(z)"

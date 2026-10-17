@@ -662,3 +662,129 @@ def figure_behaviour_landscape_3d(
             fig.savefig(out.with_suffix(".pdf"))
             fig.savefig(out.with_suffix(".png"), dpi=300)
     return fig
+
+
+# ----------------------------------------------------------------------
+# figure 4 — energy landscape over the embedding (Waddington view)
+# ----------------------------------------------------------------------
+
+
+def figure_energy_landscape(
+    adata: AnnData,
+    use_rep: str = "X_umap",
+    energy_key: str = "energy",
+    n_bins: int = 60,
+    smooth_sigma: float = 1.5,
+    colour_by: Optional[str] = "op_behaviour_basin",
+    elev: float = 38.0,
+    azim: float = -60.0,
+    out: Optional[str | Path] = None,
+) -> Figure:
+    """Learned energy ``E(z)`` as a surface over the first two axes of
+    ``obsm[use_rep]`` (UMAP by default), cells on the floor beneath it.
+
+    This is the Waddington view: valleys are where cells pile up, the
+    rim rises around them, and the lower passes between valleys are the
+    transitions. On the snapshot path ``E ≈ −log p``, so valley depth
+    is cell abundance, not how firmly cells are held — that reading
+    belongs to :func:`figure_behaviour_landscape_3d`. The two figures
+    are complementary, not alternatives.
+
+    ``use_rep="X_umap"`` is the readable choice; it distorts distances,
+    so the surface is a map of the density on that picture, not of the
+    latent space ``E`` was learned on. Pass ``"X_pca"`` for the honest
+    floor.
+
+    The surface is the per-bin mean of ``obs[energy_key]`` over the
+    floor, lightly Gaussian-smoothed, masked where no cell lands.
+    ``obs[energy_key]`` is written by
+    :func:`scjdo2.opspace.store_energy` from an
+    :class:`scjdo2.energy_drift.EnergyDriftAdapter`.
+    """
+    from scipy.ndimage import gaussian_filter
+
+    if use_rep not in adata.obsm:
+        raise KeyError(f"obsm[{use_rep!r}] missing")
+    if energy_key not in adata.obs:
+        raise RuntimeError(
+            f"adata.obs[{energy_key!r}] missing — call "
+            "scjdo2.opspace.store_energy(adata, drift) after fitting the energy drift",
+        )
+    Zemb = np.asarray(adata.obsm[use_rep], dtype=float)
+    if Zemb.shape[1] < 2:
+        raise ValueError(f"obsm[{use_rep!r}] needs at least two columns")
+    x = Zemb[:, 0]
+    y = Zemb[:, 1]
+    E = adata.obs[energy_key].to_numpy(dtype=float)
+    m = np.isfinite(x) & np.isfinite(y) & np.isfinite(E)
+    xlim = _shared_limits(x[m], None, pad=0.04)
+    ylim = _shared_limits(y[m], None, pad=0.04)
+    xe = np.linspace(xlim[0], xlim[1], n_bins + 1)
+    ye = np.linspace(ylim[0], ylim[1], n_bins + 1)
+    cnt, _, _ = np.histogram2d(x[m], y[m], bins=[xe, ye])
+    esum, _, _ = np.histogram2d(x[m], y[m], bins=[xe, ye], weights=E[m])
+    with np.errstate(invalid="ignore", divide="ignore"):
+        H = (esum / cnt).T                       # (ny, nx)
+    occupied = cnt.T > 0
+    # Smooth with normalised convolution so empty bins do not pull the
+    # surface toward zero; keep the mask so the surface stays local.
+    Hf = np.where(occupied, H, 0.0)
+    num = gaussian_filter(Hf, sigma=smooth_sigma)
+    den = gaussian_filter(occupied.astype(float), sigma=smooth_sigma)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        Hs = num / den
+    Hs[den < 0.05] = np.nan
+    xc = 0.5 * (xe[:-1] + xe[1:])
+    yc = 0.5 * (ye[:-1] + ye[1:])
+    X, Y = np.meshgrid(xc, yc)
+    finite = Hs[np.isfinite(Hs)]
+    e_lo, e_hi = (float(finite.min()), float(finite.max())) if finite.size else (0.0, 1.0)
+    if e_hi <= e_lo:
+        e_hi = e_lo + 1.0
+    floor = e_lo - 0.35 * (e_hi - e_lo)
+
+    beh = None
+    if colour_by is not None and colour_by in adata.obs:
+        beh = adata.obs[colour_by].astype(str).to_numpy()
+
+    with style():
+        fig = plt.figure(figsize=(OPSPACE_FIG_WIDTH_IN * 0.75, OPSPACE_FIG_HEIGHT_IN * 1.15))
+        ax = fig.add_subplot(111, projection="3d")
+        Hm = np.ma.masked_invalid(Hs)
+        ax.plot_surface(X, Y, Hm, cmap="Blues_r", vmin=e_lo, vmax=e_hi,
+                        rstride=1, cstride=1, linewidth=0.1,
+                        edgecolor="#1F4E79", alpha=0.85, antialiased=True)
+        # cells on the floor
+        if beh is None:
+            ax.scatter(x[m], y[m], np.full(int(m.sum()), floor), s=1.5,
+                       c="#404040", alpha=0.35, edgecolors="none", depthshade=False)
+        else:
+            for b, colour in BEHAVIOUR_COLOURS.items():
+                mb = m & (beh == b)
+                if mb.any():
+                    ax.scatter(x[mb], y[mb], np.full(int(mb.sum()), floor), s=1.5,
+                               c=colour, alpha=0.5, edgecolors="none",
+                               depthshade=False, label=b)
+            ax.legend(loc="upper left", bbox_to_anchor=(0.0, 1.0), fontsize=6,
+                      frameon=False, markerscale=4)
+        ax.set_xlim(*xlim)
+        ax.set_ylim(*ylim)
+        ax.set_zlim(floor, e_hi + 0.05 * (e_hi - e_lo))
+        rep = use_rep.replace("X_", "").upper()
+        ax.set_xlabel(f"{rep} 1", labelpad=2)
+        ax.set_ylabel(f"{rep} 2", labelpad=2)
+        ax.set_zlabel("energy E(z)", labelpad=4)
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+        ax.view_init(elev=elev, azim=azim)
+        ax.set_title("energy landscape — E(z) ≈ −log density over the embedding",
+                     loc="left", fontsize=8)
+        _footer(fig, f"floor: {use_rep} (distances {'distorted' if 'umap' in use_rep.lower() else 'preserved'}); "
+                     f"surface: per-bin mean E, σ={smooth_sigma} bins; "
+                     "valley depth = cell abundance, not holding stiffness")
+        if out is not None:
+            out = Path(out)
+            out.parent.mkdir(parents=True, exist_ok=True)
+            fig.savefig(out.with_suffix(".pdf"))
+            fig.savefig(out.with_suffix(".png"), dpi=300)
+    return fig

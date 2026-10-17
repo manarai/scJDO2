@@ -36,6 +36,7 @@ from .landscape import (
     figure_behaviour_landscape,
     figure_behaviour_landscape_3d,
     figure_behaviour_ternary,
+    figure_energy_landscape,
 )
 from .figures_v05 import (
     add_aging_footer,
@@ -81,4 +82,5 @@ __all__ = [
     "figure_behaviour_landscape_3d",
     "figure_behaviour_ternary",
     "behaviour_composition",
+    "figure_energy_landscape",
 ]

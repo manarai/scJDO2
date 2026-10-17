@@ -1031,6 +1031,30 @@ def landscape_descriptors(J: np.ndarray) -> dict[str, np.ndarray]:
             "stiffness": stiff, "lambda_min": lmin}
 
 
+def store_energy(adata: AnnData, drift, use_rep: Optional[str] = None,
+                 key: str = "energy") -> np.ndarray:
+    """Write ``obs[key] = drift.energy(z)`` for an energy-parameterised
+    drift (:class:`scjdo2.energy_drift.EnergyDriftAdapter`) and record
+    ``uns['scjdo2']['energy_rep']``. ``use_rep`` defaults to
+    ``uns['scjdo2']['meta']['use_rep']`` or ``"X_pca"``. Raises if the
+    adapter has no ``.energy`` method (v1 / measured-flow drifts carry
+    no scalar potential)."""
+    if not hasattr(drift, "energy"):
+        raise TypeError(
+            "store_energy needs an energy-parameterised drift with .energy(z); "
+            f"got {type(drift).__name__}",
+        )
+    if use_rep is None:
+        use_rep = adata.uns.get("scjdo2", {}).get("meta", {}).get("use_rep", "X_pca")
+    if use_rep not in adata.obsm:
+        raise KeyError(f"obsm[{use_rep!r}] missing")
+    z = np.asarray(adata.obsm[use_rep], dtype=np.float32)
+    E = np.asarray(drift.energy(z), dtype=np.float32).reshape(-1)
+    adata.obs[key] = E
+    adata.uns.setdefault("scjdo2", {})["energy_rep"] = str(use_rep)
+    return E
+
+
 def well_stiffness(adata: AnnData) -> np.ndarray:
     """Write ``obs['op_stiffness']`` and ``obs['op_lambda_min']`` from the
     dense latent J (see :func:`landscape_descriptors`) and return the

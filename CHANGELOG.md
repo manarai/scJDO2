@@ -55,6 +55,18 @@ the Hessian of a density and the null must be ``mode="marginal"``.
   if asked for it; ``energy`` likewise, as ``E ≈ −log p`` restates the
   floor density). ``lambda_min`` is the alternative height. The null's
   binned height is overlaid as grey ticks.
+- **``scjdo2.plot.figure_energy_landscape``** — the Waddington view:
+  the learned energy ``E(z)`` as a surface over the first two axes of
+  ``obsm[use_rep]`` (UMAP by default, PCA for the honest floor), cells
+  on the floor coloured by basin class. Surface = per-bin mean ``E``
+  with normalised Gaussian smoothing, masked where no cell lands, so
+  it is only drawn where ``E`` was observed. ``E ≈ −log p`` on the
+  snapshot path: valley depth is abundance, not holding stiffness
+  (the footer says so). ``scjdo2.opspace.store_energy(adata, drift)``
+  writes ``obs['energy']`` from an ``EnergyDriftAdapter``; the run
+  scripts need that one call after the fit.
+- **CLI**: ``scjdo2 figure energy --input <run> --out <dir> [--use-rep
+  X_umap] [--energy-key energy] [--colour-by op_behaviour_basin]``.
 - **CLI**: ``scjdo2 figure landscape --input <run> --out <dir> [--y
   spectral_gap|henrici] [--null <npz>] [--subtract] [--three-d
   [--height stiffness|lambda_min|...]]`` and
