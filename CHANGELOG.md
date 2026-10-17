@@ -45,8 +45,19 @@ the Hessian of a density and the null must be ``mode="marginal"``.
   coloured by cell type; Panel B: stacked composition bars per type
   split by condition (young vs aged). ``behaviour_composition`` returns
   the tidy table behind Panel B.
+- **``scjdo2.plot.figure_behaviour_landscape_3d``** — same floor, with
+  height = per-bin Fisher-weighted mean of the cell's **well stiffness**
+  (``−mean(Re λ < 0)``, from ``scjdo2.opspace.well_stiffness`` /
+  ``landscape_descriptors``), drawn as bars shaded by occupancy over the
+  projected density contours, so deep-but-sparse and crowded-but-shallow
+  regions are visible. ``basin_index`` was NOT used as the height: it is
+  ``−lead_re``, i.e. ``−x`` over this floor, a plane (the function warns
+  if asked for it; ``energy`` likewise, as ``E ≈ −log p`` restates the
+  floor density). ``lambda_min`` is the alternative height. The null's
+  binned height is overlaid as grey ticks.
 - **CLI**: ``scjdo2 figure landscape --input <run> --out <dir> [--y
-  spectral_gap|henrici] [--null <npz>] [--subtract]`` and
+  spectral_gap|henrici] [--null <npz>] [--subtract] [--three-d
+  [--height stiffness|lambda_min|...]]`` and
   ``scjdo2 figure ternary --input <run> --out <dir> [--color-key
   cluster] [--condition-key age] [--tol <float>]`` (default tol: the
   stored oracle tol, else computed on ``--color-key`` clusters).

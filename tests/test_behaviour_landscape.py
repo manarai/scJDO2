@@ -182,3 +182,50 @@ def test_figures_write_and_label():
         comp.loc[("basin", "young"), "frac_pos"],
     )
     assert tol > 0
+
+
+def test_stiffness_is_not_a_function_of_lead_re():
+    ad = _planted_adata()
+    desc = opspace.landscape_descriptors(ad.uns["scjdo2"]["J"])
+    cl = ad.obs["cluster"].to_numpy()
+    # basin and saddle cells share the same holding stiffness (~1.0) but
+    # differ in lead_re by ~1.8: height must separate from the floor.
+    assert desc["stiffness"][cl == "basin"].mean() == pytest.approx(1.0, abs=0.1)
+    assert desc["stiffness"][cl == "saddle"].mean() == pytest.approx(1.0, abs=0.1)
+    assert desc["stiffness"][cl == "flat"].mean() < 0.1
+    assert abs(desc["lead_re"][cl == "saddle"].mean()
+               - desc["lead_re"][cl == "basin"].mean()) > 1.0
+    # basin_index = -lead_re exactly (a plane over the floor)
+    s = opspace.well_stiffness(ad)
+    assert "op_stiffness" in ad.obs and "op_lambda_min" in ad.obs
+    assert np.allclose(s, ad.obs["op_stiffness"].to_numpy())
+
+
+def test_figure_3d_writes_and_warns():
+    import warnings
+
+    from scjdo2.plot import figure_behaviour_landscape_3d
+
+    ad = _planted_adata()
+    J = ad.uns["scjdo2"]["J"]
+    n = ad.n_obs
+
+    def fit_fn(z_in, v_perm, seed):
+        rng = np.random.default_rng(seed)
+        return _ConstAdapter(J[rng.permutation(n)])
+
+    null = opspace.flow_scrambled_null(
+        ad.obsm["X_pca"], np.zeros_like(ad.obsm["X_pca"]), fit_fn, n_perm=2,
+    )
+    assert "stiffness" in null and null["stiffness"].shape == (2 * n,)
+    with TemporaryDirectory() as tmp:
+        out = Path(tmp) / "landscape3d"
+        fig = figure_behaviour_landscape_3d(ad, y="spectral_gap", null=null, out=out)
+        assert out.with_suffix(".pdf").exists() and out.with_suffix(".png").exists()
+        ax = fig.axes[0]
+        assert "(relative)" in ax.get_xlabel()
+        assert "stiffness" in ax.get_zlabel()
+        with warnings.catch_warnings(record=True) as rec:
+            warnings.simplefilter("always")
+            figure_behaviour_landscape_3d(ad, height="basin_index")
+        assert any("plane" in str(r.message) for r in rec)

@@ -438,3 +438,227 @@ def figure_behaviour_ternary(
             fig.savefig(out.with_suffix(".pdf"))
             fig.savefig(out.with_suffix(".png"), dpi=300)
     return fig
+
+
+# ----------------------------------------------------------------------
+# figure 3 — 3-D landscape: descriptor floor, well depth as height
+# ----------------------------------------------------------------------
+
+_HEIGHT_LABELS = {
+    "stiffness": "well stiffness −mean(Re λ < 0)",
+    "lambda_min": "stiffest axis −min Re λ",
+    "basin_index": "basin index −Re(λ₁)",
+    "energy": "energy E(z)",
+}
+
+
+def _binned_height(
+    x: np.ndarray, y: np.ndarray, h: np.ndarray, w: np.ndarray,
+    xlim: tuple[float, float], ylim: tuple[float, float],
+    n_bins: int = 36, min_weight: float = 0.0,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Fisher-weighted mean height per (x, y) bin. Returns ``(X, Y, H,
+    W)`` on bin centres; ``H`` is NaN where no cell lands (so the
+    surface is masked there rather than interpolated across gaps)."""
+    m = np.isfinite(x) & np.isfinite(y) & np.isfinite(h) & np.isfinite(w) & (w > 0)
+    xe = np.linspace(xlim[0], xlim[1], n_bins + 1)
+    ye = np.linspace(ylim[0], ylim[1], n_bins + 1)
+    Wsum, _, _ = np.histogram2d(x[m], y[m], bins=[xe, ye], weights=w[m])
+    Hsum, _, _ = np.histogram2d(x[m], y[m], bins=[xe, ye], weights=w[m] * h[m])
+    with np.errstate(invalid="ignore", divide="ignore"):
+        H = Hsum / Wsum
+    H[Wsum <= min_weight] = np.nan
+    xc = 0.5 * (xe[:-1] + xe[1:])
+    yc = 0.5 * (ye[:-1] + ye[1:])
+    X, Y = np.meshgrid(xc, yc)
+    return X, Y, H.T, Wsum.T
+
+
+def figure_behaviour_landscape_3d(
+    adata: AnnData,
+    y: str = "spectral_gap",
+    height: str = "stiffness",
+    null: Optional[dict] = None,
+    weight: str = "fisher",
+    n_bins: int = 36,
+    n_grid: int = 120,
+    bw: Optional[float] = None,
+    n_levels: int = 8,
+    elev: float = 32.0,
+    azim: float = -58.0,
+    out: Optional[str | Path] = None,
+) -> Figure:
+    """3-D behaviour landscape: operator-space floor ``(lead_re, y)``,
+    height = curvature-derived well depth, Fisher-weighted density
+    contours projected onto the floor.
+
+    The point of the third axis is to carry something the floor and the
+    density do not already encode, so that places where depth and
+    crowding disagree stand out: a tall, sparsely occupied cell of the
+    surface is a deep well few cells sit in; a crowded floor region
+    under a low surface is a shallow well many cells sit in.
+
+    ``height``:
+
+    * ``"stiffness"`` (default) — ``−mean(Re λ < 0)`` per cell, the
+      depth along the directions that hold the cell. Computed from the
+      dense latent J via :func:`scjdo2.opspace.well_stiffness` when
+      ``obs['op_stiffness']`` is absent.
+    * ``"lambda_min"`` — the stiffest single axis.
+    * ``"basin_index"`` — ``−lead_re``. Allowed but warned against: it
+      is ``−x``, a plane over this floor.
+    * ``"energy"`` — ``obs['energy']`` (``E(z)`` from the energy drift).
+      Warned against: on the snapshot path ``E ≈ −log p``, so its
+      valleys are the density contours redrawn as height.
+    * any other string — an ``obs`` column to use as height.
+
+    ``null`` (from :func:`scjdo2.opspace.flow_scrambled_null`) adds the
+    null's binned height as grey ticks and its density as dashed floor
+    contours.
+    """
+    import warnings
+
+    from .. import opspace as _opspace
+
+    for col in ("lead_re", y):
+        if col not in adata.obs:
+            raise RuntimeError(
+                f"adata.obs[{col!r}] missing — call scjdo2.opspace.invariants first",
+            )
+    if height == "stiffness" and "op_stiffness" not in adata.obs:
+        _opspace.well_stiffness(adata)
+    if height == "lambda_min" and "op_lambda_min" not in adata.obs:
+        _opspace.well_stiffness(adata)
+    if height == "basin_index":
+        warnings.warn(
+            "height='basin_index' is −lead_re, i.e. −x over this floor: the "
+            "surface will be a plane. Use 'stiffness' or 'lambda_min'.",
+            RuntimeWarning, stacklevel=2,
+        )
+    if height == "energy":
+        warnings.warn(
+            "height='energy' is ≈ −log density on the snapshot path; the "
+            "surface will restate the floor contours.",
+            RuntimeWarning, stacklevel=2,
+        )
+    height_col = {
+        "stiffness": "op_stiffness", "lambda_min": "op_lambda_min",
+        "basin_index": "op_basin_index", "energy": "energy",
+    }.get(height, height)
+    if height_col not in adata.obs:
+        if height == "basin_index" and "lead_re" in adata.obs:
+            adata.obs["op_basin_index"] = -adata.obs["lead_re"].to_numpy(dtype=float)
+        else:
+            raise RuntimeError(f"adata.obs[{height_col!r}] missing for height={height!r}")
+
+    x_real = adata.obs["lead_re"].to_numpy(dtype=float)
+    y_real = adata.obs[y].to_numpy(dtype=float)
+    h_real = adata.obs[height_col].to_numpy(dtype=float)
+    w_real = (_opspace.fisher_mass(adata) if weight == "fisher"
+              else np.ones(adata.n_obs))
+
+    x_null = y_null = h_null = w_null = None
+    null_key = {"stiffness": "stiffness", "lambda_min": "lambda_min",
+                "basin_index": "lead_re"}.get(height)
+    if null is not None:
+        x_null = np.asarray(null["lead_re"], dtype=float)
+        y_null = np.asarray(null[y], dtype=float)
+        w_null = np.asarray(null.get("weight", np.ones_like(x_null)), dtype=float)
+        if null_key is not None and null_key in null:
+            h_null = np.asarray(null[null_key], dtype=float)
+            if height == "basin_index":
+                h_null = -h_null
+
+    xlim = _shared_limits(x_real, x_null)
+    ylim = _shared_limits(y_real, y_null)
+    X, Y, H, Wb = _binned_height(x_real, y_real, h_real, w_real, xlim, ylim, n_bins)
+    Xd, Yd, Z = _weighted_kde_grid(x_real, y_real, w_real, xlim, ylim, n_grid, bw)
+    Hn = Zn = None
+    if x_null is not None:
+        _, _, Zn = _weighted_kde_grid(x_null, y_null, w_null, xlim, ylim, n_grid, bw)
+        if h_null is not None:
+            _, _, Hn, _ = _binned_height(x_null, y_null, h_null, w_null, xlim, ylim, n_bins)
+
+    h_finite = H[np.isfinite(H)]
+    if Hn is not None:
+        h_finite = np.concatenate([h_finite, Hn[np.isfinite(Hn)]])
+    if h_finite.size == 0:
+        h_lo, h_hi = 0.0, 1.0
+    else:
+        h_lo, h_hi = float(np.min(h_finite)), float(np.max(h_finite))
+        if h_hi <= h_lo:
+            h_hi = h_lo + 1.0
+    floor = h_lo - 0.25 * (h_hi - h_lo)
+
+    with style():
+        fig = plt.figure(figsize=(OPSPACE_FIG_WIDTH_IN * 0.75, OPSPACE_FIG_HEIGHT_IN * 1.15))
+        ax = fig.add_subplot(111, projection="3d")
+        # Height map: one bar per occupied bin (Fisher-weighted mean
+        # height), shaded by occupancy. Bars, not a surface, so empty
+        # bins stay empty instead of being interpolated across.
+        occ = np.where(np.isfinite(H), Wb, 0.0)
+        occ_max = float(occ.max()) if occ.size and float(occ.max()) > 0 else 1.0
+        cmap = plt.get_cmap("Blues")
+        dx = (xlim[1] - xlim[0]) / n_bins
+        dy = (ylim[1] - ylim[0]) / n_bins
+        ii, jj = np.where(np.isfinite(H))
+        if ii.size:
+            xs_b = X[ii, jj] - dx / 2.0
+            ys_b = Y[ii, jj] - dy / 2.0
+            hs_b = H[ii, jj] - floor
+            cols = cmap(0.25 + 0.75 * occ[ii, jj] / occ_max)
+            ax.bar3d(xs_b, ys_b, np.full(ii.size, floor), dx * 0.95, dy * 0.95,
+                     hs_b, color=cols, edgecolor="#1F4E79", linewidth=0.15,
+                     shade=False, alpha=0.9)
+        if Hn is not None:
+            ni, nj = np.where(np.isfinite(Hn))
+            if ni.size:
+                ax.scatter(X[ni, nj], Y[ni, nj], Hn[ni, nj], s=3, c="#808080",
+                           marker="_", linewidths=0.6, alpha=0.8, depthshade=False)
+        # Floor: density contours (and null contours dashed).
+        vmax = float(np.max(Z)) if np.isfinite(Z).any() and float(np.max(Z)) > 0 else 1.0
+        levels = np.linspace(vmax / n_levels, vmax, n_levels)
+        ax.contour(Xd, Yd, Z, levels=levels, zdir="z", offset=floor,
+                   colors="#1F4E79", linewidths=0.5)
+        if Zn is not None:
+            nmax = float(np.max(Zn)) if float(np.max(Zn)) > 0 else 1.0
+            ax.contour(Xd, Yd, Zn, levels=np.linspace(nmax / n_levels, nmax, n_levels),
+                       zdir="z", offset=floor, colors="#808080",
+                       linewidths=0.5, linestyles="dashed")
+        ax.set_xlim(*xlim)
+        ax.set_ylim(*ylim)
+        ax.set_zlim(floor, h_hi + 0.05 * (h_hi - h_lo))
+        ax.set_xlabel(relative_label(adata, "Re(λ₁)"), labelpad=4)
+        ylab = {"spectral_gap": "spectral gap", "henrici": "Henrici"}.get(y, y)
+        if y == "spectral_gap":
+            ylab = relative_label(adata, ylab)
+        ax.set_ylabel(ylab, labelpad=4)
+        zlab = _HEIGHT_LABELS.get(height, height)
+        if height in ("stiffness", "lambda_min", "basin_index"):
+            zlab = relative_label(adata, zlab)
+        ax.set_zlabel(zlab, labelpad=4)
+        ax.view_init(elev=elev, azim=azim)
+        ax.set_title("behaviour landscape — bars: well depth, floor: density",
+                     loc="left", fontsize=8)
+        import matplotlib.lines as mlines
+        import matplotlib.patches as mpatches
+        handles = [
+            mpatches.Patch(facecolor=cmap(0.95), edgecolor="#1F4E79",
+                           label="bars: well depth per bin (shade = occupancy)"),
+            mlines.Line2D([], [], color="#1F4E79", lw=0.8, label="floor: density contours"),
+        ]
+        if null is not None:
+            handles.append(mlines.Line2D([], [], color="#808080", lw=0.8, ls="--",
+                                         label="scrambled-flow null (floor contours; "
+                                               "grey ticks = null height)"))
+        ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(0.0, 1.0),
+                  fontsize=6, frameon=False)
+        _footer(fig, f"height: {height} (curvature-derived, not density); "
+                     f"weight: {weight}; bins: {n_bins}; "
+                     f"null: {'none' if null is None else null.get('mode', 'flow')}")
+        if out is not None:
+            out = Path(out)
+            out.parent.mkdir(parents=True, exist_ok=True)
+            fig.savefig(out.with_suffix(".pdf"))
+            fig.savefig(out.with_suffix(".png"), dpi=300)
+    return fig

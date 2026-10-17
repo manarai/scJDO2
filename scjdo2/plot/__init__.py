@@ -34,6 +34,7 @@ from .figures import (
 from .landscape import (
     behaviour_composition,
     figure_behaviour_landscape,
+    figure_behaviour_landscape_3d,
     figure_behaviour_ternary,
 )
 from .figures_v05 import (
@@ -77,6 +78,7 @@ __all__ = [
     "basin_index_by_type",
     # behaviour-landscape figures (operator-space occupancy)
     "figure_behaviour_landscape",
+    "figure_behaviour_landscape_3d",
     "figure_behaviour_ternary",
     "behaviour_composition",
 ]

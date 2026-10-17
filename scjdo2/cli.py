@@ -114,6 +114,11 @@ def _build_parser() -> argparse.ArgumentParser:
                         help="plot max(real − null, 0) instead of overlaying the null")
     f_land.add_argument("--no-fisher", action="store_true",
                         help="unweighted density (default: Fisher-mass weighted)")
+    f_land.add_argument("--three-d", action="store_true",
+                        help="also write the 3-D variant (height = well stiffness)")
+    f_land.add_argument("--height", default="stiffness",
+                        help="3-D height channel: stiffness (default), lambda_min, "
+                             "basin_index (warned: a plane), energy (warned), or an obs column")
 
     f_tern = fig_sub.add_parser(
         "ternary",
@@ -276,6 +281,14 @@ def _cmd_fig_landscape(args) -> int:
         weight="none" if args.no_fisher else "fisher", out=out,
     )
     print(f"figure: wrote {out}.pdf and {out}.png")
+    if args.three_d:
+        from .plot import figure_behaviour_landscape_3d
+        out3 = Path(args.out) / f"behaviour_landscape_3d_{args.y}_{args.height}"
+        figure_behaviour_landscape_3d(
+            adata, y=args.y, height=args.height, null=null,
+            weight="none" if args.no_fisher else "fisher", out=out3,
+        )
+        print(f"figure: wrote {out3}.pdf and {out3}.png")
     return 0
 
 

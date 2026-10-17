@@ -991,13 +991,26 @@ def behaviour_fractions(adata: AnnData, tol: float) -> pd.DataFrame:
 
 
 def landscape_descriptors(J: np.ndarray) -> dict[str, np.ndarray]:
-    """Per-cell ``lead_re``, ``spectral_gap`` and ``henrici`` from a dense
-    ``(n, d, d)`` tensor. Shared by :func:`invariants` consumers and the
-    flow-scrambled null so real and null are scored by the same code."""
+    """Per-cell ``lead_re``, ``spectral_gap``, ``henrici``, ``stiffness``
+    and ``lambda_min`` from a dense ``(n, d, d)`` tensor. Shared by
+    :func:`invariants` consumers and the flow-scrambled null so real and
+    null are scored by the same code.
+
+    ``stiffness`` is the mean contraction over the cell's negative
+    eigenvalues, ``−mean{Re λ : Re λ < 0}`` (0 when none): the depth of
+    the well along the directions that hold the cell. It is the height
+    channel of the 3-D landscape because it is NOT a function of
+    ``lead_re`` — ``lead_re`` reads the softest axis, ``stiffness`` the
+    holding axes — whereas ``basin_index = −lead_re`` would be a plane
+    over the ``lead_re`` floor. ``lambda_min`` is the stiffest single
+    axis, kept as an alternative height.
+    """
     n = J.shape[0]
     lead_re = np.full(n, np.nan)
     gap = np.full(n, np.nan)
     hen = np.full(n, np.nan)
+    stiff = np.full(n, np.nan)
+    lmin = np.full(n, np.nan)
     for c in range(n):
         Jc = J[c].astype(np.float64)
         if not np.all(np.isfinite(Jc)):
@@ -1011,7 +1024,21 @@ def landscape_descriptors(J: np.ndarray) -> dict[str, np.ndarray]:
         lead_re[c] = float(ev[0].real)
         gap[c] = float(ev[0].real - ev[1].real) if ev.size > 1 else 0.0
         hen[c] = _henrici(Jc, ev)
-    return {"lead_re": lead_re, "spectral_gap": gap, "henrici": hen}
+        negs = ev.real[ev.real < 0]
+        stiff[c] = float(-negs.mean()) if negs.size else 0.0
+        lmin[c] = float(ev.real.min())
+    return {"lead_re": lead_re, "spectral_gap": gap, "henrici": hen,
+            "stiffness": stiff, "lambda_min": lmin}
+
+
+def well_stiffness(adata: AnnData) -> np.ndarray:
+    """Write ``obs['op_stiffness']`` and ``obs['op_lambda_min']`` from the
+    dense latent J (see :func:`landscape_descriptors`) and return the
+    stiffness array."""
+    desc = landscape_descriptors(_dense_latent_J(adata))
+    adata.obs["op_stiffness"] = desc["stiffness"].astype(np.float32)
+    adata.obs["op_lambda_min"] = desc["lambda_min"].astype(np.float32)
+    return desc["stiffness"]
 
 
 def flow_scrambled_null(
@@ -1036,7 +1063,7 @@ def flow_scrambled_null(
     :func:`null_tol_pos`, and call ``fit_fn(z_perm, seed)``.
 
     Returns a dict with pooled per-cell-per-perm arrays ``lead_re``,
-    ``spectral_gap``, ``henrici``, ``weight`` (Fisher weights tiled per
+    ``spectral_gap``, ``henrici``, ``stiffness``, ``lambda_min``, ``weight`` (Fisher weights tiled per
     perm, ones if not given), ``perm`` (perm index), plus ``n_perm``
     and ``mode``. Pass the dict as ``null=`` to
     :func:`scjdo2.plot.figure_behaviour_landscape`.
@@ -1046,7 +1073,8 @@ def flow_scrambled_null(
     w = (np.ones(n) if fisher_weights is None
          else np.asarray(fisher_weights, dtype=np.float64))
     pooled: dict[str, list[np.ndarray]] = {
-        "lead_re": [], "spectral_gap": [], "henrici": [], "weight": [], "perm": [],
+        "lead_re": [], "spectral_gap": [], "henrici": [], "stiffness": [],
+        "lambda_min": [], "weight": [], "perm": [],
     }
     for p in range(int(n_perm)):
         s = int(seed + 100 + p)
@@ -1065,7 +1093,7 @@ def flow_scrambled_null(
         else:
             raise ValueError(f"unknown mode {mode!r}")
         desc = landscape_descriptors(J)
-        for k in ("lead_re", "spectral_gap", "henrici"):
+        for k in ("lead_re", "spectral_gap", "henrici", "stiffness", "lambda_min"):
             pooled[k].append(desc[k])
         pooled["weight"].append(w)
         pooled["perm"].append(np.full(n, p, dtype=np.int32))
