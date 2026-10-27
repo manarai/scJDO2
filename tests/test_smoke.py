@@ -12,7 +12,11 @@ def test_package_imports():
     import scjdo2.pipeline  # noqa: F401
     import scjdo2.plot  # noqa: F401
 
-    assert scjdo2.__version__.startswith("0.1.0")
+    import re
+    from pathlib import Path
+
+    toml = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
+    assert scjdo2.__version__ == re.search(r'^version = "([^"]+)"', toml, re.M).group(1)
 
 
 def test_all_modules_importable():

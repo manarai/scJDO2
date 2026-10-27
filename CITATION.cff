@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use scJDO2, please cite it as below."
+title: "scJDO2: label-free flow operators of single-cell dynamics from sampled time courses"
+type: software
+license: MIT
+repository-code: "https://github.com/manarai/scJDO2"
+version: "0.6.0"
+date-released: "2026-10-27"
+authors:
+  - family-names: Redd
+    given-names: David
+    affiliation: Brigham Young University
+  - family-names: Green
+    given-names: Sam
+    affiliation: Brigham Young University
+  - family-names: Terooatea
+    given-names: Tommy W.
+    affiliation: Brigham Young University

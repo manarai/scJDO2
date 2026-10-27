@@ -9,7 +9,7 @@ publication figures. Phase C adds the NB rate model and the Fisher ledger.
 See `V2_PLAN.md` and `CHANGELOG.md`.
 """
 
-__version__ = "0.1.0.dev1"
+__version__ = "0.6.0"
 
 from .flow_operator import flow, flow_descriptors, ot_velocity  # noqa: E402
 

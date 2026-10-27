@@ -293,6 +293,10 @@ Using the CRediT framework:
 
 **Tommy W. Terooatea**: Conceptualization, Supervision, Project administration, Funding acquisition, Writing — review & editing.
 
+## Funding
+
+This work was supported by a New Faculty Start-up award from the College of Life Sciences, Brigham Young University (to T.W.T.).
+
 ## Competing Interests
 
 The authors declare no competing interests.
