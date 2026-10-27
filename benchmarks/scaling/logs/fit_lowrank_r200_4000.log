@@ -1,0 +1,35 @@
+{
+  "finished_utc": "2026-10-22T18:31:15.372030+00:00",
+  "jacobian": "autodiff",
+  "lambda1_path": "benchmarks/scaling/data/lambda1_lowrank_r200_4000.npz",
+  "measured_drift": "MeasuredDrift(30, seed=0) defaults",
+  "n_eval_cells": 8000,
+  "n_fit_cells": 8000,
+  "n_per_day": 4000,
+  "rank": 200,
+  "solver": "lowrank_r200",
+  "stage": "fit_and_jacobian",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "fit_lowrank_r200_4000",
+  "wall_seconds": 81.976,
+  "wall_seconds_internal": 81.976
+}
+       83.92 real        29.83 user        12.26 sys
+           658325504  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               62917  page reclaims
+                  25  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1339  voluntary context switches
+             1479219  involuntary context switches
+        300389593159  instructions retired
+        108377885527  cycles elapsed
+           578356784  peak memory footprint

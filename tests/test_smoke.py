@@ -20,7 +20,6 @@ def test_all_modules_importable():
 
     for mod in (
         "scjdo2.embed",
-        "scjdo2.drift",
         "scjdo2.rates",
         "scjdo2.field",
         "scjdo2.fisher",

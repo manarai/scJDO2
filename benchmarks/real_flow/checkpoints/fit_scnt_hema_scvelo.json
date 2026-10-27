@@ -1,0 +1,15 @@
+{
+  "dataset": "scnt_hema",
+  "finished_utc": "2026-10-19T06:18:08.363380+00:00",
+  "fit_artifact": "benchmarks/real_flow/arrays/scvelo_fits/scnt_hema_scvelo_fit.npz",
+  "fit_only": true,
+  "n_pca_genes_present": 210,
+  "n_retained_genes": 2467,
+  "n_velocity_genes": 72,
+  "settings": "S03 fixed neighbours=30, moments reuse, recover_dynamics, velocity(dynamical)",
+  "source": "scvelo",
+  "started_utc": "2026-10-19T06:16:49.198833+00:00",
+  "task": "orient/S11",
+  "unit": "fit_scnt_hema_scvelo",
+  "wall_seconds": 79.165
+}

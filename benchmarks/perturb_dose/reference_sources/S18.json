@@ -1,0 +1,1082 @@
+{
+  "task": "orient/S18",
+  "status": "done",
+  "started_utc": "2026-10-22T05:47:18.329344+00:00",
+  "finished_utc": "2026-10-22T06:13:59.413082+00:00",
+  "compute": {
+    "cpu_hours": 1.1004433133333333,
+    "gpu_hours": 0.0,
+    "hardware": {
+      "python": "3.12.3",
+      "platform": "Linux-6.18.38+-aarch64-with-glibc2.39",
+      "cpu_count": 6,
+      "ram_bytes": 18754445312,
+      "coord_checker_baseline": {
+        "ref": "orientation",
+        "commit": "4c1aad9c627ac4371ced46525baac956529260d9",
+        "reason": "branch-only bundle omitted orientation; local ref points to exact pre-run imported snapshot"
+      },
+      "ram_bytes_at_report": 25599549440,
+      "ram_bytes_seen_in_timed_units": [
+        8419680256,
+        18754445312,
+        25599549440
+      ],
+      "peak_timed_process_rss_kib": 3105136
+    },
+    "units": [
+      {
+        "unit": "download",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "download"
+        ],
+        "started_utc": "2026-10-22T05:52:05.078129+00:00",
+        "finished_utc": "2026-10-22T05:55:24.181560+00:00",
+        "exit_code": 0,
+        "wall_seconds": 199.10343606000015,
+        "cpu_hours": 0.014315512499999999,
+        "max_rss_kib": 38264,
+        "cpu_hours_before": 0.04797673305555556,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/download.log"
+      },
+      {
+        "unit": "effects",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "effects"
+        ],
+        "started_utc": "2026-10-22T05:56:31.161007+00:00",
+        "finished_utc": "2026-10-22T05:56:32.829284+00:00",
+        "exit_code": 1,
+        "wall_seconds": 1.6682823860001008,
+        "cpu_hours": 0.0006352633333333332,
+        "max_rss_kib": 170104,
+        "cpu_hours_before": 0.09146034361111112,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/effects.log"
+      },
+      {
+        "unit": "effects_after_label_repair",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "effects"
+        ],
+        "started_utc": "2026-10-22T05:57:35.337170+00:00",
+        "finished_utc": "2026-10-22T05:59:52.193452+00:00",
+        "exit_code": 0,
+        "wall_seconds": 136.85628265200012,
+        "cpu_hours": 0.19598045333333333,
+        "max_rss_kib": 331420,
+        "cpu_hours_before": 0.09404560472222223,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/effects_after_label_repair.log"
+      },
+      {
+        "unit": "embedding",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "embed"
+        ],
+        "started_utc": "2026-10-22T05:55:41.781860+00:00",
+        "finished_utc": "2026-10-22T05:56:17.932907+00:00",
+        "exit_code": 0,
+        "wall_seconds": 36.151047593000385,
+        "cpu_hours": 0.029168098055555557,
+        "max_rss_kib": 3105136,
+        "cpu_hours_before": 0.062292245555555556,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/embedding.log"
+      },
+      {
+        "unit": "final_input_verification",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "verify-final"
+        ],
+        "started_utc": "2026-10-22T06:12:54.271773+00:00",
+        "finished_utc": "2026-10-22T06:13:08.317258+00:00",
+        "exit_code": 0,
+        "wall_seconds": 14.045487891999983,
+        "cpu_hours": 0.002864756388888889,
+        "max_rss_kib": 40196,
+        "cpu_hours_before": 1.0975102788888889,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/final_input_verification.log"
+      },
+      {
+        "unit": "fit_capture_k10",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "fit-capture",
+          "--k",
+          "10"
+        ],
+        "started_utc": "2026-10-22T06:00:07.089611+00:00",
+        "finished_utc": "2026-10-22T06:01:43.375469+00:00",
+        "exit_code": 0,
+        "wall_seconds": 96.28585566999982,
+        "cpu_hours": 0.11190061972222223,
+        "max_rss_kib": 935536,
+        "cpu_hours_before": 0.29002605805555554,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/fit_capture_k10.log"
+      },
+      {
+        "unit": "fit_capture_k15",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "fit-capture",
+          "--k",
+          "15"
+        ],
+        "started_utc": "2026-10-22T06:01:50.769096+00:00",
+        "finished_utc": "2026-10-22T06:04:04.524396+00:00",
+        "exit_code": 0,
+        "wall_seconds": 133.75530443599973,
+        "cpu_hours": 0.16124875166666666,
+        "max_rss_kib": 937624,
+        "cpu_hours_before": 0.4019266777777778,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/fit_capture_k15.log"
+      },
+      {
+        "unit": "fit_capture_k20",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "fit-capture",
+          "--k",
+          "20"
+        ],
+        "started_utc": "2026-10-22T06:04:11.807334+00:00",
+        "finished_utc": "2026-10-22T06:07:07.988761+00:00",
+        "exit_code": 0,
+        "wall_seconds": 176.18143043500004,
+        "cpu_hours": 0.21370340694444445,
+        "max_rss_kib": 944340,
+        "cpu_hours_before": 0.5631754294444444,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/fit_capture_k20.log"
+      },
+      {
+        "unit": "fit_capture_k30",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "fit-capture",
+          "--k",
+          "30"
+        ],
+        "started_utc": "2026-10-22T06:07:17.294733+00:00",
+        "finished_utc": "2026-10-22T06:11:34.102992+00:00",
+        "exit_code": 0,
+        "wall_seconds": 256.8082639559998,
+        "cpu_hours": 0.314896168611111,
+        "max_rss_kib": 994020,
+        "cpu_hours_before": 0.7768788363888889,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/fit_capture_k30.log"
+      },
+      {
+        "unit": "install",
+        "command": [
+          ".venv/bin/pip",
+          "install",
+          "--no-cache-dir",
+          "-e",
+          ".[dev]"
+        ],
+        "started_utc": "2026-10-22T05:48:25.170853+00:00",
+        "finished_utc": "2026-10-22T05:51:03.557926+00:00",
+        "exit_code": 0,
+        "wall_seconds": 158.38706736899985,
+        "cpu_hours": 0.043234395,
+        "max_rss_kib": 474836,
+        "cpu_hours_before": 0.0,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 18754445312,
+        "log": "benchmarks/perturb_k562/run_logs/install.log"
+      },
+      {
+        "unit": "label_cache_repair",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "repair-labels"
+        ],
+        "started_utc": "2026-10-22T05:57:21.717353+00:00",
+        "finished_utc": "2026-10-22T05:57:28.496393+00:00",
+        "exit_code": 0,
+        "wall_seconds": 6.77904356099998,
+        "cpu_hours": 0.001949997777777778,
+        "max_rss_kib": 871424,
+        "cpu_hours_before": 0.09209560694444445,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/label_cache_repair.log"
+      },
+      {
+        "unit": "report_final",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "report"
+        ],
+        "started_utc": "2026-10-22T06:13:46.237188+00:00",
+        "finished_utc": "2026-10-22T06:13:46.501610+00:00",
+        "exit_code": 0,
+        "wall_seconds": 0.264421183000195,
+        "cpu_hours": 6.827805555555556e-05,
+        "max_rss_kib": 41416,
+        "cpu_hours_before": 1.1003750352777777,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/report_final.log"
+      },
+      {
+        "exit_code": 127,
+        "finished_utc": "2026-10-22T05:47:18.329344+00:00",
+        "cpu_count": 6,
+        "ram_bytes": 8419680256
+      },
+      {
+        "unit": "summarize",
+        "command": [
+          ".venv/bin/python",
+          "scripts/s18_perturb_response.py",
+          "summarize"
+        ],
+        "started_utc": "2026-10-22T06:11:41.935507+00:00",
+        "finished_utc": "2026-10-22T06:11:47.812117+00:00",
+        "exit_code": 0,
+        "wall_seconds": 5.876610703000097,
+        "cpu_hours": 0.001726078611111111,
+        "max_rss_kib": 218776,
+        "cpu_hours_before": 1.091775005,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/summarize.log"
+      },
+      {
+        "unit": "tests_after",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_orient.py",
+          "tests/test_smoke.py"
+        ],
+        "started_utc": "2026-10-22T06:12:03.651649+00:00",
+        "finished_utc": "2026-10-22T06:12:18.446482+00:00",
+        "exit_code": 0,
+        "wall_seconds": 14.794840327000202,
+        "cpu_hours": 0.0040091952777777775,
+        "max_rss_kib": 860768,
+        "cpu_hours_before": 1.093501083611111,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 25599549440,
+        "log": "benchmarks/perturb_k562/run_logs/tests_after.log"
+      },
+      {
+        "unit": "tests_before",
+        "command": [
+          ".venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/test_orient.py",
+          "tests/test_smoke.py"
+        ],
+        "started_utc": "2026-10-22T05:51:27.716150+00:00",
+        "finished_utc": "2026-10-22T05:51:46.267951+00:00",
+        "exit_code": 0,
+        "wall_seconds": 18.551797510999677,
+        "cpu_hours": 0.004742338055555556,
+        "max_rss_kib": 889156,
+        "cpu_hours_before": 0.043234395,
+        "threads": 6,
+        "cpu_count": 6,
+        "ram_bytes": 18754445312,
+        "log": "benchmarks/perturb_k562/run_logs/tests_before.log"
+      }
+    ]
+  },
+  "metrics": {
+    "n_targets_significant": 865,
+    "gate_P1_capture_vs_null": {
+      "k": 20,
+      "m": 3,
+      "n_targets": 865,
+      "n_above_null95": 46,
+      "fraction_above_null95": 0.05317919075144509,
+      "required_fraction": 0.7,
+      "pass": false
+    },
+    "score_vs_covariance": {
+      "median_capture": {
+        "local_score_J": 0.0446798776,
+        "global_score_J": 0.03783336,
+        "local_covariance": 0.292425586,
+        "global_covariance": 0.588926425
+      },
+      "paired_comparisons": {
+        "local_score_J_minus_local_covariance": {
+          "median_paired_difference": -0.21548772670000002,
+          "wilcoxon_statistic": 15338.0,
+          "wilcoxon_p_two_sided": 5.248439516217788e-121,
+          "n_pairs": 865
+        },
+        "local_score_J_minus_global_covariance": {
+          "median_paired_difference": -0.5186451505999999,
+          "wilcoxon_statistic": 4422.0,
+          "wilcoxon_p_two_sided": 1.3423982700931021e-136,
+          "n_pairs": 865
+        },
+        "local_covariance_minus_global_covariance": {
+          "median_paired_difference": -0.27677913500000006,
+          "wilcoxon_statistic": 13243.0,
+          "wilcoxon_p_two_sided": 6.334745902031414e-124,
+          "n_pairs": 865
+        }
+      },
+      "highest_median_method": "global_covariance"
+    },
+    "capture_by_k_m": [
+      {
+        "k": 10,
+        "m": 1,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.0166184219,
+          "global_score_J": 0.00321993613,
+          "local_covariance": 0.0164843646,
+          "global_covariance": 0.00802559692
+        },
+        "fraction_local_score_above_null95": 0.06705202312138728,
+        "median_random_null_mean": 0.101060913,
+        "median_random_null_p95": 0.357442047,
+        "random_expectation": 0.1,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 10,
+        "m": 3,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.0993256451,
+          "global_score_J": 0.0338147869,
+          "local_covariance": 0.446736233,
+          "global_covariance": 0.706522796
+        },
+        "fraction_local_score_above_null95": 0.04508670520231214,
+        "median_random_null_mean": 0.301934761,
+        "median_random_null_p95": 0.651181467,
+        "random_expectation": 0.3,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 10,
+        "m": 5,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.377211542,
+          "global_score_J": 0.0814559219,
+          "local_covariance": 0.62739495,
+          "global_covariance": 0.821147581
+        },
+        "fraction_local_score_above_null95": 0.03815028901734104,
+        "median_random_null_mean": 0.502476648,
+        "median_random_null_p95": 0.840925909,
+        "random_expectation": 0.5,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 15,
+        "m": 1,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.00637953308,
+          "global_score_J": 0.00149155883,
+          "local_covariance": 0.0118884773,
+          "global_covariance": 0.00850768551
+        },
+        "fraction_local_score_above_null95": 0.06589595375722543,
+        "median_random_null_mean": 0.0694652852,
+        "median_random_null_p95": 0.254428051,
+        "random_expectation": 0.06666666666666667,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 15,
+        "m": 3,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.0555891335,
+          "global_score_J": 0.0389161004,
+          "local_covariance": 0.369078387,
+          "global_covariance": 0.621491717
+        },
+        "fraction_local_score_above_null95": 0.056647398843930635,
+        "median_random_null_mean": 0.202806425,
+        "median_random_null_p95": 0.468241313,
+        "random_expectation": 0.2,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 15,
+        "m": 5,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.259114326,
+          "global_score_J": 0.0753151491,
+          "local_covariance": 0.504405342,
+          "global_covariance": 0.743928125
+        },
+        "fraction_local_score_above_null95": 0.06473988439306358,
+        "median_random_null_mean": 0.334454359,
+        "median_random_null_p95": 0.627096336,
+        "random_expectation": 0.3333333333333333,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 20,
+        "m": 1,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.00422635852,
+          "global_score_J": 0.000602131694,
+          "local_covariance": 0.010632127,
+          "global_covariance": 0.00911143855
+        },
+        "fraction_local_score_above_null95": 0.03815028901734104,
+        "median_random_null_mean": 0.049386188,
+        "median_random_null_p95": 0.182581426,
+        "random_expectation": 0.05,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 20,
+        "m": 3,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.0446798776,
+          "global_score_J": 0.03783336,
+          "local_covariance": 0.292425586,
+          "global_covariance": 0.588926425
+        },
+        "fraction_local_score_above_null95": 0.05317919075144509,
+        "median_random_null_mean": 0.150593932,
+        "median_random_null_p95": 0.364920889,
+        "random_expectation": 0.15,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 20,
+        "m": 5,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.166985688,
+          "global_score_J": 0.0793727909,
+          "local_covariance": 0.393981141,
+          "global_covariance": 0.717797035
+        },
+        "fraction_local_score_above_null95": 0.08554913294797688,
+        "median_random_null_mean": 0.252109724,
+        "median_random_null_p95": 0.497988332,
+        "random_expectation": 0.25,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 30,
+        "m": 1,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.0225456589,
+          "global_score_J": 0.00718857676,
+          "local_covariance": 0.00902711194,
+          "global_covariance": 0.00941667742
+        },
+        "fraction_local_score_above_null95": 0.046242774566473986,
+        "median_random_null_mean": 0.0329816571,
+        "median_random_null_p95": 0.124407955,
+        "random_expectation": 0.03333333333333333,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 30,
+        "m": 3,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.0512761145,
+          "global_score_J": 0.0445813311,
+          "local_covariance": 0.198839842,
+          "global_covariance": 0.530075603
+        },
+        "fraction_local_score_above_null95": 0.018497109826589597,
+        "median_random_null_mean": 0.09979546,
+        "median_random_null_p95": 0.243347636,
+        "random_expectation": 0.1,
+        "fraction_local_soft_fallback": 0.0
+      },
+      {
+        "k": 30,
+        "m": 5,
+        "n_targets": 865,
+        "median_capture": {
+          "local_score_J": 0.256068087,
+          "global_score_J": 0.191781754,
+          "local_covariance": 0.288355852,
+          "global_covariance": 0.666429517
+        },
+        "fraction_local_score_above_null95": 0.261271676300578,
+        "median_random_null_mean": 0.165611893,
+        "median_random_null_p95": 0.342599986,
+        "random_expectation": 0.16666666666666666,
+        "fraction_local_soft_fallback": 0.0
+      }
+    ],
+    "versions": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "pandas": "2.3.3",
+      "anndata": "0.10.9",
+      "scanpy": "1.12.4",
+      "scikit-learn": "1.9.1",
+      "scikit-misc": "0.5.3",
+      "torch": "2.14.1",
+      "matplotlib": "3.11.2",
+      "pytest": "9.1.1",
+      "python": "3.12.3",
+      "pip_freeze": "benchmarks/perturb_k562/pip-freeze.txt"
+    },
+    "cpu_hours": 1.1004433133333333
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k10.npz",
+      "bytes": 3455967,
+      "sha256": "4f1d43ff365a69f7dda53b3c76eea504a05c5fa8149534d6b127bbbd669c24d8",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k15.npz",
+      "bytes": 7864714,
+      "sha256": "b2b216dc35ac24c327eae62cdc9754efa895376d36b5bb6d8d07f28fe0ad074b",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k20.npz",
+      "bytes": 14155573,
+      "sha256": "c716050cb0ef89e6d50e044b92249b892b5dd6f0081e9729d2168fc853f709ed",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k30.npz",
+      "bytes": 32444269,
+      "sha256": "be93d800ce9f4640c7d474087e41e2c7993bb0158ed9908c95aa90d8c24ee591",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/embedding.npz",
+      "bytes": 35901963,
+      "sha256": "c1bfc77d63876da85bde891e73149a0308bb414d25db37b018d8d456279384de",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k10.npz",
+      "bytes": 1883839,
+      "sha256": "8a3cd8acbc0604a068306909bd4ead14d8b2304a3d67b6c8c9992d10a87b289a",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k15.npz",
+      "bytes": 2002859,
+      "sha256": "3598f60ce80a005c9f129facb26c8120a2fff3013712afb43acd04c273e4171b",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k20.npz",
+      "bytes": 2122785,
+      "sha256": "827bcbcec63df903ef0c7fbcc9427011f87e85b0c06d05951d1eb51edb1da6f2",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k30.npz",
+      "bytes": 2375381,
+      "sha256": "01f90f2de6787d13c3f726d9754d74480f04ea7b3567f9bf98ac0af27c09a6be",
+      "committed": false,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/capture.csv",
+      "bytes": 1632944,
+      "sha256": "0bf65c90098b5364d612f3539c6ce6043a475b0d12f204e5fae326f56e276ed4",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/capture_k10.csv",
+      "bytes": 398853,
+      "sha256": "62c67757eda51da60a4a68747a275da41bc5c66c0243df261062bfecaac9d1d1",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/capture_k15.csv",
+      "bytes": 415694,
+      "sha256": "61afa2580574a58d122f033f6206d7ac5c95dd926b535ff9b743ef3565757b12",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/capture_k20.csv",
+      "bytes": 404291,
+      "sha256": "914a9daf401b724c19e74adc955371bd636350ceb7de2afaf62db05ecf9a5223",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/capture_k30.csv",
+      "bytes": 415015,
+      "sha256": "543f060841bb33ced4d34178e97d8118222fe4347e59004a8989d190e00d9faf",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/data/CHECKSUMS.txt",
+      "bytes": 104,
+      "sha256": "37fdc5442385bc3aab82a5a5764db8e3f7d93fa3b925dc7b8b6948cbffec3861",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/data_source.json",
+      "bytes": 1273,
+      "sha256": "d44f81d20938945af0c409eea06edd01aaf3a6e93d3c07a8beb134875af92ffc",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/effect_tests.json",
+      "bytes": 605,
+      "sha256": "8ad3f71fd63a399c12bb3579ea3ef055a0d3a81d93c99be66684a4207b9d4fd1",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/embedding.json",
+      "bytes": 2199,
+      "sha256": "04289c7af795af24b8542c62813e8766c14bff427d52c0c1b457da93085691fe",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/environment.json",
+      "bytes": 353,
+      "sha256": "4d524ba1dfd1b0db53b836ec542cc6d53d79ce1d2b868af5f6ec3f06ef22b71c",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/final_input_verification.json",
+      "bytes": 156,
+      "sha256": "a67f54ec26cec156ef6b3cfddfa2b2a7a26bd46b203751cbb32d0b2737f9145c",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/fit_k10.json",
+      "bytes": 1109,
+      "sha256": "c6dbdb9069e529463b6bb19d03783f09229aee4e2af256f3650860e7a30090b0",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/fit_k15.json",
+      "bytes": 1110,
+      "sha256": "e1dced086e27cccbf78944bbf2d6f09fa99d830b7c23489700fb1703d165dd11",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/fit_k20.json",
+      "bytes": 1108,
+      "sha256": "594e6fb7bf176204211c37df334f201903474662921e553a452df1ccb4450a73",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/fit_k30.json",
+      "bytes": 1107,
+      "sha256": "3b5da84592b33e197043ebd0fa4e2d40c6d11da2385089cdc7b93397d9cf43b7",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/hvg_control.csv",
+      "bytes": 1587700,
+      "sha256": "0a0b3e544c947c3fe7b24081c833e46f1e6384418cb54189ab3615557c9e6f53",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/label_cache_repair.json",
+      "bytes": 474,
+      "sha256": "99216bdea7b8ea428fa6ad46b2dbc9f0ef5dccb950865d613891728fc2564543",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/pip-freeze.txt",
+      "bytes": 4154,
+      "sha256": "4d92d06111e0ad9dac1f52bc59a2cfbf08c9bf03bd76a8e89ac2e3c5ddd162f6",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/download.checkpoint.json",
+      "bytes": 510,
+      "sha256": "7663f3b8e95534baa05dfe50c7e7ee54726433657cb9d76c52125f69b101b0a2",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/download.log",
+      "bytes": 3112,
+      "sha256": "28f402ce857cb7c4d8c2826ce5f64ce2d302ca42823d7bc0c314a47ab65b7050",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/effects.checkpoint.json",
+      "bytes": 509,
+      "sha256": "577540cc3ac4c7aa8a8e5fb93618851142fcce186353e7cd04b219fa108626fd",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/effects.log",
+      "bytes": 1082,
+      "sha256": "6b8db2012403701690aa8e2cbf4a335bcb5184ea46d1e9bc0609523e71ab9749",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/effects_after_label_repair.checkpoint.json",
+      "bytes": 545,
+      "sha256": "0509219831a4555875fe5272bec953c3e8d8838cf5e5eac5ce39f14d2c5c4fd1",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/effects_after_label_repair.log",
+      "bytes": 4048,
+      "sha256": "aac43ac431d05cdacbab70458b41f4fedf9e56a27f40f73f89f8047861adcdde",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/embedding.checkpoint.json",
+      "bytes": 512,
+      "sha256": "1cf42b9788f82d8c6fe388156a0a75e4e7620bd2169ce5803946f4ceb915bdbf",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/embedding.log",
+      "bytes": 753,
+      "sha256": "c7f50bb87787bfb4d782fe8cfe66c197cd27ed85533e03ebbb2f96508f5f4de1",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/final_input_verification.checkpoint.json",
+      "bytes": 545,
+      "sha256": "9000cc9d9ad79ef13808a527127e0654a0f565093e507d2b81262c490a7c2780",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/final_input_verification.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k10.checkpoint.json",
+      "bytes": 547,
+      "sha256": "5ab0ea32c49fb5c16aa8744f5b13337ee3adf6dbdd17cc18bf093dfcb0380a39",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k10.log",
+      "bytes": 1029,
+      "sha256": "7b51b2a4de0c958da65c179e5d9ec56af22c22f8fb1e99a613540b924e0a1f04",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k15.checkpoint.json",
+      "bytes": 547,
+      "sha256": "5ead13434418fbb9dd5196e9f9d58f874126a02cbb9e870f883841e1f39b508f",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k15.log",
+      "bytes": 1029,
+      "sha256": "dad092402d1b7fc9eefe2a89aba02f246dda174587b17d92d7ce449d5ea6d867",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k20.checkpoint.json",
+      "bytes": 547,
+      "sha256": "d7c285eaadd3fad7c2ec9ea43ce0640064328900a2c7db8f04862ca00a70c4bf",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k20.log",
+      "bytes": 1038,
+      "sha256": "581a3b15bee0562878d095ce80f3eb0a63188247732ba53ef518751545bf617a",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k30.checkpoint.json",
+      "bytes": 544,
+      "sha256": "c6c509f9ad29ec5e04be51f14f3da1901ebe98f6a41e516e77e6bd857bf044f7",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/fit_capture_k30.log",
+      "bytes": 1039,
+      "sha256": "a98a57390de996949462168bb86b0b85858f1c8351a26a849bde82c04707436d",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/install.checkpoint.json",
+      "bytes": 487,
+      "sha256": "9d4e9f3fe14ebcf527f1fa98560a2a316ec7b7977764fc45290c85e1fbc1570d",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/install.log",
+      "bytes": 88459,
+      "sha256": "32b718e815b026965932e607acaa2632fc03bd183e4d6810f8a8b899437badc3",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/label_cache_repair.checkpoint.json",
+      "bytes": 534,
+      "sha256": "5da9a3e0bca29cc08c0af4df20be826cc8e3be3f630de7fc8fdb8638e7a252b2",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/label_cache_repair.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/report_final.checkpoint.json",
+      "bytes": 515,
+      "sha256": "51de9230c40026c0302427335ba65a1815e67ad17c1f9b33705c43d6b419d7f1",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/report_final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/setup.checkpoint.json",
+      "bytes": 122,
+      "sha256": "661e9ec0aa028413eb258e17122ec736b758f0f49e26d6a6659bf20e8d9c9142",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/setup.log",
+      "bytes": 47,
+      "sha256": "0df5d8085fd4b2c6f72a40ac403de2331f8ea1bd0792c5e4778e2a355a9d2a60",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/summarize.checkpoint.json",
+      "bytes": 505,
+      "sha256": "4667f8565284119b9d080c12d702c3455bc7ccd641217ad0d64b6e969dd9a3e9",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/summarize.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/tests_after.checkpoint.json",
+      "bytes": 550,
+      "sha256": "aa656b5f7011b97960ea16b889cff4417cf89c22bc63100104735c369b95bfe0",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/tests_after.log",
+      "bytes": 549,
+      "sha256": "95ab6776a0cfeca6f59124e29ccb7cc7a4c7c9242641eafd067c61b03adcff26",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/tests_before.checkpoint.json",
+      "bytes": 545,
+      "sha256": "a2319f274c41afc6e0327554a6f357e469136bb5b05a60beb1659b498bbb4d11",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/run_logs/tests_before.log",
+      "bytes": 549,
+      "sha256": "46db81cbc33176a5b9e75dff1e4c4775517880209fb0b3eae58a67025baae599",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/summary.json",
+      "bytes": 7219,
+      "sha256": "9eb493e1a2075d4f509c4d6f8c04431bcafb1dc08256e64fc8513215d9db9511",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/targets.csv",
+      "bytes": 110962,
+      "sha256": "f5651bbdefe5fa1ead6b637387cd07cb9a3f4d5d6254a6a769a5c0ab187fe16f",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/figures/perturb_k562/capture_by_method.png",
+      "bytes": 150995,
+      "sha256": "71e30d7d0f9fbcd57ce4cd4a5548927328752dc1303337afee50015c67d1459a",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/figures/perturb_k562/example_target_shifts.png",
+      "bytes": 365497,
+      "sha256": "a009cfdd3ad7a21e73d42bd3a2a77ea7b6823cf4fcc9658fd832b5622b261e34",
+      "committed": true,
+      "regenerate": "Run the recorded S18 units in order on the SHA-verified original input"
+    },
+    {
+      "path": "benchmarks/perturb_k562/data/K562_essential_raw_singlecell_01.h5ad",
+      "bytes": 10661879995,
+      "sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+      "committed": false,
+      "regenerate": "Download https://ndownloader.figshare.com/files/35773219; verify required SHA-256"
+    }
+  ],
+  "deviations": [
+    "Mac folder, launchers and fixed split replaced by the task's cloud amendment; fresh .venv and six available threads were used.",
+    "The cloud image lacked /usr/bin/time; the initial setup failed before pip ran. A Python resource/monotonic timer was used for every subsequent unit.",
+    "The provided branch contains no xfail annotations in tests/test_orient.py; the exact mandated command passed all 48 tests before analysis. Protected tests were not changed.",
+    "Exact full control-only PCA SVD computed once and truncated to k=10,15,20,30; this yields the same nested PCA-k axes without repeating the identical full decomposition.",
+    "The branch-only input bundle omitted orientation. For the mechanical checker only, a local orientation ref was created at the exact imported pre-run snapshot, 4c1aad9c627ac4371ced46525baac956529260d9; no merge or push occurred.",
+    "The first effect unit failed before any statistic/RNG draw because our cached labels had object dtype. Labels were reserialized from the verified raw obs as Unicode, with every fitted numeric array verified bitwise unchanged. No fit or completed statistic was repeated."
+  ],
+  "questions": [],
+  "observations": [
+    "Original SHA-256 matches exactly; 10691 controls among 310385 cells.",
+    "865 of 1299 targets with >=100 cells passed BH-adjusted permutation p<0.01.",
+    "With 200 permutations and the add-one p-value, the smallest attainable p is 1/201; selection resolution is recorded, not changed.",
+    "P1 local score-J null exceedance fraction is 0.053179.",
+    "Among local score J, local covariance and global covariance, global_covariance has the highest median capture at k=20,m=3.",
+    "GATA1 is the largest energy-distance target (2.93, 108 cells); its local score-J capture is 0.788 versus 0.607 for local covariance. The example targets were chosen by effect size, not by score-J performance."
+  ],
+  "suggestions": [
+    "In a separate approved task, evaluate held-out control score-matching fit quality and control-only axis stability to distinguish score-estimation limitations from failure of the soft-axis response hypothesis. No such fit or analysis was run here."
+  ],
+  "data_source": {
+    "deposit_url": "https://plus.figshare.com/articles/dataset/_Mapping_information-rich_genotype-phenotype_landscapes_with_genome-scale_Perturb-seq_Replogle_et_al_2022_processed_Perturb-seq_datasets/20029387",
+    "metadata_url": "https://api.figshare.com/v2/articles/20029387",
+    "download_url": "https://ndownloader.figshare.com/files/35773219",
+    "file_name": "K562_essential_raw_singlecell_01.h5ad",
+    "figshare_file_id": 35773219,
+    "expected_bytes": 10661879995,
+    "figshare_md5": "4f1122ce1c7f13299a68df6459a266d3",
+    "required_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+    "retrieved_metadata_utc": "2026-10-22T05:47:14Z",
+    "verified": true,
+    "source_archive": {
+      "drive_file_id": "[drive-id-withheld]",
+      "zip_md5": "0a158d89d47e55e855c9ca57ab055f90",
+      "imported_branch": "manus/orient-S18",
+      "imported_commit": "4c1aad9c627ac4371ced46525baac956529260d9"
+    },
+    "download_started_utc": "2026-10-22T05:52:05.142930+00:00",
+    "download_finished_utc": "2026-10-22T05:55:24.119359+00:00",
+    "actual_bytes": 10661879995,
+    "actual_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+    "actual_md5": "4f1122ce1c7f13299a68df6459a266d3",
+    "verified_stat_mtime_ns": 1792648524078208661
+  },
+  "control_only_fit": true
+}

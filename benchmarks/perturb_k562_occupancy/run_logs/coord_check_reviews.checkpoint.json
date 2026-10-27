@@ -1,0 +1,24 @@
+{
+  "unit": "coord_check_reviews",
+  "command": [
+    ".venv/bin/python",
+    "coord/coord_check.py",
+    "check",
+    "orient",
+    "S18b",
+    "--base",
+    "56e9c0045387bf6049dbd40c8b049ef2d55a4cae",
+    "--run-reviews"
+  ],
+  "started_utc": "2026-10-22T12:16:55.044390+00:00",
+  "finished_utc": "2026-10-22T12:17:12.553646+00:00",
+  "exit_code": 0,
+  "wall_seconds": 17.509259256003133,
+  "cpu_hours": 0.004338991388888889,
+  "cpu_hours_before": 9.1510976925,
+  "max_rss_kib": 892264,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/coord_check_reviews.log"
+}

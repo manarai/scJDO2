@@ -1,0 +1,23 @@
+{
+  "embedding_dimension": 30,
+  "embedding_path": "benchmarks/scaling/data/larry_embedding_all.npz",
+  "finished_utc": "2026-10-22T18:19:21.876752+00:00",
+  "input_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+  "n_cells": 130887,
+  "n_hvg": 2000,
+  "normalization": "library-normalise to median then log1p",
+  "normalization_target": 2249.0,
+  "pca_solver": "sklearn PCA(svd_solver=randomized, random_state=0) fitted on all cells",
+  "sample_per_time": {
+    "16000": 16000,
+    "2000": 2000,
+    "4000": 4000,
+    "8000": 8000
+  },
+  "sample_seed": 0,
+  "source_read_mode": "backed HDF5 in 4096-cell chunks",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "prepare_larry_all",
+  "wall_seconds_internal": 15.586
+}

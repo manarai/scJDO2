@@ -1,0 +1,104 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_transition_s4_k10_reference.npz",
+  "array_sha256": "95481a074552964dada10d82b93f445eb0d1a0329241645c03807b8fbf422eb4",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "configuration_id": "reference",
+  "dataset": "v3_transition_s4",
+  "finished_utc": "2026-10-22T13:18:00.770827Z",
+  "in_process_cpu_seconds": 27.211,
+  "k": 10,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1649,
+      "seconds": 6.7,
+      "seed": 0,
+      "weight_decay": 0.0001
+    }
+  ],
+  "n_cells": 12865,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 28.040409663402194,
+      "final_err": 6.254381044429898e-10,
+      "from_day": 2,
+      "n_iter": 22,
+      "n_source": 188,
+      "n_target": 1461,
+      "plan_mass": 0.9999999999999999,
+      "rows_zero": 0,
+      "seconds": 0.02,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 28.880907474810073,
+      "final_err": 5.561690691978872e-10,
+      "from_day": 4,
+      "n_iter": 10,
+      "n_source": 1461,
+      "n_target": 11216,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.69,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 7322320896,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_transition_s4.npz",
+  "prepared_sha256": "d59a867fe0c4e084d007f1c64ee4463e4f6f1abad693881411779b36fa584465",
+  "preset": "v3_transition",
+  "scores": {
+    "auc_lam1": 0.9682040279387352,
+    "fate_axis_abs_cos_at_saddle": 0.9704635109462547,
+    "jref_relative_frobenius_median": 1.0016921583938312,
+    "median_lam1_committed": 0.00025650822917434494,
+    "median_lam1_saddle": 0.014877997247496968,
+    "n_committed": 9122,
+    "n_saddle": 350,
+    "transition_abs_offset": 0,
+    "transition_bin_medians": "[0.005618, 0.002383, 0.001589, 0.002366, 0.001458, 0.004324, 0.00221, 0.001706, 0.001078, 0.002091, 2.3e-05, -0.000189]",
+    "transition_detected_bin": 0,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 0,
+    "transition_peak_to_median": 2.9597076562001736,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": 0,
+    "transition_true_bin": 0
+  },
+  "seed": 4,
+  "started_utc": "2026-10-22T13:17:30.798189Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_transition_s4_k10_reference",
+  "wall_seconds": 29.973
+}

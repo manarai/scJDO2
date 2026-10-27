@@ -1,0 +1,63 @@
+{
+  "finished_utc": "2026-10-20T11:50:32.874009Z",
+  "in_process_cpu_seconds": 251.863,
+  "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+  "peak_rss_bytes": 6722502656,
+  "s08": {
+    "group_rows": {
+      "counts_trajectory": 79,
+      "labelling": 19,
+      "lineage": 21,
+      "splicing": 43
+    },
+    "integrity": {
+      "bytes": 1265407970,
+      "dataset": "v2_v3_transition_s2",
+      "path": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/v3/v3_transition_s2.h5ad",
+      "raw_layers": [
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "X",
+          "n_nonzero_values": 51536000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "new",
+          "n_nonzero_values": 51536000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "total",
+          "n_nonzero_values": 51536000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "spliced",
+          "n_nonzero_values": 51536000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "unspliced",
+          "n_nonzero_values": 51536000
+        }
+      ],
+      "sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+      "shape": [
+        12884,
+        4000
+      ],
+      "started_utc": "2026-10-20T11:44:02.664716Z",
+      "status": "complete",
+      "wall_seconds": 10.821
+    }
+  },
+  "started_utc": "2026-10-20T11:43:49.733169Z",
+  "task": "orient/S10",
+  "unit": "s08_v3_transition_s2",
+  "wall_seconds": 403.141
+}

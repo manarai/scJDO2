@@ -1,0 +1,17 @@
+{
+  "common_reference": "PCA-50 fitted on all 12,000 fixed-sample log-normalised HVG cells",
+  "fa30_reconstruction_max_abs_diff_vs_s10": 0.0,
+  "finished_utc": "2026-10-21T01:58:09.077742Z",
+  "in_process_cpu_seconds": 5.505,
+  "n_cells": 12000,
+  "n_hvg": 2000,
+  "path": "benchmarks/synthetic_multimodal/s13/arrays/larry_maps.npz",
+  "peak_rss_bytes": 4086464512,
+  "sample_per_day": 4000,
+  "sample_seed": 0,
+  "sha256": "a384076df378fe5a5991df2537357bf22ba5dbeb9c749d461cd9841cdc97aed9",
+  "started_utc": "2026-10-21T01:58:04.276397Z",
+  "task": "orient/S13",
+  "unit": "prepare_larry",
+  "wall_seconds": 4.801
+}

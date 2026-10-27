@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/s22_score_lineage.py",
+    "fit",
+    "--seed",
+    "0"
+  ],
+  "cpu_hours": 0.18413844944444444,
+  "exit_code": 0,
+  "finished_utc": "2026-10-24T15:33:13.672504+00:00",
+  "max_rss_bytes": 904749056,
+  "process_rss_limit_bytes": 8589934592,
+  "started_utc": "2026-10-24T15:28:29.629561+00:00",
+  "stop_reason": null,
+  "task": "orient/S22",
+  "threads_limit": 3,
+  "unit": "score_seed0",
+  "wall_seconds": 284.04296958600025
+}

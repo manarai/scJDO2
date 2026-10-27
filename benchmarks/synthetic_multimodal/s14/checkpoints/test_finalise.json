@@ -1,0 +1,93 @@
+{
+  "figure": "benchmarks/figures/orient/s14/test_auc_by_k.png",
+  "finished_utc": "2026-10-22T15:46:36.874879Z",
+  "gates": {
+    "gate_G1_auc_band": {
+      "k_values": [
+        10,
+        15,
+        20
+      ],
+      "minimum_auc": 0.42268570241239234,
+      "n_required_rows": 9,
+      "pass": false,
+      "rule": "selected fork AUC >= 0.85 on every transition test seed at k* and immediate grid neighbours"
+    },
+    "gate_G2_transition": {
+      "nofork_pass": false,
+      "nofork_ratios": {
+        "v3_nofork_s0": 1.08310142182613,
+        "v3_nofork_s1": 1.6007122060681667,
+        "v3_nofork_s2": 1.0586567056652927
+      },
+      "pass": false,
+      "rule": "informative transition bin absolute offset <= 1; nofork peak/median below every transition-test ratio",
+      "transition_abs_offsets": {
+        "v3_transition_s2": 4,
+        "v3_transition_s3": 4,
+        "v3_transition_s4": 0
+      },
+      "transition_pass": false,
+      "transition_ratios": {
+        "v3_transition_s2": 1.6544984198803518,
+        "v3_transition_s3": 1.1159469915945643,
+        "v3_transition_s4": 1.30363086791583
+      }
+    },
+    "gate_G3_larry": {
+      "heldout_energy": {
+        "flow": 0.9433916433041751,
+        "mean_displacement": 0.8667826833933505,
+        "no_movement": 0.8815008253806457
+      },
+      "lineage_null_max": 0.14347252401822863,
+      "lineage_spearman": 0.5474766858993969,
+      "pass": false,
+      "rule": "selected LARRY lineage agreement exceeds all five nulls and held-out flow energy beats both baselines"
+    },
+    "gate_G4_k_sanity": {
+      "development": [
+        {
+          "auc_lam1": 0.8264490521703235,
+          "dataset": "v3_transition_s0"
+        },
+        {
+          "auc_lam1": 0.9252031832035219,
+          "dataset": "v3_transition_s1"
+        }
+      ],
+      "pass": false,
+      "rule": "selected development fork AUC >= 0.85 on both transition development seeds at k*"
+    },
+    "overall_pass": false
+  },
+  "in_process_cpu_seconds": 0.468,
+  "k_star": 15,
+  "ledger": {
+    "budget_cpu_hours": 24.0,
+    "cpu_hours": 9.663741666666667,
+    "n_logs": 262,
+    "within_budget": true
+  },
+  "n_test_rows": 86,
+  "palantir_roots": "benchmarks/synthetic_multimodal/s14/palantir_roots_test.csv",
+  "part": "C",
+  "peak_rss_bytes": 146407424,
+  "selected_configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "started_utc": "2026-10-22T15:46:36.201708Z",
+  "task": "orient/S14",
+  "test_csv": "benchmarks/synthetic_multimodal/s14/test.csv",
+  "unit": "test_finalise",
+  "wall_seconds": 0.673
+}

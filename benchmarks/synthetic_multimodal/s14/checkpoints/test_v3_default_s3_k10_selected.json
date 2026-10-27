@@ -1,0 +1,156 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_default_s3_k10_selected.npz",
+  "array_sha256": "4791253fa4f455f926f94d20fec2cc3d58277865987170f5a6f7c737b3e21254",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "selected",
+  "dataset": "v3_default_s3",
+  "finished_utc": "2026-10-22T13:41:11.452977Z",
+  "in_process_cpu_seconds": 55.28,
+  "k": 10,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 3.659,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 2.878,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 2.974,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 2.924,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 2.939,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "n_cells": 12784,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 13.605163106620843,
+      "final_err": 5.773151678674491e-10,
+      "from_day": 2,
+      "n_iter": 14,
+      "n_source": 187,
+      "n_target": 1447,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 14.07125946442003,
+      "final_err": 9.17263084181735e-10,
+      "from_day": 4,
+      "n_iter": 95,
+      "n_source": 1447,
+      "n_target": 11150,
+      "plan_mass": 1.0000000000000002,
+      "rows_zero": 0,
+      "seconds": 3.89,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 5773017088,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s3.npz",
+  "prepared_sha256": "0ee4d820b7c760f0a977a4fef22d437fa5f6bdc69f468c241079881e11c2676e",
+  "preset": "v3_default",
+  "scores": {
+    "auc_lam1": 0.9872475344649395,
+    "fate_axis_abs_cos_at_saddle": 0.9926250423067411,
+    "jref_relative_frobenius_median": 1.0006873809169297,
+    "median_lam1_committed": 0.0015287050537270608,
+    "median_lam1_saddle": 0.007385057804299315,
+    "n_committed": 12686,
+    "n_saddle": 18,
+    "transition_abs_offset": 5,
+    "transition_bin_medians": "[0.001153, 0.001364, 0.002091, 0.003137, 0.002762, 0.001336, -0.000255, -0.001377, 0.002494, 0.0018, 0.001207, 0.000727]",
+    "transition_detected_bin": 3,
+    "transition_informative": true,
+    "transition_n_rising_bins_before_detected": 3,
+    "transition_peak_to_median": 2.289284625498815,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": -5,
+    "transition_true_bin": 8
+  },
+  "seed": 3,
+  "started_utc": "2026-10-22T13:40:11.002057Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_default_s3_k10_selected",
+  "wall_seconds": 60.451
+}

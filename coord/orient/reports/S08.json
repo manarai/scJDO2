@@ -1,0 +1,151 @@
+{
+  "artifacts": [
+    {
+      "bytes": 220926,
+      "committed": true,
+      "path": "benchmarks/real_reference/stats.csv",
+      "regenerate": "python scripts/s08_reference_stats.py --dataset <key> --group <group>",
+      "sha256": "e838312763c7893bf5e7ae1cdd0e3edb12ba5242832950df08343743cc4774e3"
+    },
+    {
+      "bytes": 141017,
+      "committed": true,
+      "path": "benchmarks/real_reference/compare.csv",
+      "regenerate": "python scripts/s08_compare.py",
+      "sha256": "f15bc0bb2971046d9d8b9662c2327510c1df74e5fd66af9718faa7b03957c8a1"
+    },
+    {
+      "bytes": 1012,
+      "committed": true,
+      "path": "benchmarks/real_reference/RESULT_S08.md",
+      "regenerate": "python scripts/s08_compare.py",
+      "sha256": "26486671c5f07da1915a05888f3f6f1e7a066c7ca69f26e7fcffdad4d498fab5"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 4.486472,
+    "cpu_hours_note": "sum of explicit /usr/bin/time user-seconds retained in local unit logs",
+    "gpu_hours": 0.0,
+    "hardware": "local Desktop CPU; every dataset\u00d7group unit was detached, timed, and checkpointed"
+  },
+  "deviations": [
+    "Revision 1 resolved the prior S3 deviation: the original likelihood/switch-time result was preserved as S3b_scvelo_switch_class and S3 now uses the mandated extreme-quantile phase-portrait classification."
+  ],
+  "finished_utc": "2026-10-18T18:54:42.918797Z",
+  "metrics": {
+    "counts_stats": {
+      "records": 1256
+    },
+    "datasets": {
+      "real": [
+        "scnt_hema",
+        "larry",
+        "setty",
+        "scnt_neuron",
+        "pancreas",
+        "dentate"
+      ],
+      "synthetic": [
+        "v1_default_s0",
+        "v1_default_s1",
+        "v1_default_s2",
+        "v2_default_s0",
+        "v2_default_s1",
+        "v2_default_s2",
+        "v2_stress_s0",
+        "v2_stress_s1",
+        "v2_stress_s2",
+        "v2_batch_s0",
+        "v2_batch_s1",
+        "v2_batch_s2"
+      ]
+    },
+    "integrity_checks": {
+      "completed": 18,
+      "passed": 18
+    },
+    "labelling_stats": {
+      "records": 253
+    },
+    "lineage_stats": {
+      "records": 278
+    },
+    "match_matrix": {
+      "by_preset": [
+        {
+          "match_rate": 0.352273,
+          "matched": 31,
+          "preset": "v1",
+          "statistics": 88
+        },
+        {
+          "match_rate": 0.202247,
+          "matched": 18,
+          "preset": "v2_batch",
+          "statistics": 89
+        },
+        {
+          "match_rate": 0.215909,
+          "matched": 19,
+          "preset": "v2_default",
+          "statistics": 88
+        },
+        {
+          "match_rate": 0.229885,
+          "matched": 20,
+          "preset": "v2_stress",
+          "statistics": 87
+        }
+      ],
+      "matched": 88,
+      "rate": 0.25,
+      "total": 352,
+      "within_real_range": {
+        "applicable_scalar_or_median_rows": 316,
+        "class_share_rows_not_applicable": 36,
+        "within": 105
+      }
+    },
+    "real_spread_by_statistic": {
+      "comparison_rows": 352,
+      "statistics": 30
+    },
+    "retained_checkpoint_count": 90,
+    "splicing_stats": {
+      "S3_classes": [
+        "cycle",
+        "induction",
+        "repression",
+        "steady"
+      ],
+      "S3_datasets": 16,
+      "S3b_name": "S3b_scvelo_switch_class",
+      "records": 690
+    },
+    "trajectory_stats": {
+      "dentate_earliest_age_days": 12.0,
+      "pancreas": "not applicable (no time field)",
+      "records": 114
+    },
+    "versions": {
+      "anndata": "0.11.4",
+      "numpy": "2.5.4",
+      "pandas": "2.3.3",
+      "python": "3.13.2",
+      "scanpy": "1.12.4",
+      "scvelo": "0.3.4",
+      "scvi-tools": "1.5.1"
+    },
+    "wall_hours": 0.487324
+  },
+  "observations": [
+    "All 18 declared raw-count layer integrity checks passed.",
+    "The corrected S3 phase-portrait class shares are a four-class partition for every 16 splicing-capable dataset.",
+    "The match matrix is descriptive only; this measurement task changes neither generator nor orientation model."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-18T16:11:41Z",
+  "status": "done",
+  "suggestions": [],
+  "task": "orient/S08"
+}

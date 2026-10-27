@@ -1,0 +1,20 @@
+{
+  "basis": "processed_file_X_pca",
+  "dynamo_version": "1.5.3",
+  "embedding_dimension": 30,
+  "finished_utc": "2026-10-19T07:03:49.993959+00:00",
+  "jacobian_finite": true,
+  "jacobian_median_abs": 0.0012662611540972717,
+  "jacobian_shape_d_d_n": [
+    30,
+    30,
+    1947
+  ],
+  "kind": "report_only_stored_dynamo_baseline",
+  "n_cells": 1947,
+  "note": "Different PCA basis from S11 common embedding; report-only invariants, never cross-basis compared.",
+  "started_utc": "2026-10-19T07:03:40.460745+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_stored_dynamo",
+  "wall_seconds": 9.533
+}

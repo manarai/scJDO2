@@ -1,0 +1,20 @@
+{
+  "dataset": "larry",
+  "details": {
+    "all_cells_used_for_clone_means": true,
+    "next_timepoint_only": true,
+    "retained_by_day": {
+      "2": 319,
+      "4": 1002
+    }
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:22:55.340265+00:00",
+  "n_cells": 1321,
+  "source": "lineage",
+  "started_utc": "2026-10-19T06:22:54.456589+00:00",
+  "task": "orient/S11",
+  "unit": "velocity_larry_lineage",
+  "velocity": "benchmarks/real_flow/arrays/velocities/larry_lineage.npz",
+  "wall_seconds": 0.884
+}

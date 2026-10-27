@@ -1,0 +1,27 @@
+{
+  "dataset": "v3_transition_s2",
+  "error": null,
+  "input_path": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/v3/v3_transition_s2.h5ad",
+  "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+  "measured_peak_memory_bytes": 8528297984,
+  "method": "cellrank",
+  "peak_memory_bytes": "external /usr/bin/time -l",
+  "runtime_seconds": 0,
+  "settings": {
+    "gpcca": {
+      "fate_probabilities": true,
+      "n_states": 5,
+      "terminal_states": "predicted"
+    },
+    "kernels": "0.8 * RealTimeKernel(moscot TemporalProblem) + 0.2 * ConnectivityKernel",
+    "method": "cellrank",
+    "neighbors": {
+      "n_neighbors": 30,
+      "random_state": 0,
+      "use_rep": "X_pca"
+    },
+    "sampling_time_key": "day"
+  },
+  "status": "complete",
+  "version": "2.3.3"
+}

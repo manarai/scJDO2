@@ -1,0 +1,100 @@
+{
+  "gate_guard_fresh": {
+    "all_presets": {
+      "v3_batch": {
+        "day2_default": "8/30 accepted",
+        "day2_strict": "28/30 accepted",
+        "day6_default": "0/30 accepted",
+        "day6_strict": "0/30 accepted"
+      },
+      "v3_default": {
+        "day2_default": "0/30 accepted",
+        "day2_strict": "30/30 accepted",
+        "day6_default": "0/30 accepted",
+        "day6_strict": "0/30 accepted"
+      },
+      "v3_stress": {
+        "day2_default": "0/30 accepted",
+        "day2_strict": "30/30 accepted",
+        "day6_default": "0/30 accepted",
+        "day6_strict": "0/30 accepted"
+      },
+      "v3_transition": {
+        "day2_default": "20/30 accepted",
+        "day2_strict": "26/30 accepted",
+        "day6_default": "0/30 accepted",
+        "day6_strict": "0/30 accepted"
+      }
+    },
+    "pass": false,
+    "v3_default": {
+      "default": {
+        "day2_accepted": 0,
+        "day2_accepted_fraction": 0.0,
+        "day2_runs": 30,
+        "latest_day_refused": 30,
+        "latest_day_runs": 30
+      },
+      "strict": {
+        "day2_accepted": 30,
+        "day2_accepted_fraction": 1.0,
+        "day2_runs": 30,
+        "latest_day_refused": 30,
+        "latest_day_runs": 30
+      }
+    }
+  },
+  "gate_orientation": {
+    "J_unchanged": true,
+    "independence_exact": true,
+    "labelling_agreement_by_seed": [
+      0.9565,
+      0.9781,
+      0.9781
+    ],
+    "labelling_agreement_min": 0.9565289256198348,
+    "labelling_ge_0_80": true,
+    "lineage_pseudotime_vs_pseudotime": "not evaluable as written: needs the forward developmental truth, which the protected forward_developmental_truth does not provide for v3",
+    "pass": null,
+    "primary_variant_labelling_agreement_by_seed": [
+      0.6444,
+      0.634,
+      0.6682
+    ],
+    "status": "not_evaluable_as_written",
+    "substitute_chord_truth_median_by_seed": {
+      "default": {
+        "lineage": {
+          "0": 0.8986,
+          "1": 0.8804,
+          "2": 0.8713
+        },
+        "lineage+pseudotime": {},
+        "n_accepted_runs_per_seed": {},
+        "pseudotime": {}
+      },
+      "strict": {
+        "lineage": {
+          "0": 0.8986,
+          "1": 0.8804,
+          "2": 0.8713
+        },
+        "lineage+pseudotime": {
+          "0": 0.7312,
+          "1": 0.6099,
+          "2": 0.5758
+        },
+        "n_accepted_runs_per_seed": {
+          "0": 5,
+          "1": 5,
+          "2": 5
+        },
+        "pseudotime": {
+          "0": 0.7121,
+          "1": 0.5542,
+          "2": 0.5165
+        }
+      }
+    }
+  }
+}

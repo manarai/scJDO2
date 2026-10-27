@@ -1,0 +1,22 @@
+{
+  "part": "C-input-generation",
+  "preset": "v3_default",
+  "seed": 3,
+  "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s3.h5ad",
+  "sha256": "a8775b8ea069f284dbb046ac8c2ac2f8f831b775f3b89893ea372b430afc8621",
+  "n_cells": 12784,
+  "n_vars": 4000,
+  "days": {
+    "2": 187,
+    "4": 1447,
+    "6": 11150
+  },
+  "manifest_path": "benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+  "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_default_s3.log",
+  "exit": 0,
+  "wall_seconds": 3832.01,
+  "cpu_seconds": 3669.3,
+  "peak_rss_bytes": 9949931576,
+  "duration_limit_seconds": 5400,
+  "verified": "sha256 and H5AD metadata agree with the manifest row"
+}

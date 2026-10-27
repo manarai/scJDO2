@@ -1,0 +1,17 @@
+{
+  "task": "orient/S22",
+  "before_any_fit_or_fate_statistic": true,
+  "implementation_sha256": "de529ed1cf3511a421d43ccd65aef3067a7e5525a0467de5bc9cf0b42ab5be1c",
+  "task_sha256": "40d21ae6f31d287bb094c7739f3636d334bc1469867e2cc8a0428ea1aa3caca6",
+  "technical_conventions": {
+    "training": "12000 delivered rows in sample_index order, float32, no normalization",
+    "autodiff": "protected adapter chunk128, outer blocks2048; eigvalsh directly",
+    "clone_medians": "float64 medians of represented per-cell values",
+    "baselines": "all same-day cells, 30 Euclidean non-self neighbours; float64 distance arithmetic",
+    "partial_spearman": "average ranks, intercept + ranked density, Pearson of separate OLS residuals",
+    "permutations": "default_rng(0) reset for each reported cohort, 1000 draws within t and permutation_type",
+    "ties": "no majority; own tied stratum per t; L1 retained, Undifferentiated/per-type excluded",
+    "tail": "+1 positive one-sided; >= observed centered-rank statistic",
+    "csv": "17 significant digits and round_trip parsing"
+  }
+}

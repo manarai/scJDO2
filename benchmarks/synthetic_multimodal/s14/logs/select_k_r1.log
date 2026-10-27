@@ -1,0 +1,118 @@
+START 2026-10-21T08:25:05Z
+{
+  "revision": 1,
+  "k_star": 15,
+  "rule": "among k with mean seed stability >= 0.5, highest mean lineage agreement; ties within 0.02 by higher seed stability, then lower k; if none pass, use the most stable k",
+  "stability_threshold": 0.5,
+  "fallback_used": false,
+  "all_candidates": [
+    {
+      "k": 5,
+      "mean_lineage_agreement": 0.5255634582212234,
+      "mean_null_max": 0.2370765276941941,
+      "mean_seed_stability": 0.825924462176498,
+      "n_datasets": 5
+    },
+    {
+      "k": 10,
+      "mean_lineage_agreement": 0.6747028427973508,
+      "mean_null_max": 0.2820794022444394,
+      "mean_seed_stability": 0.6676668055104961,
+      "n_datasets": 5
+    },
+    {
+      "k": 15,
+      "mean_lineage_agreement": 0.6993001830963994,
+      "mean_null_max": 0.2421530251016294,
+      "mean_seed_stability": 0.6184665344476254,
+      "n_datasets": 5
+    },
+    {
+      "k": 20,
+      "mean_lineage_agreement": 0.733886490028279,
+      "mean_null_max": 0.207224733109447,
+      "mean_seed_stability": 0.2291772043186639,
+      "n_datasets": 5
+    },
+    {
+      "k": 30,
+      "mean_lineage_agreement": 0.7548631719043235,
+      "mean_null_max": 0.1667048350223995,
+      "mean_seed_stability": 0.1433427459552326,
+      "n_datasets": 5
+    }
+  ],
+  "eligible_candidates": [
+    {
+      "k": 5,
+      "mean_lineage_agreement": 0.5255634582212234,
+      "mean_null_max": 0.2370765276941941,
+      "mean_seed_stability": 0.825924462176498,
+      "n_datasets": 5
+    },
+    {
+      "k": 10,
+      "mean_lineage_agreement": 0.6747028427973508,
+      "mean_null_max": 0.2820794022444394,
+      "mean_seed_stability": 0.6676668055104961,
+      "n_datasets": 5
+    },
+    {
+      "k": 15,
+      "mean_lineage_agreement": 0.6993001830963994,
+      "mean_null_max": 0.2421530251016294,
+      "mean_seed_stability": 0.6184665344476254,
+      "n_datasets": 5
+    }
+  ],
+  "within_0_02_candidates": [
+    {
+      "k": 15,
+      "mean_lineage_agreement": 0.6993001830963994,
+      "mean_null_max": 0.2421530251016294,
+      "mean_seed_stability": 0.6184665344476254,
+      "n_datasets": 5
+    }
+  ],
+  "development_datasets": [
+    "v3_transition_s0",
+    "v3_transition_s1",
+    "v3_default_s0",
+    "v3_default_s1",
+    "larry"
+  ],
+  "truth_free": true,
+  "truth_free_inputs": [
+    "locked Part A observed-only choose_k.csv"
+  ],
+  "truth_keys_absent_from_selection": [
+    "z_true",
+    "fate_true",
+    "jacobian_state",
+    "ds_dt_true",
+    "z1_crit"
+  ],
+  "amendment_disclosure": "Rule fixed after development fork AUCs had been seen; development data are tuning data and test seeds were not accessed by this recomputation.",
+  "source_choose_k_csv": "benchmarks/synthetic_multimodal/s14/choose_k.csv",
+  "source_choose_k_sha256": "7832702e3688e0c032805105d02c36a6f86cb31208e460b60b65cdeb60c9339c",
+  "selection_locked_utc": "2026-10-21T08:25:06.005086Z"
+}
+        0.53 real         0.41 user         0.10 sys
+           107610112  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               11773  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   3  voluntary context switches
+                 318  involuntary context switches
+          3227299595  instructions retired
+          1338680832  cycles elapsed
+            66143240  peak memory footprint
+EXIT 0 2026-10-21T08:25:06Z

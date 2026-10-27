@@ -1,0 +1,155 @@
+{
+  "array": {
+    "path": "benchmarks/synthetic_multimodal/s13/arrays/v3_default_s2_pca10.npz",
+    "sha256": "8f540c10e2dc69d0c5b4050c2ff7831d661de604e08e0e8364d6d0e9fdda1e25"
+  },
+  "dataset": "v3_default_s2",
+  "dimension": 10,
+  "embedding": "pca10",
+  "finished_utc": "2026-10-21T03:03:17.100598Z",
+  "fits": {
+    "raw_ot_whitened_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1647,
+      "seconds": 5.429,
+      "seed": 0
+    },
+    "whitened_full": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1647,
+      "seconds": 7.011,
+      "seed": 0
+    },
+    "whitened_ot_raw_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1647,
+      "seconds": 5.441,
+      "seed": 0
+    }
+  },
+  "heldout_details": {
+    "status": "not required: S13 held-out prediction is v3_transition and LARRY only"
+  },
+  "heldout_prediction": [],
+  "in_process_cpu_seconds": 50.045,
+  "input_sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+  "n_cells": 12884,
+  "peak_rss_bytes": 3262447616,
+  "preset": "v3_default",
+  "raw_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 26.940947728510324,
+      "final_err": 4.48465592924938e-10,
+      "from_day": 2,
+      "n_iter": 8,
+      "n_source": 190,
+      "n_target": 1457,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 29.32775011915984,
+      "final_err": 8.26006538946834e-10,
+      "from_day": 4,
+      "n_iter": 41,
+      "n_source": 1457,
+      "n_target": 11237,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 3.86,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "scores": {
+    "raw_ot_whitened_drift": {
+      "auc_lam1": 0.9946903944162806,
+      "fate_axis_abs_cos_at_saddle": 0.9843878272412174,
+      "median_lam1_committed": 0.0008686381079301684,
+      "median_lam1_saddle": 0.007796473380866788,
+      "n_committed": 12781,
+      "n_saddle": 29
+    },
+    "raw_s12": {
+      "auc_lam1": 0.9968649584917267,
+      "fate_axis_abs_cos_at_saddle": 0.9724572274591712,
+      "median_lam1_committed": -0.00122858689218126,
+      "median_lam1_saddle": 0.01997143944908009,
+      "n_committed": 12781,
+      "n_saddle": 29
+    },
+    "whitened_full": {
+      "auc_lam1": 0.6362272662276169,
+      "fate_axis_abs_cos_at_saddle": 0.943073764609917,
+      "median_lam1_committed": 0.0013325193766396022,
+      "median_lam1_saddle": 0.002135378946184694,
+      "n_committed": 12781,
+      "n_saddle": 29
+    },
+    "whitened_ot_raw_drift": {
+      "auc_lam1": 0.7880906194270051,
+      "fate_axis_abs_cos_at_saddle": 0.7807209211682826,
+      "median_lam1_committed": 0.00048605394258466713,
+      "median_lam1_saddle": 0.002919259699812171,
+      "n_committed": 12781,
+      "n_saddle": 29
+    }
+  },
+  "seed": 2,
+  "started_utc": "2026-10-21T03:02:18.353631Z",
+  "task": "orient/S13",
+  "unit": "unit_v3_default_s2_pca10",
+  "wall_seconds": 58.747,
+  "whitened_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 1.1879608655150962,
+      "final_err": 5.436808199722191e-10,
+      "from_day": 2,
+      "n_iter": 9,
+      "n_source": 190,
+      "n_target": 1457,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 0.9904472927156764,
+      "final_err": 4.1265059320719746e-10,
+      "from_day": 4,
+      "n_iter": 12,
+      "n_source": 1457,
+      "n_target": 11237,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.99,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "whitening": {
+    "eigen_floor": 9.681947243524889e-05,
+    "eigen_max": 96.8194724352489,
+    "eigen_min": 4.51627889597104,
+    "n_floored": 0,
+    "whiten_cov_max_abs_error": 8.992806499463768e-15
+  }
+}

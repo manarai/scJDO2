@@ -1,0 +1,84 @@
+{
+  "array_key": "J",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/operators/flow_v3_transition_s4_k10_d2.npz",
+  "array_sha256": "044dccf95da06a8d2719b2658997824aa3b6dea3957bd122664c9655489fafe2",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "dataset": "v3_transition_s4",
+  "drift_seed": 2,
+  "finished_utc": "2026-10-26T01:10:31.472363Z",
+  "fit": {
+    "model": {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1649,
+      "seconds": 7.079,
+      "seed": 2,
+      "weight_decay": 0.0001
+    },
+    "ot_pairs": [
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 28.040409663402194,
+        "final_err": 6.254381044429898e-10,
+        "from_day": 2,
+        "n_iter": 22,
+        "n_source": 188,
+        "n_target": 1461,
+        "plan_mass": 0.9999999999999999,
+        "rows_zero": 0,
+        "seconds": 0.02,
+        "to_day": 4,
+        "warnings": []
+      },
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 28.880907474810073,
+        "final_err": 5.561690691978872e-10,
+        "from_day": 4,
+        "n_iter": 10,
+        "n_source": 1461,
+        "n_target": 11216,
+        "plan_mass": 1.0,
+        "rows_zero": 0,
+        "seconds": 1.08,
+        "to_day": 6,
+        "warnings": []
+      }
+    ],
+    "source": "S14 raw-PCA OT plus locked reference MeasuredDrift"
+  },
+  "in_process_cpu_seconds": 14.692,
+  "input": {
+    "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_transition_s4.npz",
+    "prepared_sha256": "d59a867fe0c4e084d007f1c64ee4463e4f6f1abad693881411779b36fa584465",
+    "source": "S14 observed prepared PCA-50 prefix"
+  },
+  "k": 10,
+  "observed_fit_complete_before_truth_scoring": true,
+  "operator": "J_flow_reference",
+  "peak_rss_bytes": 1335115776,
+  "stage": "operators",
+  "started_utc": "2026-10-26T01:10:13.447747Z",
+  "task": "orient/S15",
+  "truth_keys_accessed": false,
+  "unit": "flow_v3_transition_s4_k10_d2",
+  "wall_seconds": 18.025
+}

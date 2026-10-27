@@ -1,0 +1,31 @@
+{
+  "finished_utc": "2026-10-19T17:07:26Z",
+  "ledger": {
+    "attempted_evaluations": 247.0,
+    "budget_cpu_hours": 40.0,
+    "completed_evaluations": 243.0,
+    "cpu_hours": 14.340786388888889,
+    "cpu_seconds": 51626.831,
+    "excluded_after_retry": 1.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 0.0
+  },
+  "peak_rss_bytes": 458588160,
+  "recover_dynamics_timing": [],
+  "rows": [
+    {
+      "base_uid": "refine_p2_n_founders_3",
+      "base_unmet": 5,
+      "block": 2,
+      "complete": 24,
+      "eligible_points": 3,
+      "errors": [
+        "block2_04"
+      ],
+      "grid_points": 25,
+      "result": "no grid point improves on the base under the block preference; base kept"
+    }
+  ],
+  "stage": "block-select",
+  "task": "orient/S09"
+}

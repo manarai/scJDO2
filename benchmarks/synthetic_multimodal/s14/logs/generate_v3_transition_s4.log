@@ -1,0 +1,21 @@
+START 2026-10-21T21:18:02Z preset=v3_transition seed=4
+{"detected_clone_fraction": 0.34597745821997666, "f_sample": 0.0289091169431116, "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_batch_effect\": true, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\", \"z1_crit\": 2.0}", "n_cells": 12865, "n_clones_detected": 676, "n_collected_by_day": "[188, 1461, 11216]", "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s4.h5ad", "preset": "v3_transition", "seed": 4, "sha256": "30cd640d01c686442c424ae23a8a6d53548d7f9f371db8e96502ae1beb5bf457"}
+     3148.70 real      1596.05 user      1473.71 sys
+         11882135552  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+           329455036  page reclaims
+                8401  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3718  voluntary context switches
+             2853434  involuntary context switches
+      16511289801055  instructions retired
+       8668774773012  cycles elapsed
+         10069222544  peak memory footprint
+EXIT 0 2026-10-21T22:10:31Z

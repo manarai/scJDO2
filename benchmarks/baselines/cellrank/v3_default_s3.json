@@ -1,0 +1,31 @@
+{
+  "dataset": "v3_default_s3",
+  "error": "",
+  "external_time_seconds": 937.23,
+  "input_path": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/v3/v3_default_s3.h5ad",
+  "input_sha256": "a8775b8ea069f284dbb046ac8c2ac2f8f831b775f3b89893ea372b430afc8621",
+  "method": "cellrank",
+  "peak_memory_bytes": 8235335680,
+  "runtime_seconds": 934.82,
+  "settings": {
+    "gpcca": {
+      "fate_probabilities": true,
+      "n_states": 5,
+      "terminal_states": "predicted"
+    },
+    "kernels": "0.8 * RealTimeKernel(moscot TemporalProblem) + 0.2 * ConnectivityKernel",
+    "method": "cellrank",
+    "neighbors": {
+      "n_neighbors": 30,
+      "random_state": 0,
+      "use_rep": "X_pca"
+    },
+    "representation": "observed supplied X_pca (30 components)",
+    "sampling_time_key": "day"
+  },
+  "status": "complete",
+  "version": "2.3.3",
+  "warnings": [
+    "GMRES fallback used because PETSc/SLEPc were unavailable."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "finished_utc": "2026-10-20T11:47:31.404946Z",
+  "in_process_cpu_seconds": 21.657,
+  "input_sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5",
+  "noise_seed": 1,
+  "path": "benchmarks/synthetic_multimodal/data/s10/v3_default_s0/diffusion/sigma_meas.npz",
+  "peak_rss_bytes": 3658858496,
+  "sha256": "5a27cb72201aff9ff58f88d6811bedd1a6ed0c743c24e93c35ef11f2f922baf7",
+  "started_utc": "2026-10-20T11:47:07.817967Z",
+  "stored_transform_reconstruction_max_abs": {
+    "fa": 9.5367431640625e-07,
+    "pca": 3.814697265625e-06
+  },
+  "task": "orient/S10",
+  "unit": "dmeas_v3_default_s0",
+  "wall_seconds": 23.587
+}

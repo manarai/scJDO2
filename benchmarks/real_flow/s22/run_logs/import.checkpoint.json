@@ -1,0 +1,9 @@
+{
+  "unit": "S22_bundle_import_and_input_placement",
+  "exit_code": 0,
+  "started_utc": "2026-10-24T00:10:06.063704+00:00",
+  "finished_utc": "2026-10-24T00:10:09.029061+00:00",
+  "wall_seconds": 2.9653509569980088,
+  "cpu_hours": 0.0007153852777777778,
+  "max_rss_kib": 96008
+}

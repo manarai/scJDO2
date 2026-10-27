@@ -1,0 +1,155 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/optimise/combined_k15_combined_selected_v3_default_s1.npz",
+  "array_sha256": "c8cd1eecf02e4318f7255ea3dfcaba46700e950b348a0f4761bfcecfd66e0b19",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "combined_selected",
+  "dataset": "v3_default_s1",
+  "finished_utc": "2026-10-21T10:14:49.869847Z",
+  "in_process_cpu_seconds": 92.014,
+  "k_star": 15,
+  "mode": "combined",
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 6.901,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.676,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.713,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.505,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.785,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 19.303611393993453,
+      "final_err": 7.131101332845161e-10,
+      "from_day": 2,
+      "n_iter": 22,
+      "n_source": 186,
+      "n_target": 1440,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 17.7385771691879,
+      "final_err": 9.81012267065762e-08,
+      "from_day": 4,
+      "n_iter": 100,
+      "n_source": 1440,
+      "n_target": 11028,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 7.62,
+      "to_day": 6,
+      "warnings": [
+        "Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`."
+      ]
+    }
+  ],
+  "part": "B",
+  "peak_rss_bytes": 7381827584,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s1.npz",
+  "prepared_sha256": "bbac3d5b56a3be246cc4117326910fd62376eef1ab54f3338593504f6996e2f2",
+  "scores": {
+    "auc_lam1": 0.998824701195219,
+    "fate_axis_abs_cos_at_saddle": 0.9958448896959013,
+    "jref_relative_frobenius_median": 1.00099696701505,
+    "median_lam1_committed": 0.00041247928689528844,
+    "median_lam1_saddle": 0.007655096576710761,
+    "n_committed": 12550,
+    "n_saddle": 28,
+    "transition_abs_offset": 0,
+    "transition_bin_medians": "[0.006976, 0.00715, 0.000829, 0.000447, 0.00038, 0.000522, 0.000171, 0.000134, 0.001029, 0.000554, 0.00057, -0.000513]",
+    "transition_detected_bin": 1,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 1,
+    "transition_peak_to_median": 13.296884144887187,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": 0,
+    "transition_true_bin": 1
+  },
+  "started_utc": "2026-10-21T10:13:04.017462Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "strict-pseudotime transition error"
+  ],
+  "unit": "optimise_combined_k15_combined_selected_v3_default_s1",
+  "wall_seconds": 105.852
+}

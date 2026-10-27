@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/s22_score_lineage.py",
+    "mechanical-review"
+  ],
+  "cpu_hours": 0.0040674525,
+  "exit_code": 0,
+  "finished_utc": "2026-10-24T15:57:11.419724+00:00",
+  "max_rss_bytes": 889065472,
+  "process_rss_limit_bytes": 8589934592,
+  "started_utc": "2026-10-24T15:56:51.338640+00:00",
+  "stop_reason": null,
+  "task": "orient/S22",
+  "threads_limit": 3,
+  "unit": "coord_check",
+  "wall_seconds": 20.081109709004522
+}

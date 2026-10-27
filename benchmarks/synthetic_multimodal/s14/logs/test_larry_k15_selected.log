@@ -1,0 +1,20 @@
+START 2026-10-22T15:40:06Z unit=test_larry_k15_selected launcher=.sandbox/bin/python cap=14GiB
+      150.82 real       122.32 user         5.03 sys
+          1696890880  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              210725  page reclaims
+                   4  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  34  voluntary context switches
+              160023  involuntary context switches
+       1010530836469  instructions retired
+        312666231167  cycles elapsed
+           840533984  peak memory footprint
+EXIT 0 2026-10-22T15:42:37Z

@@ -17,6 +17,12 @@ from .pbmc import (
     present_cycle_genes,
 )
 from .setty_cd34 import PROGENITOR_CLUSTERS, TERMINAL_CLUSTERS, load_setty_cd34
+from .synthetic_multimodal import (
+    embed_linear,
+    finite_difference_embedding_velocity,
+    make_multimodal,
+    true_velocity_in_embedding,
+)
 from .synthetic_pitchfork import (
     ALPHA_CRIT,
     DEFAULT_WIDTH,
@@ -43,4 +49,8 @@ __all__ = [
     "CYCLE_GENES",
     "RESTING_TYPES",
     "NK_PROLIF_TYPES",
+    "make_multimodal",
+    "embed_linear",
+    "true_velocity_in_embedding",
+    "finite_difference_embedding_velocity",
 ]

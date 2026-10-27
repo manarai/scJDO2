@@ -1,0 +1,46 @@
+{
+  "backbone": "cycle",
+  "bytes": 43953811,
+  "cells": 5000,
+  "finished_utc": "2026-10-22T15:05:46.025639Z",
+  "genes": 1000,
+  "key": "cycle_s2",
+  "path": "benchmarks/dyngen/data/cycle_s2.h5ad",
+  "seed": 2,
+  "settings": {
+    "R_version": "4.6.0",
+    "backbone": "cycle",
+    "compute_cellwise_grn": false,
+    "compute_dimred": true,
+    "compute_rna_velocity": true,
+    "distance_metric": "pearson",
+    "dyngen_version": "1.1.1",
+    "experiment": {
+      "num_timepoints": 3,
+      "pct_between": 0.75,
+      "type": "synchronised"
+    },
+    "num_cells": 5000,
+    "num_features": 1000,
+    "num_hks": 50,
+    "num_modules": 19,
+    "num_simulations": 32,
+    "num_targets": 900,
+    "num_tfs": 50,
+    "seed": 2,
+    "store_reaction_firings": false,
+    "store_reaction_propensities": false,
+    "task": "orient/S19",
+    "timings_seconds": {
+      "generate_cells": 2324.031,
+      "generate_experiment": 14.637,
+      "generate_feature_network": 3.866,
+      "generate_gold_standard": 9.771,
+      "generate_kinetics": 1.157,
+      "generate_tf_network": 0.101
+    }
+  },
+  "sha256": "0fdf4c871b1f0f2944e6323865852df5f6dadd06a5d8ca241f219893fe0bc293",
+  "status": "complete",
+  "task": "orient/S19"
+}

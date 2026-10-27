@@ -1,0 +1,33 @@
+START 2026-10-21T04:42:52Z
+{
+  "basis": "S10 max full-v3 generation + S13 max PCA-50 operator unit; explicit one-network fit equivalents",
+  "generation_units": 6,
+  "generation_cpu_seconds_each": 3145.57,
+  "part_a_model_fit_equivalents": 100,
+  "optimisation_and_combined_fit_equivalents": 64,
+  "test_fit_equivalents": 50,
+  "operator_cpu_seconds_each": 178.12,
+  "preparation_and_aggregation_allowance_seconds": 7200.0,
+  "projected_cpu_hours": 17.830861111111112,
+  "budget_cpu_hours": 24.0,
+  "admitted": true
+}
+       11.46 real         8.01 user         2.55 sys
+           461045760  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               76842  page reclaims
+                5718  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2795  voluntary context switches
+                9927  involuntary context switches
+         45257866946  instructions retired
+         27421771329  cycles elapsed
+           344491520  peak memory footprint
+EXIT 0 2026-10-21T04:43:04Z

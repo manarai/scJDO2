@@ -1,0 +1,20 @@
+START 2026-10-23T23:55:00Z unit=flow_v3_transition_s2_k15_d0 launcher=.sandbox/bin/python cap=14GiB reuse=step0
+        1.20 real         0.85 user         0.17 sys
+           290799616  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               24738  page reclaims
+                   4  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1233  voluntary context switches
+                 369  involuntary context switches
+          8991999927  instructions retired
+          3740335553  cycles elapsed
+           202753272  peak memory footprint
+EXIT 0 2026-10-23T23:55:01Z

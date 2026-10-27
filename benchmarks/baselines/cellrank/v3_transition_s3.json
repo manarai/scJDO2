@@ -1,0 +1,28 @@
+{
+  "dataset": "v3_transition_s3",
+  "error": "Previously above the 8 GiB cap; accepted under the revised 14 GiB per-process cap.",
+  "input_path": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/v3/v3_transition_s3.h5ad",
+  "input_sha256": "28d27cea26eb7112c7a6395046fe52bb202905f8a28ea34d5de452c5d8b37de3",
+  "measured_peak_memory_bytes": 8799666176,
+  "method": "cellrank",
+  "peak_memory_bytes": 8799666176,
+  "runtime_seconds": 1313.259,
+  "settings": {
+    "gpcca": {
+      "fate_probabilities": true,
+      "n_states": 5,
+      "terminal_states": "predicted"
+    },
+    "kernels": "0.8 * RealTimeKernel(moscot TemporalProblem) + 0.2 * ConnectivityKernel",
+    "method": "cellrank",
+    "neighbors": {
+      "n_neighbors": 30,
+      "random_state": 0,
+      "use_rep": "X_pca"
+    },
+    "representation": "observed supplied X_pca (30 components)",
+    "sampling_time_key": "day"
+  },
+  "status": "complete",
+  "version": "2.3.3"
+}

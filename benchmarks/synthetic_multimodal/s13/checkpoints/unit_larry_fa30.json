@@ -1,0 +1,202 @@
+{
+  "array": {
+    "path": "benchmarks/synthetic_multimodal/s13/arrays/larry_fa30.npz",
+    "sha256": "ff312375b3a8048239a3fa123c387fe4023e95dd87b2a7fa73c78646ea55e526"
+  },
+  "dataset": "larry",
+  "dimension": 30,
+  "embedding": "fa30",
+  "finished_utc": "2026-10-21T03:22:48.463396Z",
+  "fits": {
+    "raw_ot_whitened_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 6.041,
+      "seed": 0
+    },
+    "whitened_full": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 6.982,
+      "seed": 0
+    },
+    "whitened_ot_raw_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 6.054,
+      "seed": 0
+    }
+  },
+  "heldout_details": {
+    "first_day": 2.0,
+    "gap_hours": 48.0,
+    "last_day": 6.0,
+    "measured_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 4000,
+      "seconds": 5.672,
+      "seed": 0
+    },
+    "middle_day": 4.0,
+    "ot_pairs": [
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 1.7424405930572604,
+        "final_err": null,
+        "from_day": 2,
+        "n_iter": 0,
+        "n_source": 4000,
+        "n_target": 4000,
+        "plan_mass": 0.00047105647329387157,
+        "rows_zero": 3,
+        "seconds": 0.18,
+        "to_day": 4,
+        "warnings": [
+          "divide by zero encountered in divide",
+          "Warning: numerical errors at iteration 0"
+        ]
+      }
+    ]
+  },
+  "heldout_prediction": [
+    {
+      "energy_distance": 0.7179855219695408,
+      "method": "whitened_flow",
+      "n_last": 4000,
+      "n_middle": 4000
+    },
+    {
+      "energy_distance": 0.6228315034291608,
+      "method": "no_movement",
+      "n_last": 4000,
+      "n_middle": 4000
+    },
+    {
+      "energy_distance": 0.5155224565157237,
+      "method": "mean_displacement",
+      "n_last": 4000,
+      "n_middle": 4000
+    }
+  ],
+  "in_process_cpu_seconds": 86.534,
+  "input_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+  "n_cells": 12000,
+  "peak_rss_bytes": 1823604736,
+  "preset": "larry",
+  "raw_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 1.5006453113185398,
+      "final_err": null,
+      "from_day": 2,
+      "n_iter": 0,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 0.0005424843678686658,
+      "rows_zero": 3,
+      "seconds": 0.17,
+      "to_day": 4,
+      "warnings": [
+        "divide by zero encountered in divide",
+        "Warning: numerical errors at iteration 0"
+      ]
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 1.9044031037912967,
+      "final_err": null,
+      "from_day": 4,
+      "n_iter": 0,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 0.0010951882781268768,
+      "rows_zero": 1,
+      "seconds": 0.16,
+      "to_day": 6,
+      "warnings": [
+        "divide by zero encountered in divide",
+        "Warning: numerical errors at iteration 0"
+      ]
+    }
+  ],
+  "sample_note": "S11 fixed default_rng(0) sample: 4,000 cells per day, exactly as S10 Step 5",
+  "scores": {
+    "raw_ot_whitened_drift": {
+      "mean_lam1": -0.00036803484545089304,
+      "median_lam1": -0.0006723572732880712
+    },
+    "raw_s10": {
+      "mean_lam1": -0.00035419329651631415,
+      "median_lam1": -0.0006722910329699516
+    },
+    "whitened_full": {
+      "mean_lam1": -0.0004203370481263846,
+      "median_lam1": -0.0007395658176392317
+    },
+    "whitened_ot_raw_drift": {
+      "mean_lam1": -0.0004017754108645022,
+      "median_lam1": -0.0007230566116049886
+    }
+  },
+  "seed": 0,
+  "started_utc": "2026-10-21T03:21:10.805336Z",
+  "task": "orient/S13",
+  "unit": "unit_larry_fa30",
+  "wall_seconds": 97.658,
+  "whitened_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 1.7424405930572604,
+      "final_err": null,
+      "from_day": 2,
+      "n_iter": 0,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 0.00047105647329387157,
+      "rows_zero": 3,
+      "seconds": 0.17,
+      "to_day": 4,
+      "warnings": [
+        "divide by zero encountered in divide",
+        "Warning: numerical errors at iteration 0"
+      ]
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 2.179013995968887,
+      "final_err": null,
+      "from_day": 4,
+      "n_iter": 0,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 0.0009312788623711734,
+      "rows_zero": 1,
+      "seconds": 0.17,
+      "to_day": 6,
+      "warnings": [
+        "divide by zero encountered in divide",
+        "Warning: numerical errors at iteration 0"
+      ]
+    }
+  ],
+  "whitening": {
+    "eigen_floor": 9.92143694515319e-07,
+    "eigen_max": 0.992143694515319,
+    "eigen_min": 0.6890223119530909,
+    "n_floored": 0,
+    "whiten_cov_max_abs_error": 1.3322676295501878e-14
+  }
+}

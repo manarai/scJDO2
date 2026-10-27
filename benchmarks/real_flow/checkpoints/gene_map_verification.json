@@ -1,0 +1,11 @@
+{
+  "expected_unique_mappings": 1956,
+  "finished_utc": "2026-10-19T05:41:21.560227+00:00",
+  "map_sha256_after": "da14f87794ee0cd7a5f965a1a9d0d953345ec032b0decbdc16b9108911d946a2",
+  "map_sha256_before": "da14f87794ee0cd7a5f965a1a9d0d953345ec032b0decbdc16b9108911d946a2",
+  "map_unchanged": true,
+  "returncode": 0,
+  "started_utc": "2026-10-19T05:41:18Z",
+  "task": "orient/S11",
+  "unit": "gene_map_verification"
+}

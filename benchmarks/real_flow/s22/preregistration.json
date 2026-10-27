@@ -1,0 +1,32 @@
+{
+  "task": "orient/S22",
+  "input_sha256": "74f01c2a9121531ac4a0af156c2b96e5be63d1af1957075377277f57249286c8",
+  "issued_snapshot": "e90440cfa3d87aa9c76ae0a0c6be697712ac6094",
+  "task_sha256": "8f7ba897b6c6339a0b151626c470c08b8a00c3507858528a954f5b865ff51deb",
+  "s11_sha256": "01789994b91166b89c98f08b717467ecfcfc0833aaac22f440bfab9f97c392c7",
+  "energy_adapter_sha256": "fddd58b69ee50dd9cb5b6340d10f1ad18fccef11716e566842da3a456d86ff93",
+  "score_config": {
+    "hidden": 96,
+    "depth": 3,
+    "n_epochs": 1500,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "batch_size": 256,
+    "loss": "esm",
+    "lr": 0.0005,
+    "beta": 1.0,
+    "esm_laplacian": "exact",
+    "other_defaults": "unchanged protected EnergyDriftConfig defaults"
+  },
+  "gated_seed": 0,
+  "permutations": 1000,
+  "permutation_rng_seed": 0,
+  "permutation_tail": "positive one-sided with +1 correction",
+  "threads_limit": 3,
+  "process_rss_limit_gb": 8,
+  "cpu_budget_hours": 8,
+  "no_score_fit_or_fate_statistic_has_run": true
+}

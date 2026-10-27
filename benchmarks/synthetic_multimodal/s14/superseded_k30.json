@@ -1,0 +1,42 @@
+{
+  "amended_rule": "mean seed stability >= 0.5 is required before lineage agreement counts",
+  "completed_k30_checkpoints": 53,
+  "log_path": "benchmarks/synthetic_multimodal/s14/optimisation_log_k30_superseded.csv",
+  "log_sha256": "dd842481654dac116f58c7e7729d25149920bc6dfe4b6918ff2a99fcb6c528f8",
+  "not_retained_incomplete_k30_units": [
+    {
+      "configuration_id": "arch_128x128x128_wd0p001",
+      "dataset": "v3_default_s0"
+    },
+    {
+      "configuration_id": "arch_128x128x128_wd0p001",
+      "dataset": "v3_default_s1"
+    },
+    {
+      "configuration_id": "arch_128x128x128_wd0p001",
+      "dataset": "v3_transition_s1"
+    },
+    {
+      "configuration_id": "ensemble_5",
+      "dataset": "v3_default_s0"
+    },
+    {
+      "configuration_id": "ensemble_5",
+      "dataset": "v3_default_s1"
+    },
+    {
+      "configuration_id": "ensemble_5",
+      "dataset": "v3_transition_s0"
+    },
+    {
+      "configuration_id": "ensemble_5",
+      "dataset": "v3_transition_s1"
+    }
+  ],
+  "note": "Checkpoint and array files are retained in place and are excluded from Revision 1 selection by k-qualified artifact names.",
+  "revision": 1,
+  "rule_superseded": "highest mean lineage agreement without a stability eligibility gate",
+  "status": "superseded",
+  "superseded_k_star": 30,
+  "superseded_selection_path": "benchmarks/synthetic_multimodal/s14/k_selection.json"
+}

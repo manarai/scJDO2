@@ -1,0 +1,24 @@
+{
+  "basis_checkpoints": {
+    "v3_default_s2": "4fa15b74250bde86be6163630e3a0862943b69330ff5ab21632916e4092710bc",
+    "v3_transition_s2": "89f51f64e6e41b8de64f53205bfcc5c00b9ab695e33c814e10b3f7a2fe0d37b4",
+    "v3_transition_s3": "48063372546470f60ae81abceb81bb2e5f007c3bb69d5eecf521d98829967b0c",
+    "v3_transition_s4": "33f5903e394d4e71ab8efd89d68ae3a456ae8c5a862c2531b905387994c0dc88"
+  },
+  "datasets": [
+    "v3_transition_s2",
+    "v3_transition_s3",
+    "v3_transition_s4",
+    "v3_default_s2"
+  ],
+  "finished_utc": "2026-10-24T15:31:06.801425Z",
+  "in_process_cpu_seconds": 0.008,
+  "jref_diagnosis": "benchmarks/synthetic_multimodal/s15/jref_diagnosis.csv",
+  "jref_diagnosis_sha256": "507c118b36149a6b7d7e69c5441b0e50f84b83171fd1496fdcb863f00c970cd7",
+  "peak_rss_bytes": 108036096,
+  "stage": "report_only_basis_aggregate",
+  "started_utc": "2026-10-24T15:31:06.792461Z",
+  "task": "orient/S15",
+  "unit": "basis_combine",
+  "wall_seconds": 0.009
+}

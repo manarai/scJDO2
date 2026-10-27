@@ -1,0 +1,8 @@
+{
+  "n_committed": 2245,
+  "n_fork": 0,
+  "n_rows": 4,
+  "task": "orient/S21b",
+  "truth_read_after_fits": true,
+  "unit": "score_linear_s0_T8"
+}

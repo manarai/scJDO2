@@ -1,0 +1,49 @@
+{
+  "figures": [
+    "benchmarks/figures/orient/s13/auc_raw_vs_whitened.png",
+    "benchmarks/figures/orient/s13/lambda1_agreement_matrix.png"
+  ],
+  "finished_utc": "2026-10-21T03:26:45.614367Z",
+  "gate": {
+    "by_embedding": {
+      "fa20": {
+        "count": 3,
+        "max": 0.5332879345779411,
+        "median": 0.49010859556091835,
+        "min": 0.2999580995990322
+      },
+      "pca10": {
+        "count": 3,
+        "max": 0.3735896865970216,
+        "median": 0.3197624550498489,
+        "min": 0.21711922780567047
+      },
+      "pca20": {
+        "count": 3,
+        "max": 0.5836161457029697,
+        "median": 0.4263792488808818,
+        "min": 0.37364334931572096
+      },
+      "pca50": {
+        "count": 3,
+        "max": 0.48605408851979726,
+        "median": 0.3891436192169689,
+        "min": 0.32387261541934753
+      }
+    },
+    "n_passing_embeddings": 0,
+    "pass": false,
+    "passing_embeddings": [],
+    "rule": "AUC >= 0.85 on every v3_transition seed in at least 3 linear embeddings"
+  },
+  "in_process_cpu_seconds": 0.72,
+  "n_agreement_rows": 36,
+  "n_auc_rows": 96,
+  "n_heldout_rows": 42,
+  "n_variant_rows": 104,
+  "peak_rss_bytes": 245547008,
+  "started_utc": "2026-10-21T03:26:44.883959Z",
+  "task": "orient/S13",
+  "unit": "summarize",
+  "wall_seconds": 0.73
+}

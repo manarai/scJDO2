@@ -1,0 +1,19 @@
+{
+  "unit": "label_cache_repair",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "repair-labels"
+  ],
+  "started_utc": "2026-10-22T05:57:21.717353+00:00",
+  "finished_utc": "2026-10-22T05:57:28.496393+00:00",
+  "exit_code": 0,
+  "wall_seconds": 6.77904356099998,
+  "cpu_hours": 0.001949997777777778,
+  "max_rss_kib": 871424,
+  "cpu_hours_before": 0.09209560694444445,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/label_cache_repair.log"
+}

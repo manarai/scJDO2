@@ -1,0 +1,86 @@
+{
+  "k": 15,
+  "n_controls": 10691,
+  "n_basins": 66,
+  "n_initial_endpoint_clusters": 8561,
+  "n_small_cluster_merges": 8495,
+  "median_endpoint_nearest_neighbor_distance": 0.0014949573434134861,
+  "agglomerative_distance_threshold": 0.0007474786717067431,
+  "agglomerative_linkage": "sklearn default ward",
+  "merge_algorithm": "Smallest active cluster first, then source label; nearest endpoint centroid; stable lowest-label distance ties; repeat until all groups >=100",
+  "euler_step": 0.05,
+  "max_steps": 400,
+  "step_stop_norm": 0.0001,
+  "fraction_stopped": 0.15966700963427183,
+  "tangent": "30 neighbors, no explicit self removal; centered; denominator29; largest3 covariance eigendirections",
+  "energy_endpoint_minimum": "Lowest energy among the final fixed-integration endpoints in the basin",
+  "leiden_resolution": 5.0185546875,
+  "leiden_attempts": [
+    {
+      "resolution": 1.0,
+      "n_states": 12
+    },
+    {
+      "resolution": 2.0,
+      "n_states": 21
+    },
+    {
+      "resolution": 4.0,
+      "n_states": 53
+    },
+    {
+      "resolution": 8.0,
+      "n_states": 105
+    },
+    {
+      "resolution": 6.0,
+      "n_states": 84
+    },
+    {
+      "resolution": 5.0,
+      "n_states": 65
+    },
+    {
+      "resolution": 5.5,
+      "n_states": 72
+    },
+    {
+      "resolution": 5.25,
+      "n_states": 67
+    },
+    {
+      "resolution": 5.125,
+      "n_states": 68
+    },
+    {
+      "resolution": 5.0625,
+      "n_states": 69
+    },
+    {
+      "resolution": 5.03125,
+      "n_states": 68
+    },
+    {
+      "resolution": 5.015625,
+      "n_states": 63
+    },
+    {
+      "resolution": 5.0234375,
+      "n_states": 69
+    },
+    {
+      "resolution": 5.01953125,
+      "n_states": 67
+    },
+    {
+      "resolution": 5.017578125,
+      "n_states": 64
+    },
+    {
+      "resolution": 5.0185546875,
+      "n_states": 66
+    }
+  ],
+  "leiden_neighbors": "Scanpy defaults (n_neighbors15), use_rep X, random_state0; Leiden defaults with seed0",
+  "control_only_state_fit": true
+}

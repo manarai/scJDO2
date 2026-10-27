@@ -1,0 +1,8 @@
+[2026-10-23T02:50:31.174440+00:00] rpe1: frozen-transform projection+raw doses 2048/247914
+[2026-10-23T02:50:37.307645+00:00] rpe1: frozen-transform projection+raw doses 43008/247914
+[2026-10-23T02:50:43.629155+00:00] rpe1: frozen-transform projection+raw doses 83968/247914
+[2026-10-23T02:50:50.226301+00:00] rpe1: frozen-transform projection+raw doses 124928/247914
+[2026-10-23T02:50:56.652238+00:00] rpe1: frozen-transform projection+raw doses 165888/247914
+[2026-10-23T02:51:03.039198+00:00] rpe1: frozen-transform projection+raw doses 206848/247914
+[2026-10-23T02:51:09.579855+00:00] rpe1: frozen-transform projection+raw doses 247808/247914
+rpe1 dose/projection complete 26234 cells

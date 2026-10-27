@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "task": "orient/S21b",
+  "source_key": "bifurcating_v2_s16",
+  "key": "bifurcating_v2_s16_T8",
+  "backbone": "bifurcating",
+  "seed": 16,
+  "timepoints": 8,
+  "cells": 5000,
+  "genes": 1000,
+  "fork_cells": 746,
+  "generate_experiment_seconds": 10.993,
+  "generated_utc": "2026-10-23 23:56:06 UTC",
+  "h5ad_path": "benchmarks/dyngen/data/bifurcating_v2_s16_T8.h5ad",
+  "h5ad_sha256": "26490941bd446f0f90b979f3fc7cf0fa28ec27e407b467d5745f02bf3c71c884",
+  "h5ad_bytes": 61380792
+}

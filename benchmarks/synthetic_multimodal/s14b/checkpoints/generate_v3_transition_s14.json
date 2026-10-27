@@ -1,0 +1,12 @@
+{
+  "cpu_seconds": 1016.02,
+  "dataset_created": false,
+  "eligibility_assessed": false,
+  "error": "Stopped with SIGTERM after exceeding 7200-second wall limit; 17293.73 s wall, 1016.02 s CPU, peak RSS 11812798464 bytes; no dataset or manifest row.",
+  "manifest_row_appended": false,
+  "peak_rss_bytes": 11812798464,
+  "status": "stopped_wall_limit",
+  "task": "orient/S14b",
+  "unit": "generate_v3_transition_s14",
+  "wall_seconds": 17293.73
+}

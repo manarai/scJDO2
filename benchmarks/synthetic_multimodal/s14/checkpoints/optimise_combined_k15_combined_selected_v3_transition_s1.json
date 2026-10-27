@@ -1,0 +1,153 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/optimise/combined_k15_combined_selected_v3_transition_s1.npz",
+  "array_sha256": "a5f5476172e878d10b157cbe5b45f555cfe69c7e96f79d8c432ddb62dc5c1aa8",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "combined_selected",
+  "dataset": "v3_transition_s1",
+  "finished_utc": "2026-10-21T10:09:21.604444Z",
+  "in_process_cpu_seconds": 88.81,
+  "k_star": 15,
+  "mode": "combined",
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 6.859,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.547,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.548,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.534,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 5.708,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 17.190027067424218,
+      "final_err": 6.293572757815605e-10,
+      "from_day": 2,
+      "n_iter": 25,
+      "n_source": 186,
+      "n_target": 1440,
+      "plan_mass": 1.0000000000000002,
+      "rows_zero": 0,
+      "seconds": 0.02,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 15.797457934389067,
+      "final_err": 9.401915223085604e-10,
+      "from_day": 4,
+      "n_iter": 30,
+      "n_source": 1440,
+      "n_target": 11028,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 2.29,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part": "B",
+  "peak_rss_bytes": 5828460544,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_transition_s1.npz",
+  "prepared_sha256": "0569e87eb008b22a10b771c75fce0f6ea6387a216014f40bb133d4779ccb41ed",
+  "scores": {
+    "auc_lam1": 0.9252031832035219,
+    "fate_axis_abs_cos_at_saddle": 0.9941707905247412,
+    "jref_relative_frobenius_median": 1.0043173507670033,
+    "median_lam1_committed": 0.00670932244636608,
+    "median_lam1_saddle": 0.012788194764117473,
+    "n_committed": 8859,
+    "n_saddle": 368,
+    "transition_abs_offset": 4,
+    "transition_bin_medians": "[0.021445, 0.018353, 0.017512, 0.016425, 0.015414, 0.013907, 0.011326, 0.009458, 0.007802, 0.007968, 0.006028, 0.005482]",
+    "transition_detected_bin": 0,
+    "transition_informative": true,
+    "transition_n_rising_bins_before_detected": 0,
+    "transition_peak_to_median": 1.6996814490932601,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": -4,
+    "transition_true_bin": 4
+  },
+  "started_utc": "2026-10-21T10:07:38.596427Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "strict-pseudotime transition error"
+  ],
+  "unit": "optimise_combined_k15_combined_selected_v3_transition_s1",
+  "wall_seconds": 103.008
+}

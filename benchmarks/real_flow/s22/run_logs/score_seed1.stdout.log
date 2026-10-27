@@ -1,0 +1,72 @@
+[energy-drift] epoch 150/1500  loss_kind=esm  loss=-23.5469
+[energy-drift] epoch 300/1500  loss_kind=esm  loss=-36.3340
+[energy-drift] epoch 450/1500  loss_kind=esm  loss=-45.5644
+[energy-drift] epoch 600/1500  loss_kind=esm  loss=-48.4737
+[energy-drift] epoch 750/1500  loss_kind=esm  loss=-56.3849
+[energy-drift] epoch 900/1500  loss_kind=esm  loss=-62.6834
+[energy-drift] epoch 1050/1500  loss_kind=esm  loss=-62.5916
+[energy-drift] epoch 1200/1500  loss_kind=esm  loss=-59.0777
+[energy-drift] epoch 1350/1500  loss_kind=esm  loss=-56.7034
+[energy-drift] epoch 1500/1500  loss_kind=esm  loss=-56.0222
+S22 seed 1 exact Jacobians/eigenspectra: 2048/19623
+S22 seed 1 exact Jacobians/eigenspectra: 4096/19623
+S22 seed 1 exact Jacobians/eigenspectra: 6144/19623
+S22 seed 1 exact Jacobians/eigenspectra: 8192/19623
+S22 seed 1 exact Jacobians/eigenspectra: 10240/19623
+S22 seed 1 exact Jacobians/eigenspectra: 12288/19623
+S22 seed 1 exact Jacobians/eigenspectra: 14336/19623
+S22 seed 1 exact Jacobians/eigenspectra: 16384/19623
+S22 seed 1 exact Jacobians/eigenspectra: 18432/19623
+S22 seed 1 exact Jacobians/eigenspectra: 19623/19623
+{
+  "seed": 1,
+  "started_utc": "2026-10-24T15:33:37.685634+00:00",
+  "fit_finished_utc": "2026-10-24T15:38:02.427686+00:00",
+  "config": {
+    "hidden": 96,
+    "depth": 3,
+    "beta": 1.0,
+    "n_epochs": 1500,
+    "batch_size": 256,
+    "lr": 0.0005,
+    "weight_decay": 0.0001,
+    "seed": 1,
+    "device": null,
+    "loss": "esm",
+    "dsm_sigma_range": [
+      0.05,
+      0.5
+    ],
+    "esm_laplacian": "exact",
+    "esm_hutch_k": 4,
+    "clock_calibrated": false
+  },
+  "device": "cpu",
+  "n_training_cells": 12000,
+  "training_array_sha256": "736c2c6405d343fca48dc8d79bced95453291795f615925fe4ae1f52323c2595",
+  "sample_index_sha256": "d5b2d030fcddc2482c2a7037130e795d999a95e48bc8dc930c839a145e33f894",
+  "model_sha256": "98fe2d35afa0bfd708e6b04ce7ad296034d9e7dcd499a032d1ebfd7a6106504a",
+  "symmetry": {
+    "n_sample": 100,
+    "median_asym": 1.6452047901793776e-07,
+    "max_asym": 2.1799257865495747e-07,
+    "mean_asym": 1.652100269211587e-07
+  },
+  "symmetry_pass": true,
+  "torch_threads": 3,
+  "n_query_cells": 19623,
+  "query_finished_utc": "2026-10-24T15:38:09.565684+00:00",
+  "query_max_asym_report_only": 2.914784715812857e-07,
+  "eigenvalue_range": [
+    -59.97759246826172,
+    14.637618064880371
+  ],
+  "lambda1_median": 0.5865503549575806,
+  "positive_eigen_count_distribution": {
+    "0": 3751,
+    "1": 13240,
+    "2": 2618,
+    "3": 14
+  },
+  "cells_npz_sha256": "432d04bbafb4a03ed05a38a5902deccd78e4bdb259954bcc73d8f89dded443a2"
+}

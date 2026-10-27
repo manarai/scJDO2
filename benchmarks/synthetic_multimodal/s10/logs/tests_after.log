@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/terooatt/Documents/scJDO2-manus
+configfile: pyproject.toml
+plugins: platformdirs-4.13.0, fast-array-utils-1.5.1
+collected 77 items
+
+tests/test_orient.py .............................................       [ 58%]
+tests/test_smoke.py ...                                                  [ 62%]
+tests/test_synthetic_multimodal.py .............................         [100%]
+
+=============================== warnings summary ===============================
+tests/test_synthetic_multimodal.py::test_embedding_truth_mapping_matches_finite_difference[fa]
+  /Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/sklearn/decomposition/_factor_analysis.py:296: ConvergenceWarning: FactorAnalysis did not converge. You might want to increase the number of iterations.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================== 77 passed, 1 warning in 295.55s (0:04:55) ===================
+      298.97 real       192.75 user       105.69 sys
+          4707123200  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            11531932  page reclaims
+                 138  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1626  voluntary context switches
+               54392  involuntary context switches
+       2468406625659  instructions retired
+        777420103948  cycles elapsed
+           872960392  peak memory footprint

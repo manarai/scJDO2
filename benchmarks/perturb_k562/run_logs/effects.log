@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/scJDO2/scripts/s18_perturb_response.py", line 612, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/ubuntu/scJDO2/scripts/s18_perturb_response.py", line 608, in main
+    return fit_capture(args.k) if args.subcommand == "fit-capture" else operations[args.subcommand]()
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/scJDO2/scripts/s18_perturb_response.py", line 264, in effect_tests
+    z, labels, ci = data["z"][:, :20], data["labels"], data["control_indices"]
+                                       ~~~~^^^^^^^^^^
+  File "/home/ubuntu/scJDO2/.venv/lib/python3.12/site-packages/numpy/lib/_npyio_impl.py", line 257, in __getitem__
+    return format.read_array(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/scJDO2/.venv/lib/python3.12/site-packages/numpy/lib/_format_impl.py", line 833, in read_array
+    raise ValueError("Object arrays cannot be loaded when "
+ValueError: Object arrays cannot be loaded when allow_pickle=False

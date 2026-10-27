@@ -1,0 +1,106 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_batch_s0_k20_reference.npz",
+  "array_sha256": "6429c890aba313b10aa13eb88b872c1025decdc0c98d83c5e51658b57e5264b2",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "configuration_id": "reference",
+  "dataset": "v3_batch_s0",
+  "finished_utc": "2026-10-22T15:09:08.065239Z",
+  "in_process_cpu_seconds": 30.549,
+  "k": 20,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1613,
+      "seconds": 3.275,
+      "seed": 0,
+      "weight_decay": 0.0001
+    }
+  ],
+  "n_cells": 12634,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 40.77848556476728,
+      "final_err": 1.1219329815146211e-10,
+      "from_day": 2,
+      "n_iter": 8,
+      "n_source": 184,
+      "n_target": 1429,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.0,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 40.858450325063394,
+      "final_err": 2.7256324526697736e-08,
+      "from_day": 4,
+      "n_iter": 100,
+      "n_source": 1429,
+      "n_target": 11021,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 3.62,
+      "to_day": 6,
+      "warnings": [
+        "Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`."
+      ]
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 5719097344,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_batch_s0.npz",
+  "prepared_sha256": "5528c69d0a9c098e3e6144b0fb111696796da8e704ba753ce2f688bc4fee0a22",
+  "preset": "v3_batch",
+  "scores": {
+    "auc_lam1": 0.9991518997445722,
+    "fate_axis_abs_cos_at_saddle": 0.9844659269757292,
+    "jref_relative_frobenius_median": 1.0011648685921735,
+    "median_lam1_committed": 0.00022060434176154046,
+    "median_lam1_saddle": 0.02733699287263502,
+    "n_committed": 12528,
+    "n_saddle": 24,
+    "transition_abs_offset": 0,
+    "transition_bin_medians": "[0.024535, 0.029437, 0.021411, 0.000762, 2.7e-05, -0.000584, -0.000264, 0.003801, 0.001934, 0.002637, -0.000352, 0.000264]",
+    "transition_detected_bin": 1,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 1,
+    "transition_peak_to_median": 21.83177983185748,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": 0,
+    "transition_true_bin": 1
+  },
+  "seed": 0,
+  "started_utc": "2026-10-22T15:08:37.042409Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_batch_s0_k20_reference",
+  "wall_seconds": 31.023
+}

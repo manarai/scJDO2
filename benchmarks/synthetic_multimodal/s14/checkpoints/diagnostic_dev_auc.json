@@ -1,0 +1,14 @@
+{
+  "finished_utc": "2026-10-21T05:31:24.829614Z",
+  "in_process_cpu_seconds": 43.447,
+  "k_selection_sha256": "6f345a3ab073097fe3bef120794a9e085f13c0652bbaceaf26336769bc94ce8f",
+  "k_star": 30,
+  "n_rows": 20,
+  "path": "benchmarks/synthetic_multimodal/s14/dev_auc_by_k.csv",
+  "peak_rss_bytes": 5070487552,
+  "post_selection_diagnostic": true,
+  "started_utc": "2026-10-21T05:30:40.846362Z",
+  "task": "orient/S14",
+  "unit": "diagnostic_dev_auc",
+  "wall_seconds": 43.983
+}

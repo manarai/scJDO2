@@ -1,0 +1,20 @@
+{
+  "budget_cpu_hours": 24.0,
+  "decision": "stopped_before_coordinate_refinement",
+  "estimated_unmetered_child_cpu_seconds_per_evaluation": 119.06996875000002,
+  "estimated_unmetered_prior_cpu_hours": 1.091474713541667,
+  "lhs_completed": 64,
+  "lhs_errors": 0,
+  "prior_attempts_with_cpu": 33,
+  "prior_final_reserve_estimate_cpu_hours_in_script_v2_sized": 2.086580555555556,
+  "prior_final_reserve_scaled_by_process_over_in_script_ratio": 3.0356396384747066,
+  "projected_calibration_total_cpu_hours": 21.159534053819446,
+  "projected_total_cpu_hours": 24.19517369229415,
+  "remaining_for_final_measurement_and_tests_cpu_hours": 2.8404659461805544,
+  "remaining_refinement_evaluations": 130,
+  "revision": 2,
+  "revision2_mean_in_script_rusage_self_cpu_seconds": 270.73284375000003,
+  "revision2_mean_process_cpu_seconds_per_evaluation": 393.8728125,
+  "spent_prior_recorded_cpu_hours_rusage_self": 2.3437827777777778,
+  "spent_revision2_process_cpu_hours_usr_bin_time": 3.501091666666667
+}

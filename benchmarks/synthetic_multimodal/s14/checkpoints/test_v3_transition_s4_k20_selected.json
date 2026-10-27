@@ -1,0 +1,156 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_transition_s4_k20_selected.npz",
+  "array_sha256": "f83461476b8b85c729c7ab4f093c1c23155eef14c5102c3016a939635abfe6ec",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "selected",
+  "dataset": "v3_transition_s4",
+  "finished_utc": "2026-10-22T13:24:53.802571Z",
+  "in_process_cpu_seconds": 105.949,
+  "k": 20,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1649,
+      "seconds": 7.031,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1649,
+      "seconds": 5.824,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1649,
+      "seconds": 6.05,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1649,
+      "seconds": 6.234,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1649,
+      "seconds": 6.28,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "n_cells": 12865,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 17.795630296596865,
+      "final_err": 6.502353096369496e-10,
+      "from_day": 2,
+      "n_iter": 35,
+      "n_source": 188,
+      "n_target": 1461,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.02,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 16.66004841111759,
+      "final_err": 5.962897262708695e-10,
+      "from_day": 4,
+      "n_iter": 19,
+      "n_source": 1461,
+      "n_target": 11216,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 1.22,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 7264747520,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_transition_s4.npz",
+  "prepared_sha256": "d59a867fe0c4e084d007f1c64ee4463e4f6f1abad693881411779b36fa584465",
+  "preset": "v3_transition",
+  "scores": {
+    "auc_lam1": 0.8852363203558116,
+    "fate_axis_abs_cos_at_saddle": 0.9847833163798007,
+    "jref_relative_frobenius_median": 1.0015228300843755,
+    "median_lam1_committed": 0.008458909855488653,
+    "median_lam1_saddle": 0.010780532694828471,
+    "n_committed": 9122,
+    "n_saddle": 350,
+    "transition_abs_offset": 0,
+    "transition_bin_medians": "[0.010794, 0.010277, 0.010129, 0.010141, 0.009829, 0.010356, 0.009733, 0.009953, 0.009111, 0.008744, 0.008445, 0.007542]",
+    "transition_detected_bin": 0,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 0,
+    "transition_peak_to_median": 1.0913450523906358,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": 0,
+    "transition_true_bin": 0
+  },
+  "seed": 4,
+  "started_utc": "2026-10-22T13:22:53.374727Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_transition_s4_k20_selected",
+  "wall_seconds": 120.428
+}

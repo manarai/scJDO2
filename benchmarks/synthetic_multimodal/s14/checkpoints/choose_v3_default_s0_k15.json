@@ -1,0 +1,176 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/choose/v3_default_s0_k15.npz",
+  "array_sha256": "94f4844d0888598c8bd3bca57f23dea3999f10ab2665839e795fcd26afd8d3d5",
+  "dataset": "v3_default_s0",
+  "finished_utc": "2026-10-21T05:03:23.056836Z",
+  "heldout_day": [
+    {
+      "energy_distance": 1.443071664093712,
+      "method": "whitened_flow",
+      "n_last": 11066,
+      "n_middle": 1448
+    },
+    {
+      "energy_distance": 1.3743694039582053,
+      "method": "no_movement",
+      "n_last": 11066,
+      "n_middle": 1448
+    },
+    {
+      "energy_distance": 1.3995428954945073,
+      "method": "mean_displacement",
+      "n_last": 11066,
+      "n_middle": 1448
+    }
+  ],
+  "heldout_details": {
+    "first_day": 2.0,
+    "gap_hours": 48.0,
+    "last_day": 6.0,
+    "measured_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 187,
+      "seconds": 2.767,
+      "seed": 0
+    },
+    "middle_day": 4.0,
+    "ot_pairs": [
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 2.108479616760932,
+        "final_err": 1.9037197966580742e-10,
+        "from_day": 2,
+        "n_iter": 9,
+        "n_source": 187,
+        "n_target": 1448,
+        "plan_mass": 1.0,
+        "rows_zero": 0,
+        "seconds": 0.01,
+        "to_day": 4,
+        "warnings": []
+      }
+    ]
+  },
+  "in_process_cpu_seconds": 39.037,
+  "k": 15,
+  "lineage": {
+    "definition": "Spearman across all PCA-coordinate components of observed clone-cell pairs; Euler integration uses 1-hour steps over the observed sampling gap",
+    "lineage_null_max": 0.22097954066240083,
+    "lineage_nulls": [
+      0.20739205208528705,
+      0.20291107949494092,
+      0.22097954066240083,
+      0.20629575230072095,
+      0.19839730041579642
+    ],
+    "lineage_spearman": 0.7233755534028177,
+    "n_lineage_cell_barcode_pairs": 530,
+    "n_lineage_dimensions_pooled": 7950
+  },
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1635,
+      "seconds": 3.354,
+      "seed": 0,
+      "weight_decay": 0.0001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1635,
+      "seconds": 2.84,
+      "seed": 1,
+      "weight_decay": 0.0001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1635,
+      "seconds": 2.629,
+      "seed": 2,
+      "weight_decay": 0.0001
+    }
+  ],
+  "n_cells": 12701,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 33.233275079050365,
+      "final_err": 7.640376375173138e-10,
+      "from_day": 2,
+      "n_iter": 18,
+      "n_source": 187,
+      "n_target": 1448,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 36.31934015853911,
+      "final_err": 8.992555440944086e-10,
+      "from_day": 4,
+      "n_iter": 59,
+      "n_source": 1448,
+      "n_target": 11066,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 2.19,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part_a_truth_free": true,
+  "peak_rss_bytes": 1976369152,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s0.npz",
+  "prepared_sha256": "f630dc7f4bab2e405be3cbb13b060fc92e85375d9b8fb345bf521e4d79878675",
+  "reference_config": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.0001
+  },
+  "stability": {
+    "definition": "median of the three whole-cell Spearman correlations of lambda1 between drift seeds 0, 1, 2",
+    "lambda_seed_spearman_pairs": [
+      0.3309351097322419,
+      0.4288493790713585,
+      0.5987196863475458
+    ],
+    "lambda_seed_stability_median": 0.4288493790713585
+  },
+  "started_utc": "2026-10-21T05:02:40.298674Z",
+  "task": "orient/S14",
+  "unit": "choose_v3_default_s0_k15",
+  "wall_seconds": 42.758
+}

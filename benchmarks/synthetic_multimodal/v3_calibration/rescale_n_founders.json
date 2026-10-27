@@ -1,0 +1,75 @@
+{
+  "collected_cells": 12164,
+  "final_knobs": {
+    "beta0": 1.55,
+    "eta_u": 0.2,
+    "f_constant": 0.15,
+    "f_sample": 0.15107160922949833,
+    "f_switch": 0.15,
+    "gamma0": 0.1625,
+    "mu_b": -2.75,
+    "n_founders": 200,
+    "n_prog": 5,
+    "p_barcode": 0.35000000000000003,
+    "sigma_b": 2.5,
+    "sigma_gamma": 0.8999999999999999,
+    "theta0": 37.75
+  },
+  "lineage_recheck": {
+    "G1_barcoded_cell_fraction": {
+      "met": true,
+      "met_at_calibration_size": true,
+      "target": [
+        0.3013408512686516,
+        0.4708450801072681
+      ],
+      "value": 0.3537487668530089,
+      "value_at_calibration_size": 0.3497519696527575
+    },
+    "G2_clone_size": {
+      "met": false,
+      "met_at_calibration_size": false,
+      "target": [
+        3.8,
+        4.2
+      ],
+      "value": 18.0,
+      "value_at_calibration_size": 16.0
+    },
+    "G3_multi_time_clone_fraction": {
+      "met": true,
+      "met_at_calibration_size": true,
+      "target": [
+        0.5312414733969987,
+        0.8300648021828104
+      ],
+      "value": 0.7947368421052632,
+      "value_at_calibration_size": 0.8025845477041518
+    }
+  },
+  "n_founders_at_bound": true,
+  "n_founders_counts": {
+    "200": 12164,
+    "201": 12714,
+    "202": 13805
+  },
+  "rule": "Revision 3 size rule (seed-0 lineage-only genealogy)",
+  "selected_knobs_before": {
+    "beta0": 1.55,
+    "eta_u": 0.2,
+    "f_constant": 0.15,
+    "f_sample": 0.15107160922949833,
+    "f_switch": 0.15,
+    "gamma0": 0.1625,
+    "mu_b": -2.75,
+    "n_founders": 3800,
+    "n_prog": 5,
+    "p_barcode": 0.35000000000000003,
+    "sigma_b": 2.5,
+    "sigma_gamma": 0.8999999999999999,
+    "theta0": 37.75
+  },
+  "selected_uid": "refine_p2_n_founders_3",
+  "task": "orient/S09",
+  "within_4000_6000": false
+}

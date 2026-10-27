@@ -1,0 +1,4 @@
+command: /usr/bin/time -l .sandbox/bin/python scripts/s14b_confirm.py prepare --preset v3_nofork --seed 3
+exit: 0
+61.02 real 64.00 user 4.03 sys
+6304792576 maximum resident set size

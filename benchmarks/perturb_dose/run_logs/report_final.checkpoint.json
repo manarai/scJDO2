@@ -1,0 +1,22 @@
+{
+  "unit": "report_final",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "report",
+    "--status",
+    "done"
+  ],
+  "started_utc": "2026-10-23T02:56:54.197696+00:00",
+  "finished_utc": "2026-10-23T02:56:56.205793+00:00",
+  "exit_code": 0,
+  "wall_seconds": 2.0081013579983846,
+  "cpu_hours": 0.00040791250000000003,
+  "max_rss_kib": 94012,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/report_final.log",
+  "stop_reason": null
+}

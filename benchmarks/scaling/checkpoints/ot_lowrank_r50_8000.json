@@ -1,0 +1,52 @@
+{
+  "finished_utc": "2026-10-22T18:33:36.233450+00:00",
+  "n_per_day": 8000,
+  "n_velocity_cells": 16000,
+  "pairs": [
+    {
+      "converged": true,
+      "epsilon": 3.6953329874857377,
+      "from_day": 2.0,
+      "library": "moscot",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 73.90665974971475,
+      "n_source": 8000,
+      "n_target": 8000,
+      "plan_shape": [
+        8000,
+        8000
+      ],
+      "rank": 50,
+      "solution_rank": 50,
+      "to_day": 4.0,
+      "version": "0.5.2"
+    },
+    {
+      "converged": true,
+      "epsilon": 6.844042470192121,
+      "from_day": 4.0,
+      "library": "moscot",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 136.8808494038424,
+      "n_source": 8000,
+      "n_target": 8000,
+      "plan_shape": [
+        8000,
+        8000
+      ],
+      "rank": 50,
+      "solution_rank": 50,
+      "to_day": 6.0,
+      "version": "0.5.2"
+    }
+  ],
+  "rank": 50,
+  "solver": "lowrank_r50",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_lowrank_r50_8000",
+  "velocity_path": "benchmarks/scaling/data/velocity_lowrank_r50_8000.npz",
+  "wall_seconds": 9.332,
+  "wall_seconds_internal": 9.332
+}

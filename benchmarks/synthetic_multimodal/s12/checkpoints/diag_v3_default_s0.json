@@ -1,0 +1,32 @@
+{
+  "diag": {
+    "a_fa20_fate_projection_abs_median_committed": 1.007377966981387,
+    "a_fa20_fate_projection_median_saddle": 0.019025678614205177,
+    "a_fate_axis_gene_space_abs_cos_pca_vs_fa": 0.9120008111680831,
+    "a_fraction_saddle": 0.001732147075033462,
+    "a_n_committed": 12594,
+    "a_n_saddle": 22,
+    "a_note": "truth classes are defined on z_true and are identical in every embedding",
+    "a_pca20_fate_projection_abs_median_committed": 10.682283013214786,
+    "a_pca20_fate_projection_median_saddle": -0.25505612734521876,
+    "b_fitted_gene_space_cos_median_all": 0.5459666908968642,
+    "b_fitted_gene_space_cos_median_committed": 0.5464688559587583,
+    "b_fitted_gene_space_cos_median_saddle": 0.5053157748274733,
+    "b_gene_space_cos_fraction_positive": 0.999388379204893,
+    "b_gene_space_cos_median": 0.5239999803596825,
+    "b_gene_space_cos_median_by_day": {
+      "2": 0.5167178914064418,
+      "4": 0.5254887789614687
+    },
+    "b_gene_space_cos_median_saddle": 0.5075412519099731,
+    "b_n_cells": 1635
+  },
+  "finished_utc": "2026-10-20T22:23:32.409144Z",
+  "in_process_cpu_seconds": 7.854,
+  "input_sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5",
+  "peak_rss_bytes": 4139024384,
+  "started_utc": "2026-10-20T22:23:24.526560Z",
+  "task": "orient/S12",
+  "unit": "diag_v3_default_s0",
+  "wall_seconds": 7.883
+}

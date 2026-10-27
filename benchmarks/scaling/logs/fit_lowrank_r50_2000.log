@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s20_scaling.py", line 583, in <module>
+    main()
+    ~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s20_scaling.py", line 579, in main
+    run_fit(args.solver, n, args.rank)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s20_scaling.py", line 384, in run_fit
+    import torch
+ModuleNotFoundError: No module named 'torch'
+        1.10 real         0.89 user         0.17 sys
+           132153344  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               23381  page reclaims
+                   4  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   0  voluntary context switches
+                 472  involuntary context switches
+          7014431371  instructions retired
+          2768858924  cycles elapsed
+            96879408  peak memory footprint

@@ -1,0 +1,18 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "config": "MeasuredDrift default (n_epochs=1500, batch=256, hidden=96x3)",
+    "seed": 1
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:27:47.129339+00:00",
+  "n_cells": 1947,
+  "operator": "measured",
+  "operator_path": "benchmarks/real_flow/arrays/operators/scnt_hema_labelling_measured_s1.npz",
+  "seed": 1,
+  "source": "labelling",
+  "started_utc": "2026-10-19T06:27:04.115748+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_labelling_measured_s1",
+  "wall_seconds": 43.014
+}

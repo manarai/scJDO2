@@ -1,0 +1,106 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_stress_s0_k20_reference.npz",
+  "array_sha256": "61e864fd9ebd6ba8eff1af4efdbabf01b5ba9041120611f10c483eca2546c97e",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "configuration_id": "reference",
+  "dataset": "v3_stress_s0",
+  "finished_utc": "2026-10-22T14:32:00.391776Z",
+  "in_process_cpu_seconds": 44.629,
+  "k": 20,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1712,
+      "seconds": 6.052,
+      "seed": 0,
+      "weight_decay": 0.0001
+    }
+  ],
+  "n_cells": 13337,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 38.02905667251288,
+      "final_err": 5.34388051074504e-10,
+      "from_day": 2,
+      "n_iter": 15,
+      "n_source": 197,
+      "n_target": 1515,
+      "plan_mass": 0.9999999999999999,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 37.31508187619098,
+      "final_err": 3.8506397287938557e-07,
+      "from_day": 4,
+      "n_iter": 100,
+      "n_source": 1515,
+      "n_target": 11625,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 7.58,
+      "to_day": 6,
+      "warnings": [
+        "Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`."
+      ]
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 7799406592,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_stress_s0.npz",
+  "prepared_sha256": "387c0dfcfaf4848f4455e382f4873ffa246659c41624469528cee8ab71db2a7e",
+  "preset": "v3_stress",
+  "scores": {
+    "auc_lam1": 0.9991676755447941,
+    "fate_axis_abs_cos_at_saddle": 0.9794773273764104,
+    "jref_relative_frobenius_median": 1.001441698290067,
+    "median_lam1_committed": 0.001010920985690744,
+    "median_lam1_saddle": 0.016219102747946433,
+    "n_committed": 13216,
+    "n_saddle": 30,
+    "transition_abs_offset": 1,
+    "transition_bin_medians": "[0.018088, 0.015844, 0.012342, 0.004435, 0.000479, 0.000432, 0.002565, 0.004387, 0.00058, -0.000705, -4.5e-05, -0.000197]",
+    "transition_detected_bin": 0,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 0,
+    "transition_peak_to_median": 11.06318123470068,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": -1,
+    "transition_true_bin": 1
+  },
+  "seed": 0,
+  "started_utc": "2026-10-22T14:31:14.050478Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_stress_s0_k20_reference",
+  "wall_seconds": 46.341
+}

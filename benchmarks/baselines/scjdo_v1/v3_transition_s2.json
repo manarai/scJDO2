@@ -1,0 +1,23 @@
+{
+  "dataset": "v3_transition_s2",
+  "error": "Process exited status 1 with time reported signal Invalid argument after fit/Jacobians; no operator NPZ/JSON was saved. Stopped v1 after the one final retry.",
+  "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+  "method": "scjdo_v1",
+  "peak_memory_bytes": 9837363200,
+  "runtime_seconds": 3149.75,
+  "settings": {
+    "completed_work": "5000 epochs and 101 per-cell Jacobian batches",
+    "environment": ".venv-v1 with corrected sys.path precedence and NUMBA_CACHE_DIR=.sandbox/cache/numba",
+    "fit": {
+      "archetype_method": "snmf",
+      "n_epochs": 5000,
+      "seed": 0
+    },
+    "output_saved": false,
+    "preprocessing": "v1 defaults: log-normalise, 2000 HVGs, FA-30",
+    "pseudotime": "strict Palantir; selected root cell_0004186 used in prepare_trajectory because external pseudotime is unsupported",
+    "runner": "scripts/s16a_v1.py -> compare.run_v1._run_fit_drift"
+  },
+  "status": "failed_final_retry_no_output",
+  "version": "0.3.0"
+}

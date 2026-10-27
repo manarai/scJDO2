@@ -1,0 +1,23 @@
+{
+  "unit": "env_install",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--no-cache-dir",
+    "-e",
+    ".[dev]"
+  ],
+  "started_utc": "2026-10-22T09:31:01.414445+00:00",
+  "finished_utc": "2026-10-22T09:33:54.898940+00:00",
+  "exit_code": 0,
+  "wall_seconds": 173.484500734,
+  "cpu_hours": 0.046508579999999994,
+  "cpu_hours_before": 0.0030582902777777777,
+  "max_rss_kib": 474208,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/env_install.log"
+}

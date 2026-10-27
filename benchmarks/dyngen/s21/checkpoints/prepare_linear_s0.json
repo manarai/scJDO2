@@ -1,0 +1,8 @@
+{
+  "dataset": "linear_s0",
+  "n_cells": 5000,
+  "n_genes": 1000,
+  "task": "orient/S21",
+  "unit": "prepare_linear_s0",
+  "wall_seconds": 0.32779717445373535
+}

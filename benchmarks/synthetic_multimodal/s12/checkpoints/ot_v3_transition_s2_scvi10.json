@@ -1,0 +1,76 @@
+{
+  "dim": 10,
+  "embedding": "scvi10",
+  "finished_utc": "2026-10-20T23:10:44.592358Z",
+  "in_process_cpu_seconds": 26.443,
+  "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+  "measured_drift": {
+    "fit_device": "mps:0",
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "jacobian_device": "cpu",
+    "n_fit_cells": 1647,
+    "seconds": 13.14,
+    "seed": 0,
+    "weight_decay": 0.0001
+  },
+  "median_ot_speed": 0.053038205951452255,
+  "ot_library": {
+    "name": "POT",
+    "version": "0.9.7.post1"
+  },
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 1.6952762167644395,
+      "final_err": 6.300295994171539e-10,
+      "from_day": 2,
+      "n_iter": 5,
+      "n_source": 190,
+      "n_target": 1457,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 1.158335534208543,
+      "final_err": 1.50981202103531e-10,
+      "from_day": 4,
+      "n_iter": 8,
+      "n_source": 1457,
+      "n_target": 11237,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.75,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_scvi10.npz",
+  "peak_rss_bytes": 3793895424,
+  "scores": {
+    "auc_lam1": 0.5561320619289267,
+    "auc_soft_axis_curvature": 0.5188673997459106,
+    "auc_tangent5_lam1": 0.538615559271993,
+    "fate_axis_abs_cos_at_saddle": 0.16632463877324488,
+    "fraction_saddle": 0.02825209562247749,
+    "median_lam1_committed": 0.003962122942849533,
+    "median_lam1_saddle": 0.005073266292356345,
+    "n_committed": 9186,
+    "n_saddle": 364,
+    "soft_axis_abs_cos_fate_axis": 0.22319379861537697
+  },
+  "sha256": "25a528e0f96db58c3386a366e2477a3655825abb523ec638e0023b5fe5bf7045",
+  "started_utc": "2026-10-20T23:10:16.273170Z",
+  "task": "orient/S12",
+  "unit": "ot_v3_transition_s2_scvi10",
+  "wall_seconds": 28.319
+}

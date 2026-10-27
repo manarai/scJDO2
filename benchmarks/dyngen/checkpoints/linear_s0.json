@@ -1,0 +1,46 @@
+{
+  "backbone": "linear",
+  "bytes": 44584749,
+  "cells": 5000,
+  "finished_utc": "2026-10-22T13:28:27.397149Z",
+  "genes": 1000,
+  "key": "linear_s0",
+  "path": "benchmarks/dyngen/data/linear_s0.h5ad",
+  "seed": 0,
+  "settings": {
+    "R_version": "4.6.0",
+    "backbone": "linear",
+    "compute_cellwise_grn": false,
+    "compute_dimred": true,
+    "compute_rna_velocity": true,
+    "distance_metric": "pearson",
+    "dyngen_version": "1.1.1",
+    "experiment": {
+      "num_timepoints": 3,
+      "pct_between": 0.75,
+      "type": "synchronised"
+    },
+    "num_cells": 5000,
+    "num_features": 1000,
+    "num_hks": 50,
+    "num_modules": 17,
+    "num_simulations": 32,
+    "num_targets": 900,
+    "num_tfs": 50,
+    "seed": 0,
+    "store_reaction_firings": false,
+    "store_reaction_propensities": false,
+    "task": "orient/S19",
+    "timings_seconds": {
+      "generate_cells": 1220.095,
+      "generate_experiment": 13.562,
+      "generate_feature_network": 3.018,
+      "generate_gold_standard": 7.431,
+      "generate_kinetics": 1.223,
+      "generate_tf_network": 0.127
+    }
+  },
+  "sha256": "90d879ef97bbab91aa98d4fea9e17b6581a9caf3781e3bb946a27df6bf41f732",
+  "status": "complete",
+  "task": "orient/S19"
+}

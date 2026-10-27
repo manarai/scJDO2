@@ -1,0 +1,20 @@
+START 2026-10-20T09:32:57Z .venv/bin/python scripts/s10_fit_and_runs.py fit --preset v3_default --seed 1 --method fa
+      139.83 real       111.01 user        10.78 sys
+          4909989888  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1201225  page reclaims
+                 109  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4750  voluntary context switches
+              339219  involuntary context switches
+       1242126500320  instructions retired
+        439401065814  cycles elapsed
+          5814901120  peak memory footprint
+EXIT 0 2026-10-20T09:35:17Z

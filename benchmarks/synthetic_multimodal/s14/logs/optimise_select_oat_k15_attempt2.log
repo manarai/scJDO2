@@ -1,0 +1,136 @@
+START 2026-10-21T10:04:14Z
+{
+  "k_star": 15,
+  "objective": "mean development fork AUC over v3_transition/default s0,s1",
+  "objective_datasets": [
+    "v3_transition_s0",
+    "v3_transition_s1",
+    "v3_default_s0",
+    "v3_default_s1"
+  ],
+  "larry_role": "truth-free Part A k selection only; absent from synthetic fork-AUC Part B objective",
+  "components": {
+    "epsilon": {
+      "selected_configuration_id": "eps_0p025",
+      "best_auc": 0.9028169755900158,
+      "within_0_01": [
+        {
+          "configuration_id": "eps_0p025",
+          "mean_development_fork_auc": 0.9028169755900158,
+          "mean_jref_error": 1.001858624565227,
+          "mean_transition_abs_offset_informative": 5.0,
+          "n_datasets": 4,
+          "n_informative": 2
+        },
+        {
+          "configuration_id": "eps_0p05",
+          "mean_development_fork_auc": 0.8972874682362678,
+          "mean_jref_error": 1.0018864111074695,
+          "mean_transition_abs_offset_informative": 5.0,
+          "n_datasets": 4,
+          "n_informative": 2
+        }
+      ],
+      "tie_break": "within 0.01 fork-AUC: lower mean J_ref error, then lower mean transition-bin error on informative development datasets, then lexicographic id"
+    },
+    "last_day": {
+      "selected_configuration_id": "eps_0p05",
+      "best_auc": 0.8972874682362678,
+      "within_0_01": [
+        {
+          "configuration_id": "eps_0p05",
+          "mean_development_fork_auc": 0.8972874682362678,
+          "mean_jref_error": 1.0018864111074695,
+          "mean_transition_abs_offset_informative": 5.0,
+          "n_datasets": 4,
+          "n_informative": 2
+        }
+      ],
+      "tie_break": "within 0.01 fork-AUC: lower mean J_ref error, then lower mean transition-bin error on informative development datasets, then lexicographic id"
+    },
+    "drift": {
+      "selected_configuration_id": "arch_128x128x128_wd0p001",
+      "best_auc": 0.9203236862487519,
+      "within_0_01": [
+        {
+          "configuration_id": "arch_128x128x128_wd0p001",
+          "mean_development_fork_auc": 0.9203236862487519,
+          "mean_jref_error": 1.002111519624576,
+          "mean_transition_abs_offset_informative": 5.0,
+          "n_datasets": 4,
+          "n_informative": 2
+        },
+        {
+          "configuration_id": "arch_128x128x128_wd0p0001",
+          "mean_development_fork_auc": 0.9202976499666473,
+          "mean_jref_error": 1.0021124428989934,
+          "mean_transition_abs_offset_informative": 5.0,
+          "n_datasets": 4,
+          "n_informative": 2
+        },
+        {
+          "configuration_id": "arch_128x128x128_wd1em05",
+          "mean_development_fork_auc": 0.9202925551924057,
+          "mean_jref_error": 1.0021125469702854,
+          "mean_transition_abs_offset_informative": 5.0,
+          "n_datasets": 4,
+          "n_informative": 2
+        }
+      ],
+      "tie_break": "within 0.01 fork-AUC: lower mean J_ref error, then lower mean transition-bin error on informative development datasets, then lexicographic id"
+    },
+    "ensemble": {
+      "selected_configuration_id": "ensemble_5",
+      "best_auc": 0.9146455875799342,
+      "within_0_01": [
+        {
+          "configuration_id": "ensemble_5",
+          "mean_development_fork_auc": 0.9146455875799342,
+          "mean_jref_error": 1.001768659138803,
+          "mean_transition_abs_offset_informative": 5.0,
+          "n_datasets": 4,
+          "n_informative": 2
+        }
+      ],
+      "tie_break": "within 0.01 fork-AUC: lower mean J_ref error, then lower mean transition-bin error on informative development datasets, then lexicographic id"
+    }
+  },
+  "configuration": {
+    "eps": 0.025,
+    "last": "extrapolate",
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "wd": 0.001,
+    "ensemble": 5,
+    "space": "whitened"
+  },
+  "component_source_ids": {
+    "epsilon": "eps_0p025",
+    "last_day": "eps_0p05",
+    "drift": "arch_128x128x128_wd0p001",
+    "ensemble": "ensemble_5"
+  },
+  "selection_utc": "2026-10-21T10:04:15.328682Z"
+}
+        0.60 real         0.42 user         0.10 sys
+           106463232  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               11698  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 443  voluntary context switches
+                 242  involuntary context switches
+          3316066837  instructions retired
+          1375544756  cycles elapsed
+            65799056  peak memory footprint
+EXIT 0 2026-10-21T10:04:15Z

@@ -1,0 +1,64 @@
+{
+  "finished_utc": "2026-10-22T18:49:15.873850+00:00",
+  "n_per_day": 16000,
+  "n_velocity_cells": 32000,
+  "pairs": [
+    {
+      "epsilon": 3.7229771956387623,
+      "from_day": 2.0,
+      "library": "POT",
+      "median_method": "deterministic 2,000,000-pair median (full pairwise matrix exceeds memory budget)",
+      "median_squared_distance": 74.45954391277525,
+      "n_source": 16000,
+      "n_target": 16000,
+      "plan_shape": [
+        16000,
+        16000
+      ],
+      "to_day": 4.0,
+      "version": "0.9.7.post1"
+    },
+    {
+      "epsilon": 6.8554332987645585,
+      "from_day": 4.0,
+      "library": "POT",
+      "median_method": "deterministic 2,000,000-pair median (full pairwise matrix exceeds memory budget)",
+      "median_squared_distance": 137.10866597529116,
+      "n_source": 16000,
+      "n_target": 16000,
+      "plan_shape": [
+        16000,
+        16000
+      ],
+      "to_day": 6.0,
+      "version": "0.9.7.post1"
+    }
+  ],
+  "rank": null,
+  "solver": "dense",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_dense_16000",
+  "velocity_path": "benchmarks/scaling/data/velocity_dense_16000.npz",
+  "wall_seconds": 70.702,
+  "wall_seconds_internal": 70.702
+}
+       72.49 real        61.09 user         8.36 sys
+          9936683008  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             2455822  page reclaims
+                2414  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1152  voluntary context switches
+               66767  involuntary context switches
+        272271786684  instructions retired
+        181249952370  cycles elapsed
+         10640401816  peak memory footprint

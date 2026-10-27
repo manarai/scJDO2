@@ -1,0 +1,1271 @@
+{
+  "artifacts": [
+    {
+      "bytes": 8755,
+      "committed": true,
+      "path": "scripts/s06_fit_units.py",
+      "regenerate": "python scripts/s06_fit_units.py --preset v2_default --seed 0",
+      "sha256": "5376bef55555bdebf9c5b41689e37a4aac0d15c38f6fb508d7ff931f2d435a2a"
+    },
+    {
+      "bytes": 15270,
+      "committed": true,
+      "path": "scripts/s06_user_runs.py",
+      "regenerate": "python scripts/s06_user_runs.py --preset v2_default --seed 0",
+      "sha256": "e1f1d70e49fb7b958e0acfad3b44f5b046739d0e575a04de0fa41ba394f5e79c"
+    },
+    {
+      "bytes": 27356,
+      "committed": true,
+      "path": "scripts/s06_score.py",
+      "regenerate": "repository source / test input",
+      "sha256": "9a6e5ffcff905178f35908a950cf6de00e971ebdaf709a7298757cbe5b0c486d"
+    },
+    {
+      "bytes": 57959,
+      "committed": true,
+      "path": "scjdo2/data/synthetic_multimodal.py",
+      "regenerate": "repository source / test input",
+      "sha256": "d83e4bd42ccc81c78a9b3442b5f69a26e60ad36b75d11c23bf034f92c4264d6e"
+    },
+    {
+      "bytes": 21203,
+      "committed": true,
+      "path": "tests/test_synthetic_multimodal.py",
+      "regenerate": "repository source / test input",
+      "sha256": "e3e4739402d3e009d41ec8baa86bf10458058028bb8aad49ac6ae5e1c3bc82f6"
+    },
+    {
+      "bytes": 2746614,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/results.csv",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "b724ff0ec041fbd25d8bf43be8a903d6888a96397e8aa59257fdb24748743d0f"
+    },
+    {
+      "bytes": 107007,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/summary.csv",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "a6687928953ad67eb813414b592d2d69153c61bc721673e86750648ff20a67b0"
+    },
+    {
+      "bytes": 7374915,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/by_day.csv",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "06da2cd2096403ea2192c9034a2aff436f42aab8e77481c3d3bc74339ee57f49"
+    },
+    {
+      "bytes": 1455612,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/diagnostics.csv",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "d8649172cffa513ad7153628ef42d47d668e075d606e27cda1dccb6972494755"
+    },
+    {
+      "bytes": 184916,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/palantir_runs.csv",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "93b74802d91bac88a8cf2bc021aaeb9d3aab9864a1e99f9402644b9c75735225"
+    },
+    {
+      "bytes": 5596,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/j_check.csv",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "dee5517b6b16fb8adb45f8b7bab7e731c271cf7326503b9287c85f5e1e3941bb"
+    },
+    {
+      "bytes": 434,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/flags.csv",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "41cb6e844af18514e3df1a25716d21de5c88450821f90376ee77e5e9c8b0d26b"
+    },
+    {
+      "bytes": 1795,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/forward_vs_chord_truth.json",
+      "regenerate": "python -m pytest -q -s tests/test_synthetic_multimodal.py::test_forward_developmental_truth_amended_validation",
+      "sha256": "cd3acfbcb92be997d1b1f3b0ade03daa4f73455f90327129f7e7f6016b1ffec2"
+    },
+    {
+      "bytes": 3707,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/scoring_manifest.json",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "3807dfcb45a24711f1a1392bdd365bcc449d2e198a7002eb737e8797fb25974b"
+    },
+    {
+      "bytes": 1349,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s06/RESULT_S06.md",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "02d0ab254237200e86799c3083e6474b283d20f5e1f5aee87d62737d36d866b3"
+    },
+    {
+      "bytes": 186205,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s06/agreement_by_combination_preset.png",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "812fab18411e7b11846f1b07d5b0b292e266cab9a93efd1ddfdb486be938235d"
+    },
+    {
+      "bytes": 36654,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s06/check_on_vs_off.png",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "f82ed88add67c574c16cb442caf32ce1489c0771c46e9b44d00a793b75518071"
+    },
+    {
+      "bytes": 50857,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s06/pseudotime_by_mode.png",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "b6775e99a95cbfc74c27982ec001f1d92739a5f6711b7daf2a7816264142f4b8"
+    },
+    {
+      "bytes": 49987,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s06/j_lead_by_truth_class.png",
+      "regenerate": "python scripts/s06_score.py",
+      "sha256": "684a23c22877189e52ca482f99f4411a5916defa2aed5aa268d2d502f3848b9d"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 5.816786,
+    "gpu_hours": 0.0,
+    "hardware": "macOS-26.7.1-arm64-arm-64bit-Mach-O"
+  },
+  "deviations": [
+    "No frozen model, parameter, threshold, seed, or truth-input rule was changed. The stationary-cycle controls were assembled as flags-only; incidental non-gating J rows from the first stationary checkpoint were excluded without a refit or an orientation rerun.",
+    "The strict-mode pseudotime plotting filter was corrected and the figure regenerated from stored tables only; no data, fit, Palantir run, or orient call was repeated.",
+    "Recorded CPU time is a lower bound of 5.816786 h from 8 retained restartable scoring logs; complete unit wall-time provenance is reported in metrics.wall_hours (known lower bound 2.362182 h)."
+  ],
+  "finished_utc": "2026-10-18T14:20:28.080336Z",
+  "metrics": {
+    "agreement_by_group_combination_preset": {
+      "path": "benchmarks/synthetic_multimodal/s06/summary.csv",
+      "rows": 816
+    },
+    "flow_vs_dev_disagreement_by_day": [
+      {
+        "day": 1.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 2.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 3.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 4.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 1.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 2.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 3.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 4.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 140,
+        "preset": "v2_batch"
+      },
+      {
+        "day": 1.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 2.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 3.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 4.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 1.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 2.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 3.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 4.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 208,
+        "preset": "v2_default"
+      },
+      {
+        "day": 1.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      },
+      {
+        "day": 2.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      },
+      {
+        "day": 3.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      },
+      {
+        "day": 4.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "fa",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      },
+      {
+        "day": 1.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      },
+      {
+        "day": 2.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      },
+      {
+        "day": 3.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      },
+      {
+        "day": 4.0,
+        "max": 0.0,
+        "mean": 0.0,
+        "method": "pca",
+        "min": 0.0,
+        "n": 220,
+        "preset": "v2_stress"
+      }
+    ],
+    "forward_vs_chord_truth_cosine": [
+      {
+        "by_minimum_clone_cells_at_ends": {
+          "1": {
+            "median_cosine": 0.8657258459406783,
+            "n": 3530
+          },
+          "2": {
+            "median_cosine": 0.8847688893547002,
+            "n": 1903
+          },
+          "3": {
+            "median_cosine": 0.9004180114853811,
+            "n": 1163
+          },
+          "5": {
+            "median_cosine": 0.9180598555578268,
+            "n": 291
+          }
+        },
+        "median_all_chord_cosine": 0.8657258459406783,
+        "n_all_chord": 3530,
+        "path": "benchmarks/synthetic_multimodal/data/default_s0.h5ad",
+        "population_day_pair_cosines": [
+          {
+            "cosine": 0.9991979931543894,
+            "from_day": 1,
+            "to_day": 2
+          },
+          {
+            "cosine": 0.9999333090483236,
+            "from_day": 2,
+            "to_day": 3
+          },
+          {
+            "cosine": 0.9997641210785897,
+            "from_day": 3,
+            "to_day": 4
+          }
+        ],
+        "version": "v1"
+      },
+      {
+        "by_minimum_clone_cells_at_ends": {
+          "1": {
+            "median_cosine": 0.6072198147605004,
+            "n": 2284
+          },
+          "2": {
+            "median_cosine": 0.6476890709300482,
+            "n": 354
+          },
+          "3": {
+            "median_cosine": 0.7679016662703246,
+            "n": 54
+          },
+          "5": {
+            "median_cosine": 0.7860607293702266,
+            "n": 20
+          }
+        },
+        "median_all_chord_cosine": 0.6072198147605004,
+        "n_all_chord": 2284,
+        "path": "benchmarks/synthetic_multimodal/data/v2/v2_default_s0.h5ad",
+        "population_day_pair_cosines": [
+          {
+            "cosine": 0.9958911317502257,
+            "from_day": 1,
+            "to_day": 2
+          },
+          {
+            "cosine": 0.9980931868474976,
+            "from_day": 2,
+            "to_day": 3
+          },
+          {
+            "cosine": 0.9969043182526295,
+            "from_day": 3,
+            "to_day": 4
+          }
+        ],
+        "version": "v2"
+      }
+    ],
+    "gate_dev_coverage": {
+      "oriented_min": 0.8153124334,
+      "pass": true
+    },
+    "gate_dev_lineage": {
+      "agreement_min": 0.7206502107,
+      "pass": false
+    },
+    "gate_dev_pseudotime": {
+      "median": 0.9620140216698534,
+      "minimum": 0.9601621471,
+      "pass": true
+    },
+    "gate_flags_stationary": {
+      "minimum_non_equilibrium": 1.0,
+      "pass": true
+    },
+    "gate_flow_check_guard": {
+      "agreement_margin_min": 0.0,
+      "oriented_margin_min": 0.0,
+      "pass": true
+    },
+    "gate_flow_labelling": {
+      "agreement_min": 0.8231498285944747,
+      "oriented_min": 0.6682712431979908,
+      "pass": false
+    },
+    "gate_independence_hash": {
+      "hash_all": true,
+      "independence_all": true,
+      "pass": true
+    },
+    "gate_j_auc": {
+      "minimum": 0.1814485891,
+      "pass": false
+    },
+    "gate_negative_control": {
+      "accepted_day4_n": 104,
+      "day1_default_refused_n": 0,
+      "day4_accepted_bad_start_n": 104,
+      "day4_accepted_low_forward_n": 9,
+      "n_day1_default": 90,
+      "n_day4": 180,
+      "pass": false
+    },
+    "j_lead_by_truth_class": [
+      {
+        "auc_saddle_vs_committed": 0.266341283663757,
+        "fraction_lead_positive": 0.7615735188294555,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1004488288251974,
+        "median_lead": 1.7906578624320182,
+        "method": "fa",
+        "n": 4169,
+        "preset": "v2_batch",
+        "seed": 0,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.266341283663757,
+        "fraction_lead_positive": 0.8292682926829268,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1004488288251974,
+        "median_lead": 0.0432936512994958,
+        "method": "fa",
+        "n": 82,
+        "preset": "v2_batch",
+        "seed": 0,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.266341283663757,
+        "fraction_lead_positive": 0.8405797101449275,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1004488288251974,
+        "median_lead": 0.0705053614368874,
+        "method": "fa",
+        "n": 69,
+        "preset": "v2_batch",
+        "seed": 0,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2877692839835779,
+        "fraction_lead_positive": 0.781962101223315,
+        "median_abs_cosine_fate_axis_at_saddle": 0.3821334998291852,
+        "median_lead": 0.2121602002009561,
+        "method": "pca",
+        "n": 4169,
+        "preset": "v2_batch",
+        "seed": 0,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2877692839835779,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.3821334998291852,
+        "median_lead": 0.0091449445600603,
+        "method": "pca",
+        "n": 82,
+        "preset": "v2_batch",
+        "seed": 0,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2877692839835779,
+        "fraction_lead_positive": 0.7101449275362319,
+        "median_abs_cosine_fate_axis_at_saddle": 0.3821334998291852,
+        "median_lead": 0.0115623208882003,
+        "method": "pca",
+        "n": 69,
+        "preset": "v2_batch",
+        "seed": 0,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3520975766329642,
+        "fraction_lead_positive": 0.696437168993741,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0478727563233928,
+        "median_lead": 1.3258267686077814,
+        "method": "fa",
+        "n": 4154,
+        "preset": "v2_batch",
+        "seed": 1,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3520975766329642,
+        "fraction_lead_positive": 0.8333333333333334,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0478727563233928,
+        "median_lead": 0.0944458711009286,
+        "method": "fa",
+        "n": 54,
+        "preset": "v2_batch",
+        "seed": 1,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3520975766329642,
+        "fraction_lead_positive": 0.8666666666666667,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0478727563233928,
+        "median_lead": 0.1187998400000989,
+        "method": "fa",
+        "n": 75,
+        "preset": "v2_batch",
+        "seed": 1,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2566843203338148,
+        "fraction_lead_positive": 0.757823784304285,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1197785866286631,
+        "median_lead": 0.2154702221603431,
+        "method": "pca",
+        "n": 4154,
+        "preset": "v2_batch",
+        "seed": 1,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2566843203338148,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1197785866286631,
+        "median_lead": 0.0160046943821629,
+        "method": "pca",
+        "n": 54,
+        "preset": "v2_batch",
+        "seed": 1,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2566843203338148,
+        "fraction_lead_positive": 0.4933333333333333,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1197785866286631,
+        "median_lead": -0.0030893250792618,
+        "method": "pca",
+        "n": 75,
+        "preset": "v2_batch",
+        "seed": 1,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.4700900488022395,
+        "fraction_lead_positive": 0.5378093492208983,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1266375064853803,
+        "median_lead": 0.285442066540972,
+        "method": "fa",
+        "n": 4364,
+        "preset": "v2_batch",
+        "seed": 2,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.4700900488022395,
+        "fraction_lead_positive": 0.3835616438356164,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1266375064853803,
+        "median_lead": -0.0046669528729935,
+        "method": "fa",
+        "n": 73,
+        "preset": "v2_batch",
+        "seed": 2,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.4700900488022395,
+        "fraction_lead_positive": 0.3918918918918919,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1266375064853803,
+        "median_lead": -0.0147288810453956,
+        "method": "fa",
+        "n": 74,
+        "preset": "v2_batch",
+        "seed": 2,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3756007382267694,
+        "fraction_lead_positive": 0.6544454628780935,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1721459016085468,
+        "median_lead": 0.1174367006597573,
+        "method": "pca",
+        "n": 4364,
+        "preset": "v2_batch",
+        "seed": 2,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3756007382267694,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1721459016085468,
+        "median_lead": 0.0204542855953212,
+        "method": "pca",
+        "n": 73,
+        "preset": "v2_batch",
+        "seed": 2,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3756007382267694,
+        "fraction_lead_positive": 0.6891891891891891,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1721459016085468,
+        "median_lead": 0.0093197828106204,
+        "method": "pca",
+        "n": 74,
+        "preset": "v2_batch",
+        "seed": 2,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1814485891,
+        "fraction_lead_positive": 0.8600047136,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1266016366,
+        "median_lead": 1.8046994093,
+        "method": "fa",
+        "n": 4243,
+        "preset": "v2_default",
+        "seed": 0,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1814485891,
+        "fraction_lead_positive": 0.7611940299,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1266016366,
+        "median_lead": 0.0711650352,
+        "method": "fa",
+        "n": 67,
+        "preset": "v2_default",
+        "seed": 0,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1814485891,
+        "fraction_lead_positive": 0.875,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1266016366,
+        "median_lead": 0.0724209967,
+        "method": "fa",
+        "n": 88,
+        "preset": "v2_default",
+        "seed": 0,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1910874596,
+        "fraction_lead_positive": 0.8272448739,
+        "median_abs_cosine_fate_axis_at_saddle": 0.4390325191,
+        "median_lead": 0.2806940044,
+        "method": "pca",
+        "n": 4243,
+        "preset": "v2_default",
+        "seed": 0,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1910874596,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.4390325191,
+        "median_lead": 0.0153572143,
+        "method": "pca",
+        "n": 67,
+        "preset": "v2_default",
+        "seed": 0,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1910874596,
+        "fraction_lead_positive": 0.7272727273,
+        "median_abs_cosine_fate_axis_at_saddle": 0.4390325191,
+        "median_lead": 0.0202370729,
+        "method": "pca",
+        "n": 88,
+        "preset": "v2_default",
+        "seed": 0,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3069443851940333,
+        "fraction_lead_positive": 0.7146879399343031,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1689609771164003,
+        "median_lead": 1.618534936850046,
+        "method": "fa",
+        "n": 4262,
+        "preset": "v2_default",
+        "seed": 1,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3069443851940333,
+        "fraction_lead_positive": 0.9104477611940298,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1689609771164003,
+        "median_lead": 0.050594483790138,
+        "method": "fa",
+        "n": 67,
+        "preset": "v2_default",
+        "seed": 1,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3069443851940333,
+        "fraction_lead_positive": 0.9242424242424242,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1689609771164003,
+        "median_lead": 0.0555495709427394,
+        "method": "fa",
+        "n": 66,
+        "preset": "v2_default",
+        "seed": 1,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2263093155866501,
+        "fraction_lead_positive": 0.818629751290474,
+        "median_abs_cosine_fate_axis_at_saddle": 0.2618727675960176,
+        "median_lead": 0.2672172794859375,
+        "method": "pca",
+        "n": 4262,
+        "preset": "v2_default",
+        "seed": 1,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2263093155866501,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.2618727675960176,
+        "median_lead": 0.0169782100504092,
+        "method": "pca",
+        "n": 67,
+        "preset": "v2_default",
+        "seed": 1,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2263093155866501,
+        "fraction_lead_positive": 0.7878787878787878,
+        "median_abs_cosine_fate_axis_at_saddle": 0.2618727675960176,
+        "median_lead": 0.0138712640103133,
+        "method": "pca",
+        "n": 66,
+        "preset": "v2_default",
+        "seed": 1,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.594037753222836,
+        "fraction_lead_positive": 0.4629373848987109,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0872388668328916,
+        "median_lead": -0.2105750341103209,
+        "method": "fa",
+        "n": 4344,
+        "preset": "v2_default",
+        "seed": 2,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.594037753222836,
+        "fraction_lead_positive": 0.28125,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0872388668328916,
+        "median_lead": -0.0284551776632055,
+        "method": "fa",
+        "n": 64,
+        "preset": "v2_default",
+        "seed": 2,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.594037753222836,
+        "fraction_lead_positive": 0.4042553191489361,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0872388668328916,
+        "median_lead": -0.0173617288940009,
+        "method": "fa",
+        "n": 94,
+        "preset": "v2_default",
+        "seed": 2,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3479781356529916,
+        "fraction_lead_positive": 0.7055709023941068,
+        "median_abs_cosine_fate_axis_at_saddle": 0.2230839084274841,
+        "median_lead": 0.2193297717219255,
+        "method": "pca",
+        "n": 4344,
+        "preset": "v2_default",
+        "seed": 2,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3479781356529916,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.2230839084274841,
+        "median_lead": 0.0204487792380273,
+        "method": "pca",
+        "n": 64,
+        "preset": "v2_default",
+        "seed": 2,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3479781356529916,
+        "fraction_lead_positive": 0.6063829787234043,
+        "median_abs_cosine_fate_axis_at_saddle": 0.2230839084274841,
+        "median_lead": 0.0115504627390818,
+        "method": "pca",
+        "n": 94,
+        "preset": "v2_default",
+        "seed": 2,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2746090014498565,
+        "fraction_lead_positive": 0.7717339667458433,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1733457139712351,
+        "median_lead": 1.5680152324879728,
+        "method": "fa",
+        "n": 4210,
+        "preset": "v2_stress",
+        "seed": 0,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2746090014498565,
+        "fraction_lead_positive": 0.8333333333333334,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1733457139712351,
+        "median_lead": 0.0532030460942913,
+        "method": "fa",
+        "n": 60,
+        "preset": "v2_stress",
+        "seed": 0,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2746090014498565,
+        "fraction_lead_positive": 0.7012987012987013,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1733457139712351,
+        "median_lead": 0.0470211903193079,
+        "method": "fa",
+        "n": 77,
+        "preset": "v2_stress",
+        "seed": 0,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1538637134836659,
+        "fraction_lead_positive": 0.8465558194774346,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1214571240794382,
+        "median_lead": 0.3418768771525687,
+        "method": "pca",
+        "n": 4210,
+        "preset": "v2_stress",
+        "seed": 0,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1538637134836659,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1214571240794382,
+        "median_lead": 0.0157056745368961,
+        "method": "pca",
+        "n": 60,
+        "preset": "v2_stress",
+        "seed": 0,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1538637134836659,
+        "fraction_lead_positive": 0.5974025974025974,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1214571240794382,
+        "median_lead": 0.0059277694517645,
+        "method": "pca",
+        "n": 77,
+        "preset": "v2_stress",
+        "seed": 0,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3107216547367348,
+        "fraction_lead_positive": 0.7370405278039586,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1827058013190055,
+        "median_lead": 1.559127347737764,
+        "method": "fa",
+        "n": 4244,
+        "preset": "v2_stress",
+        "seed": 1,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3107216547367348,
+        "fraction_lead_positive": 0.6527777777777778,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1827058013190055,
+        "median_lead": 0.0125361745413035,
+        "method": "fa",
+        "n": 72,
+        "preset": "v2_stress",
+        "seed": 1,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.3107216547367348,
+        "fraction_lead_positive": 0.8513513513513513,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1827058013190055,
+        "median_lead": 0.0254311078261132,
+        "method": "fa",
+        "n": 74,
+        "preset": "v2_stress",
+        "seed": 1,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1851707975647655,
+        "fraction_lead_positive": 0.838124410933082,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1654526365434261,
+        "median_lead": 0.2570272751134751,
+        "method": "pca",
+        "n": 4244,
+        "preset": "v2_stress",
+        "seed": 1,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1851707975647655,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1654526365434261,
+        "median_lead": 0.0174838584327787,
+        "method": "pca",
+        "n": 72,
+        "preset": "v2_stress",
+        "seed": 1,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.1851707975647655,
+        "fraction_lead_positive": 0.6351351351351351,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1654526365434261,
+        "median_lead": 0.0100890208238803,
+        "method": "pca",
+        "n": 74,
+        "preset": "v2_stress",
+        "seed": 1,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.5468441528277784,
+        "fraction_lead_positive": 0.4919724770642202,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0959447352484005,
+        "median_lead": -0.0493138401361469,
+        "method": "fa",
+        "n": 4360,
+        "preset": "v2_stress",
+        "seed": 2,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.5468441528277784,
+        "fraction_lead_positive": 0.1428571428571428,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0959447352484005,
+        "median_lead": -0.0325006172634422,
+        "method": "fa",
+        "n": 70,
+        "preset": "v2_stress",
+        "seed": 2,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.5468441528277784,
+        "fraction_lead_positive": 0.379746835443038,
+        "median_abs_cosine_fate_axis_at_saddle": 0.0959447352484005,
+        "median_lead": -0.0252611379365956,
+        "method": "fa",
+        "n": 79,
+        "preset": "v2_stress",
+        "seed": 2,
+        "truth_class": "saddle"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2929741028916502,
+        "fraction_lead_positive": 0.7213302752293578,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1422739944635546,
+        "median_lead": 0.206002720785216,
+        "method": "pca",
+        "n": 4360,
+        "preset": "v2_stress",
+        "seed": 2,
+        "truth_class": "committed"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2929741028916502,
+        "fraction_lead_positive": 1.0,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1422739944635546,
+        "median_lead": 0.0210770881069754,
+        "method": "pca",
+        "n": 70,
+        "preset": "v2_stress",
+        "seed": 2,
+        "truth_class": "progenitor"
+      },
+      {
+        "auc_saddle_vs_committed": 0.2929741028916502,
+        "fraction_lead_positive": 0.3670886075949367,
+        "median_abs_cosine_fate_axis_at_saddle": 0.1422739944635546,
+        "median_lead": -0.0178754374442961,
+        "method": "pca",
+        "n": 79,
+        "preset": "v2_stress",
+        "seed": 2,
+        "truth_class": "saddle"
+      }
+    ],
+    "max_symmetry": 3.910058410383499e-07,
+    "palantir_actual_vs_given_start": [
+      {
+        "actual_day_max": 4,
+        "actual_day_min": 1,
+        "given_differs": 0.9777777777777777,
+        "guard_accepted": 90,
+        "guard_refused": 0,
+        "n": 90,
+        "palantir_mode": "default",
+        "root_group": "day1"
+      },
+      {
+        "actual_day_max": 2,
+        "actual_day_min": 1,
+        "given_differs": 0.5777777777777777,
+        "guard_accepted": 90,
+        "guard_refused": 0,
+        "n": 90,
+        "palantir_mode": "strict",
+        "root_group": "day1"
+      },
+      {
+        "actual_day_max": 4,
+        "actual_day_min": 3,
+        "given_differs": 1.0,
+        "guard_accepted": 58,
+        "guard_refused": 32,
+        "n": 90,
+        "palantir_mode": "default",
+        "root_group": "day4"
+      },
+      {
+        "actual_day_max": 4,
+        "actual_day_min": 3,
+        "given_differs": 0.7555555555555555,
+        "guard_accepted": 46,
+        "guard_refused": 44,
+        "n": 90,
+        "palantir_mode": "strict",
+        "root_group": "day4"
+      }
+    ],
+    "velocity_reliability_by_dataset": [
+      {
+        "agreement_mean": 0.5492057556280046,
+        "method": "fa",
+        "n": 30,
+        "oriented_fraction_mean": 0.8354057379375355,
+        "preset": "v2_batch",
+        "reliability_mode": "off"
+      },
+      {
+        "agreement_mean": 0.7915178180381269,
+        "method": "fa",
+        "n": 30,
+        "oriented_fraction_mean": 0.5448047576487737,
+        "preset": "v2_batch",
+        "reliability_mode": "on"
+      },
+      {
+        "agreement_mean": 0.6389503428118236,
+        "method": "pca",
+        "n": 30,
+        "oriented_fraction_mean": 0.8093314457109796,
+        "preset": "v2_batch",
+        "reliability_mode": "off"
+      },
+      {
+        "agreement_mean": 0.8234967643078286,
+        "method": "pca",
+        "n": 30,
+        "oriented_fraction_mean": 0.633220640575294,
+        "preset": "v2_batch",
+        "reliability_mode": "on"
+      },
+      {
+        "agreement_mean": 0.5547555817751992,
+        "method": "fa",
+        "n": 30,
+        "oriented_fraction_mean": 0.8543372887231693,
+        "preset": "v2_default",
+        "reliability_mode": "off"
+      },
+      {
+        "agreement_mean": 0.7789126415392428,
+        "method": "fa",
+        "n": 30,
+        "oriented_fraction_mean": 0.5891733403683036,
+        "preset": "v2_default",
+        "reliability_mode": "on"
+      },
+      {
+        "agreement_mean": 0.6563033756890709,
+        "method": "pca",
+        "n": 30,
+        "oriented_fraction_mean": 0.8687309417151813,
+        "preset": "v2_default",
+        "reliability_mode": "off"
+      },
+      {
+        "agreement_mean": 0.8497663736791569,
+        "method": "pca",
+        "n": 30,
+        "oriented_fraction_mean": 0.6799595638997028,
+        "preset": "v2_default",
+        "reliability_mode": "on"
+      },
+      {
+        "agreement_mean": 0.5023975263155587,
+        "method": "fa",
+        "n": 30,
+        "oriented_fraction_mean": 0.8608488313771168,
+        "preset": "v2_stress",
+        "reliability_mode": "off"
+      },
+      {
+        "agreement_mean": 0.7041161685357386,
+        "method": "fa",
+        "n": 30,
+        "oriented_fraction_mean": 0.5707493920869672,
+        "preset": "v2_stress",
+        "reliability_mode": "on"
+      },
+      {
+        "agreement_mean": 0.5942649298166227,
+        "method": "pca",
+        "n": 30,
+        "oriented_fraction_mean": 0.867064453974464,
+        "preset": "v2_stress",
+        "reliability_mode": "off"
+      },
+      {
+        "agreement_mean": 0.7977448872527686,
+        "method": "pca",
+        "n": 30,
+        "oriented_fraction_mean": 0.6409928907176188,
+        "preset": "v2_stress",
+        "reliability_mode": "on"
+      }
+    ],
+    "versions": {
+      "numpy": "2.5.4",
+      "palantir": "1.4.5",
+      "python": "3.13.2",
+      "scanpy": "1.12.4",
+      "scikit-learn": "1.9.1",
+      "scvelo": "0.3.4",
+      "torch": "2.14.1"
+    },
+    "wall_hours": {
+      "fit": 0.4875366666666667,
+      "score_part_missing_wall": [
+        "v2_default_s0"
+      ],
+      "scoring_known": 1.7766341666666665,
+      "total_known_lower_bound": 2.3621816666666664,
+      "user_runs": 0.09801083333333334
+    }
+  },
+  "observations": [
+    "All 12 v2 inputs were processed: 10,872 scored rows, 43,488 day-stratified rows, 8,256 diagnostic rows, 360 Palantir guard records, 54 J-class records, and 6 stationary flags rows.",
+    "The maximum fitted J symmetry discrepancy was 3.910058410383499e-07, below the task limit of 1e-4.",
+    "The reversed-root negative control had 104 accepted day-4 runs; every accepted run started on a day outside {1,2}, and 9 had forward-truth agreement below 0.5.",
+    "Forward-truth population cosines were 0.999198\u20130.999933 for v1 default seed 0 and 0.995891\u20130.998093 for v2 default seed 0. The v2 chord comparisons are report-only and range from 0.607220 (all eligible cells) to 0.786061 (minimum 5 cells at each clone endpoint).",
+    "The full prescribed regression suite passed 67 tests; the only warning was a non-fatal FactorAnalysis convergence warning in the FA finite-difference synthetic test."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-18T00:47:10.057708Z",
+  "status": "done",
+  "suggestions": [
+    "Issue a separate, explicitly scoped analysis of the \u00a716 guard and Palantir start-cell handling, because the required reversed-root negative control was accepted rather than refused or snapped to day 1/2.",
+    "Issue a separate exploratory diagnostic of the J saddle-versus-committed mapping, because the minimum AUC was 0.181449 against the frozen 0.75 gate."
+  ],
+  "task": "orient/S06"
+}

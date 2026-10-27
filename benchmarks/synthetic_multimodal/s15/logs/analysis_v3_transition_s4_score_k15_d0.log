@@ -1,0 +1,39 @@
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:822: UserWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden", flavor="leidenalg")
+      315.46 real       325.74 user        19.36 sys
+          1730953216  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              984354  page reclaims
+                 247  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                5224  voluntary context switches
+              293794  involuntary context switches
+       3255428904589  instructions retired
+        893228685796  cycles elapsed
+          3127267648  peak memory footprint
+EXIT 0 2026-10-24T15:48:50Z

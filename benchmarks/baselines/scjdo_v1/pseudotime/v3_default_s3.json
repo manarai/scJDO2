@@ -1,0 +1,14 @@
+{
+  "dataset_seed": 3,
+  "knn": 30,
+  "n_components": 10,
+  "num_waypoints": 500,
+  "palantir_seed": 0,
+  "pseudotime_sha256": "5afcd7955fc2436d2aaf29465fcbb2c83ccc518b98026d587b8b5b5f4c80d71e",
+  "root_cell": "cell_0001681",
+  "root_rule": "default_rng(1000 + seed).choice(day-2 cells, 5, replace=False), first",
+  "source": "computed with S03 Palantir settings",
+  "strict_mode": true,
+  "use_early_cell_as_start": true,
+  "wall_seconds": 38.284
+}

@@ -1,0 +1,74 @@
+{
+  "k": 20,
+  "n_controls": 10691,
+  "n_basins": 59,
+  "n_initial_endpoint_clusters": 7901,
+  "n_small_cluster_merges": 7842,
+  "median_endpoint_nearest_neighbor_distance": 0.0007120122318156064,
+  "agglomerative_distance_threshold": 0.0003560061159078032,
+  "agglomerative_linkage": "sklearn default ward",
+  "merge_algorithm": "Smallest active cluster first, then source label; nearest endpoint centroid; stable lowest-label distance ties; repeat until all groups >=100",
+  "euler_step": 0.05,
+  "max_steps": 400,
+  "step_stop_norm": 0.0001,
+  "fraction_stopped": 0.2773360770741745,
+  "tangent": "30 neighbors, no explicit self removal; centered; denominator29; largest3 covariance eigendirections",
+  "energy_endpoint_minimum": "Lowest energy among the final fixed-integration endpoints in the basin",
+  "leiden_resolution": 4.6484375,
+  "leiden_attempts": [
+    {
+      "resolution": 1.0,
+      "n_states": 11
+    },
+    {
+      "resolution": 2.0,
+      "n_states": 22
+    },
+    {
+      "resolution": 4.0,
+      "n_states": 48
+    },
+    {
+      "resolution": 8.0,
+      "n_states": 118
+    },
+    {
+      "resolution": 6.0,
+      "n_states": 77
+    },
+    {
+      "resolution": 5.0,
+      "n_states": 69
+    },
+    {
+      "resolution": 4.5,
+      "n_states": 55
+    },
+    {
+      "resolution": 4.75,
+      "n_states": 62
+    },
+    {
+      "resolution": 4.625,
+      "n_states": 56
+    },
+    {
+      "resolution": 4.6875,
+      "n_states": 62
+    },
+    {
+      "resolution": 4.65625,
+      "n_states": 64
+    },
+    {
+      "resolution": 4.640625,
+      "n_states": 58
+    },
+    {
+      "resolution": 4.6484375,
+      "n_states": 59
+    }
+  ],
+  "leiden_neighbors": "Scanpy defaults (n_neighbors15), use_rep X, random_state0; Leiden defaults with seed0",
+  "control_only_state_fit": true
+}

@@ -1,0 +1,34 @@
+{
+  "k": 30,
+  "n_fit_controls": 10691,
+  "n_targets_significant": 865,
+  "S02_config": {
+    "hidden": 96,
+    "depth": 3,
+    "beta": 1.0,
+    "n_epochs": 1500,
+    "batch_size": 256,
+    "lr": 0.0005,
+    "weight_decay": 0.0001,
+    "seed": 0,
+    "device": null,
+    "loss": "esm",
+    "dsm_sigma_range": [
+      0.05,
+      0.5
+    ],
+    "esm_laplacian": "exact",
+    "esm_hutch_k": 4,
+    "clock_calibrated": false
+  },
+  "device_selected_by_adapter": "cpu",
+  "n_epochs_completed": 1500,
+  "symmetry_max_relative": 2.21769383301762e-07,
+  "symmetry_median_relative": 1.443075348106504e-07,
+  "operator": "J_score = jacobian_autodiff; beta=1",
+  "control_only_fit": true,
+  "local_operator": "mean H over same 200 nearest controls used for shift and local covariance",
+  "soft_rule": "smallest positive eigenvalues of -H; fewer than m positive => smallest absolute eigenvalues",
+  "numerical_symmetrization": "(H + H.T)/2 before symmetric eigendecomposition; no ridge or threshold",
+  "random_subspaces": "1000 QR decompositions of standard Gaussian k x 5 matrices, default_rng(0); nested m=1,3,5"
+}

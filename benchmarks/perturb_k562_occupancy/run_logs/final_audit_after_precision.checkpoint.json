@@ -1,0 +1,19 @@
+{
+  "unit": "final_audit_after_precision",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "audit"
+  ],
+  "started_utc": "2026-10-22T12:14:26.807360+00:00",
+  "finished_utc": "2026-10-22T12:14:39.151758+00:00",
+  "exit_code": 0,
+  "wall_seconds": 12.344426092999129,
+  "cpu_hours": 0.0035569205555555554,
+  "cpu_hours_before": 9.146783445,
+  "max_rss_kib": 219508,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/final_audit_after_precision.log"
+}

@@ -1,0 +1,20 @@
+START 2026-10-20T22:29:52Z threads=2 .venv/bin/python scripts/s12_step0.py ot --preset v3_default --seed 2 --embedding pca10
+       28.04 real        23.12 user         2.16 sys
+          3759521792  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              304172  page reclaims
+                  11  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4137  voluntary context switches
+               18372  involuntary context switches
+        224391326544  instructions retired
+         89110933415  cycles elapsed
+          3152055920  peak memory footprint
+EXIT 0 2026-10-20T22:30:21Z

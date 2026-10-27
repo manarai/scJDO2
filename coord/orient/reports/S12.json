@@ -1,0 +1,577 @@
+{
+  "task": "orient/S12",
+  "status": "blocked",
+  "status_note": "Step 0 fixed decision rule says stop; Steps 1-2 not run (task 'Stop and ask': Step 0's decision says stop)",
+  "started_utc": "2026-10-20T22:04:07Z",
+  "finished_utc": "2026-10-20T23:20:00Z",
+  "compute": {
+    "cpu_hours": 5.0,
+    "cpu_hours_note": "4.99 h measured with /usr/bin/time -l over 49 process trees (s12/cpu_ledger.csv) + < 0.02 h untimed toy probes; budget 60",
+    "gpu_hours": 0.0,
+    "hardware": "local Mac, 14 CPUs, 36 GB; <= 12 threads in total; MeasuredDrift fits on MPS, Jacobians on CPU, scVI on CPU"
+  },
+  "metrics": {
+    "gate_G0_step0": {
+      "pass": false,
+      "decision": "stop",
+      "embeddings_other_than_pca20_with_auc_ge_0_85_every_seed": [
+        "pca10"
+      ],
+      "clause_two_embeddings": false,
+      "clause_fa_fix": false,
+      "min_auc": {
+        "fa20": 0.04324037026944629,
+        "fa20w": 0.20743283237328022,
+        "pca10": 0.8752011558124027,
+        "pca20": 0.8180871939796145,
+        "pca50": 0.5585634926844535,
+        "scvi10": 0.31020671260280064
+      }
+    },
+    "fa_inversion_diagnosis": {
+      "a_truth_classes": {
+        "note": "classes defined on z_true: identical cells in every embedding",
+        "fraction_saddle": {
+          "v3_default_s0": 0.00173,
+          "v3_default_s1": 0.00221,
+          "v3_default_s2": 0.00225,
+          "v3_transition_s0": 0.02756,
+          "v3_transition_s1": 0.02908,
+          "v3_transition_s2": 0.02825
+        },
+        "fate_axis_gene_space_abs_cos_pca_vs_fa": {
+          "v3_default_s0": 0.912,
+          "v3_default_s1": 0.8604,
+          "v3_default_s2": 0.8888,
+          "v3_transition_s0": 0.7973,
+          "v3_transition_s1": 0.7797,
+          "v3_transition_s2": 0.7569
+        }
+      },
+      "b_ot_velocity_gene_space_cos_pca_vs_fa_median": {
+        "v3_default_s0": 0.524,
+        "v3_default_s1": 0.5418,
+        "v3_default_s2": 0.5634,
+        "v3_transition_s0": 0.5627,
+        "v3_transition_s1": 0.5379,
+        "v3_transition_s2": 0.5545
+      },
+      "b_fraction_cos_positive": {
+        "v3_default_s0": 0.9994,
+        "v3_default_s1": 1.0,
+        "v3_default_s2": 1.0,
+        "v3_transition_s0": 1.0,
+        "v3_transition_s1": 1.0,
+        "v3_transition_s2": 1.0
+      },
+      "c_tangent5_lam1_auc": {
+        "pca20": {
+          "v3_default_s0": 0.8757,
+          "v3_default_s1": 0.8731,
+          "v3_default_s2": 0.976,
+          "v3_transition_s0": 0.6434,
+          "v3_transition_s1": 0.7808,
+          "v3_transition_s2": 0.8824
+        },
+        "fa20": {
+          "v3_default_s0": 0.0848,
+          "v3_default_s1": 0.1182,
+          "v3_default_s2": 0.0909,
+          "v3_transition_s0": 0.5434,
+          "v3_transition_s1": 0.568,
+          "v3_transition_s2": 0.6049
+        },
+        "fa20w": {
+          "v3_default_s0": 0.2253,
+          "v3_default_s1": 0.1519,
+          "v3_default_s2": 0.327,
+          "v3_transition_s0": 0.6001,
+          "v3_transition_s1": 0.6501,
+          "v3_transition_s2": 0.6719
+        }
+      },
+      "c_soft_axis_curvature_auc": {
+        "pca20": {
+          "v3_default_s0": 0.8224,
+          "v3_default_s1": 0.9966,
+          "v3_default_s2": 0.9988,
+          "v3_transition_s0": 0.9101,
+          "v3_transition_s1": 0.9547,
+          "v3_transition_s2": 0.9702
+        },
+        "fa20": {
+          "v3_default_s0": 0.0826,
+          "v3_default_s1": 0.0255,
+          "v3_default_s2": 0.2027,
+          "v3_transition_s0": 0.379,
+          "v3_transition_s1": 0.4158,
+          "v3_transition_s2": 0.5583
+        },
+        "fa20w": {
+          "v3_default_s0": 0.0433,
+          "v3_default_s1": 0.9621,
+          "v3_default_s2": 0.7605,
+          "v3_transition_s0": 0.6897,
+          "v3_transition_s1": 0.7974,
+          "v3_transition_s2": 0.7081
+        }
+      },
+      "d_whitened_cost_fa_auc": {
+        "v3_default_s0": 0.2074,
+        "v3_default_s1": 0.9699,
+        "v3_default_s2": 0.8968,
+        "v3_transition_s0": 0.6248,
+        "v3_transition_s1": 0.7875,
+        "v3_transition_s2": 0.8015
+      },
+      "d_raw_fa_auc": {
+        "v3_default_s0": 0.0472,
+        "v3_default_s1": 0.2004,
+        "v3_default_s2": 0.0432,
+        "v3_transition_s0": 0.4747,
+        "v3_transition_s1": 0.3016,
+        "v3_transition_s2": 0.5263
+      },
+      "fix_bringing_fa_to_0_85": null,
+      "conclusion": "no tested item identifies a fix that brings FA to >= 0.85 on every seed (whitened-cost minimum 0.207)"
+    },
+    "auc_by_embedding": {
+      "pca20": {
+        "v3_default_s0": 0.9738,
+        "v3_default_s1": 0.9905,
+        "v3_default_s2": 0.999,
+        "v3_transition_s0": 0.8181,
+        "v3_transition_s1": 0.9103,
+        "v3_transition_s2": 0.9668
+      },
+      "fa20": {
+        "v3_default_s0": 0.0472,
+        "v3_default_s1": 0.2004,
+        "v3_default_s2": 0.0432,
+        "v3_transition_s0": 0.4747,
+        "v3_transition_s1": 0.3016,
+        "v3_transition_s2": 0.5263
+      },
+      "pca10": {
+        "v3_default_s0": 0.9552,
+        "v3_default_s1": 0.98,
+        "v3_default_s2": 0.9969,
+        "v3_transition_s0": 0.8752,
+        "v3_transition_s1": 0.8948,
+        "v3_transition_s2": 0.9626
+      },
+      "pca50": {
+        "v3_default_s0": 0.6368,
+        "v3_default_s1": 0.9676,
+        "v3_default_s2": 0.5586,
+        "v3_transition_s0": 0.8906,
+        "v3_transition_s1": 0.7869,
+        "v3_transition_s2": 0.9672
+      },
+      "scvi10": {
+        "v3_default_s0": 0.8281,
+        "v3_default_s1": 0.7165,
+        "v3_default_s2": 0.9644,
+        "v3_transition_s0": 0.3102,
+        "v3_transition_s1": 0.5221,
+        "v3_transition_s2": 0.5561
+      },
+      "fa20w": {
+        "v3_default_s0": 0.2074,
+        "v3_default_s1": 0.9699,
+        "v3_default_s2": 0.8968,
+        "v3_transition_s0": 0.6248,
+        "v3_transition_s1": 0.7875,
+        "v3_transition_s2": 0.8015
+      }
+    },
+    "selected_configuration": null,
+    "gate_G1_test_auc": null,
+    "gate_G2_jref_error": null,
+    "gate_G3_transition": null,
+    "gate_G4_real_heldout": null,
+    "orientation_v3_forward": null,
+    "guard_strict": null,
+    "versions": {
+      "python": "3.13.2",
+      "numpy": "2.5.4",
+      "torch": "2.14.1",
+      "POT": "0.9.7.post1",
+      "scvi-tools": "1.5.1",
+      "scikit-learn": "1.9.1",
+      "anndata": "0.11.4",
+      "dynamo (.venv-dynamo, probe only)": "1.5.3"
+    },
+    "cpu_hours": 5.0
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/embeddings.npz",
+      "bytes": 4550602,
+      "sha256": "1b9b822f77d9858b6495edfedf93ea539f928c4b313227c90e65841d024da1d2",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py embed --preset v3_default --seed 0"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/embeddings.npz",
+      "bytes": 4537442,
+      "sha256": "fc9218040df16ecd3d721896b513319607607db64c16c420a1bbd98b2d81bca3",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py embed --preset v3_default --seed 1"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/embeddings.npz",
+      "bytes": 4601842,
+      "sha256": "b157cef9ae3fdaf552a5e1dc40c1bb9b51e62d3769e8d8262af998eaedbeedc5",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py embed --preset v3_default --seed 2"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/embeddings.npz",
+      "bytes": 4550602,
+      "sha256": "027d9a4ae91eadd5b4b8666d1a37a792dc31642621c19b1cc3daedb83f8e9314",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py embed --preset v3_transition --seed 0"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/embeddings.npz",
+      "bytes": 4537442,
+      "sha256": "13d3b637593775aab2f56567e861c12c6ee26872887260e3e59fa1f5b055890d",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py embed --preset v3_transition --seed 1"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/embeddings.npz",
+      "bytes": 4601842,
+      "sha256": "436b88abe7da31f34590b33799e7b378aa27ade3b7ed683f0bba185f7a634ca4",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py embed --preset v3_transition --seed 2"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_fa20.npz",
+      "bytes": 22507658,
+      "sha256": "0ca8537269713e0a0c986e33323a5e566f4812d610d7c80f626cad7a98090bf1",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 0 --embedding fa20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_fa20w.npz",
+      "bytes": 22507658,
+      "sha256": "d0c102e8a465f0c1ddb7090cfe2b8cde7a8fa04c16f480815066e1924c09f8ae",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 0 --embedding fa20w"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca10.npz",
+      "bytes": 6250378,
+      "sha256": "5a4c3c99c65b34b31207c93f8845a070439ff4ec28f3818726c48ceafbe9bf42",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 0 --embedding pca10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca20.npz",
+      "bytes": 22507658,
+      "sha256": "1516063e38fe95fae06556e69e10d83894f4662058081d2130253a40793f4f7f",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 0 --embedding pca20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca50.npz",
+      "bytes": 132244298,
+      "sha256": "cb6128336a6c170f8a5eb6c1ff83ce42d2b0eebb8f9c365539e276d856fc975b",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 0 --embedding pca50"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_scvi10.npz",
+      "bytes": 6250378,
+      "sha256": "c7096677c913e67d0e3adbe063683a7aa52da11acb2c926ab9b3124c59549c6a",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 0 --embedding scvi10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_fa20.npz",
+      "bytes": 22424374,
+      "sha256": "7d9e91e5cc0f77c0d162c75ef01ae31fdf31197ffd9fa13e03f2136d9cc4608e",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 1 --embedding fa20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_fa20w.npz",
+      "bytes": 22424374,
+      "sha256": "237e4bff129a13750b1d4898fb72ec1edf2928e44de1bc4967b3eae9ea0eed9d",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 1 --embedding fa20w"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca10.npz",
+      "bytes": 6227254,
+      "sha256": "7a1787b8a79b537b733cbc86969189d0e5bd49ca1bc3a6b3be3295f5f4e59f1f",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 1 --embedding pca10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca20.npz",
+      "bytes": 22424374,
+      "sha256": "d625f57e124f45424a56286fe8d0a86be3ce18fd5ffb51ba83917a3adf18207e",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 1 --embedding pca20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca50.npz",
+      "bytes": 131754934,
+      "sha256": "e4991d9e283088afd199c5d3ad68a328e609680ea7ac362d83cf7dc5caa32920",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 1 --embedding pca50"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_scvi10.npz",
+      "bytes": 6227254,
+      "sha256": "50e8a85d8d8ddf3c02654c311c7c43adcc7aa34f40c2b16726b4190d8cad7c82",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 1 --embedding scvi10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_fa20.npz",
+      "bytes": 22831934,
+      "sha256": "c24562a88956e965d5c2cc14bc219d0ffe9ff4a0bd8f8e37f964b8805a9ccca7",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 2 --embedding fa20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_fa20w.npz",
+      "bytes": 22831934,
+      "sha256": "a370684d44aa123aa5bc4d91374bf8bba623ef1a78150bc063572b8ad874ff2f",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 2 --embedding fa20w"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca10.npz",
+      "bytes": 6340414,
+      "sha256": "64f95532f224dbdfb76135699b2e90680f69753834467a3692786c2ee7823474",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 2 --embedding pca10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca20.npz",
+      "bytes": 22831934,
+      "sha256": "47aeea81e8c8da34a733473859d8dd6ef70bb3e8164abc933b1f3f00f56fbdc4",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 2 --embedding pca20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca50.npz",
+      "bytes": 134149694,
+      "sha256": "506a7b4f8e09772d71ed5c14e01fc9a8e320f47563c69b0ed569c00aaaa4109b",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 2 --embedding pca50"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_scvi10.npz",
+      "bytes": 6340414,
+      "sha256": "ae4134ade6d1de38d2a023340424b077ae3951e887fecfe94111f4e033d300ac",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_default --seed 2 --embedding scvi10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_fa20.npz",
+      "bytes": 22507658,
+      "sha256": "ec001e60adbb802355adee48ab7f6807dca16d315d9bb7e2411ea33c1d090885",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 0 --embedding fa20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_fa20w.npz",
+      "bytes": 22507658,
+      "sha256": "6b1344237f33c91d43a284b6a0a2641ceb542f9a77219b27baa8e6d8eae71c01",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 0 --embedding fa20w"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca10.npz",
+      "bytes": 6250378,
+      "sha256": "a8a01e95b2e2e70fa792284953e9a5c812b07e0648cb4b8bb81abcefa3951419",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 0 --embedding pca10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca20.npz",
+      "bytes": 22507658,
+      "sha256": "5d120bbb790b703ba944db62e89ece188e6a9506f85c4afe486bc5ec39eb08f1",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 0 --embedding pca20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca50.npz",
+      "bytes": 132244298,
+      "sha256": "a8e109f0736bbc37387a591f1e6c72ca1b59e3ac439731ab8f8f9ec28579f3d0",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 0 --embedding pca50"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_scvi10.npz",
+      "bytes": 6250378,
+      "sha256": "f047275aa9390c643c88e6525ae5a5c969078b05c16d3d71eddeb0262f9aea3d",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 0 --embedding scvi10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_fa20.npz",
+      "bytes": 22424374,
+      "sha256": "93272594bccc5db40f468ea0676a5b3ac4fc314796e1689b8686cb0f886bc293",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 1 --embedding fa20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_fa20w.npz",
+      "bytes": 22424374,
+      "sha256": "89a91e70cd11a733e33286798b61213cd6e7d1611cbac6c46421f08caf3df102",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 1 --embedding fa20w"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca10.npz",
+      "bytes": 6227254,
+      "sha256": "3a89db300e71f3e6c8806724d88340411095f1c7fa27bb63ca79c3932c7200c7",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 1 --embedding pca10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca20.npz",
+      "bytes": 22424374,
+      "sha256": "b9b1f876fc689fb0379f44be8727baf8eee0c441e93e60ee7b9fb2dfbed2764d",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 1 --embedding pca20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca50.npz",
+      "bytes": 131754934,
+      "sha256": "442d812eceefdd681cc576de3b38a8e7d475238177abc3b946171e582208879b",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 1 --embedding pca50"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_scvi10.npz",
+      "bytes": 6227254,
+      "sha256": "0255043e770a4da61abf47c74a717f47f690ede9148e86d692a886e5e89bbaac",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 1 --embedding scvi10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_fa20.npz",
+      "bytes": 22831934,
+      "sha256": "51703083dec5b865ad10bcc5da114bad49acc461684e726b1333df834c9dcf0a",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 2 --embedding fa20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_fa20w.npz",
+      "bytes": 22831934,
+      "sha256": "8147b71ddf5fe30892e6eab9d1694b13290c9477ed3294f6f1317078267880f4",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 2 --embedding fa20w"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca10.npz",
+      "bytes": 6340414,
+      "sha256": "4d970490d4fd159dd9146d9603c15397a5e5ee8e2d273d5c20c125d9002809be",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 2 --embedding pca10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca20.npz",
+      "bytes": 22831934,
+      "sha256": "23f98a8393c1d0bbd2aa2f10410e33f270c15b0dc504041db2c52e29bdfc2119",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 2 --embedding pca20"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca50.npz",
+      "bytes": 134149694,
+      "sha256": "72d5474c6d777e8cfd6012612d58764f03514881bab1c515af5a6047f56d9863",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 2 --embedding pca50"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_scvi10.npz",
+      "bytes": 6340414,
+      "sha256": "25a528e0f96db58c3386a366e2477a3655825abb523ec638e0023b5fe5bf7045",
+      "committed": false,
+      "regenerate": "python scripts/s12_step0.py ot --preset v3_transition --seed 2 --embedding scvi10"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s12/step0.csv",
+      "bytes": 9502,
+      "sha256": "df6b89f5c97e28d57a5710aba3a456de3b7204019e99823d92ed3604de2d632f",
+      "committed": true,
+      "regenerate": "python scripts/s12_step0.py summary / ledger"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s12/step0_fa_diagnosis.csv",
+      "bytes": 2781,
+      "sha256": "484873435129be72c35841b6e12c91fc8441d28a0d416d3ecfba667ecf40961c",
+      "committed": true,
+      "regenerate": "python scripts/s12_step0.py summary / ledger"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s12/step0_decision.json",
+      "bytes": 2955,
+      "sha256": "f351edb202f0cf1078243d2fb334d770fd80e252a8631bd35763a5512681c263",
+      "committed": true,
+      "regenerate": "python scripts/s12_step0.py summary / ledger"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s12/RESULT_S12.md",
+      "bytes": 10142,
+      "sha256": "daa57a150602c0662fc04e6d84a6ac5b34e289600f76613c9cf50ecb37fe21d3",
+      "committed": true,
+      "regenerate": "python scripts/s12_step0.py summary / ledger"
+    },
+    {
+      "path": "benchmarks/figures/orient/s12/step0_auc_by_embedding.png",
+      "bytes": 48446,
+      "sha256": "637cf20eec13ac98f0d7a58d3b858fe41327054cd702524c525759eb2adbcc18",
+      "committed": true,
+      "regenerate": "python scripts/s12_step0.py summary / ledger"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s12/cpu_ledger.csv",
+      "bytes": 6458,
+      "sha256": "ae714428cc3dee192ac3ae199a5cc952cfa540cf61b8ecc1b8ae6f476eaf45ea",
+      "committed": true,
+      "regenerate": "python scripts/s12_step0.py summary / ledger"
+    }
+  ],
+  "deviations": [
+    "Executor: a local Claude agent. Commit footers are 'Co-Authored-By: Claude Opus 5.5' (the caller's instruction), not the Manus footer.",
+    "Start state: untracked S09 leftovers (v3_calibration/.locks, candidates/, s08_runtime/) were present; left untouched and not committed.",
+    "selected_configuration, gate_G1_test_auc, gate_G2_jref_error, gate_G3_transition, gate_G4_real_heldout, orientation_v3_forward, guard_strict: null, not computed: Step 0 decision = stop (Steps 1-2 not run).",
+    "Required files not produced because Steps 1-2 did not run: scripts/s12_test.py, s12/optimisation_log.csv, s12/test.csv, s12/real_larry.csv. scripts/s12_optimise.py is committed as prepared but not executed (only its dynamo worker was probed on a toy field).",
+    "No generator change was committed: v3_nofork, forward_developmental_truth_v3, seed-3 datasets and MANIFEST rows belong to Step 2. A draft of these generator edits was reverted, uncommitted, once Step 0 said stop.",
+    "Step 0.1 'reproduce': both the AUC of the S10 stored operator and a full refit (OT + MeasuredDrift + jacobian_autodiff) were computed. They agree with S10's reported values to 4 decimals.",
+    "Step 0.2(a) 'fraction of saddle cells': the truth classes are defined on z_true, so the fraction is identical in every embedding by construction. Reported as is, with the projection of saddle and committed cells on each embedding's fate axis added.",
+    "Step 0.2(a)/(b) gene-space maps: a score-space vector v is mapped to gene space as v pinv(L), with L the embedding's stored linear map (genes x d; for FA, the posterior map).",
+    "Step 0.2(c) 'S06 tangent rule' is not defined in the S06 task or scripts. It was implemented as the task text gives it: per cell, the top-5 eigenvectors U of the kNN-30 local data covariance in the embedding, and lambda1 of U^T J U. The soft-axis curvature uses S10 Step 4's soft_axis.",
+    "Step 0.2(d) whitening: the cost is (z_i - z_j)^T W^T Psi^-1 W (z_i - z_j), with W the FA loadings and Psi the FA noise variances, i.e. the gene-space reconstruction difference whitened by Psi. eps = 0.05 x median of that cost. Barycentres, MeasuredDrift and J are in raw FA coordinates. This is the executor's reading of 'costs in FA whitened by the FA noise variances'.",
+    "Step 0.3 PCA-10/PCA-50 come from embed_linear on the observed spliced counts (same normalisation/log1p as PCA-20). scVI-10 uses SCVI defaults, n_latent = 10, spliced counts, all genes, seed 0, default max_epochs (400) on CPU, with the posterior-mean latent. The task fixed no scVI settings beyond 10 latent dims.",
+    "Decision clause 1 counts FA-20, PCA-10, PCA-50 and scVI-10 as the 'embeddings other than PCA-20'. The whitened-cost FA variant is evaluated only under clause 2 (FA fix)."
+  ],
+  "questions": [
+    "Step 0's fixed rule says stop. Only PCA-10 (min 0.875) of FA-20 / PCA-10 / PCA-50 / scVI-10 has OT-flow-J fork AUC >= 0.85 on every seed; PCA-50 (min 0.559), scVI-10 (min 0.310) and FA-20 (min 0.043) do not. The FA-whitened OT cost raises FA to 0.21-0.97, not >= 0.85 on every seed. How should the workstream proceed: stop here as the rule says, or another task?"
+  ],
+  "observations": [
+    "S10's OT velocity was reproduced exactly (max |dv| = 0), and the refitted OT flow J gives the same AUC to 4 decimals on all 12 PCA-20/FA-20 units.",
+    "PCA-20 itself is below 0.85 on v3_transition s0 (0.818).",
+    "OT-flow-J fork AUC is not monotone in PCA dimension: PCA-10 0.875-0.997, PCA-20 0.818-0.999, PCA-50 0.559-0.968. PCA-50 falls on v3_default s0 (0.637) and s2 (0.559) but not s1 (0.968).",
+    "scVI-10: AUC 0.72-0.96 on v3_default and 0.31-0.56 on v3_transition. On v3_transition the leading eigenvector at saddle cells aligns poorly with the fate axis (|cos| 0.17-0.53).",
+    "FA-20: OT velocities agree in sign with PCA-20 in gene space (cos > 0 for >= 99.9 % of cells), but only moderately in direction (median cos 0.52-0.56). The MeasuredDrift-fitted velocities agree less on v3_transition (median cos 0.09-0.28 over all cells).",
+    "In FA-20 the committed cells sit about 1 unit from the saddle midpoint along the fate axis, vs 7-11 units in PCA-20. FA scores have about unit variance per axis; the median OT speed is 0.05-0.10 (FA) vs 0.17-0.28 (PCA-20).",
+    "The whitened FA cost raises the FA AUC on every dataset (+0.15 to +0.85) and raises the fate-axis |cos| at saddles to 0.64-0.97, but it stays below 0.85 on 4 of 6 datasets.",
+    "Restricting J to the top-5 local covariance directions does not remove the FA inversion (FA tangent-lambda1 AUC 0.09-0.61)."
+  ],
+  "suggestions": [
+    "Since PCA-10 and PCA-20 pass while PCA-50 and scVI-10 do not, a sweep of PCA dimension (e.g. 5-50) on the development data would show where OT flow J stops resolving the fork. Its result is bounded by the S10 choice of 20.",
+    "FA's committed/saddle separation along the fate axis is about 10x smaller than PCA's relative to its noise. A diagnostic that rescales FA axes (e.g. by the per-axis posterior precision) before OT and MeasuredDrift would test whether the inversion is a scale/regularisation effect of MeasuredDrift (weight decay) rather than of OT.",
+    "The 22-29 saddle cells per v3_default seed make its AUCs noisy; v3_transition (350-368 saddle cells) is the more informative fork set."
+  ]
+}

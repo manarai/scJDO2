@@ -1,0 +1,13 @@
+{
+  "dataset": "v3_transition_s2",
+  "error": "AssertionError: #existing gene is 0; max RSS exceeds 8 GiB cap.",
+  "method": "dynamo_oneshot",
+  "peak_memory_bytes": 12771672064,
+  "runtime_seconds": 103.997,
+  "settings": {
+    "planned_vector_field": "SparseVFC in PCA-30; per-cell jacobian; fixed points and classes",
+    "workflow": "dynamo.tl.recipe_one_shot_data(one_shot_method=sci-fate, tkey=pulse_hours) then velocity_N"
+  },
+  "status": "failed_over_cap",
+  "version": "1.5.3"
+}

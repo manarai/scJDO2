@@ -1,0 +1,148 @@
+{
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "configuration_id": "reference",
+  "dataset": "larry",
+  "finished_utc": "2026-10-22T15:43:58.048848Z",
+  "heldout_day": [
+    {
+      "energy_distance": 0.6874104724666862,
+      "method": "flow",
+      "n_last": 4000,
+      "n_middle": 4000
+    },
+    {
+      "energy_distance": 0.8815008253806457,
+      "method": "no_movement",
+      "n_last": 4000,
+      "n_middle": 4000
+    },
+    {
+      "energy_distance": 0.8667826833933505,
+      "method": "mean_displacement",
+      "n_last": 4000,
+      "n_middle": 4000
+    }
+  ],
+  "heldout_details": {
+    "first_day": 2,
+    "fit_models": [
+      {
+        "fit_device": "mps:0",
+        "hidden": [
+          96,
+          96,
+          96
+        ],
+        "jacobian_device": "cpu",
+        "n_fit_cells": 4000,
+        "seconds": 5.727,
+        "seed": 0,
+        "weight_decay": 0.0001
+      }
+    ],
+    "fit_ot_pairs": [
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 3.161102115052934,
+        "final_err": 9.898635103870056e-10,
+        "from_day": 2,
+        "n_iter": 15,
+        "n_source": 4000,
+        "n_target": 4000,
+        "plan_mass": 1.0,
+        "rows_zero": 0,
+        "seconds": 0.89,
+        "to_day": 4,
+        "warnings": []
+      }
+    ],
+    "gap_hours": 48.0,
+    "last_day": 6,
+    "middle_day": 4
+  },
+  "in_process_cpu_seconds": 31.693,
+  "k": 15,
+  "lineage": {
+    "definition": "Spearman across all PCA-coordinate components of observed clone-cell pairs; Euler integration uses 1-hour steps over the observed sampling gap",
+    "lineage_null_max": 0.14663916717171305,
+    "lineage_nulls": [
+      0.10075622287620178,
+      0.114976994111507,
+      0.14663916717171305,
+      0.12720954349887167,
+      0.11821753810858121
+    ],
+    "lineage_spearman": 0.5606976454095578,
+    "n_lineage_cell_barcode_pairs": 554,
+    "n_lineage_dimensions_pooled": 8310
+  },
+  "lineage_models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 6.363,
+      "seed": 0,
+      "weight_decay": 0.0001
+    }
+  ],
+  "lineage_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 3.161102115052934,
+      "final_err": 9.898635103870056e-10,
+      "from_day": 2,
+      "n_iter": 15,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 1.06,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 6.131301198856545,
+      "final_err": 6.165977670571516e-10,
+      "from_day": 4,
+      "n_iter": 23,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 1.57,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "n_cells": 12000,
+  "part": "C",
+  "peak_rss_bytes": 1530363904,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/larry.npz",
+  "prepared_sha256": "72cd1d9ec98e40f8ef55e5ae62c18485236df4ed8febadba7ab4ba1c2f381d6b",
+  "started_utc": "2026-10-22T15:43:21.361233Z",
+  "task": "orient/S14",
+  "truth_free": true,
+  "unit": "test_larry_k15_reference",
+  "wall_seconds": 36.688
+}

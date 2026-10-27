@@ -1,0 +1,102 @@
+{
+  "realism": {
+    "met_count_by_seed": {
+      "v3_default_s0": 6,
+      "v3_default_s1": 6,
+      "v3_default_s2": 6
+    },
+    "n_statistics": 13,
+    "pass": false,
+    "unmet_by_seed": {
+      "v3_default_s0": [
+        "C2_genes_detected",
+        "C5_zero_fraction",
+        "G3_multi_time_clone_fraction",
+        "L2_gamma_half_life",
+        "S1_unspliced_fraction",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ],
+      "v3_default_s1": [
+        "C2_genes_detected",
+        "C7_participation_ratio",
+        "G3_multi_time_clone_fraction",
+        "L2_gamma_half_life",
+        "S1_unspliced_fraction",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ],
+      "v3_default_s2": [
+        "C2_genes_detected",
+        "C4_dispersion",
+        "C7_participation_ratio",
+        "G3_multi_time_clone_fraction",
+        "S1_unspliced_fraction",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ]
+    }
+  },
+  "signal_O1_O2": {
+    "pass": false,
+    "values": [
+      {
+        "dataset": "v3_default_s0",
+        "median_cosine": 0.2826177258729833,
+        "oracle": "O1",
+        "s09_gate_status": "fail",
+        "s09_threshold": 0.3
+      },
+      {
+        "dataset": "v3_default_s0",
+        "median_cosine": 0.4317173536831487,
+        "oracle": "O2",
+        "s09_gate_status": "pass",
+        "s09_threshold": 0.2
+      },
+      {
+        "dataset": "v3_default_s1",
+        "median_cosine": 0.2116742522946466,
+        "oracle": "O1",
+        "s09_gate_status": "fail",
+        "s09_threshold": 0.3
+      },
+      {
+        "dataset": "v3_default_s1",
+        "median_cosine": 0.4536461705457063,
+        "oracle": "O2",
+        "s09_gate_status": "pass",
+        "s09_threshold": 0.2
+      },
+      {
+        "dataset": "v3_default_s2",
+        "median_cosine": 0.2830925376174347,
+        "oracle": "O1",
+        "s09_gate_status": "fail",
+        "s09_threshold": 0.3
+      },
+      {
+        "dataset": "v3_default_s2",
+        "median_cosine": 0.5360898541232029,
+        "oracle": "O2",
+        "s09_gate_status": "pass",
+        "s09_threshold": 0.2
+      }
+    ]
+  },
+  "targets_met_by_seed_all_presets": {
+    "v3_batch_s0": 7,
+    "v3_batch_s1": 6,
+    "v3_batch_s2": 6,
+    "v3_default_s0": 6,
+    "v3_default_s1": 6,
+    "v3_default_s2": 6,
+    "v3_stationary_cycle_s0": 7,
+    "v3_stationary_cycle_s1": 5,
+    "v3_stationary_cycle_s2": 7,
+    "v3_stress_s0": 4,
+    "v3_stress_s1": 4,
+    "v3_stress_s2": 4
+  },
+  "task": "orient/S09"
+}

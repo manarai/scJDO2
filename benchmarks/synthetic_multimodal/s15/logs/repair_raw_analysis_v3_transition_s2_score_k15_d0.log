@@ -1,0 +1,20 @@
+START 2026-10-24T00:06:50Z unit=repair_raw_analysis_v3_transition_s2_score_k15_d0 launcher=.sandbox/bin/python cap=14GiB observed_only=true
+       19.33 real        18.34 user         0.54 sys
+           486244352  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               82832  page reclaims
+                1077  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2382  voluntary context switches
+                8650  involuntary context switches
+        231303601072  instructions retired
+         59895437106  cycles elapsed
+           379176328  peak memory footprint
+EXIT 0 2026-10-24T00:07:09Z

@@ -1,0 +1,20 @@
+START 2026-10-23T23:46:26Z unit=step0_v3_transition_s3 launcher=.sandbox/bin/python cap=14GiB estimate_lt=8GiB
+       27.68 real        23.59 user         2.20 sys
+          5099225088  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              612466  page reclaims
+                  11  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4294  voluntary context switches
+               18235  involuntary context switches
+        292213269040  instructions retired
+         96207808202  cycles elapsed
+          6095133128  peak memory footprint
+EXIT 0 2026-10-23T23:46:54Z

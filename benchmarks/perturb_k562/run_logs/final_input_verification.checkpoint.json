@@ -1,0 +1,19 @@
+{
+  "unit": "final_input_verification",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "verify-final"
+  ],
+  "started_utc": "2026-10-22T06:12:54.271773+00:00",
+  "finished_utc": "2026-10-22T06:13:08.317258+00:00",
+  "exit_code": 0,
+  "wall_seconds": 14.045487891999983,
+  "cpu_hours": 0.002864756388888889,
+  "max_rss_kib": 40196,
+  "cpu_hours_before": 1.0975102788888889,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/final_input_verification.log"
+}

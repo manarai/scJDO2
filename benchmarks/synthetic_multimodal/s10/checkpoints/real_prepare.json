@@ -1,0 +1,46 @@
+{
+  "details": {
+    "larry_ot_fa": [
+      {
+        "epsilon": 1.5006453113185398,
+        "from_day": 2.0
+      },
+      {
+        "epsilon": 1.9044031037912967,
+        "from_day": 4.0
+      }
+    ],
+    "larry_ot_pca": [
+      {
+        "epsilon": 3.8358795014973155,
+        "from_day": 2.0
+      },
+      {
+        "epsilon": 6.860390457832162,
+        "from_day": 4.0
+      }
+    ],
+    "larry_ot_pca_matches_s11_function": 0.0,
+    "scnt_fa_labelling": {
+      "epochs_run": 400,
+      "gamma_max": 6.307620525360107,
+      "gamma_min": 0.0027532828971743584,
+      "held_out_nll": 0.3000071048736572,
+      "seed": 0
+    },
+    "scnt_pca_labelling": {
+      "epochs_run": 400,
+      "gamma_max": 5.65129280090332,
+      "gamma_min": 0.0024952811654657125,
+      "held_out_nll": 0.3005455732345581,
+      "seed": 0
+    }
+  },
+  "finished_utc": "2026-10-20T12:49:24.532906Z",
+  "in_process_cpu_seconds": 56.365,
+  "peak_rss_bytes": 4780081152,
+  "started_utc": "2026-10-20T12:48:09.952383Z",
+  "task": "orient/S10",
+  "unit": "real_prepare",
+  "wall_seconds": 74.581
+}

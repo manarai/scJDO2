@@ -1,0 +1,56 @@
+{
+  "array_key": "J",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/operators/flow_v3_stationary_cycle_s1_k15_d0.npz",
+  "array_sha256": "99fed88cb768707d87f5efa9357f8283907a7f68d8e74438bbdc1c3d7b703d5a",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "dataset": "v3_stationary_cycle_s1",
+  "drift_seed": 0,
+  "finished_utc": "2026-10-24T17:42:23.746528Z",
+  "fit": {
+    "model": {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 2801,
+      "seconds": 6.158,
+      "seed": 0,
+      "weight_decay": 0.0001
+    },
+    "ot_pairs": [],
+    "s10_velocity_key": "v_lab_raw_shared",
+    "source": "S10 raw_shared labelling velocity (one sampling time; no OT)"
+  },
+  "in_process_cpu_seconds": 5.969,
+  "input": {
+    "s10_checkpoint": "benchmarks/synthetic_multimodal/s10/checkpoints/fit_v3_stationary_cycle_s1_pca.json",
+    "s10_fit_path": "benchmarks/synthetic_multimodal/data/s10/v3_stationary_cycle_s1/fit_pca.npz",
+    "s10_fit_sha256": "f14d97549484aac556cf2a456d8618112b72fb996abe2a95d10057b2517b6316",
+    "s10_labelling_variant": "raw_shared",
+    "source": "S10 observed PCA with its first k components"
+  },
+  "k": 15,
+  "observed_fit_complete_before_truth_scoring": true,
+  "operator": "J_flow_reference",
+  "peak_rss_bytes": 520962048,
+  "stage": "operators",
+  "started_utc": "2026-10-24T17:42:15.386694Z",
+  "task": "orient/S15",
+  "truth_keys_accessed": false,
+  "unit": "flow_v3_stationary_cycle_s1_k15_d0",
+  "wall_seconds": 8.36
+}

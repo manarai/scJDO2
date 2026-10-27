@@ -1,0 +1,19 @@
+{
+  "unit": "effects_after_label_repair",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "effects"
+  ],
+  "started_utc": "2026-10-22T05:57:35.337170+00:00",
+  "finished_utc": "2026-10-22T05:59:52.193452+00:00",
+  "exit_code": 0,
+  "wall_seconds": 136.85628265200012,
+  "cpu_hours": 0.19598045333333333,
+  "max_rss_kib": 331420,
+  "cpu_hours_before": 0.09404560472222223,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/effects_after_label_repair.log"
+}

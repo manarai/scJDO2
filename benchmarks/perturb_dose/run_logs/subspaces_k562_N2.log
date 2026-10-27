@@ -1,0 +1,11 @@
+[energy-drift] epoch 150/1500  loss_kind=esm  loss=-2.7394
+[energy-drift] epoch 300/1500  loss_kind=esm  loss=-4.1784
+[energy-drift] epoch 450/1500  loss_kind=esm  loss=-4.2487
+[energy-drift] epoch 600/1500  loss_kind=esm  loss=-5.0638
+[energy-drift] epoch 750/1500  loss_kind=esm  loss=-4.9776
+[energy-drift] epoch 900/1500  loss_kind=esm  loss=-4.7757
+[energy-drift] epoch 1050/1500  loss_kind=esm  loss=-4.9166
+[energy-drift] epoch 1200/1500  loss_kind=esm  loss=-5.1808
+[energy-drift] epoch 1350/1500  loss_kind=esm  loss=-4.5177
+[energy-drift] epoch 1500/1500  loss_kind=esm  loss=-4.5688
+k562 N2 subspaces+10000 bases SAVED bb396f85e6ccd3273db4ee59687d31a0b596af6e33711e6f11d35dea2f66f31e selected stiffness [0.02981548 0.05725269 0.06084141]

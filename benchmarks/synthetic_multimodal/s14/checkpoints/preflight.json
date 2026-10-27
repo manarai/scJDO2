@@ -1,0 +1,57 @@
+{
+  "admission_plan": {
+    "admitted": true,
+    "basis": "S10 max full-v3 generation + S13 max PCA-50 operator unit; explicit one-network fit equivalents",
+    "budget_cpu_hours": 24.0,
+    "generation_cpu_seconds_each": 3145.57,
+    "generation_units": 6,
+    "operator_cpu_seconds_each": 178.12,
+    "optimisation_and_combined_fit_equivalents": 64,
+    "part_a_model_fit_equivalents": 100,
+    "preparation_and_aggregation_allowance_seconds": 7200.0,
+    "projected_cpu_hours": 17.830861111111112,
+    "test_fit_equivalents": 50
+  },
+  "finished_utc": "2026-10-21T04:43:03.467194Z",
+  "in_process_cpu_seconds": 9.944,
+  "larry_input_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+  "memory_stop_gib": 24.0,
+  "part_a_truth_free": true,
+  "passed": true,
+  "peak_rss_bytes": 461045760,
+  "s13_larry_map": {
+    "path": "benchmarks/synthetic_multimodal/s13/arrays/larry_maps.npz",
+    "sha256": "a384076df378fe5a5991df2537357bf22ba5dbeb9c749d461cd9841cdc97aed9"
+  },
+  "started_utc": "2026-10-21T04:42:52.644931Z",
+  "synthetic_inputs": {
+    "v3_default_s0": {
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s0.h5ad",
+      "sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5"
+    },
+    "v3_default_s1": {
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s1.h5ad",
+      "sha256": "d5dd02a5b42a12e25d4cf9dc57cf803691a9b55681fe1ce7cb139f7cbb998ba5"
+    },
+    "v3_default_s2": {
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s2.h5ad",
+      "sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255"
+    },
+    "v3_transition_s0": {
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s0.h5ad",
+      "sha256": "1faec85323413f2b79f657413b2f7511367a4cbd244fa2d766ded8b09a30a308"
+    },
+    "v3_transition_s1": {
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s1.h5ad",
+      "sha256": "f3d9743121031d2e8a2379ddf50648359fd6f9cd1d73eefcc0ab9244f26e30da"
+    },
+    "v3_transition_s2": {
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s2.h5ad",
+      "sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9"
+    }
+  },
+  "task": "orient/S14",
+  "threads_limit": 12,
+  "unit": "preflight",
+  "wall_seconds": 10.822
+}

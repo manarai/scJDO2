@@ -1,0 +1,89 @@
+{
+  "task": "orient/S19",
+  "status": "done",
+  "started_utc": "2026-10-22T00:00:00Z",
+  "finished_utc": "2026-10-22T15:29:02Z",
+  "compute": {
+    "cpu_hours": 4.5309,
+    "cpu_hours_basis": "Sum of user+system CPU seconds from the nine successful timed dyngen generation/export units and the successful timed realism run; excludes setup and failed/interrupted retries.",
+    "gpu_hours": 0.0,
+    "compute_budget_cpu_hours": 16.0,
+    "hardware": {
+      "R": "4.6.0",
+      "python": "3.13.2",
+      "platform": "macOS arm64",
+      "threads_per_dyngen_process": 3,
+      "memory_cap_bytes": 15032385536
+    },
+    "realism_run": {
+      "wall_seconds": 679.98,
+      "user_seconds": 1843.49,
+      "system_seconds": 439.66,
+      "max_rss_bytes": 8636792832
+    },
+    "datasets": [
+      {"key": "bifurcating_s0", "backbone": "bifurcating", "seed": 0, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 1365.95, "max_rss_bytes": 4626759680},
+      {"key": "bifurcating_s1", "backbone": "bifurcating", "seed": 1, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 1090.19, "max_rss_bytes": 5940641792},
+      {"key": "bifurcating_s2", "backbone": "bifurcating", "seed": 2, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 1097.55, "max_rss_bytes": 5657919488},
+      {"key": "cycle_s0", "backbone": "cycle", "seed": 0, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 2334.49, "max_rss_bytes": 8819032064},
+      {"key": "cycle_s1", "backbone": "cycle", "seed": 1, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 2190.84, "max_rss_bytes": 7152631808},
+      {"key": "cycle_s2", "backbone": "cycle", "seed": 2, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 2526.87, "max_rss_bytes": 9803612160},
+      {"key": "linear_s0", "backbone": "linear", "seed": 0, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 1355.09, "max_rss_bytes": 4579147776},
+      {"key": "linear_s1", "backbone": "linear", "seed": 1, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 1123.06, "max_rss_bytes": 4895653888},
+      {"key": "linear_s2", "backbone": "linear", "seed": 2, "cells": 5000, "genes": 1000, "num_simulations": 32, "wall_seconds": 1049.05, "max_rss_bytes": 4576329728}
+    ]
+  },
+  "datasets": 9,
+  "dyngen_settings": {
+    "version": "1.1.1",
+    "num_cells": 5000,
+    "num_tfs": 50,
+    "num_targets": 900,
+    "num_hks": 50,
+    "num_features": 1000,
+    "experiment": "synchronised, 3 time points, pct_between=0.75",
+    "compute_rna_velocity": true,
+    "compute_dimred": true,
+    "compute_cellwise_grn": false,
+    "distance_metric": "pearson",
+    "num_simulations": 32,
+    "reduced_simulation_retries": 0
+  },
+  "realism_match_rate": 0.5111111111111111,
+  "realism": {
+    "statistics": 25,
+    "comparison_rows": 225,
+    "v3_source": "cached local computation from shared v3 h5ad read-only because real_reference/stats.csv had no v3_default rows",
+    "result": "benchmarks/dyngen/RESULT_S19.md",
+    "table": "benchmarks/dyngen/realism.csv"
+  },
+  "versions": {
+    "R": "4.6.0",
+    "dyngen": "1.1.1",
+    "python": "3.13.2",
+    "anndata": "0.11.4",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3",
+    "scipy": "1.18.1",
+    "scvelo": "0.3.4"
+  },
+  "truth": {
+    "raw_layers": ["spliced", "unspliced"],
+    "truth_prefix": "truth_",
+    "rna_velocity": "truth_rna_velocity layer",
+    "grn": "truth_grn in uns",
+    "milestone_network": "truth_milestone_network in uns"
+  },
+  "checks": {
+    "coord_check": "PASS",
+    "pytest": "48 passed in 4.15s (tests/test_orient.py, tests/test_smoke.py)",
+    "protected_s08_sources_edited": false,
+    "scjdo2_operator_run": false
+  },
+  "artifacts": {
+    "manifest": "benchmarks/dyngen/MANIFEST.csv",
+    "datasets": "benchmarks/dyngen/data/*.h5ad",
+    "checkpoints": "benchmarks/dyngen/checkpoints/*.json",
+    "reports": ["coord/orient/reports/S19.json", "coord/orient/reports/S19.md"]
+  }
+}

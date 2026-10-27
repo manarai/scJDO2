@@ -1,0 +1,26 @@
+START 2026-10-20T13:22:10Z .venv/bin/python scripts/s10_score.py --preset v3_stress
+[S10 score] v3_stress s0 pca
+[S10 score] v3_stress s0 fa
+[S10 score] v3_stress s1 pca
+[S10 score] v3_stress s1 fa
+[S10 score] v3_stress s2 pca
+[S10 score] v3_stress s2 fa
+      940.49 real      1205.40 user        83.04 sys
+          7898726400  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             6146931  page reclaims
+                   8  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1396  voluntary context switches
+             1160386  involuntary context switches
+      14750451245702  instructions retired
+       3337156115711  cycles elapsed
+          8170514752  peak memory footprint
+EXIT 0 2026-10-20T13:37:50Z

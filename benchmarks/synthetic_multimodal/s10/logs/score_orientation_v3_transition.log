@@ -1,0 +1,26 @@
+START 2026-10-20T13:37:52Z .venv/bin/python scripts/s10_score.py --preset v3_transition
+[S10 score] v3_transition s0 pca
+[S10 score] v3_transition s0 fa
+[S10 score] v3_transition s1 pca
+[S10 score] v3_transition s1 fa
+[S10 score] v3_transition s2 pca
+[S10 score] v3_transition s2 fa
+     1150.82 real      1529.73 user        95.22 sys
+         12716785664  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             4125093  page reclaims
+                  86  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4615  voluntary context switches
+             1206975  involuntary context switches
+      18521621231432  instructions retired
+       4209858903089  cycles elapsed
+          7440805024  peak memory footprint
+EXIT 0 2026-10-20T13:57:03Z

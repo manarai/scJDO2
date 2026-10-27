@@ -1,0 +1,32 @@
+START 2026-10-20T22:04:07Z threads=4 .venv/bin/python -m pytest -q tests/test_orient.py tests/test_smoke.py tests/test_synthetic_multimodal.py
+============================= test session starts ==============================
+platform darwin -- Python 3.13.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/terooatt/Documents/scJDO2-manus
+configfile: pyproject.toml
+plugins: platformdirs-4.13.0, fast-array-utils-1.5.1
+collected 77 items
+
+tests/test_orient.py .............................................       [ 58%]
+tests/test_smoke.py ...                                                  [ 62%]
+tests/test_synthetic_multimodal.py .............................         [100%]
+
+======================== 77 passed in 228.67s (0:03:48) ========================
+      231.32 real       135.48 user        94.25 sys
+          4173824000  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+            11630990  page reclaims
+                3386  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2938  voluntary context switches
+               90419  involuntary context switches
+       2510484840824  instructions retired
+        825617091873  cycles elapsed
+          1044172568  peak memory footprint
+EXIT 0 2026-10-20T22:07:59Z

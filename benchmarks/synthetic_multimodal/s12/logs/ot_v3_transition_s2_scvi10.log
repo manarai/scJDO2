@@ -1,0 +1,20 @@
+START 2026-10-20T23:10:14Z threads=2 .venv/bin/python scripts/s12_step0.py ot --preset v3_transition --seed 2 --embedding scvi10
+       30.94 real        27.20 user         1.82 sys
+          3804233728  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              295695  page reclaims
+                  21  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1078  voluntary context switches
+               10231  involuntary context switches
+        212869705084  instructions retired
+         75488900180  cycles elapsed
+          3150057072  peak memory footprint
+EXIT 0 2026-10-20T23:10:45Z

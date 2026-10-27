@@ -1,0 +1,164 @@
+{
+  "finished_utc": "2026-10-19T04:14:07Z",
+  "inputs": {
+    "larry_raw": {
+      "bytes": 1433640865,
+      "path": "/Users/terooatt/Documents/scJDO2/benchmarks/data/larry/larry_inVitro_raw.h5ad",
+      "sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e"
+    },
+    "scnt_processed": {
+      "bytes": 219336191,
+      "path": "/Users/terooatt/Documents/scJDO2/benchmarks/data/dynamo_hematopoiesis/data/hematopoiesis.h5ad",
+      "sha256": "635898d1e5ced4faac6546f0930548ceca56d0662b2527b867ab8f8a3ce62c11"
+    },
+    "scnt_raw": {
+      "bytes": 83855367,
+      "path": "/Users/terooatt/Documents/scJDO2/benchmarks/data/dynamo_hematopoiesis/data/hematopoiesis_raw.h5ad",
+      "sha256": "2e0e274452fd730a30552b18fea26d9dcf665fff33ffc9de2007ec5c9eedb68d"
+    }
+  },
+  "kind": "read_only_preflight",
+  "larry": {
+    "cell_type": {
+      "column_exists": true,
+      "n_missing": 0,
+      "n_unique": 11
+    },
+    "clone_matrix_shape": [
+      130887,
+      5864
+    ],
+    "clone_matrix_type": "csr_matrix",
+    "time": {
+      "column_exists": true,
+      "counts": {
+        "2.0": 28249,
+        "4.0": 48498,
+        "6.0": 54140
+      }
+    }
+  },
+  "larry_raw": {
+    "X_type": "_CSRDataset",
+    "layers": [],
+    "n_obs": 130887,
+    "n_vars": 25289,
+    "obsm": [
+      "clone_matrix"
+    ],
+    "uns": [
+      "dataset"
+    ],
+    "var_names_unique": true
+  },
+  "scnt": {
+    "processed_genes_not_raw": 1956,
+    "processed_has_required": {
+      "velocity_alpha_minus_gamma_s": true
+    },
+    "processed_has_vecfld_pca": true,
+    "processed_obsm_shapes": {
+      "X_pca": [
+        1947,
+        30
+      ],
+      "velocity_pca": [
+        1947,
+        30
+      ]
+    },
+    "raw_cell_type": {
+      "column_exists": true,
+      "n_missing": 0,
+      "n_unique": 8
+    },
+    "raw_genes_not_processed": 26193,
+    "raw_processed_gene_overlap": 0,
+    "raw_time": {
+      "column_exists": true,
+      "counts": {
+        "3": 1129,
+        "5": 818
+      }
+    }
+  },
+  "scnt_processed": {
+    "X_type": "_CSRDataset",
+    "layers": [
+      "M_n",
+      "M_nn",
+      "M_t",
+      "M_tn",
+      "M_tt",
+      "X_new",
+      "X_total",
+      "velocity_alpha_minus_gamma_s"
+    ],
+    "n_obs": 1947,
+    "n_vars": 1956,
+    "obsm": [
+      "X",
+      "X_pca",
+      "X_pca_SparseVFC",
+      "X_umap",
+      "X_umap_SparseVFC",
+      "X_umap_ori_perturbation",
+      "X_umap_test",
+      "acceleration_pca",
+      "acceleration_umap",
+      "cell_cycle_scores",
+      "curvature_pca",
+      "curvature_umap",
+      "j_delta_x_perturbation",
+      "velocity_pca",
+      "velocity_pca_SparseVFC",
+      "velocity_umap",
+      "velocity_umap_SparseVFC",
+      "velocity_umap_ori_perturbation",
+      "velocity_umap_test"
+    ],
+    "uns": [
+      "PCs",
+      "VecFld_pca",
+      "VecFld_umap",
+      "X_umap_neighbors",
+      "cell_phase_genes",
+      "cell_type_colors",
+      "dynamics",
+      "explained_variance_ratio_",
+      "feature_selection",
+      "grid_velocity_pca",
+      "grid_velocity_umap",
+      "grid_velocity_umap_ori_perturbation",
+      "grid_velocity_umap_test",
+      "jacobian_pca",
+      "leiden",
+      "neighbors",
+      "pca_mean",
+      "pp",
+      "response"
+    ],
+    "var_names_unique": true
+  },
+  "scnt_raw": {
+    "X_type": "_CSRDataset",
+    "layers": [
+      "new",
+      "spliced",
+      "total",
+      "unspliced"
+    ],
+    "n_obs": 1947,
+    "n_vars": 26193,
+    "obsm": [
+      "X_umap"
+    ],
+    "uns": [
+      "genes_to_use"
+    ],
+    "var_names_unique": true
+  },
+  "started_utc": "2026-10-19T04:14:06Z",
+  "task": "orient/S11",
+  "wall_seconds": 1.644
+}

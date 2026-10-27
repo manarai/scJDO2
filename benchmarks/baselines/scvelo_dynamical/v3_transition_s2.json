@@ -1,0 +1,12 @@
+{
+  "dataset": "v3_transition_s2",
+  "error": "Not run after dynamo one-shot exceeded the 8 GiB cap; dynamo is required for SparseVFC/Jacobians.",
+  "method": "scvelo_dynamical",
+  "peak_memory_bytes": null,
+  "runtime_seconds": "",
+  "settings": {
+    "planned": "S03 scVelo dynamical settings, then SparseVFC in PCA-30, per-cell jacobian, fixed points/classes"
+  },
+  "status": "not_run_resource_cap",
+  "version": "unavailable in active environment"
+}

@@ -1,0 +1,105 @@
+{
+  "artifacts": [
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14b/g2_transition_eligibility.csv"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14b/null_calibration.csv"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14b/test.csv"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14b/gates.json"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14b/RESULT_S14b.md"
+    },
+    {
+      "committed": true,
+      "path": "coord/orient/reports/S14b.md"
+    },
+    {
+      "committed": true,
+      "path": "coord/orient/reports/S14b.json"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 8.7415,
+    "cpu_seconds": 31469.431904,
+    "gpu_hours": 0.0,
+    "hardware": "Apple Silicon; sandbox launcher; 3 threads; 14 GB per-process cap"
+  },
+  "deviations": [
+    "The frozen reserve had only two eligible transition datasets, so task-directed construction-failure stop applied before null calibration and held-out fits.",
+    "Seed 13 generation failed twice with ValueError: n < 0; seed 14 exceeded the two-hour wall limit; seed 15 was stopped as RSS approached the cap (measured peak 14,727,905,280 bytes). Neither produced a dataset or manifest row.",
+    "No fit-based figure or S14 comparison values exist because Step 2 and Step 3 were not run."
+  ],
+  "eligibility": {
+    "eligible_count": 2,
+    "required": 4,
+    "reserve": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "summary": {
+      "eligible_seeds": [
+        12,
+        16
+      ],
+      "reserve_exhausted": true
+    },
+    "table_rows": 12
+  },
+  "finished_utc": "2026-10-25T12:27:30Z",
+  "metrics": {
+    "T_null": null,
+    "cpu_hours": 8.7415,
+    "eligible_seeds": [
+      12,
+      16
+    ],
+    "gate_X1": null,
+    "gate_X2": null,
+    "gate_X3": null,
+    "gate_X4": null,
+    "versions": "Python 3.13.2; NumPy 2.5.4; pandas 2.3.3; AnnData 0.11.4; Scanpy 1.12.4; Palantir 1.4.5; SciPy 1.18.1; scikit-learn 1.9.1"
+  },
+  "observations": [
+    "Seeds 12 and 16 passed all four frozen truth-only criteria.",
+    "The four preserved S14 preparation outputs remain committed unchanged. No existing S14 file was modified.",
+    "No truth scoring or flow fitting was performed."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-24T15:38:31Z",
+  "status": "test_construction_failure",
+  "task": "orient/S14b",
+  "validation": {
+    "coord_check": {
+      "command": ".sandbox/bin/python coord/coord_check.py check orient S14b",
+      "output": "FAIL outside allowed_paths: coord/orient/tasks/S14b.md; planner amendment 031a1ab was explicitly cherry-picked and retained.",
+      "status": "failed"
+    },
+    "tests": {
+      "command": ".sandbox/bin/python -m pytest -q tests/test_orient.py tests/test_smoke.py",
+      "failed": 0,
+      "passed": 48,
+      "status": "passed"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "unit": "delivery_prepare",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "delivery-prepare"
+  ],
+  "started_utc": "2026-10-22T12:18:11.199066+00:00",
+  "finished_utc": "2026-10-22T12:18:14.120776+00:00",
+  "exit_code": 0,
+  "wall_seconds": 2.9217162800014194,
+  "cpu_hours": 0.0008017249999999999,
+  "cpu_hours_before": 9.155436683888889,
+  "max_rss_kib": 31520,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/delivery_prepare.log"
+}

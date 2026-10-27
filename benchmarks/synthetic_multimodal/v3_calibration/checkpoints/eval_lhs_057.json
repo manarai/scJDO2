@@ -1,0 +1,52 @@
+{
+  "finished_utc": "2026-10-19T11:15:44Z",
+  "ledger": {
+    "attempted_evaluations": 59.0,
+    "budget_cpu_hours": 24.0,
+    "completed_evaluations": 57.0,
+    "cpu_hours": 4.0739286111111115,
+    "cpu_seconds": 14666.143,
+    "excluded_after_retry": 0.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 0.0
+  },
+  "peak_rss_bytes": 4680482816,
+  "recover_dynamics_timing": [
+    {
+      "run_seconds": 22.025,
+      "wait_seconds": 0.0
+    }
+  ],
+  "refine_base": {},
+  "rows": [
+    {
+      "attempt": 1,
+      "batch": "7",
+      "candidate_index": 57,
+      "cpu_seconds": 336.941,
+      "error": "",
+      "knobs_json": "{\"beta0\": 0.456676769979788, \"eta_u\": 0.654891561602967, \"f_constant\": 0.3598336551902505, \"f_sample\": 0.07078264315338063, \"f_switch\": 0.5011626870621388, \"gamma0\": 0.3431812863660019, \"mu_b\": -1.4791136517754313, \"n_founders\": 2800, \"n_prog\": 1, \"p_barcode\": 0.7039666896036987, \"sigma_b\": 1.6285675126974073, \"sigma_gamma\": 1.0305491094666748, \"theta0\": 20.010689804465308}",
+      "normalized_distance": 62.839499316135715,
+      "pass": 0,
+      "peak_rss_bytes": 4680482816,
+      "ranking_eligible": "true",
+      "reduced_n_founders": 42,
+      "reused_from": "",
+      "stage": "lhs",
+      "statistics_json": "{\"C2_genes_detected\": 804.0, \"C3_hvg_log_mean\": 0.14206410199403763, \"C4_dispersion\": 1.3294247388839722, \"C5_zero_fraction\": 0.8050231328486459, \"C7_participation_ratio\": 1.8336705181747144, \"G1_barcoded_cell_fraction\": 0.7019250941567848, \"G2_clone_size\": 17.0, \"G3_multi_time_clone_fraction\": 0.7896094325718497, \"L1_new_total_fraction\": 0.4446609616279602, \"L2_gamma_half_life\": 3.716833317662119, \"S1_unspliced_fraction\": 0.257696408399675, \"S3_steady_share\": 0.00125, \"S4_recovered_fraction\": 0.83125}",
+      "status": "complete",
+      "targets_met_json": "{\"C2_genes_detected\": false, \"C3_hvg_log_mean\": true, \"C4_dispersion\": false, \"C5_zero_fraction\": false, \"C7_participation_ratio\": false, \"G1_barcoded_cell_fraction\": false, \"G2_clone_size\": false, \"G3_multi_time_clone_fraction\": true, \"L1_new_total_fraction\": false, \"L2_gamma_half_life\": false, \"S1_unspliced_fraction\": true, \"S3_steady_share\": false, \"S4_recovered_fraction\": false}",
+      "uid": "lhs_057",
+      "unmet_targets": 10,
+      "wall_seconds": 362.696
+    }
+  ],
+  "stage": "lhs",
+  "task": "orient/S09",
+  "threads_env": {
+    "LOKY_MAX_CPU_COUNT": "2",
+    "MKL_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2"
+  }
+}

@@ -1,0 +1,7 @@
+START 2026-10-20T13:04:17Z .venv/bin/python scripts/s10_score.py
+[S10 score] v3_default s0 pca
+[S10 score] v3_default s0 fa
+[S10 score] v3_default s1 pca
+[S10 score] v3_default s1 fa
+[S10 score] v3_default s2 pca
+[S10 score] v3_default s2 fa

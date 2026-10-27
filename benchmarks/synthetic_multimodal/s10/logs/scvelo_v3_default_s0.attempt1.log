@@ -1,0 +1,9 @@
+START 2026-10-20T09:47:34Z .venv/bin/python scripts/s10_fit_and_runs.py scvelo --preset v3_default --seed 0
+Filtered out 1488 genes that are detected 20 counts (shared).
+Normalized count data: X, spliced, unspliced.
+computing moments based on connectivities
+    finished (0:00:02) --> added 
+    'Ms' and 'Mu', moments of un/spliced abundances (adata.layers)
+recovering dynamics (using 1/14 cores)
+WARNING: Unable to create progress bar. Consider installing `tqdm` as `pip install tqdm` and `ipywidgets` as `pip install ipywidgets`,
+or disable the progress bar using `show_progress_bar=False`.

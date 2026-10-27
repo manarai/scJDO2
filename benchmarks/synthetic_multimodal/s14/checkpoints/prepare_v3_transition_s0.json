@@ -1,0 +1,26 @@
+{
+  "finished_utc": "2026-10-21T04:43:45.920066Z",
+  "in_process_cpu_seconds": 11.376,
+  "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s0.h5ad",
+  "input_sha256": "1faec85323413f2b79f657413b2f7511367a4cbd244fa2d766ded8b09a30a308",
+  "n_cells": 12701,
+  "part_a_truth_free": true,
+  "pca50": {
+    "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/embeddings.npz",
+    "sha256": "027d9a4ae91eadd5b4b8666d1a37a792dc31642621c19b1cc3daedb83f8e9314",
+    "source": "S12 PCA-50"
+  },
+  "peak_rss_bytes": 2894807040,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_transition_s0.npz",
+  "prepared_sha256": "557e7c1991029c34443a79c1ebeaab258485c43ac52cadaff0cc2a33a259b540",
+  "started_utc": "2026-10-21T04:43:34.476162Z",
+  "strict_pseudotime": {
+    "key": "day2_strict_r0",
+    "path": "benchmarks/synthetic_multimodal/data/s10/v3_transition_s0/palantir.npz",
+    "sha256": "79c04496dba3da9fa22f51af703a9135f399af015eabdeebffd091a760f8785c",
+    "source": "reused S10 strict r0"
+  },
+  "task": "orient/S14",
+  "unit": "prepare_v3_transition_s0",
+  "wall_seconds": 11.444
+}

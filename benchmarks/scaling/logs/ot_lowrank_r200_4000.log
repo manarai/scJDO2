@@ -1,0 +1,80 @@
+/Users/terooatt/miniconda3/lib/python3.13/functools.py:934: ImplicitModificationWarning: Transforming to str index.
+  return dispatch(args[0].__class__)(*args, **kw)
+INFO     Solving `1` problems                                                   
+INFO     Solving problem BirthDeathProblem[stage='prepared', shape=(4000,       
+         4000)].                                                                
+/Users/terooatt/miniconda3/lib/python3.13/functools.py:934: ImplicitModificationWarning: Transforming to str index.
+  return dispatch(args[0].__class__)(*args, **kw)
+INFO     Solving `1` problems                                                   
+INFO     Solving problem BirthDeathProblem[stage='prepared', shape=(4000,       
+         4000)].                                                                
+{
+  "finished_utc": "2026-10-22T18:25:48.875132+00:00",
+  "n_per_day": 4000,
+  "n_velocity_cells": 8000,
+  "pairs": [
+    {
+      "converged": true,
+      "epsilon": 3.6783537707414755,
+      "from_day": 2.0,
+      "library": "moscot",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 73.5670754148295,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_shape": [
+        4000,
+        4000
+      ],
+      "rank": 200,
+      "solution_rank": 200,
+      "to_day": 4.0,
+      "version": "0.5.2"
+    },
+    {
+      "converged": true,
+      "epsilon": 6.943671022992884,
+      "from_day": 4.0,
+      "library": "moscot",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 138.87342045985767,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_shape": [
+        4000,
+        4000
+      ],
+      "rank": 200,
+      "solution_rank": 200,
+      "to_day": 6.0,
+      "version": "0.5.2"
+    }
+  ],
+  "rank": 200,
+  "solver": "lowrank_r200",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_lowrank_r200_4000",
+  "velocity_path": "benchmarks/scaling/data/velocity_lowrank_r200_4000.npz",
+  "wall_seconds": 6.65,
+  "wall_seconds_internal": 6.65
+}
+        8.41 real        17.06 user         2.95 sys
+          1016397824  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              141754  page reclaims
+                  22  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 934  voluntary context switches
+              125617  involuntary context switches
+        152462366213  instructions retired
+         51392334413  cycles elapsed
+           497797232  peak memory footprint

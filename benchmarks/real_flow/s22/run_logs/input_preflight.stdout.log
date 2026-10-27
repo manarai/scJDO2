@@ -1,0 +1,35 @@
+{
+  "task": "orient/S22",
+  "input_sha256": "74f01c2a9121531ac4a0af156c2b96e5be63d1af1957075377277f57249286c8",
+  "input_bytes": 15254801,
+  "shape": [
+    130887,
+    30
+  ],
+  "sample_cells_by_day": {
+    "2": 4000,
+    "4": 4000,
+    "6": 4000
+  },
+  "n_clones_declared": 5864,
+  "n_clones_observed": 5864,
+  "n_membership_pairs": 49302,
+  "n_barcoded_day2_or_day4_cells": 19623,
+  "n_eligible_clone_time_pairs": 1818,
+  "n_eligible_clones": 1694,
+  "n_tied_majorities": 67,
+  "n_undifferentiated_majority_ties": 62,
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.9.1",
+    "torch": "2.14.1",
+    "pytest": "9.1.1"
+  },
+  "task_sha256": "8f7ba897b6c6339a0b151626c470c08b8a00c3507858528a954f5b865ff51deb",
+  "s11_code_sha256": "01789994b91166b89c98f08b717467ecfcfc0833aaac22f440bfab9f97c392c7",
+  "energy_code_sha256": "fddd58b69ee50dd9cb5b6340d10f1ad18fccef11716e566842da3a456d86ff93",
+  "fit_has_run": false,
+  "entropy_or_correlation_has_been_computed": false
+}

@@ -1,0 +1,84 @@
+{
+  "array_key": "J",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/operators/flow_v3_default_s0_k20_d2.npz",
+  "array_sha256": "ea0c264220279dd4cfae2336abe7ae79e28c9a00e9cd0c7bc442b5bfeb355d82",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "dataset": "v3_default_s0",
+  "drift_seed": 2,
+  "finished_utc": "2026-10-26T01:56:23.104975Z",
+  "fit": {
+    "model": {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1635,
+      "seconds": 7.828,
+      "seed": 2,
+      "weight_decay": 0.0001
+    },
+    "ot_pairs": [
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 37.95674257677467,
+        "final_err": 5.561452310121016e-10,
+        "from_day": 2,
+        "n_iter": 16,
+        "n_source": 187,
+        "n_target": 1448,
+        "plan_mass": 1.0,
+        "rows_zero": 0,
+        "seconds": 0.01,
+        "to_day": 4,
+        "warnings": []
+      },
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 37.274930796510624,
+        "final_err": 9.57603928369857e-10,
+        "from_day": 4,
+        "n_iter": 58,
+        "n_source": 1448,
+        "n_target": 11066,
+        "plan_mass": 1.0,
+        "rows_zero": 0,
+        "seconds": 5.57,
+        "to_day": 6,
+        "warnings": []
+      }
+    ],
+    "source": "S14 raw-PCA OT plus locked reference MeasuredDrift"
+  },
+  "in_process_cpu_seconds": 26.131,
+  "input": {
+    "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s0.npz",
+    "prepared_sha256": "f630dc7f4bab2e405be3cbb13b060fc92e85375d9b8fb345bf521e4d79878675",
+    "source": "S14 observed prepared PCA-50 prefix"
+  },
+  "k": 20,
+  "observed_fit_complete_before_truth_scoring": true,
+  "operator": "J_flow_reference",
+  "peak_rss_bytes": 1328594944,
+  "stage": "operators",
+  "started_utc": "2026-10-26T01:55:53.210414Z",
+  "task": "orient/S15",
+  "truth_keys_accessed": false,
+  "unit": "flow_v3_default_s0_k20_d2",
+  "wall_seconds": 29.895
+}

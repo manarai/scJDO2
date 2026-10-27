@@ -1,0 +1,40 @@
+{
+  "finished_utc": "2026-10-19T16:40:47Z",
+  "ledger": {
+    "attempted_evaluations": 225.0,
+    "budget_cpu_hours": 40.0,
+    "completed_evaluations": 222.0,
+    "cpu_hours": 13.14727361111111,
+    "cpu_seconds": 47330.185,
+    "excluded_after_retry": 0.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 1.0
+  },
+  "peak_rss_bytes": 4004708352,
+  "recover_dynamics_timing": [],
+  "rows": [
+    {
+      "attempt": 1,
+      "batch": "block2",
+      "candidate_index": 4,
+      "cpu_seconds": 208.762,
+      "error": "ArpackNoConvergence: ARPACK error -1: No convergence (17051 iterations, 0/1 eigenvectors converged)\nTraceback (most recent call last):\n  File \"/Users/terooatt/Documents/scJDO2-manus/scripts/s09_calibrate.py\", line 530, in evaluate\n    table = s08_statistics(vector, candidate_dir)\n  File \"/Users/terooatt/Documents/scJDO2-manus/scripts/s09_calibrate.py\", line 307, in s08_statistics\n    records.extend(S08.run_counts_trajectory(reduced_dataset))\n                   ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/Users/terooatt/Documents/scJDO2-manus/scripts/s08_reference_stats.py\", line 402, in run_counts_trajectory\n    palantir_summary(dataset, work, records)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/terooatt/Documents/scJDO2-manus/scripts/s08_reference_stats.py\", line 367, in palantir_summary\n    result = palantir.core.run_palantir(ms, early_cell=work.obs_names[root_idx], num_waypoints=min(500, z.shape[0]), knn=min(30, z.shape[0] - 1), seed=0)\nscipy.sparse.linalg._eigen.arpack.arpack.ArpackNoConvergence: ARPACK error -1: No convergence (17051 iterations, 0/1 eigenvectors converged)\n",
+      "knobs_json": "{\"beta0\": 1.55, \"eta_u\": 0.2, \"f_constant\": 0.15, \"f_sample\": 0.15107160922949833, \"f_switch\": 0.15, \"gamma0\": 0.05, \"mu_b\": -2.75, \"n_founders\": 3800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"sigma_b\": 2.5, \"sigma_gamma\": 1.5, \"theta0\": 37.75}",
+      "normalized_distance": "",
+      "pass": 4,
+      "peak_rss_bytes": 4004708352,
+      "ranking_eligible": "false",
+      "reduced_n_founders": 23,
+      "reused_from": "",
+      "stage": "block2",
+      "statistics_json": "{}",
+      "status": "retry_pending",
+      "targets_met_json": "{}",
+      "uid": "block2_04",
+      "unmet_targets": "",
+      "wall_seconds": 212.455
+    }
+  ],
+  "stage": "block",
+  "task": "orient/S09"
+}

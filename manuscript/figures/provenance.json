@@ -1,0 +1,1986 @@
+{
+ "Fig1": {
+  "notebook": "notebooks/fig1_framework.ipynb",
+  "kind": "main",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/main/Fig1.pdf",
+   "manuscript/figures/main/Fig1.png",
+   "manuscript/figures/main/Fig1.tiff"
+  ],
+  "panels": {
+   "all": {
+    "description": "Schematic: time information -> score/flow operator -> operator space -> archetypes; identifiability components",
+    "status": "schematic"
+   }
+  },
+  "sources": {
+   "manuscript/scJDO_manuscript_v57_draft.md": {
+    "sha256": "fbfd18db971c17c487bcdc8425d227df912bbf93d5599731c368686588cdd91c",
+    "panels": [
+     "all"
+    ],
+    "tasks": [
+     "draft"
+    ],
+    "notes": [
+     "text of Results section 1 (no numbers drawn)"
+    ]
+   }
+  }
+ },
+ "Fig2": {
+  "notebook": "notebooks/fig2_benchmark.ipynb",
+  "kind": "main",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/main/Fig2.pdf",
+   "manuscript/figures/main/Fig2.png",
+   "manuscript/figures/main/Fig2.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "Six statistics: per-real-dataset value (black) and real range (grey band) vs each synthetic dataset (v1, v2 presets, v3 presets)",
+    "status": "data"
+   },
+   "b": {
+    "description": "Within-real-range indicator per statistic and preset (mean over seeds); grey = not applicable",
+    "status": "data"
+   },
+   "c": {
+    "description": "Match rate (fraction of statistics matched) per preset; dyngen = mean over nine datasets (dots: per dataset)",
+    "status": "data"
+   },
+   "d": {
+    "description": "ECDFs of three S08 distributions: five real datasets (greys) vs v1/v2 default seed 0 (dashed); v3 distributions were not saved by S09",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/dyngen/realism.csv": {
+    "sha256": "fe36c7cb21ea1b335773afd7922dd6f5a3c432218062ac373c4e914f35403c5e",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S19"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/compare.csv": {
+    "sha256": "f15bc0bb2971046d9d8b9662c2327510c1df74e5fd66af9718faa7b03957c8a1",
+    "panels": [
+     "a,c"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/dentate__C3_hvg_log_mean.csv": {
+    "sha256": "6326b1cc14e1deae9e57f060646a8c91f08afc06eec27299c0b8b1c83f605649",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/dentate__C4_dispersion.csv": {
+    "sha256": "8bb7664815feab6783044095add6a2d696bf44379f860c7aa025fd11ceeec8e1",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/dentate__C5_zero_fraction.csv": {
+    "sha256": "d25891d11573890fa909f60245534925f7390aac616bda361712d2c2b554e058",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/larry__C3_hvg_log_mean.csv": {
+    "sha256": "a5a0d0a036aeaee9d9f367009e61d9b38ef22786cfd1ae1595c006f5930343bc",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/larry__C4_dispersion.csv": {
+    "sha256": "33169576f93240cbc2a28955e5e34558a7259e443b1da3020d5c017247a5d3bf",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/larry__C5_zero_fraction.csv": {
+    "sha256": "b47f458be109a12204a4258a31db0ef2f930b9bc92013b88af24800d57d02539",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/pancreas__C3_hvg_log_mean.csv": {
+    "sha256": "9984f0353e152b0efe40b903725a3e7a685fef34e355c6627e6c4f41699beae2",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/pancreas__C4_dispersion.csv": {
+    "sha256": "9a0f5e49f2c01fec6b88fb5d7c8485cfa658bac58d69753422cc803763323087",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/pancreas__C5_zero_fraction.csv": {
+    "sha256": "305382a7cd3cfafabba1c3dd039316b473e6bb817ba29f45b6cf9a70e7e51b0e",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/scnt_hema__C3_hvg_log_mean.csv": {
+    "sha256": "64fa5220dc744554c2a2b5bba34a3caa91216977e004aa4b1b441419f973e1d7",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/scnt_hema__C4_dispersion.csv": {
+    "sha256": "a45867c6648b5006d2fbdfd1c1430a24db4b0b1bd4a176e4e7b8343cd922a90a",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/scnt_hema__C5_zero_fraction.csv": {
+    "sha256": "ab59f331720cde13153251d66ee01ed6edb9c797ea170eec199cfa208ae68faa",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/setty__C3_hvg_log_mean.csv": {
+    "sha256": "b32cc24e6651e7546ff212b9d0853e5c62dc13dd27398fc43364bd605f9f9437",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/setty__C4_dispersion.csv": {
+    "sha256": "7820ee7afb6d4d2759f9087b535f4dfc8bc0793a42c3b6ca42a066fb462c53f4",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/setty__C5_zero_fraction.csv": {
+    "sha256": "3b268005c53585bb2235022cb9a8782e92601ed1b74da2ab1dec591038f0539e",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/v1_default_s0__C3_hvg_log_mean.csv": {
+    "sha256": "4f946c3363b277456c54daaf1dad71b5c135f5ac5bed035d8a4e99a06b7c500c",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/v1_default_s0__C4_dispersion.csv": {
+    "sha256": "9140ec3e700ae539349ef5900fe82e350c0ca9ed2f1215558b3b9ae1b10145e6",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/v1_default_s0__C5_zero_fraction.csv": {
+    "sha256": "a9da549427bb0dea324691951be75b7cb9aa27448964bff99de7ba64d2a044b6",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/v2_default_s0__C3_hvg_log_mean.csv": {
+    "sha256": "f2f06f567ac0fa746c394678f73befbdb9f515ed3bb1fab7adfb222badcc67e4",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/v2_default_s0__C4_dispersion.csv": {
+    "sha256": "6be22bd420d67484312203b110c555343dcf39da73512a6baf14fc9f7abd1c9f",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/distributions/v2_default_s0__C5_zero_fraction.csv": {
+    "sha256": "d837311538a852cfcef49bf52bbfedfb1ba5b7111e75e63b0912e13ad9ba978d",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/v3_calibration/compare_v3.csv": {
+    "sha256": "6184b661b9c2d482a70f8fd95383d998bfcf8374075769734e2775125ba36c17",
+    "panels": [
+     "a,b,c"
+    ],
+    "tasks": [
+     "S09"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/v3_calibration/gates_v3.json": {
+    "sha256": "6cb4a9a55642e8e2e2ba891ae4c43f474e1c8a95bfc045b6575b35e6752611e3",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S09"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "Fig3": {
+  "notebook": "notebooks/fig3_flow_operator.ipynb",
+  "kind": "main",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/main/Fig3.pdf",
+   "manuscript/figures/main/Fig3.png",
+   "manuscript/figures/main/Fig3.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "S14 held-out fork AUC vs k (10/15/20), reference vs selected configuration, per test dataset (one line per seed)",
+    "status": "data"
+   },
+   "b": {
+    "description": "S10 fork AUC per operator (v3 presets, PCA-20, three seeds each; filled = v3_default)",
+    "status": "data"
+   },
+   "c": {
+    "description": "S12 OT flow J fork AUC by embedding (6 datasets) and S13 whitening variants on v3_transition seeds 0-2",
+    "status": "data"
+   },
+   "d": {
+    "description": "J_ref diagnosis per test dataset (filled: J_ref with 15 neighbours, open: 30)",
+    "status": "data"
+   },
+   "e": {
+    "description": "S14 post-hoc peak-to-median R (transition vs no-fork test seeds, reference k=15); S14b/S14c bootstrap stability per reserve seed s5-s40 with 0.90 rule, eligibility, seeds failing only the >=50-cells-per-bin rule, failed generations",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/synthetic_multimodal/s10/operators.csv": {
+    "sha256": "cb0a43c75544fc5db4ea9976bdd1c979f5e2307bcfcf81a1d7c3b71ad77591e0",
+    "panels": [
+     "b"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s12/step0.csv": {
+    "sha256": "df6b89f5c97e28d57a5710aba3a456de3b7204019e99823d92ed3604de2d632f",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S12"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s13/auc.csv": {
+    "sha256": "13cdd0e1d97bf9cd6fa0ae2e14c3092ac3092fc3c6865544b91dd39880039a36",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S13"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/dev_auc_by_k.csv": {
+    "sha256": "1992bd27830b35ace072b6b026a1a5f011815873c938d19390e79f5ce6e3b0b5",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/gates.json": {
+    "sha256": "463c3f53a1e22fb30ac999476ddd8dd0fd545c0026cdaeaa1e81a1391627ff2a",
+    "panels": [
+     "a,e"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/test.csv": {
+    "sha256": "c8784eca67f31cd169fae88e577fec252935d334186020370dc756829e4655b2",
+    "panels": [
+     "a,e"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14b/g2_transition_eligibility.csv": {
+    "sha256": "3e31cd6523e3464e75b2071c3adfc6d3297ee7f815d3a2e4ac6365cb3441b77d",
+    "panels": [
+     "e"
+    ],
+    "tasks": [
+     "S14b"
+    ],
+    "notes": [
+     "cross-check of the reused S14b rows"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s14c/RESULT_S14c.md": {
+    "sha256": "63e020e6ee62e120a046c16f25793a6f50d400a15181ff34ca261367ff73488f",
+    "panels": [
+     "e"
+    ],
+    "tasks": [
+     "S14c"
+    ],
+    "notes": [
+     "outcome line (construction failure)"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s14c/g2_transition_eligibility.csv": {
+    "sha256": "7438420ceb62c9e8784c74312e028f5852874b33aa454808cbaec73ef83c7286",
+    "panels": [
+     "e"
+    ],
+    "tasks": [
+     "S14b/S14c"
+    ],
+    "notes": [
+     "S14b reserve s5-s16 reused + S14c extended reserve s17-s40"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s14c/gates.json": {
+    "sha256": "837e4cceb7d08855d1c21697f5fd00c86f503fecf239315a90d815560ae5b774",
+    "panels": [
+     "e"
+    ],
+    "tasks": [
+     "S14c"
+    ],
+    "notes": [
+     "gate values null (no model fitted)"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s15/RESULT_S15.md": {
+    "sha256": "b8ab2d31f60a6ac5cf50761b26cd1846e93803fd607fd734116af245de4d5a47",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": [
+     "status line (complete)"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s15/jref_diagnosis.csv": {
+    "sha256": "507c118b36149a6b7d7e69c5441b0e50f84b83171fd1496fdcb863f00c970cd7",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": [
+     "final S15"
+    ]
+   }
+  }
+ },
+ "Fig4": {
+  "notebook": "notebooks/fig4_dyngen.ipynb",
+  "kind": "main",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/main/Fig4.pdf",
+   "manuscript/figures/main/Fig4.png",
+   "manuscript/figures/main/Fig4.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "Fork AUC per bifurcating dataset: flow J for drift seeds 0-2, score J (one fit)",
+    "status": "data"
+   },
+   "b": {
+    "description": "Median rotational index of flow J on cycle vs linear backbone, per dataset seed and drift seed",
+    "status": "data"
+   },
+   "c": {
+    "description": "Fraction of cells with Re lambda1 > 0 by truth region (flow J; bar = median over drift seeds, dots = seeds)",
+    "status": "data"
+   },
+   "d": {
+    "description": "Fork-region cell counts at 3 (S21) vs 8 (S21b) synchronised time points",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/dyngen/s21/scores.csv": {
+    "sha256": "d5c769e97644a69f10ff600852e3ce7e18fbd9aedad7f5c7baf4e25ca5e02083",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S21"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/s21b/RESULT_S21b.md": {
+    "sha256": "d62e2450540fbd6123d9e078f1004ddbd184843f8a51f6f69fb1b7feb87a2809",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": [
+     "report-only linear_all table"
+    ]
+   },
+   "benchmarks/dyngen/s21b/part_a_T.csv": {
+    "sha256": "32e614d2b8f0d644a732829ebc3dcd04a7035682238c3adde920de62a1d0e4b5",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/s21b/scores.csv": {
+    "sha256": "b21363cba6e70735ef6edfc285f251d97044441165d0a6358962ba1bbb2d398e",
+    "panels": [
+     "a,b,c"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "Fig5": {
+  "notebook": "notebooks/fig5_real_scale.ipynb",
+  "kind": "main",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/main/Fig5.pdf",
+   "manuscript/figures/main/Fig5.png",
+   "manuscript/figures/main/Fig5.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "LARRY (S14 test): lineage Spearman vs five permutation nulls; held-out day-6 energy distance of flow vs two baselines, both configurations",
+    "status": "data"
+   },
+   "b": {
+    "description": "S11: per-cell velocity cosine between sources; LARRY cell-type median lambda1 for OT vs lineage flow J",
+    "status": "data"
+   },
+   "c": {
+    "description": "S20: wall time and OT-stage peak memory vs cells (log-log, per solver); agreement with dense OT per solver and size",
+    "status": "data"
+   },
+   "d": {
+    "description": "Full-LARRY cell-type lambda1 (cell-weighted mean of per-day medians) vs S11 4,000/day cell-type median",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/real_flow/by_cell_type.csv": {
+    "sha256": "e3100b2eece02fa5fc7ae4445837b28655737a402dbd84e11bafa29da1dc5363",
+    "panels": [
+     "b"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/operator_agreement.csv": {
+    "sha256": "551707cb9d54963e097abc383009d9f8457040c6fdff4cb42239cc934f14b322",
+    "panels": [
+     "b"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/velocity_agreement.csv": {
+    "sha256": "94af717f0cb4b5e7d86d87258c2c76174441cd9cdec8bedb460bcce149881881",
+    "panels": [
+     "b"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/scaling/agreement.csv": {
+    "sha256": "735000940bae701c4ccb8d4bab3a2bf20ba133e041f95623802855f4c60c4bbc",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S20"
+    ],
+    "notes": []
+   },
+   "benchmarks/scaling/larry_full_lambda1.csv": {
+    "sha256": "63030badd0232f834ed056742073482cf911a0c08d013df1c651528a2574cb3b",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S20"
+    ],
+    "notes": []
+   },
+   "benchmarks/scaling/scaling.csv": {
+    "sha256": "a6193ac2fde02bc4384fa5bae8b0d88de1ed51c1a447959a015aaba619ae5761",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S20"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/test.csv": {
+    "sha256": "c8784eca67f31cd169fae88e577fec252935d334186020370dc756829e4655b2",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "Fig6": {
+  "notebook": "notebooks/fig6_score_operator.ipynb",
+  "kind": "main",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/main/Fig6.pdf",
+   "manuscript/figures/main/Fig6.png",
+   "manuscript/figures/main/Fig6.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "S10 fork AUC of score J vs OT flow J on four non-stationary v3 presets (3 seeds each)",
+    "status": "data"
+   },
+   "b": {
+    "description": "S18 capture fraction per knockdown (k=20, m=3) for score-J and covariance directions; dashed = random-subspace expectation",
+    "status": "data"
+   },
+   "c": {
+    "description": "S18b: H1 explained fraction per knockdown (k=20); H2 basin stiffness vs occupancy sensitivity (59 score-J basins)",
+    "status": "data"
+   },
+   "d": {
+    "description": "S22 Spearman rho of clone lambda1 / density / centroid distance with LARRY next-time fate entropy (pooled, Undifferentiated; seeds 0-2); S18d weak-tertile capture of T-target displacements by score-J vs covariance directions with shared-basis null95 (RPE1 underpowered, K562 report only)",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/perturb_dose/capture_k562_N1.csv": {
+    "sha256": "35c8db593a139c05de71b784a4ee04e53cb10b2273f4d6db12267865a745f154",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N1.json": {
+    "sha256": "19154a92a2a6cf6936bac8e8bef159aaa46b806ecabaadd3f28449fa2e75f77f",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N2.csv": {
+    "sha256": "afe937ed40e9275edf8a01a37ea286c99ca2d5e45df8770d31b62c8239e4688d",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N2.json": {
+    "sha256": "75baf307a328b5deb369a65f941b7d392d823078fd496abf7b665e296e72b418",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N1.csv": {
+    "sha256": "effa39e0ed466cd41661e82bc1a39688c635861908bd15f5fdd3895d5bc16e55",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N1.json": {
+    "sha256": "d23115f9b71cd90734507a0044376cf93e4e4da0c8546e0afc2929649292a40c",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N2.csv": {
+    "sha256": "f6753ee233b7da4d5f8a14eb8b359d5ecafb4d1ec511abcd3fccca50fd89d82f",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N2.json": {
+    "sha256": "16c0aec9aceeb0cfe42dee7889f915d5aba26127a94aa639a2c261c250724457",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/gates.json": {
+    "sha256": "8c3ceb2b072bee055c757956e7e8b5d28cdcbd112ee353d9fcd0fdb01276a8ba",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562/capture.csv": {
+    "sha256": "0bf65c90098b5364d612f3539c6ce6043a475b0d12f204e5fae326f56e276ed4",
+    "panels": [
+     "b"
+    ],
+    "tasks": [
+     "S18"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562/effect_tests.json": {
+    "sha256": "8ad3f71fd63a399c12bb3579ea3ef055a0d3a81d93c99be66684a4207b9d4fd1",
+    "panels": [
+     "b"
+    ],
+    "tasks": [
+     "S18"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562_occupancy/basins.csv": {
+    "sha256": "853561cfb21609564e03574e707442e877af8b0759e71ea57f18ec418d377a98",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S18b"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562_occupancy/h1.csv": {
+    "sha256": "20acd840ff88a5e5d0ada1f57314773b028e92e705da348db86de32a0c721191",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S18b"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562_occupancy/h2.json": {
+    "sha256": "3039c0e83dc9b5a9a4e39678efc3b5e5be9a0ba6afdf278421a9a900c6661a4d",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S18b"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/scores.csv": {
+    "sha256": "888f9fac8d0e266968a4c34d3b67c9995b8f69c4464fa4481cce15ee68863268",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/summary.json": {
+    "sha256": "eca543978e07538b64e2c8ff65dba4914ed59c0727db120ae0b98a09a2a23a56",
+    "panels": [
+     "d"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s10/operators.csv": {
+    "sha256": "cb0a43c75544fc5db4ea9976bdd1c979f5e2307bcfcf81a1d7c3b71ad77591e0",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "Fig7": {
+  "notebook": "notebooks/fig7_archetypes.ipynb",
+  "kind": "main",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/main/Fig7.pdf",
+   "manuscript/figures/main/Fig7.png",
+   "manuscript/figures/main/Fig7.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "A1: saddle recall and precision over base rate of the best flow archetype per test seed and view (bars: drift seed 0, gate; dots: drift seeds 1-2, report only)",
+    "status": "data"
+   },
+   "b": {
+    "description": "A2: NMI of flow archetypes, score archetypes and matched-K Leiden with the true regimes per test seed, both views",
+    "status": "data"
+   },
+   "c": {
+    "description": "A3: assignment ARI between drift-fit seed pairs (0-1, 0-2, 1-2) per test seed and view, k=15",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/synthetic_multimodal/s15/RESULT_S15.md": {
+    "sha256": "b8ab2d31f60a6ac5cf50761b26cd1846e93803fd607fd734116af245de4d5a47",
+    "panels": [
+     "a,b,c"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": [
+     "final S15; status and gate PASS/FAIL lines"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s15/checkpoints/finalise.json": {
+    "sha256": "ed7885cfd6df829120028bb8565f49dc91db21de8b43fdd96d7dec394e60b9ce",
+    "panels": [
+     "a,b,c"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": [
+     "final S15; gate blocks"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s15/pending_units.csv": {
+    "sha256": "5b72435f8e996917236e29344fc671afd813b6d229dbc3dfe2c2160d46acb70f",
+    "panels": [
+     "a,b,c"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": [
+     "zero-row completion record"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s15/regime_recovery.csv": {
+    "sha256": "ebdadadab87605e3d36eba81b32603f050316d16698886058eaa2635774d46bf",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": [
+     "final S15"
+    ]
+   },
+   "benchmarks/synthetic_multimodal/s15/stability.csv": {
+    "sha256": "a0b9b8c0092f5416d76540082b88771487478f1a845b29eb300c1cb6b59776c0",
+    "panels": [
+     "c"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": [
+     "final S15"
+    ]
+   }
+  }
+ },
+ "FigS1": {
+  "notebook": "notebooks/supp_s10_diffusion.ipynb",
+  "kind": "supplementary",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/supplementary/FigS1.pdf",
+   "manuscript/figures/supplementary/FigS1.png",
+   "manuscript/figures/supplementary/FigS1.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "Diffusion estimate / truth ratio per estimator, v3_default seeds 0-2, PCA and FA; band = within factor 2 (gate)",
+    "status": "data"
+   },
+   "b": {
+    "description": "Measurement-noise covariance vs true 48-h effective diffusion (median trace/d), per seed",
+    "status": "data"
+   },
+   "c": {
+    "description": "Score-flow diffusion estimate: Spearman with truth over committed cells per labelling variant (gate >= 0.5)",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/synthetic_multimodal/s10/diffusion.csv": {
+    "sha256": "1533cba0089696f88d74d0164542b3f68a4ea8f0189f35a9514c6de30f202471",
+    "panels": [
+     "a,c"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s10/diffusion_summary.json": {
+    "sha256": "036061668320eba01b57e4ec9c594490ab944f167c8e92210011f552914f1b83",
+    "panels": [
+     "b"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "FigS2": {
+  "notebook": "notebooks/supp_s21_three_timepoints.ipynb",
+  "kind": "supplementary",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/supplementary/FigS2.pdf",
+   "manuscript/figures/supplementary/FigS2.png",
+   "manuscript/figures/supplementary/FigS2.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "Cells in the fork and early (pre-branch) truth regions at 3 vs 8 sampling times",
+    "status": "data"
+   },
+   "b": {
+    "description": "Median rotational index, cycle vs linear, at T=3 and T=8 (three drift seeds)",
+    "status": "data"
+   },
+   "c": {
+    "description": "Fraction of early (pre-branch) cells with Re lambda1 > 0 at T=3 vs T=8",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/dyngen/s21/scores.csv": {
+    "sha256": "d5c769e97644a69f10ff600852e3ce7e18fbd9aedad7f5c7baf4e25ca5e02083",
+    "panels": [
+     "a,b,c"
+    ],
+    "tasks": [
+     "S21"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/s21b/scores.csv": {
+    "sha256": "b21363cba6e70735ef6edfc285f251d97044441165d0a6358962ba1bbb2d398e",
+    "panels": [
+     "a,b,c"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "FigS3": {
+  "notebook": "notebooks/supp_s13_whitening.ipynb",
+  "kind": "supplementary",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/supplementary/FigS3.pdf",
+   "manuscript/figures/supplementary/FigS3.png",
+   "manuscript/figures/supplementary/FigS3.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "Fork AUC of OT flow J for every embedding x whitening variant x dataset (S13) plus scVI-10 and FA-20 whitened cost (S12)",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/synthetic_multimodal/s12/step0.csv": {
+    "sha256": "df6b89f5c97e28d57a5710aba3a456de3b7204019e99823d92ed3604de2d632f",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S12"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s13/auc.csv": {
+    "sha256": "13cdd0e1d97bf9cd6fa0ae2e14c3092ac3092fc3c6865544b91dd39880039a36",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S13"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "FigS4": {
+  "notebook": "notebooks/supp_s11_operator_agreement.ipynb",
+  "kind": "supplementary",
+  "interim": false,
+  "outputs": [
+   "manuscript/figures/supplementary/FigS4.pdf",
+   "manuscript/figures/supplementary/FigS4.png",
+   "manuscript/figures/supplementary/FigS4.tiff"
+  ],
+  "panels": {
+   "a": {
+    "description": "S11 per-cell operator agreement (lambda1 Spearman, eigenvector |cos|) for independent sources, estimators and fit seeds, with permutation nulls",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/real_flow/null.csv": {
+    "sha256": "c6298b040f9cea300f596a796f496442c491e7502d824e89613006c59caa86b2",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/operator_agreement.csv": {
+    "sha256": "551707cb9d54963e097abc383009d9f8457040c6fdff4cb42239cc934f14b322",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "NUMBERS": {
+  "notebook": "notebooks/numbers_v57.ipynb",
+  "kind": "report",
+  "interim": false,
+  "outputs": [],
+  "panels": {
+   "table": {
+    "description": "NUMBERS_v57.md and manuscript/figures/numbers_v57.csv (final manuscript)",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/dyngen/MANIFEST.csv": {
+    "sha256": "47dd28e02501bb754ac070562fdae7e45eeece7746542cfd682ee8e51c474e48",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/realism.csv": {
+    "sha256": "fe36c7cb21ea1b335773afd7922dd6f5a3c432218062ac373c4e914f35403c5e",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S19"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/s21/scores.csv": {
+    "sha256": "d5c769e97644a69f10ff600852e3ce7e18fbd9aedad7f5c7baf4e25ca5e02083",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S21"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/s21b/RESULT_S21b.md": {
+    "sha256": "d62e2450540fbd6123d9e078f1004ddbd184843f8a51f6f69fb1b7feb87a2809",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/s21b/part_a_T.csv": {
+    "sha256": "32e614d2b8f0d644a732829ebc3dcd04a7035682238c3adde920de62a1d0e4b5",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": []
+   },
+   "benchmarks/dyngen/s21b/scores.csv": {
+    "sha256": "b21363cba6e70735ef6edfc285f251d97044441165d0a6358962ba1bbb2d398e",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S21b"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N1.csv": {
+    "sha256": "35c8db593a139c05de71b784a4ee04e53cb10b2273f4d6db12267865a745f154",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N1.json": {
+    "sha256": "19154a92a2a6cf6936bac8e8bef159aaa46b806ecabaadd3f28449fa2e75f77f",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N2.csv": {
+    "sha256": "afe937ed40e9275edf8a01a37ea286c99ca2d5e45df8770d31b62c8239e4688d",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N2.json": {
+    "sha256": "75baf307a328b5deb369a65f941b7d392d823078fd496abf7b665e296e72b418",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N1.csv": {
+    "sha256": "effa39e0ed466cd41661e82bc1a39688c635861908bd15f5fdd3895d5bc16e55",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N1.json": {
+    "sha256": "d23115f9b71cd90734507a0044376cf93e4e4da0c8546e0afc2929649292a40c",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N2.csv": {
+    "sha256": "f6753ee233b7da4d5f8a14eb8b359d5ecafb4d1ec511abcd3fccca50fd89d82f",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N2.json": {
+    "sha256": "16c0aec9aceeb0cfe42dee7889f915d5aba26127a94aa639a2c261c250724457",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/gates.json": {
+    "sha256": "8c3ceb2b072bee055c757956e7e8b5d28cdcbd112ee353d9fcd0fdb01276a8ba",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562/RESULT_S18.md": {
+    "sha256": "f897e851a2670ec6e8f563f9faa07fae6fc380173c6cc959ebaeddf306072ee1",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562/capture.csv": {
+    "sha256": "0bf65c90098b5364d612f3539c6ce6043a475b0d12f204e5fae326f56e276ed4",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562/effect_tests.json": {
+    "sha256": "8ad3f71fd63a399c12bb3579ea3ef055a0d3a81d93c99be66684a4207b9d4fd1",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562/embedding.json": {
+    "sha256": "04289c7af795af24b8542c62813e8766c14bff427d52c0c1b457da93085691fe",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562_occupancy/RESULT_S18b.md": {
+    "sha256": "6ce1bcb3fba89a550ce56224cc0fdf392df8aed99e6e7b1bd6a795c34c2d69b0",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18b"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562_occupancy/h1.csv": {
+    "sha256": "20acd840ff88a5e5d0ada1f57314773b028e92e705da348db86de32a0c721191",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18b"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_k562_occupancy/h2.json": {
+    "sha256": "3039c0e83dc9b5a9a4e39678efc3b5e5be9a0ba6afdf278421a9a900c6661a4d",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S18b"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/RESULT_S11.md": {
+    "sha256": "ab713bf7f4626b35d780f3a69579cc13ae536392bcbf340315689100ca7e0242",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/by_cell_type.csv": {
+    "sha256": "e3100b2eece02fa5fc7ae4445837b28655737a402dbd84e11bafa29da1dc5363",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/null.csv": {
+    "sha256": "c6298b040f9cea300f596a796f496442c491e7502d824e89613006c59caa86b2",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/operator_agreement.csv": {
+    "sha256": "551707cb9d54963e097abc383009d9f8457040c6fdff4cb42239cc934f14b322",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/RESULT_S22.md": {
+    "sha256": "1839248b843e8c78fa2fb8a71fe7567592df24cbf627950292a9264b9fde4a50",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/cells_seed0.npz": {
+    "sha256": "25f6e94f38947229409a9a26c21eb993e2656a5600b6e70cc4f1e853b2873a9a",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/clones.csv": {
+    "sha256": "11648d95ea2326a94383520cffa5e0c47a5a1bba4e8a0bfe6ecab4d96f126991",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/fit_seed0.json": {
+    "sha256": "ca67b78f385437547243bc1a57313c8f0c4bd35b6611e5f9fbba3232f2d75330",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/permutation_nulls_seed0.npz": {
+    "sha256": "b9c4c50b66ed4cbe0c85745ec8359489338b4f2254cdec11c97acdae917f2920",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/preregistration.json": {
+    "sha256": "3e6af0e63d4361fdb6256545240a7330a2ec46af69d19848698048ee04b7fa90",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/scores.csv": {
+    "sha256": "888f9fac8d0e266968a4c34d3b67c9995b8f69c4464fa4481cce15ee68863268",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/summary.json": {
+    "sha256": "eca543978e07538b64e2c8ff65dba4914ed59c0727db120ae0b98a09a2a23a56",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/velocity_agreement.csv": {
+    "sha256": "94af717f0cb4b5e7d86d87258c2c76174441cd9cdec8bedb460bcce149881881",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S11"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/compare.csv": {
+    "sha256": "f15bc0bb2971046d9d8b9662c2327510c1df74e5fd66af9718faa7b03957c8a1",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_reference/stats.csv": {
+    "sha256": "e838312763c7893bf5e7ae1cdd0e3edb12ba5242832950df08343743cc4774e3",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S08"
+    ],
+    "notes": []
+   },
+   "benchmarks/scaling/RESULT_S20.md": {
+    "sha256": "74d582821fa10ba607e333726a7bc118f8d6ee2fcb8f5d43c1b4e6ed41af1ebc",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S20"
+    ],
+    "notes": []
+   },
+   "benchmarks/scaling/agreement.csv": {
+    "sha256": "735000940bae701c4ccb8d4bab3a2bf20ba133e041f95623802855f4c60c4bbc",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S20"
+    ],
+    "notes": []
+   },
+   "benchmarks/scaling/larry_full_lambda1.csv": {
+    "sha256": "63030badd0232f834ed056742073482cf911a0c08d013df1c651528a2574cb3b",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S20"
+    ],
+    "notes": []
+   },
+   "benchmarks/scaling/scaling.csv": {
+    "sha256": "a6193ac2fde02bc4384fa5bae8b0d88de1ed51c1a447959a015aaba619ae5761",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S20"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s10/by_day.csv": {
+    "sha256": "cbdbba33adf45b93c8fbf250adc6e77a072387b74cccacce162dac924b2a1699",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s10/diffusion.csv": {
+    "sha256": "1533cba0089696f88d74d0164542b3f68a4ea8f0189f35a9514c6de30f202471",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s10/diffusion_summary.json": {
+    "sha256": "036061668320eba01b57e4ec9c594490ab944f167c8e92210011f552914f1b83",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s10/operators.csv": {
+    "sha256": "cb0a43c75544fc5db4ea9976bdd1c979f5e2307bcfcf81a1d7c3b71ad77591e0",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S10"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s12/step0.csv": {
+    "sha256": "df6b89f5c97e28d57a5710aba3a456de3b7204019e99823d92ed3604de2d632f",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S12"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s12/step0_fa_diagnosis.csv": {
+    "sha256": "484873435129be72c35841b6e12c91fc8441d28a0d416d3ecfba667ecf40961c",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S12"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s13/auc.csv": {
+    "sha256": "13cdd0e1d97bf9cd6fa0ae2e14c3092ac3092fc3c6865544b91dd39880039a36",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S13"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/choose_k.csv": {
+    "sha256": "7832702e3688e0c032805105d02c36a6f86cb31208e460b60b65cdeb60c9339c",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/dev_auc_by_k.csv": {
+    "sha256": "1992bd27830b35ace072b6b026a1a5f011815873c938d19390e79f5ce6e3b0b5",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/gates.json": {
+    "sha256": "463c3f53a1e22fb30ac999476ddd8dd0fd545c0026cdaeaa1e81a1391627ff2a",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/k_selection_r1.json": {
+    "sha256": "5dbfbd2cd429a399beba3ad6ee2fc81742a6e59bf9ef5ed07a8424fe649b1cc1",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/selected_configuration.json": {
+    "sha256": "ea75df5c36982e0ce312110f8dd22dd362245c9b37ae894cf4af39252b587465",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14/test.csv": {
+    "sha256": "c8784eca67f31cd169fae88e577fec252935d334186020370dc756829e4655b2",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14b/RESULT_S14b.md": {
+    "sha256": "de3d6a3681940ff3ea270d76df9047baa00f4a95dabec714b0b079549af39b26",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14b"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14b/g2_transition_eligibility.csv": {
+    "sha256": "3e31cd6523e3464e75b2071c3adfc6d3297ee7f815d3a2e4ac6365cb3441b77d",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14b"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14c/RESULT_S14c.md": {
+    "sha256": "63e020e6ee62e120a046c16f25793a6f50d400a15181ff34ca261367ff73488f",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14c"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14c/g2_transition_eligibility.csv": {
+    "sha256": "7438420ceb62c9e8784c74312e028f5852874b33aa454808cbaec73ef83c7286",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14b/S14c"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s14c/gates.json": {
+    "sha256": "837e4cceb7d08855d1c21697f5fd00c86f503fecf239315a90d815560ae5b774",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14c"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s15/RESULT_S15.md": {
+    "sha256": "b8ab2d31f60a6ac5cf50761b26cd1846e93803fd607fd734116af245de4d5a47",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s15/archetypes.csv": {
+    "sha256": "e5ed619dbd3fd200a98c46c3b7f5c3d20ba432ad7b07ea2bcb25f1f90989b080",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s15/checkpoints/finalise.json": {
+    "sha256": "ed7885cfd6df829120028bb8565f49dc91db21de8b43fdd96d7dec394e60b9ce",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s15/jref_diagnosis.csv": {
+    "sha256": "507c118b36149a6b7d7e69c5441b0e50f84b83171fd1496fdcb863f00c970cd7",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s15/regime_recovery.csv": {
+    "sha256": "ebdadadab87605e3d36eba81b32603f050316d16698886058eaa2635774d46bf",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/s15/stability.csv": {
+    "sha256": "a0b9b8c0092f5416d76540082b88771487478f1a845b29eb300c1cb6b59776c0",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S15"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/v3_calibration/compare_v3.csv": {
+    "sha256": "6184b661b9c2d482a70f8fd95383d998bfcf8374075769734e2775125ba36c17",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S09"
+    ],
+    "notes": []
+   },
+   "benchmarks/synthetic_multimodal/v3_calibration/gates_v3.json": {
+    "sha256": "6cb4a9a55642e8e2e2ba891ae4c43f474e1c8a95bfc045b6575b35e6752611e3",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S09"
+    ],
+    "notes": []
+   },
+   "manuscript/scJDO_manuscript_v57.md": {
+    "sha256": "5877ad1bed4c6c3c1dc17b1a7724f20291ff7348a20a6ebcce09256d01e15375",
+    "panels": [
+     "all"
+    ],
+    "tasks": [
+     "final manuscript"
+    ],
+    "notes": []
+   }
+  }
+ },
+ "TABLES": {
+  "notebook": "notebooks/tables_v57.ipynb",
+  "kind": "report",
+  "interim": false,
+  "outputs": [],
+  "panels": {
+   "S2": {
+    "description": "Supplementary Table S2 (S22): manuscript/tables/TableS2_S22.{csv,md}",
+    "status": "data"
+   },
+   "S3": {
+    "description": "Supplementary Table S3 (S18d): manuscript/tables/TableS3_S18d.{csv,md}",
+    "status": "data"
+   }
+  },
+  "sources": {
+   "benchmarks/perturb_dose/capture_k562_N1.csv": {
+    "sha256": "35c8db593a139c05de71b784a4ee04e53cb10b2273f4d6db12267865a745f154",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N1.json": {
+    "sha256": "19154a92a2a6cf6936bac8e8bef159aaa46b806ecabaadd3f28449fa2e75f77f",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N2.csv": {
+    "sha256": "afe937ed40e9275edf8a01a37ea286c99ca2d5e45df8770d31b62c8239e4688d",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_k562_N2.json": {
+    "sha256": "75baf307a328b5deb369a65f941b7d392d823078fd496abf7b665e296e72b418",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N1.csv": {
+    "sha256": "effa39e0ed466cd41661e82bc1a39688c635861908bd15f5fdd3895d5bc16e55",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N1.json": {
+    "sha256": "d23115f9b71cd90734507a0044376cf93e4e4da0c8546e0afc2929649292a40c",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N2.csv": {
+    "sha256": "f6753ee233b7da4d5f8a14eb8b359d5ecafb4d1ec511abcd3fccca50fd89d82f",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/capture_rpe1_N2.json": {
+    "sha256": "16c0aec9aceeb0cfe42dee7889f915d5aba26127a94aa639a2c261c250724457",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/perturb_dose/gates.json": {
+    "sha256": "8c3ceb2b072bee055c757956e7e8b5d28cdcbd112ee353d9fcd0fdb01276a8ba",
+    "panels": [
+     "S3"
+    ],
+    "tasks": [
+     "S18d"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/RESULT_S22.md": {
+    "sha256": "1839248b843e8c78fa2fb8a71fe7567592df24cbf627950292a9264b9fde4a50",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/cells_seed0.npz": {
+    "sha256": "25f6e94f38947229409a9a26c21eb993e2656a5600b6e70cc4f1e853b2873a9a",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/fit_seed0.json": {
+    "sha256": "ca67b78f385437547243bc1a57313c8f0c4bd35b6611e5f9fbba3232f2d75330",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/fit_seed1.json": {
+    "sha256": "a78260a00d99a1beebcbb8e762a62a7ea91ba8f5f18bbdbdb87bc8d5cd120b1b",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/fit_seed2.json": {
+    "sha256": "766792d4d4a79d3909adc288d58e2d4f0ecc379ceb86f96a4b5982914a1c46fb",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/preregistration.json": {
+    "sha256": "3e6af0e63d4361fdb6256545240a7330a2ec46af69d19848698048ee04b7fa90",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/scores.csv": {
+    "sha256": "888f9fac8d0e266968a4c34d3b67c9995b8f69c4464fa4481cce15ee68863268",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   },
+   "benchmarks/real_flow/s22/summary.json": {
+    "sha256": "eca543978e07538b64e2c8ff65dba4914ed59c0727db120ae0b98a09a2a23a56",
+    "panels": [
+     "S2"
+    ],
+    "tasks": [
+     "S22"
+    ],
+    "notes": []
+   }
+  }
+ }
+}

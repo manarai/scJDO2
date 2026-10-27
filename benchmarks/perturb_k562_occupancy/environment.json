@@ -1,0 +1,9 @@
+{
+  "python": "3.12.3",
+  "platform": "Linux-6.18.38+-aarch64-with-glibc2.39",
+  "cpu_count": 6,
+  "ram_bytes": 14727913472,
+  "fresh_venv": true,
+  "preserved_previous_venv": ".venv-S18",
+  "planner_amendment_commit": "56e9c0045387bf6049dbd40c8b049ef2d55a4cae"
+}

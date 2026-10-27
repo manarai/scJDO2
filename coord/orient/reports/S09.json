@@ -1,0 +1,1528 @@
+{
+  "artifacts": [
+    {
+      "bytes": 1081,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/admission_plan.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage plan",
+      "sha256": "a72200b6fed86a66a6083d77dab36f16f9e194252fe43862bea163f9b08e52e2"
+    },
+    {
+      "bytes": 13044,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/checkpoints/lhs_00.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage <lhs|retry> ...",
+      "sha256": "a4010bf1aa7b96b2f2a2e1576185ae7483c1148a9bc53566bcfca6a5830d1982"
+    },
+    {
+      "bytes": 15235,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/checkpoints/lhs_01.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage <lhs|retry> ...",
+      "sha256": "7abed23b5669675bbd48215f19a8b37ba4d3c308e7093f71a070d8232a5a4cb7"
+    },
+    {
+      "bytes": 15283,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/checkpoints/lhs_02.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage <lhs|retry> ...",
+      "sha256": "4fc8ab8eb5abd8ea3f05dac85f0014244cd70d24393069f9789258880207ce50"
+    },
+    {
+      "bytes": 15288,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/checkpoints/lhs_03.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage <lhs|retry> ...",
+      "sha256": "c88f77884f06611cc719b73b95b0f8a2be5e9664f550879760f96464e0d1aa86"
+    },
+    {
+      "bytes": 2266,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/checkpoints/retry_lhs_007.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage <lhs|retry> ...",
+      "sha256": "8f70b0c2960fd0a73031d80f47870cae75a404dedb9783b210c10de831d73d36"
+    },
+    {
+      "bytes": 2268,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/checkpoints/retry_lhs_012.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage <lhs|retry> ...",
+      "sha256": "844af918402a650074459bd40f0692a35e5e838104d5ba614699d4128ef84fd7"
+    },
+    {
+      "bytes": 994,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/admission_plan_r2.json",
+      "regenerate": "computed from calibration_log.csv and process_cpu.csv",
+      "sha256": "220cb8344c9a318bd2ffc935de0732146d157d5a8eb60b3b1c35271600dbe448"
+    },
+    {
+      "bytes": 1778,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/rescale_n_founders.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage rescale",
+      "sha256": "594215cdb3e89fd6a5beb3e813de373dd7f68f240894333e407195c25a9b3cc6"
+    },
+    {
+      "bytes": 3432,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/block_state.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage block-select --block <1..4>",
+      "sha256": "f2bb0d11e544a10c1ed57f27bbffcc1debd14d34599b253bbfd34d7d03f67fd6"
+    },
+    {
+      "bytes": 429386,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/calibration_log.csv",
+      "regenerate": "python scripts/s09_calibrate.py --stage <lhs|refine|block|r5lineage> ... --index N",
+      "sha256": "a06effd277daf41baa337783619d4a14ebfaa8f3b66d284151abe3fb684b2fa7"
+    },
+    {
+      "bytes": 88947,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/process_cpu.csv",
+      "regenerate": "scheduler, from /usr/bin/time -l",
+      "sha256": "ebc71fe164511a77ad1b80175c43dd505aab3a89d92535194faaa4369646b3a3"
+    },
+    {
+      "bytes": 5507,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/rerank_r5.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage rerank",
+      "sha256": "6f7b78a32ec293e93d1b8430383bf925e427554398618861fa87c75887dd5238"
+    },
+    {
+      "bytes": 1311,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/r5_lineage_select.json",
+      "regenerate": "python scripts/s09_calibrate.py --stage r5lineage-select",
+      "sha256": "dbc1bca65385ca0973ffd788b5fc2fe713bd949aa23711172a128b05a3bd7598"
+    },
+    {
+      "bytes": 2963,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/knobs.json",
+      "regenerate": "from rerank_r5.json and r5_lineage_select.json",
+      "sha256": "3fa7069854d0e9ddeb47131f14ce6926064f8d6da116a7d82e5abde931242e62"
+    },
+    {
+      "bytes": 8142,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+      "regenerate": "python scripts/s09_measure.py --dataset <preset> --seed <0..2> --part generate",
+      "sha256": "be82e27c8343b5a40bc5207fba2855d36594e6e13844d3314f7f4cd8d0780404"
+    },
+    {
+      "bytes": 5036,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/oracles_v3.csv",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_default --seed <0..2> --part measure",
+      "sha256": "42b05efef07b54339201023fbeaf38529ab7cbffe84ca46f05e5fc1b7928a09e"
+    },
+    {
+      "bytes": 291127,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/compare_v3.csv",
+      "regenerate": "python scripts/s09_measure.py --compare",
+      "sha256": "6184b661b9c2d482a70f8fd95383d998bfcf8374075769734e2775125ba36c17"
+    },
+    {
+      "bytes": 17040,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/targets_met_by_seed.csv",
+      "regenerate": "python scripts/s09_measure.py --gates",
+      "sha256": "5127ff25aa0c8f99d75aa25f176b0cf2b24cb0742e719805c9339e993798b926"
+    },
+    {
+      "bytes": 2525,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/gates_v3.json",
+      "regenerate": "python scripts/s09_measure.py --gates",
+      "sha256": "6cb4a9a55642e8e2e2ba891ae4c43f474e1c8a95bfc045b6575b35e6752611e3"
+    },
+    {
+      "bytes": 4632,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v3_calibration/RESULT_S09.md",
+      "regenerate": "written from the ledgers",
+      "sha256": "2068e82f4a8c8c32da15f69abf99af1d8b3c6fa90f2b19dcc7c580854f0a631f"
+    },
+    {
+      "bytes": 1219874485,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s0.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_default --seed 0 --part generate",
+      "sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5"
+    },
+    {
+      "bytes": 1217260401,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s1.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_default --seed 1 --part generate",
+      "sha256": "d5dd02a5b42a12e25d4cf9dc57cf803691a9b55681fe1ce7cb139f7cbb998ba5"
+    },
+    {
+      "bytes": 1236761489,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s2.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_default --seed 2 --part generate",
+      "sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255"
+    },
+    {
+      "bytes": 1277458807,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_stress_s0.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_stress --seed 0 --part generate",
+      "sha256": "1afcbee0dc1b51a92a3d0437ab074c51ec2ff3b80126a28c7b8ed7adf3951a33"
+    },
+    {
+      "bytes": 1123783587,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_stress_s1.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_stress --seed 1 --part generate",
+      "sha256": "a596428de4bb33881c74ca955676e5ae00ae0966fd49bc6b3f239e91863422c3"
+    },
+    {
+      "bytes": 1196972103,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_stress_s2.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_stress --seed 2 --part generate",
+      "sha256": "50e4c2717e038f81667485d98580889ab13e614a219f53efbeb40e15ca000a9e"
+    },
+    {
+      "bytes": 1214456999,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_batch_s0.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_batch --seed 0 --part generate",
+      "sha256": "3eab794c1abbaf55ae6fdf46bee47b27ecc414396528139699127825a078935b"
+    },
+    {
+      "bytes": 1252711236,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_batch_s1.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_batch --seed 1 --part generate",
+      "sha256": "198b2940578b941582aa63fdd2b512a9e0646db0a02776f4c0c6e708fcecb500"
+    },
+    {
+      "bytes": 1171472795,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_batch_s2.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_batch --seed 2 --part generate",
+      "sha256": "d3dda4aa5c99c8ea35dbc6f149baa1b06b1094395f284de5d11224bdf46d991f"
+    },
+    {
+      "bytes": 247669997,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_stationary_cycle_s0.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_stationary_cycle --seed 0 --part generate",
+      "sha256": "44094a5c506aaddec00bb93a3ba1e6dfd90f1587e9b11c8c6f6920d2d6d527ff"
+    },
+    {
+      "bytes": 251675139,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_stationary_cycle_s1.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_stationary_cycle --seed 1 --part generate",
+      "sha256": "32b741c73393e41a1ad23b20314b6f5db7e71150eecac8ff3ab2eb2f188cbeb8"
+    },
+    {
+      "bytes": 252185746,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_stationary_cycle_s2.h5ad",
+      "regenerate": "python scripts/s09_measure.py --dataset v3_stationary_cycle --seed 2 --part generate",
+      "sha256": "565a3853a9913304000db36078ab313cf0669a3071e82679ee169379c6aa108d"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 35.08337693576389,
+    "cpu_hours_note": "measured: 2.344 prior recorded + 1.091 estimated prior unmetered + process_cpu.csv units + 0.160 tests + 0.006 small runs; two killed units without /usr/bin/time records add about 1.14 + <=0.5 h (estimated total about 36.7); budget 40",
+    "gpu_hours": 0.0,
+    "hardware": "local Mac, 14 CPUs, 36 GB; 3 concurrent evaluation processes, 2 BLAS/OpenMP threads each"
+  },
+  "deviations": [
+    "Stopped after 32 of 64 LHS vectors and before coordinate refinement because the no-additional-retry projection was 16.019812 CPU-hours, exceeding S09\u2019s fixed 16-hour budget.",
+    "No final v3 datasets, S08 v3 comparison, figures, or S05 oracle audit was run; the fixed gates consequently cannot be evaluated.",
+    "A first-attempt scVelo EOFError (lhs_007) was retried once and succeeded. A v3 rounded-allocation boundary failure (lhs_012) was repaired without changing knobs/bounds; its one retry succeeded.",
+    "Required MANIFEST_v3.csv, knobs.json, compare_v3.csv, and oracles_v3.csv are schema-valid zero-row or explicitly blocked sentinels. They contain no invented dataset, comparison, or oracle value; RESULT_S09.md and the report explain why.",
+    "Revision 2: stopped after LHS 64/64, before coordinate refinement: projected total 24.195 CPU-h > 24 (21.160 calibration incl. estimated 1.091 h unmetered prior worker CPU, + 3.036 h final-measurement reserve scaled from the prior v2-sized estimate).",
+    "Revision 2: prior CPU ledger (RUSAGE_SELF) excluded loky worker CPU; Revision 2 CPU measured per process tree with /usr/bin/time -l (process_cpu.csv).",
+    "Revision 2: LOKY_MAX_CPU_COUNT=2 set in addition to OMP/MKL/OPENBLAS=2 so Palantir's default n_jobs=-1 uses 2 workers; concurrency 3 with a cross-process mutex around scVelo recover_dynamics (S08 hard-codes n_jobs=8) keeps total threads at 12.",
+    "Revision 2: runner changes (per-evaluation --index units, log lock, per-candidate S08 runtime dir, identical-vector reuse, refinement base excluding the running sweep) in commit 45d8314; measurement runner locks and --gates stage not yet exercised.",
+    "Revision 3: rescale search = proportional updates from the expectation-based start then +/-1,+/-2 neighbours (seed 0, lineage-only); it hit the n_founders lower bound.",
+    "Revision 3: 10 refinement candidates reused the S08 table of an identical completed vector (0 CPU); no completed candidate rerun.",
+    "Revision 4: block 3 acceptance used one confirmation evaluation (block3_confirm); a first attempt wrongly reused the lineage-only row block3_12 (0 CPU) and was deleted from the log after fixing the reuse rule.",
+    "Revision 4: block 2/4 preference key (preferred targets met, unmet, distance) among points not raising the unmet count; block 4 also excluded points losing C3; block 2 grid linear.",
+    "Revision 4: block 3 choice (n_founders 300, 8576 cells) applied; the 'closest to 5000 cells' rescale was not re-applied (it would give n_founders 200, 5264 cells: block3_04 G2 9, G3 0.61).",
+    "Revision 4: final measurement stopped after 3 of 12 datasets on the memory condition (v3_default_s0 17.18 GB); a scheduler parse bug caused one 0.3 s argparse failure (v3_stress_s0) before relaunch; 3 v3_stress units were killed after ~10 s (CPU not recorded).",
+    "Revision 5: x[1/1.25,1.25] applied to all five single-reference targets incl. KS-metric L2 and G2 (named in the review); 'KS-type targets unchanged' read as the S08 comparison metric. Realism gate evaluated with Revision 5 bands.",
+    "Revision 5: lineage choice applied without a confirmation evaluation (no new calibration runs).",
+    "Revision 5: measurement split into --part generate and --part measure (one dataset at a time, each a timed command).",
+    "Revision 5: v3_default_s2 measure exceeded 60 min and was killed (scheduler crashed on killpg PermissionError; CPU unrecorded, est. 1.14 h); rerun once alone succeeded (2656 s).",
+    "Revision 5: v3_batch_s2 generate killed by the 60-min check after the scheduler loop was suspended about 2h20m (launch 04:44:43Z, kill 08:04:17Z; CPU unrecorded, est. <=0.5 h); rerun once alone succeeded (1610 s).",
+    "Revision 5: the scheduler's fixed-reserve budget check stopped once at 40.015 h; recomputed projection 38.1 h and resumed."
+  ],
+  "finished_utc": "2026-10-20T08:53:11Z",
+  "metrics": {
+    "bands_revision5": {
+      "C2_genes_detected": [
+        1215.0,
+        3067.0
+      ],
+      "C3_hvg_log_mean": [
+        0.0331266485154628,
+        0.1596132218837738
+      ],
+      "C4_dispersion": [
+        2.1165090799331665,
+        3.5829782485961914
+      ],
+      "C5_zero_fraction": [
+        0.8410443722943716,
+        0.9604095563139932
+      ],
+      "C7_participation_ratio": [
+        3.940349207830242,
+        8.38120527741117
+      ],
+      "G1_barcoded_cell_fraction": [
+        0.3013408512686516,
+        0.4708450801072681
+      ],
+      "G2_clone_size": [
+        3.2,
+        5.0
+      ],
+      "G3_multi_time_clone_fraction": [
+        0.5312414733969987,
+        0.8300648021828104
+      ],
+      "L1_new_total_fraction": [
+        0.1547573029994964,
+        0.25423727929592127
+      ],
+      "L2_gamma_half_life": [
+        4.054482714481733,
+        6.335129241377707
+      ],
+      "S1_unspliced_fraction": [
+        0.25,
+        0.35
+      ],
+      "S3_steady_share": [
+        0.12,
+        0.46
+      ],
+      "S4_recovered_fraction": [
+        0.17375,
+        0.6275
+      ]
+    },
+    "budget_projection_cpu_hours": null,
+    "compare_v3_vs_v1_v2": {
+      "v1": {
+        "comparisons": 88,
+        "match_rate": 0.3522727272727273,
+        "matched": 31,
+        "within_real_range": 0.35443037974683544
+      },
+      "v2_batch": {
+        "comparisons": 89,
+        "match_rate": 0.20224719101123595,
+        "matched": 18,
+        "within_real_range": 0.3125
+      },
+      "v2_default": {
+        "comparisons": 88,
+        "match_rate": 0.2159090909090909,
+        "matched": 19,
+        "within_real_range": 0.3291139240506329
+      },
+      "v2_stress": {
+        "comparisons": 87,
+        "match_rate": 0.22988505747126436,
+        "matched": 20,
+        "within_real_range": 0.3333333333333333
+      },
+      "v3_batch": {
+        "comparisons": 95,
+        "match_rate": 0.3894736842105263,
+        "matched": 37,
+        "within_real_range": 0.3488372093023256
+      },
+      "v3_default": {
+        "comparisons": 96,
+        "match_rate": 0.3854166666666667,
+        "matched": 37,
+        "within_real_range": 0.3448275862068966
+      },
+      "v3_stationary": {
+        "comparisons": 90,
+        "match_rate": 0.4888888888888889,
+        "matched": 44,
+        "within_real_range": 0.48148148148148145
+      },
+      "v3_stress": {
+        "comparisons": 95,
+        "match_rate": 0.3368421052631579,
+        "matched": 32,
+        "within_real_range": 0.3953488372093023
+      }
+    },
+    "final_dataset_cells": {
+      "v3_batch_s0": 12634,
+      "v3_batch_s1": 13032,
+      "v3_batch_s2": 12192,
+      "v3_default_s0": 12701,
+      "v3_default_s1": 12654,
+      "v3_default_s2": 12884,
+      "v3_stationary_cycle_s0": 2768,
+      "v3_stationary_cycle_s1": 2801,
+      "v3_stationary_cycle_s2": 2800,
+      "v3_stress_s0": 13337,
+      "v3_stress_s1": 11707,
+      "v3_stress_s2": 12503
+    },
+    "gate_realism": {
+      "bands": "revision5",
+      "met_count_by_seed": {
+        "v3_default_s0": 6,
+        "v3_default_s1": 6,
+        "v3_default_s2": 6
+      },
+      "pass": false,
+      "unmet_by_seed": {
+        "v3_default_s0": [
+          "C2_genes_detected",
+          "C5_zero_fraction",
+          "G3_multi_time_clone_fraction",
+          "L2_gamma_half_life",
+          "S1_unspliced_fraction",
+          "S3_steady_share",
+          "S4_recovered_fraction"
+        ],
+        "v3_default_s1": [
+          "C2_genes_detected",
+          "C7_participation_ratio",
+          "G3_multi_time_clone_fraction",
+          "L2_gamma_half_life",
+          "S1_unspliced_fraction",
+          "S3_steady_share",
+          "S4_recovered_fraction"
+        ],
+        "v3_default_s2": [
+          "C2_genes_detected",
+          "C4_dispersion",
+          "C7_participation_ratio",
+          "G3_multi_time_clone_fraction",
+          "S1_unspliced_fraction",
+          "S3_steady_share",
+          "S4_recovered_fraction"
+        ]
+      }
+    },
+    "gate_realism_previous_bands_note": "targets_met_by_seed.csv column met_previous_bands",
+    "gate_signal_O1_O2": {
+      "O1_s0": 0.2826177258729833,
+      "O1_s1": 0.2116742522946466,
+      "O1_s2": 0.2830925376174347,
+      "O2_s0": 0.4317173536831487,
+      "O2_s1": 0.4536461705457063,
+      "O2_s2": 0.5360898541232029,
+      "O3_s0": 0.1874544975570674,
+      "O3_s1": 0.1299203139069273,
+      "O3_s2": 0.2289581956438929,
+      "O4_s0": 0.0061063552258255,
+      "O4_s1": 0.0426452860832312,
+      "O4_s2": 0.085622262159727,
+      "pass": false,
+      "thresholds": {
+        "O1": 0.3,
+        "O2": 0.2
+      }
+    },
+    "knobs": {
+      "lineage_choice": "r5block3_27",
+      "rerank_winner": "block1_09",
+      "status": "fixed_revision5",
+      "values": {
+        "beta0": 0.2340347319320716,
+        "eta_u": 1.0,
+        "f_constant": 0.15,
+        "f_sample": 0.0289091169431116,
+        "f_switch": 0.15,
+        "gamma0": 0.1625,
+        "mu_b": -2.75,
+        "n_founders": 800,
+        "n_prog": 5,
+        "p_barcode": 0.35000000000000003,
+        "sigma_b": 2.5,
+        "sigma_gamma": 0.8999999999999999,
+        "theta0": 37.75
+      }
+    },
+    "lineage_recheck_at_rescaled_size": {
+      "G1_barcoded_cell_fraction": {
+        "met": true,
+        "met_at_calibration_size": true,
+        "target": [
+          0.3013408512686516,
+          0.4708450801072681
+        ],
+        "value": 0.3537487668530089,
+        "value_at_calibration_size": 0.3497519696527575
+      },
+      "G2_clone_size": {
+        "met": false,
+        "met_at_calibration_size": false,
+        "target": [
+          3.8,
+          4.2
+        ],
+        "value": 18.0,
+        "value_at_calibration_size": 16.0
+      },
+      "G3_multi_time_clone_fraction": {
+        "met": true,
+        "met_at_calibration_size": true,
+        "target": [
+          0.5312414733969987,
+          0.8300648021828104
+        ],
+        "value": 0.7947368421052632,
+        "value_at_calibration_size": 0.8025845477041518
+      }
+    },
+    "n_evaluations": {
+      "attempts": 66,
+      "best_lhs": {
+        "normalized_distance": 67.39429035096585,
+        "uid": "lhs_058",
+        "unmet": [
+          "C2_genes_detected",
+          "C4_dispersion",
+          "G2_clone_size",
+          "L1_new_total_fraction",
+          "L2_gamma_half_life",
+          "S1_unspliced_fraction"
+        ],
+        "unmet_targets": 6
+      },
+      "block_refinement": {
+        "block1": 25,
+        "block2": 25,
+        "block2_errors": [
+          "block2_04"
+        ],
+        "block3_confirm": 1,
+        "block3_lineage_only": 40,
+        "block4": 25,
+        "decisions": [
+          "best S1-meeting point increases the unmet count; block 1 not applied",
+          "no grid point improves on the base under the block preference; base kept",
+          "accepted block3_confirm",
+          "no grid point improves on the base under the block preference; base kept"
+        ]
+      },
+      "coordinate_refinement_completed": 130,
+      "coordinate_refinement_required": 130,
+      "excluded_candidates": 0,
+      "lhs_ranked_completed": 64,
+      "lhs_required": 64,
+      "ranked_total": 194,
+      "refinement_failures": 0,
+      "refinement_reused_identical": 10,
+      "resolved_retries_prior": 2,
+      "revision2_failures": 0,
+      "revision2_lhs_evaluations": 32,
+      "revision2_retries": 0,
+      "revision5": {
+        "lineage_choice": {
+          "cells": 12701,
+          "g_unmet": 1,
+          "g_values": {
+            "G1_barcoded_cell_fraction": 0.3529643335170459,
+            "G2_clone_size": 5.0,
+            "G3_multi_time_clone_fraction": 0.48316251830161056
+          },
+          "uid": "r5block3_27"
+        },
+        "lineage_only_runs": 40,
+        "lineage_points_in_window": 14,
+        "meeting_S1": 6,
+        "rerank_unique_vectors": 257,
+        "top5": [
+          {
+            "S1": 0.281323185115972,
+            "distance": 7.467127695569314,
+            "s1_met": true,
+            "stage": "block1",
+            "uid": "block1_09",
+            "unmet": 7,
+            "unmet_targets": [
+              "C2_genes_detected",
+              "C5_zero_fraction",
+              "G2_clone_size",
+              "L1_new_total_fraction",
+              "L2_gamma_half_life",
+              "S3_steady_share",
+              "S4_recovered_fraction"
+            ]
+          },
+          {
+            "S1": 0.2941417015940242,
+            "distance": 5.79618850352344,
+            "s1_met": true,
+            "stage": "lhs",
+            "uid": "lhs_043",
+            "unmet": 8,
+            "unmet_targets": [
+              "C2_genes_detected",
+              "C4_dispersion",
+              "G1_barcoded_cell_fraction",
+              "G3_multi_time_clone_fraction",
+              "L1_new_total_fraction",
+              "L2_gamma_half_life",
+              "S3_steady_share",
+              "S4_recovered_fraction"
+            ]
+          },
+          {
+            "S1": 0.29824052471203577,
+            "distance": 9.811387129284178,
+            "s1_met": true,
+            "stage": "block1",
+            "uid": "block1_01",
+            "unmet": 8,
+            "unmet_targets": [
+              "C2_genes_detected",
+              "C4_dispersion",
+              "C5_zero_fraction",
+              "G2_clone_size",
+              "L1_new_total_fraction",
+              "L2_gamma_half_life",
+              "S3_steady_share",
+              "S4_recovered_fraction"
+            ]
+          },
+          {
+            "S1": 0.31244998656807565,
+            "distance": 18.33047983879035,
+            "s1_met": true,
+            "stage": "lhs",
+            "uid": "lhs_048",
+            "unmet": 9,
+            "unmet_targets": [
+              "C2_genes_detected",
+              "C4_dispersion",
+              "G1_barcoded_cell_fraction",
+              "G2_clone_size",
+              "G3_multi_time_clone_fraction",
+              "L1_new_total_fraction",
+              "L2_gamma_half_life",
+              "S3_steady_share",
+              "S4_recovered_fraction"
+            ]
+          },
+          {
+            "S1": 0.334296317784869,
+            "distance": 10.902124114766147,
+            "s1_met": true,
+            "stage": "lhs",
+            "uid": "lhs_041",
+            "unmet": 10,
+            "unmet_targets": [
+              "C2_genes_detected",
+              "C4_dispersion",
+              "C7_participation_ratio",
+              "G1_barcoded_cell_fraction",
+              "G2_clone_size",
+              "G3_multi_time_clone_fraction",
+              "L1_new_total_fraction",
+              "L2_gamma_half_life",
+              "S3_steady_share",
+              "S4_recovered_fraction"
+            ]
+          }
+        ]
+      },
+      "selected": {
+        "normalized_distance": 33.34994576266843,
+        "uid": "refine_p2_n_founders_3",
+        "unmet": [
+          "C2_genes_detected",
+          "C5_zero_fraction",
+          "G2_clone_size",
+          "L2_gamma_half_life",
+          "S1_unspliced_fraction"
+        ],
+        "unmet_targets": 5
+      },
+      "unique_vectors": 184
+    },
+    "peak_memory_gb": 18.2767616,
+    "peak_memory_note": "v3_batch_s2 generate process tree; Revision 5 stop is 24 GB",
+    "targets_met_by_seed": {
+      "v3_batch_s0": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 843.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.1437923237681388
+        },
+        "C4_dispersion": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 2.2734415531158447
+        },
+        "C5_zero_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.8204448314073179
+        },
+        "C7_participation_ratio": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 7.809561194068159
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3544403989235397
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 5.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4549483013293944
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.1576228961348533
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 6.40908064970883
+        },
+        "S1_unspliced_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3402180788143445
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.01
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.825
+        }
+      },
+      "v3_batch_s1": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 824.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0952344015240669
+        },
+        "C4_dispersion": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 2.4644356966018677
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8737722529158993
+        },
+        "C7_participation_ratio": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 8.981859046526818
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3503683241252302
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 5.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4757709251101321
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.2219647765159607
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 6.71754903859003
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.5168847235734357
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.0125
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.77625
+        }
+      },
+      "v3_batch_s2": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 836.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.1054104678332805
+        },
+        "C4_dispersion": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 2.0167155265808105
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8634760498687681
+        },
+        "C7_participation_ratio": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 8.712053292466468
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.353264435695538
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 4.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.441726618705036
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.2484070435166359
+        },
+        "L2_gamma_half_life": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 6.334476315958227
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4475974547588022
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.01125
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.79
+        }
+      },
+      "v3_default_s0": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 836.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.1409208998084068
+        },
+        "C4_dispersion": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 2.228821635246277
+        },
+        "C5_zero_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.8241870718840942
+        },
+        "C7_participation_ratio": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 8.028813098738366
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.354302810802299
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 5.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4438040345821326
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.167536661028862
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 6.391489602519227
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.3968067417813029
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.01375
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.8175
+        }
+      },
+      "v3_default_s1": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 824.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0976212434470653
+        },
+        "C4_dispersion": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 2.4504958391189575
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8718587008060679
+        },
+        "C7_participation_ratio": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 8.857198941065608
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.35214161529951
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 5.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4912023460410557
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.2183908447623253
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 6.67103674202857
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.5201015709828072
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.015
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.76125
+        }
+      },
+      "v3_default_s2": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 836.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0996831245720386
+        },
+        "C4_dispersion": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 1.852899193763733
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8679757839180386
+        },
+        "C7_participation_ratio": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 8.435812721309814
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3479509469108972
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 5.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.472913616398243
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.2392779290676117
+        },
+        "L2_gamma_half_life": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 6.205234518806518
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4264256585132032
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.01
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.7725
+        }
+      },
+      "v3_stationary_cycle_s0": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 723.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0871336571872234
+        },
+        "C4_dispersion": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 1.6783372163772583
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8796965317919068
+        },
+        "C7_participation_ratio": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 7.348986398788693
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3547687861271676
+        },
+        "G2_clone_size": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 1.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.0
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.1898227483034134
+        },
+        "L2_gamma_half_life": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 6.326817836738199
+        },
+        "S1_unspliced_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3038261602400871
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.0
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.67
+        }
+      },
+      "v3_stationary_cycle_s1": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 717.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0824773162603378
+        },
+        "C4_dispersion": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 1.9857752919197085
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8830774723313106
+        },
+        "C7_participation_ratio": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 7.602462045592354
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3409496608354159
+        },
+        "G2_clone_size": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 1.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.0
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.1945876330137252
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 6.921842015615092
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.3505717188404822
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.00375
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.69
+        }
+      },
+      "v3_stationary_cycle_s2": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 712.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0740037150681018
+        },
+        "C4_dispersion": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 1.5962687134742737
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8951785714285712
+        },
+        "C7_participation_ratio": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 7.445070032632442
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3328571428571428
+        },
+        "G2_clone_size": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 1.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.0
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.2079677134752273
+        },
+        "L2_gamma_half_life": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 6.2303049980653835
+        },
+        "S1_unspliced_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.3376510017962826
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.0025
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.635
+        }
+      },
+      "v3_stress_s0": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 830.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.1156892329454422
+        },
+        "C4_dispersion": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 2.2973010540008545
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8468921046712179
+        },
+        "C7_participation_ratio": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 8.822917459296184
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.2964684711704281
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 4.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4204379562043795
+        },
+        "L1_new_total_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.1138961315155029
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 9.339704077868838
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.3727463099882497
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.00875
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.8025
+        }
+      },
+      "v3_stress_s1": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 822.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0975632295012474
+        },
+        "C4_dispersion": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 2.320141911506653
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.8671734859485762
+        },
+        "C7_participation_ratio": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 8.668125258825446
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.2975997266592637
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 4.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.423780487804878
+        },
+        "L1_new_total_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.1539196968078613
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 10.003837815676045
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.5918400259847291
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.01125
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.76625
+        }
+      },
+      "v3_stress_s2": {
+        "C2_genes_detected": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 827.0
+        },
+        "C3_hvg_log_mean": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.0930449403822422
+        },
+        "C4_dispersion": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 2.069700837135315
+        },
+        "C5_zero_fraction": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 0.875229944813249
+        },
+        "C7_participation_ratio": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 8.79869906092746
+        },
+        "G1_barcoded_cell_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.2927297448612333
+        },
+        "G2_clone_size": {
+          "met": true,
+          "met_previous_bands": true,
+          "value": 4.0
+        },
+        "G3_multi_time_clone_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.4230769230769231
+        },
+        "L1_new_total_fraction": {
+          "met": true,
+          "met_previous_bands": false,
+          "value": 0.1820624768733978
+        },
+        "L2_gamma_half_life": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 9.43242618678442
+        },
+        "S1_unspliced_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.3953005725132176
+        },
+        "S3_steady_share": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.01
+        },
+        "S4_recovered_fraction": {
+          "met": false,
+          "met_previous_bands": false,
+          "value": 0.755
+        }
+      }
+    },
+    "tests_passed": {
+      "mandatory_preimplementation_suite": {
+        "passed": 69,
+        "wall_seconds": 257.41
+      },
+      "revision2_required_suite": {
+        "command": "python -m pytest -q tests/test_orient.py tests/test_smoke.py tests/test_synthetic_multimodal.py",
+        "failed": 0,
+        "passed": 74,
+        "wall_seconds": 268.01
+      },
+      "revision4_required_suite": {
+        "after": "v3_default constants fixed (9a74f35)",
+        "failed": 0,
+        "passed": 74,
+        "wall_seconds": 154.23
+      },
+      "revision5_required_suite": {
+        "after": "V3_DEFAULT_KNOBS replaced (696f752)",
+        "failed": 0,
+        "passed": 74,
+        "wall_seconds": 151.73
+      }
+    },
+    "unreachable_targets": {
+      "classified_unreachable": [],
+      "note": "every target met by >=1 evaluated vector (G2=4 at block3_03, 2910 cells, outside the size window)"
+    },
+    "v1_v2_unchanged": {
+      "evidence": "v1/v2 regression tests pass (74 passed) after the v3-only constant change",
+      "value": true
+    },
+    "wall_hours": 24.745895833333336
+  },
+  "observations": [
+    "All 32 completed LHS vectors were ranked from S08 statistic tables only; no orientation, operator, oracle, or truth quantity entered the objective.",
+    "The best partial LHS candidate was lhs_000 with 8 unmet target statistics, so no credible calibrated knob vector was available to fix as v3_default.",
+    "Peak observed resident memory was 8.779 GB, below the 16 GB memory stop condition.",
+    "LHS unmet-target counts over 64 vectors: 6:1, 8:3, 9:14, 10:21, 11:16, 12:8, 13:1.",
+    "lhs_058 (best) unmet values at reduced size: C2 408 (1215-3067), C4 1.131 (2.117-3.583), G2 17 (3.8-4.2), L1 0.478 (0.193-0.203), L2 3.056 h (4.868-5.268), S1 0.034 (0.25-0.35).",
+    "Revision 2 per-evaluation process CPU mean 393.9 s (in-script 270.7 s); recover_dynamics 20-60 s per evaluation; peak RSS 7.834 GB.",
+    "Selected vector refine_p2_n_founders_3 unmet at reduced size: C2 825 (1215-3067), C5 0.838 (0.841-0.960), G2 16 (3.8-4.2), L2 4.376 h (4.868-5.268), S1 0.011 (0.25-0.35); sigma_b at upper bound 2.5, eta_u at lower bound 0.2.",
+    "Ranges over 184 unique vectors: G2 1-45 (never met), S1 0.003-0.579 (met 4), L2 1.44-14.6 h (met 5), C2 79-2899 (met 31), C5 0.093-0.984 (met 61).",
+    "At n_founders 200/201/202 the seed-0 genealogy collects 12164/12714/13805 cells.",
+    "Full-size v3_default S1 0.016-0.031 vs reduced-size calibration 0.016; L1 0.171/0.296/0.312 across seeds (reduced-size 0.196).",
+    "O1 0.12-0.16 and O4 about 0 on v3_default; O2 0.77-0.81.",
+    "Block 1: S1 rises with eta_u and falls with beta0 (0.006 at beta0 3, eta_u 0.2; 0.515 at beta0 0.1, eta_u 1.0); S1-meeting points had 7-8 unmet.",
+    "Full-size v3_default S1 0.397-0.520 (reduced-size winner 0.281); S4 0.76-0.82 (real max 0.628); S3 0.010-0.015.",
+    "Under Revision 5 bands L1 and G2 are met on every v3_default seed; L2 6.2-6.7 h vs upper 6.335 h; G3 0.44-0.49 vs lower 0.531.",
+    "S08 match rate: v3_default 0.385, v3_batch 0.389, v3_stress 0.337, v3_stationary_cycle 0.489; v2_default 0.216; v1 0.352."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-18T19:21:19Z",
+  "status": "done",
+  "suggestions": [
+    "If a budget amendment is approved, resume from the checkpointed LHS ledger and run only the remaining prescribed units; otherwise a revised task must define a permitted reduced calibration protocol.",
+    "The reduced-size (about 1500-cell) calibration S1/S4 values differ from full-size (12-13k cells) values for the same knobs (S1 0.281 vs 0.40-0.52); a size-matched check of the calibration statistics could quantify this."
+  ],
+  "task": "orient/S09"
+}

@@ -1,0 +1,155 @@
+{
+  "array": {
+    "path": "benchmarks/synthetic_multimodal/s13/arrays/v3_default_s0_pca50.npz",
+    "sha256": "bae48c3f6d4d46526f85e490c21d4f725f41c052e6a1c43fd345eb72086285b6"
+  },
+  "dataset": "v3_default_s0",
+  "dimension": 50,
+  "embedding": "pca50",
+  "finished_utc": "2026-10-21T02:46:54.694863Z",
+  "fits": {
+    "raw_ot_whitened_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1635,
+      "seconds": 5.588,
+      "seed": 0
+    },
+    "whitened_full": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1635,
+      "seconds": 7.21,
+      "seed": 0
+    },
+    "whitened_ot_raw_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1635,
+      "seconds": 5.639,
+      "seed": 0
+    }
+  },
+  "heldout_details": {
+    "status": "not required: S13 held-out prediction is v3_transition and LARRY only"
+  },
+  "heldout_prediction": [],
+  "in_process_cpu_seconds": 168.179,
+  "input_sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5",
+  "n_cells": 12701,
+  "peak_rss_bytes": 3917873152,
+  "preset": "v3_default",
+  "raw_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 41.141671384783535,
+      "final_err": 9.383172874038964e-10,
+      "from_day": 2,
+      "n_iter": 14,
+      "n_source": 187,
+      "n_target": 1448,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 39.333097200297864,
+      "final_err": 8.262421655767643e-10,
+      "from_day": 4,
+      "n_iter": 56,
+      "n_source": 1448,
+      "n_target": 11066,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 4.81,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "scores": {
+    "raw_ot_whitened_drift": {
+      "auc_lam1": 0.742514472981362,
+      "fate_axis_abs_cos_at_saddle": 0.11698628882548956,
+      "median_lam1_committed": 0.0009509037401235871,
+      "median_lam1_saddle": 0.0012602661955516343,
+      "n_committed": 12594,
+      "n_saddle": 22
+    },
+    "raw_s12": {
+      "auc_lam1": 0.6367823061486712,
+      "fate_axis_abs_cos_at_saddle": 0.8987882129457452,
+      "median_lam1_committed": 0.0016456528948092714,
+      "median_lam1_saddle": 0.003105943071082769,
+      "n_committed": 12594,
+      "n_saddle": 22
+    },
+    "whitened_full": {
+      "auc_lam1": 0.14915111091861924,
+      "fate_axis_abs_cos_at_saddle": 0.656144299076787,
+      "median_lam1_committed": -0.004178368662813308,
+      "median_lam1_saddle": -0.005051873359462841,
+      "n_committed": 12594,
+      "n_saddle": 22
+    },
+    "whitened_ot_raw_drift": {
+      "auc_lam1": 0.21956703769471753,
+      "fate_axis_abs_cos_at_saddle": 0.21450586557202134,
+      "median_lam1_committed": -0.00026698338791023794,
+      "median_lam1_saddle": -0.0013675059842602083,
+      "n_committed": 12594,
+      "n_saddle": 22
+    }
+  },
+  "seed": 0,
+  "started_utc": "2026-10-21T02:43:57.018254Z",
+  "task": "orient/S13",
+  "unit": "unit_v3_default_s0_pca50",
+  "wall_seconds": 177.677,
+  "whitened_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 9.656305944995673,
+      "final_err": 8.789726447390876e-10,
+      "from_day": 2,
+      "n_iter": 4,
+      "n_source": 187,
+      "n_target": 1448,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 5.315923540237761,
+      "final_err": 7.20087041117664e-10,
+      "from_day": 4,
+      "n_iter": 6,
+      "n_source": 1448,
+      "n_target": 11066,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.62,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "whitening": {
+    "eigen_floor": 0.00010960218055359939,
+    "eigen_max": 109.6021805535994,
+    "eigen_min": 0.40523998491859525,
+    "n_floored": 0,
+    "whiten_cov_max_abs_error": 1.0436096431476471e-14
+  }
+}

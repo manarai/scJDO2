@@ -1,0 +1,21 @@
+{
+  "unit": "report_final",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "report",
+    "--status",
+    "done"
+  ],
+  "started_utc": "2026-10-22T12:16:34.759596+00:00",
+  "finished_utc": "2026-10-22T12:16:37.731072+00:00",
+  "exit_code": 0,
+  "wall_seconds": 2.971483659999649,
+  "cpu_hours": 0.0007573269444444444,
+  "cpu_hours_before": 9.150340365555556,
+  "max_rss_kib": 43656,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/report_final.log"
+}

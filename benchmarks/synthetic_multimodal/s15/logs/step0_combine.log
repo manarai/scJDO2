@@ -1,0 +1,20 @@
+START 2026-10-23T23:49:47Z unit=step0_combine launcher=.sandbox/bin/python cap=14GiB
+        0.50 real         0.27 user         0.08 sys
+           105644032  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               10620  page reclaims
+                1327  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 383  voluntary context switches
+                 896  involuntary context switches
+          3331587335  instructions retired
+          1309468892  cycles elapsed
+            64930728  peak memory footprint
+EXIT 0 2026-10-23T23:49:47Z

@@ -1,0 +1,324 @@
+{
+  "artifacts": [
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14c/g2_transition_eligibility.csv"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14c/null_calibration.csv"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14c/test.csv"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14c/gates.json"
+    },
+    {
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14c/RESULT_S14c.md"
+    },
+    {
+      "committed": true,
+      "path": "coord/orient/reports/S14c.md"
+    },
+    {
+      "committed": true,
+      "path": "coord/orient/reports/S14c.json"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 14.1543,
+    "gpu_hours": 0.0,
+    "hardware": "Apple Silicon; sandbox launcher; 3 threads; 14 GB per-process cap",
+    "measured_cpu_hours_from_timed_logs": 13.3983,
+    "timed_units_with_logs": 42,
+    "unlogged_seed_s17_wall_upper_bound_seconds": 2721.5716409683228
+  },
+  "deviations": [
+    "Construction failure: after exhausting s17\u2013s40, only reused transition seeds s12 and s16 were eligible; four were required. Per task, execution stopped before null calibration and held-out/transition flow fits.",
+    "Seeds s17, s18, s19, s20, s22\u2013s28, s38, s39, and s40 were stopped by the 12 GB RSS guard; no retries were made. No generator exceptions occurred.",
+    "The first s17 outer /usr/bin/time log was not saved. CPU hours report a conservative upper bound: measured user+system CPU from the other 42 timed logs plus three-thread \u00d7 s17 wall time. This is below the 24 CPU-hour budget.",
+    "Successful generation/preparation checkpoints inherited the task label orient/S14b from the protected imported helper; their S14c paths and wrapper invocation identify this run. Guard-stop checkpoints identify orient/S14c."
+  ],
+  "eligibility": {
+    "eligible_count": 2,
+    "eligible_seeds": [
+      12,
+      16
+    ],
+    "extended_reserve": [
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "extended_rows": 24,
+    "required": 4,
+    "reserve_exhausted": true,
+    "reused_eligible_seeds": [
+      12,
+      16
+    ]
+  },
+  "finished_utc": "2026-10-26T13:45:24Z",
+  "generator_failures": [
+    {
+      "peak_rss_bytes": 12792348672,
+      "reason": "RSS reached guard threshold (12776652800 bytes >= 12000000000)",
+      "seed": 17,
+      "status": "guard_stop",
+      "wall_seconds": 907.1905469894409
+    },
+    {
+      "peak_rss_bytes": 12088508416,
+      "reason": "RSS reached guard threshold (12020203520 bytes >= 12000000000)",
+      "seed": 18,
+      "status": "guard_stop",
+      "wall_seconds": 168.42220520973206
+    },
+    {
+      "peak_rss_bytes": 12497469440,
+      "reason": "RSS reached guard threshold (12497469440 bytes >= 12000000000)",
+      "seed": 19,
+      "status": "guard_stop",
+      "wall_seconds": 1186.9778230190277
+    },
+    {
+      "peak_rss_bytes": 12116738048,
+      "reason": "RSS reached guard threshold (12054757376 bytes >= 12000000000)",
+      "seed": 20,
+      "status": "guard_stop",
+      "wall_seconds": 1058.1489579677582
+    },
+    {
+      "peak_rss_bytes": 12384174080,
+      "reason": "RSS reached guard threshold (12363333632 bytes >= 12000000000)",
+      "seed": 22,
+      "status": "guard_stop",
+      "wall_seconds": 1192.159823179245
+    },
+    {
+      "peak_rss_bytes": 12167200768,
+      "reason": "RSS reached guard threshold (12157157376 bytes >= 12000000000)",
+      "seed": 23,
+      "status": "guard_stop",
+      "wall_seconds": 1367.7182939052582
+    },
+    {
+      "peak_rss_bytes": 12279087104,
+      "reason": "RSS reached guard threshold (12279087104 bytes >= 12000000000)",
+      "seed": 24,
+      "status": "guard_stop",
+      "wall_seconds": 1311.648997783661
+    },
+    {
+      "peak_rss_bytes": 12127207424,
+      "reason": "RSS reached guard threshold (12078415872 bytes >= 12000000000)",
+      "seed": 25,
+      "status": "guard_stop",
+      "wall_seconds": 978.9711630344391
+    },
+    {
+      "peak_rss_bytes": 12091981824,
+      "reason": "RSS reached guard threshold (12031934464 bytes >= 12000000000)",
+      "seed": 26,
+      "status": "guard_stop",
+      "wall_seconds": 1148.0122771263123
+    },
+    {
+      "peak_rss_bytes": 12063817728,
+      "reason": "RSS reached guard threshold (12061605888 bytes >= 12000000000)",
+      "seed": 27,
+      "status": "guard_stop",
+      "wall_seconds": 1586.3149008750916
+    },
+    {
+      "peak_rss_bytes": 12432244736,
+      "reason": "RSS reached guard threshold (12349784064 bytes >= 12000000000)",
+      "seed": 28,
+      "status": "guard_stop",
+      "wall_seconds": 1579.4937160015106
+    },
+    {
+      "peak_rss_bytes": 12073304064,
+      "reason": "RSS reached guard threshold (12019417088 bytes >= 12000000000)",
+      "seed": 38,
+      "status": "guard_stop",
+      "wall_seconds": 2352.942570209503
+    },
+    {
+      "peak_rss_bytes": 12072566784,
+      "reason": "RSS reached guard threshold (12036210688 bytes >= 12000000000)",
+      "seed": 39,
+      "status": "guard_stop",
+      "wall_seconds": 2091.2859048843384
+    },
+    {
+      "peak_rss_bytes": 12045615104,
+      "reason": "RSS reached guard threshold (12006047744 bytes >= 12000000000)",
+      "seed": 40,
+      "status": "guard_stop",
+      "wall_seconds": 1048.1468019485474
+    }
+  ],
+  "metrics": {
+    "T_null": null,
+    "cpu_hours": 14.1543,
+    "eligible_seeds": [
+      12,
+      16
+    ],
+    "gate_X1": null,
+    "gate_X2": null,
+    "gate_X3": null,
+    "gate_X4": null,
+    "generator_failures": [
+      {
+        "peak_rss_bytes": 12792348672,
+        "reason": "RSS reached guard threshold (12776652800 bytes >= 12000000000)",
+        "seed": 17,
+        "status": "guard_stop",
+        "wall_seconds": 907.1905469894409
+      },
+      {
+        "peak_rss_bytes": 12088508416,
+        "reason": "RSS reached guard threshold (12020203520 bytes >= 12000000000)",
+        "seed": 18,
+        "status": "guard_stop",
+        "wall_seconds": 168.42220520973206
+      },
+      {
+        "peak_rss_bytes": 12497469440,
+        "reason": "RSS reached guard threshold (12497469440 bytes >= 12000000000)",
+        "seed": 19,
+        "status": "guard_stop",
+        "wall_seconds": 1186.9778230190277
+      },
+      {
+        "peak_rss_bytes": 12116738048,
+        "reason": "RSS reached guard threshold (12054757376 bytes >= 12000000000)",
+        "seed": 20,
+        "status": "guard_stop",
+        "wall_seconds": 1058.1489579677582
+      },
+      {
+        "peak_rss_bytes": 12384174080,
+        "reason": "RSS reached guard threshold (12363333632 bytes >= 12000000000)",
+        "seed": 22,
+        "status": "guard_stop",
+        "wall_seconds": 1192.159823179245
+      },
+      {
+        "peak_rss_bytes": 12167200768,
+        "reason": "RSS reached guard threshold (12157157376 bytes >= 12000000000)",
+        "seed": 23,
+        "status": "guard_stop",
+        "wall_seconds": 1367.7182939052582
+      },
+      {
+        "peak_rss_bytes": 12279087104,
+        "reason": "RSS reached guard threshold (12279087104 bytes >= 12000000000)",
+        "seed": 24,
+        "status": "guard_stop",
+        "wall_seconds": 1311.648997783661
+      },
+      {
+        "peak_rss_bytes": 12127207424,
+        "reason": "RSS reached guard threshold (12078415872 bytes >= 12000000000)",
+        "seed": 25,
+        "status": "guard_stop",
+        "wall_seconds": 978.9711630344391
+      },
+      {
+        "peak_rss_bytes": 12091981824,
+        "reason": "RSS reached guard threshold (12031934464 bytes >= 12000000000)",
+        "seed": 26,
+        "status": "guard_stop",
+        "wall_seconds": 1148.0122771263123
+      },
+      {
+        "peak_rss_bytes": 12063817728,
+        "reason": "RSS reached guard threshold (12061605888 bytes >= 12000000000)",
+        "seed": 27,
+        "status": "guard_stop",
+        "wall_seconds": 1586.3149008750916
+      },
+      {
+        "peak_rss_bytes": 12432244736,
+        "reason": "RSS reached guard threshold (12349784064 bytes >= 12000000000)",
+        "seed": 28,
+        "status": "guard_stop",
+        "wall_seconds": 1579.4937160015106
+      },
+      {
+        "peak_rss_bytes": 12073304064,
+        "reason": "RSS reached guard threshold (12019417088 bytes >= 12000000000)",
+        "seed": 38,
+        "status": "guard_stop",
+        "wall_seconds": 2352.942570209503
+      },
+      {
+        "peak_rss_bytes": 12072566784,
+        "reason": "RSS reached guard threshold (12036210688 bytes >= 12000000000)",
+        "seed": 39,
+        "status": "guard_stop",
+        "wall_seconds": 2091.2859048843384
+      },
+      {
+        "peak_rss_bytes": 12045615104,
+        "reason": "RSS reached guard threshold (12006047744 bytes >= 12000000000)",
+        "seed": 40,
+        "status": "guard_stop",
+        "wall_seconds": 1048.1468019485474
+      }
+    ],
+    "versions": "Python 3.13.2; NumPy 2.5.4; pandas 2.3.3; AnnData 0.11.4; Scanpy 1.12.4; Palantir 1.4.5; SciPy 1.18.1; scikit-learn 1.9.1; scvelo 0.3.4; PyTorch 2.14.1; Matplotlib 3.11.2"
+  },
+  "observations": [
+    "Eligibility followed the frozen S14b criteria and was decided from truth only.",
+    "No flow fits or null calibration were run.",
+    "Generation used the S14c 60-minute / 12 GB guard; guard stops were not retried."
+  ],
+  "outcome": "test_construction_failure",
+  "questions": [],
+  "status": "partial",
+  "task": "orient/S14c",
+  "validation": {
+    "coord_check": {
+      "command": ".sandbox/bin/python coord/coord_check.py check orient S14c",
+      "output": "base orientation  head manus/orient-S14c  changed 129 file(s)\n== check orient/S14c\nPASS",
+      "status": "passed"
+    },
+    "tests": {
+      "command": ".sandbox/bin/python -m pytest -q tests/test_orient.py tests/test_smoke.py",
+      "failed": 0,
+      "output": "48 passed in 4.07s",
+      "passed": 48,
+      "status": "passed"
+    }
+  },
+  "versions": "Python 3.13.2; NumPy 2.5.4; pandas 2.3.3; AnnData 0.11.4; Scanpy 1.12.4; Palantir 1.4.5; SciPy 1.18.1; scikit-learn 1.9.1; scvelo 0.3.4; PyTorch 2.14.1; Matplotlib 3.11.2"
+}

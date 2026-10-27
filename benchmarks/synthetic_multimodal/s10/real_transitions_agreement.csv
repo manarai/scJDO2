@@ -1,0 +1,22 @@
+dataset,operator,signal,detected_bins,n_distinct,range_bins
+larry,J_flow_ot,lam1,"[7, 7, 7, 10, 11, 11]",3,4
+larry,J_flow_ot,soft_curv,"[0, 7, 7, 7, 9, 9]",3,9
+larry,J_flow_ot,var_soft,"[1, 1, 1, 9, 10, 11]",4,10
+larry,J_score,lam1,"[0, 1, 7, 7, 8, 8]",4,8
+larry,J_score,soft_curv,"[10, 10, 10, 11, 11, 11]",2,1
+larry,J_score,var_soft,"[8, 8, 8, 9, 10, 10]",3,2
+scnt,J_flow_raw_perpulse,lam1,"[0, 0, 0, 0, 0, 0]",1,0
+scnt,J_flow_raw_perpulse,soft_curv,"[0, 0, 5, 6, 6, 6]",3,6
+scnt,J_flow_raw_perpulse,var_soft,"[0, 0, 0, 0, 0, 0]",1,0
+scnt,J_flow_raw_shared,lam1,"[0, 0, 0, 0, 0, 0]",1,0
+scnt,J_flow_raw_shared,soft_curv,"[0, 0, 1, 4, 5, 5]",4,5
+scnt,J_flow_raw_shared,var_soft,"[0, 0, 0, 0, 0, 1]",2,1
+scnt,J_flow_smoothed_perpulse,lam1,"[0, 0, 10, 10, 10, 10]",2,10
+scnt,J_flow_smoothed_perpulse,soft_curv,"[10, 10, 10, 10, 10, 10]",1,0
+scnt,J_flow_smoothed_perpulse,var_soft,"[0, 0, 0, 0, 0, 0]",1,0
+scnt,J_flow_smoothed_shared,lam1,"[10, 10, 10, 10, 10, 10]",1,0
+scnt,J_flow_smoothed_shared,soft_curv,"[10, 10, 10, 10, 10, 10]",1,0
+scnt,J_flow_smoothed_shared,var_soft,"[0, 0, 0, 0, 0, 0]",1,0
+scnt,J_score,lam1,"[7, 7, 8, 8, 8, 9]",3,2
+scnt,J_score,soft_curv,"[0, 0, 0, 1, 1, 4]",3,4
+scnt,J_score,var_soft,"[0, 0, 0, 0, 0, 4]",2,4

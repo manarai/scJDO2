@@ -1,0 +1,39 @@
+{
+  "array_key": "J_flow_reference",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/step0_v3_transition_s4_k15_reference.npz",
+  "array_sha256": "0cf5f2ec352d85c85d15e092b22e7a9b57bb01cf2e01a305adf7075b2a631361",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "dataset": "v3_transition_s4",
+  "drift_seed": 0,
+  "finished_utc": "2026-10-24T15:32:05.647520Z",
+  "in_process_cpu_seconds": 0.024,
+  "k": 15,
+  "observed_fit_complete_before_truth_scoring": true,
+  "operator": "J_flow_reference",
+  "peak_rss_bytes": 286212096,
+  "reused": {
+    "array_key": "J_flow_reference",
+    "array_path": "benchmarks/synthetic_multimodal/s15/arrays/step0_v3_transition_s4_k15_reference.npz",
+    "array_sha256": "0cf5f2ec352d85c85d15e092b22e7a9b57bb01cf2e01a305adf7075b2a631361",
+    "reuse_note": "Exact S15 Step 0 S14-reference raw-PCA15 flow Jacobian reused; no refit.",
+    "source_checkpoint": "benchmarks/synthetic_multimodal/s15/checkpoints/step0_v3_transition_s4.json",
+    "source_checkpoint_sha256": "3a06843726cf848afe76ec9f41a70c571c738fddb38f8e4bef8d560ad9117add"
+  },
+  "stage": "operators",
+  "started_utc": "2026-10-24T15:32:05.621225Z",
+  "task": "orient/S15",
+  "truth_keys_accessed": false,
+  "unit": "flow_v3_transition_s4_k15_d0",
+  "wall_seconds": 0.026
+}

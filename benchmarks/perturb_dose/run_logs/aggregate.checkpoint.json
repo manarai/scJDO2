@@ -1,0 +1,20 @@
+{
+  "unit": "aggregate",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "aggregate"
+  ],
+  "started_utc": "2026-10-23T02:54:34.737739+00:00",
+  "finished_utc": "2026-10-23T02:54:40.760574+00:00",
+  "exit_code": 0,
+  "wall_seconds": 6.022838037999463,
+  "cpu_hours": 0.0014912622222222223,
+  "max_rss_kib": 162212,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/aggregate.log",
+  "stop_reason": null
+}

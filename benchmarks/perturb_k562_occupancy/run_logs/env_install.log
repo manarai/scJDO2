@@ -1,0 +1,878 @@
+Obtaining file:///home/ubuntu/scJDO2
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting torch>=2.2 (from scjdo2==0.1.0.dev1)
+  Downloading torch-2.14.1-cp312-cp312-manylinux_2_28_aarch64.whl.metadata (37 kB)
+Collecting numpy>=1.24 (from scjdo2==0.1.0.dev1)
+  Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (6.6 kB)
+Collecting scipy>=1.11 (from scjdo2==0.1.0.dev1)
+  Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.4/62.4 kB 223.9 MB/s eta 0:00:00
+Collecting pandas>=2.0 (from scjdo2==0.1.0.dev1)
+  Downloading pandas-3.0.6-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (79 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 230.8 MB/s eta 0:00:00
+Collecting anndata>=0.10 (from scjdo2==0.1.0.dev1)
+  Downloading anndata-0.13.4-py3-none-any.whl.metadata (7.2 kB)
+Collecting scanpy>=1.9 (from scjdo2==0.1.0.dev1)
+  Downloading scanpy-1.12.4-py3-none-any.whl.metadata (8.5 kB)
+Collecting scikit-learn>=1.3 (from scjdo2==0.1.0.dev1)
+  Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (9.3 kB)
+Collecting tqdm>=4.66 (from scjdo2==0.1.0.dev1)
+  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.4/57.4 kB 250.1 MB/s eta 0:00:00
+Collecting matplotlib>=3.7 (from scjdo2==0.1.0.dev1)
+  Downloading matplotlib-3.11.2-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (80 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.3/80.3 kB 252.8 MB/s eta 0:00:00
+Collecting scvi-tools>=1.1 (from scjdo2==0.1.0.dev1)
+  Downloading scvi_tools-1.5.1-py3-none-any.whl.metadata (18 kB)
+Collecting dynamo-release>=1.4 (from scjdo2==0.1.0.dev1)
+  Downloading dynamo_release-1.5.3-py3-none-any.whl.metadata (11 kB)
+Collecting zarr>=2.17 (from scjdo2==0.1.0.dev1)
+  Downloading zarr-3.4.1-py3-none-any.whl.metadata (5.8 kB)
+Collecting pyyaml>=6.0 (from scjdo2==0.1.0.dev1)
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.4 kB)
+Collecting pytest>=7.4 (from scjdo2==0.1.0.dev1)
+  Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting pytest-cov>=4.1 (from scjdo2==0.1.0.dev1)
+  Downloading pytest_cov-7.1.0-py3-none-any.whl.metadata (32 kB)
+Collecting ruff>=0.4 (from scjdo2==0.1.0.dev1)
+  Downloading ruff-0.17.[drive-id-withheld].manylinux2014_aarch64.whl.metadata (20 kB)
+Collecting ipykernel>=6.25 (from scjdo2==0.1.0.dev1)
+  Downloading ipykernel-7.4.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting jupyterlab>=4.0 (from scjdo2==0.1.0.dev1)
+  Downloading jupyterlab-4.6.4-py3-none-any.whl.metadata (16 kB)
+Collecting nbconvert>=7.0 (from scjdo2==0.1.0.dev1)
+  Downloading nbconvert-7.17.2-py3-none-any.whl.metadata (8.4 kB)
+Collecting array-api-compat>=1.7.1 (from anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading array_api_compat-1.15.0-py3-none-any.whl.metadata (1.4 kB)
+Collecting h5py>=3.11 (from anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading h5py-3.16.0-cp312-cp312-manylinux_2_28_aarch64.whl.metadata (3.0 kB)
+Collecting legacy-api-wrap (from anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading legacy_api_wrap-1.5-py3-none-any.whl.metadata (2.2 kB)
+Collecting natsort (from anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading natsort-8.4.0-py3-none-any.whl.metadata (21 kB)
+Collecting packaging>=24.2 (from anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting scverse-misc>=0.1.0 (from scverse-misc[settings]>=0.1.0->anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading scverse_misc-0.1.7-py3-none-any.whl.metadata (4.9 kB)
+Collecting typing-extensions>=4.16 (from anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting pandas>=2.0 (from scjdo2==0.1.0.dev1)
+  Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (91 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.2/91.2 kB 261.4 MB/s eta 0:00:00
+Collecting anndata>=0.10 (from scjdo2==0.1.0.dev1)
+  Downloading anndata-0.10.9-py3-none-any.whl.metadata (6.9 kB)
+Collecting loompy>=3.0.5 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading loompy-3.0.8.tar.gz (49 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 49.6/49.6 kB 232.6 MB/s eta 0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting setuptools (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading setuptools-84.2.1-py3-none-any.whl.metadata (6.6 kB)
+Collecting numdifftools>=0.9.39 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading numdifftools-0.11.1-py3-none-any.whl.metadata (12 kB)
+Collecting umap-learn>=0.5.1 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading umap_learn-0.5.12-py3-none-any.whl.metadata (24 kB)
+Collecting PATSY>=0.5.1 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading patsy-1.0.3-py2.py3-none-any.whl.metadata (3.7 kB)
+Collecting statsmodels>=0.9.0 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (9.6 kB)
+Collecting numba>=0.54.0 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading numba-0.68.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (2.8 kB)
+Collecting seaborn>=0.9.0 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting colorcet>=2.0.1 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading colorcet-3.2.1-py3-none-any.whl.metadata (6.3 kB)
+Collecting igraph>=0.7.1 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading igraph-1.0.0-cp39-abi3-manylinux_2_28_aarch64.whl.metadata (4.4 kB)
+Collecting leidenalg (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading leidenalg-0.12.0-cp38-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (10 kB)
+Collecting pynndescent>=0.5.2 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading pynndescent-0.6.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting pre-commit (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading pre_commit-4.7.0-py2.py3-none-any.whl.metadata (1.2 kB)
+Collecting networkx>=2.6 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading networkx-3.7-py3-none-any.whl.metadata (6.7 kB)
+Collecting get_version>=3.5.4 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading get_version-3.5.5-py3-none-any.whl.metadata (2.3 kB)
+Collecting openpyxl (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading openpyxl-3.1.5-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting session-info>=1.0.0 (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading session_info-1.0.1-py3-none-any.whl.metadata (5.1 kB)
+Collecting adjustText (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading adjusttext-1.4.0-py3-none-any.whl.metadata (3.4 kB)
+Collecting mudata (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading mudata-0.4.1-py3-none-any.whl.metadata (10 kB)
+Collecting requests (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting datacache (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading datacache-1.29.2-py3-none-any.whl.metadata (5.9 kB)
+Collecting comm>=0.1.1 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading comm-0.2.3-py3-none-any.whl.metadata (3.7 kB)
+Collecting debugpy>=1.6.5 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading debugpy-1.8.22-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting ipython>=7.23.1 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading ipython-9.17.1-py3-none-any.whl.metadata (4.6 kB)
+Collecting jupyter-client>=8.9.0 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading jupyter_client-8.10.0-py3-none-any.whl.metadata (8.5 kB)
+Collecting jupyter-core!=6.0.*,>=5.1 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading jupyter_core-5.9.1-py3-none-any.whl.metadata (1.5 kB)
+Collecting matplotlib-inline>=0.1 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading matplotlib_inline-0.2.2-py3-none-any.whl.metadata (2.4 kB)
+Collecting nest-asyncio2>=1.7.0 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading nest_asyncio2-1.7.4-py3-none-any.whl.metadata (7.0 kB)
+Collecting pyzmq>=25 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading pyzmq-27.2.0-cp312-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (3.8 kB)
+Collecting tornado>=6.5.7 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading tornado-6.6-cp311-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.6 kB)
+Collecting traitlets>=5.4.0 (from ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading traitlets-5.16.1-py3-none-any.whl.metadata (10 kB)
+Collecting async-lru>=1.0.0 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading async_lru-2.4.0-py3-none-any.whl.metadata (10 kB)
+Collecting httpx<1,>=0.25.0 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jinja2>=3.0.3 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting jupyter-builder>=1.0.2 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jupyter_builder-1.2.3-py3-none-any.whl.metadata (7.8 kB)
+Collecting jupyter-lsp>=2.0.0 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jupyter_lsp-2.3.1-py3-none-any.whl.metadata (1.8 kB)
+Collecting jupyter-server<3,>=2.19.0 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jupyter_server-2.21.1-py3-none-any.whl.metadata (8.5 kB)
+Collecting jupyterlab-server<3,>=2.28.0 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jupyterlab_server-2.28.1-py3-none-any.whl.metadata (5.8 kB)
+Collecting notebook-shim>=0.2 (from jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading notebook_shim-0.2.4-py3-none-any.whl.metadata (4.0 kB)
+Collecting contourpy>=1.0.1 (from matplotlib>=3.7->scjdo2==0.1.0.dev1)
+  Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (3.8 kB)
+Collecting cycler>=0.10 (from matplotlib>=3.7->scjdo2==0.1.0.dev1)
+  Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting fonttools>=4.28.2 (from matplotlib>=3.7->scjdo2==0.1.0.dev1)
+  Downloading fonttools-4.67.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (137 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.2/137.2 kB 225.8 MB/s eta 0:00:00
+Collecting kiwisolver>=1.3.1 (from matplotlib>=3.7->scjdo2==0.1.0.dev1)
+  Downloading kiwisolver-1.5.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (5.2 kB)
+Collecting pillow>=9 (from matplotlib>=3.7->scjdo2==0.1.0.dev1)
+  Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (9.1 kB)
+Collecting pyparsing>=3 (from matplotlib>=3.7->scjdo2==0.1.0.dev1)
+  Downloading pyparsing-3.3.3-py3-none-any.whl.metadata (5.9 kB)
+Collecting python-dateutil>=2.7 (from matplotlib>=3.7->scjdo2==0.1.0.dev1)
+  Downloading python_dateutil-3.0.0-py2.py3-none-any.whl.metadata (8.2 kB)
+Collecting beautifulsoup4 (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading beautifulsoup4-4.15.0-py3-none-any.whl.metadata (3.8 kB)
+Collecting bleach!=5.0.0 (from bleach[css]!=5.0.0->nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading bleach-6.4.0-py3-none-any.whl.metadata (32 kB)
+Collecting defusedxml (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+Collecting jupyterlab-pygments (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl.metadata (4.4 kB)
+Collecting markupsafe>=2.0 (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (2.7 kB)
+Collecting mistune<4,>=2.0.3 (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading mistune-3.4.0-py3-none-any.whl.metadata (2.1 kB)
+Collecting nbclient>=0.5.0 (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading nbclient-0.11.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting nbformat>=5.7 (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading nbformat-5.11.1-py3-none-any.whl.metadata (3.7 kB)
+Collecting pandocfilters>=1.4.1 (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading pandocfilters-1.5.1-py2.py3-none-any.whl.metadata (9.0 kB)
+Collecting pygments>=2.4.1 (from nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting pytz>=2020.1 (from pandas>=2.0->scjdo2==0.1.0.dev1)
+  Downloading pytz-2026.5-py2.py3-none-any.whl.metadata (22 kB)
+Collecting tzdata>=2022.7 (from pandas>=2.0->scjdo2==0.1.0.dev1)
+  Downloading tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+Collecting iniconfig>=1.0.1 (from pytest>=7.4->scjdo2==0.1.0.dev1)
+  Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting pluggy<2,>=1.5 (from pytest>=7.4->scjdo2==0.1.0.dev1)
+  Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+Collecting coverage>=7.10.6 (from coverage[toml]>=7.10.6->pytest-cov>=4.1->scjdo2==0.1.0.dev1)
+  Downloading coverage-7.16.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (8.2 kB)
+Collecting certifi (from scanpy>=1.9->scjdo2==0.1.0.dev1)
+  Downloading certifi-2026.10.19-py3-none-any.whl.metadata (2.5 kB)
+Collecting fast-array-utils>=1.4 (from fast-array-utils[accel,sparse]>=1.4->scanpy>=1.9->scjdo2==0.1.0.dev1)
+  Downloading fast_array_utils-1.5.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting joblib (from scanpy>=1.9->scjdo2==0.1.0.dev1)
+  Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting session-info2 (from scanpy>=1.9->scjdo2==0.1.0.dev1)
+  Downloading session_info2-0.4.2-py3-none-any.whl.metadata (2.4 kB)
+Collecting narwhals>=2.0.1 (from scikit-learn>=1.3->scjdo2==0.1.0.dev1)
+  Downloading narwhals-2.27.1-py3-none-any.whl.metadata (15 kB)
+Collecting threadpoolctl>=3.5.0 (from scikit-learn>=1.3->scjdo2==0.1.0.dev1)
+  Downloading threadpoolctl-3.7.0-py3-none-any.whl.metadata (24 kB)
+Collecting docrep>=0.3.2 (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading docrep-0.3.2.tar.gz (33 kB)
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting lightning>=2 (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading lightning-2.6.6-py3-none-any.whl.metadata (45 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.0/45.0 kB 203.6 MB/s eta 0:00:00
+Collecting ml-collections (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading ml_collections-1.1.0-py3-none-any.whl.metadata (22 kB)
+Collecting pyro-ppl (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading pyro_ppl-1.9.2-py3-none-any.whl.metadata (6.5 kB)
+Collecting rich (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting sparse>=0.14 (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading sparse-0.19.2-py2.py3-none-any.whl.metadata (5.3 kB)
+Collecting tensorboard (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading tensorboard-2.21.0-py3-none-any.whl.metadata (1.8 kB)
+Collecting torchmetrics (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading torchmetrics-1.9.0-py3-none-any.whl.metadata (23 kB)
+Collecting xarray (from scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading xarray-2026.9.0-py3-none-any.whl.metadata (12 kB)
+Collecting filelock (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading filelock-4.2.4-py3-none-any.whl.metadata (2.0 kB)
+Collecting sympy>=1.13.3 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting fsspec>=0.8.5 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading fsspec-2026.9.0-py3-none-any.whl.metadata (10 kB)
+Collecting cuda-toolkit==13.0.3 (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading cuda_toolkit-13.0.3.0-py2.py3-none-any.whl.metadata (17 kB)
+Collecting cuda-bindings<14,>=13.0.3 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading cuda_bindings-13.4.4-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (2.4 kB)
+Collecting nvidia-cudnn-cu13==9.24.0.43 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cudnn_cu13-9.24.0.43-py3-none-manylinux_2_27_aarch64.whl.metadata (1.9 kB)
+Collecting nvidia-cusparselt-cu13==0.8.1 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_aarch64.whl.metadata (12 kB)
+Collecting nvidia-nccl-cu13==2.30.7 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_nccl_cu13-2.30.7-py3-none-manylinux_2_18_aarch64.whl.metadata (2.1 kB)
+Collecting nvidia-nvshmem-cu13==3.4.5 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_nvshmem_cu13-3.4.5-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (2.1 kB)
+Collecting triton~=3.8.0 (from torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading triton-3.8.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (978 bytes)
+Collecting nvidia-cublas==13.1.1.3.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_aarch64.whl.metadata (1.8 kB)
+Collecting nvidia-cuda-nvrtc==13.0.88.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cuda_nvrtc-13.0.88-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (1.7 kB)
+Collecting nvidia-cuda-runtime==13.0.96.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cuda_runtime-13.0.96-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (1.7 kB)
+Collecting nvidia-cufft==12.0.0.61.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cufft-12.0.0.61-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (1.8 kB)
+Collecting nvidia-nvjitlink<14,>=13.0.88 (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_nvjitlink-13.4.92-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (1.8 kB)
+Collecting nvidia-cufile==1.15.1.6.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cufile-1.15.1.6-py3-none-manylinux_2_27_aarch64.whl.metadata (1.7 kB)
+Collecting nvidia-cuda-cupti==13.0.85.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cuda_cupti-13.0.85-py3-none-manylinux_2_25_aarch64.whl.metadata (1.7 kB)
+Collecting nvidia-curand==10.4.0.35.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_aarch64.whl.metadata (1.7 kB)
+Collecting nvidia-cusolver==12.0.4.66.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_aarch64.whl.metadata (1.8 kB)
+Collecting nvidia-cusparse==12.6.3.3.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (1.8 kB)
+Collecting nvidia-nvtx==13.0.85.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading nvidia_nvtx-13.0.85-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (1.8 kB)
+Collecting donfig>=0.8 (from zarr>=2.17->scjdo2==0.1.0.dev1)
+  Downloading donfig-0.8.1.post1-py3-none-any.whl.metadata (5.0 kB)
+Collecting google-crc32c>=1.5 (from zarr>=2.17->scjdo2==0.1.0.dev1)
+  Downloading google_crc32c-1.9.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (2.2 kB)
+Collecting msgspec>=0.19 (from zarr>=2.17->scjdo2==0.1.0.dev1)
+  Downloading msgspec-0.22.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (6.0 kB)
+Collecting numcodecs>=0.16 (from zarr>=2.17->scjdo2==0.1.0.dev1)
+  Downloading numcodecs-0.17.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (3.2 kB)
+Collecting webencodings (from bleach!=5.0.0->bleach[css]!=5.0.0->nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading webencodings-0.6.1-py3-none-any.whl.metadata (3.4 kB)
+Collecting tinycss2>=1.1.0 (from bleach[css]!=5.0.0->nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading tinycss2-1.5.1-py3-none-any.whl.metadata (3.0 kB)
+Collecting cuda-pathfinder>=1.4.2 (from cuda-bindings<14,>=13.0.3->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading cuda_pathfinder-1.8.3-py3-none-any.whl.metadata (1.9 kB)
+Collecting six (from docrep>=0.3.2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting dunamai>=1.19.0 (from get_version>=3.5.4->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading dunamai-1.26.3-py3-none-any.whl.metadata (10 kB)
+Collecting anyio (from httpx<1,>=0.25.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.25.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx<1,>=0.25.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.25.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting texttable>=1.6.2 (from igraph>=0.7.1->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading texttable-1.7.2-py2.py3-none-any.whl.metadata (10 kB)
+Collecting ipython-pygments-lexers>=1.0.0 (from ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl.metadata (1.1 kB)
+Collecting jedi>=0.18.2 (from ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading jedi-0.20.1-py2.py3-none-any.whl.metadata (23 kB)
+Collecting pexpect>4.6 (from ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading pexpect-4.9.0-py2.py3-none-any.whl.metadata (2.5 kB)
+Collecting prompt_toolkit<3.1.0,>=3.0.41 (from ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading prompt_toolkit-3.0.53-py3-none-any.whl.metadata (6.4 kB)
+Collecting psutil>=7 (from ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading psutil-7.2.2-cp36-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (22 kB)
+Collecting stack_data>=0.6.0 (from ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading stack_data-0.6.3-py3-none-any.whl.metadata (18 kB)
+Collecting cloudpickle>=3.0 (from joblib->scanpy>=1.9->scjdo2==0.1.0.dev1)
+  Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+Collecting platformdirs>=2.5 (from jupyter-core!=6.0.*,>=5.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading platformdirs-4.13.5-py3-none-any.whl.metadata (5.5 kB)
+Collecting argon2-cffi>=21.1 (from jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading argon2_cffi-25.1.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting jupyter-events>=0.11.0 (from jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jupyter_events-0.12.1-py3-none-any.whl.metadata (5.8 kB)
+Collecting jupyter-server-terminals>=0.4.4 (from jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jupyter_server_terminals-0.5.4-py3-none-any.whl.metadata (5.9 kB)
+Collecting prometheus-client>=0.9 (from jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading prometheus_client-0.26.0-py3-none-any.whl.metadata (2.1 kB)
+Collecting send2trash>=1.8.2 (from jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading send2trash-2.1.0-py3-none-any.whl.metadata (4.1 kB)
+Collecting terminado>=0.8.3 (from jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading terminado-0.18.1-py3-none-any.whl.metadata (5.8 kB)
+Collecting websocket-client>=1.7 (from jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading websocket_client-1.9.2-py3-none-any.whl.metadata (8.3 kB)
+Collecting babel>=2.10 (from jupyterlab-server<3,>=2.28.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading babel-2.18.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting json5>=0.9.0 (from jupyterlab-server<3,>=2.28.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading json5-0.17.3-py3-none-any.whl.metadata (27 kB)
+Collecting jsonschema>=4.18.0 (from jupyterlab-server<3,>=2.28.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting lightning-utilities<2.0,>=0.10.0 (from lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading lightning_utilities-0.15.3-py3-none-any.whl.metadata (5.5 kB)
+Collecting pytorch-lightning (from lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading pytorch_lightning-2.6.6-py3-none-any.whl.metadata (21 kB)
+Collecting click (from loompy>=3.0.5->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting numpy-groupies (from loompy>=3.0.5->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading numpy_groupies-0.15.0-py3-none-any.whl.metadata (17 kB)
+Collecting fastjsonschema>=2.15 (from nbformat>=5.7->nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading fastjsonschema-2.22.2-py3-none-any.whl.metadata (2.1 kB)
+Collecting llvmlite<0.51,>=0.50.0dev0 (from numba>=0.54.0->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading llvmlite-0.50.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl.metadata (5.1 kB)
+Collecting charset_normalizer<4,>=2 (from requests->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (46 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 46.4/46.4 kB 139.3 MB/s eta 0:00:00
+Collecting urllib3<3,>=1.26 (from requests->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting scikit-misc>=0.5.1 (from scanpy[skmisc]>=1.10->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading scikit_misc-0.5.3-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl.metadata (5.0 kB)
+Collecting stdlib_list (from session-info>=1.0.0->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading stdlib_list-0.12.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting formulaic>=1.1.0 (from statsmodels>=0.9.0->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading formulaic-1.2.2-py3-none-any.whl.metadata (7.0 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch>=2.2->scjdo2==0.1.0.dev1)
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting soupsieve>=1.6.1 (from beautifulsoup4->nbconvert>=7.0->scjdo2==0.1.0.dev1)
+  Downloading soupsieve-3.0.4-py3-none-any.whl.metadata (4.4 kB)
+Collecting absl-py (from ml-collections->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading absl_py-2.5.1-py3-none-any.whl.metadata (3.3 kB)
+INFO: pip is looking at multiple versions of mudata to determine which version is compatible with other requirements. This could take a while.
+Collecting mudata (from dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading mudata-0.4.0-py3-none-any.whl.metadata (10 kB)
+  Downloading mudata-0.3.10-py3-none-any.whl.metadata (10 kB)
+Collecting scverse-misc>=0.0.6 (from scanpy>=1.9->scjdo2==0.1.0.dev1)
+  Downloading scverse_misc-0.1.1-py3-none-any.whl.metadata (4.8 kB)
+Collecting et-xmlfile (from openpyxl->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading et_xmlfile-2.0.0-py3-none-any.whl.metadata (2.7 kB)
+Collecting cfgv>=2.0.0 (from pre-commit->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading cfgv-3.5.0-py2.py3-none-any.whl.metadata (8.9 kB)
+Collecting identify>=1.0.0 (from pre-commit->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading identify-2.6.20-py2.py3-none-any.whl.metadata (4.4 kB)
+Collecting nodeenv>=0.11.1 (from pre-commit->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading nodeenv-1.11.0-py2.py3-none-any.whl.metadata (40 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.0/41.0 kB 212.2 MB/s eta 0:00:00
+Collecting virtualenv>=20.10.0 (from pre-commit->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading virtualenv-21.14.12-py3-none-any.whl.metadata (4.1 kB)
+Collecting opt_einsum>=2.3.2 (from pyro-ppl->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading opt_einsum-3.4.0-py3-none-any.whl.metadata (6.3 kB)
+Collecting pyro-api>=0.1.1 (from pyro-ppl->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading pyro_api-0.1.2-py3-none-any.whl.metadata (2.5 kB)
+Collecting markdown-it-py>=2.2.0 (from rich->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting grpcio<2.0,>=1.74.0 (from tensorboard->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading grpcio-1.84.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (3.8 kB)
+Collecting markdown>=2.6.8 (from tensorboard->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading markdown-3.11.2-py3-none-any.whl.metadata (5.1 kB)
+Collecting protobuf<8.0.0,>=6.31.1 (from tensorboard->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_aarch64.whl.metadata (595 bytes)
+Collecting tensorboard-data-server<0.8.0,>=0.7.0 (from tensorboard->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading tensorboard_data_server-0.7.2-py3-none-any.whl.metadata (1.1 kB)
+Collecting werkzeug>=1.0.1 (from tensorboard->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading werkzeug-3.1.9-py3-none-any.whl.metadata (4.1 kB)
+Collecting argon2-cffi-bindings (from argon2-cffi>=21.1->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl.metadata (7.5 kB)
+Collecting interface-meta>=1.2.0 (from formulaic>=1.1.0->statsmodels>=0.9.0->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading interface_meta-2.0.1-py3-none-any.whl.metadata (6.4 kB)
+Collecting wrapt>=1.0 (from formulaic>=1.1.0->statsmodels>=0.9.0->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading wrapt-2.5.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (7.6 kB)
+Collecting aiohttp!=4.0.0a0,!=4.0.0a1 (from fsspec[http]<2028.0,>=2022.5.0->lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading aiohttp-3.14.5-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (8.3 kB)
+Collecting parso<0.9.0,>=0.8.7 (from jedi>=0.18.2->ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading parso-0.8.7-py2.py3-none-any.whl.metadata (8.2 kB)
+Collecting attrs>=22.2.0 (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting jsonschema-specifications>=2023.03.6 (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting referencing>=0.28.4 (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py>=0.25.0 (from jsonschema>=4.18.0->jupyterlab-server<3,>=2.28.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading rpds_py-2026.9.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (4.1 kB)
+Collecting python-json-logger>=2.0.4 (from jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading python_json_logger-4.2.0-py3-none-any.whl.metadata (2.9 kB)
+Collecting rfc3339-validator (from jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl.metadata (1.5 kB)
+Collecting rfc3986-validator>=0.1.1 (from jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading rfc3986_validator-0.1.1-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting ptyprocess>=0.5 (from pexpect>4.6->ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading ptyprocess-0.7.0-py2.py3-none-any.whl.metadata (1.3 kB)
+Collecting wcwidth>=0.1.4 (from prompt_toolkit<3.1.0,>=3.0.41->ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading wcwidth-0.9.3-cp310-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (23 kB)
+Collecting executing>=1.2.0 (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading executing-2.3.0-py3-none-any.whl.metadata (9.1 kB)
+Collecting asttokens>=2.1.0 (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading asttokens-3.0.2-py3-none-any.whl.metadata (5.7 kB)
+Collecting pure-eval (from stack_data>=0.6.0->ipython>=7.23.1->ipykernel>=6.25->scjdo2==0.1.0.dev1)
+  Downloading pure_eval-0.2.4-py3-none-any.whl.metadata (6.4 kB)
+Collecting distlib<1,>=0.4.3 (from virtualenv>=20.10.0->pre-commit->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading distlib-0.4.4-py2.py3-none-any.whl.metadata (5.3 kB)
+Collecting python-discovery>=1.6.1 (from virtualenv>=20.10.0->pre-commit->dynamo-release>=1.4->scjdo2==0.1.0.dev1)
+  Downloading python_discovery-1.6.4-py3-none-any.whl.metadata (5.1 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<2028.0,>=2022.5.0->lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.4.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<2028.0,>=2022.5.0->lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<2028.0,>=2022.5.0->lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading frozenlist-1.8.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (20 kB)
+Collecting multidict<8.0,>=4.5 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<2028.0,>=2022.5.0->lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading multidict-7.1.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (6.2 kB)
+Collecting propcache>=0.2.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<2028.0,>=2022.5.0->lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading propcache-0.5.4-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (25 kB)
+Collecting yarl<2.0,>=1.25.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<2028.0,>=2022.5.0->lightning>=2->scvi-tools>=1.1->scjdo2==0.1.0.dev1)
+  Downloading yarl-1.25.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl.metadata (111 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 111.6/111.6 kB 215.7 MB/s eta 0:00:00
+Collecting fqdn (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading fqdn-1.6.0-py3-none-any.whl.metadata (9.4 kB)
+Collecting isoduration (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading isoduration-20.11.0-py3-none-any.whl.metadata (5.7 kB)
+Collecting jsonpointer>1.13 (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading jsonpointer-3.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting rfc3987-syntax>=1.1.0 (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading rfc3987_syntax-1.1.0-py3-none-any.whl.metadata (7.7 kB)
+Collecting uri-template (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading uri_template-1.3.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting webcolors>=24.6.0 (from jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading webcolors-25.10.0-py3-none-any.whl.metadata (2.2 kB)
+Collecting cffi>=1.0.1 (from argon2-cffi-bindings->argon2-cffi>=21.1->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading cffi-2.1.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (2.5 kB)
+Collecting pycparser (from cffi>=1.0.1->argon2-cffi-bindings->argon2-cffi>=21.1->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading pycparser-3.11-py3-none-any.whl.metadata (8.2 kB)
+Collecting lark>=1.2.2 (from rfc3987-syntax>=1.1.0->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading lark-1.3.1-py3-none-any.whl.metadata (1.8 kB)
+Collecting arrow>=0.15.0 (from isoduration->jsonschema[format-nongpl]>=4.18.0->jupyter-events>=0.11.0->jupyter-server<3,>=2.19.0->jupyterlab>=4.0->scjdo2==0.1.0.dev1)
+  Downloading arrow-1.4.0-py3-none-any.whl.metadata (7.7 kB)
+INFO: pip is looking at multiple versions of scverse-misc[settings] to determine which version is compatible with other requirements. This could take a while.
+Collecting scverse-misc[settings]>=0.1.0 (from anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading scverse_misc-0.1.6-py3-none-any.whl.metadata (4.9 kB)
+  Downloading scverse_misc-0.1.5-py3-none-any.whl.metadata (4.9 kB)
+  Downloading scverse_misc-0.1.4-py3-none-any.whl.metadata (4.9 kB)
+  Downloading scverse_misc-0.1.3-py3-none-any.whl.metadata (4.9 kB)
+  Downloading scverse_misc-0.1.2-py3-none-any.whl.metadata (4.9 kB)
+Collecting pydantic-settings (from scverse-misc[settings]>=0.1.0->anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading pydantic_settings-2.16.1-py3-none-any.whl.metadata (4.0 kB)
+Collecting python-dotenv (from scverse-misc[settings]>=0.1.0->anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading python_dotenv-1.2.4-py3-none-any.whl.metadata (29 kB)
+Collecting pydantic>=2.7.0 (from pydantic-settings->scverse-misc[settings]>=0.1.0->anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.0/133.0 kB 252.9 MB/s eta 0:00:00
+Collecting typing-inspection>=0.4.0 (from pydantic-settings->scverse-misc[settings]>=0.1.0->anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting annotated-types>=0.6.0 (from pydantic>=2.7.0->pydantic-settings->scverse-misc[settings]>=0.1.0->anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.50.1 (from pydantic>=2.7.0->pydantic-settings->scverse-misc[settings]>=0.1.0->anndata>=0.10->scjdo2==0.1.0.dev1)
+  Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (6.5 kB)
+Downloading dynamo_release-1.5.3-py3-none-any.whl (1.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 197.8 MB/s eta 0:00:00
+Downloading anndata-0.10.9-py3-none-any.whl (128 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 129.0/129.0 kB 247.9 MB/s eta 0:00:00
+Downloading ipykernel-7.4.0-py3-none-any.whl (123 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 123.2/123.2 kB 279.5 MB/s eta 0:00:00
+Downloading jupyterlab-4.6.4-py3-none-any.whl (17.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.2/17.2 MB 300.9 MB/s eta 0:00:00
+Downloading matplotlib-3.11.2-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (10.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.7/10.7 MB 274.5 MB/s eta 0:00:00
+Downloading nbconvert-7.17.2-py3-none-any.whl (262 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 262.1/262.1 kB 326.1 MB/s eta 0:00:00
+Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (15.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.7/15.7 MB 255.4 MB/s eta 0:00:00
+Downloading pandas-2.3.3-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl (11.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.7/11.7 MB 227.5 MB/s eta 0:00:00
+Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 386.5/386.5 kB 339.7 MB/s eta 0:00:00
+Downloading pytest_cov-7.1.0-py3-none-any.whl (22 kB)
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (775 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 775.1/775.1 kB 313.9 MB/s eta 0:00:00
+Downloading ruff-0.17.[drive-id-withheld].manylinux2014_aarch64.whl (9.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.9/9.9 MB 152.7 MB/s eta 0:00:00
+Downloading scanpy-1.12.4-py3-none-any.whl (2.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 267.0 MB/s eta 0:00:00
+Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (8.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.9/8.9 MB 140.4 MB/s eta 0:00:00
+Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (34.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.0/34.0 MB 241.5 MB/s eta 0:00:00
+Downloading scvi_tools-1.5.1-py3-none-any.whl (731 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 731.5/731.5 kB 307.6 MB/s eta 0:00:00
+Downloading torch-2.14.1-cp312-cp312-manylinux_2_28_aarch64.whl (454.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 454.0/454.0 MB 209.1 MB/s eta 0:00:00
+Downloading cuda_toolkit-13.0.3.0-py2.py3-none-any.whl (2.5 kB)
+Downloading nvidia_cudnn_cu13-9.24.0.43-py3-none-manylinux_2_27_aarch64.whl (651.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 651.0/651.0 MB 238.6 MB/s eta 0:00:00
+Downloading nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_aarch64.whl (221.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 221.1/221.1 MB 292.3 MB/s eta 0:00:00
+Downloading nvidia_nccl_cu13-2.30.7-py3-none-manylinux_2_18_aarch64.whl (216.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 216.0/216.0 MB 240.3 MB/s eta 0:00:00
+Downloading nvidia_nvshmem_cu13-3.4.5-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (60.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.2/60.2 MB 214.4 MB/s eta 0:00:00
+Downloading nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_aarch64.whl (542.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 542.8/542.8 MB 274.0 MB/s eta 0:00:00
+Downloading nvidia_cuda_cupti-13.0.85-py3-none-manylinux_2_25_aarch64.whl (10.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.3/10.3 MB 290.5 MB/s eta 0:00:00
+Downloading nvidia_cuda_nvrtc-13.0.88-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (43.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 43.0/43.0 MB 247.1 MB/s eta 0:00:00
+Downloading nvidia_cuda_runtime-13.0.96-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (2.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 291.6 MB/s eta 0:00:00
+Downloading nvidia_cufft-12.0.0.61-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (214.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 214.1/214.1 MB 247.4 MB/s eta 0:00:00
+Downloading nvidia_cufile-1.15.1.6-py3-none-manylinux_2_27_aarch64.whl (1.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 339.8 MB/s eta 0:00:00
+Downloading nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_aarch64.whl (62.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.0/62.0 MB 253.6 MB/s eta 0:00:00
+Downloading nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_aarch64.whl (223.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 223.5/223.5 MB 275.5 MB/s eta 0:00:00
+Downloading nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (162.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.2/162.2 MB 237.9 MB/s eta 0:00:00
+Downloading nvidia_nvtx-13.0.85-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (148 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 148.9/148.9 kB 301.4 MB/s eta 0:00:00
+Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.2/80.2 kB 304.1 MB/s eta 0:00:00
+Downloading zarr-3.4.1-py3-none-any.whl (405 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 405.3/405.3 kB 344.1 MB/s eta 0:00:00
+Downloading array_api_compat-1.15.0-py3-none-any.whl (79 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.1/79.1 kB 299.1 MB/s eta 0:00:00
+Downloading async_lru-2.4.0-py3-none-any.whl (10 kB)
+Downloading bleach-6.4.0-py3-none-any.whl (165 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 165.1/165.1 kB 330.9 MB/s eta 0:00:00
+Downloading colorcet-3.2.1-py3-none-any.whl (262 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 262.3/262.3 kB 344.3 MB/s eta 0:00:00
+Downloading comm-0.2.3-py3-none-any.whl (7.3 kB)
+Downloading contourpy-1.4.0-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (356 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 356.3/356.3 kB 344.0 MB/s eta 0:00:00
+Downloading coverage-7.16.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (259 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 259.7/259.7 kB 331.7 MB/s eta 0:00:00
+Downloading cuda_bindings-13.4.4-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl (6.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.5/6.5 MB 245.9 MB/s eta 0:00:00
+Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+Downloading debugpy-1.8.22-py2.py3-none-any.whl (5.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 298.2 MB/s eta 0:00:00
+Downloading donfig-0.8.1.post1-py3-none-any.whl (21 kB)
+Downloading fast_array_utils-1.5.1-py3-none-any.whl (40 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.6/40.6 kB 251.3 MB/s eta 0:00:00
+Downloading fonttools-4.67.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (5.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 295.7 MB/s eta 0:00:00
+Downloading fsspec-2026.9.0-py3-none-any.whl (221 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 221.7/221.7 kB 341.4 MB/s eta 0:00:00
+Downloading get_version-3.5.5-py3-none-any.whl (18 kB)
+Downloading google_crc32c-1.9.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (37 kB)
+Downloading h5py-3.16.0-cp312-cp312-manylinux_2_28_aarch64.whl (5.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 278.2 MB/s eta 0:00:00
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 284.7 MB/s eta 0:00:00
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.8/78.8 kB 296.1 MB/s eta 0:00:00
+Downloading igraph-1.0.0-cp39-abi3-manylinux_2_28_aarch64.whl (5.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 273.3 MB/s eta 0:00:00
+Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+Downloading ipython-9.17.1-py3-none-any.whl (639 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 639.0/639.0 kB 339.7 MB/s eta 0:00:00
+Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 kB 322.9 MB/s eta 0:00:00
+Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 306.1/306.1 kB 342.4 MB/s eta 0:00:00
+Downloading jupyter_builder-1.2.3-py3-none-any.whl (947 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 947.5/947.5 kB 268.4 MB/s eta 0:00:00
+Downloading jupyter_client-8.10.0-py3-none-any.whl (110 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 110.2/110.2 kB 309.9 MB/s eta 0:00:00
+Downloading jupyter_core-5.9.1-py3-none-any.whl (29 kB)
+Downloading jupyter_lsp-2.3.1-py3-none-any.whl (77 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 77.5/77.5 kB 281.0 MB/s eta 0:00:00
+Downloading jupyter_server-2.21.1-py3-none-any.whl (394 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 394.6/394.6 kB 342.8 MB/s eta 0:00:00
+Downloading jupyterlab_server-2.28.1-py3-none-any.whl (60 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.2/60.2 kB 275.0 MB/s eta 0:00:00
+Downloading kiwisolver-1.5.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 291.6 MB/s eta 0:00:00
+Downloading legacy_api_wrap-1.5-py3-none-any.whl (10 kB)
+Downloading lightning-2.6.6-py3-none-any.whl (849 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 849.3/849.3 kB 344.3 MB/s eta 0:00:00
+Downloading markupsafe-3.0.4-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (24 kB)
+Downloading matplotlib_inline-0.2.2-py3-none-any.whl (9.5 kB)
+Downloading mistune-3.4.0-py3-none-any.whl (70 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70.4/70.4 kB 288.1 MB/s eta 0:00:00
+Downloading msgspec-0.22.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (224 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 224.0/224.0 kB 327.0 MB/s eta 0:00:00
+Downloading narwhals-2.27.1-py3-none-any.whl (483 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 483.2/483.2 kB 347.5 MB/s eta 0:00:00
+Downloading nbclient-0.11.0-py3-none-any.whl (25 kB)
+Downloading nbformat-5.11.1-py3-none-any.whl (79 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.8/79.8 kB 294.9 MB/s eta 0:00:00
+Downloading nest_asyncio2-1.7.4-py3-none-any.whl (8.5 kB)
+Downloading networkx-3.7-py3-none-any.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 293.4 MB/s eta 0:00:00
+Downloading notebook_shim-0.2.4-py3-none-any.whl (13 kB)
+Downloading numba-0.68.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (3.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 283.0 MB/s eta 0:00:00
+Downloading numcodecs-0.17.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (1.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 171.9 MB/s eta 0:00:00
+Downloading numdifftools-0.11.1-py3-none-any.whl (96 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.5/96.5 kB 307.6 MB/s eta 0:00:00
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 130.0/130.0 kB 319.7 MB/s eta 0:00:00
+Downloading pandocfilters-1.5.1-py2.py3-none-any.whl (8.7 kB)
+Downloading patsy-1.0.3-py2.py3-none-any.whl (233 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 233.3/233.3 kB 323.7 MB/s eta 0:00:00
+Downloading pillow-13.0.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (6.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.5/6.5 MB 214.3 MB/s eta 0:00:00
+Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 351.5 MB/s eta 0:00:00
+Downloading pynndescent-0.6.0-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.5/73.5 kB 248.6 MB/s eta 0:00:00
+Downloading pyparsing-3.3.3-py3-none-any.whl (126 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 126.4/126.4 kB 318.2 MB/s eta 0:00:00
+Downloading python_dateutil-3.0.0-py2.py3-none-any.whl (94 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 94.7/94.7 kB 309.5 MB/s eta 0:00:00
+Downloading pytz-2026.5-py2.py3-none-any.whl (506 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 506.3/506.3 kB 341.2 MB/s eta 0:00:00
+Downloading pyzmq-27.2.0-cp312-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (697 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 697.7/697.7 kB 353.6 MB/s eta 0:00:00
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 73.1/73.1 kB 282.9 MB/s eta 0:00:00
+Downloading certifi-2026.10.19-py3-none-any.whl (136 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 136.5/136.5 kB 319.2 MB/s eta 0:00:00
+Downloading seaborn-0.13.2-py3-none-any.whl (294 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 294.9/294.9 kB 183.8 MB/s eta 0:00:00
+Downloading session_info-1.0.1-py3-none-any.whl (9.1 kB)
+Downloading setuptools-84.2.1-py3-none-any.whl (876 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 876.3/876.3 kB 251.3 MB/s eta 0:00:00
+Downloading sparse-0.19.2-py2.py3-none-any.whl (155 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 155.3/155.3 kB 299.8 MB/s eta 0:00:00
+Downloading statsmodels-0.15.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (11.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.7/11.7 MB 203.0 MB/s eta 0:00:00
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 243.9 MB/s eta 0:00:00
+Downloading threadpoolctl-3.7.0-py3-none-any.whl (26 kB)
+Downloading torchmetrics-1.9.0-py3-none-any.whl (983 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 983.4/983.4 kB 291.5 MB/s eta 0:00:00
+Downloading tornado-6.6-cp311-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (530 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 530.5/530.5 kB 286.0 MB/s eta 0:00:00
+Downloading traitlets-5.16.1-py3-none-any.whl (86 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 86.2/86.2 kB 293.0 MB/s eta 0:00:00
+Downloading triton-3.8.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (226.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.5/226.5 MB 247.7 MB/s eta 0:00:00
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.6/45.6 kB 200.9 MB/s eta 0:00:00
+Downloading tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 348.0/348.0 kB 334.3 MB/s eta 0:00:00
+Downloading umap_learn-0.5.12-py3-none-any.whl (91 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.8/91.8 kB 299.9 MB/s eta 0:00:00
+Downloading adjusttext-1.4.0-py3-none-any.whl (13 kB)
+Downloading beautifulsoup4-4.15.0-py3-none-any.whl (109 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 109.9/109.9 kB 288.9 MB/s eta 0:00:00
+Downloading datacache-1.29.2-py3-none-any.whl (103 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.7/103.7 kB 303.9 MB/s eta 0:00:00
+Downloading filelock-4.2.4-py3-none-any.whl (162 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.5/162.5 kB 303.2 MB/s eta 0:00:00
+Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl (15 kB)
+Downloading leidenalg-0.12.0-cp38-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (2.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.5/2.5 MB 191.0 MB/s eta 0:00:00
+Downloading ml_collections-1.1.0-py3-none-any.whl (76 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 76.7/76.7 kB 286.7 MB/s eta 0:00:00
+Downloading mudata-0.3.10-py3-none-any.whl (43 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 44.0/44.0 kB 241.0 MB/s eta 0:00:00
+Downloading scverse_misc-0.1.1-py3-none-any.whl (22 kB)
+Downloading natsort-8.4.0-py3-none-any.whl (38 kB)
+Downloading openpyxl-3.1.5-py2.py3-none-any.whl (250 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.9/250.9 kB 317.5 MB/s eta 0:00:00
+Downloading pre_commit-4.7.0-py2.py3-none-any.whl (226 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.3/226.3 kB 316.9 MB/s eta 0:00:00
+Downloading pyro_ppl-1.9.2-py3-none-any.whl (760 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 760.7/760.7 kB 342.7 MB/s eta 0:00:00
+Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 310.7/310.7 kB 342.4 MB/s eta 0:00:00
+Downloading session_info2-0.4.2-py3-none-any.whl (17 kB)
+Downloading tensorboard-2.21.0-py3-none-any.whl (5.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 271.6 MB/s eta 0:00:00
+Downloading xarray-2026.9.0-py3-none-any.whl (1.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.4/1.4 MB 289.5 MB/s eta 0:00:00
+Downloading absl_py-2.5.1-py3-none-any.whl (137 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.7/137.7 kB 294.6 MB/s eta 0:00:00
+Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 132.1/132.1 kB 284.5 MB/s eta 0:00:00
+Downloading argon2_cffi-25.1.0-py3-none-any.whl (14 kB)
+Downloading babel-2.18.0-py3-none-any.whl (10.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.2/10.2 MB 265.0 MB/s eta 0:00:00
+Downloading cfgv-3.5.0-py2.py3-none-any.whl (7.4 kB)
+Downloading charset_normalizer-3.5.2-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (246 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 246.7/246.7 kB 316.4 MB/s eta 0:00:00
+Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+Downloading cuda_pathfinder-1.8.3-py3-none-any.whl (62 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.6/62.6 kB 263.1 MB/s eta 0:00:00
+Downloading dunamai-1.26.3-py3-none-any.whl (27 kB)
+Downloading fastjsonschema-2.22.2-py3-none-any.whl (27 kB)
+Downloading formulaic-1.2.2-py3-none-any.whl (118 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 118.9/118.9 kB 308.8 MB/s eta 0:00:00
+Downloading grpcio-1.84.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (7.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.0/7.0 MB 255.7 MB/s eta 0:00:00
+Downloading identify-2.6.20-py2.py3-none-any.whl (99 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.5/99.5 kB 298.6 MB/s eta 0:00:00
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 69.6/69.6 kB 247.0 MB/s eta 0:00:00
+Downloading ipython_pygments_lexers-1.1.1-py3-none-any.whl (8.1 kB)
+Downloading jedi-0.20.1-py2.py3-none-any.whl (4.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.9/4.9 MB 276.7 MB/s eta 0:00:00
+Downloading json5-0.17.3-py3-none-any.whl (34 kB)
+Downloading jsonschema-4.26.0-py3-none-any.whl (90 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.6/90.6 kB 301.9 MB/s eta 0:00:00
+Downloading jupyter_events-0.12.1-py3-none-any.whl (19 kB)
+Downloading jupyter_server_terminals-0.5.4-py3-none-any.whl (13 kB)
+Downloading lightning_utilities-0.15.3-py3-none-any.whl (31 kB)
+Downloading llvmlite-0.50.0-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl (58.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 MB 297.5 MB/s eta 0:00:00
+Downloading markdown-3.11.2-py3-none-any.whl (114 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 114.3/114.3 kB 307.9 MB/s eta 0:00:00
+Downloading markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 91.7/91.7 kB 298.0 MB/s eta 0:00:00
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 339.5 MB/s eta 0:00:00
+Downloading nodeenv-1.11.0-py2.py3-none-any.whl (34 kB)
+Downloading nvidia_nvjitlink-13.4.92-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (40.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.4/40.4 MB 266.0 MB/s eta 0:00:00
+Downloading opt_einsum-3.4.0-py3-none-any.whl (71 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 71.9/71.9 kB 272.8 MB/s eta 0:00:00
+Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 63.8/63.8 kB 252.7 MB/s eta 0:00:00
+Downloading platformdirs-4.13.5-py3-none-any.whl (32 kB)
+Downloading prometheus_client-0.26.0-py3-none-any.whl (64 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.5/64.5 kB 264.5 MB/s eta 0:00:00
+Downloading prompt_toolkit-3.0.53-py3-none-any.whl (392 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 392.3/392.3 kB 338.0 MB/s eta 0:00:00
+Downloading protobuf-7.36.2-cp310-abi3-manylinux2014_aarch64.whl (344 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 344.2/344.2 kB 332.8 MB/s eta 0:00:00
+Downloading psutil-7.2.2-cp36-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (156 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 157.0/157.0 kB 323.0 MB/s eta 0:00:00
+Downloading pyro_api-0.1.2-py3-none-any.whl (11 kB)
+Downloading scikit_misc-0.5.3-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl (178 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 179.0/179.0 kB 309.4 MB/s eta 0:00:00
+Downloading send2trash-2.1.0-py3-none-any.whl (17 kB)
+Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading soupsieve-3.0.4-py3-none-any.whl (42 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 42.5/42.5 kB 234.0 MB/s eta 0:00:00
+Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
+Downloading tensorboard_data_server-0.7.2-py3-none-any.whl (2.4 kB)
+Downloading terminado-0.18.1-py3-none-any.whl (14 kB)
+Downloading texttable-1.7.2-py2.py3-none-any.whl (10 kB)
+Downloading tinycss2-1.5.1-py3-none-any.whl (28 kB)
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 135.7/135.7 kB 294.5 MB/s eta 0:00:00
+Downloading virtualenv-21.14.12-py3-none-any.whl (5.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.6/5.6 MB 291.4 MB/s eta 0:00:00
+Downloading webencodings-0.6.1-py3-none-any.whl (8.7 kB)
+Downloading websocket_client-1.9.2-py3-none-any.whl (95 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 95.8/95.8 kB 306.0 MB/s eta 0:00:00
+Downloading werkzeug-3.1.9-py3-none-any.whl (228 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 228.7/228.7 kB 336.7 MB/s eta 0:00:00
+Downloading click-8.5.0-py3-none-any.whl (125 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.3/125.3 kB 299.3 MB/s eta 0:00:00
+Downloading et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+Downloading numpy_groupies-0.15.0-py3-none-any.whl (177 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 177.8/177.8 kB 314.0 MB/s eta 0:00:00
+Downloading pytorch_lightning-2.6.6-py3-none-any.whl (853 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 853.0/853.0 kB 271.1 MB/s eta 0:00:00
+Downloading stdlib_list-0.12.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.6/87.6 kB 294.5 MB/s eta 0:00:00
+Downloading aiohttp-3.14.5-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 245.2 MB/s eta 0:00:00
+Downloading asttokens-3.0.2-py3-none-any.whl (28 kB)
+Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 67.5/67.5 kB 251.7 MB/s eta 0:00:00
+Downloading distlib-0.4.4-py2.py3-none-any.whl (472 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 472.1/472.1 kB 331.1 MB/s eta 0:00:00
+Downloading executing-2.3.0-py3-none-any.whl (29 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading interface_meta-2.0.1-py3-none-any.whl (15 kB)
+Downloading jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading parso-0.8.7-py2.py3-none-any.whl (107 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 107.0/107.0 kB 275.9 MB/s eta 0:00:00
+Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+Downloading python_discovery-1.6.4-py3-none-any.whl (39 kB)
+Downloading python_json_logger-4.2.0-py3-none-any.whl (14 kB)
+Downloading referencing-0.37.0-py3-none-any.whl (26 kB)
+Downloading rfc3986_validator-0.1.1-py2.py3-none-any.whl (4.2 kB)
+Downloading rpds_py-2026.9.1-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (373 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 373.1/373.1 kB 56.8 MB/s eta 0:00:00
+Downloading wcwidth-0.9.3-cp310-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (771 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 771.9/771.9 kB 236.1 MB/s eta 0:00:00
+Downloading wrapt-2.5.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (250 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 250.6/250.6 kB 311.1 MB/s eta 0:00:00
+Downloading argon2_cffi_bindings-26.1.0-cp310-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl (27 kB)
+Downloading pure_eval-0.2.4-py3-none-any.whl (11 kB)
+Downloading rfc3339_validator-0.1.4-py2.py3-none-any.whl (3.5 kB)
+Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)
+Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+Downloading cffi-2.1.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (222 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 222.4/222.4 kB 315.9 MB/s eta 0:00:00
+Downloading frozenlist-1.8.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (243 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 243.0/243.0 kB 303.7 MB/s eta 0:00:00
+Downloading jsonpointer-3.4-py3-none-any.whl (9.0 kB)
+Downloading multidict-7.1.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (478 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 478.6/478.6 kB 295.5 MB/s eta 0:00:00
+Downloading propcache-0.5.4-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (251 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 251.8/251.8 kB 323.7 MB/s eta 0:00:00
+Downloading rfc3987_syntax-1.1.0-py3-none-any.whl (8.0 kB)
+Downloading webcolors-25.10.0-py3-none-any.whl (14 kB)
+Downloading yarl-1.25.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl (115 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 115.4/115.4 kB 307.2 MB/s eta 0:00:00
+Downloading fqdn-1.6.0-py3-none-any.whl (12 kB)
+Downloading isoduration-20.11.0-py3-none-any.whl (11 kB)
+Downloading uri_template-1.3.0-py3-none-any.whl (11 kB)
+Downloading arrow-1.4.0-py3-none-any.whl (68 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 68.8/68.8 kB 278.8 MB/s eta 0:00:00
+Downloading lark-1.3.1-py3-none-any.whl (113 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 113.2/113.2 kB 285.1 MB/s eta 0:00:00
+Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 51.2/51.2 kB 256.6 MB/s eta 0:00:00
+Checking if build backend supports build_editable: started
+Checking if build backend supports build_editable: finished with status 'done'
+Building wheels for collected packages: scjdo2, docrep, loompy
+  Building editable for scjdo2 (pyproject.toml): started
+  Building editable for scjdo2 (pyproject.toml): finished with status 'done'
+  Created wheel for scjdo2: filename=scjdo2-0.1.0.dev1-0.editable-py3-none-any.whl size=6530 sha256=8ca073ffee961d18505d0b5fa40be82053f40db86e1d616cce96d8e8d346c06e
+  Stored in directory: /tmp/pip-ephem-wheel-cache-m2eq8z_2/wheels/67/2c/8f/7b3c183d3d89f2badf9392df4ac1b45ffd07bbadaa5a4c8ca6
+  Building wheel for docrep (pyproject.toml): started
+  Building wheel for docrep (pyproject.toml): finished with status 'done'
+  Created wheel for docrep: filename=docrep-0.3.2-py3-none-any.whl size=19972 sha256=8f35599e53f36aab0c5cf26cc22e53a2e9bf8c928aa6a0527b7ed4a9883afbb6
+  Stored in directory: /tmp/pip-ephem-wheel-cache-m2eq8z_2/wheels/d6/19/ee/0a6a1793d91c449563b49ccab57ce52da3e6fab7614836bd8c
+  Building wheel for loompy (pyproject.toml): started
+  Building wheel for loompy (pyproject.toml): finished with status 'done'
+  Created wheel for loompy: filename=loompy-3.0.8-py3-none-any.whl size=54099 sha256=74a329f2d746410b26bc250e1cae2904181a6e8e99dae122b01a2188fde1862b
+  Stored in directory: /tmp/pip-ephem-wheel-cache-m2eq8z_2/wheels/2e/45/28/2c7afc7f9eab47612e1b5090cfb9ba0f00777625064039a6af
+Successfully built scjdo2 docrep loompy
+Installing collected packages: texttable, pytz, pyro-api, pure-eval, ptyprocess, nvidia-cusparselt-cu13, mpmath, distlib, cuda-toolkit, wrapt, websocket-client, webencodings, webcolors, wcwidth, urllib3, uri-template, tzdata, typing-extensions, triton, traitlets, tqdm, tornado, threadpoolctl, tensorboard-data-server, sympy, stdlib_list, soupsieve, six, setuptools, session-info2, send2trash, ruff, rpds-py, rfc3986-validator, pyzmq, pyyaml, python-json-logger, pyparsing, pygments, pycparser, psutil, protobuf, propcache, prometheus-client, pluggy, platformdirs, pillow, pexpect, parso, pandocfilters, packaging, opt_einsum, nvidia-nvtx, nvidia-nvshmem-cu13, nvidia-nvjitlink, nvidia-nccl-cu13, nvidia-curand, nvidia-cufile, nvidia-cuda-runtime, nvidia-cuda-nvrtc, nvidia-cuda-cupti, numpy, nodeenv, networkx, nest-asyncio2, natsort, narwhals, multidict, msgspec, mistune, mdurl, markupsafe, markdown, llvmlite, legacy-api-wrap, lark, kiwisolver, jupyterlab-pygments, jsonpointer, json5, interface-meta, iniconfig, igraph, idna, identify, h11, google-crc32c, fsspec, frozenlist, fqdn, fonttools, filelock, fastjsonschema, executing, et-xmlfile, defusedxml, debugpy, cycler, cuda-pathfinder, coverage, comm, colorcet, cloudpickle, click, charset_normalizer, cfgv, certifi, babel, attrs, async-lru, asttokens, array-api-compat, aiohappyeyeballs, absl-py, yarl, werkzeug, tinycss2, terminado, stack_data, session-info, scverse-misc, scipy, scikit-misc, rfc3987-syntax, rfc3339-validator, requests, referencing, python-discovery, python-dateutil, pytest, prompt_toolkit, PATSY, openpyxl, nvidia-cusparse, nvidia-cufft, nvidia-cublas, numpy-groupies, numcodecs, numba, ml-collections, matplotlib-inline, markdown-it-py, lightning-utilities, leidenalg, jupyter-core, joblib, jinja2, jedi, ipython-pygments-lexers, httpcore, h5py, grpcio, fast-array-utils, dunamai, donfig, docrep, cuda-bindings, contourpy, cffi, bleach, beautifulsoup4, anyio, aiosignal, zarr, virtualenv, tensorboard, sparse, scikit-learn, rich, pytest-cov, pandas, nvidia-cusolver, nvidia-cudnn-cu13, numdifftools, matplotlib, loompy, jupyter-server-terminals, jupyter-client, jupyter-builder, jsonschema-specifications, ipython, httpx, get_version, arrow, argon2-cffi-bindings, aiohttp, xarray, seaborn, pynndescent, pre-commit, jsonschema, isoduration, ipykernel, formulaic, datacache, argon2-cffi, anndata, adjustText, umap-learn, torch, statsmodels, nbformat, mudata, torchmetrics, scanpy, pyro-ppl, nbclient, jupyter-events, dynamo-release, pytorch-lightning, nbconvert, lightning, jupyter-server, scvi-tools, notebook-shim, jupyterlab-server, jupyter-lsp, scjdo2, jupyterlab
+Successfully installed PATSY-1.0.3 absl-py-2.5.1 adjustText-1.4.0 aiohappyeyeballs-2.7.1 aiohttp-3.14.5 aiosignal-1.4.0 anndata-0.10.9 anyio-4.15.1 argon2-cffi-25.1.0 argon2-cffi-bindings-26.1.0 array-api-compat-1.15.0 arrow-1.4.0 asttokens-3.0.2 async-lru-2.4.0 attrs-26.1.0 babel-2.18.0 beautifulsoup4-4.15.0 bleach-6.4.0 certifi-2026.10.19 cffi-2.1.1 cfgv-3.5.0 charset_normalizer-3.5.2 click-8.5.0 cloudpickle-3.1.2 colorcet-3.2.1 comm-0.2.3 contourpy-1.4.0 coverage-7.16.2 cuda-bindings-13.4.4 cuda-pathfinder-1.8.3 cuda-toolkit-13.0.3.0 cycler-0.12.1 datacache-1.29.2 debugpy-1.8.22 defusedxml-0.7.1 distlib-0.4.4 docrep-0.3.2 donfig-0.8.1.post1 dunamai-1.26.3 dynamo-release-1.5.3 et-xmlfile-2.0.0 executing-2.3.0 fast-array-utils-1.5.1 fastjsonschema-2.22.2 filelock-4.2.4 fonttools-4.67.0 formulaic-1.2.2 fqdn-1.6.0 frozenlist-1.8.0 fsspec-2026.9.0 get_version-3.5.5 google-crc32c-1.9.0 grpcio-1.84.0 h11-0.16.0 h5py-3.16.0 httpcore-1.0.9 httpx-0.28.1 identify-2.6.20 idna-3.20 igraph-1.0.0 iniconfig-2.3.1 interface-meta-2.0.1 ipykernel-7.4.0 ipython-9.17.1 ipython-pygments-lexers-1.1.1 isoduration-20.11.0 jedi-0.20.1 jinja2-3.1.6 joblib-1.6.0 json5-0.17.3 jsonpointer-3.4 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 jupyter-builder-1.2.3 jupyter-client-8.10.0 jupyter-core-5.9.1 jupyter-events-0.12.1 jupyter-lsp-2.3.1 jupyter-server-2.21.1 jupyter-server-terminals-0.5.4 jupyterlab-4.6.4 jupyterlab-pygments-0.3.0 jupyterlab-server-2.28.1 kiwisolver-1.5.1 lark-1.3.1 legacy-api-wrap-1.5 leidenalg-0.12.0 lightning-2.6.6 lightning-utilities-0.15.3 llvmlite-0.50.0 loompy-3.0.8 markdown-3.11.2 markdown-it-py-4.2.0 markupsafe-3.0.4 matplotlib-3.11.2 matplotlib-inline-0.2.2 mdurl-0.1.2 mistune-3.4.0 ml-collections-1.1.0 mpmath-1.3.0 msgspec-0.22.0 mudata-0.3.10 multidict-7.1.0 narwhals-2.27.1 natsort-8.4.0 nbclient-0.11.0 nbconvert-7.17.2 nbformat-5.11.1 nest-asyncio2-1.7.4 networkx-3.7 nodeenv-1.11.0 notebook-shim-0.2.4 numba-0.68.0 numcodecs-0.17.1 numdifftools-0.11.1 numpy-2.5.4 numpy-groupies-0.15.0 nvidia-cublas-13.1.1.3 nvidia-cuda-cupti-13.0.85 nvidia-cuda-nvrtc-13.0.88 nvidia-cuda-runtime-13.0.96 nvidia-cudnn-cu13-9.24.0.43 nvidia-cufft-12.0.0.61 nvidia-cufile-1.15.1.6 nvidia-curand-10.4.0.35 nvidia-cusolver-12.0.4.66 nvidia-cusparse-12.6.3.3 nvidia-cusparselt-cu13-0.8.1 nvidia-nccl-cu13-2.30.7 nvidia-nvjitlink-13.4.92 nvidia-nvshmem-cu13-3.4.5 nvidia-nvtx-13.0.85 openpyxl-3.1.5 opt_einsum-3.4.0 packaging-26.3 pandas-2.3.3 pandocfilters-1.5.1 parso-0.8.7 pexpect-4.9.0 pillow-13.0.0 platformdirs-4.13.5 pluggy-1.7.0 pre-commit-4.7.0 prometheus-client-0.26.0 prompt_toolkit-3.0.53 propcache-0.5.4 protobuf-7.36.2 psutil-7.2.2 ptyprocess-0.7.0 pure-eval-0.2.4 pycparser-3.11 pygments-2.21.0 pynndescent-0.6.0 pyparsing-3.3.3 pyro-api-0.1.2 pyro-ppl-1.9.2 pytest-9.1.1 pytest-cov-7.1.0 python-dateutil-3.0.0 python-discovery-1.6.4 python-json-logger-4.2.0 pytorch-lightning-2.6.6 pytz-2026.5 pyyaml-6.0.3 pyzmq-27.2.0 referencing-0.37.0 requests-2.34.2 rfc3339-validator-0.1.4 rfc3986-validator-0.1.1 rfc3987-syntax-1.1.0 rich-15.0.0 rpds-py-2026.9.1 ruff-0.17.1 scanpy-1.12.4 scikit-learn-1.9.1 scikit-misc-0.5.3 scipy-1.18.1 scjdo2-0.1.0.dev1 scverse-misc-0.1.1 scvi-tools-1.5.1 seaborn-0.13.2 send2trash-2.1.0 session-info-1.0.1 session-info2-0.4.2 setuptools-84.2.1 six-1.17.0 soupsieve-3.0.4 sparse-0.19.2 stack_data-0.6.3 statsmodels-0.15.0 stdlib_list-0.12.0 sympy-1.14.0 tensorboard-2.21.0 tensorboard-data-server-0.7.2 terminado-0.18.1 texttable-1.7.2 threadpoolctl-3.7.0 tinycss2-1.5.1 torch-2.14.1 torchmetrics-1.9.0 tornado-6.6 tqdm-4.70.1 traitlets-5.16.1 triton-3.8.0 typing-extensions-4.16.0 tzdata-2026.5 umap-learn-0.5.12 uri-template-1.3.0 urllib3-2.8.0 virtualenv-21.14.12 wcwidth-0.9.3 webcolors-25.10.0 webencodings-0.6.1 websocket-client-1.9.2 werkzeug-3.1.9 wrapt-2.5.1 xarray-2026.9.0 yarl-1.25.1 zarr-3.4.1

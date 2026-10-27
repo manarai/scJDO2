@@ -1,0 +1,63 @@
+{
+  "finished_utc": "2026-10-19T17:16:11Z",
+  "ledger": {
+    "attempted_evaluations": 288.0,
+    "budget_cpu_hours": 40.0,
+    "completed_evaluations": 284.0,
+    "cpu_hours": 14.551046944444444,
+    "cpu_seconds": 52383.769,
+    "excluded_after_retry": 1.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 0.0
+  },
+  "peak_rss_bytes": 6079053824,
+  "recover_dynamics_timing": [
+    {
+      "run_seconds": 15.326,
+      "wait_seconds": 0.0
+    }
+  ],
+  "rows": [
+    {
+      "base_uid": "refine_p2_n_founders_3",
+      "base_unmet": 5,
+      "block": 3,
+      "complete": 40,
+      "confirm": {
+        "normalized_distance": 14.222400823688726,
+        "status": "complete",
+        "targets_met_json": "{\"C2_genes_detected\": false, \"C3_hvg_log_mean\": true, \"C4_dispersion\": true, \"C5_zero_fraction\": false, \"C7_participation_ratio\": true, \"G1_barcoded_cell_fraction\": true, \"G2_clone_size\": false, \"G3_multi_time_clone_fraction\": true, \"L1_new_total_fraction\": true, \"L2_gamma_half_life\": false, \"S1_unspliced_fraction\": false, \"S3_steady_share\": true, \"S4_recovered_fraction\": true}",
+        "uid": "block3_confirm",
+        "unmet_targets": 5
+      },
+      "errors": [],
+      "grid_points": 40,
+      "lineage_choice": {
+        "cells": 8576,
+        "g_distance": 9.499999999999991,
+        "g_unmet": 1,
+        "in_window": true,
+        "knobs": {
+          "beta0": 1.55,
+          "eta_u": 0.2,
+          "f_constant": 0.15,
+          "f_sample": 0.05188674572633102,
+          "f_switch": 0.15,
+          "gamma0": 0.1625,
+          "mu_b": -2.75,
+          "n_founders": 300,
+          "n_prog": 5,
+          "p_barcode": 0.35000000000000003,
+          "sigma_b": 2.5,
+          "sigma_gamma": 0.8999999999999999,
+          "theta0": 37.75
+        },
+        "uid": "block3_12"
+      },
+      "points_in_window": 14,
+      "result": "accepted block3_confirm"
+    }
+  ],
+  "stage": "block-select",
+  "task": "orient/S09"
+}

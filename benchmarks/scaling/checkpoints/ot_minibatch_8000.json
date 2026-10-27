@@ -1,0 +1,50 @@
+{
+  "finished_utc": "2026-10-22T18:35:07.879896+00:00",
+  "n_per_day": 8000,
+  "n_velocity_cells": 16000,
+  "pairs": [
+    {
+      "batch_count": 20,
+      "batch_size": 4000,
+      "coverage_max": 10,
+      "coverage_median": 10.0,
+      "coverage_min": 10,
+      "epsilon": 3.6953329874857377,
+      "from_day": 2.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 73.90665974971475,
+      "n_source": 8000,
+      "n_target": 8000,
+      "target_sampling_with_replacement": false,
+      "to_day": 4.0,
+      "version": "0.9.7.post1"
+    },
+    {
+      "batch_count": 20,
+      "batch_size": 4000,
+      "coverage_max": 10,
+      "coverage_median": 10.0,
+      "coverage_min": 10,
+      "epsilon": 6.844042470192121,
+      "from_day": 4.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 136.8808494038424,
+      "n_source": 8000,
+      "n_target": 8000,
+      "target_sampling_with_replacement": false,
+      "to_day": 6.0,
+      "version": "0.9.7.post1"
+    }
+  ],
+  "rank": null,
+  "solver": "minibatch",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_minibatch_8000",
+  "velocity_path": "benchmarks/scaling/data/velocity_minibatch_8000.npz",
+  "wall_seconds": 59.8,
+  "wall_seconds_internal": 59.801
+}

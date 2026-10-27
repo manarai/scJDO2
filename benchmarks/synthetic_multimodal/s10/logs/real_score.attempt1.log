@@ -1,0 +1,41 @@
+START 2026-10-20T13:01:02Z .venv/bin/python scripts/s10_real_transitions.py score
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s10_real_transitions.py", line 334, in <module>
+    main()
+    ~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s10_real_transitions.py", line 328, in main
+    stage_score()
+    ~~~~~~~~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s10_real_transitions.py", line 235, in stage_score
+    X = data.X[idx[order]]
+        ~~~~~~^^^^^^^^^^^^
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/anndata/_core/sparse_dataset.py", line 440, in __getitem__
+    row_sp_matrix_validated, col_sp_matrix_validated = validate_indices(
+                                                       ~~~~~~~~~~~~~~~~^
+        mtx, indices
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/anndata/_core/sparse_dataset.py", line 376, in validate_indices
+    res = mtx._validate_indices(indices)
+          ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'backed_csr_matrix' object has no attribute '_validate_indices'. Did you mean: '_prepare_indices'?
+       38.30 real        37.44 user         1.10 sys
+          1059192832  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              121579  page reclaims
+                  18  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3145  voluntary context switches
+                8075  involuntary context switches
+        509456332933  instructions retired
+         97985903269  cycles elapsed
+           437192024  peak memory footprint
+EXIT 1 2026-10-20T13:01:40Z

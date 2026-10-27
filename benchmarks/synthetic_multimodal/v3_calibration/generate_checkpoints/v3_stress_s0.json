@@ -1,0 +1,21 @@
+{
+  "cpu_seconds": 1809.203,
+  "dataset": "v3_stress_s0",
+  "finished_utc": "2026-10-20T02:35:33Z",
+  "manifest_row": {
+    "detected_clone_fraction": 0.2964684711704281,
+    "f_sample": 0.0289091169431116,
+    "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.6, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.3, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.2, \"theta0\": 37.75, \"version\": \"v3\"}",
+    "n_cells": 13337,
+    "n_clones_detected": 685,
+    "n_collected_by_day": "[197, 1515, 11625]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_stress_s0.h5ad",
+    "preset": "v3_stress",
+    "seed": 0,
+    "sha256": "1afcbee0dc1b51a92a3d0437ab074c51ec2ff3b80126a28c7b8ed7adf3951a33"
+  },
+  "part": "generate",
+  "peak_rss_bytes": 12731432960,
+  "task": "orient/S09",
+  "wall_seconds": 1793.75
+}

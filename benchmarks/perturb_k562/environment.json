@@ -1,0 +1,11 @@
+{
+  "python": "3.12.3",
+  "platform": "Linux-6.18.38+-aarch64-with-glibc2.39",
+  "cpu_count": 6,
+  "ram_bytes": 18754445312,
+  "coord_checker_baseline": {
+    "ref": "orientation",
+    "commit": "4c1aad9c627ac4371ced46525baac956529260d9",
+    "reason": "branch-only bundle omitted orientation; local ref points to exact pre-run imported snapshot"
+  }
+}

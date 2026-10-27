@@ -1,0 +1,22 @@
+{
+  "common_reference": "S13 PCA-50 on the fixed observed LARRY sample",
+  "finished_utc": "2026-10-21T04:46:12.426915Z",
+  "in_process_cpu_seconds": 3.535,
+  "input_path": "/Users/terooatt/Documents/scJDO2/benchmarks/data/larry/larry_inVitro_raw.h5ad",
+  "input_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+  "n_cells": 12000,
+  "part_a_truth_free": true,
+  "peak_rss_bytes": 4092608512,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/larry.npz",
+  "prepared_sha256": "72cd1d9ec98e40f8ef55e5ae62c18485236df4ed8febadba7ab4ba1c2f381d6b",
+  "s10_sample_path": "benchmarks/synthetic_multimodal/data/s10/real/larry.npz",
+  "s10_sample_sha256": "89ef82a9431e902a04725b61abb02b20002153fa09cc82c66e293cbdf3e93a13",
+  "s13_map_path": "benchmarks/synthetic_multimodal/s13/arrays/larry_maps.npz",
+  "s13_map_sha256": "a384076df378fe5a5991df2537357bf22ba5dbeb9c749d461cd9841cdc97aed9",
+  "sample_per_day": 4000,
+  "sample_seed": 0,
+  "started_utc": "2026-10-21T04:46:08.495670Z",
+  "task": "orient/S14",
+  "unit": "prepare_larry",
+  "wall_seconds": 3.931
+}

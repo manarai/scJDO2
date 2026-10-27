@@ -1,0 +1,54 @@
+{
+ "gate_A1_pass": {
+  "operator_archetype": true,
+  "descriptor_kmeans": false
+ },
+ "gate_A2_pass": {
+  "operator_archetype": false,
+  "descriptor_kmeans": false
+ },
+ "gate_A3_pass": {
+  "operator_archetype": false,
+  "descriptor_kmeans": false
+ },
+ "overall_pass": false,
+ "a_operator_archetype_recall_min": 0.7197802197802198,
+ "a_operator_archetype_recall_max": 0.7890410958904109,
+ "a_operator_archetype_prec_over_base_min": 3.360127038595274,
+ "a_operator_archetype_prec_over_base_max": 4.051388491268251,
+ "a_operator_archetype_n_other_seed_rows": 6,
+ "a_descriptor_kmeans_recall_min": 0.8821917808219178,
+ "a_descriptor_kmeans_recall_max": 0.9542857142857143,
+ "a_descriptor_kmeans_prec_over_base_min": 1.5407738095238097,
+ "a_descriptor_kmeans_prec_over_base_max": 3.185417018132741,
+ "a_descriptor_kmeans_n_other_seed_rows": 6,
+ "a_dk_n_seeds_below": 1,
+ "b_operator_archetype_nmi_flow_min": 0.3521377790537948,
+ "b_operator_archetype_nmi_flow_max": 0.3946003465808812,
+ "b_operator_archetype_nmi_score_min": 0.04660829518853046,
+ "b_operator_archetype_nmi_score_max": 0.3077803861592369,
+ "b_operator_archetype_leiden_nmi_min": 0.3532906700809884,
+ "b_operator_archetype_leiden_nmi_max": 0.36919996110642833,
+ "b_operator_archetype_n_seeds_flow_beats_leiden": 1,
+ "b_operator_archetype_n_seeds_flow_beats_score": 3,
+ "b_operator_archetype_k_selected": [
+  8
+ ],
+ "b_descriptor_kmeans_nmi_flow_min": 0.06359531484574941,
+ "b_descriptor_kmeans_nmi_flow_max": 0.22773579814832,
+ "b_descriptor_kmeans_nmi_score_min": 0.03732258337344198,
+ "b_descriptor_kmeans_nmi_score_max": 0.07364003001439241,
+ "b_descriptor_kmeans_leiden_nmi_min": 0.013876773848153836,
+ "b_descriptor_kmeans_leiden_nmi_max": 0.01674961802407592,
+ "b_descriptor_kmeans_n_seeds_flow_beats_leiden": 3,
+ "b_descriptor_kmeans_n_seeds_flow_beats_score": 2,
+ "b_descriptor_kmeans_k_selected": [
+  2
+ ],
+ "c_operator_archetype_ari_min": 0.2157287824709361,
+ "c_operator_archetype_ari_max": 0.4391916775628189,
+ "c_operator_archetype_n_pairs": 9,
+ "c_descriptor_kmeans_ari_min": -0.02409140730831449,
+ "c_descriptor_kmeans_ari_max": 0.5272736021254368,
+ "c_descriptor_kmeans_n_pairs": 9
+}

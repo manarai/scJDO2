@@ -1,0 +1,25 @@
+START 2026-10-20T22:29:15Z threads=4 .venv/bin/python scripts/s12_step0.py embed --preset v3_transition --seed 0
+Seed set to 0
+GPU available: True (mps), used: False
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+`Trainer.fit` stopped: `max_epochs=400` reached.
+     1237.43 real      2301.95 user       699.78 sys
+          6287785984  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              777519  page reclaims
+                  85  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3966  voluntary context switches
+            18180674  involuntary context switches
+      26066773719049  instructions retired
+       7965421609864  cycles elapsed
+          5959047096  peak memory footprint
+EXIT 0 2026-10-20T22:49:53Z

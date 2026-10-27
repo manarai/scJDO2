@@ -1,0 +1,20 @@
+{
+  "unit": "input_verification",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "preflight"
+  ],
+  "started_utc": "2026-10-22T18:18:48.980332+00:00",
+  "finished_utc": "2026-10-22T18:21:00.501676+00:00",
+  "exit_code": 0,
+  "wall_seconds": 131.52134665999984,
+  "cpu_hours": 0.0052727097222222226,
+  "max_rss_kib": 46804,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 21975670784,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/input_verification.log",
+  "stop_reason": null
+}

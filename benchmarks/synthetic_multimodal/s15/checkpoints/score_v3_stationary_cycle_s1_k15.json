@@ -1,0 +1,41 @@
+{
+  "array_key": "J",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/operators/score_v3_stationary_cycle_s1_k15.npz",
+  "array_sha256": "33c94127906779702a25d7745d11420dc00b16ab75414e95a82a776f5640be6d",
+  "configuration": {
+    "batch_size": 256,
+    "beta": 1.0,
+    "depth": 3,
+    "esm_laplacian": "exact",
+    "hidden": 96,
+    "loss": "esm",
+    "lr": 0.0005,
+    "n_epochs": 1500,
+    "seed": 0
+  },
+  "dataset": "v3_stationary_cycle_s1",
+  "finished_utc": "2026-10-24T17:59:57.977819Z",
+  "in_process_cpu_seconds": 35.336,
+  "input": {
+    "s10_checkpoint": "benchmarks/synthetic_multimodal/s10/checkpoints/fit_v3_stationary_cycle_s1_pca.json",
+    "s10_fit_path": "benchmarks/synthetic_multimodal/data/s10/v3_stationary_cycle_s1/fit_pca.npz",
+    "s10_fit_sha256": "f14d97549484aac556cf2a456d8618112b72fb996abe2a95d10057b2517b6316",
+    "s10_labelling_variant": "raw_shared",
+    "source": "S10 observed PCA with its first k components"
+  },
+  "k": 15,
+  "observed_fit_complete_before_truth_scoring": true,
+  "operator": "J_score",
+  "pca15_source": "No S10 J_score artifact exists in PCA-15; refit exactly with S10 EnergyDrift settings in the matching observed PCA-k space.",
+  "peak_rss_bytes": 540295168,
+  "stage": "operators",
+  "started_utc": "2026-10-24T17:59:21.634564Z",
+  "symmetry": {
+    "max_asym": 2.3676176397202653e-07,
+    "median_asym": 1.565098699529699e-07
+  },
+  "task": "orient/S15",
+  "truth_keys_accessed": false,
+  "unit": "score_v3_stationary_cycle_s1_k15",
+  "wall_seconds": 36.343
+}

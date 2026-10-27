@@ -1,0 +1,29 @@
+{
+  "finished_utc": "2026-10-19T19:11:39Z",
+  "peak_rss_bytes": 887275520,
+  "rows": [
+    {
+      "attempt": 1,
+      "batch": "block3",
+      "candidate_index": 22,
+      "cpu_seconds": 5.845,
+      "error": "",
+      "knobs_json": "{\"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.16714740848610046, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"mu_b\": -2.75, \"n_founders\": 500, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"theta0\": 37.75}",
+      "normalized_distance": "",
+      "pass": 4,
+      "peak_rss_bytes": 887111680,
+      "ranking_eligible": "false",
+      "reduced_n_founders": "",
+      "reused_from": "",
+      "stage": "block3_lineage",
+      "statistics_json": "{\"G1_barcoded_cell_fraction\": 0.3515512212368522, \"G2_clone_size\": 16.0, \"G3_multi_time_clone_fraction\": 0.8065843621399177, \"collected_cells\": 33941}",
+      "status": "complete",
+      "targets_met_json": "{\"G1_barcoded_cell_fraction\": true, \"G2_clone_size\": false, \"G3_multi_time_clone_fraction\": true}",
+      "uid": "r5block3_22",
+      "unmet_targets": "",
+      "wall_seconds": 5.857
+    }
+  ],
+  "stage": "r5lineage",
+  "task": "orient/S09"
+}

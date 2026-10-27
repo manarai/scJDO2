@@ -1,0 +1,33 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "cpu_seconds": 1677.27,
+      "error": "ValueError: n < 0",
+      "peak_rss_bytes": 10866589696,
+      "system_seconds": 680.91,
+      "user_seconds": 996.36,
+      "wall_seconds": 1669.06
+    },
+    {
+      "attempt": 2,
+      "cpu_seconds": 1691.71,
+      "error": "ValueError: n < 0",
+      "peak_rss_bytes": 10680303616,
+      "system_seconds": 692.86,
+      "user_seconds": 998.85,
+      "wall_seconds": 1685.53
+    }
+  ],
+  "cpu_seconds": 3368.98,
+  "dataset_created": false,
+  "eligibility_assessed": false,
+  "error": "ValueError: n < 0 in numpy Generator.binomial at scjdo2/data/synthetic_multimodal.py:1586",
+  "finished_unix": 1792908088.6410282,
+  "manifest_row_appended": false,
+  "peak_rss_bytes": 10866589696,
+  "status": "failed_after_retry",
+  "task": "orient/S14b",
+  "unit": "generate_v3_transition_s13",
+  "wall_seconds": 3354.59
+}

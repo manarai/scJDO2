@@ -1,0 +1,31 @@
+{
+  "dataset": "v3_default_s2",
+  "error": "",
+  "external_time_seconds": 416.39,
+  "input_path": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/v3/v3_default_s2.h5ad",
+  "input_sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+  "method": "cellrank",
+  "peak_memory_bytes": 7002423296,
+  "runtime_seconds": 414.96,
+  "settings": {
+    "gpcca": {
+      "fate_probabilities": true,
+      "n_states": 5,
+      "terminal_states": "predicted"
+    },
+    "kernels": "0.8 * RealTimeKernel(moscot TemporalProblem) + 0.2 * ConnectivityKernel",
+    "method": "cellrank",
+    "neighbors": {
+      "n_neighbors": 30,
+      "random_state": 0,
+      "use_rep": "X_pca"
+    },
+    "representation": "observed supplied X_pca (30 components)",
+    "sampling_time_key": "day"
+  },
+  "status": "complete",
+  "version": "2.3.3",
+  "warnings": [
+    "GPCCA solver did not converge; GMRES fallback used; terminal state 2 contained 17 cells vs 30 requested."
+  ]
+}

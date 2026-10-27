@@ -1,0 +1,10 @@
+{
+  "dataset": "scnt_hema",
+  "finished_utc": "2026-10-19T07:58:22.999734+00:00",
+  "n_seeds": 5,
+  "source": "scvelo",
+  "started_utc": "2026-10-19T07:56:35.540318+00:00",
+  "task": "orient/S11",
+  "unit": "null_dynamo_prepare_scnt_hema_scvelo",
+  "wall_seconds": 107.459
+}

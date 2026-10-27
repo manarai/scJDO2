@@ -1,0 +1,20 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "basis": "X_pca30",
+    "dynamo_version": "1.5.3",
+    "method": "SparseVFC + vf.jacobian(method=analytical)",
+    "vecfld_iteration": 2
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:30:06.854893+00:00",
+  "n_cells": 1947,
+  "operator": "dynamo",
+  "operator_path": "benchmarks/real_flow/arrays/operators/scnt_hema_labelling_dynamo.npz",
+  "seed": null,
+  "source": "labelling",
+  "started_utc": "2026-10-19T06:29:57.908761+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_labelling_dynamo",
+  "wall_seconds": 8.946
+}

@@ -1,0 +1,7 @@
+fraction_equilibrium,fraction_non_equilibrium,fraction_not_identified,hash_unchanged,method,preset,row_type,seed
+0.0,1.0,0.0,True,pca,v2_stationary_cycle,flags_only,0
+0.0,1.0,0.0,True,fa,v2_stationary_cycle,flags_only,0
+0.0,1.0,0.0,True,pca,v2_stationary_cycle,flags_only,1
+0.0,1.0,0.0,True,fa,v2_stationary_cycle,flags_only,1
+0.0,1.0,0.0,True,pca,v2_stationary_cycle,flags_only,2
+0.0,1.0,0.0,True,fa,v2_stationary_cycle,flags_only,2

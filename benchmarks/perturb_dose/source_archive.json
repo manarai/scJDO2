@@ -1,0 +1,10 @@
+{
+  "drive_file_id": "[drive-id-withheld]",
+  "zip_filename": "scJDO2_orient-S18d.zip",
+  "zip_bytes": 7217,
+  "zip_md5": "3f4e983cf15d3f435ee5627d21d4ef59",
+  "bundle_bytes": 7133,
+  "bundle_sha256": "21721d6b4681716c7a1b484547555f865ed914b421cbc91e597d79a13b1eda42",
+  "prerequisite_commit": "63c9ad8287b41606fa793ff35231151ad25b6871",
+  "imported_head": "f3e166ed298bce92d812ffd5ea3c24b765b3a490"
+}

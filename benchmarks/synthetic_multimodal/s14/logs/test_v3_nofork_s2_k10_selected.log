@@ -1,0 +1,24 @@
+START 2026-10-22T14:11:28Z unit=test_v3_nofork_s2_k10_selected launcher=.sandbox/bin/python cap=14GiB
+/Users/terooatt/Documents/scJDO2-manus/scripts/s12_step0.py:372: RuntimeWarning: Mean of empty slice
+  ax = X[last & (fate == "positive")].mean(0) - X[last & (fate == "negative")].mean(0)
+/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/numpy/_core/_methods.py:134: RuntimeWarning: invalid value encountered in divide
+  ret = um.true_divide(
+       73.05 real        64.00 user         3.05 sys
+          7384154112  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              575740  page reclaims
+                  16  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3871  voluntary context switches
+               54512  involuntary context switches
+        527417062060  instructions retired
+        166390738513  cycles elapsed
+          5354871216  peak memory footprint
+EXIT 0 2026-10-22T14:12:41Z

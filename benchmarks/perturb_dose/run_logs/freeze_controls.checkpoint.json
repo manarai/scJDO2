@@ -1,0 +1,20 @@
+{
+  "unit": "freeze_controls",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "freeze-controls"
+  ],
+  "started_utc": "2026-10-23T02:45:05.208733+00:00",
+  "finished_utc": "2026-10-23T02:45:06.213107+00:00",
+  "exit_code": 0,
+  "wall_seconds": 1.0043779039988294,
+  "cpu_hours": 4.485055555555555e-05,
+  "max_rss_kib": 31676,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/freeze_controls.log",
+  "stop_reason": null
+}

@@ -1,0 +1,8 @@
+{
+  "dataset": "bifurcating_v2_s18",
+  "n_cells": 5000,
+  "n_genes": 1000,
+  "task": "orient/S21",
+  "unit": "prepare_bifurcating_v2_s18",
+  "wall_seconds": 0.37430286407470703
+}

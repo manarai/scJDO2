@@ -1,0 +1,20 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "basis": "X_pca30",
+    "dynamo_version": "1.5.3",
+    "method": "SparseVFC + vf.jacobian(method=analytical)",
+    "vecfld_iteration": 25
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:35:07.694312+00:00",
+  "n_cells": 1947,
+  "operator": "dynamo",
+  "operator_path": "benchmarks/real_flow/arrays/operators/scnt_hema_scvelo_dynamo.npz",
+  "seed": null,
+  "source": "scvelo",
+  "started_utc": "2026-10-19T06:34:58.081079+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_scvelo_dynamo",
+  "wall_seconds": 9.613
+}

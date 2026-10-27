@@ -1,0 +1,14 @@
+{
+  "base_uid": "refine_p2_n_founders_3",
+  "base_unmet": 5,
+  "block": 1,
+  "complete": 25,
+  "errors": [],
+  "grid_points": 25,
+  "points_meeting_S1": 2,
+  "result": "best S1-meeting point increases the unmet count; block 1 not applied",
+  "s1_choice": {
+    "uid": "block1_09",
+    "unmet": 7
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "cellrank_memory": {
+    "cap_bytes": 15032385536,
+    "v3_default_s2_max_rss_bytes": 7002423296,
+    "v3_default_s3_max_rss_bytes": 8235335680,
+    "v3_transition_s2_max_rss_bytes": 8528297984,
+    "v3_transition_s3_max_rss_bytes": 8799666176,
+    "v3_transition_s3_status_under_revised_cap": "complete; 8,799,666,176 bytes is within the 14 GiB cap",
+    "v3_transition_s4_max_rss_bytes": 7998849024
+  },
+  "cellrank_transition_storage": "CSR, float32 values; cells and transition operator unchanged",
+  "checks": {
+    "coord_check": "PASS",
+    "input_sha256_verified_again_after_runs": true,
+    "live_scjdo_head_after": "3ffa1d0",
+    "live_scjdo_head_unchanged": true,
+    "live_scjdo_untracked_path_count_after": 11,
+    "live_scjdo_user_untracked_files_unchanged": true,
+    "pytest": "48 passed (tests/test_orient.py, tests/test_smoke.py)",
+    "truth_scoring": "not performed"
+  },
+  "cpu_hours": 3.216,
+  "cpu_hours_note": "Sum of timed baseline process wall time, including the initial partial v1 attempt, both final v1 import/fit attempts, CellRank, Dynamo, and spliceJAC attempts; excludes Palantir helper runs and environment setup.",
+  "dynamo_diagnosis": {
+    "assertion_location": "dynamo/estimation/csc/velocity.py::get_n_genes, during one-shot dynamics estimation",
+    "condition": "The CSC velocity estimator has no non-None input matrices in its internal data mapping.",
+    "revision_outcome": "Preprocessing logged 1562 outlier genes, then reached spliced/unspliced moments; stopped above 14 GiB before recipe returned.",
+    "revision_recipe_options": {
+      "keep_filtered_genes": true,
+      "keep_raw_layers": true,
+      "n_top_genes": 4000
+    },
+    "shared_count_ge_30_genes": 2456
+  },
+  "dynamo_memory": {
+    "cap_bytes": 15032385536,
+    "v3_transition_s2_prior_attempt_max_rss_bytes": 12771672064,
+    "v3_transition_s2_revision_attempt_max_rss_bytes": 15471050752
+  },
+  "inputs": {
+    "all_verified_before_use": true,
+    "checksums_sha256": {
+      "v3_default_s2": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+      "v3_default_s3": "a8775b8ea069f284dbb046ac8c2ac2f8f831b775f3b89893ea372b430afc8621",
+      "v3_transition_s2": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+      "v3_transition_s3": "28d27cea26eb7112c7a6395046fe52bb202905f8a28ea34d5de452c5d8b37de3",
+      "v3_transition_s4": "30cd640d01c686442c424ae23a8a6d53548d7f9f371db8e96502ae1beb5bf457"
+    },
+    "manifest": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+    "source_files_modified": false
+  },
+  "installer_failures": 0,
+  "live_scjdo_head_before_after": "3ffa1d0aec66cd9087bf6b006e2355b1cc3c2064",
+  "pseudotime_roots": {
+    "v3_default_s2": {
+      "cell_names_key": "names",
+      "dataset_seed": 2,
+      "key": "day2_strict_r0",
+      "pseudotime_sha256": "7d916feac94af0c5a5caa368785a125521e7f294c5d99ee3b1a657fa851b77c8",
+      "root_cell": "cell_0004186",
+      "root_rule": "default_rng(1000 + seed).choice(day-2 cells, 5, replace=False), first",
+      "source": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/s10/v3_default_s2/palantir.npz",
+      "strict_mode": true,
+      "wall_seconds": 10.439
+    },
+    "v3_default_s3": {
+      "dataset_seed": 3,
+      "knn": 30,
+      "n_components": 10,
+      "num_waypoints": 500,
+      "palantir_seed": 0,
+      "pseudotime_sha256": "5afcd7955fc2436d2aaf29465fcbb2c83ccc518b98026d587b8b5b5f4c80d71e",
+      "root_cell": "cell_0001681",
+      "root_rule": "default_rng(1000 + seed).choice(day-2 cells, 5, replace=False), first",
+      "source": "computed with S03 Palantir settings",
+      "strict_mode": true,
+      "use_early_cell_as_start": true,
+      "wall_seconds": 38.284
+    },
+    "v3_transition_s2": {
+      "cell_names_key": "names",
+      "dataset_seed": 2,
+      "key": "day2_strict_r0",
+      "pseudotime_sha256": "002a5e21b987bbf1d1efdc4271162ffbfe1a2110e9ca526395889d711d6a7ae8",
+      "root_cell": "cell_0004186",
+      "root_rule": "default_rng(1000 + seed).choice(day-2 cells, 5, replace=False), first",
+      "source": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/s10/v3_transition_s2/palantir.npz",
+      "strict_mode": true,
+      "wall_seconds": 10.587
+    },
+    "v3_transition_s3": {
+      "dataset_seed": 3,
+      "knn": 30,
+      "n_components": 10,
+      "num_waypoints": 500,
+      "palantir_seed": 0,
+      "pseudotime_sha256": "e907eb53209a1a751c4e7c6a775401ca7aaa7b2fba6fca5e93773c77c5a86aa0",
+      "root_cell": "cell_0001681",
+      "root_rule": "default_rng(1000 + seed).choice(day-2 cells, 5, replace=False), first",
+      "source": "computed with S03 Palantir settings",
+      "strict_mode": true,
+      "use_early_cell_as_start": true,
+      "wall_seconds": 38.847
+    },
+    "v3_transition_s4": {
+      "dataset_seed": 4,
+      "knn": 30,
+      "n_components": 10,
+      "num_waypoints": 500,
+      "palantir_seed": 0,
+      "pseudotime_sha256": "73904f54cd3ae91adc491aeac84115cb2c13fce9de852a39c12b8adea2c92761",
+      "root_cell": "cell_0000711",
+      "root_rule": "default_rng(1000 + seed).choice(day-2 cells, 5, replace=False), first",
+      "source": "computed with S03 Palantir settings",
+      "strict_mode": true,
+      "use_early_cell_as_start": true,
+      "wall_seconds": 38.581
+    }
+  },
+  "runs_completed": 10,
+  "runs_failed": 2,
+  "runs_not_run": 13,
+  "settings": {
+    "cellrank": "RealTimeKernel from moscot TemporalProblem + ConnectivityKernel; 0.8/0.2 weighted combination; GPCCA 5 states, predicted terminal states and fate probabilities.",
+    "dynamo_oneshot": "Dynamo 1.5.3 recipe_one_shot_data sci-fate with pulse_hours; retried with documented n_top_genes=4000, keep_filtered_genes=True, keep_raw_layers=True; stopped during spliced/unspliced moments above 14 GiB. No output.",
+    "palantir": "Strict mode, root first of default_rng(1000+seed).choice(day-2 cells,5); S10 arrays for s2, S03 settings for s3/s4.",
+    "scjdo_v1": "Final retry used corrected .venv-v1 sys.path ordering and NUMBA_CACHE_DIR=.sandbox/cache/numba; training and Jacobian batches completed but the process exited status 1 before saving any operator; v1 stopped after this retry.",
+    "scvelo_dynamical": "S03 settings specified but not run after one-shot exceeded memory cap.",
+    "splicejac": "Leiden resolution 1.0 on supplied X_pca; estimate_jacobian defaults; Scanpy rank_genes_groups by clusters (default t-test) before transition_genes; Scanpy 1.9.8/scVelo 0.2.5/SciPy 1.13.1; all five outputs completed."
+  },
+  "splicejac_environment": {
+    "anndata": "0.9.2",
+    "freeze": "benchmarks/baselines/splicejac/pip-freeze.txt",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "python": "3.11",
+    "scanpy": "1.9.8",
+    "scikit_learn": "1.5.2",
+    "scipy": "1.13.1",
+    "scvelo": "0.2.5",
+    "splicejac": "0.0.1"
+  },
+  "splicejac_memory": {
+    "v3_default_s2": 8748711936,
+    "v3_default_s3": 8589344768,
+    "v3_transition_s2": 8745058304,
+    "v3_transition_s3": 8707637248,
+    "v3_transition_s4": 8756166656
+  },
+  "splicejac_wall_seconds": {
+    "v3_default_s2": 51.81,
+    "v3_default_s3": 53.03,
+    "v3_transition_s2": 44.53,
+    "v3_transition_s3": 41.01,
+    "v3_transition_s4": 42.17
+  },
+  "support_runs_completed": 5,
+  "task": "orient/S16a",
+  "truth_scoring": "not performed",
+  "v1_attempt": {
+    "corrected_environment_retry": {
+      "error": "Scanpy import failed: Numba could not cache agg_sum_csr-parallel because no locator was available for scanpy/get/_kernels.py in .venv-v1.",
+      "peak_rss_bytes": null,
+      "runtime_seconds": 23.19,
+      "status": "failed before fit",
+      "system_seconds": 0.9,
+      "user_seconds": 18.1
+    },
+    "dataset": "v3_transition_s2",
+    "final_retry": {
+      "epochs_completed": 5000,
+      "error": "time: signal: Invalid argument; no operator NPZ/JSON was saved",
+      "jacobian_batches_completed": 101,
+      "numba_cache_dir": ".sandbox/cache/numba",
+      "path_order": "corrected v1 site-packages and source before task primary venv",
+      "peak_rss_bytes": 9837363200,
+      "runtime_seconds": 3149.75,
+      "status": "failed after fitting; exit status 1 before output save"
+    },
+    "invalid_environment_attempt": {
+      "epochs_completed": 4679,
+      "epochs_requested": 5000,
+      "peak_rss_bytes": 8278179840,
+      "runtime_seconds": 3677.3,
+      "status": "stopped incomplete; dependency path resolved to task primary venv",
+      "system_seconds": 1420.59,
+      "user_seconds": 2283.71
+    },
+    "pseudotime": "_run_fit_drift has no external pseudotime parameter; wrapper passes the same strict Palantir root to prepare_trajectory.",
+    "root_cell": "cell_0004186",
+    "status": "stopped after one failed final retry; no further v1 runs"
+  },
+  "v1_installer": "Pinned v56 worktree and .venv-v1 were created; final fit attempt used the corrected import path and explicit task-local Numba cache but exited without writing an operator; stopped as instructed.",
+  "versions": {
+    "anndata": "0.13.4",
+    "cellrank": "2.3.3",
+    "dynamo": "1.5.3",
+    "moscot": "0.5.2",
+    "numba_v1": "0.68.0",
+    "palantir": "1.4.5",
+    "scanpy": "1.12.4",
+    "scjdo_v1": "0.3.0 (pinned v56 worktree)",
+    "scvelo": "0.3.4",
+    "splicejac": "0.0.1",
+    "splicejac_anndata": "0.9.2",
+    "splicejac_numpy": "1.26.4",
+    "splicejac_pandas": "2.2.3",
+    "splicejac_scanpy": "1.9.8",
+    "splicejac_scikit_learn": "1.5.2",
+    "splicejac_scipy": "1.13.1",
+    "splicejac_scvelo": "0.2.5"
+  }
+}

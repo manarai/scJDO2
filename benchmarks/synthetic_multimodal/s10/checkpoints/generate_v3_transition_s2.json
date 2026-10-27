@@ -1,0 +1,21 @@
+{
+  "finished_utc": "2026-10-20T11:43:42.770587Z",
+  "in_process_cpu_seconds": 3144.888,
+  "manifest_row": {
+    "detected_clone_fraction": 0.34725240608506674,
+    "f_sample": 0.0289091169431116,
+    "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_batch_effect\": true, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\", \"z1_crit\": 2.0}",
+    "n_cells": 12884,
+    "n_clones_detected": 693,
+    "n_collected_by_day": "[190, 1457, 11237]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s2.h5ad",
+    "preset": "v3_transition",
+    "seed": 2,
+    "sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9"
+  },
+  "peak_rss_bytes": 16351182848,
+  "started_utc": "2026-10-20T10:44:33.892901Z",
+  "task": "orient/S10",
+  "unit": "generate_v3_transition_s2",
+  "wall_seconds": 3548.878
+}

@@ -1,0 +1,9 @@
+{
+  "authorization": "user accepted one-unit exception",
+  "next_unit": "prepare v3_transition_s2",
+  "recorded_utc": "2026-10-22T12:30:04.924971Z",
+  "scope": "completed deterministic generator only",
+  "subsequent_process_rule": "stop if maximum RSS exceeds 14 GiB",
+  "task": "orient/S14",
+  "unit": "generate_v3_nofork_s2"
+}

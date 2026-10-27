@@ -1,0 +1,38 @@
+{
+  "config": {
+    "batch_size": 256,
+    "beta": 1.0,
+    "clock_calibrated": false,
+    "depth": 3,
+    "device": null,
+    "dsm_sigma_range": [
+      0.05,
+      0.5
+    ],
+    "esm_hutch_k": 4,
+    "esm_laplacian": "exact",
+    "hidden": 96,
+    "loss": "esm",
+    "lr": 0.0005,
+    "n_epochs": 1500,
+    "seed": 0,
+    "weight_decay": 0.0001
+  },
+  "device": "cpu",
+  "fit_finished_utc": "2026-10-24T15:33:02.349235+00:00",
+  "model_sha256": "5a19be41f458b66c61ccee6f5908f565d7fe0aefa002eecd8cf38ef853378a48",
+  "n_query_cells": 19623,
+  "n_training_cells": 12000,
+  "sample_index_sha256": "d5b2d030fcddc2482c2a7037130e795d999a95e48bc8dc930c839a145e33f894",
+  "seed": 0,
+  "started_utc": "2026-10-24T15:28:34.143767+00:00",
+  "symmetry": {
+    "max_asym": 2.576739177584386e-07,
+    "mean_asym": 1.6999191487343524e-07,
+    "median_asym": 1.6832612459438678e-07,
+    "n_sample": 100
+  },
+  "symmetry_pass": true,
+  "torch_threads": 3,
+  "training_array_sha256": "736c2c6405d343fca48dc8d79bced95453291795f615925fe4ae1f52323c2595"
+}

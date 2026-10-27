@@ -1,0 +1,11 @@
+{
+  "dataset": "scnt_hema",
+  "finished_utc": "2026-10-19T07:21:08.748478+00:00",
+  "left": "labelling",
+  "n_seeds": 5,
+  "right": "dynamo_gene",
+  "started_utc": "2026-10-19T07:14:27.217912+00:00",
+  "task": "orient/S11",
+  "unit": "null_source_scnt_hema_labelling_dynamo_gene",
+  "wall_seconds": 401.531
+}

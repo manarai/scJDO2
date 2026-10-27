@@ -1,0 +1,15 @@
+{
+  "J_flow_ot": {
+    "n_fit_cells": 8000
+  },
+  "finished_utc": "2026-10-20T12:54:21.202836Z",
+  "in_process_cpu_seconds": 155.509,
+  "path": "benchmarks/synthetic_multimodal/data/s10/real/fit_larry_fa_seed1.npz",
+  "peak_rss_bytes": 743178240,
+  "sha256": "02625d5f2d132fc6f64c0017a27e860a8d906dd19668a41bc48625155244863c",
+  "started_utc": "2026-10-20T12:51:53.611908Z",
+  "symmetry_max": 2.98936612352918e-07,
+  "task": "orient/S10",
+  "unit": "real_fit_larry_fa_seed1",
+  "wall_seconds": 147.591
+}

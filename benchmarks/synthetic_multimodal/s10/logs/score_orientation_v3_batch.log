@@ -1,0 +1,26 @@
+START 2026-10-20T13:22:10Z .venv/bin/python scripts/s10_score.py --preset v3_batch
+[S10 score] v3_batch s0 pca
+[S10 score] v3_batch s0 fa
+[S10 score] v3_batch s1 pca
+[S10 score] v3_batch s1 fa
+[S10 score] v3_batch s2 pca
+[S10 score] v3_batch s2 fa
+     1015.72 real      1320.56 user        89.38 sys
+          7457488896  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             6226155  page reclaims
+                   7  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1514  voluntary context switches
+             1253053  involuntary context switches
+      16039925090157  instructions retired
+       3652147915590  cycles elapsed
+          7906962328  peak memory footprint
+EXIT 0 2026-10-20T13:39:06Z

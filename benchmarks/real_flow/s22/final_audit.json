@@ -1,0 +1,11 @@
+{
+  "all_19623_query_cells_preserved_per_seed": true,
+  "all_execution_paths_authorized": true,
+  "cpu_hours_before_this_receipt": 0.5741391086111112,
+  "input_sha256": "74f01c2a9121531ac4a0af156c2b96e5be63d1af1957075377277f57249286c8",
+  "passed": true,
+  "protected_sources_unchanged": true,
+  "published_rhos_and_1000_permutation_p_values_reproduced_from_round_trip_csv": true,
+  "saved_eigenspectra_and_clone_medians_verified": true,
+  "ties_and_switch_verified_against_delivered_labels": true
+}

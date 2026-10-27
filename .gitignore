@@ -29,3 +29,30 @@ data/moignard15/
 # External dataset caches (raw files are too large; keep only CHECKSUMS.txt)
 benchmarks/data/larry/*
 !benchmarks/data/larry/CHECKSUMS.txt
+
+# Large local outputs (synthetic data; earlier HLCA/TMS files in the shared Manus folder)
+benchmarks/synthetic_multimodal/data/
+benchmarks/aging_hlca/data/
+benchmarks/aging/models/
+
+# Real-data reference downloads (orient/S08), Manus folder only
+benchmarks/real_reference/data/
+benchmarks/real_flow/data/
+
+# Per-agent sandbox launchers, temp and caches (see coord/PROJECT.md)
+.sandbox/
+benchmarks/dyngen/data/
+
+# Per-task Python environments created inside agent folders (e.g. .venv-baselines, .venv-splicejac, .venv-v1)
+.venv-*/
+benchmarks/scaling/data/
+benchmarks/dyngen/logs/
+benchmarks/dyngen/raw/
+benchmarks/dyngen/s08_reference/
+benchmarks/dyngen/s21/arrays/
+benchmarks/dyngen/s21b/arrays/
+benchmarks/synthetic_multimodal/s14b/arrays/
+benchmarks/synthetic_multimodal/s14c/arrays/
+
+# v57 figure environment (notebooks/run_all.py)
+.venv-fig/

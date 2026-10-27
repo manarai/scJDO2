@@ -1,0 +1,19 @@
+{
+  "unit": "embedding",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "embed"
+  ],
+  "started_utc": "2026-10-22T05:55:41.781860+00:00",
+  "finished_utc": "2026-10-22T05:56:17.932907+00:00",
+  "exit_code": 0,
+  "wall_seconds": 36.151047593000385,
+  "cpu_hours": 0.029168098055555557,
+  "max_rss_kib": 3105136,
+  "cpu_hours_before": 0.062292245555555556,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/embedding.log"
+}

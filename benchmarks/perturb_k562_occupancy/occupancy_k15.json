@@ -1,0 +1,13 @@
+{
+  "k": 15,
+  "n_basins": 66,
+  "n_targets": 865,
+  "n_controls": 10691,
+  "vote_k": 15,
+  "vote_ties": "lowest stable basin ID",
+  "controls_self": "Included normally in same-data query",
+  "state_depth_and_H1_membership": "Original endpoint/Leiden partition of controls",
+  "occupancy_control_membership": "Controls classified by the same 15-neighbor vote as targets; original and classified counts both retained",
+  "centroid_reference": "All 10691 controls, never nearest controls",
+  "n_cells_classified": 190989
+}

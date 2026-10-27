@@ -1,0 +1,45 @@
+{
+  "finished_utc": "2026-10-19T16:16:49Z",
+  "ledger": {
+    "attempted_evaluations": 209.0,
+    "budget_cpu_hours": 40.0,
+    "completed_evaluations": 207.0,
+    "cpu_hours": 12.205880277777778,
+    "cpu_seconds": 43941.169,
+    "excluded_after_retry": 0.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 0.0
+  },
+  "peak_rss_bytes": 4075585536,
+  "recover_dynamics_timing": [
+    {
+      "run_seconds": 16.07,
+      "wait_seconds": 0.0
+    }
+  ],
+  "rows": [
+    {
+      "attempt": 1,
+      "batch": "block1",
+      "candidate_index": 12,
+      "cpu_seconds": 216.068,
+      "error": "",
+      "knobs_json": "{\"beta0\": 0.5477225575051661, \"eta_u\": 0.6000000000000001, \"f_constant\": 0.15, \"f_sample\": 0.15107160922949833, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"mu_b\": -2.75, \"n_founders\": 3800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"theta0\": 37.75}",
+      "normalized_distance": 32.23257514811844,
+      "pass": 4,
+      "peak_rss_bytes": 4075585536,
+      "ranking_eligible": "true",
+      "reduced_n_founders": 23,
+      "reused_from": "",
+      "stage": "block1",
+      "statistics_json": "{\"C2_genes_detected\": 826.0, \"C3_hvg_log_mean\": 0.15109799057245255, \"C4_dispersion\": 2.1815909147262573, \"C5_zero_fraction\": 0.8179805137289642, \"C7_participation_ratio\": 7.411680249117875, \"G1_barcoded_cell_fraction\": 0.3497519696527575, \"G2_clone_size\": 16.0, \"G3_multi_time_clone_fraction\": 0.8025845477041518, \"L1_new_total_fraction\": 0.19119158387184143, \"L2_gamma_half_life\": 5.007909528299589, \"S1_unspliced_fraction\": 0.09230044315826819, \"S3_steady_share\": 0.02, \"S4_recovered_fraction\": 0.7325}",
+      "status": "complete",
+      "targets_met_json": "{\"C2_genes_detected\": false, \"C3_hvg_log_mean\": true, \"C4_dispersion\": true, \"C5_zero_fraction\": false, \"C7_participation_ratio\": true, \"G1_barcoded_cell_fraction\": true, \"G2_clone_size\": false, \"G3_multi_time_clone_fraction\": true, \"L1_new_total_fraction\": false, \"L2_gamma_half_life\": true, \"S1_unspliced_fraction\": false, \"S3_steady_share\": false, \"S4_recovered_fraction\": false}",
+      "uid": "block1_12",
+      "unmet_targets": 7,
+      "wall_seconds": 235.394
+    }
+  ],
+  "stage": "block",
+  "task": "orient/S09"
+}

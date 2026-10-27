@@ -1,0 +1,20 @@
+{
+  "dataset": "larry",
+  "details": {
+    "basis": "X_pca30",
+    "dynamo_version": "1.5.3",
+    "method": "SparseVFC + vf.jacobian(method=analytical)",
+    "vecfld_iteration": 6
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:59:05.970906+00:00",
+  "n_cells": 1321,
+  "operator": "dynamo",
+  "operator_path": "benchmarks/real_flow/arrays/operators/larry_lineage_dynamo.npz",
+  "seed": null,
+  "source": "lineage",
+  "started_utc": "2026-10-19T06:58:56.839154+00:00",
+  "task": "orient/S11",
+  "unit": "operator_larry_lineage_dynamo",
+  "wall_seconds": 9.132
+}

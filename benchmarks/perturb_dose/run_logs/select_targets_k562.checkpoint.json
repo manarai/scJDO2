@@ -1,0 +1,22 @@
+{
+  "unit": "select_targets_k562",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "select-targets",
+    "--screen",
+    "k562"
+  ],
+  "started_utc": "2026-10-23T02:50:02.007503+00:00",
+  "finished_utc": "2026-10-23T02:50:03.012177+00:00",
+  "exit_code": 0,
+  "wall_seconds": 1.0046786579987383,
+  "cpu_hours": 0.0002874436111111111,
+  "max_rss_kib": 87664,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/select_targets_k562.log",
+  "stop_reason": null
+}

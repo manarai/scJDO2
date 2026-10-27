@@ -1,0 +1,19 @@
+{
+  "unit": "summarize",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "summarize"
+  ],
+  "started_utc": "2026-10-22T06:11:41.935507+00:00",
+  "finished_utc": "2026-10-22T06:11:47.812117+00:00",
+  "exit_code": 0,
+  "wall_seconds": 5.876610703000097,
+  "cpu_hours": 0.001726078611111111,
+  "max_rss_kib": 218776,
+  "cpu_hours_before": 1.091775005,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/summarize.log"
+}

@@ -1,0 +1,69 @@
+{
+  "finished_utc": "2026-10-19T12:32:42Z",
+  "ledger": {
+    "attempted_evaluations": 97.0,
+    "budget_cpu_hours": 40.0,
+    "completed_evaluations": 95.0,
+    "cpu_hours": 6.591955555555556,
+    "cpu_seconds": 23731.04,
+    "excluded_after_retry": 0.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 0.0
+  },
+  "peak_rss_bytes": 4094115840,
+  "recover_dynamics_timing": [
+    {
+      "run_seconds": 12.743,
+      "wait_seconds": 0.0
+    }
+  ],
+  "refine_base": {
+    "knobs": {
+      "beta0": 1.8764388870200641,
+      "eta_u": 0.2350240766104815,
+      "f_constant": 0.15,
+      "f_sample": 0.15107160922949833,
+      "f_switch": 0.15,
+      "gamma0": 0.20903507026102502,
+      "mu_b": -2.75,
+      "n_founders": 3025,
+      "n_prog": 5,
+      "p_barcode": 0.38248367640153536,
+      "sigma_b": 2.5,
+      "sigma_gamma": 0.3785140972034902,
+      "theta0": 39.56111512481242
+    },
+    "uid": "refine_p1_f_switch_1"
+  },
+  "rows": [
+    {
+      "attempt": 1,
+      "batch": "gamma0",
+      "candidate_index": 1,
+      "cpu_seconds": 201.855,
+      "error": "",
+      "knobs_json": "{\"beta0\": 1.8764388870200641, \"eta_u\": 0.2350240766104815, \"f_constant\": 0.15, \"f_sample\": 0.15107160922949833, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"mu_b\": -2.75, \"n_founders\": 3025, \"n_prog\": 5, \"p_barcode\": 0.38248367640153536, \"sigma_b\": 2.5, \"sigma_gamma\": 0.3785140972034902, \"theta0\": 39.56111512481242}",
+      "normalized_distance": 44.46594921342368,
+      "pass": 1,
+      "peak_rss_bytes": 4094115840,
+      "ranking_eligible": "true",
+      "reduced_n_founders": 23,
+      "reused_from": "",
+      "stage": "refine",
+      "statistics_json": "{\"C2_genes_detected\": 793.0, \"C3_hvg_log_mean\": 0.11893024668097496, \"C4_dispersion\": 2.2339701652526855, \"C5_zero_fraction\": 0.8405668733392385, \"C7_participation_ratio\": 7.968263701619042, \"G1_barcoded_cell_fraction\": 0.3812658582441321, \"G2_clone_size\": 17.0, \"G3_multi_time_clone_fraction\": 0.8117198335644937, \"L1_new_total_fraction\": 0.289432168006897, \"L2_gamma_half_life\": 4.350946600787042, \"S1_unspliced_fraction\": 0.021219516982116913, \"S3_steady_share\": 0.1875, \"S4_recovered_fraction\": 0.51875}",
+      "status": "complete",
+      "targets_met_json": "{\"C2_genes_detected\": false, \"C3_hvg_log_mean\": true, \"C4_dispersion\": true, \"C5_zero_fraction\": false, \"C7_participation_ratio\": true, \"G1_barcoded_cell_fraction\": true, \"G2_clone_size\": false, \"G3_multi_time_clone_fraction\": true, \"L1_new_total_fraction\": false, \"L2_gamma_half_life\": false, \"S1_unspliced_fraction\": false, \"S3_steady_share\": true, \"S4_recovered_fraction\": true}",
+      "uid": "refine_p1_gamma0_1",
+      "unmet_targets": 6,
+      "wall_seconds": 217.951
+    }
+  ],
+  "stage": "refine",
+  "task": "orient/S09",
+  "threads_env": {
+    "LOKY_MAX_CPU_COUNT": "2",
+    "MKL_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2"
+  }
+}

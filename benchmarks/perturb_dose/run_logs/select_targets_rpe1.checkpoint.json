@@ -1,0 +1,22 @@
+{
+  "unit": "select_targets_rpe1",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "select-targets",
+    "--screen",
+    "rpe1"
+  ],
+  "started_utc": "2026-10-23T02:45:24.841571+00:00",
+  "finished_utc": "2026-10-23T02:45:25.845907+00:00",
+  "exit_code": 0,
+  "wall_seconds": 1.0043415960026323,
+  "cpu_hours": 0.0002876636111111111,
+  "max_rss_kib": 86296,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/select_targets_rpe1.log",
+  "stop_reason": null
+}

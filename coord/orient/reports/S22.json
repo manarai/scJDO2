@@ -1,0 +1,1055 @@
+{
+  "artifacts": [
+    {
+      "bytes": 511489,
+      "committed": true,
+      "path": "benchmarks/figures/real_flow/s22_clonal_coherence.png",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "86c1ea3000ef6811a4de393d5c2cf7698dfdac164745e751c470b2831c36db7a"
+    },
+    {
+      "bytes": 421167,
+      "committed": true,
+      "path": "benchmarks/figures/real_flow/s22_coherence_by_type.png",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "c8b41aeb528d6dbe9dca1335402700f44a5513bfda17e12643009c7b9acd3375"
+    },
+    {
+      "bytes": 588172,
+      "committed": true,
+      "path": "benchmarks/figures/real_flow/s22_lambda1_embedding.png",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "1bb407f4630cc878566bacc65a892e1050130b6afd040349b77a5b158072180b"
+    },
+    {
+      "bytes": 22,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/.gitignore",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "3dd6d22d3f3c4982c5d133c1c8c1936b3467655ee987651f2bbb629c74d54b90"
+    },
+    {
+      "bytes": 5218,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/REPRODUCE.md",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "639c42c5a14d3f14dd59be7334d9c06b517c330bf3c6972b507286acf84ea3ce"
+    },
+    {
+      "bytes": 7834,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/RESULT_S22.md",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "1839248b843e8c78fa2fb8a71fe7567592df24cbf627950292a9264b9fde4a50"
+    },
+    {
+      "bytes": 517,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/amendment_record.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "8303bc87411ebaae875befc203c8d67172c7826e1f83714740d4773d108cd8d8"
+    },
+    {
+      "bytes": 7641,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/audit_import_repair.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "4f2bf6270f950c3b783c067e3341812e8f396aa8e7d95b29b228c68c85c0ed89"
+    },
+    {
+      "bytes": 1255,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/baselines.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py baselines",
+      "sha256": "07bd22c34a02a543fe51e0f3a94d228e55263883f010dccff0980ee3ada09a3d"
+    },
+    {
+      "bytes": 325289,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/cell_baselines.npz",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py baselines",
+      "sha256": "d576e35448d34e7353f9803d0bf3d1f2a481f0245332e58266d1fc2ae36d986c"
+    },
+    {
+      "bytes": 983137,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/cells_seed0.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0",
+      "sha256": "2877dc5241f6c652da3c7f33c381be3e3f93910c83a1c5c546dedc0fb723e8e6"
+    },
+    {
+      "bytes": 2251471,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/cells_seed0.npz",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0",
+      "sha256": "25f6e94f38947229409a9a26c21eb993e2656a5600b6e70cc4f1e853b2873a9a"
+    },
+    {
+      "bytes": 983264,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/cells_seed1.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1",
+      "sha256": "c403705cdc1a626a7fe764c3977f5192d9e2f01a0a9f1305825888348bdd42a0"
+    },
+    {
+      "bytes": 2251868,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/cells_seed1.npz",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1",
+      "sha256": "432d04bbafb4a03ed05a38a5902deccd78e4bdb259954bcc73d8f89dded443a2"
+    },
+    {
+      "bytes": 983958,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/cells_seed2.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2",
+      "sha256": "3b22fe69d9eec7d3282907e631e1e6c10b8f9e1979a95491d1281913a3ae857d"
+    },
+    {
+      "bytes": 2249939,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/cells_seed2.npz",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2",
+      "sha256": "654718248349ed99d0807f8f4a9b90ae71a729294f4bc65a31a5e83181ec125d"
+    },
+    {
+      "bytes": 438943,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/clones.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py baselines",
+      "sha256": "11648d95ea2326a94383520cffa5e0c47a5a1bba4e8a0bfe6ecab4d96f126991"
+    },
+    {
+      "bytes": 697,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/clones_summary.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py clones",
+      "sha256": "6a491a66ead8b6a6dcb015e31021da52a51c9bf13ac944e4a6dd15567575f3a6"
+    },
+    {
+      "bytes": 367956,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/clones_truth.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py clones",
+      "sha256": "86fe1edd7846b9646f506e622e218e0a28baefdd467ac533220dc4ed4fda5674"
+    },
+    {
+      "bytes": 7366,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/deliver_bundle.py",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "11d525d82913f10dc84baf27ae163a2a7baea5b5a7323e107f921e233f56c5a9"
+    },
+    {
+      "bytes": 63262,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/eligibility_preflight.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "b89b58a496b7d661616544f15f5e7b5af2ceeb8698ab79528a642b5dbf63bec3"
+    },
+    {
+      "bytes": 500,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/final_audit.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "44717e827e8f10078711411d70b73e2e250fa803c3cabe477ab740b198bdb62e"
+    },
+    {
+      "bytes": 1037,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/fit_seed0.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0",
+      "sha256": "ca67b78f385437547243bc1a57313c8f0c4bd35b6611e5f9fbba3232f2d75330"
+    },
+    {
+      "bytes": 1037,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/fit_seed1.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1",
+      "sha256": "a78260a00d99a1beebcbb8e762a62a7ea91ba8f5f18bbdbdb87bc8d5cd120b1b"
+    },
+    {
+      "bytes": 1037,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/fit_seed2.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2",
+      "sha256": "766792d4d4a79d3909adc288d58e2d4f0ecc379ceb86f96a4b5982914a1c46fb"
+    },
+    {
+      "bytes": 1077,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/implementation_record.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "3bbcfa8220a9cb4fa1ab3976aebef12337417747ffd01229c3a38321aad7b598"
+    },
+    {
+      "bytes": 265,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/index_metadata.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "193ba34a489d81b12c013bea546498a8c09114a68afa2d44d38c91ea76333b86"
+    },
+    {
+      "bytes": 1027,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/input_preflight.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "1ffaf0dd60b3454723c9f8a723fa22b25336dd1db9f90c39145152fadfc1ed2f"
+    },
+    {
+      "bytes": 90373,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/model_seed0.pt",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0",
+      "sha256": "5a19be41f458b66c61ccee6f5908f565d7fe0aefa002eecd8cf38ef853378a48"
+    },
+    {
+      "bytes": 90373,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/model_seed1.pt",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1",
+      "sha256": "98fe2d35afa0bfd708e6b04ce7ad296034d9e7dcd499a032d1ebfd7a6106504a"
+    },
+    {
+      "bytes": 90373,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/model_seed2.pt",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2",
+      "sha256": "9d81886a5642134687bba8b578e8e6d5964c38badc3287aca297b63d318737b1"
+    },
+    {
+      "bytes": 87050,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/permutation_nulls_seed0.npz",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 0",
+      "sha256": "b9c4c50b66ed4cbe0c85745ec8359489338b4f2254cdec11c97acdae917f2920"
+    },
+    {
+      "bytes": 87003,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/permutation_nulls_seed1.npz",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 1",
+      "sha256": "06f54731b7a97b34a06d966c401ce43912abe062e7eb56d0ca7b7c958af9ba27"
+    },
+    {
+      "bytes": 87034,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/permutation_nulls_seed2.npz",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 2",
+      "sha256": "35f22506a8b4c78760094f4a495d1a27f6915576214b980a527b31187ed02348"
+    },
+    {
+      "bytes": 4154,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/pip-freeze.txt",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "fde881bbc78b69ab34951064529a17633356da72936d831cf0cb96d2015625df"
+    },
+    {
+      "bytes": 1010,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/preregistration.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "3e6af0e63d4361fdb6256545240a7330a2ec46af69d19848698048ee04b7fa90"
+    },
+    {
+      "bytes": 448,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/report_cache_filter_repair.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "d10e1316d2f99fc919bd3b642fd7e0301876b394e45eff22b266bde72cc0c731"
+    },
+    {
+      "bytes": 455,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/audit.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "ce876979154fcc33453a2557c1c7a0ee708f4aff65057d64683139106f0e5571"
+    },
+    {
+      "bytes": 392,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/audit.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "15d59017d77b5693eab34166eea45e455810015d2c15a2581da54e75fca0321f"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/audit.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 461,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/audit_import_repaired.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "8100c77acfbc72548c4fbd346d1022661294963d839dc8a79c64f56dcde0bcbc"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/audit_import_repaired.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 41,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/audit_import_repaired.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "c055656e3ee68ad3b505e2aacb9d827c10762c4de26ed0a3bf78c9b2f52b8e59"
+    },
+    {
+      "bytes": 462,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/baselines.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "a9c7cba70d48e41a125751fc4859defa153a65457201bd1bebdf0225baad623b"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/baselines.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 3039,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/baselines.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "f6198f7b2cd00b3feff3b56eac455d6fe95cf4f8fd611f1d9f9023de050f94df"
+    },
+    {
+      "bytes": 457,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/clones.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "2a6d36dc81fc998d379246c611105ca46a18d0208575be9dd8ff871332d43488"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/clones.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 697,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/clones.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "a1e8aeada1077f8a320145da771f478f137909f11fa9af0e40f1936f79301305"
+    },
+    {
+      "bytes": 464,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/coord_check.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "b6cf35d76ea76f82b07ace417e8a9e7ad7fdfe09a1f0ccad157178e83bf161b6"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/coord_check.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 743,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/coord_check.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "d13acad55f8b4653282f5ea77d65184c2b6d86d53ec75c10fa0d9692f28b8b6c"
+    },
+    {
+      "bytes": 477,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/coord_check_final.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "4b1f8b840ff05174694f4b073f21e2af237893c1a2226121ad947c2a3cc29a28"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/coord_check_final.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 743,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/coord_check_final.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "03dce3bf8c3e5ae7f86915ece6ae3a3b162631f9e4fc539261d6b5fba29baf9f"
+    },
+    {
+      "bytes": 267,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/download.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "234cda114e6935cca433220994762f51a267f9d3052e80a0ce435041914d6149"
+    },
+    {
+      "bytes": 279,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/import.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "efc8a50393837545dd1a32eec1f29e9c25a5f4726fdc74628d83cacb13ec3a77"
+    },
+    {
+      "bytes": 1158,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/index_metadata.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "72d3d56875e8f01286a135971273318f2a3546bd449c7de50c8998aff469dbd2"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/index_metadata.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 265,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/index_metadata.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "193ba34a489d81b12c013bea546498a8c09114a68afa2d44d38c91ea76333b86"
+    },
+    {
+      "bytes": 469,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/input_preflight.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "98c4f33473b50730aa9b89a97a652e1efdc6efe4ec58f9f46468a2515355932b"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/input_preflight.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1027,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/input_preflight.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "f406c26616c3e326757514b7d52237df8a3aeedc9a69da6c811ffab4f488f595"
+    },
+    {
+      "bytes": 490,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/report_final.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "4c041dbb083806aeefb67ece67e700c04785b8c2896df954ec28357d19aaf230"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/report_final.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/report_final.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 480,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed0.checkpoint.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0.checkpoint",
+      "sha256": "cac0857e27a9a6d205f91c29fa29ab6dadc496a5422c58894923a539c337e407"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed0.stderr.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2592,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed0.stdout.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0.stdout",
+      "sha256": "0f3b35bf94702759ad5bfd9e67980c907d090d7be398578dce5c7d77216ac4f5"
+    },
+    {
+      "bytes": 478,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed1.checkpoint.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1.checkpoint",
+      "sha256": "12d7a523e398eed9beb17bb1814637fc10d40c5d5d201b724abef9a9dfe89798"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed1.stderr.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2592,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed1.stdout.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1.stdout",
+      "sha256": "6045df8a7bdedf9ffc77f727852d9a30334bc0442d9ab266910899541e853079"
+    },
+    {
+      "bytes": 472,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed2.checkpoint.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2.checkpoint",
+      "sha256": "b7845a6f7699e3e74fadfdf9dc1a2b68aebc16c8fa25a56504852ed1e6216913"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed2.stderr.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2581,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/score_seed2.stdout.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2.stdout",
+      "sha256": "bffc971cb9df9662e43a79a46864a2b150f79ccd51c321a44f2cb64c6bdd89b5"
+    },
+    {
+      "bytes": 490,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed0.checkpoint.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 0.checkpoint",
+      "sha256": "d08924362caf1d1c9f13e7c998ed4fb83fa9ac8913c3fdf73fa3eb064f2d2955"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed0.stderr.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 0.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7239,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed0.stdout.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 0.stdout",
+      "sha256": "2ec287d94cc526111e614834d5cf0f900d2a0c20a78828bd1a05372eb2ebf0e2"
+    },
+    {
+      "bytes": 490,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed1.checkpoint.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 1.checkpoint",
+      "sha256": "689c042e3c1f473f029f30c575ed228c3d9b9a5c93937fbec9f66af4cf27ee73"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed1.stderr.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7253,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed1.stdout.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 1.stdout",
+      "sha256": "5e76d5b421deffef145546a7e957009997f02c22ff2920d7157c15e9a6e94042"
+    },
+    {
+      "bytes": 489,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed2.checkpoint.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 2.checkpoint",
+      "sha256": "b9d76158130479a15307a1aa13199d5ce72b51bdfc6deaf53f32f16453b71aaa"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed2.stderr.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 2.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 7235,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/statistics_seed2.stdout.log",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 2.stdout",
+      "sha256": "5cba46caf9b5900962e49680045755059fe5d216870413cbbea64916c25f6921"
+    },
+    {
+      "bytes": 461,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/summarize.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "c03b4863fa3a659d2fa8089d8b9a7bda975f61523fa26717d646ddb36685ea89"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/summarize.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1231,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/summarize.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "5f328ec2766a5a863b98c51326b5cad7ade5e56bdcf75aa93ba4892bc62185f3"
+    },
+    {
+      "bytes": 500,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_after.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "0ca1a1bacbbd0d9426e90f5b7298a37df3167df2f0f16aae3c032581963d481d"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_after.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 549,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_after.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "5ff02265f7c76106c4c397738be2c5b6708e9b968482e138e5dffd0503a238e3"
+    },
+    {
+      "bytes": 500,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_before.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "31166c8e43efd0141e9976e3f1c708632a80567800c241446da18115eeb3d7f6"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_before.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 549,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_before.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "47e269eb0f49d2ab3ebcdb3f6653dd8cd1d69d22cef6192b6464a13325ba39f1"
+    },
+    {
+      "bytes": 510,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_before_amendment.checkpoint.json",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "eb66bc013dac5dc3e2a35b3454c702d0e4c379c17318d408665dcbf2500ed577"
+    },
+    {
+      "bytes": 0,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_before_amendment.stderr.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 549,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/run_logs/tests_before_amendment.stdout.log",
+      "regenerate": "Exact argv in the matching unit checkpoint; run in a fresh restoration",
+      "sha256": "bf90eca6c6517b730a1d85b5140aeb0911b9b114566b2039b028e4410bb7c6a6"
+    },
+    {
+      "bytes": 1462,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/score_seed0.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 0",
+      "sha256": "9db6eceec57ffab1714e47d2d884d67f43e44a39a20cd03327481a8ba0762374"
+    },
+    {
+      "bytes": 1462,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/score_seed1.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 1",
+      "sha256": "4c4d110e1fccaa2dcd0efe283a968e41f566c98f849dc7c4f3609caf7f6f3abb"
+    },
+    {
+      "bytes": 1451,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/score_seed2.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py fit --seed 2",
+      "sha256": "0dd8b8b6782a0c211cdbd5ad26df866701dbfd9ecd0da700b58d6c399176b2b4"
+    },
+    {
+      "bytes": 6398,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/scores.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "888f9fac8d0e266968a4c34d3b67c9995b8f69c4464fa4481cce15ee68863268"
+    },
+    {
+      "bytes": 2262,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/scores_seed0.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 0",
+      "sha256": "19a207f8eb1c70711e1009fd13b07a005c06624d76969491960a70054afa933b"
+    },
+    {
+      "bytes": 2264,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/scores_seed1.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 1",
+      "sha256": "68c5278cc7d3646892bbd4fabbd8907922450be0022b84934d8073594c8da9fd"
+    },
+    {
+      "bytes": 2246,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/scores_seed2.csv",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 2",
+      "sha256": "0241d4c051c5ae050f48d08890d005436ab82bed07f82422ba482b9da50aeeac"
+    },
+    {
+      "bytes": 490,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/source_archive.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "bd95e08f9a4db657fc20551d40b17ca6e5a28a3b81500c5e551bb8df74b0a4c0"
+    },
+    {
+      "bytes": 7656,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/statistics_seed0.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 0",
+      "sha256": "0fe7cf2c5381e5bb029d77b92aae6015f5ac6d23da2d5597812957438efe20be"
+    },
+    {
+      "bytes": 7670,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/statistics_seed1.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 1",
+      "sha256": "085e96d72ea021afeff9b5e2e13b0f9cb396cf637d8d35599ebd261dd848e40a"
+    },
+    {
+      "bytes": 7652,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/statistics_seed2.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py scores --seed 2",
+      "sha256": "e2d769f81b2ffbc12d165bc361c97eea4d0881fb0163b25ed28bf797b603e8c1"
+    },
+    {
+      "bytes": 7688,
+      "committed": true,
+      "path": "benchmarks/real_flow/s22/summary.json",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "eca543978e07538b64e2c8ff65dba4914ed59c0727db120ae0b98a09a2a23a56"
+    },
+    {
+      "bytes": 45884,
+      "committed": true,
+      "path": "scripts/s22_score_lineage.py",
+      "regenerate": ".venv/bin/python scripts/s22_score_lineage.py summarize (or restore tracked provenance/source from this branch)",
+      "sha256": "dee0cc9848cf77c28794b9da6b28c449049a8d2400534188d052426c9edd15ec"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.5842068005555555,
+    "gpu_hours": 0.0,
+    "hardware": "Linux cloud sandbox, 6 visible CPUs, 3-thread cap, 8 GiB RSS/process"
+  },
+  "deviations": [
+    "Planner Amendment 1 was supplied on 2026-10-24 and appended/committed before all score fits and fate statistics; no majority label was chosen for tied pairs.",
+    "The unchanged delivered tests have 48 passing tests and no xfails; the workstream text mentions three strict xfails.",
+    "The cloud bundle imported a newer issue snapshot than the local orientation ref. Mechanical review uses the authorized planner amendment commit as --base; the full execution diff is also audited against e90440c, allowing only the exact authorized task amendment. No merge, push or Mac access occurred.",
+    "The auxiliary final audit initially failed before numerical checks because coord is not an importable package from the script directory. Only audit module loading was repaired to use the unchanged checker by absolute repository path; the failed receipt is preserved. Scientific function bodies and all saved scientific files were verified unchanged, and no model was refitted.",
+    "A pre-commit artifact assertion caught autogenerated, ignored Python bytecode incorrectly included in the report manifest. The bytecode cache was excluded from the manifest only; saved scientific files and function bodies were verified unchanged. The completed checker/test receipt was retained and final review rerun after committing the corrected reports."
+  ],
+  "finished_utc": "2026-10-24T16:00:38.607186+00:00",
+  "metrics": {
+    "cpu_hours": 0.5842068005555555,
+    "gate_L1_pooled": {
+      "cohort": "pooled",
+      "gated": true,
+      "n_pairs": 1818,
+      "n_tied_pairs": 67,
+      "n_unique_clones": 1694,
+      "p_permutation_positive": 1.0,
+      "partial_rho_given_density": 0.011456313600472594,
+      "passed": false,
+      "rho_centroid_distance_H": 0.05803340770876592,
+      "rho_density_H": 0.0780519030130409,
+      "rho_lambda1_H": -0.002642724688277755,
+      "rho_lambda1_switch_report_only": 0.11958264371940358,
+      "seed": 0
+    },
+    "gate_L2_undifferentiated": {
+      "cohort": "undifferentiated",
+      "gated": true,
+      "n_pairs": 1401,
+      "n_tied_pairs": 0,
+      "n_unique_clones": 1317,
+      "p_permutation_positive": 1.0,
+      "partial_rho_given_density": -0.07774117579453121,
+      "passed": false,
+      "rho_centroid_distance_H": 0.22102459560108648,
+      "rho_density_H": 0.07632362628447911,
+      "rho_lambda1_H": -0.10116104731018428,
+      "rho_lambda1_switch_report_only": -0.06876676681021487,
+      "seed": 0
+    },
+    "gate_L3_baselines": {
+      "n_pairs": 1401,
+      "partial_rho_given_density": -0.07774117579453121,
+      "passed": false,
+      "rho_centroid_distance_H": 0.22102459560108648,
+      "rho_density_H": 0.07632362628447911,
+      "rho_lambda1_H": -0.10116104731018428,
+      "seed": 0
+    },
+    "n_clones": {
+      "amendment_applied": true,
+      "entropy_range": [
+        -0.0,
+        1.5047882836811908
+      ],
+      "n_clone_time_pairs": 1818,
+      "n_pairs_per_t": {
+        "2": 232,
+        "4": 1586
+      },
+      "n_tied_pairs": 67,
+      "n_tied_pairs_per_t": {
+        "2": 3,
+        "4": 64
+      },
+      "n_undifferentiated_pairs": 1401,
+      "n_undifferentiated_pairs_per_t": {
+        "2": 227,
+        "4": 1174
+      },
+      "n_unique_clones": 1694,
+      "n_untied_per_type": {
+        "Baso": 121,
+        "Eos": 2,
+        "Erythroid": 2,
+        "Lymphoid": 3,
+        "Mast": 29,
+        "Meg": 16,
+        "Monocyte": 65,
+        "Neutrophil": 109,
+        "Undifferentiated": 1401,
+        "pDC": 3
+      },
+      "n_zero_entropy": 798,
+      "switch_median": 0.43167701863354035,
+      "tied_switch_median": 0.0
+    },
+    "seed_robustness": [
+      {
+        "gated": true,
+        "pooled": {
+          "cohort": "pooled",
+          "gated": true,
+          "n_pairs": 1818,
+          "n_tied_pairs": 67,
+          "n_unique_clones": 1694,
+          "p_permutation_positive": 1.0,
+          "partial_rho_given_density": 0.011456313600472594,
+          "rho_centroid_distance_H": 0.05803340770876592,
+          "rho_density_H": 0.0780519030130409,
+          "rho_lambda1_H": -0.002642724688277755,
+          "rho_lambda1_switch_report_only": 0.11958264371940358,
+          "seed": 0
+        },
+        "pooled_without_tied_report_only": {
+          "cohort": "pooled_without_tied",
+          "gated": false,
+          "n_pairs": 1751,
+          "n_tied_pairs": 0,
+          "n_unique_clones": 1631,
+          "p_permutation_positive": 0.999000999000999,
+          "partial_rho_given_density": 0.01674521875358889,
+          "rho_centroid_distance_H": 0.05620909141181966,
+          "rho_density_H": 0.08223438983080969,
+          "rho_lambda1_H": 0.0014120990000737227,
+          "rho_lambda1_switch_report_only": 0.1192118177271502,
+          "seed": 0
+        },
+        "seed": 0,
+        "undifferentiated": {
+          "cohort": "undifferentiated",
+          "gated": true,
+          "n_pairs": 1401,
+          "n_tied_pairs": 0,
+          "n_unique_clones": 1317,
+          "p_permutation_positive": 1.0,
+          "partial_rho_given_density": -0.07774117579453121,
+          "rho_centroid_distance_H": 0.22102459560108648,
+          "rho_density_H": 0.07632362628447911,
+          "rho_lambda1_H": -0.10116104731018428,
+          "rho_lambda1_switch_report_only": -0.06876676681021487,
+          "seed": 0
+        }
+      },
+      {
+        "gated": false,
+        "pooled": {
+          "cohort": "pooled",
+          "gated": false,
+          "n_pairs": 1818,
+          "n_tied_pairs": 67,
+          "n_unique_clones": 1694,
+          "p_permutation_positive": 0.999000999000999,
+          "partial_rho_given_density": -0.009025257489330592,
+          "rho_centroid_distance_H": 0.05803340770876592,
+          "rho_density_H": 0.0780519030130409,
+          "rho_lambda1_H": -0.018425198758647177,
+          "rho_lambda1_switch_report_only": 0.12208007707517474,
+          "seed": 1
+        },
+        "pooled_without_tied_report_only": {
+          "cohort": "pooled_without_tied",
+          "gated": false,
+          "n_pairs": 1751,
+          "n_tied_pairs": 0,
+          "n_unique_clones": 1631,
+          "p_permutation_positive": 1.0,
+          "partial_rho_given_density": 0.0011674795596583688,
+          "rho_centroid_distance_H": 0.05620909141181966,
+          "rho_density_H": 0.08223438983080969,
+          "rho_lambda1_H": -0.009260233702744638,
+          "rho_lambda1_switch_report_only": 0.12169194268461592,
+          "seed": 1
+        },
+        "seed": 1,
+        "undifferentiated": {
+          "cohort": "undifferentiated",
+          "gated": false,
+          "n_pairs": 1401,
+          "n_tied_pairs": 0,
+          "n_unique_clones": 1317,
+          "p_permutation_positive": 1.0,
+          "partial_rho_given_density": -0.09106041573323698,
+          "rho_centroid_distance_H": 0.22102459560108648,
+          "rho_density_H": 0.07632362628447911,
+          "rho_lambda1_H": -0.11054723489139898,
+          "rho_lambda1_switch_report_only": -0.026369125797182248,
+          "seed": 1
+        }
+      },
+      {
+        "gated": false,
+        "pooled": {
+          "cohort": "pooled",
+          "gated": false,
+          "n_pairs": 1818,
+          "n_tied_pairs": 67,
+          "n_unique_clones": 1694,
+          "p_permutation_positive": 1.0,
+          "partial_rho_given_density": -0.024527664166731095,
+          "rho_centroid_distance_H": 0.05803340770876592,
+          "rho_density_H": 0.0780519030130409,
+          "rho_lambda1_H": -0.03476633692107847,
+          "rho_lambda1_switch_report_only": 0.08354268367633932,
+          "seed": 2
+        },
+        "pooled_without_tied_report_only": {
+          "cohort": "pooled_without_tied",
+          "gated": false,
+          "n_pairs": 1751,
+          "n_tied_pairs": 0,
+          "n_unique_clones": 1631,
+          "p_permutation_positive": 1.0,
+          "partial_rho_given_density": -0.01580523063354662,
+          "rho_centroid_distance_H": 0.05620909141181966,
+          "rho_density_H": 0.08223438983080969,
+          "rho_lambda1_H": -0.02726470690582521,
+          "rho_lambda1_switch_report_only": 0.08425794362265245,
+          "seed": 2
+        },
+        "seed": 2,
+        "undifferentiated": {
+          "cohort": "undifferentiated",
+          "gated": false,
+          "n_pairs": 1401,
+          "n_tied_pairs": 0,
+          "n_unique_clones": 1317,
+          "p_permutation_positive": 1.0,
+          "partial_rho_given_density": -0.11094328741005323,
+          "rho_centroid_distance_H": 0.22102459560108648,
+          "rho_density_H": 0.07632362628447911,
+          "rho_lambda1_H": -0.12968769450735124,
+          "rho_lambda1_switch_report_only": -0.0956967871034996,
+          "seed": 2
+        }
+      }
+    ],
+    "versions": {
+      "matplotlib": "3.11.2",
+      "numpy": "2.5.4",
+      "pandas": "2.3.3",
+      "pytest": "9.1.1",
+      "python": "3.12.3",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "torch": "2.14.1"
+    }
+  },
+  "observations": [
+    "The fit sample is exactly 12,000 delivered rows: 4,000 each on days 2, 4 and 6.",
+    "Every one of the 19,623 barcoded day-2/day-4 cells was included in each completed score-J query; no lineage/type filtering was used for fitting.",
+    "Seed 0: max symmetry asymmetry 2.57674e-07; median cell lambda1 0.589464; positive-eigenvalue count distribution (count: cells) {'0': 4141, '1': 12380, '2': 3095, '3': 7}.",
+    "Seed 1: max symmetry asymmetry 2.17993e-07; median cell lambda1 0.58655; positive-eigenvalue count distribution (count: cells) {'0': 3751, '1': 13240, '2': 2618, '3': 14}.",
+    "Seed 2: max symmetry asymmetry 2.58655e-07; median cell lambda1 0.526145; positive-eigenvalue count distribution (count: cells) {'0': 4674, '1': 13287, '2': 1662}.",
+    "The eligible cohort has 1818 clone/time pairs from 1694 distinct clones; 67 tied pairs were retained in L1 and report-only per-t pooled tests in their own per-t permutation strata, and excluded from Undifferentiated and per-type tests.",
+    "Tied pairs per t: {'2': 3, '4': 64}; untied Undifferentiated pairs per t: {'2': 227, '4': 1174}.",
+    "798 pairs have H=0; observed entropy range is [-0.0, 1.5047882836811908]."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-24T00:09:29.927430+00:00",
+  "status": "done",
+  "suggestions": [],
+  "task": "orient/S22",
+  "validation": {
+    "audit": {
+      "cpu_hours": 0.00018417416666666666,
+      "exit_code": 1
+    },
+    "audit_import_repaired": {
+      "cpu_hours": 0.0018292325,
+      "exit_code": 0
+    },
+    "coord_check": {
+      "cpu_hours": 0.0040674525,
+      "exit_code": 0
+    },
+    "coord_check_final": {
+      "cpu_hours": 0.004120831388888889,
+      "exit_code": 0
+    },
+    "tests_after": {
+      "cpu_hours": 0.004105155277777777,
+      "exit_code": 0
+    },
+    "tests_before": {
+      "cpu_hours": 0.004088855277777777,
+      "exit_code": 0
+    },
+    "tests_before_amendment": {
+      "cpu_hours": 0.004145123888888888,
+      "exit_code": 0
+    }
+  }
+}

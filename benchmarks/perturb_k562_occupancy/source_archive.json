@@ -1,0 +1,17 @@
+{
+  "archive_url": "[shared archive; link withheld]",
+  "drive_file_id": "[drive-id-withheld]",
+  "archive_name": "scJDO2_orient-S18b.zip",
+  "archive_bytes": 58307352,
+  "archive_md5": "e8e70de2aa7cdf0516057c4b50458435",
+  "bundle_name": "scJDO2_orient-S18b.bundle",
+  "bundle_bytes": 58383013,
+  "supplied_refs": {
+    "manus/orient-S18b": "1c60fbad98563ed82c9d9019d92040b744d58c99",
+    "orientation": "1c60fbad98563ed82c9d9019d92040b744d58c99"
+  },
+  "raw_data_url": "https://ndownloader.figshare.com/files/35773219",
+  "raw_deposit_url": "https://plus.figshare.com/articles/dataset/_Mapping_information-rich_genotype-phenotype_landscapes_with_genome-scale_Perturb-seq_Replogle_et_al_2022_processed_Perturb-seq_datasets/20029387",
+  "raw_data_name": "K562_essential_raw_singlecell_01.h5ad",
+  "required_raw_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee"
+}

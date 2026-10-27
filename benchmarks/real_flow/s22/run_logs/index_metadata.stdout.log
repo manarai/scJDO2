@@ -1,0 +1,7 @@
+{
+  "clone_cell_within_z_all_row_bounds": true,
+  "cell_id_matches_zero_based_z_all_row_index": true,
+  "n_cells_in_multiple_delivered_clone_memberships": 0,
+  "membership_pairs_preserved_as_delivered": true,
+  "no_score_or_entropy_or_correlation_computed": true
+}

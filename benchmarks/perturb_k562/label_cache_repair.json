@@ -1,0 +1,9 @@
+{
+  "old_cache_sha256": "fed3a2e33488953cd7a9b75b2456ecaa4532aa162ae1707f98d246e8369478df",
+  "new_cache_sha256": "c1bfc77d63876da85bde891e73149a0308bb414d25db37b018d8d456279384de",
+  "repair": "Labels read from SHA-verified raw obs['gene'] and serialized as Unicode instead of object dtype",
+  "all_numeric_arrays_bitwise_unchanged": true,
+  "fitting_repeated": false,
+  "effect_statistics_computed_before_repair": 0,
+  "finished_utc": "2026-10-22T05:57:27.875470+00:00"
+}

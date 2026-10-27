@@ -1,0 +1,49 @@
+{
+  "T_null": {
+    "0": null,
+    "1": null,
+    "2": null
+  },
+  "eligible_seed_count": 2,
+  "eligible_seeds": [
+    12,
+    16
+  ],
+  "gate_X1": null,
+  "gate_X2": null,
+  "gate_X3": null,
+  "gate_X4": null,
+  "no_flow_fits": true,
+  "overall": null,
+  "reason": "S14c exhausted transition reserve s17\u2013s40 with only two total eligible transition seeds (s12, s16); four are required. The task requires stopping before null calibration and held-out fits when fewer than four are eligible.",
+  "required_eligible_seeds": 4,
+  "reserve_exhausted": true,
+  "status": "test_construction_failure",
+  "task": "orient/S14c",
+  "transition_reserve": [
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ]
+}

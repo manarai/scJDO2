@@ -1,0 +1,83 @@
+{
+  "dim": 20,
+  "embedding": "fa20w",
+  "finished_utc": "2026-10-20T22:09:10.066442Z",
+  "in_process_cpu_seconds": 31.99,
+  "input_sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5",
+  "measured_drift": {
+    "fit_device": "mps:0",
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "jacobian_device": "cpu",
+    "n_fit_cells": 1635,
+    "seconds": 16.61,
+    "seed": 0,
+    "weight_decay": 0.0001
+  },
+  "median_ot_speed": 0.07388356328010559,
+  "ot_library": {
+    "name": "POT",
+    "version": "0.9.7.post1"
+  },
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 234.53797657401074,
+      "final_err": 5.508121292713429e-10,
+      "from_day": 2,
+      "n_iter": 19,
+      "n_source": 187,
+      "n_target": 1448,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 218.17793511131987,
+      "final_err": 9.367354211877924e-10,
+      "from_day": 4,
+      "n_iter": 61,
+      "n_source": 1448,
+      "n_target": 11066,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 4.2,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_fa20w.npz",
+  "peak_rss_bytes": 2018148352,
+  "scores": {
+    "auc_lam1": 0.20743283237328022,
+    "auc_soft_axis_curvature": 0.043267356749967505,
+    "auc_tangent5_lam1": 0.22534179335036889,
+    "fate_axis_abs_cos_at_saddle": 0.640227731324331,
+    "fraction_saddle": 0.001732147075033462,
+    "median_lam1_committed": 0.0024244298162998936,
+    "median_lam1_saddle": 0.0006551584074957712,
+    "n_committed": 12594,
+    "n_saddle": 22,
+    "soft_axis_abs_cos_fate_axis": 0.12109966196573183
+  },
+  "sha256": "d0c102e8a465f0c1ddb7090cfe2b8cde7a8fa04c16f480815066e1924c09f8ae",
+  "started_utc": "2026-10-20T22:08:36.011443Z",
+  "task": "orient/S12",
+  "unit": "ot_v3_default_s0_fa20w",
+  "wall_seconds": 34.055,
+  "whitening": {
+    "M_eigenvalues_min_max": [
+      7.258545557036322,
+      691.605261122204
+    ],
+    "metric": "M = W^T Psi^-1 W (FA loadings W, FA noise variances Psi); cost = (z_i - z_j)^T M (z_i - z_j)"
+  }
+}

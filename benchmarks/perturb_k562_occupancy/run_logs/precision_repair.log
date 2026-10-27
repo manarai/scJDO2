@@ -1,0 +1,32 @@
+{
+  "20": {
+    "score_J": {
+      "ranks_coalesced_by_csv_rounding": 0,
+      "max_serialization_absolute_difference": 3.814726312612038e-12
+    },
+    "leiden": {
+      "ranks_coalesced_by_csv_rounding": 0,
+      "max_serialization_absolute_difference": 6.559197629485425e-13
+    }
+  },
+  "15": {
+    "score_J": {
+      "ranks_coalesced_by_csv_rounding": 0,
+      "max_serialization_absolute_difference": 4.990452495690079e-13
+    },
+    "leiden": {
+      "ranks_coalesced_by_csv_rounding": 0,
+      "max_serialization_absolute_difference": 1.0897949209720537e-12
+    }
+  },
+  "30": {
+    "score_J": {
+      "ranks_coalesced_by_csv_rounding": 4,
+      "max_serialization_absolute_difference": 4.196198943873242e-12
+    },
+    "leiden": {
+      "ranks_coalesced_by_csv_rounding": 0,
+      "max_serialization_absolute_difference": 4.67936800419011e-12
+    }
+  }
+}

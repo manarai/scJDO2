@@ -1,0 +1,50 @@
+START 2026-10-21T03:24:33Z
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/pandas/compat/_optional.py", line 135, in import_optional_dependency
+    module = importlib.import_module(name)
+  File "/Users/terooatt/miniconda3/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'tabulate'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s13_whitened.py", line 302, in <module>
+    if __name__=="__main__": main()
+                             ~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s13_whitened.py", line 300, in main
+    elif a.stage=="summarize": summarize()
+                               ~~~~~~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s13_whitened.py", line 281, in summarize
+    lines += ["","## Held-out prediction (truth-free)","Flow fit: first sampling pair only; integrate middle-day cells to final day in 1-hour Euler steps. Best method for each dataset × embedding:","",best.to_markdown(index=False),"","## Scope","Synthetic units use every S09/S10 cell. LARRY uses S11’s fixed `default_rng(0)` sample of 4,000 cells per time point as amended in S13 Revision 1.","","## CPU","`ledger` adds the closed /usr/bin/time total here after all unit logs are available."]
+                                                                                                                                                                                                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/pandas/core/frame.py", line 2994, in to_markdown
+    tabulate = import_optional_dependency("tabulate")
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/pandas/compat/_optional.py", line 138, in import_optional_dependency
+    raise ImportError(msg)
+ImportError: Missing optional dependency 'tabulate'.  Use pip or conda to install tabulate.
+        2.28 real         1.87 user         0.27 sys
+           243171328  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               34006  page reclaims
+                 175  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 509  voluntary context switches
+                1452  involuntary context switches
+         15247427130  instructions retired
+          5583478608  cycles elapsed
+           170935280  peak memory footprint
+EXIT 1 2026-10-21T03:24:35Z

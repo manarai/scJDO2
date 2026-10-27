@@ -1,0 +1,20 @@
+START 2026-10-20T11:41:58Z .venv/bin/python scripts/s10_fit_and_runs.py flow --preset v3_stationary_cycle --seed 2 --method pca
+       14.22 real        10.83 user         0.94 sys
+          1137164288  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               91927  page reclaims
+                  26  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 774  voluntary context switches
+               12963  involuntary context switches
+         81699066193  instructions retired
+         30598025245  cycles elapsed
+           971343648  peak memory footprint
+EXIT 0 2026-10-20T11:42:13Z

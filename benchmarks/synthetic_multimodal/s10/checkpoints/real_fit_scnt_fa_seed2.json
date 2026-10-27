@@ -1,0 +1,24 @@
+{
+  "J_flow_raw_perpulse": {
+    "n_fit_cells": 1947
+  },
+  "J_flow_raw_shared": {
+    "n_fit_cells": 1947
+  },
+  "J_flow_smoothed_perpulse": {
+    "n_fit_cells": 1947
+  },
+  "J_flow_smoothed_shared": {
+    "n_fit_cells": 1947
+  },
+  "finished_utc": "2026-10-20T12:58:32.222408Z",
+  "in_process_cpu_seconds": 132.847,
+  "path": "benchmarks/synthetic_multimodal/data/s10/real/fit_scnt_fa_seed2.npz",
+  "peak_rss_bytes": 569163776,
+  "sha256": "e776fec17539787f03c6e4f5209b49aeb2a0aa1411eea443e024ce90b13cb7f9",
+  "started_utc": "2026-10-20T12:56:18.308199Z",
+  "symmetry_max": 2.4880728233256377e-07,
+  "task": "orient/S10",
+  "unit": "real_fit_scnt_fa_seed2",
+  "wall_seconds": 133.914
+}

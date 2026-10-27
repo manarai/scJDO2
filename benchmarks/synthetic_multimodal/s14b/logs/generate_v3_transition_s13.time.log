@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s14b_confirm.py", line 402, in <module>
+    main()
+    ~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s14b_confirm.py", line 393, in main
+    if a.cmd == "generate": generate(a.preset, a.seed)
+                            ~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s14b_confirm.py", line 113, in generate
+    row = writer.write_dataset(preset, seed, DATA)
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/make_synthetic_multimodal.py", line 42, in write_dataset
+    adata = make_multimodal(preset=preset, seed=seed)
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scjdo2/data/synthetic_multimodal.py", line 1099, in make_multimodal
+    return _make_multimodal_v3(_make_v3_config(preset, seed, overrides), integration=integration)
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scjdo2/data/synthetic_multimodal.py", line 1586, in _make_multimodal_v3
+    new_before_efficiency = measurement_rng.binomial(total.astype(np.int64), fraction_new).astype(np.int32)
+                            ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "numpy/random/_generator.pyx", line 3089, in numpy.random._generator.Generator.binomial
+  File "numpy/random/_common.pyx", line 386, in numpy.random._common.check_array_constraint
+ValueError: n < 0
+     1669.06 real       996.36 user       680.91 sys
+         10866589696  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+           310548888  page reclaims
+                   7  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  24  voluntary context switches
+              164658  involuntary context switches
+      15773611022041  instructions retired
+       6276743636342  cycles elapsed
+         10283067712  peak memory footprint

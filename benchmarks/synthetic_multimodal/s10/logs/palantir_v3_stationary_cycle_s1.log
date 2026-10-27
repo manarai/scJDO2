@@ -1,0 +1,35 @@
+START 2026-10-20T09:47:12Z .venv/bin/python scripts/s10_fit_and_runs.py palantir --preset v3_stationary_cycle --seed 1
+Sampling and flocking waypoints...
+Time for determining waypoints: 5.336602528889974e-05 minutes
+Determining pseudotime...
+Shortest path distances using 30-nearest neighbor graph...
+Time for shortest paths: 0.006738499800364176 minutes
+Iteratively refining the pseudotime...
+Correlation at iteration 1: 0.9818
+Correlation at iteration 2: 0.9995
+Correlation at iteration 3: 1.0000
+Entropy and branch probabilities...
+Markov chain construction...
+Identification of terminal states...
+Computing fundamental matrix and absorption probabilities...
+Project results to all cells...
+[S10 palantir] v3_stationary_cycle s1 random_default_r0: 0.761s
+        5.58 real         4.99 user         0.69 sys
+          1185234944  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              148169  page reclaims
+                  38  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  17  voluntary context switches
+                4279  involuntary context switches
+         51273725581  instructions retired
+         20493281692  cycles elapsed
+           948373352  peak memory footprint
+EXIT 0 2026-10-20T09:47:17Z

@@ -1,0 +1,9 @@
+{
+  "task_sha256": "01ffb64bfed939f1b4d383d31e11f8e55a877d82ced97fc800771ad88e6a8463",
+  "before_any_S18d_scientific_fit": true,
+  "status": "pending planner conventions",
+  "proposed_D1_null": "For each screen/normalisation, default_rng(0).standard_normal((10000,20,3)); multiply by the symmetric square root of its all-control covariance, then reduced QR; save bases and sha256 before perturbed access. For each draw, take the median capture across all qualifying T weak displacements; D1 compares the observed median to the 95th percentile of these 10000 medians.",
+  "proposed_tertiles": "numpy.array_split of ascending knockdown row indices; ties by original source-row order; remainder cells go to earlier bins.",
+  "proposed_cohort": "Accepted S18/S18c original log-normalized PCA20 energy-distance significance per screen, before N1 projection; same target cohort for N1/N2 after >=150 cells and >=50% control target-gene detection.",
+  "Pearson_and_depth_conventions": "Use the named exploratory implementation: full raw library totals, HVG proportions from aggregate controls, theta=100, clipping sqrt(n_controls); depth-report vector B[1]/norm(B[1]), distinct from the N1 two-axis removal plane."
+}

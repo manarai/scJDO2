@@ -1,0 +1,20 @@
+START 2026-10-20T16:12:06Z .venv/bin/python scripts/s10_diffusion.py truth --preset v3_default --seed 0 --chunk 9
+      829.60 real       591.95 user       221.56 sys
+          3808428032  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              332449  page reclaims
+                   3  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                   8  voluntary context switches
+              459817  involuntary context switches
+       5814312906669  instructions retired
+       2120164571891  cycles elapsed
+          3339898480  peak memory footprint
+EXIT 0 2026-10-20T16:25:55Z

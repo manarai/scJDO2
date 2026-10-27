@@ -1,0 +1,50 @@
+{
+  "finished_utc": "2026-10-22T19:09:40.427271+00:00",
+  "n_per_day": "full",
+  "n_velocity_cells": 76747,
+  "pairs": [
+    {
+      "batch_count": 71,
+      "batch_size": 4000,
+      "coverage_max": 10,
+      "coverage_median": 10.0,
+      "coverage_min": 10,
+      "epsilon": 3.7095651960965728,
+      "from_day": 2.0,
+      "library": "POT",
+      "median_method": "deterministic 2,000,000-pair median (full pairwise matrix exceeds memory budget)",
+      "median_squared_distance": 74.19130392193145,
+      "n_source": 28249,
+      "n_target": 48498,
+      "target_sampling_with_replacement": false,
+      "to_day": 4.0,
+      "version": "0.9.7.post1"
+    },
+    {
+      "batch_count": 122,
+      "batch_size": 4000,
+      "coverage_max": 10,
+      "coverage_median": 10.0,
+      "coverage_min": 10,
+      "epsilon": 6.873212771963306,
+      "from_day": 4.0,
+      "library": "POT",
+      "median_method": "deterministic 2,000,000-pair median (full pairwise matrix exceeds memory budget)",
+      "median_squared_distance": 137.4642554392661,
+      "n_source": 48498,
+      "n_target": 54140,
+      "target_sampling_with_replacement": false,
+      "to_day": 6.0,
+      "version": "0.9.7.post1"
+    }
+  ],
+  "rank": null,
+  "solver": "minibatch",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_minibatch_full",
+  "velocity_path": "benchmarks/scaling/data/velocity_minibatch_full.npz",
+  "wall_seconds": 288.527,
+  "wall_seconds_internal": 288.527
+}

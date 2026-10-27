@@ -1,0 +1,19 @@
+{
+  "analysis_checkpoint": "benchmarks/synthetic_multimodal/s15/checkpoints/analysis_v3_transition_s2_score_k15_d0.json",
+  "dataset": "v3_transition_s2",
+  "drift_seed": 0,
+  "finished_utc": "2026-10-24T00:07:09.630749Z",
+  "in_process_cpu_seconds": 18.304,
+  "k": 15,
+  "new_array_sha256": "54cbd859fff57b85ec8c76f09ef78f7078e53d884d2e7f0440e1888d49ff51d3",
+  "observed_only": true,
+  "old_array_sha256": "e8ef3cf8be456c4d917ed338e9c6b604f645c67e0e9b0309e530c2dc659fb46f",
+  "operator": "score",
+  "peak_rss_bytes": 462700544,
+  "repair": "Re-encoded the already-computed finite raw descriptors as float64 after float32 storage overflow; operator, rank descriptors, assignments, truth scores, K selection, and all fits are unchanged.",
+  "stage": "artifact_repair",
+  "started_utc": "2026-10-24T00:06:50.938123Z",
+  "task": "orient/S15",
+  "unit": "repair_raw_analysis_v3_transition_s2_score_k15_d0",
+  "wall_seconds": 18.693
+}

@@ -1,0 +1,41 @@
+{
+  "details": {
+    "pca10": {
+      "n_comp": 10,
+      "seconds": 15.36
+    },
+    "pca50": {
+      "n_comp": 50,
+      "seconds": 14.01
+    },
+    "scvi10": {
+      "final_elbo_train": 2348.092529296875,
+      "n_epochs": 400,
+      "n_latent": 10,
+      "scvi_version": "1.5.1",
+      "seconds": 1029.23,
+      "settings": "SCVI defaults (n_hidden 128, n_layers 1, gene_likelihood zinb), layer = observed spliced counts, all genes, seed 0, default max_epochs, accelerator cpu; latent = posterior mean"
+    }
+  },
+  "finished_utc": "2026-10-20T22:21:58.857712Z",
+  "in_process_cpu_seconds": 2449.42,
+  "input_sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5",
+  "keys": [
+    "linear_map_pca10",
+    "linear_map_pca50",
+    "mean_pca10",
+    "mean_pca50",
+    "target_pca10",
+    "target_pca50",
+    "z_pca10",
+    "z_pca50",
+    "z_scvi10"
+  ],
+  "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/embeddings.npz",
+  "peak_rss_bytes": 4317626368,
+  "sha256": "1b9b822f77d9858b6495edfedf93ea539f928c4b313227c90e65841d024da1d2",
+  "started_utc": "2026-10-20T22:04:09.594735Z",
+  "task": "orient/S12",
+  "unit": "embed_v3_default_s0",
+  "wall_seconds": 1069.263
+}

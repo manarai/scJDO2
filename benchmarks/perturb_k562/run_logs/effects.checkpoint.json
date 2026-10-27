@@ -1,0 +1,19 @@
+{
+  "unit": "effects",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "effects"
+  ],
+  "started_utc": "2026-10-22T05:56:31.161007+00:00",
+  "finished_utc": "2026-10-22T05:56:32.829284+00:00",
+  "exit_code": 1,
+  "wall_seconds": 1.6682823860001008,
+  "cpu_hours": 0.0006352633333333332,
+  "max_rss_kib": 170104,
+  "cpu_hours_before": 0.09146034361111112,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/effects.log"
+}

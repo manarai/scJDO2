@@ -1,0 +1,16 @@
+{
+  "basis": "processed_file_X_pca",
+  "dynamo_version": "1.5.3",
+  "embedding_dimension": 30,
+  "jacobian_finite": true,
+  "jacobian_median_abs": 0.0012662611540972717,
+  "jacobian_shape_d_d_n": [
+    30,
+    30,
+    1947
+  ],
+  "kind": "report_only_stored_dynamo_baseline",
+  "n_cells": 1947,
+  "note": "Different PCA basis from S11 common embedding; report-only invariants, never cross-basis compared.",
+  "task": "orient/S11"
+}

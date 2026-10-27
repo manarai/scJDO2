@@ -1,0 +1,9 @@
+{
+  "finished_utc": "2026-10-20T13:19:12.844581Z",
+  "in_process_cpu_seconds": 1289.26,
+  "peak_rss_bytes": 6794559488,
+  "started_utc": "2026-10-20T12:58:00.048110Z",
+  "task": "orient/S10",
+  "unit": "transitions",
+  "wall_seconds": 1272.796
+}

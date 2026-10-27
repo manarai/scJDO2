@@ -1,0 +1,20 @@
+START 2026-10-21T10:10:21Z
+      109.76 real        90.84 user         5.03 sys
+          7384580096  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              605020  page reclaims
+                   8  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3979  voluntary context switches
+               63907  involuntary context switches
+        723390033735  instructions retired
+        236311535884  cycles elapsed
+          5314124256  peak memory footprint
+EXIT 0 2026-10-21T10:12:10Z

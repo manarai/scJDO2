@@ -1,0 +1,46 @@
+{
+  "finished_utc": "2026-10-22T18:25:14.683138+00:00",
+  "n_per_day": 4000,
+  "n_velocity_cells": 8000,
+  "pairs": [
+    {
+      "epsilon": 3.6783537707414755,
+      "from_day": 2.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 73.5670754148295,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_shape": [
+        4000,
+        4000
+      ],
+      "to_day": 4.0,
+      "version": "0.9.7.post1"
+    },
+    {
+      "epsilon": 6.943671022992884,
+      "from_day": 4.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 138.87342045985767,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_shape": [
+        4000,
+        4000
+      ],
+      "to_day": 6.0,
+      "version": "0.9.7.post1"
+    }
+  ],
+  "rank": null,
+  "solver": "dense",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_dense_4000",
+  "velocity_path": "benchmarks/scaling/data/velocity_dense_4000.npz",
+  "wall_seconds": 6.171,
+  "wall_seconds_internal": 6.172
+}

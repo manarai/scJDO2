@@ -1,0 +1,40 @@
+{
+  "finished_utc": "2026-10-19T17:08:02Z",
+  "ledger": {
+    "attempted_evaluations": 260.0,
+    "budget_cpu_hours": 40.0,
+    "completed_evaluations": 256.0,
+    "cpu_hours": 14.35751638888889,
+    "cpu_seconds": 51687.059,
+    "excluded_after_retry": 1.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 0.0
+  },
+  "peak_rss_bytes": 708018176,
+  "recover_dynamics_timing": [],
+  "rows": [
+    {
+      "attempt": 1,
+      "batch": "block3",
+      "candidate_index": 13,
+      "cpu_seconds": 5.682,
+      "error": "",
+      "knobs_json": "{\"beta0\": 1.55, \"eta_u\": 0.2, \"f_constant\": 0.15, \"f_sample\": 0.09312752054539772, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"mu_b\": -2.75, \"n_founders\": 300, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"theta0\": 37.75}",
+      "normalized_distance": "",
+      "pass": 4,
+      "peak_rss_bytes": 707969024,
+      "ranking_eligible": "false",
+      "reduced_n_founders": "",
+      "reused_from": "",
+      "stage": "block3_lineage",
+      "statistics_json": "{\"G1_barcoded_cell_fraction\": 0.35338125275047677, \"G2_clone_size\": 12.5, \"G3_multi_time_clone_fraction\": 0.7464788732394366, \"collected_cells\": 13634}",
+      "status": "complete",
+      "targets_met_json": "{\"G1_barcoded_cell_fraction\": true, \"G2_clone_size\": false, \"G3_multi_time_clone_fraction\": true}",
+      "uid": "block3_13",
+      "unmet_targets": "",
+      "wall_seconds": 5.699
+    }
+  ],
+  "stage": "block",
+  "task": "orient/S09"
+}

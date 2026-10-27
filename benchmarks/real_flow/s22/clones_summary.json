@@ -1,0 +1,38 @@
+{
+  "amendment_applied": true,
+  "entropy_range": [
+    -0.0,
+    1.5047882836811908
+  ],
+  "n_clone_time_pairs": 1818,
+  "n_pairs_per_t": {
+    "2": 232,
+    "4": 1586
+  },
+  "n_tied_pairs": 67,
+  "n_tied_pairs_per_t": {
+    "2": 3,
+    "4": 64
+  },
+  "n_undifferentiated_pairs": 1401,
+  "n_undifferentiated_pairs_per_t": {
+    "2": 227,
+    "4": 1174
+  },
+  "n_unique_clones": 1694,
+  "n_untied_per_type": {
+    "Baso": 121,
+    "Eos": 2,
+    "Erythroid": 2,
+    "Lymphoid": 3,
+    "Mast": 29,
+    "Meg": 16,
+    "Monocyte": 65,
+    "Neutrophil": 109,
+    "Undifferentiated": 1401,
+    "pDC": 3
+  },
+  "n_zero_entropy": 798,
+  "switch_median": 0.43167701863354035,
+  "tied_switch_median": 0.0
+}

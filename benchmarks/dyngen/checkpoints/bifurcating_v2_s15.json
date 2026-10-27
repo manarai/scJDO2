@@ -1,0 +1,46 @@
+{
+  "backbone": "bifurcating",
+  "bytes": 43522932,
+  "cells": 5000,
+  "finished_utc": "2026-10-23T06:46:06.938121Z",
+  "genes": 1000,
+  "key": "bifurcating_v2_s15",
+  "path": "benchmarks/dyngen/data/bifurcating_v2_s15.h5ad",
+  "seed": 15,
+  "settings": {
+    "R_version": "4.6.0",
+    "backbone": "bifurcating",
+    "compute_cellwise_grn": false,
+    "compute_dimred": true,
+    "compute_rna_velocity": true,
+    "distance_metric": "pearson",
+    "dyngen_version": "1.1.1",
+    "experiment": {
+      "num_timepoints": 3,
+      "pct_between": 0.75,
+      "type": "synchronised"
+    },
+    "num_cells": 5000,
+    "num_features": 1000,
+    "num_hks": 50,
+    "num_modules": 34,
+    "num_simulations": 64,
+    "num_targets": 900,
+    "num_tfs": 50,
+    "seed": 15,
+    "store_reaction_firings": false,
+    "store_reaction_propensities": false,
+    "task": "orient/S19",
+    "timings_seconds": {
+      "generate_cells": 1561.866,
+      "generate_experiment": 9.493,
+      "generate_feature_network": 2.821,
+      "generate_gold_standard": 5.295,
+      "generate_kinetics": 0.752,
+      "generate_tf_network": 0.067
+    }
+  },
+  "sha256": "2b3383bc4a6d80745fb572fe443740ecc5c2b959e2f2152d8cc6004b49fe5513",
+  "status": "complete",
+  "task": "orient/S19"
+}

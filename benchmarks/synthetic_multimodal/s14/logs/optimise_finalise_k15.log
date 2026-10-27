@@ -1,0 +1,28 @@
+START 2026-10-21T10:15:50Z
+{
+  "configuration_id": "combined_selected",
+  "mean_development_fork_auc": 0.9072232663654027,
+  "mean_jref_error": 1.0020638347069244,
+  "mean_transition_abs_offset_informative": 5.0,
+  "n_datasets": 4,
+  "n_informative": 2
+}
+        0.59 real         0.42 user         0.10 sys
+           105791488  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               11656  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 443  voluntary context switches
+                 197  involuntary context switches
+          3279613063  instructions retired
+          1361077469  cycles elapsed
+            65356688  peak memory footprint
+EXIT 0 2026-10-21T10:15:51Z

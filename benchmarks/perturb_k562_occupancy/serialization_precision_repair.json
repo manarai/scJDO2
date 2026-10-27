@@ -1,0 +1,64 @@
+{
+  "status": "pass",
+  "csv_format": "17 significant digits; float_precision=round_trip",
+  "changes": {
+    "20": {
+      "score_J": {
+        "ranks_coalesced_by_csv_rounding": 0,
+        "max_serialization_absolute_difference": 3.814726312612038e-12
+      },
+      "leiden": {
+        "ranks_coalesced_by_csv_rounding": 0,
+        "max_serialization_absolute_difference": 6.559197629485425e-13
+      }
+    },
+    "15": {
+      "score_J": {
+        "ranks_coalesced_by_csv_rounding": 0,
+        "max_serialization_absolute_difference": 4.990452495690079e-13
+      },
+      "leiden": {
+        "ranks_coalesced_by_csv_rounding": 0,
+        "max_serialization_absolute_difference": 1.0897949209720537e-12
+      }
+    },
+    "30": {
+      "score_J": {
+        "ranks_coalesced_by_csv_rounding": 4,
+        "max_serialization_absolute_difference": 4.196198943873242e-12
+      },
+      "leiden": {
+        "ranks_coalesced_by_csv_rounding": 0,
+        "max_serialization_absolute_difference": 4.67936800419011e-12
+      }
+    }
+  },
+  "scientific_jsons_and_caches_unchanged": true,
+  "immutable_sha256": {
+    "benchmarks/perturb_k562_occupancy/h1_k20.json": "d1aa3888c8fce4a942a95f0b0829e5716f76c1f8c248e20689667391e868971b",
+    "benchmarks/perturb_k562_occupancy/h2_k20.json": "08cad502e361b74504b61c3a26b1d829f63fa01777dcfb2ef109806051019a6b",
+    "benchmarks/perturb_k562_occupancy/cache/model_k20.pt": "94569df055d469e45833860c5110829eefd7cfd1b62975e7429dc5f360698edf",
+    "benchmarks/perturb_k562_occupancy/cache/states_k20.npz": "bc1ec528437c381ea966204d9fa9de39673ba0115b5cf8a2fe8934639648c377",
+    "benchmarks/perturb_k562_occupancy/cache/refit_k20.npz": "726d53e0d8808fae362cf8dd9a0190190d8e43a3b2277a232c2bf526e6649d90",
+    "benchmarks/perturb_k562_occupancy/cache/occupancy_k20.npz": "2b06cf74cd742c01751f49d282e7b568137e56b2f5eb197a7108d34674a38568",
+    "benchmarks/perturb_k562_occupancy/cache/h1_k20.npz": "329405bbe0135f101151b59aca385611694033572f544a897d1224875c11b56a",
+    "benchmarks/perturb_k562_occupancy/h1_k15.json": "ec1f25ed891376b7200a272f9ac93130de5254f2d0746e0687ee9502d27f1e24",
+    "benchmarks/perturb_k562_occupancy/h2_k15.json": "86b6ae8de1afc1f4b48261d37a523491c8d0ba6b364f01753106ea05c7b4cdf6",
+    "benchmarks/perturb_k562_occupancy/cache/model_k15.pt": "7d9b5412abf1aea31cb03acbfe3043eee2fd7f94d007d1f4cb1f0e80f21b2103",
+    "benchmarks/perturb_k562_occupancy/cache/states_k15.npz": "8395a165e3cab68d88009d51d6de8db9d61a0fc20e9783fe80bfa26dc2546cb2",
+    "benchmarks/perturb_k562_occupancy/cache/refit_k15.npz": "1598b68ddce71916a390afc4e830e4e4c18ae14c3e4b139ed16c1816cee88bae",
+    "benchmarks/perturb_k562_occupancy/cache/occupancy_k15.npz": "fff896b3dafa03f74381ee08d2edf568962b042b9eea35a3622c6997fc846a6e",
+    "benchmarks/perturb_k562_occupancy/cache/h1_k15.npz": "48573d2c4d90479ec6aee116a503a37fd4a0609235ce7479675cddd1b39916ff",
+    "benchmarks/perturb_k562_occupancy/h1_k30.json": "a8ecb63b98b1040e218280b2c18a1e9b48c13968a290f6ec3f671d6905f271e8",
+    "benchmarks/perturb_k562_occupancy/h2_k30.json": "0d26c53ceab2e856cadabf766442f419650565e5f1e80b4ed37a021a3191e3db",
+    "benchmarks/perturb_k562_occupancy/cache/model_k30.pt": "fb43e0afe830d7d247140a164b0c37818e8ebb213b655e206bd5f1e6603e0b8d",
+    "benchmarks/perturb_k562_occupancy/cache/states_k30.npz": "95877a755cd7ebf91a4e657ea9f0318de7c1d18902385f92a8bcdcd4fbb9343d",
+    "benchmarks/perturb_k562_occupancy/cache/refit_k30.npz": "aa9d442c7a26fc2fe3a7837ac9d8369d22449ffe34d10703fea824e9d4bd5c33",
+    "benchmarks/perturb_k562_occupancy/cache/occupancy_k30.npz": "14459c344ad74346382381d990ec4e9e10d638c353dc5f440470a32db77ab002",
+    "benchmarks/perturb_k562_occupancy/cache/h1_k30.npz": "97be55355eb8eaa8e5c20d4a9efaacfc27b588998afa74d61e36c8531a99f6a2"
+  },
+  "refits": 0,
+  "resampling": 0,
+  "statistical_parameter_changes": 0,
+  "repaired_utc": "2026-10-22T12:13:41.675086+00:00"
+}

@@ -1,0 +1,829 @@
+{
+  "attempted_cpu_hours": 8.10375,
+  "budget_cpu_hours": 24.0,
+  "entries": [
+    {
+      "cpu_seconds": 29.529999999999998,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_larry_k10.log",
+      "real_seconds": 33.38
+    },
+    {
+      "cpu_seconds": 54.35,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_larry_k15.log",
+      "real_seconds": 63.97
+    },
+    {
+      "cpu_seconds": 64.1,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_larry_k20.log",
+      "real_seconds": 74.14
+    },
+    {
+      "cpu_seconds": 88.72999999999999,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_larry_k30.log",
+      "real_seconds": 99.07
+    },
+    {
+      "cpu_seconds": 22.58,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_larry_k5.log",
+      "real_seconds": 26.28
+    },
+    {
+      "cpu_seconds": 32.38,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s0_k10.log",
+      "real_seconds": 36.01
+    },
+    {
+      "cpu_seconds": 39.91,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s0_k15.log",
+      "real_seconds": 43.65
+    },
+    {
+      "cpu_seconds": 71.71000000000001,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s0_k20.log",
+      "real_seconds": 81.42
+    },
+    {
+      "cpu_seconds": 95.55,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s0_k30.log",
+      "real_seconds": 105.9
+    },
+    {
+      "cpu_seconds": 26.24,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s0_k5.log",
+      "real_seconds": 30.17
+    },
+    {
+      "cpu_seconds": 32.35,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s1_k10.log",
+      "real_seconds": 36.05
+    },
+    {
+      "cpu_seconds": 61.17,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s1_k15.log",
+      "real_seconds": 70.99
+    },
+    {
+      "cpu_seconds": 71.19,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s1_k20.log",
+      "real_seconds": 80.9
+    },
+    {
+      "cpu_seconds": 95.84,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s1_k30.log",
+      "real_seconds": 106.27
+    },
+    {
+      "cpu_seconds": 26.22,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_default_s1_k5.log",
+      "real_seconds": 29.77
+    },
+    {
+      "cpu_seconds": 30.53,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s0_k10.log",
+      "real_seconds": 34.37
+    },
+    {
+      "cpu_seconds": 38.32,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s0_k15.log",
+      "real_seconds": 42.45
+    },
+    {
+      "cpu_seconds": 70.32,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s0_k20.log",
+      "real_seconds": 81.15
+    },
+    {
+      "cpu_seconds": 92.44,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s0_k30.log",
+      "real_seconds": 102.4
+    },
+    {
+      "cpu_seconds": 23.7,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s0_k5.log",
+      "real_seconds": 28.12
+    },
+    {
+      "cpu_seconds": 30.369999999999997,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s1_k10.log",
+      "real_seconds": 34.15
+    },
+    {
+      "cpu_seconds": 37.879999999999995,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s1_k15.log",
+      "real_seconds": 41.65
+    },
+    {
+      "cpu_seconds": 67.89999999999999,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s1_k20.log",
+      "real_seconds": 78.08
+    },
+    {
+      "cpu_seconds": 91.75999999999999,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s1_k30.log",
+      "real_seconds": 102.22
+    },
+    {
+      "cpu_seconds": 23.68,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/choose_v3_transition_s1_k5.log",
+      "real_seconds": 27.3
+    },
+    {
+      "cpu_seconds": 45.980000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/diagnostic_dev_auc.log",
+      "real_seconds": 46.78
+    },
+    {
+      "cpu_seconds": 3669.3,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_default_s3.log",
+      "real_seconds": 3832.01
+    },
+    {
+      "cpu_seconds": 3629.25,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_nofork_s0.log",
+      "real_seconds": 3807.21
+    },
+    {
+      "cpu_seconds": 1966.18,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_nofork_s1.log",
+      "real_seconds": 1991.81
+    },
+    {
+      "cpu_seconds": 3641.17,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_transition_s3.log",
+      "real_seconds": 3718.94
+    },
+    {
+      "cpu_seconds": 3544.8500000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_transition_s3_retry1.log",
+      "real_seconds": 3589.69
+    },
+    {
+      "cpu_seconds": 3069.76,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_transition_s4.log",
+      "real_seconds": 3148.7
+    },
+    {
+      "cpu_seconds": 95.87,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_combined_k15_combined_selected_v3_default_s0.log",
+      "real_seconds": 109.76
+    },
+    {
+      "cpu_seconds": 93.83,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_combined_k15_combined_selected_v3_default_s1.log",
+      "real_seconds": 107.77
+    },
+    {
+      "cpu_seconds": 89.33,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_combined_k15_combined_selected_v3_transition_s0.log",
+      "real_seconds": 103.14
+    },
+    {
+      "cpu_seconds": 90.75999999999999,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_combined_k15_combined_selected_v3_transition_s1.log",
+      "real_seconds": 105.05
+    },
+    {
+      "cpu_seconds": 0.52,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_finalise_k15.log",
+      "real_seconds": 0.59
+    },
+    {
+      "cpu_seconds": 56.95,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd0p0001_v3_default_s0.log",
+      "real_seconds": 57.15
+    },
+    {
+      "cpu_seconds": 56.93,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd0p0001_v3_default_s1.log",
+      "real_seconds": 57.02
+    },
+    {
+      "cpu_seconds": 55.87,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd0p0001_v3_transition_s0.log",
+      "real_seconds": 58.18
+    },
+    {
+      "cpu_seconds": 53.37,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd0p0001_v3_transition_s1.log",
+      "real_seconds": 53.56
+    },
+    {
+      "cpu_seconds": 53.83,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd0p001_v3_transition_s0.log",
+      "real_seconds": 54.06
+    },
+    {
+      "cpu_seconds": 58.790000000000006,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd1em05_v3_default_s0.log",
+      "real_seconds": 61.21
+    },
+    {
+      "cpu_seconds": 58.29,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd1em05_v3_default_s1.log",
+      "real_seconds": 60.33
+    },
+    {
+      "cpu_seconds": 54.370000000000005,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd1em05_v3_transition_s0.log",
+      "real_seconds": 56.22
+    },
+    {
+      "cpu_seconds": 55.519999999999996,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_128x128x128_wd1em05_v3_transition_s1.log",
+      "real_seconds": 58.02
+    },
+    {
+      "cpu_seconds": 51.98,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p0001_v3_default_s0.log",
+      "real_seconds": 52.59
+    },
+    {
+      "cpu_seconds": 52.199999999999996,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p0001_v3_default_s1.log",
+      "real_seconds": 52.9
+    },
+    {
+      "cpu_seconds": 48.96,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p0001_v3_transition_s0.log",
+      "real_seconds": 49.84
+    },
+    {
+      "cpu_seconds": 49.43,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p0001_v3_transition_s1.log",
+      "real_seconds": 50.36
+    },
+    {
+      "cpu_seconds": 52.080000000000005,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p001_v3_default_s0.log",
+      "real_seconds": 52.76
+    },
+    {
+      "cpu_seconds": 51.879999999999995,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p001_v3_default_s1.log",
+      "real_seconds": 52.6
+    },
+    {
+      "cpu_seconds": 49.050000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p001_v3_transition_s0.log",
+      "real_seconds": 49.76
+    },
+    {
+      "cpu_seconds": 48.51,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd0p001_v3_transition_s1.log",
+      "real_seconds": 49.12
+    },
+    {
+      "cpu_seconds": 52.42,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd1em05_v3_default_s0.log",
+      "real_seconds": 53.43
+    },
+    {
+      "cpu_seconds": 52.95,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd1em05_v3_default_s1.log",
+      "real_seconds": 54.04
+    },
+    {
+      "cpu_seconds": 48.48,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd1em05_v3_transition_s0.log",
+      "real_seconds": 49.9
+    },
+    {
+      "cpu_seconds": 49.82,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_64x64_wd1em05_v3_transition_s1.log",
+      "real_seconds": 51.2
+    },
+    {
+      "cpu_seconds": 56.17,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd0p001_v3_default_s0.log",
+      "real_seconds": 58.31
+    },
+    {
+      "cpu_seconds": 56.300000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd0p001_v3_default_s1.log",
+      "real_seconds": 57.82
+    },
+    {
+      "cpu_seconds": 53.3,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd0p001_v3_transition_s0.log",
+      "real_seconds": 54.82
+    },
+    {
+      "cpu_seconds": 53.94,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd0p001_v3_transition_s1.log",
+      "real_seconds": 56.06
+    },
+    {
+      "cpu_seconds": 56.480000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd1em05_v3_default_s0.log",
+      "real_seconds": 57.72
+    },
+    {
+      "cpu_seconds": 56.080000000000005,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd1em05_v3_default_s1.log",
+      "real_seconds": 57.4
+    },
+    {
+      "cpu_seconds": 53.18,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd1em05_v3_transition_s0.log",
+      "real_seconds": 54.76
+    },
+    {
+      "cpu_seconds": 51.81,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_arch_96x96x96_wd1em05_v3_transition_s1.log",
+      "real_seconds": 53.31
+    },
+    {
+      "cpu_seconds": 60.25,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p0125_v3_default_s0.log",
+      "real_seconds": 62.3
+    },
+    {
+      "cpu_seconds": 59.58,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p0125_v3_default_s1.log",
+      "real_seconds": 62.42
+    },
+    {
+      "cpu_seconds": 56.160000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p0125_v3_transition_s0.log",
+      "real_seconds": 57.56
+    },
+    {
+      "cpu_seconds": 56.17,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p0125_v3_transition_s1.log",
+      "real_seconds": 57.62
+    },
+    {
+      "cpu_seconds": 60.150000000000006,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p025_v3_default_s0.log",
+      "real_seconds": 61.78
+    },
+    {
+      "cpu_seconds": 58.76,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p025_v3_default_s1.log",
+      "real_seconds": 60.42
+    },
+    {
+      "cpu_seconds": 54.89,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p025_v3_transition_s0.log",
+      "real_seconds": 57.0
+    },
+    {
+      "cpu_seconds": 54.58,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p025_v3_transition_s1.log",
+      "real_seconds": 56.37
+    },
+    {
+      "cpu_seconds": 55.88,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p05_v3_default_s0.log",
+      "real_seconds": 57.2
+    },
+    {
+      "cpu_seconds": 56.04,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p05_v3_default_s1.log",
+      "real_seconds": 57.32
+    },
+    {
+      "cpu_seconds": 53.92,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p05_v3_transition_s0.log",
+      "real_seconds": 55.93
+    },
+    {
+      "cpu_seconds": 53.09,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p05_v3_transition_s1.log",
+      "real_seconds": 54.53
+    },
+    {
+      "cpu_seconds": 54.22,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p1_v3_default_s0.log",
+      "real_seconds": 55.85
+    },
+    {
+      "cpu_seconds": 53.11,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p1_v3_default_s1.log",
+      "real_seconds": 54.77
+    },
+    {
+      "cpu_seconds": 52.830000000000005,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p1_v3_transition_s0.log",
+      "real_seconds": 54.53
+    },
+    {
+      "cpu_seconds": 53.080000000000005,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p1_v3_transition_s1.log",
+      "real_seconds": 55.03
+    },
+    {
+      "cpu_seconds": 52.93,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p2_v3_default_s0.log",
+      "real_seconds": 54.58
+    },
+    {
+      "cpu_seconds": 51.730000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p2_v3_default_s1.log",
+      "real_seconds": 53.22
+    },
+    {
+      "cpu_seconds": 52.68000000000001,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p2_v3_transition_s0.log",
+      "real_seconds": 54.48
+    },
+    {
+      "cpu_seconds": 52.17,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_eps_0p2_v3_transition_s1.log",
+      "real_seconds": 54.4
+    },
+    {
+      "cpu_seconds": 39.74,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p0001_v3_default_s0.log",
+      "real_seconds": 43.11
+    },
+    {
+      "cpu_seconds": 39.88,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p0001_v3_default_s1.log",
+      "real_seconds": 43.23
+    },
+    {
+      "cpu_seconds": 37.26,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p0001_v3_transition_s0.log",
+      "real_seconds": 40.14
+    },
+    {
+      "cpu_seconds": 36.699999999999996,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p0001_v3_transition_s1.log",
+      "real_seconds": 40.04
+    },
+    {
+      "cpu_seconds": 39.09,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p001_v3_default_s0.log",
+      "real_seconds": 42.38
+    },
+    {
+      "cpu_seconds": 39.61,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p001_v3_default_s1.log",
+      "real_seconds": 42.83
+    },
+    {
+      "cpu_seconds": 36.199999999999996,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p001_v3_transition_s0.log",
+      "real_seconds": 39.56
+    },
+    {
+      "cpu_seconds": 35.87,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd0p001_v3_transition_s1.log",
+      "real_seconds": 39.18
+    },
+    {
+      "cpu_seconds": 39.26,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd1em05_v3_default_s0.log",
+      "real_seconds": 42.57
+    },
+    {
+      "cpu_seconds": 39.57,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd1em05_v3_default_s1.log",
+      "real_seconds": 42.86
+    },
+    {
+      "cpu_seconds": 36.37,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd1em05_v3_transition_s0.log",
+      "real_seconds": 40.07
+    },
+    {
+      "cpu_seconds": 36.550000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_128x128x128_wd1em05_v3_transition_s1.log",
+      "real_seconds": 39.85
+    },
+    {
+      "cpu_seconds": 36.3,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p0001_v3_default_s0.log",
+      "real_seconds": 38.73
+    },
+    {
+      "cpu_seconds": 36.71,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p0001_v3_default_s1.log",
+      "real_seconds": 39.31
+    },
+    {
+      "cpu_seconds": 33.61,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p0001_v3_transition_s0.log",
+      "real_seconds": 36.07
+    },
+    {
+      "cpu_seconds": 33.17,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p0001_v3_transition_s1.log",
+      "real_seconds": 35.77
+    },
+    {
+      "cpu_seconds": 36.010000000000005,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p001_v3_default_s0.log",
+      "real_seconds": 38.53
+    },
+    {
+      "cpu_seconds": 34.5,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p001_v3_default_s1.log",
+      "real_seconds": 36.71
+    },
+    {
+      "cpu_seconds": 33.7,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p001_v3_transition_s0.log",
+      "real_seconds": 36.6
+    },
+    {
+      "cpu_seconds": 33.54,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd0p001_v3_transition_s1.log",
+      "real_seconds": 36.22
+    },
+    {
+      "cpu_seconds": 36.44,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd1em05_v3_default_s0.log",
+      "real_seconds": 39.04
+    },
+    {
+      "cpu_seconds": 36.71,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd1em05_v3_default_s1.log",
+      "real_seconds": 39.28
+    },
+    {
+      "cpu_seconds": 33.57,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd1em05_v3_transition_s0.log",
+      "real_seconds": 36.22
+    },
+    {
+      "cpu_seconds": 33.28,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_64x64_wd1em05_v3_transition_s1.log",
+      "real_seconds": 35.87
+    },
+    {
+      "cpu_seconds": 38.519999999999996,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd0p001_v3_default_s0.log",
+      "real_seconds": 41.63
+    },
+    {
+      "cpu_seconds": 39.03,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd0p001_v3_default_s1.log",
+      "real_seconds": 42.18
+    },
+    {
+      "cpu_seconds": 35.92,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd0p001_v3_transition_s0.log",
+      "real_seconds": 39.08
+    },
+    {
+      "cpu_seconds": 35.82,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd0p001_v3_transition_s1.log",
+      "real_seconds": 39.01
+    },
+    {
+      "cpu_seconds": 38.57,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd1em05_v3_default_s0.log",
+      "real_seconds": 41.79
+    },
+    {
+      "cpu_seconds": 39.02,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd1em05_v3_default_s1.log",
+      "real_seconds": 42.1
+    },
+    {
+      "cpu_seconds": 35.89,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd1em05_v3_transition_s0.log",
+      "real_seconds": 39.14
+    },
+    {
+      "cpu_seconds": 35.86,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_arch_96x96x96_wd1em05_v3_transition_s1.log",
+      "real_seconds": 39.38
+    },
+    {
+      "cpu_seconds": 89.47999999999999,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_ensemble_5_v3_default_s0.log",
+      "real_seconds": 102.37
+    },
+    {
+      "cpu_seconds": 87.26,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_ensemble_5_v3_default_s1.log",
+      "real_seconds": 100.1
+    },
+    {
+      "cpu_seconds": 83.88,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_ensemble_5_v3_transition_s0.log",
+      "real_seconds": 96.9
+    },
+    {
+      "cpu_seconds": 83.91,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_ensemble_5_v3_transition_s1.log",
+      "real_seconds": 96.91
+    },
+    {
+      "cpu_seconds": 39.34,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p0125_v3_default_s0.log",
+      "real_seconds": 42.09
+    },
+    {
+      "cpu_seconds": 39.95,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p0125_v3_default_s1.log",
+      "real_seconds": 42.84
+    },
+    {
+      "cpu_seconds": 40.72,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p0125_v3_transition_s0.log",
+      "real_seconds": 44.72
+    },
+    {
+      "cpu_seconds": 40.12,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p0125_v3_transition_s1.log",
+      "real_seconds": 43.48
+    },
+    {
+      "cpu_seconds": 41.739999999999995,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p025_v3_default_s0.log",
+      "real_seconds": 44.93
+    },
+    {
+      "cpu_seconds": 42.16,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p025_v3_default_s1.log",
+      "real_seconds": 45.51
+    },
+    {
+      "cpu_seconds": 37.63,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p025_v3_transition_s0.log",
+      "real_seconds": 40.89
+    },
+    {
+      "cpu_seconds": 37.190000000000005,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p025_v3_transition_s1.log",
+      "real_seconds": 40.85
+    },
+    {
+      "cpu_seconds": 38.059999999999995,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p05_v3_default_s0.log",
+      "real_seconds": 41.22
+    },
+    {
+      "cpu_seconds": 39.269999999999996,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p05_v3_default_s1.log",
+      "real_seconds": 42.46
+    },
+    {
+      "cpu_seconds": 36.629999999999995,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p05_v3_transition_s0.log",
+      "real_seconds": 40.13
+    },
+    {
+      "cpu_seconds": 35.94,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p05_v3_transition_s1.log",
+      "real_seconds": 39.24
+    },
+    {
+      "cpu_seconds": 36.550000000000004,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p1_v3_default_s0.log",
+      "real_seconds": 39.73
+    },
+    {
+      "cpu_seconds": 35.31,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p1_v3_default_s1.log",
+      "real_seconds": 38.47
+    },
+    {
+      "cpu_seconds": 35.43,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p1_v3_transition_s0.log",
+      "real_seconds": 38.9
+    },
+    {
+      "cpu_seconds": 33.64,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p1_v3_transition_s1.log",
+      "real_seconds": 36.76
+    },
+    {
+      "cpu_seconds": 35.08,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p2_v3_default_s0.log",
+      "real_seconds": 38.2
+    },
+    {
+      "cpu_seconds": 34.87,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p2_v3_default_s1.log",
+      "real_seconds": 38.09
+    },
+    {
+      "cpu_seconds": 34.57,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p2_v3_transition_s0.log",
+      "real_seconds": 37.86
+    },
+    {
+      "cpu_seconds": 35.75,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_eps_0p2_v3_transition_s1.log",
+      "real_seconds": 38.98
+    },
+    {
+      "cpu_seconds": 38.71,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_last_backward_v3_default_s0.log",
+      "real_seconds": 41.85
+    },
+    {
+      "cpu_seconds": 39.15,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_last_backward_v3_default_s1.log",
+      "real_seconds": 42.36
+    },
+    {
+      "cpu_seconds": 35.29,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_last_backward_v3_transition_s0.log",
+      "real_seconds": 38.71
+    },
+    {
+      "cpu_seconds": 35.85,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_k15_last_backward_v3_transition_s1.log",
+      "real_seconds": 39.32
+    },
+    {
+      "cpu_seconds": 56.22,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_last_backward_v3_default_s0.log",
+      "real_seconds": 57.83
+    },
+    {
+      "cpu_seconds": 56.76,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_last_backward_v3_default_s1.log",
+      "real_seconds": 58.37
+    },
+    {
+      "cpu_seconds": 54.02,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_last_backward_v3_transition_s0.log",
+      "real_seconds": 55.8
+    },
+    {
+      "cpu_seconds": 53.21,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_oat_last_backward_v3_transition_s1.log",
+      "real_seconds": 55.01
+    },
+    {
+      "cpu_seconds": 0.49,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_select_oat_k15_attempt1_incomplete_grid.log",
+      "real_seconds": 0.51
+    },
+    {
+      "cpu_seconds": 0.52,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/optimise_select_oat_k15_attempt2.log",
+      "real_seconds": 0.6
+    },
+    {
+      "cpu_seconds": 10.559999999999999,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/preflight.log",
+      "real_seconds": 11.46
+    },
+    {
+      "cpu_seconds": 5.03,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/prepare_larry.log",
+      "real_seconds": 5.53
+    },
+    {
+      "cpu_seconds": 13.35,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/prepare_v3_default_s0.log",
+      "real_seconds": 13.64
+    },
+    {
+      "cpu_seconds": 13.360000000000001,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/prepare_v3_default_s1.log",
+      "real_seconds": 13.64
+    },
+    {
+      "cpu_seconds": 13.73,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/prepare_v3_transition_s0.log",
+      "real_seconds": 14.05
+    },
+    {
+      "cpu_seconds": 13.31,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/prepare_v3_transition_s1.log",
+      "real_seconds": 13.62
+    },
+    {
+      "cpu_seconds": 0.52,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/select_k.log",
+      "real_seconds": 0.61
+    },
+    {
+      "cpu_seconds": 0.51,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/select_k_r1.log",
+      "real_seconds": 0.53
+    },
+    {
+      "cpu_seconds": 2559.45,
+      "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_nofork_s2.log",
+      "peak_rss_bytes": 15509716992,
+      "real_seconds": 2677.95,
+      "resource_status": "peak_rss_exceeded_14_gib",
+      "unit": "generate_v3_nofork_s2"
+    }
+  ],
+  "generation_only_projected_additional_cpu_hours": 0.0,
+  "generation_only_projected_total_cpu_hours": null,
+  "generation_reference_cpu_hours": 0.5461611111111111,
+  "last_updated_after": "v3_nofork_s2",
+  "remaining_mandatory_generators": [],
+  "resource_stop": {
+    "admission": "one_unit_exception_authorized_by_user",
+    "limit_bytes_assuming_14_gib": 15032385536,
+    "over_limit_bytes": 477331456,
+    "peak_rss_bytes": 15509716992,
+    "scope": "Only completed deterministic generator v3_nofork_s2; every subsequent process remains subject to 14 GiB peak-RSS stop.",
+    "unit": "v3_nofork_s2"
+  },
+  "status": "admitted_one_unit_exception_authorized",
+  "timed_entries": 161
+}

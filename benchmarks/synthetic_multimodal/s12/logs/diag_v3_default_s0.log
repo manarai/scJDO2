@@ -1,0 +1,20 @@
+START 2026-10-20T22:23:22Z threads=1 .venv/bin/python scripts/s12_step0.py diag --preset v3_default --seed 0
+        9.77 real         8.41 user         1.08 sys
+          4150001664  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              271269  page reclaims
+                  18  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1656  voluntary context switches
+                3169  involuntary context switches
+         63688564893  instructions retired
+         32876515899  cycles elapsed
+          3724349280  peak memory footprint
+EXIT 0 2026-10-20T22:23:32Z

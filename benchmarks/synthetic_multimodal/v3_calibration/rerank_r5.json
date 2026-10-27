@@ -1,0 +1,242 @@
+{
+  "closest_S1_if_none": null,
+  "intervals_previous": {
+    "C2_genes_detected": [
+      1215.0,
+      3067.0
+    ],
+    "C3_hvg_log_mean": [
+      0.0331266485154628,
+      0.1596132218837738
+    ],
+    "C4_dispersion": [
+      2.1165090799331665,
+      3.5829782485961914
+    ],
+    "C5_zero_fraction": [
+      0.8410443722943716,
+      0.9604095563139932
+    ],
+    "C7_participation_ratio": [
+      3.940349207830242,
+      8.38120527741117
+    ],
+    "G1_barcoded_cell_fraction": [
+      0.3013408512686516,
+      0.4708450801072681
+    ],
+    "G2_clone_size": [
+      3.8,
+      4.2
+    ],
+    "G3_multi_time_clone_fraction": [
+      0.5312414733969987,
+      0.8300648021828104
+    ],
+    "L1_new_total_fraction": [
+      0.1934466287493705,
+      0.203389823436737
+    ],
+    "L2_gamma_half_life": [
+      4.8681033931021656,
+      5.268103393102166
+    ],
+    "S1_unspliced_fraction": [
+      0.25,
+      0.35
+    ],
+    "S3_steady_share": [
+      0.12,
+      0.46
+    ],
+    "S4_recovered_fraction": [
+      0.17375,
+      0.6275
+    ]
+  },
+  "intervals_r5": {
+    "C2_genes_detected": [
+      1215.0,
+      3067.0
+    ],
+    "C3_hvg_log_mean": [
+      0.0331266485154628,
+      0.1596132218837738
+    ],
+    "C4_dispersion": [
+      2.1165090799331665,
+      3.5829782485961914
+    ],
+    "C5_zero_fraction": [
+      0.8410443722943716,
+      0.9604095563139932
+    ],
+    "C7_participation_ratio": [
+      3.940349207830242,
+      8.38120527741117
+    ],
+    "G1_barcoded_cell_fraction": [
+      0.3013408512686516,
+      0.4708450801072681
+    ],
+    "G2_clone_size": [
+      3.2,
+      5.0
+    ],
+    "G3_multi_time_clone_fraction": [
+      0.5312414733969987,
+      0.8300648021828104
+    ],
+    "L1_new_total_fraction": [
+      0.1547573029994964,
+      0.25423727929592127
+    ],
+    "L2_gamma_half_life": [
+      4.054482714481733,
+      6.335129241377707
+    ],
+    "S1_unspliced_fraction": [
+      0.25,
+      0.35
+    ],
+    "S3_steady_share": [
+      0.12,
+      0.46
+    ],
+    "S4_recovered_fraction": [
+      0.17375,
+      0.6275
+    ]
+  },
+  "revision": 5,
+  "task": "orient/S09",
+  "top5": [
+    {
+      "S1": 0.281323185115972,
+      "distance": 7.467127695569314,
+      "s1_met": true,
+      "stage": "block1",
+      "uid": "block1_09",
+      "unmet": 7,
+      "unmet_targets": [
+        "C2_genes_detected",
+        "C5_zero_fraction",
+        "G2_clone_size",
+        "L1_new_total_fraction",
+        "L2_gamma_half_life",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ]
+    },
+    {
+      "S1": 0.2941417015940242,
+      "distance": 5.79618850352344,
+      "s1_met": true,
+      "stage": "lhs",
+      "uid": "lhs_043",
+      "unmet": 8,
+      "unmet_targets": [
+        "C2_genes_detected",
+        "C4_dispersion",
+        "G1_barcoded_cell_fraction",
+        "G3_multi_time_clone_fraction",
+        "L1_new_total_fraction",
+        "L2_gamma_half_life",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ]
+    },
+    {
+      "S1": 0.29824052471203577,
+      "distance": 9.811387129284178,
+      "s1_met": true,
+      "stage": "block1",
+      "uid": "block1_01",
+      "unmet": 8,
+      "unmet_targets": [
+        "C2_genes_detected",
+        "C4_dispersion",
+        "C5_zero_fraction",
+        "G2_clone_size",
+        "L1_new_total_fraction",
+        "L2_gamma_half_life",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ]
+    },
+    {
+      "S1": 0.31244998656807565,
+      "distance": 18.33047983879035,
+      "s1_met": true,
+      "stage": "lhs",
+      "uid": "lhs_048",
+      "unmet": 9,
+      "unmet_targets": [
+        "C2_genes_detected",
+        "C4_dispersion",
+        "G1_barcoded_cell_fraction",
+        "G2_clone_size",
+        "G3_multi_time_clone_fraction",
+        "L1_new_total_fraction",
+        "L2_gamma_half_life",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ]
+    },
+    {
+      "S1": 0.334296317784869,
+      "distance": 10.902124114766147,
+      "s1_met": true,
+      "stage": "lhs",
+      "uid": "lhs_041",
+      "unmet": 10,
+      "unmet_targets": [
+        "C2_genes_detected",
+        "C4_dispersion",
+        "C7_participation_ratio",
+        "G1_barcoded_cell_fraction",
+        "G2_clone_size",
+        "G3_multi_time_clone_fraction",
+        "L1_new_total_fraction",
+        "L2_gamma_half_life",
+        "S3_steady_share",
+        "S4_recovered_fraction"
+      ]
+    }
+  ],
+  "unique_vectors_ranked": 257,
+  "vectors_meeting_S1": 6,
+  "winner": {
+    "knobs": {
+      "beta0": 0.2340347319320716,
+      "eta_u": 1.0,
+      "f_constant": 0.15,
+      "f_sample": 0.15107160922949833,
+      "f_switch": 0.15,
+      "gamma0": 0.1625,
+      "mu_b": -2.75,
+      "n_founders": 3800,
+      "n_prog": 5,
+      "p_barcode": 0.35000000000000003,
+      "sigma_b": 2.5,
+      "sigma_gamma": 0.8999999999999999,
+      "theta0": 37.75
+    },
+    "statistics": {
+      "C2_genes_detected": 827.0,
+      "C3_hvg_log_mean": 0.1375732272863388,
+      "C4_dispersion": 2.210640788078308,
+      "C5_zero_fraction": 0.8188662533215241,
+      "C7_participation_ratio": 7.269248224659787,
+      "G1_barcoded_cell_fraction": 0.3497519696527575,
+      "G2_clone_size": 16.0,
+      "G3_multi_time_clone_fraction": 0.8025845477041518,
+      "L1_new_total_fraction": 0.1492599993944168,
+      "L2_gamma_half_life": 6.828736800883476,
+      "S1_unspliced_fraction": 0.281323185115972,
+      "S3_steady_share": 0.00375,
+      "S4_recovered_fraction": 0.785
+    },
+    "uid": "block1_09"
+  }
+}

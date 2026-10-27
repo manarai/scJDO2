@@ -1,0 +1,31 @@
+Sampling and flocking waypoints...
+Time for determining waypoints: 0.00012863477071126301 minutes
+Determining pseudotime...
+Shortest path distances using 30-nearest neighbor graph...
+Time for shortest paths: 0.04459267059961955 minutes
+Iteratively refining the pseudotime...
+Correlation at iteration 1: 0.9996
+Correlation at iteration 2: 1.0000
+Entropy and branch probabilities...
+Markov chain construction...
+Identification of terminal states...
+Computing fundamental matrix and absorption probabilities...
+Project results to all cells...
+       62.10 real        64.80 user         3.78 sys
+          5835374592  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              770944  page reclaims
+                  81  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                5116  voluntary context switches
+               73006  involuntary context switches
+        391917741005  instructions retired
+        178282559304  cycles elapsed
+          4790359128  peak memory footprint

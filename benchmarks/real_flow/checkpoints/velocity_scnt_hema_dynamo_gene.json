@@ -1,0 +1,22 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "finite_gene_rule": "finite in every cell; all other genes zero",
+    "input": "/Users/terooatt/Documents/scJDO2/benchmarks/data/dynamo_hematopoiesis/data/hematopoiesis.h5ad",
+    "layer": "velocity_alpha_minus_gamma_s",
+    "n_cells_dropped": 0,
+    "n_genes_used": 1728,
+    "n_genes_zeroed": 228,
+    "n_pca_genes": 1956,
+    "stored_vecfld_pca_present": true
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:19:09.767737+00:00",
+  "n_cells": 1947,
+  "source": "dynamo_gene",
+  "started_utc": "2026-10-19T06:19:09.408105+00:00",
+  "task": "orient/S11",
+  "unit": "velocity_scnt_hema_dynamo_gene",
+  "velocity": "benchmarks/real_flow/arrays/velocities/scnt_hema_dynamo_gene.npz",
+  "wall_seconds": 0.36
+}

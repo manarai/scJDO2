@@ -1,0 +1,21 @@
+{
+  "unit": "fit_capture_k10",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "fit-capture",
+    "--k",
+    "10"
+  ],
+  "started_utc": "2026-10-22T06:00:07.089611+00:00",
+  "finished_utc": "2026-10-22T06:01:43.375469+00:00",
+  "exit_code": 0,
+  "wall_seconds": 96.28585566999982,
+  "cpu_hours": 0.11190061972222223,
+  "max_rss_kib": 935536,
+  "cpu_hours_before": 0.29002605805555554,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/fit_capture_k10.log"
+}

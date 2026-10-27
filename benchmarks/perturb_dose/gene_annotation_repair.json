@@ -1,0 +1,42 @@
+{
+  "issue": "Initial symbol lookup incorrectly used Ensembl var.index rather than the raw gene_name symbols; initial empty RPE1 qualification diagnostic preserved.",
+  "repair": "Use the dataset-provided gene_name column; no alias mapping, imputation, threshold/cohort rule change or extra significance test.",
+  "records": [
+    {
+      "screen": "rpe1",
+      "var_index_type": "Ensembl gene IDs",
+      "target_symbol_column": "var.gene_name",
+      "n_raw_gene_symbols": 8749,
+      "n_screen_targets_present": 2107,
+      "duplicate_targets_all_independently_below_150_cells": {
+        "HSPA14": 105
+      },
+      "corrected_metadata_sha256": "e3561ca3eb2d99737903a3f2460d0456cf934fd239a127e77bbf5a9c24c80fe9"
+    },
+    {
+      "screen": "k562",
+      "var_index_type": "Ensembl gene IDs",
+      "target_symbol_column": "var.gene_name",
+      "n_raw_gene_symbols": 8563,
+      "n_screen_targets_present": 1868,
+      "duplicate_targets_all_independently_below_150_cells": {
+        "HSPA14": 120,
+        "TBCE": 129
+      },
+      "corrected_metadata_sha256": "270be79e395949ed2571d7dad13c341c5291a705993ad5c054dc12b3f09d2fcd"
+    }
+  ],
+  "frozen_subspace_sha256_unchanged": {
+    "benchmarks/perturb_dose/subspaces_rpe1_N1.npz": "4089aec1e7812235abadfb51d3d7a49d0f79856774a99d75d4eb7f204e25d705",
+    "benchmarks/perturb_dose/subspaces_rpe1_N2.npz": "98ff9213c1ee72aea65f070e884c8780ff09fac35ae0dbc9b587846caf031a9e",
+    "benchmarks/perturb_dose/subspaces_k562_N1.npz": "b00fd7e57920cd2170756f2a49427e82f140f1f4a4a81c57a4e11f0f13710309",
+    "benchmarks/perturb_dose/subspaces_k562_N2.npz": "bb396f85e6ccd3273db4ee59687d31a0b596af6e33711e6f11d35dea2f66f31e"
+  },
+  "control_cache_sha256_unchanged": {
+    "rpe1": "40d4e1fddb1ea5adbb04e3a0cfc8169e7bbd7f6e4e38590fe415bd33a292458b",
+    "k562": "17a9c1d836a3bf3bd67062831812ff90c7da4fb77bedba69d7fb93aae6434f22"
+  },
+  "no_perturbed_X_access": true,
+  "no_fit_repeated": true,
+  "repaired_utc": "2026-10-23T02:49:35.949872+00:00"
+}

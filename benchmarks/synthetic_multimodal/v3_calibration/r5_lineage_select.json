@@ -1,0 +1,55 @@
+{
+  "chosen": {
+    "cells": 12701,
+    "g_distance": 0.16089424908940017,
+    "g_met": {
+      "G1_barcoded_cell_fraction": true,
+      "G2_clone_size": true,
+      "G3_multi_time_clone_fraction": false
+    },
+    "g_unmet": 1,
+    "g_values": {
+      "G1_barcoded_cell_fraction": 0.3529643335170459,
+      "G2_clone_size": 5.0,
+      "G3_multi_time_clone_fraction": 0.48316251830161056
+    },
+    "in_window": true,
+    "knobs": {
+      "beta0": 0.2340347319320716,
+      "eta_u": 1.0,
+      "f_constant": 0.15,
+      "f_sample": 0.0289091169431116,
+      "f_switch": 0.15,
+      "gamma0": 0.1625,
+      "mu_b": -2.75,
+      "n_founders": 800,
+      "n_prog": 5,
+      "p_barcode": 0.35000000000000003,
+      "sigma_b": 2.5,
+      "sigma_gamma": 0.8999999999999999,
+      "theta0": 37.75
+    },
+    "uid": "r5block3_27"
+  },
+  "errors": [],
+  "final_knobs": {
+    "beta0": 0.2340347319320716,
+    "eta_u": 1.0,
+    "f_constant": 0.15,
+    "f_sample": 0.0289091169431116,
+    "f_switch": 0.15,
+    "gamma0": 0.1625,
+    "mu_b": -2.75,
+    "n_founders": 800,
+    "n_prog": 5,
+    "p_barcode": 0.35000000000000003,
+    "sigma_b": 2.5,
+    "sigma_gamma": 0.8999999999999999,
+    "theta0": 37.75
+  },
+  "points": 40,
+  "points_in_window": 14,
+  "revision": 5,
+  "task": "orient/S09",
+  "winner_uid": "block1_09"
+}

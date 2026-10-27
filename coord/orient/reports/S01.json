@@ -1,0 +1,247 @@
+{
+  "task": "orient/S01",
+  "status": "done",
+  "started_utc": "2026-10-16T18:29:16Z",
+  "finished_utc": "2026-10-16T19:39:46.657848+00:00",
+  "compute": {
+    "cpu_hours": 0.25,
+    "gpu_hours": 0.0,
+    "hardware": "Apple local CPU; 12 H5AD generation, verification, and deterministic test suites."
+  },
+  "metrics": {
+    "validity_tests_passed": true,
+    "orient_tests_still_pass": true,
+    "n_cells_by_preset": {
+      "default": {
+        "0": 3622,
+        "1": 3419,
+        "2": 3499
+      },
+      "stress": {
+        "0": 3516,
+        "1": 3032,
+        "2": 3095
+      },
+      "batch": {
+        "0": 3505,
+        "1": 3374,
+        "2": 3499
+      },
+      "stationary_cycle": {
+        "0": 165,
+        "1": 156,
+        "2": 176
+      }
+    },
+    "n_collected_by_day": {
+      "default_s0": [
+        170,
+        403,
+        926,
+        2123
+      ],
+      "default_s1": [
+        171,
+        379,
+        888,
+        1981
+      ],
+      "default_s2": [
+        176,
+        403,
+        904,
+        2016
+      ],
+      "stress_s0": [
+        170,
+        398,
+        901,
+        2047
+      ],
+      "stress_s1": [
+        162,
+        347,
+        767,
+        1756
+      ],
+      "stress_s2": [
+        158,
+        353,
+        792,
+        1792
+      ],
+      "batch_s0": [
+        178,
+        396,
+        901,
+        2030
+      ],
+      "batch_s1": [
+        164,
+        380,
+        868,
+        1962
+      ],
+      "batch_s2": [
+        169,
+        383,
+        905,
+        2042
+      ],
+      "stationary_cycle_s0": [
+        165
+      ],
+      "stationary_cycle_s1": [
+        156
+      ],
+      "stationary_cycle_s2": [
+        176
+      ]
+    },
+    "detected_clone_fraction": {
+      "default_s0": 0.6002208724461623,
+      "default_s1": 0.6007604562737643,
+      "default_s2": 0.5964561303229494,
+      "stress_s0": 0.30745164960182025,
+      "stress_s1": 0.30408970976253297,
+      "stress_s2": 0.2972536348949919,
+      "batch_s0": 0.5971469329529244,
+      "batch_s1": 0.6010669828097214,
+      "batch_s2": 0.5970277222063447,
+      "stationary_cycle_s0": 0.5151515151515151,
+      "stationary_cycle_s1": 0.5576923076923077,
+      "stationary_cycle_s2": 0.6136363636363636
+    },
+    "fraction_clones_multi_day": {
+      "default_s0": 0.7712177121771218
+    },
+    "fraction_genes_with_spliced_lag": {
+      "default_s0": 0.2975,
+      "n_genes": 238,
+      "criterion": "|gamma*s - beta*u|/(beta*u) > 0.2 in at least 10% of cells"
+    },
+    "spliced_lag_fraction_by_day": {
+      "default_s0": {
+        "1": 0.3765441176470588,
+        "2": 0.19228908188585608,
+        "3": 0.10238930885529157,
+        "4": 0.06343205369759775
+      }
+    },
+    "truth_mapping_median_cosine": {
+      "pca": 1.0,
+      "fa": 1.0,
+      "mode": "noise-free finite-difference test"
+    },
+    "datasets_written": 12,
+    "wall_minutes": 31.0
+  },
+  "artifacts": [
+    {
+      "path": "benchmarks/synthetic_multimodal/data/default_s0.h5ad",
+      "bytes": 83645213,
+      "sha256": "05d18e4dbef669c79eb64d35f9ff70a9f4a9fcc51cf7017e8b9b9b32c1bef533",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/default_s1.h5ad",
+      "bytes": 79017473,
+      "sha256": "dd74d421c1a3b8bec7a851183c11326104f9ff8071da59330368c5f149902ae0",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/default_s2.h5ad",
+      "bytes": 81062402,
+      "sha256": "1bc4108ff03dad9faeb3b0b7a95c3623f610834d4f8a7b5bbec8506cc533e3be",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/stress_s0.h5ad",
+      "bytes": 80988283,
+      "sha256": "b6924f25b09e6cf04b5ca88b14d6fb5bed031365cee55bfca696fcc26bc6ea4b",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/stress_s1.h5ad",
+      "bytes": 70019146,
+      "sha256": "f67868e89125b3c8cfb6694352d6869027b99b955c7fd58a7bb65caa9a3d57cc",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/stress_s2.h5ad",
+      "bytes": 71586745,
+      "sha256": "5eb2590b44e387ab5abc3f8dcd6e41a1c3fa41e593178f944153871dc3e6fa5b",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/batch_s0.h5ad",
+      "bytes": 81048508,
+      "sha256": "991bd343f0638bb27311735ceefe5e9659b1cda84fb47e90e7155606891dd5fe",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/batch_s1.h5ad",
+      "bytes": 78122531,
+      "sha256": "09d73f48eb7c840ef824201db4b296691edccea4310785a0ccddc25a1037303a",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/batch_s2.h5ad",
+      "bytes": 81146758,
+      "sha256": "dc214ac5f15caf2f50eebb0a56766a1528f805b5a185269f72645c7c4fcf45a5",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/stationary_cycle_s0.h5ad",
+      "bytes": 4267371,
+      "sha256": "b1a7f19ba8fcf4f04ec645909fcaf4e8859fa232396fecc68942a8701526ec84",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/stationary_cycle_s1.h5ad",
+      "bytes": 4059563,
+      "sha256": "c094d2f7a2c258d6932d8935ab3815dd5e7d4bba019573de0e2e5ea83411ca42",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/data/stationary_cycle_s2.h5ad",
+      "bytes": 4444782,
+      "sha256": "081d3454b0c4477f8bffc8159bdffa011704eb2f5190d6d38a060da17e45e576",
+      "committed": false,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/MANIFEST.csv",
+      "bytes": 4280,
+      "sha256": "8622390d746f9afbd9c2a3e9f5345eb8f943ee9045d31637852e09e241769ea1",
+      "committed": true,
+      "regenerate": "python scripts/make_synthetic_multimodal.py --all"
+    }
+  ],
+  "deviations": [
+    "Revision 2 implements the review-amended kinetic validity metric: spliced lag rather than unspliced departure from instantaneous transcriptional steady state. No latent-dynamics or kinetic parameter was changed.",
+    "The noise-free small-fixture FA fit emits scikit-learn ConvergenceWarning at its bounded 100 iterations; its stored posterior-mean map nevertheless meets the required median cosine 1.0 finite-difference check."
+  ],
+  "observations": [
+    "All 12 preset-by-seed H5AD artifacts exist locally, each SHA-256 matches the committed manifest, and each contains 800 genes, the required count/truth layers, PCA/FA embeddings, and mapped truth velocities.",
+    "Default seed 0 has 238/800 genes (29.75%) with spliced-lag support in at least 10% of cells; the qualifying pair fraction falls by collection day from 37.65% to 6.34%.",
+    "Default seed 0 has 3622 cells, barcode detection 0.6002, and 77.12% of detected clones span at least two days.",
+    "The complete final suite reports 35 passed and 3 existing strict expected failures xfailed."
+  ],
+  "suggestions": [
+    "Run the user-controlled scVelo and Palantir workflows on the documented count/embedding inputs, then compare their outputs only against the retained truth keys in a separately issued orientation task."
+  ],
+  "questions": [],
+  "revision": 2
+}

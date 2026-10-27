@@ -1,0 +1,17 @@
+{
+  "finished_utc": "2026-10-22T19:32:39.018667+00:00",
+  "jacobian": "autodiff",
+  "lambda1_path": "benchmarks/scaling/data/lambda1_minibatch_full.npz",
+  "measured_drift": "MeasuredDrift(30, seed=0) defaults",
+  "n_eval_cells": 130887,
+  "n_fit_cells": 76747,
+  "n_per_day": "full",
+  "rank": null,
+  "solver": "minibatch",
+  "stage": "fit_and_jacobian",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "fit_minibatch_full",
+  "wall_seconds": 1276.042,
+  "wall_seconds_internal": 1276.042
+}

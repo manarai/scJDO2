@@ -1,0 +1,28 @@
+{
+  "J_flow_ot": {
+    "status": "not computable: a single sampling time"
+  },
+  "J_flow_scvelo": {
+    "fit_device": "mps:0",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 2768,
+    "scvelo_sha256": "c568a1e035f82aa4b01037d38079f36b773b6943165d779b22eba379dd625c01",
+    "seconds": 9.64
+  },
+  "finished_utc": "2026-10-20T11:41:32.207119Z",
+  "in_process_cpu_seconds": 9.563,
+  "input_sha256": "44094a5c506aaddec00bb93a3ba1e6dfd90f1587e9b11c8c6f6920d2d6d527ff",
+  "keys": [
+    "J_flow_scvelo",
+    "v_scvelo"
+  ],
+  "method": "pca",
+  "path": "benchmarks/synthetic_multimodal/data/s10/v3_stationary_cycle_s0/flow_pca.npz",
+  "peak_rss_bytes": 1112424448,
+  "sha256": "486002caf86245c542d30fbaf71465ddc38fe5cbf7eac341e1a2f18fdac0b72a",
+  "started_utc": "2026-10-20T11:41:20.391950Z",
+  "task": "orient/S10",
+  "unit": "flow_v3_stationary_cycle_s0_pca",
+  "wall_seconds": 11.815
+}

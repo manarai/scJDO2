@@ -1,0 +1,55 @@
+START 2026-10-20T11:31:44Z .venv/bin/python scripts/s10_fit_and_runs.py s08 --preset v3_transition --seed 1
+/Users/terooatt/Documents/scJDO2-manus/scripts/s08_reference_stats.py:312: FutureWarning: Argument `use_highly_variable` is deprecated, consider using the mask argument. Use_highly_variable=True can be called through mask_var="highly_variable". Use_highly_variable=False can be called through mask_var=None
+  sc.pp.pca(work, n_comps=n_pcs, use_highly_variable=True, svd_solver="arpack")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s08_reference_stats.py:314: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(work, resolution=1.0, random_state=0, key_added="s08_leiden")
+Sampling and flocking waypoints...
+Time for determining waypoints: 9.990135828653971e-05 minutes
+Determining pseudotime...
+Shortest path distances using 30-nearest neighbor graph...
+Time for shortest paths: 0.041758382320404054 minutes
+Iteratively refining the pseudotime...
+Correlation at iteration 1: 0.9988
+Correlation at iteration 2: 0.9999
+Entropy and branch probabilities...
+Markov chain construction...
+Identification of terminal states...
+Computing fundamental matrix and absorption probabilities...
+Project results to all cells...
+Normalized count data: X, spliced, unspliced.
+/Users/terooatt/Documents/scJDO2-manus/scripts/s08_reference_stats.py:418: DeprecationWarning: Automatic neighbor calculation is deprecated since scvelo==0.4.0 and will be removed in a future version of scVelo. Please compute neighbors first with Scanpy.
+  scv.pp.moments(velo, n_pcs=min(velo.obsm["X_pca"].shape[1], 30), n_neighbors=min(30, velo.n_obs - 1))
+/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/scvelo/preprocessing/moments.py:71: DeprecationWarning: `neighbors` is deprecated since scvelo==0.4.0 and will be removed in a future version of scVelo. Please compute neighbors with Scanpy.
+  neighbors(
+computing neighbors
+    finished (0:00:01) --> added 
+    'distances' and 'connectivities', weighted adjacency matrices (adata.obsp)
+computing moments based on connectivities
+    finished (0:00:00) --> added 
+    'Ms' and 'Mu', moments of un/spliced abundances (adata.layers)
+recovering dynamics (using 8/14 cores)
+WARNING: Unable to create progress bar. Consider installing `tqdm` as `pip install tqdm` and `ipywidgets` as `pip install ipywidgets`,
+or disable the progress bar using `show_progress_bar=False`.
+    finished (0:01:57) --> added 
+    'fit_pars', fitted parameters for splicing dynamics (adata.var)
+<sys>:0: DeprecationWarning: Call to deprecated function (or staticmethod) _destroy.
+      304.81 real       815.01 user       175.01 sys
+          5866258432  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             5023827  page reclaims
+                4746  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                2769  messages sent
+                5536  messages received
+                   0  signals received
+               45897  voluntary context switches
+             1146027  involuntary context switches
+       1392719792795  instructions retired
+        548923401554  cycles elapsed
+          6483745704  peak memory footprint
+EXIT 0 2026-10-20T11:36:49Z

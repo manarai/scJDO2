@@ -1,0 +1,35 @@
+{
+  "finished_utc": "2026-10-22T18:32:46.764241+00:00",
+  "jacobian": "autodiff",
+  "lambda1_path": "benchmarks/scaling/data/lambda1_minibatch_4000.npz",
+  "measured_drift": "MeasuredDrift(30, seed=0) defaults",
+  "n_eval_cells": 8000,
+  "n_fit_cells": 8000,
+  "n_per_day": 4000,
+  "rank": null,
+  "solver": "minibatch",
+  "stage": "fit_and_jacobian",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "fit_minibatch_4000",
+  "wall_seconds": 81.943,
+  "wall_seconds_internal": 81.943
+}
+       83.77 real        30.08 user        12.33 sys
+           659030016  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               63036  page reclaims
+                   8  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  24  voluntary context switches
+             1479744  involuntary context switches
+        299236538544  instructions retired
+        109179783083  cycles elapsed
+           583108216  peak memory footprint

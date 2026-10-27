@@ -1,0 +1,176 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/choose/v3_default_s1_k5.npz",
+  "array_sha256": "1796e76f4748c1f6cd82bf3e43bcd2189be265771195e10231965b58be12fd8a",
+  "dataset": "v3_default_s1",
+  "finished_utc": "2026-10-21T04:51:43.010763Z",
+  "heldout_day": [
+    {
+      "energy_distance": 2.1587891259749687,
+      "method": "whitened_flow",
+      "n_last": 11028,
+      "n_middle": 1440
+    },
+    {
+      "energy_distance": 0.8746123530023389,
+      "method": "no_movement",
+      "n_last": 11028,
+      "n_middle": 1440
+    },
+    {
+      "energy_distance": 0.7240470932641928,
+      "method": "mean_displacement",
+      "n_last": 11028,
+      "n_middle": 1440
+    }
+  ],
+  "heldout_details": {
+    "first_day": 2.0,
+    "gap_hours": 48.0,
+    "last_day": 6.0,
+    "measured_drift": {
+      "defaults": true,
+      "fit_device": "mps:0",
+      "jacobian_device": "cpu",
+      "n_fit_cells": 186,
+      "seconds": 2.676,
+      "seed": 0
+    },
+    "middle_day": 4.0,
+    "ot_pairs": [
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.05,
+        "epsilon": 0.4821199627413947,
+        "final_err": 4.17955880174518e-10,
+        "from_day": 2,
+        "n_iter": 14,
+        "n_source": 186,
+        "n_target": 1440,
+        "plan_mass": 1.0000000000000002,
+        "rows_zero": 0,
+        "seconds": 0.01,
+        "to_day": 4,
+        "warnings": []
+      }
+    ]
+  },
+  "in_process_cpu_seconds": 25.679,
+  "k": 5,
+  "lineage": {
+    "definition": "Spearman across all PCA-coordinate components of observed clone-cell pairs; Euler integration uses 1-hour steps over the observed sampling gap",
+    "lineage_null_max": 0.16481828547497407,
+    "lineage_nulls": [
+      0.15023754163783076,
+      0.15806562309407535,
+      0.14554472564188412,
+      0.13344806842144594,
+      0.16481828547497407
+    ],
+    "lineage_spearman": 0.5146661995096666,
+    "n_lineage_cell_barcode_pairs": 533,
+    "n_lineage_dimensions_pooled": 2665
+  },
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 3.307,
+      "seed": 0,
+      "weight_decay": 0.0001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 2.609,
+      "seed": 1,
+      "weight_decay": 0.0001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1626,
+      "seconds": 2.616,
+      "seed": 2,
+      "weight_decay": 0.0001
+    }
+  ],
+  "n_cells": 12654,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 22.756558114199546,
+      "final_err": 6.023043633901486e-10,
+      "from_day": 2,
+      "n_iter": 21,
+      "n_source": 186,
+      "n_target": 1440,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 26.205993490806886,
+      "final_err": 9.674476617128072e-10,
+      "from_day": 4,
+      "n_iter": 99,
+      "n_source": 1440,
+      "n_target": 11028,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 3.58,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part_a_truth_free": true,
+  "peak_rss_bytes": 1851654144,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s1.npz",
+  "prepared_sha256": "bbac3d5b56a3be246cc4117326910fd62376eef1ab54f3338593504f6996e2f2",
+  "reference_config": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.0001
+  },
+  "stability": {
+    "definition": "median of the three whole-cell Spearman correlations of lambda1 between drift seeds 0, 1, 2",
+    "lambda_seed_spearman_pairs": [
+      0.9319334455909523,
+      0.9223985740473648,
+      0.9186678320733169
+    ],
+    "lambda_seed_stability_median": 0.9223985740473648
+  },
+  "started_utc": "2026-10-21T04:51:13.810703Z",
+  "task": "orient/S14",
+  "unit": "choose_v3_default_s1_k5",
+  "wall_seconds": 29.2
+}

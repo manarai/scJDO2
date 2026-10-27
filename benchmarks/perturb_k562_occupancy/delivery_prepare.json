@@ -1,0 +1,13 @@
+{
+  "stage_path": "/home/ubuntu/S18b_benchmarks.partial.zip",
+  "staged_bytes": 260326842,
+  "staged_files": 1007,
+  "crc_check": "pass",
+  "excluded_until_final_accounting": [
+    "RESULT_S18b.md",
+    "coord/orient/reports/S18b.*",
+    "delivery_prepare metadata/log/checkpoint"
+  ],
+  "original_raw_and_S18_cache_duplicated": false,
+  "prepared_utc": "2026-10-22T12:18:14.059421+00:00"
+}

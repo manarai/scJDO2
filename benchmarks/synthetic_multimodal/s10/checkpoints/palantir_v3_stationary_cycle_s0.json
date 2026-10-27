@@ -1,0 +1,35 @@
+{
+  "finished_utc": "2026-10-20T09:47:11.731783Z",
+  "in_process_cpu_seconds": 2.501,
+  "input_sha256": "44094a5c506aaddec00bb93a3ba1e6dfd90f1587e9b11c8c6f6920d2d6d527ff",
+  "path": "benchmarks/synthetic_multimodal/data/s10/v3_stationary_cycle_s0/palantir.npz",
+  "peak_rss_bytes": 1161478144,
+  "root_rule": "earliest day: default_rng(1000+seed).choice(5); latest day: default_rng(2000+seed).choice(5); stationary cycle: default_rng(1000+seed).choice(1) of all cells, default mode",
+  "runs": [
+    {
+      "actual_start_cell": "cell_0011790",
+      "actual_start_day": 1,
+      "given_cell": "cell_0002648",
+      "given_day": 1,
+      "given_differs_from_actual": true,
+      "mode": "default",
+      "root_group": "random",
+      "root_index": 0,
+      "status": "ok",
+      "unit": "random_default_r0",
+      "wall_seconds": 0.731
+    }
+  ],
+  "settings": {
+    "input": "stored X_pca only",
+    "knn": 30,
+    "n_components": 10,
+    "num_waypoints": 500,
+    "seed": 0
+  },
+  "sha256": "589c8945f0a0680f77881b5c0ddc68afcf2d090e12014dac624a6419379e4b82",
+  "started_utc": "2026-10-20T09:47:09.403776Z",
+  "task": "orient/S10",
+  "unit": "palantir_v3_stationary_cycle_s0",
+  "wall_seconds": 2.328
+}

@@ -1,0 +1,19 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "epochs_run": 400,
+    "gamma_max": 5.636641979217529,
+    "gamma_min": 0.0026762508787214756,
+    "held_out_nll": 0.30144253373146057,
+    "seed": 0
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:02:16.371179+00:00",
+  "n_cells": 1947,
+  "source": "labelling",
+  "started_utc": "2026-10-19T06:02:09.599107+00:00",
+  "task": "orient/S11",
+  "unit": "velocity_scnt_hema_labelling",
+  "velocity": "benchmarks/real_flow/arrays/velocities/scnt_hema_labelling.npz",
+  "wall_seconds": 6.772
+}

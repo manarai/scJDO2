@@ -1,0 +1,36 @@
+{
+  "T_null": {
+    "0": null,
+    "1": null,
+    "2": null
+  },
+  "eligible_seed_count": 2,
+  "eligible_seeds": [
+    12,
+    16
+  ],
+  "gate_X1": null,
+  "gate_X2": null,
+  "gate_X3": null,
+  "gate_X4": null,
+  "no_truth_scoring_or_flow_fits": true,
+  "reason": "The transition reserve s5\u2013s16 was exhausted with only two eligible seeds; S14b requires four. The frozen Step 1 rule requires stopping here, so no null calibration, held-out fits, thresholds, or gate scores are available.",
+  "required_eligible_seeds": 4,
+  "reserve_exhausted": true,
+  "status": "test_construction_failure",
+  "task": "orient/S14b",
+  "transition_reserve": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ]
+}

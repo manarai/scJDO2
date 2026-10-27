@@ -1,0 +1,252 @@
+{
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "selected",
+  "dataset": "larry",
+  "finished_utc": "2026-10-22T15:42:36.527731Z",
+  "heldout_day": [
+    {
+      "energy_distance": 0.9433916433041751,
+      "method": "flow",
+      "n_last": 4000,
+      "n_middle": 4000
+    },
+    {
+      "energy_distance": 0.8815008253806457,
+      "method": "no_movement",
+      "n_last": 4000,
+      "n_middle": 4000
+    },
+    {
+      "energy_distance": 0.8667826833933505,
+      "method": "mean_displacement",
+      "n_last": 4000,
+      "n_middle": 4000
+    }
+  ],
+  "heldout_details": {
+    "first_day": 2,
+    "fit_models": [
+      {
+        "fit_device": "mps:0",
+        "hidden": [
+          128,
+          128,
+          128
+        ],
+        "jacobian_device": "cpu",
+        "n_fit_cells": 4000,
+        "seconds": 5.281,
+        "seed": 0,
+        "weight_decay": 0.001
+      },
+      {
+        "fit_device": "mps:0",
+        "hidden": [
+          128,
+          128,
+          128
+        ],
+        "jacobian_device": "cpu",
+        "n_fit_cells": 4000,
+        "seconds": 5.518,
+        "seed": 1,
+        "weight_decay": 0.001
+      },
+      {
+        "fit_device": "mps:0",
+        "hidden": [
+          128,
+          128,
+          128
+        ],
+        "jacobian_device": "cpu",
+        "n_fit_cells": 4000,
+        "seconds": 5.078,
+        "seed": 2,
+        "weight_decay": 0.001
+      },
+      {
+        "fit_device": "mps:0",
+        "hidden": [
+          128,
+          128,
+          128
+        ],
+        "jacobian_device": "cpu",
+        "n_fit_cells": 4000,
+        "seconds": 5.127,
+        "seed": 3,
+        "weight_decay": 0.001
+      },
+      {
+        "fit_device": "mps:0",
+        "hidden": [
+          128,
+          128,
+          128
+        ],
+        "jacobian_device": "cpu",
+        "n_fit_cells": 4000,
+        "seconds": 5.4,
+        "seed": 4,
+        "weight_decay": 0.001
+      }
+    ],
+    "fit_ot_pairs": [
+      {
+        "dt_hours": 48.0,
+        "eps_factor": 0.025,
+        "epsilon": 1.580551057526467,
+        "final_err": 9.396743845764853e-10,
+        "from_day": 2,
+        "n_iter": 35,
+        "n_source": 4000,
+        "n_target": 4000,
+        "plan_mass": 1.0,
+        "rows_zero": 0,
+        "seconds": 2.16,
+        "to_day": 4,
+        "warnings": []
+      }
+    ],
+    "gap_hours": 48.0,
+    "last_day": 6,
+    "middle_day": 4
+  },
+  "in_process_cpu_seconds": 125.415,
+  "k": 15,
+  "lineage": {
+    "definition": "Spearman across all PCA-coordinate components of observed clone-cell pairs; Euler integration uses 1-hour steps over the observed sampling gap",
+    "lineage_null_max": 0.14347252401822863,
+    "lineage_nulls": [
+      0.10138812145103318,
+      0.11150385771928888,
+      0.14347252401822863,
+      0.1278856506764249,
+      0.12180524487920283
+    ],
+    "lineage_spearman": 0.5474766858993969,
+    "n_lineage_cell_barcode_pairs": 554,
+    "n_lineage_dimensions_pooled": 8310
+  },
+  "lineage_models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 5.836,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 5.606,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 5.267,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 5.147,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 8000,
+      "seconds": 5.168,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "lineage_ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 1.580551057526467,
+      "final_err": 9.396743845764853e-10,
+      "from_day": 2,
+      "n_iter": 35,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 2.19,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 3.0656505994282726,
+      "final_err": 9.51479913063584e-10,
+      "from_day": 4,
+      "n_iter": 67,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 4.01,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "n_cells": 12000,
+  "part": "C",
+  "peak_rss_bytes": 1686028288,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/larry.npz",
+  "prepared_sha256": "72cd1d9ec98e40f8ef55e5ae62c18485236df4ed8febadba7ab4ba1c2f381d6b",
+  "started_utc": "2026-10-22T15:40:07.666719Z",
+  "task": "orient/S14",
+  "truth_free": true,
+  "unit": "test_larry_k15_selected",
+  "wall_seconds": 148.861
+}

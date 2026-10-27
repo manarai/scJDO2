@@ -1,0 +1,12 @@
+{
+  "dataset": "v3_transition_s3",
+  "error": "Stopped after the S2 attempt exceeded the 8 GiB cap.",
+  "method": "dynamo_oneshot",
+  "peak_memory_bytes": null,
+  "runtime_seconds": "",
+  "settings": {
+    "planned": "same dynamo one-shot labeling workflow"
+  },
+  "status": "not_run_resource_cap",
+  "version": "1.5.3"
+}

@@ -1,0 +1,22 @@
+{
+  "cpu_seconds": 1815.208788,
+  "finished_unix": 1792898868.053689,
+  "manifest_row": {
+    "detected_clone_fraction": 0.34959150326797384,
+    "f_sample": 0.0289091169431116,
+    "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_batch_effect\": true, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\", \"z1_crit\": 2.0}",
+    "n_cells": 12240,
+    "n_clones_detected": 675,
+    "n_collected_by_day": "[178, 1384, 10678]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s9.h5ad",
+    "preset": "v3_transition",
+    "seed": 9,
+    "sha256": "05d70b5dbd2738632077086aad7bfe40818088d348b105f3c159137c77bb8d68"
+  },
+  "peak_rss_bytes": 12367298560,
+  "reused_verified": false,
+  "started_unix": 1792897006.736129,
+  "task": "orient/S14b",
+  "unit": "generate_v3_transition_s9",
+  "wall_seconds": 1861.3175599575043
+}

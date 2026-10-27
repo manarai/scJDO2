@@ -1,0 +1,68 @@
+{
+  "finished_utc": "2026-10-22T18:26:32.334789+00:00",
+  "n_per_day": 4000,
+  "n_velocity_cells": 8000,
+  "pairs": [
+    {
+      "batch_count": 10,
+      "batch_size": 4000,
+      "coverage_max": 10,
+      "coverage_median": 10.0,
+      "coverage_min": 10,
+      "epsilon": 3.6783537707414755,
+      "from_day": 2.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 73.5670754148295,
+      "n_source": 4000,
+      "n_target": 4000,
+      "target_sampling_with_replacement": false,
+      "to_day": 4.0,
+      "version": "0.9.7.post1"
+    },
+    {
+      "batch_count": 10,
+      "batch_size": 4000,
+      "coverage_max": 10,
+      "coverage_median": 10.0,
+      "coverage_min": 10,
+      "epsilon": 6.943671022992884,
+      "from_day": 4.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 138.87342045985767,
+      "n_source": 4000,
+      "n_target": 4000,
+      "target_sampling_with_replacement": false,
+      "to_day": 6.0,
+      "version": "0.9.7.post1"
+    }
+  ],
+  "rank": null,
+  "solver": "minibatch",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_minibatch_4000",
+  "velocity_path": "benchmarks/scaling/data/velocity_minibatch_4000.npz",
+  "wall_seconds": 31.959,
+  "wall_seconds_internal": 31.959
+}
+       34.18 real        30.73 user         2.73 sys
+          1291747328  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              112328  page reclaims
+                5817  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2841  voluntary context switches
+               12379  involuntary context switches
+        162570425149  instructions retired
+         87228206790  cycles elapsed
+           745392000  peak memory footprint

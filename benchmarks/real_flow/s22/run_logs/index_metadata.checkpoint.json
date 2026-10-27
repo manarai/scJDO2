@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "from pathlib import Path; import numpy as np,json; p=Path('benchmarks/real_flow/data/larry_s22_inputs.npz'); a=np.load(p,allow_pickle=False); cell=a['clone_cell']; ids=a['cell_id'].astype(str); n=len(ids); counts=np.bincount(cell,minlength=n); payload={'clone_cell_within_z_all_row_bounds':bool(np.all((cell>=0)&(cell<n))),'cell_id_matches_zero_based_z_all_row_index':bool(np.array_equal(ids,np.arange(n).astype(str))),'n_cells_in_multiple_delivered_clone_memberships':int(np.sum(counts>1)),'membership_pairs_preserved_as_delivered':True,'no_score_or_entropy_or_correlation_computed':True}; Path('benchmarks/real_flow/s22/index_metadata.json').write_text(json.dumps(payload,indent=2)+'\\n'); print(json.dumps(payload,indent=2))"
+  ],
+  "cpu_hours": 8.879638888888889e-05,
+  "exit_code": 0,
+  "finished_utc": "2026-10-24T00:16:42.436053+00:00",
+  "max_rss_bytes": 44871680,
+  "process_rss_limit_bytes": 8589934592,
+  "started_utc": "2026-10-24T00:16:41.431596+00:00",
+  "stop_reason": null,
+  "task": "orient/S22",
+  "threads_limit": 3,
+  "unit": "index_metadata",
+  "wall_seconds": 1.004482291995373
+}

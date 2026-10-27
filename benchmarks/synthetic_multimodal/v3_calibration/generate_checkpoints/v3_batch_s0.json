@@ -1,0 +1,21 @@
+{
+  "cpu_seconds": 1693.859,
+  "dataset": "v3_batch_s0",
+  "finished_utc": "2026-10-20T04:08:29Z",
+  "manifest_row": {
+    "detected_clone_fraction": 0.3544403989235397,
+    "f_sample": 0.0289091169431116,
+    "knob_values": "{\"batch_effect\": true, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\"}",
+    "n_cells": 12634,
+    "n_clones_detected": 677,
+    "n_collected_by_day": "[184, 1429, 11021]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_batch_s0.h5ad",
+    "preset": "v3_batch",
+    "seed": 0,
+    "sha256": "3eab794c1abbaf55ae6fdf46bee47b27ecc414396528139699127825a078935b"
+  },
+  "part": "generate",
+  "peak_rss_bytes": 12662915072,
+  "task": "orient/S09",
+  "wall_seconds": 1679.133
+}

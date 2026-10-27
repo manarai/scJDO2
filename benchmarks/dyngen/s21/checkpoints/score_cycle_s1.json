@@ -1,0 +1,8 @@
+{
+  "n_committed": 0,
+  "n_fork": 0,
+  "n_rows": 4,
+  "task": "orient/S21",
+  "truth_read_after_fits": true,
+  "unit": "score_cycle_s1"
+}

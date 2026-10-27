@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.7.0
+rootdir: /home/ubuntu/scJDO2
+configfile: pyproject.toml
+plugins: platformdirs-4.13.5, fast-array-utils-1.5.1, anyio-4.15.1, zarr-3.4.1, cov-7.1.0
+collected 48 items
+
+tests/test_orient.py .............................................       [ 93%]
+tests/test_smoke.py ...                                                  [100%]
+
+============================= 48 passed in 10.24s ==============================

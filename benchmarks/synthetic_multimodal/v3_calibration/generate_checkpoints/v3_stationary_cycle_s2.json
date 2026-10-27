@@ -1,0 +1,21 @@
+{
+  "cpu_seconds": 71.432,
+  "dataset": "v3_stationary_cycle_s2",
+  "finished_utc": "2026-10-20T08:49:30Z",
+  "manifest_row": {
+    "detected_clone_fraction": 0.33285714285714285,
+    "f_sample": 0.2,
+    "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.2, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 5000, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": true, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\"}",
+    "n_cells": 2800,
+    "n_clones_detected": 849,
+    "n_collected_by_day": "[2800]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_stationary_cycle_s2.h5ad",
+    "preset": "v3_stationary_cycle",
+    "seed": 2,
+    "sha256": "565a3853a9913304000db36078ab313cf0669a3071e82679ee169379c6aa108d"
+  },
+  "part": "generate",
+  "peak_rss_bytes": 6723780608,
+  "task": "orient/S09",
+  "wall_seconds": 70.46
+}

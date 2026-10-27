@@ -1,0 +1,40 @@
+[2026-10-22T09:47:47.566093+00:00] S18 exact EnergyDriftAdapter(20,cfg).fit on 10691 controls
+[energy-drift] epoch 150/1500  loss_kind=esm  loss=-8.5494
+[energy-drift] epoch 300/1500  loss_kind=esm  loss=-10.9627
+[energy-drift] epoch 450/1500  loss_kind=esm  loss=-11.8476
+[energy-drift] epoch 600/1500  loss_kind=esm  loss=-12.5194
+[energy-drift] epoch 750/1500  loss_kind=esm  loss=-11.8532
+[energy-drift] epoch 900/1500  loss_kind=esm  loss=-13.1148
+[energy-drift] epoch 1050/1500  loss_kind=esm  loss=-13.7222
+[energy-drift] epoch 1200/1500  loss_kind=esm  loss=-13.7244
+[energy-drift] epoch 1350/1500  loss_kind=esm  loss=-12.7087
+[energy-drift] epoch 1500/1500  loss_kind=esm  loss=-12.3284
+{
+  "k": 20,
+  "n_controls": 10691,
+  "configuration": {
+    "hidden": 96,
+    "depth": 3,
+    "beta": 1.0,
+    "n_epochs": 1500,
+    "batch_size": 256,
+    "lr": 0.0005,
+    "weight_decay": 0.0001,
+    "seed": 0,
+    "device": null,
+    "loss": "esm",
+    "dsm_sigma_range": [
+      0.05,
+      0.5
+    ],
+    "esm_laplacian": "exact",
+    "esm_hutch_k": 4,
+    "clock_calibrated": false
+  },
+  "device": "cpu",
+  "median_relative_Frobenius_difference": 0.0,
+  "max_relative_Frobenius_difference": 0.0,
+  "required_primary_max_median": 0.05,
+  "primary_refit_check_pass": true,
+  "fit_path": "EnergyDriftAdapter(k, exact S18 cfg).fit(np.asarray(z[ci],dtype=float32))"
+}

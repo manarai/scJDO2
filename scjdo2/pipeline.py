@@ -17,7 +17,7 @@ Jacobian estimator (``jacobian_method``):
 Written keys:
     adata.obsm["X_drift_v"]       — drift velocities v_c (n, d)
     adata.uns["scjdo2"]["J"]      — dense Jacobian field (n, d, d)
-    adata.uns["scjdo2"]["meta"]   — {clock_calibrated, use_rep, time_key,
+    adata.uns["scjdo2"]["meta"]   — {clock_calibrated, use_rep,
                                      jacobian_method, …}
 """
 
@@ -28,48 +28,42 @@ from typing import Literal, Optional
 import numpy as np
 from anndata import AnnData
 
-from .drift import DriftAdapter, DriftConfig
+from .energy_drift import EnergyDriftAdapter, EnergyDriftConfig
 from .field import FieldConfig, JacobianField
 
 
 def fit_latent_field(
     adata: AnnData,
     use_rep: str = "X_pca",
-    time_key: str = "pseudotime",
     k: int = 40,
-    drift_config: Optional[DriftConfig] = None,
+    drift_config: Optional[EnergyDriftConfig] = None,
     field_config: Optional[FieldConfig] = None,
-    clock_scale: Optional[np.ndarray] = None,
     jacobian_method: Literal["autodiff", "neighbourhood"] = "autodiff",
     verbose: bool = False,
 ) -> AnnData:
     """Fit Steps 2 and 5 on an AnnData and store results.
 
-    Steps 2 (drift) and 5 (local Jacobian) share the ``DriftAdapter`` fit.
-    By default the Jacobian is read from the drift network itself by
-    autograd (``jacobian_method="autodiff"``); pass ``"neighbourhood"`` to
-    use the kNN-ball ridge regression kept in :mod:`scjdo2.field` for
-    Phase C's gene-space step.
+    Step 2 is scJDO2's one drift: ``f = −∇E_θ``, an energy network fitted
+    by score matching (:class:`scjdo2.energy_drift.EnergyDriftAdapter`).
+    It is time-independent, so no pseudotime is read. The Jacobian is read
+    from the drift by autograd (``jacobian_method="autodiff"``, symmetric by
+    construction) or by the kNN-ball ridge regression in
+    :mod:`scjdo2.field` (``"neighbourhood"``).
     """
     if use_rep not in adata.obsm:
         raise KeyError(f"adata.obsm[{use_rep!r}] not found")
-    if time_key not in adata.obs:
-        raise KeyError(f"adata.obs[{time_key!r}] not found")
 
     z = np.asarray(adata.obsm[use_rep], dtype=np.float32)
-    t = adata.obs[time_key].to_numpy(dtype=np.float32)
     d = z.shape[1]
 
-    drift_config = drift_config or DriftConfig()
-    drift = DriftAdapter(dim=d, config=drift_config).fit(
-        z, t=t, clock_scale=clock_scale, verbose=verbose,
-    )
-    v = drift.velocity(z, t)
+    drift_config = drift_config or EnergyDriftConfig()
+    drift = EnergyDriftAdapter(dim=d, config=drift_config).fit(z, verbose=verbose)
+    v = drift.velocity(z)
 
     field_reason_summary: dict[str, float | bool]
     field_meta: dict[str, object]
     if jacobian_method == "autodiff":
-        J = drift.jacobian_autodiff(z, t)
+        J = drift.jacobian_autodiff(z)
         field_reason_summary = {"ok": 1.0, "autodiff": True}
         field_meta = {"method": "autodiff"}
     elif jacobian_method == "neighbourhood":
@@ -92,19 +86,18 @@ def fit_latent_field(
     adata.uns.setdefault("scjdo2", {})
     adata.uns["scjdo2"]["J"] = J
     adata.uns["scjdo2"]["meta"] = {
-        "clock_calibrated": bool(drift.config.clock_calibrated),
+        "clock_calibrated": bool(drift_config.clock_calibrated),
         "use_rep": use_rep,
-        "time_key": time_key,
         "jacobian_method": jacobian_method,
+        "energy_drift": True,
         "drift": {
             "hidden": drift_config.hidden,
             "depth": drift_config.depth,
             "n_epochs": drift_config.n_epochs,
             "seed": drift_config.seed,
-            "use_spectral_norm": drift_config.use_spectral_norm,
-            "vel_scale": drift_config.vel_scale,
-            "sigma": drift_config.sigma,
-            "inject_velocity_prior": drift_config.inject_velocity_prior,
+            "beta": drift_config.beta,
+            "lr": drift_config.lr,
+            "loss": drift_config.loss,
         },
         "field": field_meta,
     }

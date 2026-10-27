@@ -1,0 +1,79 @@
+{
+  "k": 20,
+  "n_basins": 59,
+  "n_targets": 865,
+  "stiffness_ordinary": {
+    "rho": 0.05981969345602696,
+    "p_one_sided_negative": 0.6764323567643236,
+    "p_two_sided_absolute": 0.641035896410359,
+    "n_basins": 59,
+    "permutations": 10000,
+    "negative_tail_count": 6764,
+    "two_sided_count": 6410,
+    "rng": "default_rng(0)",
+    "partial": false,
+    "nuisance": null,
+    "permutation_rule": "Permute depth across states, re-rank (equivalently permute depth ranks), re-residualize against fixed nuisances"
+  },
+  "stiffness_partial": {
+    "rho": 0.05217725354718012,
+    "p_one_sided_negative": 0.6486351364863514,
+    "p_two_sided_absolute": 0.702029797020298,
+    "n_basins": 59,
+    "permutations": 10000,
+    "negative_tail_count": 6486,
+    "two_sided_count": 7020,
+    "rng": "default_rng(0)",
+    "partial": true,
+    "nuisance": "intercept and ranks of original basin size and covariance trace",
+    "permutation_rule": "Permute depth across states, re-rank (equivalently permute depth ranks), re-residualize against fixed nuisances"
+  },
+  "energy_depth_ordinary": {
+    "rho": 0.014202428441440694,
+    "p_one_sided_negative": 0.5364463553644635,
+    "p_two_sided_absolute": 0.9143085691430857,
+    "n_basins": 59,
+    "permutations": 10000,
+    "negative_tail_count": 5364,
+    "two_sided_count": 9143,
+    "rng": "default_rng(0)",
+    "partial": false,
+    "nuisance": null,
+    "permutation_rule": "Permute depth across states, re-rank (equivalently permute depth ranks), re-residualize against fixed nuisances"
+  },
+  "energy_depth_partial": {
+    "rho": -0.15084157045078095,
+    "p_one_sided_negative": 0.13338666133386662,
+    "p_two_sided_absolute": 0.2632736726327367,
+    "n_basins": 59,
+    "permutations": 10000,
+    "negative_tail_count": 1333,
+    "two_sided_count": 2632,
+    "rng": "default_rng(0)",
+    "partial": true,
+    "nuisance": "intercept and ranks of original basin size and covariance trace",
+    "permutation_rule": "Permute depth across states, re-rank (equivalently permute depth ranks), re-residualize against fixed nuisances"
+  },
+  "leiden_ordinary": {
+    "rho": 0.03185271770894214,
+    "p_one_sided_negative": 0.5994400559944005,
+    "p_two_sided_absolute": 0.7981201879812019,
+    "n_basins": 59,
+    "permutations": 10000,
+    "negative_tail_count": 5994,
+    "two_sided_count": 7981,
+    "rng": "default_rng(0)",
+    "partial": false,
+    "nuisance": null,
+    "permutation_rule": "Permute depth across states, re-rank (equivalently permute depth ranks), re-residualize against fixed nuisances"
+  },
+  "leiden_partial": null,
+  "leiden_partial_reason": "Planner Revision1: depth1/trace is rank-collinear with nuisance spread trace; undefined by construction",
+  "gate_H2": {
+    "rho": 0.05217725354718012,
+    "p_one_sided_negative": 0.6486351364863514,
+    "required_rho_less_than": 0,
+    "required_p_less_than": 0.05,
+    "pass": false
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "dataset": "v3_transition_s3",
+  "error": "",
+  "external_time_seconds": 41.01,
+  "input_path": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/v3/v3_transition_s3.h5ad",
+  "input_sha256": "28d27cea26eb7112c7a6395046fe52bb202905f8a28ea34d5de452c5d8b37de3",
+  "method": "splicejac",
+  "peak_memory_bytes": 8707637248,
+  "runtime_seconds": 39.957,
+  "settings": {
+    "cluster_count": 8,
+    "cluster_key": "s16a_leiden",
+    "estimate_jacobian": "default arguments (first_moment=True, method=Ridge, alpha=1, beta=1, rescale=True, nsim=10, frac=.9, filter_and_norm=True, min_shared_counts=20, n_top_genes=20, eps=.9, seed=100)",
+    "method": "splicejac",
+    "native_uns_keys": [
+      "jacobian_lists",
+      "average_jac",
+      "transitions"
+    ],
+    "neighbors": {
+      "n_neighbors": 30,
+      "random_state": 0,
+      "use_rep": "X_pca"
+    },
+    "operator_arrays": [
+      "jacobians",
+      "eigenvalues",
+      "positive_eigenvalue_fraction",
+      "transition_gene_weights"
+    ],
+    "rank_genes_groups": {
+      "groupby": "clusters",
+      "method": "scanpy default (t-test)"
+    },
+    "resolution": 1.0,
+    "transition_pair_count": 56
+  },
+  "status": "complete",
+  "version": "0.0.1"
+}

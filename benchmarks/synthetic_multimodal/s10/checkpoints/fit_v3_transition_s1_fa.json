@@ -1,0 +1,94 @@
+{
+  "J_flow_raw_perpulse": {
+    "fit_device": "mps:0",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 12654,
+    "seconds": 24.7
+  },
+  "J_flow_raw_shared": {
+    "fit_device": "mps:0",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 12654,
+    "seconds": 25.77
+  },
+  "J_flow_smoothed_perpulse": {
+    "fit_device": "mps:0",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 12654,
+    "seconds": 20.73
+  },
+  "J_flow_smoothed_shared": {
+    "fit_device": "mps:0",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 12654,
+    "seconds": 20.66
+  },
+  "bytes": 111458880,
+  "energy": {
+    "seconds": 89.46,
+    "symmetry_max": 2.7253150847172947e-07,
+    "symmetry_median": 1.757046277361951e-07
+  },
+  "finished_utc": "2026-10-20T10:53:27.246198Z",
+  "in_process_cpu_seconds": 215.179,
+  "input_sha256": "f3d9743121031d2e8a2379ddf50648359fd6f9cd1d73eefcc0ab9244f26e30da",
+  "keys": [
+    "J_flow_raw_perpulse",
+    "J_flow_raw_shared",
+    "J_flow_smoothed_perpulse",
+    "J_flow_smoothed_shared",
+    "J_score",
+    "X_drift_v",
+    "energy",
+    "gamma_pulse_3h",
+    "gamma_pulse_5h",
+    "gamma_shared",
+    "v_lab_fit_raw_perpulse",
+    "v_lab_fit_raw_shared",
+    "v_lab_fit_smoothed_perpulse",
+    "v_lab_fit_smoothed_shared",
+    "v_lab_raw_perpulse",
+    "v_lab_raw_shared",
+    "v_lab_smoothed_perpulse",
+    "v_lab_smoothed_shared",
+    "z"
+  ],
+  "labelling_pulse_3h": {
+    "gamma_max": 7.282168388366699,
+    "gamma_min": 0.002284655347466469,
+    "held_out_nll": -158.47854614257812,
+    "n_cells": 6327,
+    "seconds": 7.99
+  },
+  "labelling_pulse_5h": {
+    "gamma_max": 4.4036993980407715,
+    "gamma_min": 0.0020468193106353283,
+    "held_out_nll": -143.5363311767578,
+    "n_cells": 6327,
+    "seconds": 7.5
+  },
+  "labelling_shared": {
+    "epochs_run": 400,
+    "gamma_max": 5.673037528991699,
+    "gamma_min": 0.0023133670911192894,
+    "held_out_nll": -155.18853759765625,
+    "seconds": 9.34,
+    "seed": 0
+  },
+  "method": "fa",
+  "n_cells": 12654,
+  "path": "benchmarks/synthetic_multimodal/data/s10/v3_transition_s1/fit_fa.npz",
+  "peak_rss_bytes": 6077235200,
+  "raw_shared_formula_max_abs_diff": 0.0,
+  "sha256": "889256fadef6fd8decc77c0df77604b8ed3c2bcbc8c60d43f8985320371984cb",
+  "smoothing": "kNN-30 in the unit embedding, self included, size factor = total library / median; smoothed gene velocity multiplied by the size factor before the S02 chain rule",
+  "started_utc": "2026-10-20T10:49:34.169696Z",
+  "task": "orient/S10",
+  "unit": "fit_v3_transition_s1_fa",
+  "velocity_labelling_s06": "v_lab_fit_raw_shared (MeasuredDrift on the raw labelling velocity, as S06)",
+  "wall_seconds": 233.077
+}

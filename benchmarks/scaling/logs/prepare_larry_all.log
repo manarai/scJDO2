@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s20_scaling.py", line 568, in <module>
+    main()
+    ~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s20_scaling.py", line 549, in main
+    prepare(); return
+    ~~~~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus-C/scripts/s20_scaling.py", line 121, in prepare
+    chunks.append(backed.X[lo : min(lo + 4096, backed.n_obs)].copy())
+                  ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/anndata/_core/sparse_dataset.py", line 440, in __getitem__
+    row_sp_matrix_validated, col_sp_matrix_validated = validate_indices(
+                                                       ~~~~~~~~~~~~~~~~^
+        mtx, indices
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/terooatt/Documents/scJDO2-manus/.venv/lib/python3.13/site-packages/anndata/_core/sparse_dataset.py", line 376, in validate_indices
+    res = mtx._validate_indices(indices)
+          ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'backed_csr_matrix' object has no attribute '_validate_indices'. Did you mean: '_prepare_indices'?
+        7.71 real         4.59 user         1.28 sys
+           520536064  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               77129  page reclaims
+                5211  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4398  voluntary context switches
+                8145  involuntary context switches
+         30383722325  instructions retired
+         15240624354  cycles elapsed
+           371738040  peak memory footprint

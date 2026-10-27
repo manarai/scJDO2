@@ -1,0 +1,445 @@
+{
+  "gates": [
+    {
+      "gate": "Flow velocity agreement (dynamical; moving axes)",
+      "minimum": 0.75,
+      "minimum_observed": 0.13384274094158244,
+      "pass": false,
+      "per_seed": "0.1338, 0.1770, 0.2389"
+    },
+    {
+      "gate": "Flow velocity oriented fraction",
+      "minimum": 0.3,
+      "minimum_observed": 0.7119176907687911,
+      "pass": true,
+      "per_seed": "0.7656, 0.7502, 0.7119"
+    },
+    {
+      "gate": "Flow coverage non-decreasing and labelling decision unchanged",
+      "minimum": 1.0,
+      "minimum_observed": 1.0,
+      "pass": true,
+      "per_seed": "True, True, True"
+    },
+    {
+      "gate": "Flow conflict truth sides with labelling (moving axes)",
+      "minimum": 0.6,
+      "minimum_observed": 0.9691313711414213,
+      "pass": true,
+      "per_seed": "0.9786, 0.9723, 0.9691"
+    },
+    {
+      "gate": "Developmental lineage agreement (moving axes)",
+      "minimum": 0.95,
+      "minimum_observed": 0.9879245283018868,
+      "pass": true,
+      "per_seed": "0.9953, 0.9879, 0.9883"
+    },
+    {
+      "gate": "Developmental lineage+pseudotime oriented fraction",
+      "minimum": 0.9,
+      "minimum_observed": 0.7979422692197771,
+      "pass": false,
+      "per_seed": "0.8401, 0.8456, 0.7979"
+    },
+    {
+      "gate": "Developmental conflict truth sides with lineage (moving axes)",
+      "minimum": 0.8,
+      "minimum_observed": 0.6551724137931034,
+      "pass": false,
+      "per_seed": "0.9057, 0.6552, 0.7164"
+    },
+    {
+      "gate": "Flow/dev independence exact in every run",
+      "minimum": 1.0,
+      "minimum_observed": 1.0,
+      "pass": true,
+      "per_seed": "True"
+    },
+    {
+      "gate": "J hash unchanged in every call",
+      "minimum": 1.0,
+      "minimum_observed": 1.0,
+      "pass": true,
+      "per_seed": "True"
+    }
+  ],
+  "n_by_day": 1152,
+  "n_diagnostics": 120,
+  "n_results": 288,
+  "user_manifest": {
+    "files": [
+      {
+        "bytes": 138865799,
+        "finished_utc": "2026-10-17T07:27:25.793487Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/batch_s0.h5ad",
+        "input_sha256": "991bd343f0638bb27311735ceefe5e9659b1cda84fb47e90e7155606891dd5fe",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3505,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 686,
+        "palantir_start_cell": "cell_0000186",
+        "palantir_start_pseudotime": 0.007493040886193997,
+        "path": "benchmarks/synthetic_multimodal/data/user/batch_s0_user.h5ad",
+        "preset": "batch",
+        "seed": 0,
+        "sha256": "7a84e4d8d14eeaa966aa9570a521fe2a63ca6f6344e827b6c4a0061cd38f83d0",
+        "started_utc": "2026-10-17T07:21:50.072209Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "batch_s0",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 335.721
+      },
+      {
+        "bytes": 133695548,
+        "finished_utc": "2026-10-17T07:33:07.825687Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/batch_s1.h5ad",
+        "input_sha256": "09d73f48eb7c840ef824201db4b296691edccea4310785a0ccddc25a1037303a",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3374,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 676,
+        "palantir_start_cell": "cell_0000346",
+        "palantir_start_pseudotime": 0.0007346118776841963,
+        "path": "benchmarks/synthetic_multimodal/data/user/batch_s1_user.h5ad",
+        "preset": "batch",
+        "seed": 1,
+        "sha256": "5946099d2c474ec77dc72b19bd92385a032a3efd30b62b7833f965a7970f80f6",
+        "started_utc": "2026-10-17T07:27:37.654655Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "batch_s1",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 330.171
+      },
+      {
+        "bytes": 138629175,
+        "finished_utc": "2026-10-17T07:38:36.022753Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/batch_s2.h5ad",
+        "input_sha256": "dc214ac5f15caf2f50eebb0a56766a1528f805b5a185269f72645c7c4fcf45a5",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3499,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 686,
+        "palantir_start_cell": "cell_0000791",
+        "palantir_start_pseudotime": 0.007880849231452313,
+        "path": "benchmarks/synthetic_multimodal/data/user/batch_s2_user.h5ad",
+        "preset": "batch",
+        "seed": 2,
+        "sha256": "5a5fc16dbfd8ad4db810742c1365b50230000c61edf9d3e29b85e64def39fb9a",
+        "started_utc": "2026-10-17T07:33:25.493424Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "batch_s2",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 310.529
+      },
+      {
+        "bytes": 143484154,
+        "finished_utc": "2026-10-17T05:03:50.912095Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/default_s0.h5ad",
+        "input_sha256": "05d18e4dbef669c79eb64d35f9ff70a9f4a9fcc51cf7017e8b9b9b32c1bef533",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3622,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 688,
+        "palantir_start_cell": "cell_0000152",
+        "palantir_start_pseudotime": 0.013832913657435398,
+        "path": "benchmarks/synthetic_multimodal/data/user/default_s0_user.h5ad",
+        "preset": "default",
+        "seed": 0,
+        "sha256": "5fd1f7c25730d09ca603a1165aabc3ff79382574aa0d58b6d583bcfa561910a5",
+        "started_utc": "2026-10-17T04:58:26.225158Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "default_s0",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 324.687
+      },
+      {
+        "bytes": 135470184,
+        "finished_utc": "2026-10-17T05:15:41.906850Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/default_s1.h5ad",
+        "input_sha256": "dd74d421c1a3b8bec7a851183c11326104f9ff8071da59330368c5f149902ae0",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3419,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 671,
+        "palantir_start_cell": "cell_0000732",
+        "palantir_start_pseudotime": 0.008858397431767735,
+        "path": "benchmarks/synthetic_multimodal/data/user/default_s1_user.h5ad",
+        "preset": "default",
+        "seed": 1,
+        "sha256": "a56095a2ffccc13d39710e7e53c379796b4ab7f4e8468f7a35a282d720891296",
+        "started_utc": "2026-10-17T05:10:51.232883Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "default_s1",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 290.674
+      },
+      {
+        "bytes": 138629165,
+        "finished_utc": "2026-10-17T05:20:51.587112Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/default_s2.h5ad",
+        "input_sha256": "1bc4108ff03dad9faeb3b0b7a95c3623f610834d4f8a7b5bbec8506cc533e3be",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3499,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 683,
+        "palantir_start_cell": "cell_0000624",
+        "palantir_start_pseudotime": 0.011886138112792008,
+        "path": "benchmarks/synthetic_multimodal/data/user/default_s2_user.h5ad",
+        "preset": "default",
+        "seed": 2,
+        "sha256": "feaff1d90f2b9a13815995a2275768dd7d2fb27b5c9335e0925ab4fe68af9d6b",
+        "started_utc": "2026-10-17T05:16:13.051074Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "default_s2",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 278.536
+      },
+      {
+        "bytes": 139295516,
+        "finished_utc": "2026-10-17T05:25:50.089769Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/stress_s0.h5ad",
+        "input_sha256": "b6924f25b09e6cf04b5ca88b14d6fb5bed031365cee55bfca696fcc26bc6ea4b",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3516,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 681,
+        "palantir_start_cell": "cell_0000416",
+        "palantir_start_pseudotime": 0.010225268989961225,
+        "path": "benchmarks/synthetic_multimodal/data/user/stress_s0_user.h5ad",
+        "preset": "stress",
+        "seed": 0,
+        "sha256": "22b6a295b151785024c0a063d32fb2dc81f5b333fcb23649310d32f1549626d8",
+        "started_utc": "2026-10-17T05:20:57.095821Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "stress_s0",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 292.994
+      },
+      {
+        "bytes": 120192436,
+        "finished_utc": "2026-10-17T05:29:51.764099Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/stress_s1.h5ad",
+        "input_sha256": "f67868e89125b3c8cfb6694352d6869027b99b955c7fd58a7bb65caa9a3d57cc",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3032,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 658,
+        "palantir_start_cell": "cell_0000147",
+        "palantir_start_pseudotime": 0.008774107495412131,
+        "path": "benchmarks/synthetic_multimodal/data/user/stress_s1_user.h5ad",
+        "preset": "stress",
+        "seed": 1,
+        "sha256": "efcafa9809e18c266321976c69a14ba1211b15853f606ebb98c6f867663624af",
+        "started_utc": "2026-10-17T05:25:55.725301Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "stress_s1",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 236.039
+      },
+      {
+        "bytes": 122676770,
+        "finished_utc": "2026-10-17T07:21:35.067335Z",
+        "input_path": "benchmarks/synthetic_multimodal/data/stress_s2.h5ad",
+        "input_sha256": "5eb2590b44e387ab5abc3f8dcd6e41a1c3fa41e593178f944153871dc3e6fa5b",
+        "keys_added": {
+          "obs": [
+            "palantir_pseudotime"
+          ],
+          "obsm": [
+            "velocity_fa",
+            "velocity_pca"
+          ],
+          "uns": [
+            "palantir_start_cell"
+          ]
+        },
+        "n_cells": 3095,
+        "n_genes_input": 800,
+        "n_genes_scvelo": 654,
+        "palantir_start_cell": "cell_0000210",
+        "palantir_start_pseudotime": 0.00655491796337342,
+        "path": "benchmarks/synthetic_multimodal/data/user/stress_s2_user.h5ad",
+        "preset": "stress",
+        "seed": 2,
+        "sha256": "f2ee604736fed6fdde533f2876ab203c8f7b855e1ce453b36e4621c97ba5afa7",
+        "started_utc": "2026-10-17T07:17:11.344714Z",
+        "stochastic": {
+          "error": "setting an array element with a sequence.",
+          "error_type": "ValueError",
+          "status": "error"
+        },
+        "unit": "stress_s2",
+        "versions": {
+          "palantir": "1.4.5",
+          "scanpy": "1.12.4",
+          "scvelo": "0.3.4"
+        },
+        "wall_seconds": 263.723
+      }
+    ],
+    "palantir_api": {
+      "diffusion_maps": "palantir.utils.run_diffusion_maps(AnnData, n_components=10, knn=30, seed=0, pca_key='X_pca')",
+      "multiscale": "palantir.utils.determine_multiscale_space(AnnData)",
+      "pseudotime": "palantir.core.run_palantir(AnnData, early_cell=..., num_waypoints=500, knn=30, seed=0)"
+    },
+    "versions": {
+      "anndata": "0.11.4",
+      "palantir": "1.4.5",
+      "scanpy": "1.12.4",
+      "scvelo": "0.3.4"
+    }
+  }
+}

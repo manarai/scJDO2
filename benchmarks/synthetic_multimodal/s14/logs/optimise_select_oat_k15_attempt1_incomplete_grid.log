@@ -1,0 +1,32 @@
+START 2026-10-21T09:57:55Z
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s14_optimise.py", line 324, in <module>
+    main()
+    ~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s14_optimise.py", line 318, in main
+    select_oat()
+    ~~~~~~~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s14_optimise.py", line 249, in select_oat
+    frame = _oat_rows(); summary = _aggregate(frame); cfg = registry()
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s14_optimise.py", line 220, in _oat_rows
+    raise RuntimeError("missing OAT checkpoints: " + ", ".join(missing))
+RuntimeError: missing OAT checkpoints: optimise_oat_k15_arch_64x64_wd0p0001_v3_transition_s0.json, optimise_oat_k15_arch_64x64_wd0p0001_v3_transition_s1.json, optimise_oat_k15_arch_64x64_wd0p0001_v3_default_s0.json, optimise_oat_k15_arch_64x64_wd0p0001_v3_default_s1.json
+        0.51 real         0.40 user         0.09 sys
+           104562688  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               11557  page reclaims
+                   0  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  53  voluntary context switches
+                 203  involuntary context switches
+          3228307433  instructions retired
+          1299790070  cycles elapsed
+            64750480  peak memory footprint
+EXIT 1 2026-10-21T09:57:55Z

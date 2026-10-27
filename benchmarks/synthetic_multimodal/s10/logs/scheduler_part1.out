@@ -1,0 +1,88 @@
+05:07:57 start flow_v3_default_s0_pca (attempt 1) threads=12 mem=25
+05:11:29 end flow_v3_default_s0_pca rc=0 ok=True
+05:11:29 start flow_v3_default_s0_fa (attempt 1) threads=12 mem=25
+05:14:54 end flow_v3_default_s0_fa rc=0 ok=True
+05:14:54 start flow_v3_default_s1_pca (attempt 1) threads=12 mem=25
+05:17:35 start scvelo_v3_transition_s1 (attempt 1) threads=12 mem=25
+05:17:45 end flow_v3_default_s1_pca rc=0 ok=True
+05:17:45 start flow_v3_default_s1_fa (attempt 1) threads=12 mem=25
+05:20:17 end flow_v3_default_s1_fa rc=0 ok=True
+05:20:17 start flow_v3_default_s2_pca (attempt 1) threads=12 mem=25
+05:22:49 end flow_v3_default_s2_pca rc=0 ok=True
+05:22:49 start flow_v3_default_s2_fa (attempt 1) threads=12 mem=25
+05:25:20 end flow_v3_default_s2_fa rc=0 ok=True
+05:25:20 start flow_v3_stress_s0_pca (attempt 1) threads=12 mem=25
+05:26:11 end scvelo_v3_transition_s1 rc=0 ok=True
+05:26:11 start s08_v3_transition_s0 (attempt 1) threads=6 mem=30
+05:28:02 end flow_v3_stress_s0_pca rc=0 ok=True
+05:28:02 start flow_v3_stress_s0_fa (attempt 1) threads=6 mem=30
+05:30:33 end flow_v3_stress_s0_fa rc=0 ok=True
+05:30:33 start flow_v3_stress_s1_pca (attempt 1) threads=6 mem=30
+05:31:44 end s08_v3_transition_s0 rc=0 ok=True
+05:31:44 start s08_v3_transition_s1 (attempt 1) threads=6 mem=30
+05:32:14 end flow_v3_stress_s1_pca rc=0 ok=True
+05:32:14 start flow_v3_stress_s1_fa (attempt 1) threads=6 mem=30
+05:33:55 end flow_v3_stress_s1_fa rc=0 ok=True
+05:33:55 start flow_v3_stress_s2_pca (attempt 1) threads=6 mem=30
+05:36:26 end flow_v3_stress_s2_pca rc=0 ok=True
+05:36:26 start flow_v3_stress_s2_fa (attempt 1) threads=6 mem=30
+05:36:56 end s08_v3_transition_s1 rc=0 ok=True
+05:36:56 start flow_v3_batch_s0_pca (attempt 1) threads=6 mem=24
+05:36:56 start flow_v3_batch_s0_fa (attempt 1) threads=8 mem=28
+05:38:37 end flow_v3_stress_s2_fa rc=0 ok=True
+05:38:37 start flow_v3_batch_s1_pca (attempt 1) threads=8 mem=28
+05:39:07 end flow_v3_batch_s0_fa rc=0 ok=True
+05:39:07 start flow_v3_batch_s1_fa (attempt 1) threads=8 mem=28
+05:39:17 end flow_v3_batch_s0_pca rc=0 ok=True
+05:39:17 start flow_v3_batch_s2_pca (attempt 1) threads=8 mem=28
+05:40:58 end flow_v3_batch_s1_pca rc=0 ok=True
+05:40:58 start flow_v3_batch_s2_fa (attempt 1) threads=8 mem=28
+05:41:18 end flow_v3_batch_s1_fa rc=0 ok=True
+05:41:18 start flow_v3_stationary_cycle_s0_pca (attempt 1) threads=8 mem=28
+05:41:28 end flow_v3_batch_s2_pca rc=0 ok=True
+05:41:28 start flow_v3_stationary_cycle_s0_fa (attempt 1) threads=8 mem=28
+05:41:38 end flow_v3_stationary_cycle_s0_pca rc=0 ok=True
+05:41:38 start flow_v3_stationary_cycle_s1_pca (attempt 1) threads=8 mem=28
+05:41:48 end flow_v3_stationary_cycle_s0_fa rc=0 ok=True
+05:41:48 start flow_v3_stationary_cycle_s1_fa (attempt 1) threads=8 mem=28
+05:41:58 end flow_v3_stationary_cycle_s1_pca rc=0 ok=True
+05:41:58 start flow_v3_stationary_cycle_s2_pca (attempt 1) threads=8 mem=28
+05:42:08 end flow_v3_stationary_cycle_s1_fa rc=0 ok=True
+05:42:08 start flow_v3_stationary_cycle_s2_fa (attempt 1) threads=8 mem=28
+05:42:18 end flow_v3_stationary_cycle_s2_pca rc=0 ok=True
+05:42:18 start flow_v3_transition_s0_pca (attempt 1) threads=8 mem=28
+05:42:29 end flow_v3_stationary_cycle_s2_fa rc=0 ok=True
+05:42:29 start flow_v3_transition_s0_fa (attempt 1) threads=8 mem=28
+05:43:09 end flow_v3_batch_s2_fa rc=0 ok=True
+05:43:09 start flow_v3_transition_s1_pca (attempt 1) threads=8 mem=28
+05:43:49 start s08_v3_transition_s2 (attempt 1) threads=8 mem=22
+05:43:49 start fit_v3_transition_s2_pca (attempt 1) threads=10 mem=29
+05:44:29 end flow_v3_transition_s0_pca rc=0 ok=True
+05:44:29 start palantir_v3_transition_s2 (attempt 1) threads=10 mem=27
+05:44:39 end flow_v3_transition_s0_fa rc=0 ok=True
+05:44:39 start fit_v3_transition_s2_fa (attempt 1) threads=10 mem=30
+05:45:20 end flow_v3_transition_s1_pca rc=0 ok=True
+05:45:20 start flow_v3_transition_s1_fa (attempt 1) threads=10 mem=30
+05:47:00 end fit_v3_transition_s2_pca rc=0 ok=True
+05:47:00 start dmeas_v3_default_s0 (attempt 1) threads=9 mem=27
+05:47:41 end dmeas_v3_default_s0 rc=0 ok=True
+05:47:41 start dtruth_v3_default_s0_c0 (attempt 1) threads=9 mem=28
+05:48:01 end palantir_v3_transition_s2 rc=0 ok=True
+05:48:01 end flow_v3_transition_s1_fa rc=0 ok=True
+05:48:01 start dtruth_v3_default_s0_c1 (attempt 1) threads=6 mem=27
+05:48:21 end fit_v3_transition_s2_fa rc=0 ok=True
+05:48:21 start scvelo_v3_transition_s2 (attempt 1) threads=12 mem=25
+05:50:43 end s08_v3_transition_s2 rc=0 ok=True
+05:50:43 start s08compare (attempt 1) threads=11 mem=17
+05:50:43 start dtruth_v3_default_s0_c2 (attempt 1) threads=12 mem=22
+05:50:53 end s08compare rc=0 ok=True
+05:50:53 start dtruth_v3_default_s0_c3 (attempt 1) threads=12 mem=25
+05:58:29 end scvelo_v3_transition_s2 rc=0 ok=True
+05:58:29 start flow_v3_transition_s2_pca (attempt 1) threads=6 mem=24
+05:58:29 start flow_v3_transition_s2_fa (attempt 1) threads=8 mem=28
+06:00:50 end flow_v3_transition_s2_pca rc=0 ok=True
+06:00:50 end flow_v3_transition_s2_fa rc=0 ok=True
+06:00:50 start dmeas_v3_default_s1 (attempt 1) threads=5 mem=24
+06:00:50 start dtruth_v3_default_s1_c0 (attempt 1) threads=6 mem=29
+06:01:21 end dmeas_v3_default_s1 rc=0 ok=True
+06:01:21 start dtruth_v3_default_s1_c1 (attempt 1) threads=6 mem=30

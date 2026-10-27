@@ -1,0 +1,24 @@
+{
+  "unit": "capture_k562_N2",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "capture",
+    "--screen",
+    "k562",
+    "--norm",
+    "N2"
+  ],
+  "started_utc": "2026-10-23T02:54:02.204098+00:00",
+  "finished_utc": "2026-10-23T02:54:07.223245+00:00",
+  "exit_code": 0,
+  "wall_seconds": 5.0191513919999124,
+  "cpu_hours": 0.0020765369444444444,
+  "max_rss_kib": 390928,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/capture_k562_N2.log",
+  "stop_reason": null
+}

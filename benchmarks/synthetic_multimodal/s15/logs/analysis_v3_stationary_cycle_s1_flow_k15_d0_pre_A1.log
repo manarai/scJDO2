@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py", line 1224, in <module>
+    main()
+    ~~~~^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py", line 1212, in main
+    run_analysis(args.dataset, args.operator, args.k, args.drift_seed)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py", line 961, in run_analysis
+    leiden_cache[requested] = _matched_leiden(z, int(requested))
+                              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py", line 866, in _matched_leiden
+    raise RuntimeError("STOP: Leiden skipped the exact matched K; no nearest-count substitution is allowed")
+RuntimeError: STOP: Leiden skipped the exact matched K; no nearest-count substitution is allowed
+      125.97 real       132.02 user         4.05 sys
+           855130112  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              130844  page reclaims
+                   8  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 518  voluntary context switches
+               91309  involuntary context switches
+       1322502794180  instructions retired
+        353417029707  cycles elapsed
+           531498760  peak memory footprint
+EXIT 1 2026-10-24T17:46:03Z

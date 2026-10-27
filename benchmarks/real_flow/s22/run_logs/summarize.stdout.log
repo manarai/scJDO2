@@ -1,0 +1,41 @@
+{
+  "gate_L1_pooled": {
+    "cohort": "pooled",
+    "gated": true,
+    "n_pairs": 1818,
+    "n_tied_pairs": 67,
+    "n_unique_clones": 1694,
+    "p_permutation_positive": 1.0,
+    "partial_rho_given_density": 0.011456313600472594,
+    "rho_centroid_distance_H": 0.05803340770876592,
+    "rho_density_H": 0.0780519030130409,
+    "rho_lambda1_H": -0.002642724688277755,
+    "rho_lambda1_switch_report_only": 0.11958264371940358,
+    "seed": 0,
+    "passed": false
+  },
+  "gate_L2_undifferentiated": {
+    "cohort": "undifferentiated",
+    "gated": true,
+    "n_pairs": 1401,
+    "n_tied_pairs": 0,
+    "n_unique_clones": 1317,
+    "p_permutation_positive": 1.0,
+    "partial_rho_given_density": -0.07774117579453121,
+    "rho_centroid_distance_H": 0.22102459560108648,
+    "rho_density_H": 0.07632362628447911,
+    "rho_lambda1_H": -0.10116104731018428,
+    "rho_lambda1_switch_report_only": -0.06876676681021487,
+    "seed": 0,
+    "passed": false
+  },
+  "gate_L3_baselines": {
+    "seed": 0,
+    "n_pairs": 1401,
+    "rho_lambda1_H": -0.10116104731018428,
+    "rho_density_H": 0.07632362628447911,
+    "rho_centroid_distance_H": 0.22102459560108648,
+    "partial_rho_given_density": -0.07774117579453121,
+    "passed": false
+  }
+}

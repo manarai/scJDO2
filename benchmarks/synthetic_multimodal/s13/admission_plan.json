@@ -1,0 +1,12 @@
+{
+  "admitted": true,
+  "basis": "S12/S10 completed timed units; conservative five-equivalent synthetic multiplier",
+  "budget_cpu_hours": 8.0,
+  "projected_cpu_hours": 2.2097416666666665,
+  "s12_median_cpu_seconds_by_embedding": {
+    "fa20": 33.545,
+    "pca10": 27.494999999999997,
+    "pca20": 33.945,
+    "pca50": 71.60499999999999
+  }
+}

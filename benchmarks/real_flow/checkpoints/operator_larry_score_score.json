@@ -1,0 +1,33 @@
+{
+  "dataset": "larry",
+  "details": {
+    "config": {
+      "batch_size": 256,
+      "beta": 1.0,
+      "depth": 3,
+      "esm_laplacian": "exact",
+      "hidden": 96,
+      "loss": "esm",
+      "lr": 0.0005,
+      "n_epochs": 1500,
+      "seed": 0
+    },
+    "symmetry": {
+      "max_asym": 2.816193784838106e-07,
+      "mean_asym": 1.711060775733131e-07,
+      "median_asym": 1.6697360649686743e-07,
+      "n_sample": 100
+    }
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T07:00:58.045149+00:00",
+  "n_cells": 12000,
+  "operator": "score",
+  "operator_path": "benchmarks/real_flow/arrays/operators/larry_score_score.npz",
+  "seed": null,
+  "source": "score",
+  "started_utc": "2026-10-19T06:59:45.864960+00:00",
+  "task": "orient/S11",
+  "unit": "operator_larry_score_score",
+  "wall_seconds": 72.18
+}

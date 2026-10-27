@@ -1,0 +1,158 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_stress_s1_k20_selected.npz",
+  "array_sha256": "508d829977090ec5f94beabde1ed8ca375b620255a2830621979685154ee2592",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "selected",
+  "dataset": "v3_stress_s1",
+  "finished_utc": "2026-10-22T14:42:55.580958Z",
+  "in_process_cpu_seconds": 100.146,
+  "k": 20,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1495,
+      "seconds": 6.493,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1495,
+      "seconds": 5.111,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1495,
+      "seconds": 5.027,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1495,
+      "seconds": 5.022,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1495,
+      "seconds": 5.048,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "n_cells": 11707,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 20.69305897781028,
+      "final_err": 7.126087666473791e-10,
+      "from_day": 2,
+      "n_iter": 28,
+      "n_source": 173,
+      "n_target": 1322,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.02,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 17.97859308853115,
+      "final_err": 5.786137968997165e-07,
+      "from_day": 4,
+      "n_iter": 100,
+      "n_source": 1322,
+      "n_target": 10212,
+      "plan_mass": 1.0000000000000002,
+      "rows_zero": 0,
+      "seconds": 5.93,
+      "to_day": 6,
+      "warnings": [
+        "Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`."
+      ]
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 6872285184,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_stress_s1.npz",
+  "prepared_sha256": "0e83840c6af852cee84f4f83501a3c49913408a293139b5b6101951f75bab44b",
+  "preset": "v3_stress",
+  "scores": {
+    "auc_lam1": 0.9981921487603306,
+    "fate_axis_abs_cos_at_saddle": 0.9878213480161633,
+    "jref_relative_frobenius_median": 1.000447453197451,
+    "median_lam1_committed": 0.0005851847204942787,
+    "median_lam1_saddle": 0.009018129733527929,
+    "n_committed": 11616,
+    "n_saddle": 18,
+    "transition_abs_offset": 0,
+    "transition_bin_medians": "[0.009247, 0.009114, 0.007245, 0.001093, 0.000902, 0.000874, 0.000804, 0.00029, 0.000593, 0.000496, 0.000459, -0.000243]",
+    "transition_detected_bin": 0,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 0,
+    "transition_peak_to_median": 11.021113060090066,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": 0,
+    "transition_true_bin": 0
+  },
+  "seed": 1,
+  "started_utc": "2026-10-22T14:41:04.188155Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_stress_s1_k20_selected",
+  "wall_seconds": 111.393
+}

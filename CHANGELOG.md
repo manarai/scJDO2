@@ -1,5 +1,16 @@
 # Changelog
 
+## orientation branch (2026-10-16)
+
+- **Orientation layer** (`scjdo2/orient/`, `docs/ORIENTATION_SPEC.md`):
+  post-hoc direction for the score-matched operator from lineage,
+  labelling, velocity (user's scVelo) and pseudotime (user's Palantir),
+  merged by trust ranking without blending; equilibrium/stationarity flags.
+- **v1 removed** (`docs/V1_REMOVAL.md`): `scjdo2/drift.py` deleted;
+  `fit_latent_field` and `scjdo2 run` now use the energy drift; v1-only
+  scripts and tests removed; `compare/` kept as a separate harness.
+
+
 All notable changes to scJDO v2 are recorded here. Each phase from the project
 plan corresponds to one or more commits.
 

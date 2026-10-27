@@ -1,0 +1,349 @@
+{
+  "artifacts": [
+    {
+      "bytes": 13069,
+      "committed": true,
+      "path": "scripts/run_scvelo_palantir_s03.py",
+      "regenerate": "python scripts/run_scvelo_palantir_s03.py --preset default --seed 0",
+      "sha256": "4e76617b20a08a135f22d3d25d05761694851fb61a5416d5e5cb53111ea3873c"
+    },
+    {
+      "bytes": 34461,
+      "committed": true,
+      "path": "scripts/orient_end_to_end_s03.py",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "b3f14fdb15ab81829e67026fd3e78b9a63cb6474ba19c39baf4edb471ee62b44"
+    },
+    {
+      "bytes": 36784,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s03/results.csv",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "f215a12cf6c56f887adbee58f1ad5262b533ac7529153d8228e0ffcbcecdc9d7"
+    },
+    {
+      "bytes": 16088,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s03/summary.csv",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "0e09ce3d495f4bb8a2431f7e24ff98d07ec80fe04bf9aec9e72418a6671c6742"
+    },
+    {
+      "bytes": 134969,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s03/by_day.csv",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "a8dbed3c25b9a7145dbba7150be1c488c833d6f74a8508a725eae33375c9d65d"
+    },
+    {
+      "bytes": 24829,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s03/diagnostics.csv",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "6e244ee07e8f1b230087485adc0d148bcd96f655d02c227f976d13ce8c997f7c"
+    },
+    {
+      "bytes": 14358,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s03/RUN_METADATA.json",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "d3f26387b651346a5ec4ef47418ebf1edfe2109b21564ae838014422043aff4c"
+    },
+    {
+      "bytes": 6074,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s03/RESULT_S03.md",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "d19b6bce32dad20bae75e53117d093fa3cd00277a7393d4d204c64860361920b"
+    },
+    {
+      "bytes": 58468,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s03/agreement_by_combination.png",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "f26a184d82ed774321ee4fdc5cce8e96fc05b4f8619c9c9d5ca4ba9f106fb910"
+    },
+    {
+      "bytes": 114799,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s03/agreement_by_day.png",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "9a22488882d4b9ab868c80ea14db5c3121bff089e8f66aa7d881c72d4c99b31e"
+    },
+    {
+      "bytes": 52345,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s03/conflict_ranking.png",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "ab9feae62c81a9412631516c6c60a20b0b37453bfde863f52cf732caa723f342"
+    },
+    {
+      "bytes": 54281,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s03/coverage_added.png",
+      "regenerate": "python scripts/orient_end_to_end_s03.py",
+      "sha256": "22f2249bbdcf5f84b0821559a78d9b18325eede7c116fd8ef5adc592a935b12a"
+    },
+    {
+      "bytes": 11709,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s03/user_file_manifest.json",
+      "regenerate": "python scripts/run_scvelo_palantir_s03.py --preset all",
+      "sha256": "90b41fd3c652b70f03fb102839ede189b7335505e2cc8e062922ddd9e37ad272"
+    },
+    {
+      "committed": false,
+      "note": "Nine local checkpointed user files are gitignored; hashes and sizes are recorded in the committed user manifest.",
+      "path": "benchmarks/synthetic_multimodal/data/user/*_user.h5ad",
+      "regenerate": "python scripts/run_scvelo_palantir_s03.py --preset all"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.803,
+    "gpu_hours": 0.0,
+    "hardware": "macOS local desktop; arm64",
+    "note": "Includes the nine checkpointed scVelo/Palantir user runs (Revision 2 report) plus the no-refit end-to-end scorer (145.93 wall s; 368.36 user s; 508.16 system s).",
+    "wall_hours": 0.7802
+  },
+  "deviations": [
+    "The Revision 3 library amendment, merged from orientation before execution, raises the protected Palantir-root tolerance from the arbitrary 1% to 10%. The root still must be low-end; all nine pre-existing expert roots pass and no root, Palantir parameter, or user file was changed.",
+    "Stochastic scVelo remains report-only under Revision 2: every saved user file records the fixed ValueError, while the required dynamical PCA/FA velocity outputs are complete.",
+    "A pandas FutureWarning about replace downcasting was emitted during result-table rendering. It did not affect values, files, or parameters."
+  ],
+  "finished_utc": "2026-10-17T08:17:06.147770Z",
+  "metrics": {
+    "agreement_by_group_combination_preset": {
+      "path": "benchmarks/synthetic_multimodal/s03/summary.csv",
+      "rows": 96,
+      "sha256": "0e09ce3d495f4bb8a2431f7e24ff98d07ec80fe04bf9aec9e72418a6671c6742"
+    },
+    "coord_check_revision2": {
+      "command": "python coord/coord_check.py check orient S03",
+      "exit_code": 1,
+      "missing_required_files": [
+        "benchmarks/synthetic_multimodal/s03/results.csv",
+        "benchmarks/synthetic_multimodal/s03/summary.csv",
+        "benchmarks/synthetic_multimodal/s03/by_day.csv",
+        "benchmarks/synthetic_multimodal/s03/RESULT_S03.md"
+      ],
+      "reason": "The protected pseudotime source raised before any result artifact could be materialized; empty/substitute artifacts would violate the task."
+    },
+    "flow_vs_dev_disagreement_by_day": {
+      "path": "benchmarks/synthetic_multimodal/s03/by_day.csv",
+      "rows": 1152,
+      "sha256": "a8dbed3c25b9a7145dbba7150be1c488c833d6f74a8508a725eae33375c9d65d"
+    },
+    "gate_dev_coverage": {
+      "gate": "Developmental lineage+pseudotime oriented fraction",
+      "minimum": 0.9,
+      "minimum_observed": 0.7979422692197771,
+      "pass": false,
+      "per_seed": "0.8401, 0.8456, 0.7979"
+    },
+    "gate_dev_lineage": {
+      "gate": "Developmental lineage agreement (moving axes)",
+      "minimum": 0.95,
+      "minimum_observed": 0.9879245283018868,
+      "pass": true,
+      "per_seed": "0.9953, 0.9879, 0.9883"
+    },
+    "gate_dev_ranking": {
+      "gate": "Developmental conflict truth sides with lineage (moving axes)",
+      "minimum": 0.8,
+      "minimum_observed": 0.6551724137931034,
+      "pass": false,
+      "per_seed": "0.9057, 0.6552, 0.7164"
+    },
+    "gate_flow_coverage_added": {
+      "gate": "Flow coverage non-decreasing and labelling decision unchanged",
+      "minimum": 1.0,
+      "minimum_observed": 1.0,
+      "pass": true,
+      "per_seed": "True, True, True"
+    },
+    "gate_flow_ranking": {
+      "gate": "Flow conflict truth sides with labelling (moving axes)",
+      "minimum": 0.6,
+      "minimum_observed": 0.9691313711414213,
+      "pass": true,
+      "per_seed": "0.9786, 0.9723, 0.9691"
+    },
+    "gate_flow_velocity": {
+      "gate": "Flow velocity agreement (dynamical; moving axes)",
+      "minimum": 0.75,
+      "minimum_observed": 0.13384274094158244,
+      "pass": false,
+      "per_seed": "0.1338, 0.1770, 0.2389"
+    },
+    "hash_unchanged_all": {
+      "gate": "J hash unchanged in every call",
+      "minimum": 1.0,
+      "minimum_observed": 1.0,
+      "pass": true,
+      "per_seed": "True"
+    },
+    "independence_holds_all": {
+      "gate": "Flow/dev independence exact in every run",
+      "minimum": 1.0,
+      "minimum_observed": 1.0,
+      "pass": true,
+      "per_seed": "True"
+    },
+    "palantir_version": "1.4.5",
+    "revision3_gate_count": {
+      "fail": 3,
+      "pass": 6
+    },
+    "root_audit": [
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000186",
+        "root_percentile": 0.0362339514978602,
+        "root_pseudotime": 0.007493040886193997,
+        "root_quantile_max": 0.1,
+        "unit": "batch_s0"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000346",
+        "root_percentile": 0.010966212211025488,
+        "root_pseudotime": 0.0007346118776841963,
+        "root_quantile_max": 0.1,
+        "unit": "batch_s1"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000791",
+        "root_percentile": 0.03258073735352958,
+        "root_pseudotime": 0.007880849231452313,
+        "root_quantile_max": 0.1,
+        "unit": "batch_s2"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000152",
+        "root_percentile": 0.02319160684704583,
+        "root_pseudotime": 0.013832913657435398,
+        "root_quantile_max": 0.1,
+        "unit": "default_s0"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000732",
+        "root_percentile": 0.014916642293068149,
+        "root_pseudotime": 0.008858397431767735,
+        "root_quantile_max": 0.1,
+        "unit": "default_s1"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000624",
+        "root_percentile": 0.02314947127750786,
+        "root_pseudotime": 0.011886138112792008,
+        "root_quantile_max": 0.1,
+        "unit": "default_s2"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000416",
+        "root_percentile": 0.020477815699658702,
+        "root_pseudotime": 0.010225268989961225,
+        "root_quantile_max": 0.1,
+        "unit": "stress_s0"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000147",
+        "root_percentile": 0.018799472295514513,
+        "root_pseudotime": 0.008774107495412131,
+        "root_quantile_max": 0.1,
+        "unit": "stress_s1"
+      },
+      {
+        "passes_protected_low_end": true,
+        "root_cell": "cell_0000210",
+        "root_percentile": 0.005815831987075929,
+        "root_pseudotime": 0.00655491796337342,
+        "root_quantile_max": 0.1,
+        "unit": "stress_s2"
+      }
+    ],
+    "scvelo_version": "0.3.4",
+    "stochastic_sensitivity": "report-only; status=error (ValueError: setting an array element with a sequence) in all nine fixed S03 user files",
+    "user_files_and_keys": {
+      "all_sha256_verified": true,
+      "manifest": "benchmarks/synthetic_multimodal/s03/user_file_manifest.json",
+      "n_files": 9,
+      "required_added_keys": [
+        "obsm[velocity_pca]",
+        "obsm[velocity_fa]",
+        "obs[palantir_pseudotime]",
+        "uns[palantir_start_cell]"
+      ]
+    },
+    "velocity_mode_primary": "dynamical; all nine saved user files reused without refitting",
+    "wall_hours": 0.7802
+  },
+  "observations": [
+    "All 18 preset\u2013seed\u2013embedding analyses completed from the nine saved user files (PCA and FA), producing 288 combination rows, 1,152 day-stratified rows, 72 source-addition diagnostics, and 36 exact-independence diagnostics.",
+    "Default/PCA/raw scVelo velocity agreement on moving truth axes was 0.1338, 0.1770, and 0.2389 across seeds 0\u20132, below the 0.75 gate, although its oriented fraction was 0.7656, 0.7502, and 0.7119 and passed the 0.30 gate.",
+    "For default/PCA/raw flow conflicts, the instantaneous-flow truth sided with higher-ranked labelling in 0.9786, 0.9723, and 0.9691 of conflict pairs; combined flow coverage was non-decreasing and labelling decisions were unchanged exactly.",
+    "Default/PCA/raw lineage agreement on moving developmental-truth axes was 0.9953, 0.9879, and 0.9883 and passed the 0.95 gate. Combined developmental coverage was 0.8401, 0.8456, and 0.7979, below 0.90; in lineage\u2013pseudotime conflicts the developmental truth sided with lineage in 0.9057, 0.6552, and 0.7164, below the 0.80 minimum for two seeds.",
+    "All source-addition coverage and higher-source-decision invariants held; flow/developmental outputs were exactly independent in every call and every stored S02 J hash remained unchanged.",
+    "The stationary-cycle flags are recorded in diagnostics: all calls identify non-equilibrium and non-stationarity fractions, with no equilibrium fraction observed."
+  ],
+  "questions": [],
+  "revisions": [
+    {
+      "amendment": "Replaced the removed scv.pp.log1p alias with the authorized scanpy.pp.log1p call on X only.",
+      "blocker": "The required scv.tl.velocity(mode=\"stochastic\") call fails on default seed 0 with ValueError: setting an array element with a sequence, from scvelo.tools.optimization.leastsq_generalized. The same failure was reproduced on a freshly preprocessed independent copy before any dynamics fit.",
+      "default_s0_primary": "scv.tl.recover_dynamics, dynamical velocity, velocity graph, and PCA/FA embeddings completed.",
+      "review": "coord/orient/reviews/S03.md",
+      "revision": 1,
+      "user_outputs_written": false
+    },
+    {
+      "amendment": "Stochastic scVelo sensitivity is report-only: it is attempted once, recorded, and primary dynamical/PCA/FA/Palantir output continues on its fixed failure.",
+      "end_to_end_blocker": "Protected pseudotime source rejects the task-mandated default_s0 root (t=0.01383) because it is above the 1% low-end quantile; eight of nine mandated roots fail that predicate.",
+      "frozen_values_unchanged": [
+        "Palantir early_cell=suggested_start_cell",
+        "scvelo preprocessing/dynamics/velocity/graph/embedding settings",
+        "protected scjdo2/orient/pseudotime.py"
+      ],
+      "revision": 2,
+      "stochastic_status": "error in all nine files; ValueError: setting an array element with a sequence",
+      "user_files_completed": 9
+    },
+    {
+      "amendment_applied": "Protected pseudotime root tolerance is root_quantile_max=0.10; the source records root percentiles and still refuses reversed roots.",
+      "analyses_completed": 18,
+      "failed_gates": [
+        "Flow velocity agreement (dynamical; moving axes)",
+        "Developmental lineage+pseudotime oriented fraction",
+        "Developmental conflict truth sides with lineage (moving axes)"
+      ],
+      "gate_fail_count": 3,
+      "gate_pass_count": 6,
+      "no_refit": true,
+      "passed_gates": [
+        "Flow velocity oriented fraction",
+        "Flow coverage non-decreasing and labelling decision unchanged",
+        "Flow conflict truth sides with labelling (moving axes)",
+        "Developmental lineage agreement (moving axes)",
+        "Flow/dev independence exact in every run",
+        "J hash unchanged in every call"
+      ],
+      "results_rows": 288,
+      "review": "coord/orient/reviews/S03.md (Revision 2 review)",
+      "revision": 3,
+      "user_files_reused": 9
+    }
+  ],
+  "started_utc": "2026-10-17T00:44:22Z",
+  "status": "done",
+  "suggestions": [
+    "If issued as a separate task, investigate why the dynamical RNA-velocity readout retains broad orientation coverage but has weak agreement with the expected instantaneous-flow truth, stratified by sampling day and axes; this could distinguish a readout-calibration issue from biology-like transient state changes.",
+    "If issued separately, evaluate whether the large pseudotime-added developmental coverage is useful despite the failed coverage and lineage-ranking gates, focusing on biological path continuity and clone-defined differentiation trajectories rather than forcing pseudotime to behave as an instantaneous velocity source."
+  ],
+  "task": "orient/S03"
+}

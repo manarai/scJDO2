@@ -1,0 +1,33 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "config": {
+      "batch_size": 256,
+      "beta": 1.0,
+      "depth": 3,
+      "esm_laplacian": "exact",
+      "hidden": 96,
+      "loss": "esm",
+      "lr": 0.0005,
+      "n_epochs": 1500,
+      "seed": 0
+    },
+    "symmetry": {
+      "max_asym": 1.826062714371801e-07,
+      "mean_asym": 1.3574615159939185e-07,
+      "median_asym": 1.336647414973413e-07,
+      "n_sample": 100
+    }
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:46:36.614729+00:00",
+  "n_cells": 1947,
+  "operator": "score",
+  "operator_path": "benchmarks/real_flow/arrays/operators/scnt_hema_score_score.npz",
+  "seed": null,
+  "source": "score",
+  "started_utc": "2026-10-19T06:45:36.252670+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_score_score",
+  "wall_seconds": 60.362
+}

@@ -1,0 +1,24 @@
+{
+  "unit": "subspaces_k562_N2",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "subspaces",
+    "--screen",
+    "k562",
+    "--norm",
+    "N2"
+  ],
+  "started_utc": "2026-10-23T02:41:27.861846+00:00",
+  "finished_utc": "2026-10-23T02:44:25.603023+00:00",
+  "exit_code": 0,
+  "wall_seconds": 177.74118133599768,
+  "cpu_hours": 0.2163131988888889,
+  "max_rss_kib": 781480,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/subspaces_k562_N2.log",
+  "stop_reason": null
+}

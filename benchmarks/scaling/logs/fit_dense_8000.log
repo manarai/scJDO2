@@ -1,0 +1,35 @@
+{
+  "finished_utc": "2026-10-22T18:37:55.045483+00:00",
+  "jacobian": "autodiff",
+  "lambda1_path": "benchmarks/scaling/data/lambda1_dense_8000.npz",
+  "measured_drift": "MeasuredDrift(30, seed=0) defaults",
+  "n_eval_cells": 16000,
+  "n_fit_cells": 16000,
+  "n_per_day": 8000,
+  "rank": null,
+  "solver": "dense",
+  "stage": "fit_and_jacobian",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "fit_dense_8000",
+  "wall_seconds": 157.848,
+  "wall_seconds_internal": 157.848
+}
+      159.71 real        53.85 user        23.77 sys
+           735068160  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               67565  page reclaims
+                  69  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2212  voluntary context switches
+             2949080  involuntary context switches
+        556076126706  instructions retired
+        199850734898  cycles elapsed
+           688768656  peak memory footprint

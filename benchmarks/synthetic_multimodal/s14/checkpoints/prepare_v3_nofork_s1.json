@@ -1,0 +1,44 @@
+{
+  "finished_utc": "2026-10-22T12:40:24.606482Z",
+  "in_process_cpu_seconds": 69.742,
+  "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s1.h5ad",
+  "input_sha256": "09bb3d9bb16e0e4ee3da96952132cfef9644fe4e18cb93b2ab2b17ca8f1524d9",
+  "n_cells": 12654,
+  "part_a_truth_free": true,
+  "pca50": {
+    "path": null,
+    "source": "S14 observed S12 PCA code path"
+  },
+  "peak_rss_bytes": 6261604352,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_nofork_s1.npz",
+  "prepared_sha256": "cccac1c0a5b9eede2a913c20cf836228b04c7e2310b6001303a61688e9c5c9f4",
+  "started_utc": "2026-10-22T12:39:22.095096Z",
+  "strict_pseudotime": {
+    "actual_start_cell": "cell_0003904",
+    "actual_start_day": 2,
+    "candidate_roots": [
+      "cell_0003904",
+      "cell_0003113",
+      "cell_0005246",
+      "cell_0000119",
+      "cell_0005681"
+    ],
+    "given_cell": "cell_0003904",
+    "given_day": 2,
+    "given_differs_from_actual": false,
+    "given_root": "cell_0003904",
+    "key": "day2_strict_r0",
+    "root_rule": "default_rng(1000+seed).choice(earliest-day cells, 5, replace=False); strict r0",
+    "settings": {
+      "knn": 30,
+      "n_components": 10,
+      "num_waypoints": 500,
+      "seed": 0
+    },
+    "source": "S14 fixed S06 strict r0",
+    "wall_seconds": 27.516
+  },
+  "task": "orient/S14",
+  "unit": "prepare_v3_nofork_s1",
+  "wall_seconds": 62.511
+}

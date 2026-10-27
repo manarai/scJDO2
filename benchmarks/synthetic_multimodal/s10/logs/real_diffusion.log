@@ -1,0 +1,20 @@
+START 2026-10-20T13:02:25Z .venv/bin/python scripts/s10_real_transitions.py diffusion
+      103.36 real       100.05 user         2.79 sys
+          1791705088  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              201079  page reclaims
+                2045  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3390  voluntary context switches
+               20404  involuntary context switches
+        846702347116  instructions retired
+        265587961115  cycles elapsed
+          1002834320  peak memory footprint
+EXIT 0 2026-10-20T13:04:08Z

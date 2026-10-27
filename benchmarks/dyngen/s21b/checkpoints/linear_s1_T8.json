@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "task": "orient/S21b",
+  "source_key": "linear_s1",
+  "key": "linear_s1_T8",
+  "backbone": "linear",
+  "seed": 1,
+  "timepoints": 8,
+  "cells": 5000,
+  "genes": 1000,
+  "fork_cells": "NA",
+  "generate_experiment_seconds": 14.63,
+  "generated_utc": "2026-10-24 00:36:00 UTC",
+  "h5ad_path": "benchmarks/dyngen/data/linear_s1_T8.h5ad",
+  "h5ad_sha256": "a5524eeb5c4188d76b4406c540710b48b8ab11706d337d7bf7d0dd97a9e2775e",
+  "h5ad_bytes": 47360378
+}

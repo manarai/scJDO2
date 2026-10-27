@@ -1,0 +1,21 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_orient.py",
+    "tests/test_smoke.py"
+  ],
+  "cpu_hours": 0.004145123888888888,
+  "exit_code": 0,
+  "finished_utc": "2026-10-24T15:23:12.446683+00:00",
+  "max_rss_bytes": 815566848,
+  "process_rss_limit_bytes": 8589934592,
+  "started_utc": "2026-10-24T15:22:02.184359+00:00",
+  "stop_reason": null,
+  "task": "orient/S22",
+  "threads_limit": 3,
+  "unit": "tests_before_amendment",
+  "wall_seconds": 70.26235155500035
+}

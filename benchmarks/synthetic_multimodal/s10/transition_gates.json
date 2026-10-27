@@ -1,0 +1,155 @@
+{
+  "gate_critical_transition": {
+    "abs_offset_le_1_every_seed": false,
+    "embedding": "pca",
+    "every_seed_informative": false,
+    "null_below_transition_every_seed": false,
+    "operator": "J_flow_raw_shared",
+    "pass": false,
+    "per_seed": [
+      {
+        "abs_offset": 2,
+        "detected_bin": 3,
+        "informative": false,
+        "n_rising_bins_before_detected": 3,
+        "null_below_transition": false,
+        "peak_to_median_null": 1.1558507261969946,
+        "peak_to_median_transition": 1.0486342712004628,
+        "rho_before_true_bins": NaN,
+        "seed": 0,
+        "signed_offset": 2,
+        "true_bin": 1
+      },
+      {
+        "abs_offset": 0,
+        "detected_bin": 5,
+        "informative": true,
+        "n_rising_bins_before_detected": 4,
+        "null_below_transition": true,
+        "peak_to_median_null": 1.0930534928966813,
+        "peak_to_median_transition": 1.706720637113306,
+        "rho_before_true_bins": 0.8999999999999998,
+        "seed": 1,
+        "signed_offset": 0,
+        "true_bin": 5
+      },
+      {
+        "abs_offset": 0,
+        "detected_bin": 0,
+        "informative": false,
+        "n_rising_bins_before_detected": 0,
+        "null_below_transition": true,
+        "peak_to_median_null": 1.056529349009999,
+        "peak_to_median_transition": 1.2380480836089558,
+        "rho_before_true_bins": NaN,
+        "seed": 2,
+        "signed_offset": 0,
+        "true_bin": 0
+      }
+    ],
+    "signal": "lam1",
+    "status": "fail_untestable"
+  },
+  "gate_critical_transition_ot": {
+    "abs_offset_le_1_every_seed": true,
+    "embedding": "pca",
+    "every_seed_informative": false,
+    "null_below_transition_every_seed": null,
+    "operator": "J_flow_ot",
+    "pass": false,
+    "per_seed": [
+      {
+        "abs_offset": 1,
+        "detected_bin": 0,
+        "informative": false,
+        "n_rising_bins_before_detected": 0,
+        "null_below_transition": null,
+        "peak_to_median_null": null,
+        "peak_to_median_transition": 4.2259662902172215,
+        "rho_before_true_bins": NaN,
+        "seed": 0,
+        "signed_offset": -1,
+        "true_bin": 1
+      },
+      {
+        "abs_offset": 0,
+        "detected_bin": 5,
+        "informative": true,
+        "n_rising_bins_before_detected": 2,
+        "null_below_transition": null,
+        "peak_to_median_null": null,
+        "peak_to_median_transition": 6.8632783208802515,
+        "rho_before_true_bins": 0.8999999999999998,
+        "seed": 1,
+        "signed_offset": 0,
+        "true_bin": 5
+      },
+      {
+        "abs_offset": 0,
+        "detected_bin": 0,
+        "informative": false,
+        "n_rising_bins_before_detected": 0,
+        "null_below_transition": null,
+        "peak_to_median_null": null,
+        "peak_to_median_transition": 8.812414227538927,
+        "rho_before_true_bins": NaN,
+        "seed": 2,
+        "signed_offset": 0,
+        "true_bin": 0
+      }
+    ],
+    "signal": "lam1",
+    "status": "fail_untestable"
+  },
+  "primary_variant_critical_transition": {
+    "abs_offset_le_1_every_seed": true,
+    "embedding": "pca",
+    "every_seed_informative": false,
+    "null_below_transition_every_seed": false,
+    "operator": "J_flow_smoothed_shared",
+    "pass": false,
+    "per_seed": [
+      {
+        "abs_offset": 0,
+        "detected_bin": 1,
+        "informative": false,
+        "n_rising_bins_before_detected": 1,
+        "null_below_transition": false,
+        "peak_to_median_null": 1.2605006572966901,
+        "peak_to_median_transition": 1.0988091021968176,
+        "rho_before_true_bins": NaN,
+        "seed": 0,
+        "signed_offset": 0,
+        "true_bin": 1
+      },
+      {
+        "abs_offset": 1,
+        "detected_bin": 6,
+        "informative": true,
+        "n_rising_bins_before_detected": 1,
+        "null_below_transition": false,
+        "peak_to_median_null": 1.951789669182434,
+        "peak_to_median_transition": 1.1780196693192138,
+        "rho_before_true_bins": 0.9999999999999999,
+        "seed": 1,
+        "signed_offset": 1,
+        "true_bin": 5
+      },
+      {
+        "abs_offset": 0,
+        "detected_bin": 0,
+        "informative": false,
+        "n_rising_bins_before_detected": 0,
+        "null_below_transition": false,
+        "peak_to_median_null": 1.6601550926811177,
+        "peak_to_median_transition": 1.5346754127108897,
+        "rho_before_true_bins": NaN,
+        "seed": 2,
+        "signed_offset": 0,
+        "true_bin": 0
+      }
+    ],
+    "signal": "lam1",
+    "status": "fail_untestable"
+  }
+}

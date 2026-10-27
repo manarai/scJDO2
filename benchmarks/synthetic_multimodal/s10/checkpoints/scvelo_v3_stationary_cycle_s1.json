@@ -1,0 +1,24 @@
+{
+  "finished_utc": "2026-10-20T11:05:15.219419Z",
+  "in_process_cpu_seconds": 18.01,
+  "input_sha256": "32b741c73393e41a1ad23b20314b6f5db7e71150eecac8ff3ab2eb2f188cbeb8",
+  "keys": [
+    "velocity_fa",
+    "velocity_pca"
+  ],
+  "n_genes_scvelo": 1903,
+  "path": "benchmarks/synthetic_multimodal/data/s10/v3_stationary_cycle_s1/scvelo.npz",
+  "peak_rss_bytes": 3114385408,
+  "scvelo_n_jobs": 8,
+  "settings": "exact S03 block (s06_user_runs.run_scvelo): filter_genes(min_shared_counts=20), normalize_per_cell, log1p, neighbors(X_pca, 30, random_state=0), moments, recover_dynamics, velocity(dynamical), velocity_graph, velocity_embedding(pca, fa); stochastic optional",
+  "sha256": "e2182a5c475c6b1ea1018227880e3b0860db04d1f2a9796000276d0cb9e587eb",
+  "started_utc": "2026-10-20T11:03:46.509952Z",
+  "stochastic": {
+    "error": "setting an array element with a sequence.",
+    "error_type": "ValueError",
+    "status": "error"
+  },
+  "task": "orient/S10",
+  "unit": "scvelo_v3_stationary_cycle_s1",
+  "wall_seconds": 88.709
+}

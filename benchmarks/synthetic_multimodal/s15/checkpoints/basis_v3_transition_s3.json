@@ -1,0 +1,65 @@
+{
+  "array_key": "J_ref_fd_k30",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/basis_v3_transition_s3_k15_jref_fd.npz",
+  "array_sha256": "2a1f2fe66e06f920e77fccfc264364e28193398240364cba10bc15d29bf6f7cf",
+  "coordinate_audit": {
+    "dt": 1e-05,
+    "flow_j_coordinates": "S14 prepared z_pca50[:, :15]",
+    "jref_coordinates": "same S14 prepared z_pca50[:, :15]",
+    "observed_pca15_reconstruction_bitwise_equal_after_float32": false,
+    "observed_pca15_reconstruction_max_abs": 1.066773130276033e-06,
+    "pca15_is_ordered_prefix": true,
+    "pca_map_sha256": "91300062ea1ddce15409238d53defe34cb2abcfc63b8b11fa2e9b6091d44d291",
+    "pca_map_shape": [
+      4000,
+      15
+    ],
+    "pca_mean_sha256": "c8b043d703ac6f10c4cb62b3634ddbae1059a953d393e3b548dd124111dd6ea5",
+    "raw_reference_transform_s14_optimise_lines_149_155": "raw branch: jref = jref_raw; no whitening or similarity transform",
+    "route": "forward finite difference of noise-free expected spliced counts, then fixed log-normalisation and S14 PCA-15 map"
+  },
+  "dataset": "v3_transition_s3",
+  "finished_utc": "2026-10-24T15:26:54.396245Z",
+  "finite_difference_velocity": {
+    "fraction_cosine_ge_0_99": 1.0,
+    "median_cosine_vs_true_expected_velocity": 1.000000000359036,
+    "median_relative_difference": 3.2517117877614696e-07
+  },
+  "flow_vs_finite_difference_jref_k30": {
+    "c_star_dataset": -0.06510685366417183,
+    "dataset": "v3_transition_s3",
+    "jref_neighbours": 30,
+    "k_flow": 15,
+    "lambda1_sign_agreement": 0.9687108886107635,
+    "lambda1_spearman": -0.004884348583028782,
+    "median_norm_J": 0.058668669758061814,
+    "median_norm_J_over_norm_Jref": 0.0688706224971643,
+    "median_norm_Jref": 0.8427975383447402,
+    "median_per_cell_cosine": -0.0023314798237483733,
+    "median_relative_error_J": 1.002605039307097,
+    "median_relative_error_cstar_J": 1.000000119841279,
+    "n_cells": 12784
+  },
+  "in_process_cpu_seconds": 16.249,
+  "jref_k30_direct_vs_finite_difference": {
+    "comparison_jref_neighbours": 30,
+    "fraction_per_cell_cosine_ge_0_99": 1.0,
+    "lambda1_sign_agreement": 1.0,
+    "lambda1_spearman": 0.9999999997645139,
+    "median_per_cell_cosine": 0.9999999999998335,
+    "median_relative_frobenius_difference": 7.807779648299386e-07
+  },
+  "k": 15,
+  "no_flow_or_score_fit": true,
+  "observed_fit_complete_before_truth_scoring": true,
+  "peak_rss_bytes": 4218503168,
+  "stage": "report_only_basis_check",
+  "started_utc": "2026-10-24T15:26:37.336668Z",
+  "step0_array": "benchmarks/synthetic_multimodal/s15/arrays/step0_v3_transition_s3_k15_reference.npz",
+  "step0_array_sha256": "f9be6142cf2a7d5e822e33cd51d700bd54897ba7779c07800f1a4de68812c521",
+  "step0_checkpoint": "benchmarks/synthetic_multimodal/s15/checkpoints/step0_v3_transition_s3.json",
+  "step0_checkpoint_sha256": "25a7653618803f96413126d84d1c490c90e52d44c6d30b32776ff22b82135910",
+  "task": "orient/S15",
+  "unit": "basis_v3_transition_s3",
+  "wall_seconds": 17.06
+}

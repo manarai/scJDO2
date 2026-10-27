@@ -1,0 +1,64 @@
+{
+ "python": "3.13.2",
+ "platform": "macOS-26.7.1-arm64-arm-64bit-Mach-O",
+ "timeout_per_cell_s": 600,
+ "notebooks": [
+  {
+   "notebook": "notebooks/fig1_framework.ipynb",
+   "seconds": 1.8
+  },
+  {
+   "notebook": "notebooks/fig2_benchmark.ipynb",
+   "seconds": 2.8
+  },
+  {
+   "notebook": "notebooks/fig3_flow_operator.ipynb",
+   "seconds": 2.5
+  },
+  {
+   "notebook": "notebooks/fig4_dyngen.ipynb",
+   "seconds": 1.8
+  },
+  {
+   "notebook": "notebooks/fig5_real_scale.ipynb",
+   "seconds": 3.1
+  },
+  {
+   "notebook": "notebooks/fig6_score_operator.ipynb",
+   "seconds": 2.6
+  },
+  {
+   "notebook": "notebooks/fig7_archetypes.ipynb",
+   "seconds": 1.8
+  },
+  {
+   "notebook": "notebooks/supp_s10_diffusion.ipynb",
+   "seconds": 1.8
+  },
+  {
+   "notebook": "notebooks/supp_s21_three_timepoints.ipynb",
+   "seconds": 1.6
+  },
+  {
+   "notebook": "notebooks/supp_s13_whitening.ipynb",
+   "seconds": 1.9
+  },
+  {
+   "notebook": "notebooks/supp_s11_operator_agreement.ipynb",
+   "seconds": 1.9
+  },
+  {
+   "notebook": "notebooks/tables_v57.ipynb",
+   "seconds": 1.7
+  },
+  {
+   "notebook": "notebooks/numbers_v57.ipynb",
+   "seconds": 2.0
+  },
+  {
+   "notebook": "notebooks/build_reports.ipynb",
+   "seconds": 1.3
+  }
+ ],
+ "total_seconds": 28.2
+}

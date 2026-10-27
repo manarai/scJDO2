@@ -1,0 +1,11 @@
+{
+ "S2_L1_pass": false,
+ "S2_L2_pass": false,
+ "S2_L3_pass": false,
+ "S2_n_rows": 15,
+ "S3_outcome": "underpowered",
+ "S3_n_T_rpe1": 1,
+ "S3_n_T_k562": 14,
+ "S3_threshold_n_T": 10,
+ "S3_n_rows": 12
+}

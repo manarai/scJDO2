@@ -1,0 +1,19 @@
+{
+  "unit": "precision_repair",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "repair-precision"
+  ],
+  "started_utc": "2026-10-22T12:13:39.796144+00:00",
+  "finished_utc": "2026-10-22T12:13:41.916244+00:00",
+  "exit_code": 0,
+  "wall_seconds": 2.1201025099999242,
+  "cpu_hours": 0.0007101005555555555,
+  "cpu_hours_before": 9.1434354875,
+  "max_rss_kib": 149536,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/precision_repair.log"
+}

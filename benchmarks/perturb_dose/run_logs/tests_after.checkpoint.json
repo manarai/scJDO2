@@ -1,0 +1,23 @@
+{
+  "unit": "tests_after",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_orient.py",
+    "tests/test_smoke.py"
+  ],
+  "started_utc": "2026-10-23T02:55:02.638828+00:00",
+  "finished_utc": "2026-10-23T02:55:18.700240+00:00",
+  "exit_code": 0,
+  "wall_seconds": 16.06141766100336,
+  "cpu_hours": 0.004109044444444445,
+  "max_rss_kib": 864492,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/tests_after.log",
+  "stop_reason": null
+}

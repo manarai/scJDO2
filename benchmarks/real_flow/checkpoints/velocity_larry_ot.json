@@ -1,0 +1,33 @@
+{
+  "dataset": "larry",
+  "details": {
+    "balanced": true,
+    "library": "POT",
+    "pairs": [
+      {
+        "epsilon": 3.8358795014973155,
+        "from_day": 2.0,
+        "n_source": 4000,
+        "n_target": 4000,
+        "to_day": 4.0
+      },
+      {
+        "epsilon": 6.860390457832162,
+        "from_day": 4.0,
+        "n_source": 4000,
+        "n_target": 4000,
+        "to_day": 6.0
+      }
+    ],
+    "version": "0.9.7.post1"
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:21:13.334115+00:00",
+  "n_cells": 8000,
+  "source": "ot",
+  "started_utc": "2026-10-19T06:21:08.850187+00:00",
+  "task": "orient/S11",
+  "unit": "velocity_larry_ot",
+  "velocity": "benchmarks/real_flow/arrays/velocities/larry_ot.npz",
+  "wall_seconds": 4.484
+}

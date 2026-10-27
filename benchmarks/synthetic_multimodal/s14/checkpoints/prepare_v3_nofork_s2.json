@@ -1,0 +1,44 @@
+{
+  "finished_utc": "2026-10-22T12:42:10.162246Z",
+  "in_process_cpu_seconds": 67.605,
+  "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s2.h5ad",
+  "input_sha256": "f27243bbc340ee1a371784f952fc2cae6de90851fbcfe13587d0e880b1e1e89a",
+  "n_cells": 12884,
+  "part_a_truth_free": true,
+  "pca50": {
+    "path": null,
+    "source": "S14 observed S12 PCA code path"
+  },
+  "peak_rss_bytes": 6360760320,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_nofork_s2.npz",
+  "prepared_sha256": "5c9b9009fe7b911de70dd7b22f70fa1f30025c98bbce083afce6332315813282",
+  "started_utc": "2026-10-22T12:41:08.839705Z",
+  "strict_pseudotime": {
+    "actual_start_cell": "cell_0004186",
+    "actual_start_day": 2,
+    "candidate_roots": [
+      "cell_0004186",
+      "cell_0005831",
+      "cell_0002674",
+      "cell_0005022",
+      "cell_0002494"
+    ],
+    "given_cell": "cell_0004186",
+    "given_day": 2,
+    "given_differs_from_actual": false,
+    "given_root": "cell_0004186",
+    "key": "day2_strict_r0",
+    "root_rule": "default_rng(1000+seed).choice(earliest-day cells, 5, replace=False); strict r0",
+    "settings": {
+      "knn": 30,
+      "n_components": 10,
+      "num_waypoints": 500,
+      "seed": 0
+    },
+    "source": "S14 fixed S06 strict r0",
+    "wall_seconds": 26.614
+  },
+  "task": "orient/S14",
+  "unit": "prepare_v3_nofork_s2",
+  "wall_seconds": 61.323
+}

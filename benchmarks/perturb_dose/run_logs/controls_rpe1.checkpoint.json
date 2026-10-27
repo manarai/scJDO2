@@ -1,0 +1,22 @@
+{
+  "unit": "controls_rpe1",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "controls",
+    "--screen",
+    "rpe1"
+  ],
+  "started_utc": "2026-10-23T02:28:34.585213+00:00",
+  "finished_utc": "2026-10-23T02:28:57.705039+00:00",
+  "exit_code": 0,
+  "wall_seconds": 23.11982678500135,
+  "cpu_hours": 0.013022723611111111,
+  "max_rss_kib": 1936736,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/controls_rpe1.log",
+  "stop_reason": null
+}

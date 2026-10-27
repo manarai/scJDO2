@@ -1,0 +1,60 @@
+START 2026-10-20T17:34:50Z .venv/bin/python scripts/s10_diffusion.py score
+[S10 diffusion] v3_default s0 pca
+[S10 diffusion] v3_default s0 fa
+[S10 diffusion] v3_default s1 pca
+[S10 diffusion] v3_default s1 fa
+[S10 diffusion] v3_default s2 pca
+[S10 diffusion] v3_default s2 fa
+{
+ "definition": "v3_default, PCA, every seed: clone (literal Sigma_meas correction) and OT (minus trace(Sigma_meas)/d) median estimates within x2 of the all-cell median truth trace(D_eff(48 h))/d; score-flow (raw labelling) Spearman >= 0.5 with trace(D_eff(6 h))/d over committed cells",
+ "ot_selection_is_executor_construction": true,
+ "per_seed": [
+  {
+   "seed": 0,
+   "clone_ratio": -1.8277047303562886,
+   "ot_ratio": -1.1645008551523,
+   "score_flow_spearman_committed": 0.11453423661586222,
+   "clone_within_2": false,
+   "ot_within_2": false,
+   "score_flow_ge_0_5": false
+  },
+  {
+   "seed": 1,
+   "clone_ratio": -1.58828459344496,
+   "ot_ratio": -1.0891781038952664,
+   "score_flow_spearman_committed": 0.05224995071218556,
+   "clone_within_2": false,
+   "ot_within_2": false,
+   "score_flow_ge_0_5": false
+  },
+  {
+   "seed": 2,
+   "clone_ratio": -1.876787980210248,
+   "ot_ratio": -1.2483992875992895,
+   "score_flow_spearman_committed": 0.08973954623407342,
+   "clone_within_2": false,
+   "ot_within_2": false,
+   "score_flow_ge_0_5": false
+  }
+ ],
+ "pass": false
+}
+      550.66 real       319.90 user         8.85 sys
+          6741884928  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              518709  page reclaims
+                2074  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2940  voluntary context switches
+               72957  involuntary context switches
+       2299376794114  instructions retired
+        853313698524  cycles elapsed
+          3159871208  peak memory footprint
+EXIT 0 2026-10-20T17:44:01Z

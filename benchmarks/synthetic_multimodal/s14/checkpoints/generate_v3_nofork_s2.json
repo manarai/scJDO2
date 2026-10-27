@@ -1,0 +1,50 @@
+{
+  "admission": "not_admitted_to_part_c",
+  "artifact": {
+    "manifest_row": {
+      "detected_clone_fraction": "0.34795094691089723",
+      "f_sample": "0.0289091169431116",
+      "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_batch_effect\": true, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\", \"z1_crit\": 5.0}",
+      "n_cells": "12884",
+      "n_clones_detected": "699",
+      "n_collected_by_day": "[190, 1457, 11237]",
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s2.h5ad",
+      "preset": "v3_nofork",
+      "seed": "2",
+      "sha256": "f27243bbc340ee1a371784f952fc2cae6de90851fbcfe13587d0e880b1e1e89a"
+    },
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s2.h5ad",
+    "sha256": "f27243bbc340ee1a371784f952fc2cae6de90851fbcfe13587d0e880b1e1e89a"
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-10-22T09:54:31Z",
+  "launcher": ".sandbox/bin/python",
+  "memory": {
+    "maximum_resident_set_size_bytes": 15509716992,
+    "over_limit_bytes": 477331456,
+    "over_limit_gib": 0.444549560546875,
+    "peak_gib": 14.444549560546875,
+    "peak_memory_footprint_bytes": 9957370200,
+    "sandbox_limit_bytes_assuming_14_gib": 15032385536
+  },
+  "reason": "Sandbox contract requires stopping when peak RSS exceeds 14 GiB; no Part C unit was launched.",
+  "started_utc": "2026-10-22T09:09:53Z",
+  "status": "blocked_resource_limit_exceeded",
+  "task": "orient/S14",
+  "threads_limit": 6,
+  "timing": {
+    "cpu_seconds": 2559.45,
+    "sys_seconds": 1204.43,
+    "user_seconds": 1355.02,
+    "wall_seconds": 2677.95
+  },
+  "unit": "generate_v3_nofork_s2",
+  "validation": {
+    "n_obs": 12884,
+    "n_vars": 4000,
+    "preset": "v3_nofork",
+    "required_layers_present": true,
+    "sha256_match": true,
+    "version": "v3"
+  }
+}

@@ -1,0 +1,59 @@
+[2026-10-22T05:57:39.530415+00:00] energy permutations 25/1299 targets
+[2026-10-22T05:57:42.167940+00:00] energy permutations 50/1299 targets
+[2026-10-22T05:57:44.848912+00:00] energy permutations 75/1299 targets
+[2026-10-22T05:57:47.431840+00:00] energy permutations 100/1299 targets
+[2026-10-22T05:57:49.992000+00:00] energy permutations 125/1299 targets
+[2026-10-22T05:57:52.530983+00:00] energy permutations 150/1299 targets
+[2026-10-22T05:57:55.191439+00:00] energy permutations 175/1299 targets
+[2026-10-22T05:57:57.749661+00:00] energy permutations 200/1299 targets
+[2026-10-22T05:58:00.250061+00:00] energy permutations 225/1299 targets
+[2026-10-22T05:58:02.774722+00:00] energy permutations 250/1299 targets
+[2026-10-22T05:58:05.411625+00:00] energy permutations 275/1299 targets
+[2026-10-22T05:58:08.052904+00:00] energy permutations 300/1299 targets
+[2026-10-22T05:58:10.709251+00:00] energy permutations 325/1299 targets
+[2026-10-22T05:58:13.252079+00:00] energy permutations 350/1299 targets
+[2026-10-22T05:58:15.851623+00:00] energy permutations 375/1299 targets
+[2026-10-22T05:58:18.478770+00:00] energy permutations 400/1299 targets
+[2026-10-22T05:58:21.007080+00:00] energy permutations 425/1299 targets
+[2026-10-22T05:58:23.589122+00:00] energy permutations 450/1299 targets
+[2026-10-22T05:58:26.259371+00:00] energy permutations 475/1299 targets
+[2026-10-22T05:58:28.920320+00:00] energy permutations 500/1299 targets
+[2026-10-22T05:58:31.491388+00:00] energy permutations 525/1299 targets
+[2026-10-22T05:58:34.218113+00:00] energy permutations 550/1299 targets
+[2026-10-22T05:58:36.716147+00:00] energy permutations 575/1299 targets
+[2026-10-22T05:58:39.226504+00:00] energy permutations 600/1299 targets
+[2026-10-22T05:58:41.708357+00:00] energy permutations 625/1299 targets
+[2026-10-22T05:58:44.422548+00:00] energy permutations 650/1299 targets
+[2026-10-22T05:58:47.019997+00:00] energy permutations 675/1299 targets
+[2026-10-22T05:58:49.714377+00:00] energy permutations 700/1299 targets
+[2026-10-22T05:58:52.296548+00:00] energy permutations 725/1299 targets
+[2026-10-22T05:58:54.898339+00:00] energy permutations 750/1299 targets
+[2026-10-22T05:58:57.547843+00:00] energy permutations 775/1299 targets
+[2026-10-22T05:59:00.091890+00:00] energy permutations 800/1299 targets
+[2026-10-22T05:59:02.707872+00:00] energy permutations 825/1299 targets
+[2026-10-22T05:59:05.444583+00:00] energy permutations 850/1299 targets
+[2026-10-22T05:59:08.038394+00:00] energy permutations 875/1299 targets
+[2026-10-22T05:59:10.608625+00:00] energy permutations 900/1299 targets
+[2026-10-22T05:59:13.562330+00:00] energy permutations 925/1299 targets
+[2026-10-22T05:59:16.253940+00:00] energy permutations 950/1299 targets
+[2026-10-22T05:59:18.936774+00:00] energy permutations 975/1299 targets
+[2026-10-22T05:59:21.438924+00:00] energy permutations 1000/1299 targets
+[2026-10-22T05:59:24.143342+00:00] energy permutations 1025/1299 targets
+[2026-10-22T05:59:26.693767+00:00] energy permutations 1050/1299 targets
+[2026-10-22T05:59:29.305478+00:00] energy permutations 1075/1299 targets
+[2026-10-22T05:59:31.885014+00:00] energy permutations 1100/1299 targets
+[2026-10-22T05:59:34.343933+00:00] energy permutations 1125/1299 targets
+[2026-10-22T05:59:36.894939+00:00] energy permutations 1150/1299 targets
+[2026-10-22T05:59:39.482999+00:00] energy permutations 1175/1299 targets
+[2026-10-22T05:59:41.984434+00:00] energy permutations 1200/1299 targets
+[2026-10-22T05:59:44.481594+00:00] energy permutations 1225/1299 targets
+[2026-10-22T05:59:47.018412+00:00] energy permutations 1250/1299 targets
+[2026-10-22T05:59:49.543947+00:00] energy permutations 1275/1299 targets
+[2026-10-22T05:59:51.959836+00:00] energy permutations 1299/1299 targets
+target  n_cells  p_adjusted_BH  significant
+ZNF718      330       0.040350        False
+ZNF763      148       0.801534        False
+ZNHIT6      117       0.007471         True
+ ZRSR2      113       0.007471         True
+  ZW10      200       0.034086        False
+Significant targets: 865/1299

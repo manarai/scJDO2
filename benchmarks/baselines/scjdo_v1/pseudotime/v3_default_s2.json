@@ -1,0 +1,11 @@
+{
+  "cell_names_key": "names",
+  "dataset_seed": 2,
+  "key": "day2_strict_r0",
+  "pseudotime_sha256": "7d916feac94af0c5a5caa368785a125521e7f294c5d99ee3b1a657fa851b77c8",
+  "root_cell": "cell_0004186",
+  "root_rule": "default_rng(1000 + seed).choice(day-2 cells, 5, replace=False), first",
+  "source": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/s10/v3_default_s2/palantir.npz",
+  "strict_mode": true,
+  "wall_seconds": 10.439
+}

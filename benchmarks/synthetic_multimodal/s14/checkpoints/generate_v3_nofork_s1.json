@@ -1,0 +1,23 @@
+{
+  "part": "C-input-generation",
+  "preset": "v3_nofork",
+  "seed": 1,
+  "path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s1.h5ad",
+  "sha256": "09bb3d9bb16e0e4ee3da96952132cfef9644fe4e18cb93b2ab2b17ca8f1524d9",
+  "n_cells": 12654,
+  "n_vars": 4000,
+  "days": {
+    "2": 186,
+    "4": 1440,
+    "6": 11028
+  },
+  "manifest_path": "benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+  "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_nofork_s1.log",
+  "exit": 0,
+  "wall_seconds": 1991.81,
+  "cpu_seconds": 1966.18,
+  "peak_rss_bytes": 10075334808,
+  "duration_limit_seconds": 5400,
+  "memory_limit_bytes": 14000000000,
+  "verified": "sha256 and H5AD metadata agree with manifest; peak RSS is within the sandbox 14 GB ceiling"
+}

@@ -1,0 +1,590 @@
+{
+  "task": "orient/S13",
+  "status": "done",
+  "status_note": "Completed as specified. The fixed whitened-AUC gate failed (a reported result); no parameter, seed, input, or method was changed after seeing it.",
+  "started_utc": "2026-10-21T01:56:51.840302Z",
+  "finished_utc": "2026-10-21T03:27:42.140533Z",
+  "compute": {
+    "cpu_hours": 0.701711,
+    "cpu_hours_note": "0.699142 h from 31 closed /usr/bin/time -l analysis logs plus 9.25 final-pytest CPU seconds; budget 8.0 h.",
+    "gpu_hours": 0.0,
+    "n_timed_logs": 31,
+    "peak_memory_gb": 4.653,
+    "wall_hours_sum": 0.773956,
+    "compute_budget_cpu_hours": 8.0,
+    "within_budget": true,
+    "hardware": "Connected local macOS worktree; threads capped at 8 for every analysis unit."
+  },
+  "metrics": {
+    "gate_whitened_auc": {
+      "by_embedding": {
+        "fa20": {
+          "count": 3,
+          "max": 0.5332879345779411,
+          "median": 0.49010859556091835,
+          "min": 0.2999580995990322
+        },
+        "pca10": {
+          "count": 3,
+          "max": 0.3735896865970216,
+          "median": 0.3197624550498489,
+          "min": 0.21711922780567047
+        },
+        "pca20": {
+          "count": 3,
+          "max": 0.5836161457029697,
+          "median": 0.4263792488808818,
+          "min": 0.37364334931572096
+        },
+        "pca50": {
+          "count": 3,
+          "max": 0.48605408851979726,
+          "median": 0.3891436192169689,
+          "min": 0.32387261541934753
+        }
+      },
+      "n_passing_embeddings": 0,
+      "pass": false,
+      "passing_embeddings": [],
+      "rule": "AUC >= 0.85 on every v3_transition seed in at least 3 linear embeddings"
+    },
+    "auc_raw_vs_whitened_by_embedding": {
+      "pca10": {
+        "raw_s12_auc_by_seed": {
+          "v3_transition_s0": 0.875201,
+          "v3_transition_s1": 0.894783,
+          "v3_transition_s2": 0.962625
+        },
+        "raw_s12_min_median_max": [
+          0.875201,
+          0.894783,
+          0.962625
+        ],
+        "whitened_full_auc_by_seed": {
+          "v3_transition_s0": 0.37359,
+          "v3_transition_s1": 0.217119,
+          "v3_transition_s2": 0.319762
+        },
+        "whitened_full_min_median_max": [
+          0.217119,
+          0.319762,
+          0.37359
+        ]
+      },
+      "pca20": {
+        "raw_s12_auc_by_seed": {
+          "v3_transition_s0": 0.818087,
+          "v3_transition_s1": 0.910328,
+          "v3_transition_s2": 0.966846
+        },
+        "raw_s12_min_median_max": [
+          0.818087,
+          0.910328,
+          0.966846
+        ],
+        "whitened_full_auc_by_seed": {
+          "v3_transition_s0": 0.373643,
+          "v3_transition_s1": 0.583616,
+          "v3_transition_s2": 0.426379
+        },
+        "whitened_full_min_median_max": [
+          0.373643,
+          0.426379,
+          0.583616
+        ]
+      },
+      "pca50": {
+        "raw_s12_auc_by_seed": {
+          "v3_transition_s0": 0.890615,
+          "v3_transition_s1": 0.786882,
+          "v3_transition_s2": 0.967224
+        },
+        "raw_s12_min_median_max": [
+          0.786882,
+          0.890615,
+          0.967224
+        ],
+        "whitened_full_auc_by_seed": {
+          "v3_transition_s0": 0.389144,
+          "v3_transition_s1": 0.323873,
+          "v3_transition_s2": 0.486054
+        },
+        "whitened_full_min_median_max": [
+          0.323873,
+          0.389144,
+          0.486054
+        ]
+      },
+      "fa20": {
+        "raw_s12_auc_by_seed": {
+          "v3_transition_s0": 0.474731,
+          "v3_transition_s1": 0.301562,
+          "v3_transition_s2": 0.526321
+        },
+        "raw_s12_min_median_max": [
+          0.301562,
+          0.474731,
+          0.526321
+        ],
+        "whitened_full_auc_by_seed": {
+          "v3_transition_s0": 0.490109,
+          "v3_transition_s1": 0.299958,
+          "v3_transition_s2": 0.533288
+        },
+        "whitened_full_min_median_max": [
+          0.299958,
+          0.490109,
+          0.533288
+        ]
+      }
+    },
+    "lambda1_agreement": [
+      {
+        "embedding_left": "pca10",
+        "embedding_right": "fa20",
+        "n_rows": 6,
+        "spearman_lambda1_median": 0.148146,
+        "spearman_lambda1_min": -0.20376,
+        "spearman_lambda1_max": 0.335398
+      },
+      {
+        "embedding_left": "pca10",
+        "embedding_right": "pca20",
+        "n_rows": 6,
+        "spearman_lambda1_median": 0.068402,
+        "spearman_lambda1_min": -0.073171,
+        "spearman_lambda1_max": 0.42316
+      },
+      {
+        "embedding_left": "pca10",
+        "embedding_right": "pca50",
+        "n_rows": 6,
+        "spearman_lambda1_median": 0.076464,
+        "spearman_lambda1_min": -0.015711,
+        "spearman_lambda1_max": 0.256253
+      },
+      {
+        "embedding_left": "pca20",
+        "embedding_right": "fa20",
+        "n_rows": 6,
+        "spearman_lambda1_median": 0.281781,
+        "spearman_lambda1_min": -0.083527,
+        "spearman_lambda1_max": 0.640291
+      },
+      {
+        "embedding_left": "pca20",
+        "embedding_right": "pca50",
+        "n_rows": 6,
+        "spearman_lambda1_median": 0.178019,
+        "spearman_lambda1_min": 0.00043,
+        "spearman_lambda1_max": 0.338781
+      },
+      {
+        "embedding_left": "pca50",
+        "embedding_right": "fa20",
+        "n_rows": 6,
+        "spearman_lambda1_median": 0.206492,
+        "spearman_lambda1_min": -0.027188,
+        "spearman_lambda1_max": 0.424212
+      }
+    ],
+    "partial_variants": {
+      "fa20": {
+        "raw_ot_whitened_drift": 0.488684,
+        "raw_s12": 0.474731,
+        "whitened_full": 0.490109,
+        "whitened_ot_raw_drift": 0.475868
+      },
+      "pca10": {
+        "raw_ot_whitened_drift": 0.919456,
+        "raw_s12": 0.894783,
+        "whitened_full": 0.319762,
+        "whitened_ot_raw_drift": 0.78039
+      },
+      "pca20": {
+        "raw_ot_whitened_drift": 0.786868,
+        "raw_s12": 0.910328,
+        "whitened_full": 0.426379,
+        "whitened_ot_raw_drift": 0.385348
+      },
+      "pca50": {
+        "raw_ot_whitened_drift": 0.561015,
+        "raw_s12": 0.890615,
+        "whitened_full": 0.389144,
+        "whitened_ot_raw_drift": 0.226815
+      }
+    },
+    "heldout_prediction_by_embedding": {
+      "per_dataset": {
+        "larry": {
+          "best_overall_embedding": "fa30",
+          "best_overall_method": "mean_displacement",
+          "best_overall_energy_distance": 0.515522,
+          "best_whitened_flow_embedding": "fa30",
+          "best_whitened_flow_energy_distance": 0.717986,
+          "mean_energy_by_embedding_method": {
+            "fa30:mean_displacement": 0.515522,
+            "fa30:no_movement": 0.622832,
+            "fa30:whitened_flow": 0.717986,
+            "pca30:mean_displacement": 0.840525,
+            "pca30:no_movement": 0.85376,
+            "pca30:whitened_flow": 0.751157
+          }
+        },
+        "v3_transition_s0": {
+          "best_overall_embedding": "fa20",
+          "best_overall_method": "mean_displacement",
+          "best_overall_energy_distance": 1.343283,
+          "best_whitened_flow_embedding": "fa20",
+          "best_whitened_flow_energy_distance": 1.868857,
+          "mean_energy_by_embedding_method": {
+            "fa20:mean_displacement": 1.343283,
+            "fa20:no_movement": 1.363584,
+            "fa20:whitened_flow": 1.868857,
+            "pca10:mean_displacement": 1.470987,
+            "pca10:no_movement": 1.998138,
+            "pca10:whitened_flow": 2.252752,
+            "pca20:mean_displacement": 2.878927,
+            "pca20:no_movement": 2.086663,
+            "pca20:whitened_flow": 3.392159,
+            "pca50:mean_displacement": 3.002591,
+            "pca50:no_movement": 2.042409,
+            "pca50:whitened_flow": 3.018178
+          }
+        },
+        "v3_transition_s1": {
+          "best_overall_embedding": "fa20",
+          "best_overall_method": "mean_displacement",
+          "best_overall_energy_distance": 1.002119,
+          "best_whitened_flow_embedding": "fa20",
+          "best_whitened_flow_energy_distance": 2.379875,
+          "mean_energy_by_embedding_method": {
+            "fa20:mean_displacement": 1.002119,
+            "fa20:no_movement": 1.181217,
+            "fa20:whitened_flow": 2.379875,
+            "pca10:mean_displacement": 1.050155,
+            "pca10:no_movement": 1.777801,
+            "pca10:whitened_flow": 2.586264,
+            "pca20:mean_displacement": 2.971362,
+            "pca20:no_movement": 1.911018,
+            "pca20:whitened_flow": 4.659144,
+            "pca50:mean_displacement": 2.937625,
+            "pca50:no_movement": 1.873678,
+            "pca50:whitened_flow": 3.033734
+          }
+        },
+        "v3_transition_s2": {
+          "best_overall_embedding": "pca10",
+          "best_overall_method": "mean_displacement",
+          "best_overall_energy_distance": 0.752941,
+          "best_whitened_flow_embedding": "pca10",
+          "best_whitened_flow_energy_distance": 1.816241,
+          "mean_energy_by_embedding_method": {
+            "fa20:mean_displacement": 0.83979,
+            "fa20:no_movement": 1.145109,
+            "fa20:whitened_flow": 2.120887,
+            "pca10:mean_displacement": 0.752941,
+            "pca10:no_movement": 1.537041,
+            "pca10:whitened_flow": 1.816241,
+            "pca20:mean_displacement": 2.07902,
+            "pca20:no_movement": 1.714929,
+            "pca20:whitened_flow": 7.810458,
+            "pca50:mean_displacement": 2.574359,
+            "pca50:no_movement": 1.685533,
+            "pca50:whitened_flow": 2.245628
+          }
+        }
+      },
+      "v3_transition_whitened_flow_mean_energy_by_embedding": {
+        "fa20": 2.123207,
+        "pca10": 2.218419,
+        "pca20": 5.287254,
+        "pca50": 2.765846
+      }
+    },
+    "versions": {
+      "python": "3.13.2",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "pandas": "2.3.3",
+      "scikit-learn": "1.9.1",
+      "POT": "0.9.7.post1",
+      "anndata": "0.11.4",
+      "scanpy": "1.12.4",
+      "scvelo": "0.3.4",
+      "torch": "2.14.1"
+    },
+    "cpu_hours": 0.701711,
+    "tests_passed": "48/48: tests/test_orient.py + tests/test_smoke.py",
+    "input_integrity": {
+      "preflight_checkpoint": "benchmarks/synthetic_multimodal/s13/checkpoints/preflight.json",
+      "synthetic_full_cell_rule": "passed; the six S09/S10 synthetic inputs were read at their manifest dimensions without subsampling",
+      "larry_sample_rule": "S11/S10 fixed default_rng(0) sample of 4,000 cells at each of three days (12,000 total), per S13 Revision 1",
+      "preflight_details": {
+        "admission_plan": {
+          "admitted": true,
+          "basis": "S12/S10 completed timed units; conservative five-equivalent synthetic multiplier",
+          "budget_cpu_hours": 8.0,
+          "projected_cpu_hours": 2.2097416666666665,
+          "s12_median_cpu_seconds_by_embedding": {
+            "fa20": 33.545,
+            "pca10": 27.494999999999997,
+            "pca20": 33.945,
+            "pca50": 71.60499999999999
+          }
+        },
+        "finished_utc": "2026-10-21T01:57:02.174297Z",
+        "in_process_cpu_seconds": 9.387,
+        "larry": {
+          "raw_path": "/Users/terooatt/Documents/scJDO2/benchmarks/data/larry/larry_inVitro_raw.h5ad",
+          "raw_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+          "sample_path": "benchmarks/synthetic_multimodal/data/s10/real/arrays/embeddings/larry_x_pca30.npz",
+          "sample_per_day": 4000,
+          "sample_sha256": "bfe6fa91660335f05193b411cdf44149e2ddc8183382607858dc0f9e429d572d",
+          "sample_size": 12000
+        },
+        "memory_stop_gib": 24.0,
+        "passed": true,
+        "peak_rss_bytes": 472285184,
+        "started_utc": "2026-10-21T01:56:51.840302Z",
+        "synthetic": {
+          "v3_default_s0": {
+            "embedding_sha256": "1b9b822f77d9858b6495edfedf93ea539f928c4b313227c90e65841d024da1d2",
+            "input_sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5",
+            "raw": {
+              "fa20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_fa20.npz",
+                "sha256": "0ca8537269713e0a0c986e33323a5e566f4812d610d7c80f626cad7a98090bf1"
+              },
+              "pca10": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca10.npz",
+                "sha256": "5a4c3c99c65b34b31207c93f8845a070439ff4ec28f3818726c48ceafbe9bf42"
+              },
+              "pca20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca20.npz",
+                "sha256": "1516063e38fe95fae06556e69e10d83894f4662058081d2130253a40793f4f7f"
+              },
+              "pca50": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca50.npz",
+                "sha256": "cb6128336a6c170f8a5eb6c1ff83ce42d2b0eebb8f9c365539e276d856fc975b"
+              }
+            }
+          },
+          "v3_default_s1": {
+            "embedding_sha256": "fc9218040df16ecd3d721896b513319607607db64c16c420a1bbd98b2d81bca3",
+            "input_sha256": "d5dd02a5b42a12e25d4cf9dc57cf803691a9b55681fe1ce7cb139f7cbb998ba5",
+            "raw": {
+              "fa20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_fa20.npz",
+                "sha256": "7d9e91e5cc0f77c0d162c75ef01ae31fdf31197ffd9fa13e03f2136d9cc4608e"
+              },
+              "pca10": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca10.npz",
+                "sha256": "7a1787b8a79b537b733cbc86969189d0e5bd49ca1bc3a6b3be3295f5f4e59f1f"
+              },
+              "pca20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca20.npz",
+                "sha256": "d625f57e124f45424a56286fe8d0a86be3ce18fd5ffb51ba83917a3adf18207e"
+              },
+              "pca50": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca50.npz",
+                "sha256": "e4991d9e283088afd199c5d3ad68a328e609680ea7ac362d83cf7dc5caa32920"
+              }
+            }
+          },
+          "v3_default_s2": {
+            "embedding_sha256": "b157cef9ae3fdaf552a5e1dc40c1bb9b51e62d3769e8d8262af998eaedbeedc5",
+            "input_sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+            "raw": {
+              "fa20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_fa20.npz",
+                "sha256": "c24562a88956e965d5c2cc14bc219d0ffe9ff4a0bd8f8e37f964b8805a9ccca7"
+              },
+              "pca10": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca10.npz",
+                "sha256": "64f95532f224dbdfb76135699b2e90680f69753834467a3692786c2ee7823474"
+              },
+              "pca20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca20.npz",
+                "sha256": "47aeea81e8c8da34a733473859d8dd6ef70bb3e8164abc933b1f3f00f56fbdc4"
+              },
+              "pca50": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca50.npz",
+                "sha256": "506a7b4f8e09772d71ed5c14e01fc9a8e320f47563c69b0ed569c00aaaa4109b"
+              }
+            }
+          },
+          "v3_transition_s0": {
+            "embedding_sha256": "027d9a4ae91eadd5b4b8666d1a37a792dc31642621c19b1cc3daedb83f8e9314",
+            "input_sha256": "1faec85323413f2b79f657413b2f7511367a4cbd244fa2d766ded8b09a30a308",
+            "raw": {
+              "fa20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_fa20.npz",
+                "sha256": "ec001e60adbb802355adee48ab7f6807dca16d315d9bb7e2411ea33c1d090885"
+              },
+              "pca10": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca10.npz",
+                "sha256": "a8a01e95b2e2e70fa792284953e9a5c812b07e0648cb4b8bb81abcefa3951419"
+              },
+              "pca20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca20.npz",
+                "sha256": "5d120bbb790b703ba944db62e89ece188e6a9506f85c4afe486bc5ec39eb08f1"
+              },
+              "pca50": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca50.npz",
+                "sha256": "a8e109f0736bbc37387a591f1e6c72ca1b59e3ac439731ab8f8f9ec28579f3d0"
+              }
+            }
+          },
+          "v3_transition_s1": {
+            "embedding_sha256": "13d3b637593775aab2f56567e861c12c6ee26872887260e3e59fa1f5b055890d",
+            "input_sha256": "f3d9743121031d2e8a2379ddf50648359fd6f9cd1d73eefcc0ab9244f26e30da",
+            "raw": {
+              "fa20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_fa20.npz",
+                "sha256": "93272594bccc5db40f468ea0676a5b3ac4fc314796e1689b8686cb0f886bc293"
+              },
+              "pca10": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca10.npz",
+                "sha256": "3a89db300e71f3e6c8806724d88340411095f1c7fa27bb63ca79c3932c7200c7"
+              },
+              "pca20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca20.npz",
+                "sha256": "b9b1f876fc689fb0379f44be8727baf8eee0c441e93e60ee7b9fb2dfbed2764d"
+              },
+              "pca50": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca50.npz",
+                "sha256": "442d812eceefdd681cc576de3b38a8e7d475238177abc3b946171e582208879b"
+              }
+            }
+          },
+          "v3_transition_s2": {
+            "embedding_sha256": "436b88abe7da31f34590b33799e7b378aa27ade3b7ed683f0bba185f7a634ca4",
+            "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+            "raw": {
+              "fa20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_fa20.npz",
+                "sha256": "51703083dec5b865ad10bcc5da114bad49acc461684e726b1333df834c9dcf0a"
+              },
+              "pca10": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca10.npz",
+                "sha256": "4d970490d4fd159dd9146d9603c15397a5e5ee8e2d273d5c20c125d9002809be"
+              },
+              "pca20": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca20.npz",
+                "sha256": "23f98a8393c1d0bbd2aa2f10410e33f270c15b0dc504041db2c52e29bdfc2119"
+              },
+              "pca50": {
+                "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca50.npz",
+                "sha256": "72d5474c6d777e8cfd6012612d58764f03514881bab1c515af5a6047f56d9863"
+              }
+            }
+          }
+        },
+        "task": "orient/S13",
+        "threads_limit": 12,
+        "unit": "preflight",
+        "wall_seconds": 10.334
+      },
+      "inputs_modified": false
+    },
+    "figure_validation": {
+      "auc_raw_vs_whitened.png": {
+        "pixels": [
+          1440,
+          688
+        ],
+        "valid_nonblank_png": true
+      },
+      "lambda1_agreement_matrix.png": {
+        "pixels": [
+          848,
+          704
+        ],
+        "valid_nonblank_png": true
+      }
+    }
+  },
+  "artifacts": [
+    {
+      "path": "scripts/s13_whitened.py",
+      "bytes": 26900,
+      "sha256": "5fb516abd56fa42e4cf0306e56cb33cf2471e1cec861f2c65f8ba4defcea5aa7",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py preflight; then one unit command per dataset \u00d7 embedding; summarize; ledger"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s13/auc.csv",
+      "bytes": 14842,
+      "sha256": "13cdd0e1d97bf9cd6fa0ae2e14c3092ac3092fc3c6865544b91dd39880039a36",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py summarize"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s13/lambda1_agreement.csv",
+      "bytes": 3024,
+      "sha256": "cf2ba5bd86545e94f76c4063179a661ce3aea03d5cd378b796310a7010426fa6",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py summarize"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s13/variants.csv",
+      "bytes": 16205,
+      "sha256": "c71d8f4d194a6bd1839cfa9bfcb2d85e694bb4e80760319e4b0f479afc73377d",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py summarize"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s13/heldout_prediction.csv",
+      "bytes": 6012,
+      "sha256": "c2ddd23a3ceced6c984f87932985d90cfc7105c35d1601b320f1fee156f9cada",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py summarize"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s13/RESULT_S13.md",
+      "bytes": 1706,
+      "sha256": "e542007fbc755eb92ab1938cd65f7a1058c0e0e34f8d47f911d0b5143317f42a",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py summarize; python scripts/s13_whitened.py ledger"
+    },
+    {
+      "path": "benchmarks/synthetic_multimodal/s13/cpu_ledger.csv",
+      "bytes": 4057,
+      "sha256": "a7f3d8207ddff7253173783a1002fc9de4afa8c333c4c01ee8928fd7bf56076c",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py ledger"
+    },
+    {
+      "path": "benchmarks/figures/orient/s13/auc_raw_vs_whitened.png",
+      "bytes": 70809,
+      "sha256": "4353a4960a4238db0ea1d97982cf08e1f2ccb6d1a248b5f98e811b808ef20785",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py summarize"
+    },
+    {
+      "path": "benchmarks/figures/orient/s13/lambda1_agreement_matrix.png",
+      "bytes": 59709,
+      "sha256": "237743e43bee5e0b20c4adc003ce7643079dd634c836551bfc1517d21a65ac8f",
+      "committed": true,
+      "regenerate": "python scripts/s13_whitened.py summarize"
+    }
+  ],
+  "deviations": [
+    "Applied the binding S13 Revision 1 amendment: LARRY uses S11/S10\u2019s fixed default_rng(0) 4,000-cells-per-day sample, while all synthetic inputs remain full-size.",
+    "The first aggregation attempt wrote numerical CSV/PNG outputs but exited at pandas.to_markdown because optional tabulate was unavailable. The allowed runner was changed only to render its small Markdown table without tabulate, then aggregation was rerun once; no dataset or flow unit was rerun and no analysis parameter changed."
+  ],
+  "questions": [],
+  "observations": [
+    "The fixed gate passed for 0 of 4 linear embeddings: whitened-flow minimum AUCs across v3_transition seeds were 0.217 (PCA-10), 0.374 (PCA-20), 0.324 (PCA-50), and 0.300 (FA-20), all below 0.85.",
+    "For v3_transition, raw S12 flow had higher median AUC than the full whitening path in PCA-10 (0.895 vs 0.320), PCA-20 (0.910 vs 0.426), and PCA-50 (0.891 vs 0.389); FA-20 was low for both (0.475 raw, 0.490 whitened).",
+    "Median per-cell lambda1 Spearman agreement across embedding pairs ranged from 0.068 (PCA-10 vs PCA-20) to 0.282 (PCA-20 vs FA-20).",
+    "On first-pair-only held-out prediction for the three transition seeds, FA-20 was the lowest-energy whitened-flow embedding on average (2.123), but no whitened-flow transition result outperformed its no-movement baseline.",
+    "For LARRY, whitened PCA-30 flow beat no movement (energy 0.751 vs 0.854), while FA-30\u2019s mean-displacement baseline was lower than its whitened flow (0.516 vs 0.718).",
+    "All 26 dataset \u00d7 embedding units finished below the 60-minute and 24-GB limits; the largest timed log RSS was 4.653 GB."
+  ],
+  "suggestions": [
+    "If a follow-up is approved, pre-register a diagnostic that separates whitening\u2019s effect on OT coupling from its effect on MeasuredDrift regularisation; S13\u2019s fixed design cannot distinguish those mechanisms.",
+    "If held-out transport is made a future selection criterion, pre-register its baseline comparison and success threshold before comparing alternate embeddings or flow estimators."
+  ]
+}

@@ -1,0 +1,2 @@
+phase,status,calibration_seeds,drift_seed,T_null,reason
+null_calibration,not_run,v3_nofork_s3-s10,,,"S14c exhausted transition reserve s17–s40 with only two total eligible transition seeds (s12, s16); four are required. The task requires stopping before null calibration and held-out fits when fewer than four are eligible."

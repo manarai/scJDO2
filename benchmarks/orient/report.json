@@ -1,0 +1,146 @@
+{
+  "spec": "docs/ORIENTATION_SPEC.md",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "tests": {
+    "1_pitchfork_sign_agreement": {
+      "flow:labelling": {
+        "gate": 0.95,
+        "agreement": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "oriented_fraction": [
+          0.58125,
+          0.6119791666666666,
+          0.5885416666666666
+        ],
+        "pass": true
+      },
+      "flow:labelling+velocity": {
+        "gate": 0.95,
+        "agreement": [
+          0.9765342960288809,
+          0.9763224181360202,
+          0.9758043758043758
+        ],
+        "oriented_fraction": [
+          0.7276041666666667,
+          0.7536458333333333,
+          0.7447916666666666
+        ],
+        "pass": true
+      },
+      "dev:lineage": {
+        "gate": 0.97,
+        "agreement": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "oriented_fraction": [
+          0.746875,
+          0.746875,
+          0.7390625
+        ],
+        "pass": true
+      },
+      "dev:pseudotime": {
+        "gate": 0.65,
+        "agreement": [
+          0.6921862667719021,
+          0.7115460656385924,
+          0.6972173574625413
+        ],
+        "oriented_fraction": [
+          0.9838541666666667,
+          0.9864583333333333,
+          0.9859375
+        ],
+        "pass": true
+      }
+    },
+    "2_omega": {
+      "gate": 0.3,
+      "median_rel_frobenius_error": [
+        0.2193011271280787,
+        0.22172413489644685,
+        0.21424523612383012
+      ],
+      "pass": true,
+      "no_rotation_from_dev_sources": true
+    },
+    "3_conflict": {
+      "gate": 0.95,
+      "per_seed": [
+        {
+          "labelling_wins_all": true,
+          "conflict_on_injected_with_both_supported": 1.0,
+          "fraction_injected_with_both_supported": 0.5081967213114754,
+          "false_conflict_on_clean": 0.0
+        },
+        {
+          "labelling_wins_all": true,
+          "conflict_on_injected_with_both_supported": 1.0,
+          "fraction_injected_with_both_supported": 0.599009900990099,
+          "false_conflict_on_clean": 0.0005820721769499418
+        },
+        {
+          "labelling_wins_all": true,
+          "conflict_on_injected_with_both_supported": 1.0,
+          "fraction_injected_with_both_supported": 0.5052631578947369,
+          "false_conflict_on_clean": 0.0
+        }
+      ],
+      "pass": true
+    },
+    "4_coverage": {
+      "per_seed": [
+        {
+          "covered_fraction": 0.38125,
+          "measured_equals_covered_with_lineage_sign": true,
+          "measured_on_uncovered": 0.0,
+          "measured_on_covered": 0.7226775956284153,
+          "imputed_on_uncovered": 0.984006734006734,
+          "oriented_fraction": 0.9875
+        },
+        {
+          "covered_fraction": 0.40625,
+          "measured_equals_covered_with_lineage_sign": true,
+          "measured_on_uncovered": 0.0,
+          "measured_on_covered": 0.7474358974358974,
+          "imputed_on_uncovered": 0.987719298245614,
+          "oriented_fraction": 0.9890625
+        },
+        {
+          "covered_fraction": 0.45,
+          "measured_equals_covered_with_lineage_sign": true,
+          "measured_on_uncovered": 0.0,
+          "measured_on_covered": 0.7511574074074074,
+          "imputed_on_uncovered": 0.9867424242424242,
+          "oriented_fraction": 0.9895833333333334
+        }
+      ],
+      "pass": true
+    },
+    "5_flags": {
+      "gradient_equilibrium_fraction": 1.0,
+      "gradient_stationary_fraction": 1.0,
+      "rotating_non_equilibrium_fraction": 1.0,
+      "no_velocity_not_identified_fraction": 1.0,
+      "pass": true
+    },
+    "6_hash_unchanged": {
+      "runs": 25,
+      "all_unchanged": true
+    }
+  },
+  "v1": {
+    "scjdo_listed_as_dependency": true,
+    "v1_imports_remaining_in_library": []
+  }
+}

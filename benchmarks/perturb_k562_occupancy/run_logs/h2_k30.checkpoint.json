@@ -1,0 +1,21 @@
+{
+  "unit": "h2_k30",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "h2",
+    "--k",
+    "30"
+  ],
+  "started_utc": "2026-10-22T12:05:54.255492+00:00",
+  "finished_utc": "2026-10-22T12:05:56.382604+00:00",
+  "exit_code": 0,
+  "wall_seconds": 2.127113119000569,
+  "cpu_hours": 0.00114438,
+  "cpu_hours_before": 9.130134540555556,
+  "max_rss_kib": 188712,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 19425533952,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/h2_k30.log"
+}

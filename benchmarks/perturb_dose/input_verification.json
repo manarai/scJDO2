@@ -1,0 +1,39 @@
+{
+  "inputs": {
+    "k562": {
+      "path": "benchmarks/perturb_k562/data/K562_essential_raw_singlecell_01.h5ad",
+      "bytes": 10661879995,
+      "sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+      "mtime_ns": 1792648524078208661,
+      "verified_utc": "2026-10-23T02:27:23.526926+00:00"
+    },
+    "rpe1": {
+      "path": "benchmarks/perturb_valleys/data/rpe1_raw_singlecell_01.h5ad",
+      "bytes": 8700873216,
+      "sha256": "9b05ef1f81526216fa008d677e9e0d03dce9a2f7a95499a4fb81e505e9d88ef1",
+      "mtime_ns": 1792681615975718485,
+      "verified_utc": "2026-10-23T02:28:15.361358+00:00"
+    }
+  },
+  "control_only_caches": [
+    {
+      "path": "benchmarks/perturb_valleys/cache/controls_k562.npz",
+      "bytes": 1427218,
+      "sha256": "a379545290cfd869859f680286ae334eb458b17aea9f9aa1715ee21000be47b7",
+      "control_only": true,
+      "source_ref": "manus/orient-S18c",
+      "arrays_not_loaded": true
+    },
+    {
+      "path": "benchmarks/perturb_valleys/cache/controls_rpe1.npz",
+      "bytes": 1522869,
+      "sha256": "61d46fd7a6d9f8a42eed8076957f1c786903acd42be53d8aee3595ffada603cf",
+      "control_only": true,
+      "source_ref": "manus/orient-S18c",
+      "arrays_not_loaded": true
+    }
+  ],
+  "scientific_arrays_not_opened": true,
+  "hashing_is_integrity_only": true,
+  "checked_utc": "2026-10-23T02:28:15.491147+00:00"
+}

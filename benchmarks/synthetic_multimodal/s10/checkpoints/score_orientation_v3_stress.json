@@ -1,0 +1,10 @@
+{
+  "finished_utc": "2026-10-20T13:37:50.231008Z",
+  "in_process_cpu_seconds": 1284.158,
+  "n_results": 570,
+  "peak_rss_bytes": 7898726400,
+  "started_utc": "2026-10-20T13:22:14.494819Z",
+  "task": "orient/S10",
+  "unit": "score_orientation_v3_stress",
+  "wall_seconds": 935.736
+}

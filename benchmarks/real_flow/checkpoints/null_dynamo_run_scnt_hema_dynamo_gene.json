@@ -1,0 +1,11 @@
+{
+  "dataset": "scnt_hema",
+  "dynamo_version": "1.5.3",
+  "finished_utc": "2026-10-19T08:03:36.985744+00:00",
+  "n_seeds": 5,
+  "source": "dynamo_gene",
+  "started_utc": "2026-10-19T08:03:21.122926+00:00",
+  "task": "orient/S11",
+  "unit": "null_dynamo_run_scnt_hema_dynamo_gene",
+  "wall_seconds": 15.863
+}

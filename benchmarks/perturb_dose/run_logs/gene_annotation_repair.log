@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/scJDO2/scripts/s18d_dose.py", line 678, in <module>
+    if __name__=='__main__':sys.exit(main())
+                                     ^^^^^^
+  File "/home/ubuntu/scJDO2/scripts/s18d_dose.py", line 539, in main
+    if a.action=='repair-gene-mapping':return repair_gene_mapping()
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/scJDO2/scripts/s18d_dose.py", line 556, in repair_gene_mapping
+    obs,var,shape=metadata(source(s));symbols=var.gene_name.astype(str).to_numpy(dtype=str);assert len(set(symbols))==len(symbols)
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

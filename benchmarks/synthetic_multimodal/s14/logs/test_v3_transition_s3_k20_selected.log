@@ -1,0 +1,20 @@
+START 2026-10-22T13:11:14Z unit=test_v3_transition_s3_k20_selected launcher=.sandbox/bin/python cap=14GiB
+      122.50 real       104.87 user         4.19 sys
+          7579729920  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              595528  page reclaims
+                   5  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  27  voluntary context switches
+               83593  involuntary context switches
+        868621560620  instructions retired
+        268479153887  cycles elapsed
+          5386033680  peak memory footprint
+EXIT 0 2026-10-22T13:13:16Z

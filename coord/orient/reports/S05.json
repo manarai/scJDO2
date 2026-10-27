@@ -1,0 +1,346 @@
+{
+  "artifacts": [
+    {
+      "bytes": 5063,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/MANIFEST_v2.csv",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --v2-all",
+      "sha256": "7ef9b481a6561212400fef5f2fe9731595604b95e9f106e9296ec00ba293ed47"
+    },
+    {
+      "bytes": 18173,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v2_audit/audit.csv",
+      "regenerate": "python scripts/audit_synthetic.py --dataset <each v1/v2 H5AD>; add --run-scvelo only for v2_default_s0",
+      "sha256": "dda77b4a3aab5af7fed97905932affc99bf5689a4046ab89185f4cdd2dfcccbe"
+    },
+    {
+      "bytes": 4935,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v2_audit/RESULT_S05.md",
+      "regenerate": "derived from the completed manifest, audit, and timing ledgers",
+      "sha256": "dd82cca5c66430dd3786c30bd6d1b9b9fe4b41c8165c4883b1c23479ebac6a3a"
+    },
+    {
+      "bytes": 21915,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v2_audit/revision1_timing.jsonl",
+      "regenerate": "written by amended sequential generation",
+      "sha256": "63210c6fdc7670aee2c409f13e67cfb3026fb5d533554db01256c63c851c1630"
+    },
+    {
+      "bytes": 44328,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/v2_audit/audit_timing.jsonl",
+      "regenerate": "written by frozen audit",
+      "sha256": "81f87478f7c05d4d3ddb2a8e006215f1f0a047a4dd62e557919c9999feb04f5a"
+    },
+    {
+      "bytes": 103944658,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_default_s0.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_default --seed 0",
+      "sha256": "dfd5d762fb10010b1bcafa53afbc2e1f1190189f9c5bfe103d7e485942c508f6"
+    },
+    {
+      "bytes": 103679908,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_default_s1.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_default --seed 1",
+      "sha256": "a7272749514984ab8aab85dc38c5637b79c9961dc31cf61b89da28fd6d619d6c"
+    },
+    {
+      "bytes": 105763287,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_default_s2.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_default --seed 2",
+      "sha256": "326e7d84df743c4d0850e54ae6e48d079b8d3ef278ac0fb5a6f5ceade6b507a4"
+    },
+    {
+      "bytes": 102306593,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_stress_s0.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_stress --seed 0",
+      "sha256": "68e7d1b663ee9162e217c91d784fae2ec6e68b3527bfef9cbc23962ac6d39512"
+    },
+    {
+      "bytes": 103681610,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_stress_s1.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_stress --seed 1",
+      "sha256": "f515c8a2673765cfe8825084079315f30da764aca0fa47116af232e6bf0276f4"
+    },
+    {
+      "bytes": 105059727,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_stress_s2.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_stress --seed 2",
+      "sha256": "ca833947b03d5a31a931e807b9cd60e30cfc6d52ff1ff5485f977120cb717c76"
+    },
+    {
+      "bytes": 101309026,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_batch_s0.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_batch --seed 0",
+      "sha256": "07b50a6c7b624113e322637d627de173534012d9133178823d5152444da47432"
+    },
+    {
+      "bytes": 101790063,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_batch_s1.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_batch --seed 1",
+      "sha256": "9bf44d314ad322c17ba379985893fcb2321c7ecc7bfd53f4ea765c05f9e3945c"
+    },
+    {
+      "bytes": 106049916,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_batch_s2.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_batch --seed 2",
+      "sha256": "022c6667caad5b0fa9659636e6fff2ea6369990b1858d7b8b459a852e2ec0432"
+    },
+    {
+      "bytes": 51628939,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_stationary_cycle_s0.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_stationary_cycle --seed 0",
+      "sha256": "ba1201df6ded012a933de2b5e16759fd72d0f08efba46d2fe78f33ff9b867089"
+    },
+    {
+      "bytes": 51230242,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_stationary_cycle_s1.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_stationary_cycle --seed 1",
+      "sha256": "b2a333c6925f8c4e6333d64e21cd59b7522c27f64115a989ea99977ccc113b2b"
+    },
+    {
+      "bytes": 49317807,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v2/v2_stationary_cycle_s2.h5ad",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset v2_stationary_cycle --seed 2",
+      "sha256": "34fbb52292acfa41fcef2583000540c6daa2c931db827fba7bf6a65a43ebb7f1"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.7763138888888889,
+    "gpu_hours": 0.0,
+    "hardware": "macOS 26.7.1 arm64, 14 logical CPUs; measured Revision 1 only"
+  },
+  "deviations": [
+    "The original S05 attempt was blocked after a stalled environment process. Revision 1 followed the amended procedure and reran v2_stress_s2 alone; it completed within the amended limit. No parameter or method changed."
+  ],
+  "finished_utc": "2026-10-17T21:28:28Z",
+  "metrics": {
+    "O3_splicing_fitted_gamma": {
+      "default_s0": -0.15408772741388177,
+      "default_s1": -0.1591983166744121,
+      "default_s2": -0.09751793052446578,
+      "v2_batch_s0": -0.010551963093800019,
+      "v2_batch_s1": 0.06925164628342383,
+      "v2_batch_s2": -0.009393957326033089,
+      "v2_default_s0": 0.015576818550773483,
+      "v2_default_s1": 0.007795734669378967,
+      "v2_default_s2": -0.015911627834146486,
+      "v2_stationary_cycle_s0": 0.9129283803058894,
+      "v2_stationary_cycle_s1": 0.9265286882808261,
+      "v2_stationary_cycle_s2": 0.8822990912021015,
+      "v2_stress_s0": 0.2182416576323344,
+      "v2_stress_s1": 0.23582240325958606,
+      "v2_stress_s2": 0.1506929099245254
+    },
+    "O4_scvelo_v2_default_s0": {
+      "by_day_median_cosine": {
+        "1": 0.28788185905408337,
+        "2": -0.3732729905124994,
+        "3": 0.028783322314393067,
+        "4": -0.033230307598339184
+      },
+      "overall_median_cosine": -0.031067137331596956
+    },
+    "gate_O1_splicing_true_rates": {
+      "v2_default_s0": {
+        "median_cosine": 0.6316898888064933,
+        "status": "pass",
+        "threshold": 0.4
+      },
+      "v2_default_s1": {
+        "median_cosine": 0.6402564162571033,
+        "status": "pass",
+        "threshold": 0.4
+      },
+      "v2_default_s2": {
+        "median_cosine": 0.4714604742068411,
+        "status": "pass",
+        "threshold": 0.4
+      }
+    },
+    "gate_O2_labelling_true_gamma": {
+      "v2_default_s0": {
+        "median_cosine": 0.5012025337681079,
+        "status": "pass",
+        "threshold": 0.3
+      },
+      "v2_default_s1": {
+        "median_cosine": 0.49444709383490393,
+        "status": "pass",
+        "threshold": 0.3
+      },
+      "v2_default_s2": {
+        "median_cosine": 0.30847003944960244,
+        "status": "pass",
+        "threshold": 0.3
+      }
+    },
+    "lazy_equals_eager": {
+      "configuration": {
+        "f_sample": 0.2,
+        "n_founders": 60,
+        "poisson": false,
+        "preset": "v2_default",
+        "seed": 17
+      },
+      "passed": true,
+      "rtol": 1e-05
+    },
+    "multi_day_clones": {
+      "v2_default_s0": 367,
+      "v2_default_s1": 355,
+      "v2_default_s2": 378
+    },
+    "n_cells_by_preset_day": {
+      "v2_batch_s0": [
+        138,
+        383,
+        1068,
+        2976
+      ],
+      "v2_batch_s1": [
+        138,
+        384,
+        1071,
+        2970
+      ],
+      "v2_batch_s2": [
+        143,
+        398,
+        1120,
+        3130
+      ],
+      "v2_default_s0": [
+        139,
+        392,
+        1099,
+        3059
+      ],
+      "v2_default_s1": [
+        141,
+        388,
+        1087,
+        3036
+      ],
+      "v2_default_s2": [
+        143,
+        400,
+        1118,
+        3117
+      ],
+      "v2_stationary_cycle_s0": [
+        2837
+      ],
+      "v2_stationary_cycle_s1": [
+        2782
+      ],
+      "v2_stationary_cycle_s2": [
+        2763
+      ],
+      "v2_stress_s0": [
+        139,
+        385,
+        1083,
+        3021
+      ],
+      "v2_stress_s1": [
+        141,
+        391,
+        1090,
+        3045
+      ],
+      "v2_stress_s2": [
+        143,
+        400,
+        1115,
+        3108
+      ]
+    },
+    "peak_memory_gb": {
+      "v2_batch_s0": 3.455657958984375,
+      "v2_batch_s1": 3.424468994140625,
+      "v2_batch_s2": 3.456939697265625,
+      "v2_default_s0": 3.2174224853515625,
+      "v2_default_s1": 3.3041839599609375,
+      "v2_default_s2": 3.56121826171875,
+      "v2_stationary_cycle_s0": 1.3767852783203125,
+      "v2_stationary_cycle_s1": 1.56298828125,
+      "v2_stationary_cycle_s2": 1.30810546875,
+      "v2_stress_s0": 3.124603271484375,
+      "v2_stress_s1": 3.212158203125,
+      "v2_stress_s2": 3.67822265625
+    },
+    "steady_state_on_genes": {
+      "v2_default_s0": {
+        "median_within_gene_close_fraction": 0.9975839062840458,
+        "on_genes": 80,
+        "qualifying_on_gene_fraction": 1.0
+      },
+      "v2_default_s1": {
+        "median_within_gene_close_fraction": 0.9955203685546425,
+        "on_genes": 80,
+        "qualifying_on_gene_fraction": 1.0
+      },
+      "v2_default_s2": {
+        "median_within_gene_close_fraction": 0.9982186892915197,
+        "on_genes": 80,
+        "qualifying_on_gene_fraction": 1.0
+      }
+    },
+    "tests_passed": {
+      "command": "python -m pytest -q tests/test_orient.py tests/test_smoke.py tests/test_synthetic_multimodal.py",
+      "failed": 0,
+      "passed": 63,
+      "wall_seconds": 237.68,
+      "warning_count": 1
+    },
+    "unspliced_share": {
+      "v2_default_s0": 0.17641329462236768,
+      "v2_default_s1": 0.1475772316445989,
+      "v2_default_s2": 0.184181623296629
+    },
+    "v1_unchanged": true,
+    "wall_hours": 0.68455,
+    "wall_minutes_per_dataset": {
+      "v2_batch_s0": 4.224166666666666,
+      "v2_batch_s1": 4.269666666666667,
+      "v2_batch_s2": 4.504166666666666,
+      "v2_default_s0": 4.4055,
+      "v2_default_s1": 4.430666666666666,
+      "v2_default_s2": 4.3785,
+      "v2_stationary_cycle_s0": 0.5556666666666668,
+      "v2_stationary_cycle_s1": 0.4688333333333333,
+      "v2_stationary_cycle_s2": 0.4751666666666667,
+      "v2_stress_s0": 4.183666666666666,
+      "v2_stress_s1": 4.4245,
+      "v2_stress_s2": 4.7524999999999995
+    }
+  },
+  "observations": [
+    "All 12 v2 artifacts completed with recorded peak generation RSS at or below 3.678 GiB and generation wall time at or below 4.752 minutes.",
+    "All three v2-default O1/O2 gate pairs passed; v2_default_s2 has the smallest O2 value, 0.30847003944960244.",
+    "The report-only O4 scVelo overall cosine for v2_default_s0 is -0.031067137331596956."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-17T15:50:16Z",
+  "status": "done",
+  "suggestions": [
+    "Await Claude verification and interpretation; no additional analysis was run."
+  ],
+  "task": "orient/S05"
+}

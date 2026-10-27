@@ -1,0 +1,22 @@
+{
+  "cpu_seconds": 3186.8115080000002,
+  "finished_unix": 1792862910.102606,
+  "manifest_row": {
+    "detected_clone_fraction": 0.34991301597343033,
+    "f_sample": 0.0289091169431116,
+    "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_batch_effect\": true, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\", \"z1_crit\": 2.0}",
+    "n_cells": 12646,
+    "n_clones_detected": 679,
+    "n_collected_by_day": "[184, 1430, 11032]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s5.h5ad",
+    "preset": "v3_transition",
+    "seed": 5,
+    "sha256": "78e027aab490ba9fcccb46cdd705ef6743a6a0c2063c066c2ea4c022f0495f07"
+  },
+  "peak_rss_bytes": 10478632960,
+  "reused_verified": false,
+  "started_unix": 1792859589.159889,
+  "task": "orient/S14b",
+  "unit": "generate_v3_transition_s5",
+  "wall_seconds": 3320.942717075348
+}

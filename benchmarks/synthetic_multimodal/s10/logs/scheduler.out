@@ -1,0 +1,63 @@
+09:58:10 start dtruth_v3_default_s0_c6 (attempt 1) threads=4 mem=10.0
+09:58:10 start dtruth_v3_default_s0_c7 (attempt 1) threads=5 mem=12.5
+10:11:56 start dtruth_v3_default_s0_c8 (attempt 1) threads=5 mem=12.5
+10:12:06 start dtruth_v3_default_s0_c9 (attempt 1) threads=4 mem=10.0
+10:12:06 start dtruth_v3_default_s0_c10 (attempt 1) threads=5 mem=12.5
+10:12:16 end dtruth_v3_default_s0_c6 rc=0 ok=True
+10:12:16 start dtruth_v3_default_s0_c11 (attempt 1) threads=5 mem=12.5
+10:12:26 end dtruth_v3_default_s0_c7 rc=0 ok=True
+10:12:26 start dtruth_v3_default_s1_c0 (attempt 1) threads=5 mem=12.5
+10:25:41 end dtruth_v3_default_s0_c8 rc=0 ok=True
+10:25:41 start dtruth_v3_default_s1_c1 (attempt 1) threads=5 mem=12.5
+10:26:01 end dtruth_v3_default_s0_c9 rc=0 ok=True
+10:26:01 end dtruth_v3_default_s0_c10 rc=0 ok=True
+10:26:01 start dtruth_v3_default_s1_c2 (attempt 1) threads=4 mem=10.0
+10:26:01 start dtruth_v3_default_s1_c3 (attempt 1) threads=5 mem=12.5
+10:26:11 end dtruth_v3_default_s0_c11 rc=0 ok=True
+10:26:11 end dtruth_v3_default_s1_c0 rc=0 ok=True
+10:26:11 start dtruth_v3_default_s1_c4 (attempt 1) threads=4 mem=10.0
+10:26:11 start dtruth_v3_default_s1_c5 (attempt 1) threads=5 mem=12.5
+10:39:26 end dtruth_v3_default_s1_c1 rc=0 ok=True
+10:39:26 start dtruth_v3_default_s1_c6 (attempt 1) threads=5 mem=12.5
+10:39:57 end dtruth_v3_default_s1_c2 rc=0 ok=True
+10:39:57 end dtruth_v3_default_s1_c3 rc=0 ok=True
+10:39:57 start dtruth_v3_default_s1_c7 (attempt 1) threads=4 mem=10.0
+10:39:57 start dtruth_v3_default_s1_c8 (attempt 1) threads=5 mem=12.5
+10:40:07 end dtruth_v3_default_s1_c4 rc=0 ok=True
+10:40:07 end dtruth_v3_default_s1_c5 rc=0 ok=True
+10:40:07 start dtruth_v3_default_s1_c9 (attempt 1) threads=4 mem=10.0
+10:40:07 start dtruth_v3_default_s1_c10 (attempt 1) threads=5 mem=12.5
+10:53:22 end dtruth_v3_default_s1_c6 rc=0 ok=True
+10:53:22 start dtruth_v3_default_s1_c11 (attempt 1) threads=5 mem=12.5
+10:53:53 end dtruth_v3_default_s1_c7 rc=0 ok=True
+10:53:53 end dtruth_v3_default_s1_c8 rc=0 ok=True
+10:53:53 end dtruth_v3_default_s1_c9 rc=0 ok=True
+10:53:53 end dtruth_v3_default_s1_c10 rc=0 ok=True
+10:53:53 start dtruth_v3_default_s2_c0 (attempt 1) threads=2 mem=5.0
+10:53:53 start dtruth_v3_default_s2_c1 (attempt 1) threads=3 mem=7.5
+10:53:53 start dtruth_v3_default_s2_c2 (attempt 1) threads=4 mem=10.0
+10:53:53 start dtruth_v3_default_s2_c3 (attempt 1) threads=5 mem=12.5
+11:07:31 end dtruth_v3_default_s1_c11 rc=0 ok=True
+11:07:31 start dtruth_v3_default_s2_c4 (attempt 1) threads=5 mem=12.5
+11:08:12 end dtruth_v3_default_s2_c0 rc=0 ok=True
+11:08:12 end dtruth_v3_default_s2_c3 rc=0 ok=True
+11:08:12 start dtruth_v3_default_s2_c5 (attempt 1) threads=4 mem=10.0
+11:08:12 start dtruth_v3_default_s2_c6 (attempt 1) threads=5 mem=12.5
+11:08:22 end dtruth_v3_default_s2_c1 rc=0 ok=True
+11:08:22 end dtruth_v3_default_s2_c2 rc=0 ok=True
+11:08:22 start dtruth_v3_default_s2_c7 (attempt 1) threads=4 mem=10.0
+11:08:22 start dtruth_v3_default_s2_c8 (attempt 1) threads=5 mem=12.5
+11:21:47 end dtruth_v3_default_s2_c4 rc=0 ok=True
+11:21:47 start dtruth_v3_default_s2_c9 (attempt 1) threads=5 mem=12.5
+11:22:28 end dtruth_v3_default_s2_c5 rc=0 ok=True
+11:22:28 end dtruth_v3_default_s2_c6 rc=0 ok=True
+11:22:28 end dtruth_v3_default_s2_c7 rc=0 ok=True
+11:22:28 start dtruth_v3_default_s2_c10 (attempt 1) threads=3 mem=7.5
+11:22:28 start dtruth_v3_default_s2_c11 (attempt 1) threads=4 mem=10.0
+11:22:38 end dtruth_v3_default_s2_c8 rc=0 ok=True
+11:34:19 end dtruth_v3_default_s2_c9 rc=0 ok=True
+11:34:40 end dtruth_v3_default_s2_c10 rc=0 ok=True
+11:34:50 end dtruth_v3_default_s2_c11 rc=0 ok=True
+11:34:50 start diffusion_score (attempt 1) threads=2 mem=8
+11:44:02 end diffusion_score rc=0 ok=True
+11:44:02 ALL DONE failed=[]

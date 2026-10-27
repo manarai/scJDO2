@@ -1,0 +1,156 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_transition_s3_k10_selected.npz",
+  "array_sha256": "26e627161d586b4d523b68042ad4a3b9e364f78414076f915602c8eba66fa722",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "selected",
+  "dataset": "v3_transition_s3",
+  "finished_utc": "2026-10-22T13:05:04.376557Z",
+  "in_process_cpu_seconds": 69.393,
+  "k": 10,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.668,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.146,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.079,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.467,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.241,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "n_cells": 12784,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 11.037576947605714,
+      "final_err": 8.732966815723306e-10,
+      "from_day": 2,
+      "n_iter": 21,
+      "n_source": 187,
+      "n_target": 1447,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.02,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 11.145058393759449,
+      "final_err": 8.989661229123921e-10,
+      "from_day": 4,
+      "n_iter": 23,
+      "n_source": 1447,
+      "n_target": 11150,
+      "plan_mass": 1.0000000000000002,
+      "rows_zero": 0,
+      "seconds": 1.75,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 7326498816,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_transition_s3.npz",
+  "prepared_sha256": "c15885f34fe0d7af76c27d235c528a6e4cde1a5a4acc5e2978b6c1556c45d503",
+  "preset": "v3_transition",
+  "scores": {
+    "auc_lam1": 0.42268570241239234,
+    "fate_axis_abs_cos_at_saddle": 0.42511520384132784,
+    "jref_relative_frobenius_median": 1.0033725656257855,
+    "median_lam1_committed": 0.022886469209605985,
+    "median_lam1_saddle": 0.021916863627732833,
+    "n_committed": 9098,
+    "n_saddle": 365,
+    "transition_abs_offset": 0,
+    "transition_bin_medians": "[0.024873, 0.025019, 0.024504, 0.021715, 0.020764, 0.020972, 0.021046, 0.021012, 0.021879, 0.02246, 0.023178, 0.024105]",
+    "transition_detected_bin": 1,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 1,
+    "transition_peak_to_median": 1.1285169322306723,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": 0,
+    "transition_true_bin": 1
+  },
+  "seed": 3,
+  "started_utc": "2026-10-22T13:03:39.519382Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_transition_s3_k10_selected",
+  "wall_seconds": 84.857
+}

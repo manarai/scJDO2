@@ -1,0 +1,14 @@
+{
+  "embedding": "benchmarks/real_flow/arrays/embeddings/larry_x_pca30.npz",
+  "finished_utc": "2026-10-19T06:20:04.607222+00:00",
+  "input_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+  "n_cells": 130887,
+  "n_hvg": 2000,
+  "normalization_target": 2249.0,
+  "sample_per_time": 4000,
+  "sample_seed": 0,
+  "started_utc": "2026-10-19T06:19:53.630778+00:00",
+  "task": "orient/S11",
+  "unit": "prepare_larry",
+  "wall_seconds": 10.976
+}

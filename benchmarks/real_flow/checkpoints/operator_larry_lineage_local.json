@@ -1,0 +1,19 @@
+{
+  "dataset": "larry",
+  "details": {
+    "implementation": "scjdo2.orient.base.local_jacobian",
+    "k_neighbours": 30,
+    "ridge": 0.001
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:58:27.865710+00:00",
+  "n_cells": 1321,
+  "operator": "local",
+  "operator_path": "benchmarks/real_flow/arrays/operators/larry_lineage_local.npz",
+  "seed": null,
+  "source": "lineage",
+  "started_utc": "2026-10-19T06:58:26.032139+00:00",
+  "task": "orient/S11",
+  "unit": "operator_larry_lineage_local",
+  "wall_seconds": 1.834
+}

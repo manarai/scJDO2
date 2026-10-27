@@ -1,0 +1,26 @@
+{
+  "finished_utc": "2026-10-21T04:45:42.949478Z",
+  "in_process_cpu_seconds": 11.052,
+  "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s1.h5ad",
+  "input_sha256": "d5dd02a5b42a12e25d4cf9dc57cf803691a9b55681fe1ce7cb139f7cbb998ba5",
+  "n_cells": 12654,
+  "part_a_truth_free": true,
+  "pca50": {
+    "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/embeddings.npz",
+    "sha256": "fc9218040df16ecd3d721896b513319607607db64c16c420a1bbd98b2d81bca3",
+    "source": "S12 PCA-50"
+  },
+  "peak_rss_bytes": 2894200832,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s1.npz",
+  "prepared_sha256": "bbac3d5b56a3be246cc4117326910fd62376eef1ab54f3338593504f6996e2f2",
+  "started_utc": "2026-10-21T04:45:31.843457Z",
+  "strict_pseudotime": {
+    "key": "day2_strict_r0",
+    "path": "benchmarks/synthetic_multimodal/data/s10/v3_default_s1/palantir.npz",
+    "sha256": "038b2304d680f4e24ba8f9b898f4df7edcae388b683fc6066121bfe143d5ea22",
+    "source": "reused S10 strict r0"
+  },
+  "task": "orient/S14",
+  "unit": "prepare_v3_default_s1",
+  "wall_seconds": 11.106
+}

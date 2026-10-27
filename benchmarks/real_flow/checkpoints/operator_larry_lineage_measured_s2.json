@@ -1,0 +1,18 @@
+{
+  "dataset": "larry",
+  "details": {
+    "config": "MeasuredDrift default (n_epochs=1500, batch=256, hidden=96x3)",
+    "seed": 2
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:57:43.412637+00:00",
+  "n_cells": 1321,
+  "operator": "measured",
+  "operator_path": "benchmarks/real_flow/arrays/operators/larry_lineage_measured_s2.npz",
+  "seed": 2,
+  "source": "lineage",
+  "started_utc": "2026-10-19T06:57:24.881213+00:00",
+  "task": "orient/S11",
+  "unit": "operator_larry_lineage_measured_s2",
+  "wall_seconds": 18.531
+}

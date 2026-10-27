@@ -1,0 +1,76 @@
+{
+  "dim": 10,
+  "embedding": "pca10",
+  "finished_utc": "2026-10-20T22:51:44.830096Z",
+  "in_process_cpu_seconds": 26.708,
+  "input_sha256": "f3d9743121031d2e8a2379ddf50648359fd6f9cd1d73eefcc0ab9244f26e30da",
+  "measured_drift": {
+    "fit_device": "mps:0",
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "jacobian_device": "cpu",
+    "n_fit_cells": 1626,
+    "seconds": 14.4,
+    "seed": 0,
+    "weight_decay": 0.0001
+  },
+  "median_ot_speed": 0.21089628338813782,
+  "ot_library": {
+    "name": "POT",
+    "version": "0.9.7.post1"
+  },
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 31.061874768351245,
+      "final_err": 8.692189867417961e-10,
+      "from_day": 2,
+      "n_iter": 14,
+      "n_source": 186,
+      "n_target": 1440,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 29.146389547021034,
+      "final_err": 7.390081901687091e-10,
+      "from_day": 4,
+      "n_iter": 16,
+      "n_source": 1440,
+      "n_target": 11028,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.97,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca10.npz",
+  "peak_rss_bytes": 3774545920,
+  "scores": {
+    "auc_lam1": 0.8947830626677856,
+    "auc_soft_axis_curvature": 0.9288122616646299,
+    "auc_tangent5_lam1": 0.7848810102229616,
+    "fate_axis_abs_cos_at_saddle": 0.9600962751191895,
+    "fraction_saddle": 0.02908171329223961,
+    "median_lam1_committed": 0.0017340121125091876,
+    "median_lam1_saddle": 0.0113330563883189,
+    "n_committed": 8859,
+    "n_saddle": 368,
+    "soft_axis_abs_cos_fate_axis": 0.9981131928749349
+  },
+  "sha256": "3a89db300e71f3e6c8806724d88340411095f1c7fa27bb63ca79c3932c7200c7",
+  "started_utc": "2026-10-20T22:51:15.508064Z",
+  "task": "orient/S12",
+  "unit": "ot_v3_transition_s1_pca10",
+  "wall_seconds": 29.322
+}

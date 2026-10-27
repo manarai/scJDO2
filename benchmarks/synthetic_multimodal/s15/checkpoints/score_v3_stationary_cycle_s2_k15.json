@@ -1,0 +1,41 @@
+{
+  "array_key": "J",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/operators/score_v3_stationary_cycle_s2_k15.npz",
+  "array_sha256": "d4a2789fd25450f9336732c6955dccbc6e875c5dbeb8a14be51322420d762c84",
+  "configuration": {
+    "batch_size": 256,
+    "beta": 1.0,
+    "depth": 3,
+    "esm_laplacian": "exact",
+    "hidden": 96,
+    "loss": "esm",
+    "lr": 0.0005,
+    "n_epochs": 1500,
+    "seed": 0
+  },
+  "dataset": "v3_stationary_cycle_s2",
+  "finished_utc": "2026-10-24T18:09:04.595018Z",
+  "in_process_cpu_seconds": 33.536,
+  "input": {
+    "s10_checkpoint": "benchmarks/synthetic_multimodal/s10/checkpoints/fit_v3_stationary_cycle_s2_pca.json",
+    "s10_fit_path": "benchmarks/synthetic_multimodal/data/s10/v3_stationary_cycle_s2/fit_pca.npz",
+    "s10_fit_sha256": "fd9ccb4dcf2d16cf5c517815fad27c27f6894fc6fcefde56291d3d4ee0403dc4",
+    "s10_labelling_variant": "raw_shared",
+    "source": "S10 observed PCA with its first k components"
+  },
+  "k": 15,
+  "observed_fit_complete_before_truth_scoring": true,
+  "operator": "J_score",
+  "pca15_source": "No S10 J_score artifact exists in PCA-15; refit exactly with S10 EnergyDrift settings in the matching observed PCA-k space.",
+  "peak_rss_bytes": 537346048,
+  "stage": "operators",
+  "started_utc": "2026-10-24T18:08:30.184041Z",
+  "symmetry": {
+    "max_asym": 2.7763010734815907e-07,
+    "median_asym": 1.6253002854682563e-07
+  },
+  "task": "orient/S15",
+  "truth_keys_accessed": false,
+  "unit": "score_v3_stationary_cycle_s2_k15",
+  "wall_seconds": 34.411
+}

@@ -1,0 +1,80 @@
+/Users/terooatt/miniconda3/lib/python3.13/functools.py:934: ImplicitModificationWarning: Transforming to str index.
+  return dispatch(args[0].__class__)(*args, **kw)
+INFO     Solving `1` problems                                                   
+INFO     Solving problem BirthDeathProblem[stage='prepared', shape=(2000,       
+         2000)].                                                                
+/Users/terooatt/miniconda3/lib/python3.13/functools.py:934: ImplicitModificationWarning: Transforming to str index.
+  return dispatch(args[0].__class__)(*args, **kw)
+INFO     Solving `1` problems                                                   
+INFO     Solving problem BirthDeathProblem[stage='prepared', shape=(2000,       
+         2000)].                                                                
+{
+  "finished_utc": "2026-10-22T18:20:06.801214+00:00",
+  "n_per_day": 2000,
+  "n_velocity_cells": 4000,
+  "pairs": [
+    {
+      "converged": true,
+      "epsilon": 3.6491748235646067,
+      "from_day": 2.0,
+      "library": "moscot",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 72.98349647129213,
+      "n_source": 2000,
+      "n_target": 2000,
+      "plan_shape": [
+        2000,
+        2000
+      ],
+      "rank": 50,
+      "solution_rank": 50,
+      "to_day": 4.0,
+      "version": "0.5.2"
+    },
+    {
+      "converged": true,
+      "epsilon": 7.118714509889772,
+      "from_day": 4.0,
+      "library": "moscot",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 142.37429019779543,
+      "n_source": 2000,
+      "n_target": 2000,
+      "plan_shape": [
+        2000,
+        2000
+      ],
+      "rank": 50,
+      "solution_rank": 50,
+      "to_day": 6.0,
+      "version": "0.5.2"
+    }
+  ],
+  "rank": 50,
+  "solver": "lowrank_r50",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_lowrank_r50_2000",
+  "velocity_path": "benchmarks/scaling/data/velocity_lowrank_r50_2000.npz",
+  "wall_seconds": 6.009,
+  "wall_seconds_internal": 6.009
+}
+        8.09 real        10.30 user         1.65 sys
+           746913792  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              109445  page reclaims
+                5687  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4440  voluntary context switches
+               67689  involuntary context switches
+         83012347437  instructions retired
+         30776357690  cycles elapsed
+           515917792  peak memory footprint

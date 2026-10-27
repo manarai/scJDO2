@@ -1,0 +1,10 @@
+{
+  "dataset": "larry",
+  "finished_utc": "2026-10-19T07:51:15.277435+00:00",
+  "n_seeds": 5,
+  "source": "lineage",
+  "started_utc": "2026-10-19T07:49:52.615182+00:00",
+  "task": "orient/S11",
+  "unit": "null_local_larry_lineage",
+  "wall_seconds": 82.662
+}

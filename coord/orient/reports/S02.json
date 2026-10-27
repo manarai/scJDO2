@@ -1,0 +1,518 @@
+{
+  "artifacts": [
+    {
+      "bytes": 26071,
+      "committed": true,
+      "path": "scripts/orient_end_to_end.py",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "e448d5c52c88364193e1fe245b433be15b78c092e4c3db4807efe23791e29e1b"
+    },
+    {
+      "bytes": 4290,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/MANIFEST.csv",
+      "regenerate": "python scripts/make_synthetic_multimodal.py --preset stationary_cycle --seed 0; python scripts/make_synthetic_multimodal.py --preset stationary_cycle --seed 1; python scripts/make_synthetic_multimodal.py --preset stationary_cycle --seed 2",
+      "sha256": "8515c77fd86df8a14c6c26d8f1db66c9f0f43261c7526b49c64aa402596d9ed6"
+    },
+    {
+      "bytes": 58230,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s02/results.csv",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "d2d448953d55288bf74b6f822df9e255806ec1bd4d48a656c339d3c1384fae85"
+    },
+    {
+      "bytes": 15058,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s02/summary.csv",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "534f99625b2fa57771bb66d9c01b44913e57dbbb267b0a0cd236a9b651522f21"
+    },
+    {
+      "bytes": 5301,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s02/RESULT_S02.md",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "fce29de63dbc58d5d9ae2efa9bc8e9e68b4be428f817794289eb7d595d16f2a7"
+    },
+    {
+      "bytes": 205596,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s02/RUN_METADATA.json",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "ba1fc14f3d8627a9698ab95c15f060ace382cfc35bef39b6766e2849e375322a"
+    },
+    {
+      "bytes": 51540,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s02/sign_agreement.png",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "126edd30c7157d90306fe3da7d91b409088d9fb23f6ad34eb45b11d90bd36370"
+    },
+    {
+      "bytes": 47678,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s02/oriented_fraction.png",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "afac891baddc05563775a6cce9b035ef7a708008f3e223c242424cd68e393c3f"
+    },
+    {
+      "bytes": 41356,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s02/flags_by_preset.png",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "0235faa725efe775aa6107fe2be8c59d4e5faf4a336339077bd0ae371fd576e8"
+    },
+    {
+      "bytes": 100634764,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/default_s0_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "1b98844c743bc61aff390d7d203e9ad2dc3a6f62293b154f5903363449654a51"
+    },
+    {
+      "bytes": 100632097,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/default_s0_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "60e64ef018ac0c2202d79530fbcf4804175ab3eb49ac260e3d3fc0eb3504ab58"
+    },
+    {
+      "bytes": 95066515,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/default_s1_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "4ddf6275e50c5fc774d56fb3c7832bd3269a416911608addadece5def5e1428a"
+    },
+    {
+      "bytes": 95073654,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/default_s1_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "2363e6849bd426de64d4d00c61ad8a24ef419ec26fe040034e2bcd15df093146"
+    },
+    {
+      "bytes": 97468373,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/default_s2_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "81bb51fdaabb4ca5d604a0acbed630e869bf70cd1602a2ffc954232350fb5322"
+    },
+    {
+      "bytes": 97494891,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/default_s2_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "08be68cdbb2949ae57bd5923dd8239d2c55e281f56159931c9eb4af28b371d90"
+    },
+    {
+      "bytes": 97483074,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stress_s0_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "aaef7bc4c7f6ee242fa7d5e32473673ded57e7b58cea73cbc468fed3f8b5e525"
+    },
+    {
+      "bytes": 97476847,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stress_s0_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "cc96c26095327d5bb8b193ad56423f4be8629d5ed9d48ac18a4b550ab3d99184"
+    },
+    {
+      "bytes": 84159283,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stress_s1_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "18e597adf2ddd94fb62398828432bf108028dba84b3d8d1d4319196547f400c6"
+    },
+    {
+      "bytes": 84169118,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stress_s1_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "9c2154c00a7d1eaefeabe7b537e773eb849aa975672d16c1387ebd815b7d13f1"
+    },
+    {
+      "bytes": 86017020,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stress_s2_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "386c7f6f5f467fe9918fb4911e96cc74a08c8e6b8c8dc7652c1c0c0707e0f94f"
+    },
+    {
+      "bytes": 86028294,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stress_s2_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "09b564a1ddc9d415b0e11dcd10c427933185e858cd4c755ee8f668466daa8ddb"
+    },
+    {
+      "bytes": 97477459,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/batch_s0_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "77c894b26786b01ac13f5f05429f526ee082a32feff0b8d6dd5225c05332432d"
+    },
+    {
+      "bytes": 97476255,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/batch_s0_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "d28b888db713fbff4e524448353430024e625b8468f38cacb5f1ed695e6148e8"
+    },
+    {
+      "bytes": 93941103,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/batch_s1_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "9aa715e7a42c62e5b0762d6a5c511a501dfda8d4f2f334899d14e5112a254eaf"
+    },
+    {
+      "bytes": 93958183,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/batch_s1_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "1b295bd7042cdcd9fcec7694d11fd4f8aa305f906947d372f075db4ed6690f32"
+    },
+    {
+      "bytes": 97550402,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/batch_s2_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "51df7fac4153f4271329f26ec8c3fcefde04d2d1d87cc12de768a891ed8419b7"
+    },
+    {
+      "bytes": 97550667,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/batch_s2_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "953f9d8a464e8acbfc43179ac157450e3135f4abb9b6a3c13425d08197a0dced"
+    },
+    {
+      "bytes": 77773546,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stationary_cycle_s0_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "a5e2399ead2e38d3c24005d23374f5a905ea1f2631645222af3b3a30e37d0c84"
+    },
+    {
+      "bytes": 77775003,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stationary_cycle_s0_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "da09cc236754444186c017ce46fcba923b2763980bffd69243fb0b20ad47571d"
+    },
+    {
+      "bytes": 76604735,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stationary_cycle_s1_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "bf38e1e227a5cb3746ae9e6a3ecfe08533177fa5ef353863e31063b31409a40d"
+    },
+    {
+      "bytes": 76600089,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stationary_cycle_s1_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "aed14051a20e94359575b995a6902c8ca4de604232588d394b3bbb4016156e96"
+    },
+    {
+      "bytes": 74362446,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stationary_cycle_s2_pca.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "20f783a12767da4215dd16504eaf4fdaff3e2f7df94983102d4a36d2039562ae"
+    },
+    {
+      "bytes": 74346627,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/s02/stationary_cycle_s2_fa.h5ad",
+      "regenerate": "python scripts/orient_end_to_end.py",
+      "sha256": "440afe1f15f8a6e4b6480fc8a8627a50b42a51f139ef23e8d02df66b810e2dd4"
+    }
+  ],
+  "compute": {
+    "cpu_hours": 0.9,
+    "gpu_hours": 0.0,
+    "hardware": "macOS local desktop; arm64; logical_cpu=14"
+  },
+  "deviations": [
+    "The initial managed background shell was terminated by the 2-hour wait limit after 14 checkpointed units. The remaining 10 units were resumed with nohup+caffeinate; matching local checkpoints were reused and no completed unit was refit.",
+    "Aggregate CPU time was not recoverable after that managed-shell termination. cpu_hours=0.90 is a conservative estimate from the recorded 2-unit time -lp sample (235.46 CPU seconds), scaled to 24 units plus regeneration and QA; it is below the 6-hour budget.",
+    "Three fixed default/PCA sign-agreement gates failed; parameters, seeds, data, and thresholds were not changed."
+  ],
+  "finished_utc": "2026-10-16T23:15:21.398260Z",
+  "metrics": {
+    "gate_labelling_default": {
+      "oriented_min": 0.7079165475850243,
+      "oriented_pass": true,
+      "oriented_per_seed": [
+        0.7404748757592491,
+        0.740859900555718,
+        0.7079165475850243
+      ],
+      "oriented_threshold": 0.3,
+      "sign_min": 0.8410119292472233,
+      "sign_pass": false,
+      "sign_per_seed": [
+        0.8608602150537634,
+        0.8410119292472233,
+        0.8447234967399179
+      ],
+      "sign_threshold": 0.85
+    },
+    "gate_lineage_default": {
+      "oriented_min": 0.4298370963132323,
+      "oriented_pass": true,
+      "oriented_per_seed": [
+        0.4569298729983435,
+        0.4530564492541679,
+        0.4298370963132323
+      ],
+      "oriented_threshold": 0.3,
+      "sign_min": 0.7734851565677104,
+      "sign_pass": false,
+      "sign_per_seed": [
+        0.8086897945436173,
+        0.7762700069589422,
+        0.7734851565677104
+      ],
+      "sign_threshold": 0.9
+    },
+    "gate_lineage_labelling_default": {
+      "oriented_min": 0.7822234924264075,
+      "oriented_pass": true,
+      "oriented_per_seed": [
+        0.8042517945886251,
+        0.8151506288388418,
+        0.7822234924264075
+      ],
+      "oriented_threshold": 0.5,
+      "sign_min": 0.8027154906397861,
+      "sign_pass": false,
+      "sign_per_seed": [
+        0.8334245575624886,
+        0.8077889447236181,
+        0.8027154906397861
+      ],
+      "sign_threshold": 0.9
+    },
+    "gate_stationary_non_equilibrium": {
+      "minimum": 1.0,
+      "pass": true,
+      "per_seed": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "threshold": 0.8
+    },
+    "hash_unchanged_all": true,
+    "labelled_fit_nll_by_dataset": {
+      "batch_s0_fa": {
+        "epochs": 400,
+        "held_out_nll": -44.904685974121094
+      },
+      "batch_s0_pca": {
+        "epochs": 400,
+        "held_out_nll": -44.904903411865234
+      },
+      "batch_s1_fa": {
+        "epochs": 400,
+        "held_out_nll": -45.44930267333984
+      },
+      "batch_s1_pca": {
+        "epochs": 400,
+        "held_out_nll": -45.448097229003906
+      },
+      "batch_s2_fa": {
+        "epochs": 400,
+        "held_out_nll": -12.816488265991213
+      },
+      "batch_s2_pca": {
+        "epochs": 400,
+        "held_out_nll": -12.816804885864258
+      },
+      "default_s0_fa": {
+        "epochs": 400,
+        "held_out_nll": -32.862422943115234
+      },
+      "default_s0_pca": {
+        "epochs": 400,
+        "held_out_nll": -32.86061096191406
+      },
+      "default_s1_fa": {
+        "epochs": 400,
+        "held_out_nll": -32.78091049194336
+      },
+      "default_s1_pca": {
+        "epochs": 400,
+        "held_out_nll": -32.777915954589844
+      },
+      "default_s2_fa": {
+        "epochs": 400,
+        "held_out_nll": -11.299668312072754
+      },
+      "default_s2_pca": {
+        "epochs": 400,
+        "held_out_nll": -11.299970626831056
+      },
+      "stationary_cycle_s0_fa": {
+        "epochs": 400,
+        "held_out_nll": 0.0229815244674682
+      },
+      "stationary_cycle_s0_pca": {
+        "epochs": 400,
+        "held_out_nll": 0.0232076048851013
+      },
+      "stationary_cycle_s1_fa": {
+        "epochs": 400,
+        "held_out_nll": -0.2162266373634338
+      },
+      "stationary_cycle_s1_pca": {
+        "epochs": 400,
+        "held_out_nll": -0.2160257697105407
+      },
+      "stationary_cycle_s2_fa": {
+        "epochs": 400,
+        "held_out_nll": 0.1705437004566192
+      },
+      "stationary_cycle_s2_pca": {
+        "epochs": 400,
+        "held_out_nll": 0.1706417202949524
+      },
+      "stress_s0_fa": {
+        "epochs": 400,
+        "held_out_nll": -38.729469299316406
+      },
+      "stress_s0_pca": {
+        "epochs": 400,
+        "held_out_nll": -38.72856521606445
+      },
+      "stress_s1_fa": {
+        "epochs": 400,
+        "held_out_nll": -33.578487396240234
+      },
+      "stress_s1_pca": {
+        "epochs": 400,
+        "held_out_nll": -33.57770538330078
+      },
+      "stress_s2_fa": {
+        "epochs": 400,
+        "held_out_nll": -9.513447761535645
+      },
+      "stress_s2_pca": {
+        "epochs": 400,
+        "held_out_nll": -9.513096809387209
+      }
+    },
+    "max_symmetry": 6.597053925361251e-07,
+    "oriented_fraction_by_preset_and_source": {
+      "batch|fa|labelling|raw": 0.5526360038636605,
+      "batch|fa|labelling|smoothed": 0.7809666251583978,
+      "batch|fa|lineage+labelling|raw": 0.6693924828761771,
+      "batch|fa|lineage+labelling|smoothed": 0.8321932494933336,
+      "batch|fa|lineage|none": 0.2891335572780613,
+      "batch|pca|labelling|raw": 0.577999057636208,
+      "batch|pca|labelling|smoothed": 0.6604147976357785,
+      "batch|pca|lineage+labelling|raw": 0.7029476994510987,
+      "batch|pca|lineage+labelling|smoothed": 0.7433816739234255,
+      "batch|pca|lineage|none": 0.3948949585412972,
+      "default|fa|labelling|raw": 0.5816663967815694,
+      "default|fa|labelling|smoothed": 0.812362820542745,
+      "default|fa|lineage+labelling|raw": 0.7175706184403142,
+      "default|fa|lineage+labelling|smoothed": 0.8662244070811456,
+      "default|fa|lineage|none": 0.3473775871825895,
+      "default|pca|labelling|raw": 0.6278437061797757,
+      "default|pca|labelling|smoothed": 0.7297504412999971,
+      "default|pca|lineage+labelling|raw": 0.7507781682227973,
+      "default|pca|lineage+labelling|smoothed": 0.8005419719512915,
+      "default|pca|lineage|none": 0.4466078061885812,
+      "stationary_cycle|fa|labelling|raw": 0.6663883752952217,
+      "stationary_cycle|fa|labelling|smoothed": 0.7016412667798916,
+      "stationary_cycle|fa|lineage+labelling|raw": 0.6663883752952217,
+      "stationary_cycle|fa|lineage+labelling|smoothed": 0.7016412667798916,
+      "stationary_cycle|fa|lineage|none": 0.0,
+      "stationary_cycle|pca|labelling|raw": 0.6460848231192254,
+      "stationary_cycle|pca|labelling|smoothed": 0.6222490895514347,
+      "stationary_cycle|pca|lineage+labelling|raw": 0.6460848231192254,
+      "stationary_cycle|pca|lineage+labelling|smoothed": 0.6222490895514347,
+      "stationary_cycle|pca|lineage|none": 0.0,
+      "stress|fa|labelling|raw": 0.5067763985926503,
+      "stress|fa|labelling|smoothed": 0.7421702879508164,
+      "stress|fa|lineage+labelling|raw": 0.5838258006452922,
+      "stress|fa|lineage+labelling|smoothed": 0.7793085125464727,
+      "stress|fa|lineage|none": 0.1663777458802129,
+      "stress|pca|labelling|raw": 0.6166941754309846,
+      "stress|pca|labelling|smoothed": 0.715354064909346,
+      "stress|pca|lineage+labelling|raw": 0.6742361072952988,
+      "stress|pca|lineage+labelling|smoothed": 0.7528253495724222,
+      "stress|pca|lineage|none": 0.19942664813397
+    },
+    "sign_agreement_by_preset_and_source": {
+      "batch|fa|labelling|raw": 0.7937796130472391,
+      "batch|fa|labelling|smoothed": 0.7806954157177165,
+      "batch|fa|lineage+labelling|raw": 0.7263275144954203,
+      "batch|fa|lineage+labelling|smoothed": 0.7362530410406212,
+      "batch|fa|lineage|none": 0.6159762223082156,
+      "batch|pca|labelling|raw": 0.8660268058721985,
+      "batch|pca|labelling|smoothed": 0.8411011237532118,
+      "batch|pca|lineage+labelling|raw": 0.7999376495004092,
+      "batch|pca|lineage+labelling|smoothed": 0.7977513015636211,
+      "batch|pca|lineage|none": 0.7617749862101054,
+      "default|fa|labelling|raw": 0.7812865978214706,
+      "default|fa|labelling|smoothed": 0.7352596751716964,
+      "default|fa|lineage+labelling|raw": 0.7277452872085991,
+      "default|fa|lineage+labelling|smoothed": 0.7081539666692059,
+      "default|fa|lineage|none": 0.6685123770173472,
+      "default|pca|labelling|raw": 0.896189020409267,
+      "default|pca|labelling|smoothed": 0.8488652136803015,
+      "default|pca|lineage+labelling|raw": 0.8244273815940234,
+      "default|pca|lineage+labelling|smoothed": 0.8146429976419642,
+      "default|pca|lineage|none": 0.7861483193567566,
+      "stationary_cycle|fa|labelling|raw": 0.9021422913015854,
+      "stationary_cycle|fa|labelling|smoothed": 0.9352438409704562,
+      "stationary_cycle|fa|lineage+labelling|raw": 0.9021422913015854,
+      "stationary_cycle|fa|lineage+labelling|smoothed": 0.9352438409704562,
+      "stationary_cycle|fa|lineage|none": null,
+      "stationary_cycle|pca|labelling|raw": 0.962788669398638,
+      "stationary_cycle|pca|labelling|smoothed": 0.9724291463010476,
+      "stationary_cycle|pca|lineage+labelling|raw": 0.962788669398638,
+      "stationary_cycle|pca|lineage+labelling|smoothed": 0.9724291463010476,
+      "stationary_cycle|pca|lineage|none": null,
+      "stress|fa|labelling|raw": 0.7174503598077114,
+      "stress|fa|labelling|smoothed": 0.7167000921812586,
+      "stress|fa|lineage+labelling|raw": 0.6953396107712756,
+      "stress|fa|lineage+labelling|smoothed": 0.701073426688929,
+      "stress|fa|lineage|none": 0.6504337249624971,
+      "stress|pca|labelling|raw": 0.8356586397328524,
+      "stress|pca|labelling|smoothed": 0.8294390323864839,
+      "stress|pca|lineage+labelling|raw": 0.8075600137714422,
+      "stress|pca|lineage+labelling|smoothed": 0.809415800286729,
+      "stress|pca|lineage|none": 0.7591973291463002
+    },
+    "stationary_cycle_n_cells": {
+      "0": 2842,
+      "1": 2809,
+      "2": 2766
+    },
+    "wall_hours": 2.708
+  },
+  "observations": [
+    "All 24 dataset-by-embedding units completed, producing 120 result rows and 24 local fitted H5AD checkpoints.",
+    "The default/PCA minimum sign agreements were 0.7735 for lineage, 0.8410 for smoothed labelling, and 0.8027 for lineage+labelling; each is below its fixed sign gate.",
+    "All default/PCA oriented-fraction gates passed: minima were 0.4298 (lineage), 0.7079 (labelling), and 0.7822 (combined).",
+    "The stationary-cycle combined/PCA non-equilibrium fraction among identified cells was 1.0 for each seed; the fixed 0.8 gate passed.",
+    "Energy-operator symmetry maximum was 6.597e-07, below 1e-4, and every orient call preserved its J hash.",
+    "The regenerated stationary-cycle cell counts were 2842, 2809, and 2766 for seeds 0, 1, and 2."
+  ],
+  "questions": [],
+  "started_utc": "2026-10-16T20:32:54Z",
+  "status": "done",
+  "suggestions": [
+    "Review the default/PCA lineage and labelling sign disagreements by axis and clone-day support before proposing any threshold or method change, because all three fixed sign gates failed while coverage gates passed.",
+    "Compare the raw and smoothed labelling sensitivity rows in results.csv in a separately specified follow-up, because smoothing changed default/PCA mean sign agreement from 0.8962 (raw) to 0.8489 (smoothed)."
+  ],
+  "task": "orient/S02"
+}

@@ -1,0 +1,74 @@
+06:05:09 start dtruth_v3_default_s1_c2 (attempt 1) threads=7 mem=17.5
+06:05:09 start dtruth_v3_default_s1_c3 (attempt 1) threads=8 mem=20.0
+06:05:09 start dmeas_v3_default_s2 (attempt 1) threads=9 mem=24.0
+06:05:09 start dtruth_v3_default_s2_c0 (attempt 1) threads=10 mem=26.5
+06:05:09 start dtruth_v3_default_s2_c1 (attempt 1) threads=11 mem=29.0
+06:05:50 end dmeas_v3_default_s2 rc=0 ok=True
+06:05:50 start dtruth_v3_default_s2_c2 (attempt 1) threads=11 mem=27.5
+06:05:50 start dtruth_v3_default_s2_c3 (attempt 1) threads=12 mem=30.0
+06:47:43 adopted unit over 60 min: killing dtruth_v3_default_s0_c0
+06:48:05 adopted unit over 60 min: killing dtruth_v3_default_s0_c1
+06:48:07 start real_prepare (attempt 1) threads=8 mem=29.0
+06:49:25 start real_fit_larry_pca_seed0 (attempt 1) threads=8 mem=19.0
+06:49:25 start real_fit_larry_pca_seed1 (attempt 1) threads=10 mem=23.0
+06:49:25 start real_fit_larry_pca_seed2 (attempt 1) threads=12 mem=27.0
+06:50:47 adopted unit over 60 min: killing dtruth_v3_default_s0_c2
+06:50:59 adopted unit over 60 min: killing dtruth_v3_default_s0_c3
+06:51:01 start real_fit_larry_fa_seed0 (attempt 1) threads=12 mem=26.0
+06:51:52 end real_fit_larry_pca_seed0 rc=0 ok=True
+06:51:52 end real_fit_larry_pca_seed1 rc=0 ok=True
+06:51:52 end real_fit_larry_pca_seed2 rc=0 ok=True
+06:51:52 start real_fit_larry_fa_seed1 (attempt 1) threads=8 mem=18.0
+06:51:52 start real_fit_larry_fa_seed2 (attempt 1) threads=10 mem=22.0
+06:51:52 start real_palantir_larry (attempt 1) threads=12 mem=25.0
+06:52:42 end real_palantir_larry rc=0 ok=True
+06:52:42 start real_fit_scnt_pca_seed0 (attempt 1) threads=12 mem=26.0
+06:53:33 end real_fit_larry_fa_seed0 rc=0 ok=True
+06:53:33 start real_fit_scnt_pca_seed1 (attempt 1) threads=12 mem=26.0
+06:54:24 end real_fit_larry_fa_seed1 rc=0 ok=True
+06:54:24 start real_fit_scnt_pca_seed2 (attempt 1) threads=12 mem=26.0
+06:54:34 end real_fit_larry_fa_seed2 rc=0 ok=True
+06:54:34 start real_fit_scnt_fa_seed0 (attempt 1) threads=12 mem=26.0
+06:55:25 end real_fit_scnt_pca_seed0 rc=0 ok=True
+06:55:25 start real_fit_scnt_fa_seed1 (attempt 1) threads=12 mem=26.0
+06:56:16 end real_fit_scnt_pca_seed1 rc=0 ok=True
+06:56:16 start real_fit_scnt_fa_seed2 (attempt 1) threads=12 mem=26.0
+06:57:07 end real_fit_scnt_pca_seed2 rc=0 ok=True
+06:57:07 start real_palantir_scnt (attempt 1) threads=12 mem=25.0
+06:57:17 end real_fit_scnt_fa_seed0 rc=0 ok=True
+06:57:17 end real_palantir_scnt rc=0 ok=True
+06:57:17 start operators (attempt 1) threads=10 mem=24.0
+06:57:58 end real_fit_scnt_fa_seed1 rc=0 ok=True
+06:57:58 start transitions (attempt 1) threads=10 mem=28.0
+06:58:38 end real_fit_scnt_fa_seed2 rc=0 ok=True
+07:01:00 adopted unit over 60 min: killing dtruth_v3_default_s1_c0
+07:01:02 start real_score (attempt 1) threads=9 mem=29.5
+07:01:22 adopted unit over 60 min: killing dtruth_v3_default_s1_c1
+07:01:45 end real_score rc=0 ok=False
+07:01:45 start real_score (attempt 2) threads=8 mem=27.0
+07:02:25 end real_score rc=0 ok=False
+07:02:25 FAILED twice real_score
+07:02:25 start real_diffusion (attempt 1) threads=8 mem=27.0
+07:04:17 end real_diffusion rc=0 ok=True
+07:04:17 start score_orientation (attempt 1) threads=8 mem=27.0
+07:05:17 adopted unit over 60 min: killing dtruth_v3_default_s1_c2
+07:05:19 adopted unit over 60 min: killing dtruth_v3_default_s1_c3
+07:05:21 start dtruth_v3_default_s2_c0 (attempt 1) threads=7 mem=24.5
+07:05:21 start dtruth_v3_default_s2_c1 (attempt 1) threads=8 mem=27.0
+07:07:53 end operators rc=0 ok=True
+07:19:22 end transitions rc=0 ok=True
+07:22:10 start score_orientation_v3_default (attempt 1) threads=4 mem=13.0
+07:22:10 start score_orientation_v3_stress (attempt 1) threads=6 mem=21.0
+07:22:10 start score_orientation_v3_batch (attempt 1) threads=8 mem=29.0
+07:37:52 end score_orientation_v3_stress rc=0 ok=True
+07:37:52 start score_orientation_v3_transition (attempt 1) threads=8 mem=29.0
+07:38:12 end score_orientation_v3_default rc=0 ok=True
+07:39:13 end score_orientation_v3_batch rc=0 ok=True
+07:45:07 start dtruth_v3_default_s2_c2 (attempt 1) threads=3 mem=10.5
+07:45:07 start dtruth_v3_default_s2_c3 (attempt 1) threads=4 mem=13.0
+07:57:06 end score_orientation_v3_transition rc=0 ok=True
+07:57:06 start score_orientation (attempt 1) threads=3 mem=9.0
+07:57:17 end score_orientation rc=0 ok=True
+08:48:37 over 60 min: killing dtruth_v3_default_s2_c2
+08:48:37 over 60 min: killing dtruth_v3_default_s2_c3
+08:48:37 start dtruth_v3_default_s0_c0 (attempt 2, alone) threads=1 mem=2.5

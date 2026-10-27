@@ -1,0 +1,986 @@
+{
+  "artifacts": [
+    {
+      "bytes": 40509,
+      "committed": true,
+      "path": "scripts/s14_choose_k.py",
+      "regenerate": "source-controlled task script",
+      "sha256": "67b51cb2ed32cf35507cabc36b4e09cbd9eead13098ce596a40120461b2fe60f"
+    },
+    {
+      "bytes": 16496,
+      "committed": true,
+      "path": "scripts/s14_optimise.py",
+      "regenerate": "source-controlled task script",
+      "sha256": "c04bd2a1d8a91c7fbaa9756ccff46edb57c1d2b742125700ec93523d448fda03"
+    },
+    {
+      "bytes": 19772,
+      "committed": true,
+      "path": "scripts/s14_test.py",
+      "regenerate": "source-controlled task script",
+      "sha256": "2d94f4d3c908c8d51be410017076c1af287f9d01ccaf9026eb93fa23147dbcf2"
+    },
+    {
+      "bytes": 380,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/choose_k.csv",
+      "regenerate": ".sandbox/bin/python scripts/s14_choose_k.py <Part-A units>; then selection finalise",
+      "sha256": "7832702e3688e0c032805105d02c36a6f86cb31208e460b60b65cdeb60c9339c"
+    },
+    {
+      "bytes": 2868,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/k_selection_r1.json",
+      "regenerate": ".sandbox/bin/python scripts/s14_choose_k.py select-r1",
+      "sha256": "5dbfbd2cd429a399beba3ad6ee2fc81742a6e59bf9ef5ed07a8424fe649b1cc1"
+    },
+    {
+      "bytes": 1459,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/dev_auc_by_k.csv",
+      "regenerate": ".sandbox/bin/python scripts/s14_choose_k.py diagnostic-dev-auc",
+      "sha256": "1992bd27830b35ace072b6b026a1a5f011815873c938d19390e79f5ce6e3b0b5"
+    },
+    {
+      "bytes": 14361,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/optimisation_log.csv",
+      "regenerate": ".sandbox/bin/python scripts/s14_optimise.py <Part-B development units>; then finalise",
+      "sha256": "025906f42af6715b1d55147e719ea09a202d8fd47b5680ae061c75f1a528d267"
+    },
+    {
+      "bytes": 4004,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/selected_configuration.json",
+      "regenerate": ".sandbox/bin/python scripts/s14_optimise.py finalise",
+      "sha256": "ea75df5c36982e0ce312110f8dd22dd362245c9b37ae894cf4af39252b587465"
+    },
+    {
+      "bytes": 44471,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/test.csv",
+      "regenerate": ".sandbox/bin/python scripts/s14_test.py <Part-C units>; then finalise",
+      "sha256": "c8784eca67f31cd169fae88e577fec252935d334186020370dc756829e4655b2"
+    },
+    {
+      "bytes": 1733,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/gates.json",
+      "regenerate": ".sandbox/bin/python scripts/s14_test.py finalise",
+      "sha256": "463c3f53a1e22fb30ac999476ddd8dd0fd545c0026cdaeaa1e81a1391627ff2a"
+    },
+    {
+      "bytes": 5333,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/palantir_roots_test.csv",
+      "regenerate": ".sandbox/bin/python scripts/s14_test.py prepare --dataset <test dataset>",
+      "sha256": "b63c2837a52151e160e9750569a8e6361536cc22048a4f548fa08fdc2bf14418"
+    },
+    {
+      "bytes": 1167,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/RESULT_S14.md",
+      "regenerate": ".sandbox/bin/python scripts/s14_test.py finalise",
+      "sha256": "0876164b095a17a87a958b3cb0ebef8878bb31c841bd77bee0b49d37f9c8ca9b"
+    },
+    {
+      "bytes": 37941,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/cpu_ledger.csv",
+      "regenerate": ".sandbox/bin/python -c \"from scripts.s14_test import _ledger; _ledger()\"",
+      "sha256": "9d15bd4e8fbda119c7b21e883115d9a69ba732c58dd2ff204e5cfd1fc7e643f7"
+    },
+    {
+      "bytes": 79402,
+      "committed": true,
+      "path": "benchmarks/figures/orient/s14/test_auc_by_k.png",
+      "regenerate": ".sandbox/bin/python scripts/s14_test.py finalise",
+      "sha256": "483ae1c4cd7b7b291c1a84450781c847320d90581a1eca357ec24e5953605d27"
+    },
+    {
+      "bytes": 2016,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/s14/logs/final_regression.log",
+      "regenerate": ".sandbox/bin/python -m pytest -q tests/test_orient.py tests/test_smoke.py tests/test_synthetic_multimodal.py",
+      "sha256": "1579f879752423beed79f436eaee63d9ad8d36c2f43934469630520993cac239"
+    },
+    {
+      "bytes": 14682,
+      "committed": true,
+      "path": "benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+      "regenerate": ".sandbox/bin/python scripts/make_synthetic_multimodal.py --preset <preset> --seed <seed> --append-manifest",
+      "sha256": "743fed84e6eae531cecf7bccb036ce8f0b484b41219da2f573a55974e2844667"
+    },
+    {
+      "bytes": 1257884212,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s3.h5ad",
+      "regenerate": ".sandbox/bin/python scripts/make_synthetic_multimodal.py --preset v3_transition --seed 3 --append-manifest",
+      "sha256": "28d27cea26eb7112c7a6395046fe52bb202905f8a28ea34d5de452c5d8b37de3"
+    },
+    {
+      "bytes": 1268401945,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s4.h5ad",
+      "regenerate": ".sandbox/bin/python scripts/make_synthetic_multimodal.py --preset v3_transition --seed 4 --append-manifest",
+      "sha256": "30cd640d01c686442c424ae23a8a6d53548d7f9f371db8e96502ae1beb5bf457"
+    },
+    {
+      "bytes": 1228404629,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s3.h5ad",
+      "regenerate": ".sandbox/bin/python scripts/make_synthetic_multimodal.py --preset v3_default --seed 3 --append-manifest",
+      "sha256": "a8775b8ea069f284dbb046ac8c2ac2f8f831b775f3b89893ea372b430afc8621"
+    },
+    {
+      "bytes": 1200252540,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s0.h5ad",
+      "regenerate": ".sandbox/bin/python scripts/make_synthetic_multimodal.py --preset v3_nofork --seed 0 --append-manifest",
+      "sha256": "f70330db5953acb0d787d51433509f9c2aee5f5c8210504394eaf312627fc635"
+    },
+    {
+      "bytes": 1198612896,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s1.h5ad",
+      "regenerate": ".sandbox/bin/python scripts/make_synthetic_multimodal.py --preset v3_nofork --seed 1 --append-manifest",
+      "sha256": "09bb3d9bb16e0e4ee3da96952132cfef9644fe4e18cb93b2ab2b17ca8f1524d9"
+    },
+    {
+      "bytes": 1217362028,
+      "committed": false,
+      "path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s2.h5ad",
+      "regenerate": ".sandbox/bin/python scripts/make_synthetic_multimodal.py --preset v3_nofork --seed 2 --append-manifest",
+      "sha256": "f27243bbc340ee1a371784f952fc2cae6de90851fbcfe13587d0e880b1e1e89a"
+    }
+  ],
+  "choose_k_table": {
+    "amendment_disclosure": "Rule fixed after development fork AUCs had been seen; development data are tuning data and test seeds were not accessed by this recomputation.",
+    "candidates": [
+      {
+        "k": 5,
+        "mean_lineage_agreement": 0.5255634582212234,
+        "mean_null_max": 0.2370765276941941,
+        "mean_seed_stability": 0.825924462176498,
+        "n_datasets": 5
+      },
+      {
+        "k": 10,
+        "mean_lineage_agreement": 0.6747028427973508,
+        "mean_null_max": 0.2820794022444394,
+        "mean_seed_stability": 0.6676668055104961,
+        "n_datasets": 5
+      },
+      {
+        "k": 15,
+        "mean_lineage_agreement": 0.6993001830963994,
+        "mean_null_max": 0.2421530251016294,
+        "mean_seed_stability": 0.6184665344476254,
+        "n_datasets": 5
+      },
+      {
+        "k": 20,
+        "mean_lineage_agreement": 0.733886490028279,
+        "mean_null_max": 0.207224733109447,
+        "mean_seed_stability": 0.2291772043186639,
+        "n_datasets": 5
+      },
+      {
+        "k": 30,
+        "mean_lineage_agreement": 0.7548631719043235,
+        "mean_null_max": 0.1667048350223995,
+        "mean_seed_stability": 0.1433427459552326,
+        "n_datasets": 5
+      }
+    ],
+    "eligible_k": [
+      5,
+      10,
+      15
+    ],
+    "path": "benchmarks/synthetic_multimodal/s14/choose_k.csv",
+    "rule": "among k with mean seed stability >= 0.5, highest mean lineage agreement; ties within 0.02 by higher seed stability, then lower k; if none pass, use the most stable k",
+    "selection_locked_utc": "2026-10-21T08:25:06.005086Z",
+    "sha256": "7832702e3688e0c032805105d02c36a6f86cb31208e460b60b65cdeb60c9339c",
+    "stability_threshold": 0.5,
+    "truth_free": true
+  },
+  "compute": {
+    "budget_cpu_hours": 24.0,
+    "cpu_hours": 9.742230555555555,
+    "gpu_hours": 0.0,
+    "hardware": "local macOS desktop; .sandbox/bin/python; six-thread cap",
+    "maximum_recorded_rss_decimal_gb": 15.51,
+    "maximum_rss_log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_nofork_s2.log",
+    "timed_log_count": 263,
+    "wall_hours_summed": 10.196322222222223,
+    "within_budget": true
+  },
+  "cpu_hours": 9.742230555555555,
+  "dev_auc_by_k": {
+    "interpretation": "Historical all-k development diagnostic retained from the pre-amendment Part-A fit; Revision 1 selected k=15 without refitting this table. G4 uses the selected Part-B configuration at k=15.",
+    "path": "benchmarks/synthetic_multimodal/s14/dev_auc_by_k.csv",
+    "records": [
+      {
+        "auc_lam1": "0.8838913190985607",
+        "dataset": "v3_default_s0",
+        "diagnostic_only": "True",
+        "k": "5",
+        "n_committed": "12594",
+        "n_saddle": "22",
+        "preset": "v3_default",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.9958674404839245",
+        "dataset": "v3_default_s0",
+        "diagnostic_only": "True",
+        "k": "10",
+        "n_committed": "12594",
+        "n_saddle": "22",
+        "preset": "v3_default",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.9640701921549943",
+        "dataset": "v3_default_s0",
+        "diagnostic_only": "True",
+        "k": "15",
+        "n_committed": "12594",
+        "n_saddle": "22",
+        "preset": "v3_default",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.0692862402009615",
+        "dataset": "v3_default_s0",
+        "diagnostic_only": "True",
+        "k": "20",
+        "n_committed": "12594",
+        "n_saddle": "22",
+        "preset": "v3_default",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.0520305484574184",
+        "dataset": "v3_default_s0",
+        "diagnostic_only": "True",
+        "k": "30",
+        "n_committed": "12594",
+        "n_saddle": "22",
+        "preset": "v3_default",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.520221969265794",
+        "dataset": "v3_default_s1",
+        "diagnostic_only": "True",
+        "k": "5",
+        "n_committed": "12550",
+        "n_saddle": "28",
+        "preset": "v3_default",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.9978229937393285",
+        "dataset": "v3_default_s1",
+        "diagnostic_only": "True",
+        "k": "10",
+        "n_committed": "12550",
+        "n_saddle": "28",
+        "preset": "v3_default",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.9975498007968128",
+        "dataset": "v3_default_s1",
+        "diagnostic_only": "True",
+        "k": "15",
+        "n_committed": "12550",
+        "n_saddle": "28",
+        "preset": "v3_default",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.9909647125782585",
+        "dataset": "v3_default_s1",
+        "diagnostic_only": "True",
+        "k": "20",
+        "n_committed": "12550",
+        "n_saddle": "28",
+        "preset": "v3_default",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.9048776323278316",
+        "dataset": "v3_default_s1",
+        "diagnostic_only": "True",
+        "k": "30",
+        "n_committed": "12550",
+        "n_saddle": "28",
+        "preset": "v3_default",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.8936319182040454",
+        "dataset": "v3_transition_s0",
+        "diagnostic_only": "True",
+        "k": "5",
+        "n_committed": "8998",
+        "n_saddle": "350",
+        "preset": "v3_transition",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.7945089384942685",
+        "dataset": "v3_transition_s0",
+        "diagnostic_only": "True",
+        "k": "10",
+        "n_committed": "8998",
+        "n_saddle": "350",
+        "preset": "v3_transition",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.8105321817546757",
+        "dataset": "v3_transition_s0",
+        "diagnostic_only": "True",
+        "k": "15",
+        "n_committed": "8998",
+        "n_saddle": "350",
+        "preset": "v3_transition",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.7868678754008825",
+        "dataset": "v3_transition_s0",
+        "diagnostic_only": "True",
+        "k": "20",
+        "n_committed": "8998",
+        "n_saddle": "350",
+        "preset": "v3_transition",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.5458028768297718",
+        "dataset": "v3_transition_s0",
+        "diagnostic_only": "True",
+        "k": "30",
+        "n_committed": "8998",
+        "n_saddle": "350",
+        "preset": "v3_transition",
+        "seed": "0",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.6240963500640468",
+        "dataset": "v3_transition_s1",
+        "diagnostic_only": "True",
+        "k": "5",
+        "n_committed": "8859",
+        "n_saddle": "368",
+        "preset": "v3_transition",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.9194555279082437",
+        "dataset": "v3_transition_s1",
+        "diagnostic_only": "True",
+        "k": "10",
+        "n_committed": "8859",
+        "n_saddle": "368",
+        "preset": "v3_transition",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.816997698238588",
+        "dataset": "v3_transition_s1",
+        "diagnostic_only": "True",
+        "k": "15",
+        "n_committed": "8859",
+        "n_saddle": "368",
+        "preset": "v3_transition",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.8539488827377709",
+        "dataset": "v3_transition_s1",
+        "diagnostic_only": "True",
+        "k": "20",
+        "n_committed": "8859",
+        "n_saddle": "368",
+        "preset": "v3_transition",
+        "seed": "1",
+        "selection_k_star": "30"
+      },
+      {
+        "auc_lam1": "0.7215979082927212",
+        "dataset": "v3_transition_s1",
+        "diagnostic_only": "True",
+        "k": "30",
+        "n_committed": "8859",
+        "n_saddle": "368",
+        "preset": "v3_transition",
+        "seed": "1",
+        "selection_k_star": "30"
+      }
+    ]
+  },
+  "deviations": [
+    "Revision 1 replaced the original lineage-only rule with the documented stability-gated truth-free rule after development AUCs had been seen; no test seed was accessed for that change.",
+    "The completed k=30 optimisation is retained as a superseded record; Part B was rerun at the revised locked k=15.",
+    "Revision 2 permits deterministic dataset-generation units up to 90 minutes. The original transition-s3 writer/verifier stream failure was retried once alone as prescribed and its checksum/metadata were verified.",
+    "The user authorized exactly one memory exception for v3_nofork_s2 (14.445 GiB RSS, 0.445 GiB above the cap). This did not relax the 14 GiB cap for any later process.",
+    "The first final-regression wrapper was stopped by terminal job control before pytest began; its empty PID/log were removed and the identical suite was rerun once via nohup, completing successfully."
+  ],
+  "finished_utc": "2026-10-22T15:58:16Z",
+  "gate_G1_auc_band": {
+    "k_values": [
+      10,
+      15,
+      20
+    ],
+    "minimum_auc": 0.42268570241239234,
+    "n_required_rows": 9,
+    "pass": false,
+    "rule": "selected fork AUC >= 0.85 on every transition test seed at k* and immediate grid neighbours"
+  },
+  "gate_G2_transition": {
+    "nofork_pass": false,
+    "nofork_ratios": {
+      "v3_nofork_s0": 1.08310142182613,
+      "v3_nofork_s1": 1.6007122060681667,
+      "v3_nofork_s2": 1.0586567056652927
+    },
+    "pass": false,
+    "rule": "informative transition bin absolute offset <= 1; nofork peak/median below every transition-test ratio",
+    "transition_abs_offsets": {
+      "v3_transition_s2": 4,
+      "v3_transition_s3": 4,
+      "v3_transition_s4": 0
+    },
+    "transition_pass": false,
+    "transition_ratios": {
+      "v3_transition_s2": 1.6544984198803518,
+      "v3_transition_s3": 1.1159469915945643,
+      "v3_transition_s4": 1.30363086791583
+    }
+  },
+  "gate_G3_larry": {
+    "heldout_energy": {
+      "flow": 0.9433916433041751,
+      "mean_displacement": 0.8667826833933505,
+      "no_movement": 0.8815008253806457
+    },
+    "lineage_null_max": 0.14347252401822863,
+    "lineage_spearman": 0.5474766858993969,
+    "pass": false,
+    "rule": "selected LARRY lineage agreement exceeds all five nulls and held-out flow energy beats both baselines"
+  },
+  "gate_G4_k_sanity": {
+    "development": [
+      {
+        "auc_lam1": 0.8264490521703235,
+        "dataset": "v3_transition_s0"
+      },
+      {
+        "auc_lam1": 0.9252031832035219,
+        "dataset": "v3_transition_s1"
+      }
+    ],
+    "pass": false,
+    "rule": "selected development fork AUC >= 0.85 on both transition development seeds at k*"
+  },
+  "k_star": 15,
+  "metrics": {
+    "choose_k_table": {
+      "amendment_disclosure": "Rule fixed after development fork AUCs had been seen; development data are tuning data and test seeds were not accessed by this recomputation.",
+      "candidates": [
+        {
+          "k": 5,
+          "mean_lineage_agreement": 0.5255634582212234,
+          "mean_null_max": 0.2370765276941941,
+          "mean_seed_stability": 0.825924462176498,
+          "n_datasets": 5
+        },
+        {
+          "k": 10,
+          "mean_lineage_agreement": 0.6747028427973508,
+          "mean_null_max": 0.2820794022444394,
+          "mean_seed_stability": 0.6676668055104961,
+          "n_datasets": 5
+        },
+        {
+          "k": 15,
+          "mean_lineage_agreement": 0.6993001830963994,
+          "mean_null_max": 0.2421530251016294,
+          "mean_seed_stability": 0.6184665344476254,
+          "n_datasets": 5
+        },
+        {
+          "k": 20,
+          "mean_lineage_agreement": 0.733886490028279,
+          "mean_null_max": 0.207224733109447,
+          "mean_seed_stability": 0.2291772043186639,
+          "n_datasets": 5
+        },
+        {
+          "k": 30,
+          "mean_lineage_agreement": 0.7548631719043235,
+          "mean_null_max": 0.1667048350223995,
+          "mean_seed_stability": 0.1433427459552326,
+          "n_datasets": 5
+        }
+      ],
+      "eligible_k": [
+        5,
+        10,
+        15
+      ],
+      "path": "benchmarks/synthetic_multimodal/s14/choose_k.csv",
+      "rule": "among k with mean seed stability >= 0.5, highest mean lineage agreement; ties within 0.02 by higher seed stability, then lower k; if none pass, use the most stable k",
+      "selection_locked_utc": "2026-10-21T08:25:06.005086Z",
+      "sha256": "7832702e3688e0c032805105d02c36a6f86cb31208e460b60b65cdeb60c9339c",
+      "stability_threshold": 0.5,
+      "truth_free": true
+    },
+    "cpu_hours": 9.742230555555555,
+    "dev_auc_by_k": {
+      "interpretation": "Historical all-k development diagnostic retained from the pre-amendment Part-A fit; Revision 1 selected k=15 without refitting this table. G4 uses the selected Part-B configuration at k=15.",
+      "path": "benchmarks/synthetic_multimodal/s14/dev_auc_by_k.csv",
+      "records": [
+        {
+          "auc_lam1": "0.8838913190985607",
+          "dataset": "v3_default_s0",
+          "diagnostic_only": "True",
+          "k": "5",
+          "n_committed": "12594",
+          "n_saddle": "22",
+          "preset": "v3_default",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.9958674404839245",
+          "dataset": "v3_default_s0",
+          "diagnostic_only": "True",
+          "k": "10",
+          "n_committed": "12594",
+          "n_saddle": "22",
+          "preset": "v3_default",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.9640701921549943",
+          "dataset": "v3_default_s0",
+          "diagnostic_only": "True",
+          "k": "15",
+          "n_committed": "12594",
+          "n_saddle": "22",
+          "preset": "v3_default",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.0692862402009615",
+          "dataset": "v3_default_s0",
+          "diagnostic_only": "True",
+          "k": "20",
+          "n_committed": "12594",
+          "n_saddle": "22",
+          "preset": "v3_default",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.0520305484574184",
+          "dataset": "v3_default_s0",
+          "diagnostic_only": "True",
+          "k": "30",
+          "n_committed": "12594",
+          "n_saddle": "22",
+          "preset": "v3_default",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.520221969265794",
+          "dataset": "v3_default_s1",
+          "diagnostic_only": "True",
+          "k": "5",
+          "n_committed": "12550",
+          "n_saddle": "28",
+          "preset": "v3_default",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.9978229937393285",
+          "dataset": "v3_default_s1",
+          "diagnostic_only": "True",
+          "k": "10",
+          "n_committed": "12550",
+          "n_saddle": "28",
+          "preset": "v3_default",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.9975498007968128",
+          "dataset": "v3_default_s1",
+          "diagnostic_only": "True",
+          "k": "15",
+          "n_committed": "12550",
+          "n_saddle": "28",
+          "preset": "v3_default",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.9909647125782585",
+          "dataset": "v3_default_s1",
+          "diagnostic_only": "True",
+          "k": "20",
+          "n_committed": "12550",
+          "n_saddle": "28",
+          "preset": "v3_default",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.9048776323278316",
+          "dataset": "v3_default_s1",
+          "diagnostic_only": "True",
+          "k": "30",
+          "n_committed": "12550",
+          "n_saddle": "28",
+          "preset": "v3_default",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.8936319182040454",
+          "dataset": "v3_transition_s0",
+          "diagnostic_only": "True",
+          "k": "5",
+          "n_committed": "8998",
+          "n_saddle": "350",
+          "preset": "v3_transition",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.7945089384942685",
+          "dataset": "v3_transition_s0",
+          "diagnostic_only": "True",
+          "k": "10",
+          "n_committed": "8998",
+          "n_saddle": "350",
+          "preset": "v3_transition",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.8105321817546757",
+          "dataset": "v3_transition_s0",
+          "diagnostic_only": "True",
+          "k": "15",
+          "n_committed": "8998",
+          "n_saddle": "350",
+          "preset": "v3_transition",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.7868678754008825",
+          "dataset": "v3_transition_s0",
+          "diagnostic_only": "True",
+          "k": "20",
+          "n_committed": "8998",
+          "n_saddle": "350",
+          "preset": "v3_transition",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.5458028768297718",
+          "dataset": "v3_transition_s0",
+          "diagnostic_only": "True",
+          "k": "30",
+          "n_committed": "8998",
+          "n_saddle": "350",
+          "preset": "v3_transition",
+          "seed": "0",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.6240963500640468",
+          "dataset": "v3_transition_s1",
+          "diagnostic_only": "True",
+          "k": "5",
+          "n_committed": "8859",
+          "n_saddle": "368",
+          "preset": "v3_transition",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.9194555279082437",
+          "dataset": "v3_transition_s1",
+          "diagnostic_only": "True",
+          "k": "10",
+          "n_committed": "8859",
+          "n_saddle": "368",
+          "preset": "v3_transition",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.816997698238588",
+          "dataset": "v3_transition_s1",
+          "diagnostic_only": "True",
+          "k": "15",
+          "n_committed": "8859",
+          "n_saddle": "368",
+          "preset": "v3_transition",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.8539488827377709",
+          "dataset": "v3_transition_s1",
+          "diagnostic_only": "True",
+          "k": "20",
+          "n_committed": "8859",
+          "n_saddle": "368",
+          "preset": "v3_transition",
+          "seed": "1",
+          "selection_k_star": "30"
+        },
+        {
+          "auc_lam1": "0.7215979082927212",
+          "dataset": "v3_transition_s1",
+          "diagnostic_only": "True",
+          "k": "30",
+          "n_committed": "8859",
+          "n_saddle": "368",
+          "preset": "v3_transition",
+          "seed": "1",
+          "selection_k_star": "30"
+        }
+      ]
+    },
+    "gate_G1_auc_band": {
+      "k_values": [
+        10,
+        15,
+        20
+      ],
+      "minimum_auc": 0.42268570241239234,
+      "n_required_rows": 9,
+      "pass": false,
+      "rule": "selected fork AUC >= 0.85 on every transition test seed at k* and immediate grid neighbours"
+    },
+    "gate_G2_transition": {
+      "nofork_pass": false,
+      "nofork_ratios": {
+        "v3_nofork_s0": 1.08310142182613,
+        "v3_nofork_s1": 1.6007122060681667,
+        "v3_nofork_s2": 1.0586567056652927
+      },
+      "pass": false,
+      "rule": "informative transition bin absolute offset <= 1; nofork peak/median below every transition-test ratio",
+      "transition_abs_offsets": {
+        "v3_transition_s2": 4,
+        "v3_transition_s3": 4,
+        "v3_transition_s4": 0
+      },
+      "transition_pass": false,
+      "transition_ratios": {
+        "v3_transition_s2": 1.6544984198803518,
+        "v3_transition_s3": 1.1159469915945643,
+        "v3_transition_s4": 1.30363086791583
+      }
+    },
+    "gate_G3_larry": {
+      "heldout_energy": {
+        "flow": 0.9433916433041751,
+        "mean_displacement": 0.8667826833933505,
+        "no_movement": 0.8815008253806457
+      },
+      "lineage_null_max": 0.14347252401822863,
+      "lineage_spearman": 0.5474766858993969,
+      "pass": false,
+      "rule": "selected LARRY lineage agreement exceeds all five nulls and held-out flow energy beats both baselines"
+    },
+    "gate_G4_k_sanity": {
+      "development": [
+        {
+          "auc_lam1": 0.8264490521703235,
+          "dataset": "v3_transition_s0"
+        },
+        {
+          "auc_lam1": 0.9252031832035219,
+          "dataset": "v3_transition_s1"
+        }
+      ],
+      "pass": false,
+      "rule": "selected development fork AUC >= 0.85 on both transition development seeds at k*"
+    },
+    "k_star": 15,
+    "selected_configuration": {
+      "configuration": {
+        "ensemble": 5,
+        "eps": 0.025,
+        "hidden": [
+          128,
+          128,
+          128
+        ],
+        "last": "extrapolate",
+        "space": "whitened",
+        "wd": 0.001
+      },
+      "k_star": 15,
+      "larry_role": "truth-free Part A k selection only; absent from synthetic fork-AUC Part B objective",
+      "objective": "mean development fork AUC over v3_transition/default s0,s1",
+      "objective_datasets": [
+        "v3_transition_s0",
+        "v3_transition_s1",
+        "v3_default_s0",
+        "v3_default_s1"
+      ],
+      "path": "benchmarks/synthetic_multimodal/s14/selected_configuration.json",
+      "selection_utc": "2026-10-21T10:04:15.328682Z"
+    },
+    "versions": {
+      "POT": "0.9.7.post1",
+      "anndata": "0.11.4",
+      "launcher": ".sandbox/bin/python",
+      "matplotlib": "3.11.2",
+      "memory_limit_gib_for_new_processes": 14,
+      "numpy": "2.5.4",
+      "palantir": "1.4.5",
+      "pandas": "2.3.3",
+      "python": "3.13.2",
+      "scikit_learn": "1.9.1",
+      "scipy": "1.18.1",
+      "threads_limit": 6,
+      "torch": "2.14.1"
+    }
+  },
+  "nonzero_timed_logs_included_in_ledger": [
+    "benchmarks/synthetic_multimodal/s14/logs/generate_v3_transition_s3.log",
+    "benchmarks/synthetic_multimodal/s14/logs/optimise_select_oat_k15_attempt1_incomplete_grid.log"
+  ],
+  "observations": [
+    "All four frozen gates failed as measured; no configuration, k, or test fit was changed after these held-out results were obtained.",
+    "G3 lineage agreement exceeded its maximum null (0.54748 vs 0.14347), while the selected held-out flow energy (0.94339) was higher than both baselines (0.88150 and 0.86678).",
+    "Across the 33 fork-AUC test rows per configuration, selected AUC ranged from 0.42269 to 0.99879 and reference AUC from 0.88690 to 0.99964.",
+    "The PNG figure decodes as a 1360\u00d7768 RGBA image; its deterministic construction includes PCA-k and fork-AUC axes, selected/reference series labels, and the 0.85 G1 threshold line."
+  ],
+  "overall_gate_pass": false,
+  "part_c": {
+    "configurations": [
+      "selected",
+      "reference"
+    ],
+    "larry_rows": 2,
+    "strict_palantir_r0_provenance_rows": 14,
+    "synthetic_rows": 84,
+    "synthetic_test_datasets": 14,
+    "test_rows": 86,
+    "tested_k": [
+      10,
+      15,
+      20
+    ],
+    "truth_isolation": "Synthetic truth was accessed only after each observed OT/drift fit; test seeds were not used to choose k or the configuration."
+  },
+  "questions": [],
+  "resource_exception": {
+    "authorized_by_user": true,
+    "maximum_resident_set_size_bytes": 15509716992,
+    "over_limit_gib": 0.444549560546875,
+    "peak_gib": 14.444549560546875,
+    "policy_after_exception": "Every subsequent process used the sandbox launcher and remained below the 14 GiB cap.",
+    "scope": "v3_nofork_s2 deterministic generator only"
+  },
+  "selected_configuration": {
+    "configuration": {
+      "ensemble": 5,
+      "eps": 0.025,
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "last": "extrapolate",
+      "space": "whitened",
+      "wd": 0.001
+    },
+    "k_star": 15,
+    "larry_role": "truth-free Part A k selection only; absent from synthetic fork-AUC Part B objective",
+    "objective": "mean development fork AUC over v3_transition/default s0,s1",
+    "objective_datasets": [
+      "v3_transition_s0",
+      "v3_transition_s1",
+      "v3_default_s0",
+      "v3_default_s1"
+    ],
+    "path": "benchmarks/synthetic_multimodal/s14/selected_configuration.json",
+    "selection_utc": "2026-10-21T10:04:15.328682Z"
+  },
+  "source_commit_before_final_report": "3255022",
+  "started_utc": "2026-10-21T04:42:52Z",
+  "status": "done",
+  "suggestions": [
+    "A future Claude-issued follow-up could diagnose the selected whitened configuration\u2019s transition and held-out LARRY energy failures against the raw-coordinate reference, with a new pre-specified split and gate plan."
+  ],
+  "task": "orient/S14",
+  "test_status": {
+    "command": ".sandbox/bin/python -m pytest -q tests/test_orient.py tests/test_smoke.py tests/test_synthetic_multimodal.py",
+    "duration_seconds": 280.64,
+    "failed": 0,
+    "log": "benchmarks/synthetic_multimodal/s14/logs/final_regression.log",
+    "passed": 78,
+    "status": "passed",
+    "warning": "non-fatal sklearn FactorAnalysis convergence warning",
+    "warnings": 1
+  },
+  "versions": {
+    "POT": "0.9.7.post1",
+    "anndata": "0.11.4",
+    "launcher": ".sandbox/bin/python",
+    "matplotlib": "3.11.2",
+    "memory_limit_gib_for_new_processes": 14,
+    "numpy": "2.5.4",
+    "palantir": "1.4.5",
+    "pandas": "2.3.3",
+    "python": "3.13.2",
+    "scikit_learn": "1.9.1",
+    "scipy": "1.18.1",
+    "threads_limit": 6,
+    "torch": "2.14.1"
+  },
+  "workstream": "orient"
+}

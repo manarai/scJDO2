@@ -1,0 +1,24 @@
+{
+  "deposit_url": "https://plus.figshare.com/articles/dataset/_Mapping_information-rich_genotype-phenotype_landscapes_with_genome-scale_Perturb-seq_Replogle_et_al_2022_processed_Perturb-seq_datasets/20029387",
+  "metadata_url": "https://api.figshare.com/v2/articles/20029387",
+  "download_url": "https://ndownloader.figshare.com/files/35773219",
+  "file_name": "K562_essential_raw_singlecell_01.h5ad",
+  "figshare_file_id": 35773219,
+  "expected_bytes": 10661879995,
+  "figshare_md5": "4f1122ce1c7f13299a68df6459a266d3",
+  "required_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+  "retrieved_metadata_utc": "2026-10-22T05:47:14Z",
+  "verified": true,
+  "source_archive": {
+    "drive_file_id": "[drive-id-withheld]",
+    "zip_md5": "0a158d89d47e55e855c9ca57ab055f90",
+    "imported_branch": "manus/orient-S18",
+    "imported_commit": "4c1aad9c627ac4371ced46525baac956529260d9"
+  },
+  "download_started_utc": "2026-10-22T05:52:05.142930+00:00",
+  "download_finished_utc": "2026-10-22T05:55:24.119359+00:00",
+  "actual_bytes": 10661879995,
+  "actual_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+  "actual_md5": "4f1122ce1c7f13299a68df6459a266d3",
+  "verified_stat_mtime_ns": 1792648524078208661
+}

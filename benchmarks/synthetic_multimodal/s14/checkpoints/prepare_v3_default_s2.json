@@ -1,0 +1,38 @@
+{
+  "finished_utc": "2026-10-22T12:34:46.997652Z",
+  "in_process_cpu_seconds": 11.002,
+  "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_default_s2.h5ad",
+  "input_sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+  "n_cells": 12884,
+  "part_a_truth_free": true,
+  "pca50": {
+    "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/embeddings.npz",
+    "sha256": "b157cef9ae3fdaf552a5e1dc40c1bb9b51e62d3769e8d8262af998eaedbeedc5",
+    "source": "S12 PCA-50"
+  },
+  "peak_rss_bytes": 2945335296,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s2.npz",
+  "prepared_sha256": "fc8f652e56a10c19a62b300e099ef37003c2d33c4e4eb8e262e65f8c33040647",
+  "started_utc": "2026-10-22T12:34:35.931237Z",
+  "strict_pseudotime": {
+    "actual_start_cell": "cell_0004186",
+    "candidate_roots": [
+      "cell_0004186",
+      "cell_0005831",
+      "cell_0002674",
+      "cell_0005022",
+      "cell_0002494"
+    ],
+    "given_root": "cell_0004186",
+    "key": "day2_strict_r0",
+    "path": "benchmarks/synthetic_multimodal/data/s10/v3_default_s2/palantir.npz",
+    "root_rule": "default_rng(1000+seed).choice(earliest-day cells, 5, replace=False); strict r0",
+    "s10_checkpoint": "benchmarks/synthetic_multimodal/s10/checkpoints/palantir_v3_default_s2.json",
+    "s10_checkpoint_sha256": "a953186ce18e21856d275579801d2817740253ef40637a48881bca759250cf93",
+    "sha256": "2b81eab9684b1e7e730d29b630d99de492f4f8abb6eb32ef4f0b9fb7d11374c9",
+    "source": "reused S10 strict r0"
+  },
+  "task": "orient/S14",
+  "unit": "prepare_v3_default_s2",
+  "wall_seconds": 11.066
+}

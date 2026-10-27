@@ -1,0 +1,20 @@
+START 2026-10-20T10:14:24Z .venv/bin/python scripts/s10_fit_and_runs.py fit --preset v3_stationary_cycle --seed 0 --method pca
+      123.86 real        85.44 user         9.98 sys
+          1563525120  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              282260  page reclaims
+                  25  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4322  voluntary context switches
+              389959  involuntary context switches
+        667758202463  instructions retired
+        323318628609  cycles elapsed
+          2694974248  peak memory footprint
+EXIT 0 2026-10-20T10:16:28Z

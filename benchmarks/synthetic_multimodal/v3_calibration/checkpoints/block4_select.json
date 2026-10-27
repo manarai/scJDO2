@@ -1,0 +1,10 @@
+{
+  "base_uid": "block3_confirm",
+  "base_unmet": 5,
+  "block": 4,
+  "complete": 25,
+  "eligible_points": 1,
+  "errors": [],
+  "grid_points": 25,
+  "result": "no grid point improves on the base under the block preference; base kept"
+}

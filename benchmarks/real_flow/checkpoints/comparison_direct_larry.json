@@ -1,0 +1,10 @@
+{
+  "dataset": "larry",
+  "finished_utc": "2026-10-19T08:26:34.079549+00:00",
+  "n_operator_rows": 9,
+  "n_velocity_rows": 1321,
+  "started_utc": "2026-10-19T08:26:06.241618+00:00",
+  "task": "orient/S11",
+  "unit": "comparison_direct_larry",
+  "wall_seconds": 27.838
+}

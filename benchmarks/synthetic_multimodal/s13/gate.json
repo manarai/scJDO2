@@ -1,0 +1,32 @@
+{
+  "by_embedding": {
+    "fa20": {
+      "count": 3,
+      "max": 0.5332879345779411,
+      "median": 0.49010859556091835,
+      "min": 0.2999580995990322
+    },
+    "pca10": {
+      "count": 3,
+      "max": 0.3735896865970216,
+      "median": 0.3197624550498489,
+      "min": 0.21711922780567047
+    },
+    "pca20": {
+      "count": 3,
+      "max": 0.5836161457029697,
+      "median": 0.4263792488808818,
+      "min": 0.37364334931572096
+    },
+    "pca50": {
+      "count": 3,
+      "max": 0.48605408851979726,
+      "median": 0.3891436192169689,
+      "min": 0.32387261541934753
+    }
+  },
+  "n_passing_embeddings": 0,
+  "pass": false,
+  "passing_embeddings": [],
+  "rule": "AUC >= 0.85 on every v3_transition seed in at least 3 linear embeddings"
+}

@@ -1,0 +1,18 @@
+{
+  "dataset": "larry",
+  "details": {
+    "config": "MeasuredDrift default (n_epochs=1500, batch=256, hidden=96x3)",
+    "seed": 1
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:50:28.914639+00:00",
+  "n_cells": 8000,
+  "operator": "measured",
+  "operator_path": "benchmarks/real_flow/arrays/operators/larry_ot_measured_s1.npz",
+  "seed": 1,
+  "source": "ot",
+  "started_utc": "2026-10-19T06:49:09.962344+00:00",
+  "task": "orient/S11",
+  "unit": "operator_larry_ot_measured_s1",
+  "wall_seconds": 78.952
+}

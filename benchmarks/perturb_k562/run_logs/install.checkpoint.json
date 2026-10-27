@@ -1,0 +1,21 @@
+{
+  "unit": "install",
+  "command": [
+    ".venv/bin/pip",
+    "install",
+    "--no-cache-dir",
+    "-e",
+    ".[dev]"
+  ],
+  "started_utc": "2026-10-22T05:48:25.170853+00:00",
+  "finished_utc": "2026-10-22T05:51:03.557926+00:00",
+  "exit_code": 0,
+  "wall_seconds": 158.38706736899985,
+  "cpu_hours": 0.043234395,
+  "max_rss_kib": 474836,
+  "cpu_hours_before": 0.0,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 18754445312,
+  "log": "benchmarks/perturb_k562/run_logs/install.log"
+}

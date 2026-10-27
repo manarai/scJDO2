@@ -1,0 +1,33 @@
+{
+  "finished_utc": "2026-10-19T16:32:54Z",
+  "ledger": {
+    "attempted_evaluations": 221.0,
+    "budget_cpu_hours": 40.0,
+    "completed_evaluations": 219.0,
+    "cpu_hours": 12.910559722222223,
+    "cpu_seconds": 46478.015,
+    "excluded_after_retry": 0.0,
+    "retries_resolved": 2.0,
+    "retry_pending": 0.0
+  },
+  "peak_rss_bytes": 457490432,
+  "recover_dynamics_timing": [],
+  "rows": [
+    {
+      "base_uid": "refine_p2_n_founders_3",
+      "base_unmet": 5,
+      "block": 1,
+      "complete": 25,
+      "errors": [],
+      "grid_points": 25,
+      "points_meeting_S1": 2,
+      "result": "best S1-meeting point increases the unmet count; block 1 not applied",
+      "s1_choice": {
+        "uid": "block1_09",
+        "unmet": 7
+      }
+    }
+  ],
+  "stage": "block-select",
+  "task": "orient/S09"
+}

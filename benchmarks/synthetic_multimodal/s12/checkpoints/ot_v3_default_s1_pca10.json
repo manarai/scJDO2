@@ -1,0 +1,76 @@
+{
+  "dim": 10,
+  "embedding": "pca10",
+  "finished_utc": "2026-10-20T22:30:00.513529Z",
+  "in_process_cpu_seconds": 23.635,
+  "input_sha256": "d5dd02a5b42a12e25d4cf9dc57cf803691a9b55681fe1ce7cb139f7cbb998ba5",
+  "measured_drift": {
+    "fit_device": "mps:0",
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "jacobian_device": "cpu",
+    "n_fit_cells": 1626,
+    "seconds": 11.85,
+    "seed": 0,
+    "weight_decay": 0.0001
+  },
+  "median_ot_speed": 0.16366297006607056,
+  "ot_library": {
+    "name": "POT",
+    "version": "0.9.7.post1"
+  },
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 36.05607444155316,
+      "final_err": 9.369470655415829e-10,
+      "from_day": 2,
+      "n_iter": 13,
+      "n_source": 186,
+      "n_target": 1440,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 33.94819107735997,
+      "final_err": 8.927141149555642e-10,
+      "from_day": 4,
+      "n_iter": 71,
+      "n_source": 1440,
+      "n_target": 11028,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 3.5,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca10.npz",
+  "peak_rss_bytes": 3590569984,
+  "scores": {
+    "auc_lam1": 0.9799630051223677,
+    "auc_soft_axis_curvature": 0.9919237336368811,
+    "auc_tangent5_lam1": 0.9818725099601593,
+    "fate_axis_abs_cos_at_saddle": 0.9805144467299833,
+    "fraction_saddle": 0.002212739054844318,
+    "median_lam1_committed": -0.0006764158665455637,
+    "median_lam1_saddle": 0.015748327008765935,
+    "n_committed": 12550,
+    "n_saddle": 28,
+    "soft_axis_abs_cos_fate_axis": 0.9064298644993531
+  },
+  "sha256": "7a1787b8a79b537b733cbc86969189d0e5bd49ca1bc3a6b3be3295f5f4e59f1f",
+  "started_utc": "2026-10-20T22:29:34.246335Z",
+  "task": "orient/S12",
+  "unit": "ot_v3_default_s1_pca10",
+  "wall_seconds": 26.267
+}

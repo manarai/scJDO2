@@ -1,0 +1,158 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_batch_s2_k10_selected.npz",
+  "array_sha256": "6c36921b169c664520381ceb9f61e455eda376b8a07f26f45f4b902f5fee0cbc",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "selected",
+  "dataset": "v3_batch_s2",
+  "finished_utc": "2026-10-22T15:24:07.374288Z",
+  "in_process_cpu_seconds": 53.349,
+  "k": 10,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1548,
+      "seconds": 5.173,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1548,
+      "seconds": 4.318,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1548,
+      "seconds": 4.133,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1548,
+      "seconds": 4.404,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1548,
+      "seconds": 4.268,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "n_cells": 12192,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 13.10506860094855,
+      "final_err": 9.813254354844189e-10,
+      "from_day": 2,
+      "n_iter": 33,
+      "n_source": 179,
+      "n_target": 1369,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.02,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 16.260613119790445,
+      "final_err": 1.17307893035413e-08,
+      "from_day": 4,
+      "n_iter": 100,
+      "n_source": 1369,
+      "n_target": 10644,
+      "plan_mass": 1.0000000000000002,
+      "rows_zero": 0,
+      "seconds": 3.63,
+      "to_day": 6,
+      "warnings": [
+        "Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`."
+      ]
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 4134191104,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_batch_s2.npz",
+  "prepared_sha256": "8a35b7fced84d4ad77b1691b8e41a43a15b53ba261237f12e841f4d908347996",
+  "preset": "v3_batch",
+  "scores": {
+    "auc_lam1": 0.99355212036042,
+    "fate_axis_abs_cos_at_saddle": 0.993410753469454,
+    "jref_relative_frobenius_median": 1.001078575791258,
+    "median_lam1_committed": 0.0033705285510957305,
+    "median_lam1_saddle": 0.013161079484560087,
+    "n_committed": 12097,
+    "n_saddle": 23,
+    "transition_abs_offset": 1,
+    "transition_bin_medians": "[0.014573, 0.014445, 0.012848, 0.005946, 0.003523, 0.003272, 0.002752, 0.004193, 0.00403, 0.002931, 0.00356, 0.00244]",
+    "transition_detected_bin": 0,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 0,
+    "transition_peak_to_median": 3.840131792831725,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": -1,
+    "transition_true_bin": 1
+  },
+  "seed": 2,
+  "started_utc": "2026-10-22T15:23:02.043175Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_batch_s2_k10_selected",
+  "wall_seconds": 65.331
+}

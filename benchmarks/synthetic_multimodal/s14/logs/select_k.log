@@ -1,0 +1,56 @@
+START 2026-10-21T05:30:04Z
+{
+  "k_star": 30,
+  "rule": "highest mean lineage agreement over five equally-weighted development datasets; candidates within 0.02 are broken by higher mean seed stability, then lower k deterministically",
+  "best_mean_lineage_agreement": 0.7548631719043235,
+  "within_0_02_candidates": [
+    {
+      "k": 30,
+      "mean_lineage_agreement": 0.7548631719043235,
+      "mean_null_max": 0.1667048350223995,
+      "mean_seed_stability": 0.14334274595523264,
+      "n_datasets": 5
+    }
+  ],
+  "development_datasets": [
+    "v3_transition_s0",
+    "v3_transition_s1",
+    "v3_default_s0",
+    "v3_default_s1",
+    "larry"
+  ],
+  "truth_free": true,
+  "truth_free_inputs": [
+    "observed spliced counts",
+    "sampling day/time",
+    "barcodes",
+    "S10/S12/S13 observed PCA artifacts"
+  ],
+  "truth_keys_absent_from_selection": [
+    "z_true",
+    "fate_true",
+    "jacobian_state",
+    "ds_dt_true",
+    "z1_crit"
+  ],
+  "selection_locked_utc": "2026-10-21T05:30:05.491938Z"
+}
+        0.61 real         0.42 user         0.10 sys
+           108396544  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               11991  page reclaims
+                   2  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 414  voluntary context switches
+                 288  involuntary context switches
+          3284999252  instructions retired
+          1389503332  cycles elapsed
+            66896856  peak memory footprint
+EXIT 0 2026-10-21T05:30:05Z

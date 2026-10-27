@@ -1,0 +1,19 @@
+{
+  "unit": "download",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18_perturb_response.py",
+    "download"
+  ],
+  "started_utc": "2026-10-22T05:52:05.078129+00:00",
+  "finished_utc": "2026-10-22T05:55:24.181560+00:00",
+  "exit_code": 0,
+  "wall_seconds": 199.10343606000015,
+  "cpu_hours": 0.014315512499999999,
+  "max_rss_kib": 38264,
+  "cpu_hours_before": 0.04797673305555556,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562/run_logs/download.log"
+}

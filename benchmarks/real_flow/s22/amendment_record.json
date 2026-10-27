@@ -1,0 +1,12 @@
+{
+  "task": "orient/S22",
+  "planner_commit": "c34b756a86fcc1736b2b3ad27dbac7dcefc88aed",
+  "task_sha256": "40d21ae6f31d287bb094c7739f3636d334bc1469867e2cc8a0428ea1aa3caca6",
+  "planner_date": "2026-10-24",
+  "tied_pairs_L1_included": true,
+  "tied_permutation_stratum": "tied per t",
+  "tied_pairs_undifferentiated_and_per_type_excluded": true,
+  "tied_switch": "fraction of future cells outside the set of tied modal types",
+  "report_only_L1_without_ties": true,
+  "before_any_score_fit_or_fate_statistic": true
+}

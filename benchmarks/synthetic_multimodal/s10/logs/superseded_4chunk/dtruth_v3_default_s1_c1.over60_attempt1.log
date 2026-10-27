@@ -1,0 +1,21 @@
+START 2026-10-20T12:01:21Z .venv/bin/python scripts/s10_diffusion.py truth --preset v3_default --seed 1 --chunk 1
+time: command terminated abnormally
+     3601.68 real      2040.09 user      1335.29 sys
+          4356685824  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             5479642  page reclaims
+                  22  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2921  voluntary context switches
+             2860691  involuntary context switches
+      17736416109151  instructions retired
+       8519197970945  cycles elapsed
+          3570241592  peak memory footprint
+EXIT 143 2026-10-20T13:01:22Z

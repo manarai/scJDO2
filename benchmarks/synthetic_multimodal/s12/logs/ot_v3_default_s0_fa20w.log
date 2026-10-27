@@ -1,0 +1,20 @@
+START 2026-10-20T22:08:34Z threads=2 .venv/bin/python scripts/s12_step0.py ot --preset v3_default --seed 0 --embedding fa20w
+       36.39 real        31.77 user         2.34 sys
+          2060075008  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              323864  page reclaims
+                 613  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 848  voluntary context switches
+               41468  involuntary context switches
+        341389533484  instructions retired
+        118965655174  cycles elapsed
+          3247591072  peak memory footprint
+EXIT 0 2026-10-20T22:09:10Z

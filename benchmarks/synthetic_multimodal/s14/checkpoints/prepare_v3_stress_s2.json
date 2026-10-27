@@ -1,0 +1,37 @@
+{
+  "finished_utc": "2026-10-22T12:45:45.274545Z",
+  "in_process_cpu_seconds": 40.384,
+  "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_stress_s2.h5ad",
+  "input_sha256": "50e4c2717e038f81667485d98580889ab13e614a219f53efbeb40e15ca000a9e",
+  "n_cells": 12503,
+  "part_a_truth_free": true,
+  "pca50": {
+    "path": null,
+    "source": "S14 observed S12 PCA code path"
+  },
+  "peak_rss_bytes": 6189613056,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_stress_s2.npz",
+  "prepared_sha256": "faa7fd030f31f02b6a83507b1c53c528ec343aa45c390c6973b001fcada8e912",
+  "started_utc": "2026-10-22T12:45:11.734773Z",
+  "strict_pseudotime": {
+    "actual_start_cell": "cell_0003758",
+    "candidate_roots": [
+      "cell_0003758",
+      "cell_0005768",
+      "cell_0002497",
+      "cell_0004875",
+      "cell_0002359"
+    ],
+    "given_root": "cell_0003758",
+    "key": "day2_strict_r0",
+    "path": "benchmarks/synthetic_multimodal/data/s10/v3_stress_s2/palantir.npz",
+    "root_rule": "default_rng(1000+seed).choice(earliest-day cells, 5, replace=False); strict r0",
+    "s10_checkpoint": "benchmarks/synthetic_multimodal/s10/checkpoints/palantir_v3_stress_s2.json",
+    "s10_checkpoint_sha256": "06e4d4e36202d77d51efed6e154d477dddb0dbddf1451bbc8e0420829badf40e",
+    "sha256": "350547d9be2b1d11b8a8361a32bfdb1f3adb2fac6bca90a8cadb44967a7bf7e3",
+    "source": "reused S10 strict r0"
+  },
+  "task": "orient/S14",
+  "unit": "prepare_v3_stress_s2",
+  "wall_seconds": 33.54
+}

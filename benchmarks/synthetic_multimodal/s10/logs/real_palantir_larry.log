@@ -1,0 +1,33 @@
+START 2026-10-20T12:51:52Z .venv/bin/python scripts/s10_real_transitions.py palantir --dataset larry
+Sampling and flocking waypoints...
+Time for determining waypoints: 0.0001923839251200358 minutes
+Determining pseudotime...
+Shortest path distances using 30-nearest neighbor graph...
+Time for shortest paths: 0.10626671711603801 minutes
+Iteratively refining the pseudotime...
+Correlation at iteration 1: 0.9998
+Correlation at iteration 2: 1.0000
+Entropy and branch probabilities...
+Markov chain construction...
+Identification of terminal states...
+Computing fundamental matrix and absorption probabilities...
+Project results to all cells...
+       49.06 real        45.75 user         2.66 sys
+          1278689280  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              443248  page reclaims
+                  64  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2182  voluntary context switches
+               15407  involuntary context switches
+        219369026552  instructions retired
+         95048670941  cycles elapsed
+           813778912  peak memory footprint
+EXIT 0 2026-10-20T12:52:41Z

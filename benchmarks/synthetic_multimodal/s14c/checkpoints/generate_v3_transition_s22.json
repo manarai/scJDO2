@@ -1,0 +1,14 @@
+{
+  "attempts": 1,
+  "cpu_seconds": 4.600211000000001,
+  "dataset_created": false,
+  "error": "RSS reached guard threshold (12363333632 bytes >= 12000000000)",
+  "finished_unix": 1792979411.969557,
+  "manifest_row": null,
+  "peak_rss_bytes": 12384174080,
+  "started_unix": 1792978219.8097339,
+  "status": "guard_stop",
+  "task": "orient/S14c",
+  "unit": "generate_v3_transition_s22",
+  "wall_seconds": 1192.159823179245
+}

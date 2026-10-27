@@ -1,0 +1,17 @@
+{
+  "finished_utc": "2026-10-22T18:21:51.901124+00:00",
+  "jacobian": "autodiff",
+  "lambda1_path": "benchmarks/scaling/data/lambda1_dense_2000.npz",
+  "measured_drift": "MeasuredDrift(30, seed=0) defaults",
+  "n_eval_cells": 4000,
+  "n_fit_cells": 4000,
+  "n_per_day": 2000,
+  "rank": null,
+  "solver": "dense",
+  "stage": "fit_and_jacobian",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "fit_dense_2000",
+  "wall_seconds": 54.606,
+  "wall_seconds_internal": 54.606
+}

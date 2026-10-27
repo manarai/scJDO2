@@ -1,0 +1,34 @@
+START 2026-10-22T12:41:07Z unit=prepare_v3_nofork_s2 launcher=.sandbox/bin/python
+Sampling and flocking waypoints...
+Time for determining waypoints: 0.00014303127924601236 minutes
+Determining pseudotime...
+Shortest path distances using 30-nearest neighbor graph...
+Time for shortest paths: 0.05221718152364095 minutes
+Iteratively refining the pseudotime...
+Correlation at iteration 1: 0.9985
+Correlation at iteration 2: 0.9999
+Correlation at iteration 3: 1.0000
+Entropy and branch probabilities...
+Markov chain construction...
+Identification of terminal states...
+Computing fundamental matrix and absorption probabilities...
+Project results to all cells...
+       64.03 real        65.60 user         4.67 sys
+          6360760320  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              824831  page reclaims
+                   8  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                1032  voluntary context switches
+              153434  involuntary context switches
+        400963084741  instructions retired
+        182611471949  cycles elapsed
+          5195110016  peak memory footprint
+EXIT 0 2026-10-22T12:42:11Z

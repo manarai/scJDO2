@@ -1,0 +1,12 @@
+{
+  "finished_utc": "2026-10-19T08:28:04.022234+00:00",
+  "n_criteria": 14,
+  "n_null_rows": 70,
+  "n_operator_rows": 24,
+  "n_score_rows": 15162,
+  "n_velocity_rows": 7162,
+  "started_utc": "2026-10-19T08:27:11.853758+00:00",
+  "task": "orient/S11",
+  "unit": "comparison_finalize",
+  "wall_seconds": 52.168
+}

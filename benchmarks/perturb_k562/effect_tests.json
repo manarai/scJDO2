@@ -1,0 +1,14 @@
+{
+  "n_targets_eligible": 1299,
+  "n_targets_significant": 865,
+  "n_targets_under_100_excluded": 758,
+  "minimum_cells": 100,
+  "PCA_k": 20,
+  "random_controls_per_target": 2000,
+  "permutations": 200,
+  "rng": "default_rng(0), one stream; lexicographically sorted targets",
+  "energy_distance_definition": "sqrt(2 mean cross-distance - mean within-X - mean within-Y), V-statistic including diagonals",
+  "p_value_definition": "(permutations with statistic >= observed + 1) / (200 + 1)",
+  "selection": "Benjamini-Hochberg adjusted permutation p < 0.01",
+  "all_targets_used_without_subsampling": true
+}

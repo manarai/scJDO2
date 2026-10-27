@@ -1,0 +1,21 @@
+{
+  "unit": "refit_k30",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "refit",
+    "--k",
+    "30"
+  ],
+  "started_utc": "2026-10-22T11:20:22.007025+00:00",
+  "finished_utc": "2026-10-22T11:24:40.931070+00:00",
+  "exit_code": 0,
+  "wall_seconds": 258.92404989699935,
+  "cpu_hours": 0.31602688222222225,
+  "cpu_hours_before": 5.947356748888889,
+  "max_rss_kib": 896248,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 19425533952,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/refit_k30.log"
+}

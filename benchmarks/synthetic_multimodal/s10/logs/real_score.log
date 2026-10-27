@@ -1,0 +1,42 @@
+START 2026-10-20T13:20:25Z .venv/bin/python scripts/s10_real_transitions.py score
+   dataset                  operator     signal             detected_bins  n_distinct  range_bins
+0    larry                 J_flow_ot       lam1     [7, 7, 7, 10, 11, 11]           3           4
+1    larry                 J_flow_ot  soft_curv        [0, 7, 7, 7, 9, 9]           3           9
+2    larry                 J_flow_ot   var_soft      [1, 1, 1, 9, 10, 11]           4          10
+3    larry                   J_score       lam1        [0, 1, 7, 7, 8, 8]           4           8
+4    larry                   J_score  soft_curv  [10, 10, 10, 11, 11, 11]           2           1
+5    larry                   J_score   var_soft      [8, 8, 8, 9, 10, 10]           3           2
+6     scnt       J_flow_raw_perpulse       lam1        [0, 0, 0, 0, 0, 0]           1           0
+7     scnt       J_flow_raw_perpulse  soft_curv        [0, 0, 5, 6, 6, 6]           3           6
+8     scnt       J_flow_raw_perpulse   var_soft        [0, 0, 0, 0, 0, 0]           1           0
+9     scnt         J_flow_raw_shared       lam1        [0, 0, 0, 0, 0, 0]           1           0
+10    scnt         J_flow_raw_shared  soft_curv        [0, 0, 1, 4, 5, 5]           4           5
+11    scnt         J_flow_raw_shared   var_soft        [0, 0, 0, 0, 0, 1]           2           1
+12    scnt  J_flow_smoothed_perpulse       lam1    [0, 0, 10, 10, 10, 10]           2          10
+13    scnt  J_flow_smoothed_perpulse  soft_curv  [10, 10, 10, 10, 10, 10]           1           0
+14    scnt  J_flow_smoothed_perpulse   var_soft        [0, 0, 0, 0, 0, 0]           1           0
+15    scnt    J_flow_smoothed_shared       lam1  [10, 10, 10, 10, 10, 10]           1           0
+16    scnt    J_flow_smoothed_shared  soft_curv  [10, 10, 10, 10, 10, 10]           1           0
+17    scnt    J_flow_smoothed_shared   var_soft        [0, 0, 0, 0, 0, 0]           1           0
+18    scnt                   J_score       lam1        [7, 7, 8, 8, 8, 9]           3           2
+19    scnt                   J_score  soft_curv        [0, 0, 0, 1, 1, 4]           3           4
+20    scnt                   J_score   var_soft        [0, 0, 0, 0, 0, 4]           2           4
+       63.36 real        59.20 user         4.10 sys
+          6712082432  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1053512  page reclaims
+                  12  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4708  voluntary context switches
+               23712  involuntary context switches
+        804658721031  instructions retired
+        162556777182  cycles elapsed
+          6811572296  peak memory footprint
+EXIT 0 2026-10-20T13:21:28Z

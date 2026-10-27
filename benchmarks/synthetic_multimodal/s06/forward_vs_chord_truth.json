@@ -1,0 +1,84 @@
+[
+  {
+    "by_minimum_clone_cells_at_ends": {
+      "1": {
+        "median_cosine": 0.8657258459406783,
+        "n": 3530
+      },
+      "2": {
+        "median_cosine": 0.8847688893547002,
+        "n": 1903
+      },
+      "3": {
+        "median_cosine": 0.9004180114853811,
+        "n": 1163
+      },
+      "5": {
+        "median_cosine": 0.9180598555578268,
+        "n": 291
+      }
+    },
+    "median_all_chord_cosine": 0.8657258459406783,
+    "n_all_chord": 3530,
+    "path": "benchmarks/synthetic_multimodal/data/default_s0.h5ad",
+    "population_day_pair_cosines": [
+      {
+        "cosine": 0.9991979931543894,
+        "from_day": 1,
+        "to_day": 2
+      },
+      {
+        "cosine": 0.9999333090483236,
+        "from_day": 2,
+        "to_day": 3
+      },
+      {
+        "cosine": 0.9997641210785897,
+        "from_day": 3,
+        "to_day": 4
+      }
+    ],
+    "version": "v1"
+  },
+  {
+    "by_minimum_clone_cells_at_ends": {
+      "1": {
+        "median_cosine": 0.6072198147605004,
+        "n": 2284
+      },
+      "2": {
+        "median_cosine": 0.6476890709300482,
+        "n": 354
+      },
+      "3": {
+        "median_cosine": 0.7679016662703246,
+        "n": 54
+      },
+      "5": {
+        "median_cosine": 0.7860607293702266,
+        "n": 20
+      }
+    },
+    "median_all_chord_cosine": 0.6072198147605004,
+    "n_all_chord": 2284,
+    "path": "benchmarks/synthetic_multimodal/data/v2/v2_default_s0.h5ad",
+    "population_day_pair_cosines": [
+      {
+        "cosine": 0.9958911317502257,
+        "from_day": 1,
+        "to_day": 2
+      },
+      {
+        "cosine": 0.9980931868474976,
+        "from_day": 2,
+        "to_day": 3
+      },
+      {
+        "cosine": 0.9969043182526295,
+        "from_day": 3,
+        "to_day": 4
+      }
+    ],
+    "version": "v2"
+  }
+]

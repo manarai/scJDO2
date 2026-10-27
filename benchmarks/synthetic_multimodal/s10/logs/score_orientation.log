@@ -1,0 +1,120 @@
+START 2026-10-20T17:45:09Z .venv/bin/python scripts/s10_score.py --combine
+{
+ "gate_orientation": {
+  "labelling_agreement_by_seed": [
+   0.9565,
+   0.9781,
+   0.9781
+  ],
+  "labelling_agreement_min": 0.9565289256198348,
+  "labelling_ge_0_80": true,
+  "primary_variant_labelling_agreement_by_seed": [
+   0.6444,
+   0.634,
+   0.6682
+  ],
+  "lineage_pseudotime_vs_pseudotime": "not evaluable as written: needs the forward developmental truth, which the protected forward_developmental_truth does not provide for v3",
+  "substitute_chord_truth_median_by_seed": {
+   "default": {
+    "lineage+pseudotime": {},
+    "pseudotime": {},
+    "lineage": {
+     "0": 0.8986,
+     "1": 0.8804,
+     "2": 0.8713
+    },
+    "n_accepted_runs_per_seed": {}
+   },
+   "strict": {
+    "lineage+pseudotime": {
+     "0": 0.7312,
+     "1": 0.6099,
+     "2": 0.5758
+    },
+    "pseudotime": {
+     "0": 0.7121,
+     "1": 0.5542,
+     "2": 0.5165
+    },
+    "lineage": {
+     "0": 0.8986,
+     "1": 0.8804,
+     "2": 0.8713
+    },
+    "n_accepted_runs_per_seed": {
+     "0": 5,
+     "1": 5,
+     "2": 5
+    }
+   }
+  },
+  "independence_exact": true,
+  "J_unchanged": true,
+  "pass": null,
+  "status": "not_evaluable_as_written"
+ },
+ "gate_guard_fresh": {
+  "v3_default": {
+   "default": {
+    "latest_day_runs": 30,
+    "latest_day_refused": 30,
+    "day2_runs": 30,
+    "day2_accepted": 0,
+    "day2_accepted_fraction": 0.0
+   },
+   "strict": {
+    "latest_day_runs": 30,
+    "latest_day_refused": 30,
+    "day2_runs": 30,
+    "day2_accepted": 30,
+    "day2_accepted_fraction": 1.0
+   }
+  },
+  "pass": false,
+  "all_presets": {
+   "v3_batch": {
+    "day2_default": "8/30 accepted",
+    "day2_strict": "28/30 accepted",
+    "day6_default": "0/30 accepted",
+    "day6_strict": "0/30 accepted"
+   },
+   "v3_default": {
+    "day2_default": "0/30 accepted",
+    "day2_strict": "30/30 accepted",
+    "day6_default": "0/30 accepted",
+    "day6_strict": "0/30 accepted"
+   },
+   "v3_stress": {
+    "day2_default": "0/30 accepted",
+    "day2_strict": "30/30 accepted",
+    "day6_default": "0/30 accepted",
+    "day6_strict": "0/30 accepted"
+   },
+   "v3_transition": {
+    "day2_default": "20/30 accepted",
+    "day2_strict": "26/30 accepted",
+    "day6_default": "0/30 accepted",
+    "day6_strict": "0/30 accepted"
+   }
+  }
+ }
+}
+        4.79 real         3.67 user         0.57 sys
+           483655680  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               77841  page reclaims
+                1253  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3655  voluntary context switches
+                1364  involuntary context switches
+         26839093861  instructions retired
+         11040329243  cycles elapsed
+           338052488  peak memory footprint
+EXIT 0 2026-10-20T17:45:14Z

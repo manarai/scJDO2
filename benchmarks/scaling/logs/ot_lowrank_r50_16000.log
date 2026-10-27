@@ -1,0 +1,80 @@
+/Users/terooatt/miniconda3/lib/python3.13/functools.py:934: ImplicitModificationWarning: Transforming to str index.
+  return dispatch(args[0].__class__)(*args, **kw)
+INFO     Solving `1` problems                                                   
+INFO     Solving problem BirthDeathProblem[stage='prepared', shape=(16000,      
+         16000)].                                                               
+/Users/terooatt/miniconda3/lib/python3.13/functools.py:934: ImplicitModificationWarning: Transforming to str index.
+  return dispatch(args[0].__class__)(*args, **kw)
+INFO     Solving `1` problems                                                   
+INFO     Solving problem BirthDeathProblem[stage='prepared', shape=(16000,      
+         16000)].                                                               
+{
+  "finished_utc": "2026-10-22T18:49:36.313740+00:00",
+  "n_per_day": 16000,
+  "n_velocity_cells": 32000,
+  "pairs": [
+    {
+      "converged": true,
+      "epsilon": 3.7229771956387623,
+      "from_day": 2.0,
+      "library": "moscot",
+      "median_method": "deterministic 2,000,000-pair median (full pairwise matrix exceeds memory budget)",
+      "median_squared_distance": 74.45954391277525,
+      "n_source": 16000,
+      "n_target": 16000,
+      "plan_shape": [
+        16000,
+        16000
+      ],
+      "rank": 50,
+      "solution_rank": 50,
+      "to_day": 4.0,
+      "version": "0.5.2"
+    },
+    {
+      "converged": true,
+      "epsilon": 6.8554332987645585,
+      "from_day": 4.0,
+      "library": "moscot",
+      "median_method": "deterministic 2,000,000-pair median (full pairwise matrix exceeds memory budget)",
+      "median_squared_distance": 137.10866597529116,
+      "n_source": 16000,
+      "n_target": 16000,
+      "plan_shape": [
+        16000,
+        16000
+      ],
+      "rank": 50,
+      "solution_rank": 50,
+      "to_day": 6.0,
+      "version": "0.5.2"
+    }
+  ],
+  "rank": 50,
+  "solver": "lowrank_r50",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_lowrank_r50_16000",
+  "velocity_path": "benchmarks/scaling/data/velocity_lowrank_r50_16000.npz",
+  "wall_seconds": 8.373,
+  "wall_seconds_internal": 8.373
+}
+       10.27 real        22.16 user         3.91 sys
+          2095611904  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              265099  page reclaims
+                5707  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3843  voluntary context switches
+              167484  involuntary context switches
+        203539098195  instructions retired
+         66843063212  cycles elapsed
+          1134642856  peak memory footprint

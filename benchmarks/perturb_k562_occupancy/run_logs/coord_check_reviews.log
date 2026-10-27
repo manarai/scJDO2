@@ -1,0 +1,15 @@
+-- review command: python -m pytest -q tests/test_orient.py tests/test_smoke.py
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.7.0
+rootdir: /home/ubuntu/scJDO2
+configfile: pyproject.toml
+plugins: platformdirs-4.13.5, fast-array-utils-1.5.1, anyio-4.15.1, zarr-3.4.1, cov-7.1.0
+collected 48 items
+
+tests/test_orient.py .............................................       [ 93%]
+tests/test_smoke.py ...                                                  [100%]
+
+============================== 48 passed in 9.68s ==============================
+base 56e9c0045387bf6049dbd40c8b049ef2d55a4cae  head manus/orient-S18b  changed 93 file(s)
+== check orient/S18b
+PASS

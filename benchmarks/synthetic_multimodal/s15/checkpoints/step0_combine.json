@@ -1,0 +1,19 @@
+{
+  "datasets": [
+    "v3_transition_s2",
+    "v3_transition_s3",
+    "v3_transition_s4",
+    "v3_default_s2"
+  ],
+  "finished_utc": "2026-10-23T23:49:47.702795Z",
+  "in_process_cpu_seconds": 0.003,
+  "jref_diagnosis": "benchmarks/synthetic_multimodal/s15/jref_diagnosis.csv",
+  "jref_diagnosis_sha256": "168ac1856f408ba06a6b4cad998591cc728d271ced804af5bab453065c5ca937",
+  "n_rows": 8,
+  "peak_rss_bytes": 104988672,
+  "started_utc": "2026-10-23T23:49:47.698798Z",
+  "step": 0,
+  "task": "orient/S15",
+  "unit": "step0_combine",
+  "wall_seconds": 0.004
+}

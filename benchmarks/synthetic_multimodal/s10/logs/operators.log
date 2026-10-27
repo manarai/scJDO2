@@ -1,0 +1,36 @@
+START 2026-10-20T12:57:17Z .venv/bin/python scripts/s10_operators.py
+[S10 operators] v3_default s0
+[S10 operators] v3_default s1
+[S10 operators] v3_default s2
+[S10 operators] v3_stress s0
+[S10 operators] v3_stress s1
+[S10 operators] v3_stress s2
+[S10 operators] v3_batch s0
+[S10 operators] v3_batch s1
+[S10 operators] v3_batch s2
+[S10 operators] v3_transition s0
+[S10 operators] v3_transition s1
+[S10 operators] v3_transition s2
+[S10 operators] v3_stationary_cycle s0
+[S10 operators] v3_stationary_cycle s1
+[S10 operators] v3_stationary_cycle s2
+(756, 14)
+      626.58 real       605.03 user        17.66 sys
+          4250796032  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1770345  page reclaims
+                  31  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2655  voluntary context switches
+              157395  involuntary context switches
+       7385844064784  instructions retired
+       1571223984167  cycles elapsed
+          2716293768  peak memory footprint
+EXIT 0 2026-10-20T13:07:44Z

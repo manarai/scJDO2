@@ -1,0 +1,156 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_transition_s3_k20_selected.npz",
+  "array_sha256": "93ddcacee486b740a505b9479124b13ab46f7f5303f75812fe7c205d37c7cc8b",
+  "configuration": {
+    "ensemble": 5,
+    "eps": 0.025,
+    "hidden": [
+      128,
+      128,
+      128
+    ],
+    "last": "extrapolate",
+    "space": "whitened",
+    "wd": 0.001
+  },
+  "configuration_id": "selected",
+  "dataset": "v3_transition_s3",
+  "finished_utc": "2026-10-22T13:13:15.736355Z",
+  "in_process_cpu_seconds": 107.078,
+  "k": 20,
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.998,
+      "seed": 0,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.081,
+      "seed": 1,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.074,
+      "seed": 2,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.073,
+      "seed": 3,
+      "weight_decay": 0.001
+    },
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        128,
+        128,
+        128
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 6.087,
+      "seed": 4,
+      "weight_decay": 0.001
+    }
+  ],
+  "n_cells": 12784,
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 15.63691446929542,
+      "final_err": 8.604282538938288e-10,
+      "from_day": 2,
+      "n_iter": 19,
+      "n_source": 187,
+      "n_target": 1447,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.025,
+      "epsilon": 13.162727287165826,
+      "final_err": 6.659113397096935e-10,
+      "from_day": 4,
+      "n_iter": 21,
+      "n_source": 1447,
+      "n_target": 11150,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 1.31,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "part": "C",
+  "peak_rss_bytes": 7572684800,
+  "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_transition_s3.npz",
+  "prepared_sha256": "c15885f34fe0d7af76c27d235c528a6e4cde1a5a4acc5e2978b6c1556c45d503",
+  "preset": "v3_transition",
+  "scores": {
+    "auc_lam1": 0.8333838236312663,
+    "fate_axis_abs_cos_at_saddle": 0.9874894762628436,
+    "jref_relative_frobenius_median": 1.0013694592248286,
+    "median_lam1_committed": 0.009654500325110137,
+    "median_lam1_saddle": 0.011980437360806506,
+    "n_committed": 9098,
+    "n_saddle": 365,
+    "transition_abs_offset": 3,
+    "transition_bin_medians": "[0.01122, 0.011399, 0.011229, 0.010652, 0.011854, 0.011777, 0.010944, 0.010078, 0.010083, 0.0098, 0.009714, 0.009632]",
+    "transition_detected_bin": 4,
+    "transition_informative": false,
+    "transition_n_rising_bins_before_detected": 1,
+    "transition_peak_to_median": 1.0977972005530148,
+    "transition_pseudotime_order": "S10 strict earliest-day r0; 12 S14 day-weighted pseudotime-quantile bins (cell weight 1/n_cells(day))",
+    "transition_signed_offset": 3,
+    "transition_true_bin": 1
+  },
+  "seed": 3,
+  "started_utc": "2026-10-22T13:11:15.241409Z",
+  "task": "orient/S14",
+  "truth_scoring_only": [
+    "fork AUC",
+    "J_ref error",
+    "fate-axis cosine",
+    "strict-pseudotime transition"
+  ],
+  "unit": "test_v3_transition_s3_k20_selected",
+  "wall_seconds": 120.495
+}

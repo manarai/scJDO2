@@ -1,0 +1,31 @@
+{
+  "comparison": "benchmarks/synthetic_multimodal/v3_calibration/compare_v3.csv",
+  "figures": 32,
+  "summary": [
+    {
+      "comparisons": 95,
+      "match_rate": 0.3894736842105263,
+      "matched": 37,
+      "preset": "v3_batch"
+    },
+    {
+      "comparisons": 96,
+      "match_rate": 0.3854166666666667,
+      "matched": 37,
+      "preset": "v3_default"
+    },
+    {
+      "comparisons": 90,
+      "match_rate": 0.4888888888888889,
+      "matched": 44,
+      "preset": "v3_stationary"
+    },
+    {
+      "comparisons": 95,
+      "match_rate": 0.3368421052631579,
+      "matched": 32,
+      "preset": "v3_stress"
+    }
+  ],
+  "task": "orient/S09"
+}

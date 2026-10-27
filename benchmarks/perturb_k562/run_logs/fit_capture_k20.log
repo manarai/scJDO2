@@ -1,0 +1,16 @@
+[2026-10-22T06:04:15.677895+00:00] fit k=20, 10691 controls, exact frozen S02 config
+[energy-drift] epoch 150/1500  loss_kind=esm  loss=-8.5494
+[energy-drift] epoch 300/1500  loss_kind=esm  loss=-10.9627
+[energy-drift] epoch 450/1500  loss_kind=esm  loss=-11.8476
+[energy-drift] epoch 600/1500  loss_kind=esm  loss=-12.5194
+[energy-drift] epoch 750/1500  loss_kind=esm  loss=-11.8532
+[energy-drift] epoch 900/1500  loss_kind=esm  loss=-13.1148
+[energy-drift] epoch 1050/1500  loss_kind=esm  loss=-13.7222
+[energy-drift] epoch 1200/1500  loss_kind=esm  loss=-13.7244
+[energy-drift] epoch 1350/1500  loss_kind=esm  loss=-12.7087
+[energy-drift] epoch 1500/1500  loss_kind=esm  loss=-12.3284
+   local_score_J  global_score_J  local_covariance  global_covariance
+m                                                                    
+1       0.004226        0.000602          0.010632           0.009111
+3       0.044680        0.037833          0.292426           0.588926
+5       0.166986        0.079373          0.393981           0.717797

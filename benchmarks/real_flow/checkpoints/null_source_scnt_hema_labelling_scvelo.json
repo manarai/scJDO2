@@ -1,0 +1,11 @@
+{
+  "dataset": "scnt_hema",
+  "finished_utc": "2026-10-19T07:12:23.804720+00:00",
+  "left": "labelling",
+  "n_seeds": 5,
+  "right": "scvelo",
+  "started_utc": "2026-10-19T07:08:40.925700+00:00",
+  "task": "orient/S11",
+  "unit": "null_source_scnt_hema_labelling_scvelo",
+  "wall_seconds": 222.879
+}

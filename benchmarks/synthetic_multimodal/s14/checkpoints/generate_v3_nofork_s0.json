@@ -1,0 +1,22 @@
+{
+  "part": "C-input-generation",
+  "preset": "v3_nofork",
+  "seed": 0,
+  "path": "benchmarks/synthetic_multimodal/data/v3/v3_nofork_s0.h5ad",
+  "sha256": "f70330db5953acb0d787d51433509f9c2aee5f5c8210504394eaf312627fc635",
+  "n_cells": 12701,
+  "n_vars": 4000,
+  "days": {
+    "2": 187,
+    "4": 1448,
+    "6": 11066
+  },
+  "manifest_path": "benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+  "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_nofork_s0.log",
+  "exit": 0,
+  "wall_seconds": 3807.21,
+  "cpu_seconds": 3629.25,
+  "peak_rss_bytes": 9889360048,
+  "duration_limit_seconds": 5400,
+  "verified": "sha256 and H5AD metadata agree with the manifest row"
+}

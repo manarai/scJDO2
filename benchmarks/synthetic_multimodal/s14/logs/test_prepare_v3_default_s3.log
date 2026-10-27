@@ -1,0 +1,32 @@
+START 2026-10-22T12:35:32Z unit=prepare_v3_default_s3 launcher=.sandbox/bin/python
+Sampling and flocking waypoints...
+Time for determining waypoints: 0.00013904968897501628 minutes
+Determining pseudotime...
+Shortest path distances using 30-nearest neighbor graph...
+Time for shortest paths: 0.053729701042175296 minutes
+Iteratively refining the pseudotime...
+Correlation at iteration 1: 1.0000
+Entropy and branch probabilities...
+Markov chain construction...
+Identification of terminal states...
+Computing fundamental matrix and absorption probabilities...
+Project results to all cells...
+       66.34 real        68.74 user         4.95 sys
+          6304251904  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              820048  page reclaims
+                   5  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 601  voluntary context switches
+              113603  involuntary context switches
+        388641439323  instructions retired
+        190756776002  cycles elapsed
+          5166945872  peak memory footprint
+EXIT 0 2026-10-22T12:36:39Z

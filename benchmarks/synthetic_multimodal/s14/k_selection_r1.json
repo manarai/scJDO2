@@ -1,0 +1,98 @@
+{
+  "all_candidates": [
+    {
+      "k": 5,
+      "mean_lineage_agreement": 0.5255634582212234,
+      "mean_null_max": 0.2370765276941941,
+      "mean_seed_stability": 0.825924462176498,
+      "n_datasets": 5
+    },
+    {
+      "k": 10,
+      "mean_lineage_agreement": 0.6747028427973508,
+      "mean_null_max": 0.2820794022444394,
+      "mean_seed_stability": 0.6676668055104961,
+      "n_datasets": 5
+    },
+    {
+      "k": 15,
+      "mean_lineage_agreement": 0.6993001830963994,
+      "mean_null_max": 0.2421530251016294,
+      "mean_seed_stability": 0.6184665344476254,
+      "n_datasets": 5
+    },
+    {
+      "k": 20,
+      "mean_lineage_agreement": 0.733886490028279,
+      "mean_null_max": 0.207224733109447,
+      "mean_seed_stability": 0.2291772043186639,
+      "n_datasets": 5
+    },
+    {
+      "k": 30,
+      "mean_lineage_agreement": 0.7548631719043235,
+      "mean_null_max": 0.1667048350223995,
+      "mean_seed_stability": 0.1433427459552326,
+      "n_datasets": 5
+    }
+  ],
+  "amendment_disclosure": "Rule fixed after development fork AUCs had been seen; development data are tuning data and test seeds were not accessed by this recomputation.",
+  "development_datasets": [
+    "v3_transition_s0",
+    "v3_transition_s1",
+    "v3_default_s0",
+    "v3_default_s1",
+    "larry"
+  ],
+  "eligible_candidates": [
+    {
+      "k": 5,
+      "mean_lineage_agreement": 0.5255634582212234,
+      "mean_null_max": 0.2370765276941941,
+      "mean_seed_stability": 0.825924462176498,
+      "n_datasets": 5
+    },
+    {
+      "k": 10,
+      "mean_lineage_agreement": 0.6747028427973508,
+      "mean_null_max": 0.2820794022444394,
+      "mean_seed_stability": 0.6676668055104961,
+      "n_datasets": 5
+    },
+    {
+      "k": 15,
+      "mean_lineage_agreement": 0.6993001830963994,
+      "mean_null_max": 0.2421530251016294,
+      "mean_seed_stability": 0.6184665344476254,
+      "n_datasets": 5
+    }
+  ],
+  "fallback_used": false,
+  "k_star": 15,
+  "revision": 1,
+  "rule": "among k with mean seed stability >= 0.5, highest mean lineage agreement; ties within 0.02 by higher seed stability, then lower k; if none pass, use the most stable k",
+  "selection_locked_utc": "2026-10-21T08:25:06.005086Z",
+  "source_choose_k_csv": "benchmarks/synthetic_multimodal/s14/choose_k.csv",
+  "source_choose_k_sha256": "7832702e3688e0c032805105d02c36a6f86cb31208e460b60b65cdeb60c9339c",
+  "stability_threshold": 0.5,
+  "truth_free": true,
+  "truth_free_inputs": [
+    "locked Part A observed-only choose_k.csv"
+  ],
+  "truth_keys_absent_from_selection": [
+    "z_true",
+    "fate_true",
+    "jacobian_state",
+    "ds_dt_true",
+    "z1_crit"
+  ],
+  "within_0_02_candidates": [
+    {
+      "k": 15,
+      "mean_lineage_agreement": 0.6993001830963994,
+      "mean_null_max": 0.2421530251016294,
+      "mean_seed_stability": 0.6184665344476254,
+      "n_datasets": 5
+    }
+  ]
+}

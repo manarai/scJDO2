@@ -1,0 +1,20 @@
+{
+  "unit": "gene_annotation_repair",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "repair-gene-mapping"
+  ],
+  "started_utc": "2026-10-23T02:47:45.707500+00:00",
+  "finished_utc": "2026-10-23T02:47:50.726967+00:00",
+  "exit_code": 1,
+  "wall_seconds": 5.019473090000247,
+  "cpu_hours": 0.0011771797222222223,
+  "max_rss_kib": 728272,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/gene_annotation_repair.log",
+  "stop_reason": null
+}

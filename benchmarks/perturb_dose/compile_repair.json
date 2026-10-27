@@ -1,0 +1,6 @@
+{
+  "error": "SyntaxError in final output-audit indentation, line 582",
+  "failed_command_stage": "py_compile before freeze; no freeze or scientific command executed",
+  "repair": "indent the cache comparison under its existing if; no fitted arrays, definitions, parameters or scientific functions changed",
+  "no_fit_repeated": true
+}

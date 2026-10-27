@@ -1,0 +1,209 @@
+{
+  "J_flow_ot": {
+    "balanced": true,
+    "fit_device": "mps:0",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 1647,
+    "pairs": [
+      {
+        "dt_hours": 48.0,
+        "epsilon": 4.667569937908316,
+        "final_err": 8.418309435972577e-11,
+        "from_day": 2,
+        "n_iter": 4,
+        "n_source": 190,
+        "n_target": 1457,
+        "plan_mass": 1.0,
+        "reg_m": null,
+        "rows_zero": 0,
+        "seconds": 0.01,
+        "source_mass": 1.0000000000000004,
+        "to_day": 4,
+        "warnings": []
+      },
+      {
+        "dt_hours": 48.0,
+        "epsilon": 2.326159481920295,
+        "final_err": 4.1804029575551364e-10,
+        "from_day": 4,
+        "n_iter": 8,
+        "n_source": 1457,
+        "n_target": 11237,
+        "plan_mass": 1.0,
+        "reg_m": null,
+        "rows_zero": 0,
+        "seconds": 1.2,
+        "source_mass": 0.9999999999999998,
+        "to_day": 6,
+        "warnings": []
+      }
+    ],
+    "seconds": 21.88
+  },
+  "J_flow_ot_ub0.1": {
+    "fit_device": "mps:0",
+    "growth_factor": "exp(dt log2 / division_hours) (1 - f_sample) from the generator (sensitivity only)",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 1647,
+    "pairs": [
+      {
+        "dt_hours": 48.0,
+        "epsilon": 4.667569937908316,
+        "final_err": 1.9589246422547938e-08,
+        "from_day": 2,
+        "n_iter": 5,
+        "n_source": 190,
+        "n_target": 1457,
+        "plan_mass": 0.00019072967266768137,
+        "reg_m": 0.4667569937908316,
+        "rows_zero": 0,
+        "seconds": 0.01,
+        "source_mass": 1.0130803996200897,
+        "to_day": 4,
+        "warnings": []
+      },
+      {
+        "dt_hours": 48.0,
+        "epsilon": 2.326159481920295,
+        "final_err": 3.113263297486031e-08,
+        "from_day": 4,
+        "n_iter": 5,
+        "n_source": 1457,
+        "n_target": 11237,
+        "plan_mass": 1.1308192190586292e-05,
+        "reg_m": 0.2326159481920295,
+        "rows_zero": 0,
+        "seconds": 0.35,
+        "source_mass": 1.0073004656857778,
+        "to_day": 6,
+        "warnings": []
+      }
+    ],
+    "reg_m_factor": 0.1,
+    "seconds": 21.86
+  },
+  "J_flow_ot_ub1": {
+    "fit_device": "mps:0",
+    "growth_factor": "exp(dt log2 / division_hours) (1 - f_sample) from the generator (sensitivity only)",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 1647,
+    "pairs": [
+      {
+        "dt_hours": 48.0,
+        "epsilon": 4.667569937908316,
+        "final_err": 9.104447212510512e-07,
+        "from_day": 2,
+        "n_iter": 12,
+        "n_source": 190,
+        "n_target": 1457,
+        "plan_mass": 0.01786976041558302,
+        "reg_m": 4.667569937908316,
+        "rows_zero": 0,
+        "seconds": 0.01,
+        "source_mass": 1.0130803996200897,
+        "to_day": 4,
+        "warnings": []
+      },
+      {
+        "dt_hours": 48.0,
+        "epsilon": 2.326159481920295,
+        "final_err": 3.0735266871932203e-07,
+        "from_day": 4,
+        "n_iter": 13,
+        "n_source": 1457,
+        "n_target": 11237,
+        "plan_mass": 0.00799040898793327,
+        "reg_m": 2.326159481920295,
+        "rows_zero": 0,
+        "seconds": 0.41,
+        "source_mass": 1.0073004656857778,
+        "to_day": 6,
+        "warnings": []
+      }
+    ],
+    "reg_m_factor": 1.0,
+    "seconds": 22.01
+  },
+  "J_flow_ot_ub10": {
+    "fit_device": "mps:0",
+    "growth_factor": "exp(dt log2 / division_hours) (1 - f_sample) from the generator (sensitivity only)",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 1647,
+    "pairs": [
+      {
+        "dt_hours": 48.0,
+        "epsilon": 4.667569937908316,
+        "final_err": 9.971209251316672e-07,
+        "from_day": 2,
+        "n_iter": 74,
+        "n_source": 190,
+        "n_target": 1457,
+        "plan_mass": 0.45322482088594956,
+        "reg_m": 46.675699379083156,
+        "rows_zero": 0,
+        "seconds": 0.01,
+        "source_mass": 1.0130803996200897,
+        "to_day": 4,
+        "warnings": []
+      },
+      {
+        "dt_hours": 48.0,
+        "epsilon": 2.326159481920295,
+        "final_err": 9.299146837453329e-07,
+        "from_day": 4,
+        "n_iter": 75,
+        "n_source": 1457,
+        "n_target": 11237,
+        "plan_mass": 0.4850317918255028,
+        "reg_m": 23.261594819202948,
+        "rows_zero": 0,
+        "seconds": 0.97,
+        "source_mass": 1.0073004656857778,
+        "to_day": 6,
+        "warnings": []
+      }
+    ],
+    "reg_m_factor": 10.0,
+    "seconds": 21.85
+  },
+  "J_flow_scvelo": {
+    "fit_device": "mps:0",
+    "jacobian_device": "cpu",
+    "n_dropped_nonfinite": 0,
+    "n_fit_cells": 12884,
+    "scvelo_sha256": "e00be1c6c593898de4f5325f377fbb4641d4e94c7539c964498e9c5de1d2e689",
+    "seconds": 23.4
+  },
+  "finished_utc": "2026-10-20T12:00:40.784326Z",
+  "in_process_cpu_seconds": 116.604,
+  "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+  "keys": [
+    "J_flow_ot",
+    "J_flow_ot_ub0.1",
+    "J_flow_ot_ub1",
+    "J_flow_ot_ub10",
+    "J_flow_scvelo",
+    "v_ot",
+    "v_ot_ub0.1",
+    "v_ot_ub1",
+    "v_ot_ub10",
+    "v_scvelo"
+  ],
+  "method": "fa",
+  "ot_library": {
+    "moscot": "not installed (no installs without approval)",
+    "name": "POT",
+    "version": "0.9.7.post1"
+  },
+  "path": "benchmarks/synthetic_multimodal/data/s10/v3_transition_s2/flow_fa.npz",
+  "peak_rss_bytes": 4075143168,
+  "sha256": "63a9404f7c309abf9bd686f88b8d90e097c156dc2f4c56b2affd8ce343431b46",
+  "started_utc": "2026-10-20T11:58:32.414616Z",
+  "task": "orient/S10",
+  "unit": "flow_v3_transition_s2_fa",
+  "wall_seconds": 128.37
+}

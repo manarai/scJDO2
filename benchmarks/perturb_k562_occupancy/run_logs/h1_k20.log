@@ -1,0 +1,94 @@
+[2026-10-22T10:00:36.886063+00:00] k=20 exact all-control target statistics 100/865
+[2026-10-22T10:00:40.618803+00:00] k=20 exact all-control target statistics 200/865
+[2026-10-22T10:00:44.283558+00:00] k=20 exact all-control target statistics 300/865
+[2026-10-22T10:00:47.559589+00:00] k=20 exact all-control target statistics 400/865
+[2026-10-22T10:00:51.581974+00:00] k=20 exact all-control target statistics 500/865
+[2026-10-22T10:00:55.477607+00:00] k=20 exact all-control target statistics 600/865
+[2026-10-22T10:00:59.853445+00:00] k=20 exact all-control target statistics 700/865
+[2026-10-22T10:01:03.201868+00:00] k=20 exact all-control target statistics 800/865
+[2026-10-22T10:01:15.037911+00:00] H1 optimizer iteration 5000; unresolved 63; max gap 2.17e-08
+[2026-10-22T10:01:17.901933+00:00] k=20 exact null sufficient statistics 20/299 sizes
+[2026-10-22T10:01:20.737066+00:00] k=20 exact null sufficient statistics 40/299 sizes
+[2026-10-22T10:01:24.394791+00:00] k=20 exact null sufficient statistics 60/299 sizes
+[2026-10-22T10:01:28.998291+00:00] k=20 exact null sufficient statistics 80/299 sizes
+[2026-10-22T10:01:34.693983+00:00] k=20 exact null sufficient statistics 100/299 sizes
+[2026-10-22T10:01:41.568606+00:00] k=20 exact null sufficient statistics 120/299 sizes
+[2026-10-22T10:01:49.714755+00:00] k=20 exact null sufficient statistics 140/299 sizes
+[2026-10-22T10:01:59.598081+00:00] k=20 exact null sufficient statistics 160/299 sizes
+[2026-10-22T10:02:11.349767+00:00] k=20 exact null sufficient statistics 180/299 sizes
+[2026-10-22T10:02:25.441131+00:00] k=20 exact null sufficient statistics 200/299 sizes
+[2026-10-22T10:02:41.864968+00:00] k=20 exact null sufficient statistics 220/299 sizes
+[2026-10-22T10:03:01.406213+00:00] k=20 exact null sufficient statistics 240/299 sizes
+[2026-10-22T10:03:26.168858+00:00] k=20 exact null sufficient statistics 260/299 sizes
+[2026-10-22T10:03:59.370395+00:00] k=20 exact null sufficient statistics 280/299 sizes
+[2026-10-22T10:05:17.042894+00:00] k=20 exact null sufficient statistics 299/299 sizes
+[2026-10-22T10:05:55.578150+00:00] H1 optimizer iteration 5000; unresolved 779; max gap 2.32e-08
+[2026-10-22T10:06:40.150419+00:00] H1 optimizer iteration 5000; unresolved 805; max gap 2.43e-08
+[2026-10-22T10:07:25.864096+00:00] H1 optimizer iteration 5000; unresolved 849; max gap 2.37e-08
+[2026-10-22T10:08:09.467327+00:00] H1 optimizer iteration 5000; unresolved 882; max gap 2.43e-08
+[2026-10-22T10:08:53.748719+00:00] H1 optimizer iteration 5000; unresolved 937; max gap 2.44e-08
+[2026-10-22T10:09:38.522117+00:00] H1 optimizer iteration 5000; unresolved 1002; max gap 2.3e-08
+[2026-10-22T10:10:24.154758+00:00] H1 optimizer iteration 5000; unresolved 1034; max gap 2.32e-08
+[2026-10-22T10:11:10.171484+00:00] H1 optimizer iteration 5000; unresolved 1037; max gap 3.46e-08
+[2026-10-22T10:11:16.366053+00:00] H1 optimizer iteration 10000; unresolved 1; max gap 4.7e-09
+[2026-10-22T10:11:56.388824+00:00] H1 optimizer iteration 5000; unresolved 1045; max gap 2.82e-08
+[2026-10-22T10:12:41.959189+00:00] H1 optimizer iteration 5000; unresolved 1060; max gap 2.53e-08
+[2026-10-22T10:13:28.293876+00:00] H1 optimizer iteration 5000; unresolved 1071; max gap 2.2e-08
+[2026-10-22T10:14:15.396226+00:00] H1 optimizer iteration 5000; unresolved 1129; max gap 2.43e-08
+[2026-10-22T10:15:02.495507+00:00] H1 optimizer iteration 5000; unresolved 1123; max gap 2.51e-08
+[2026-10-22T10:15:49.650024+00:00] H1 optimizer iteration 5000; unresolved 1178; max gap 2.52e-08
+[2026-10-22T10:16:36.811684+00:00] H1 optimizer iteration 5000; unresolved 1158; max gap 2.7e-08
+[2026-10-22T10:17:24.435088+00:00] H1 optimizer iteration 5000; unresolved 1230; max gap 2.67e-08
+[2026-10-22T10:18:12.784954+00:00] H1 optimizer iteration 5000; unresolved 1244; max gap 2.54e-08
+[2026-10-22T10:19:01.247992+00:00] H1 optimizer iteration 5000; unresolved 1274; max gap 2.3e-08
+[2026-10-22T10:19:50.170238+00:00] H1 optimizer iteration 5000; unresolved 1244; max gap 2.55e-08
+[2026-10-22T10:20:38.924618+00:00] H1 optimizer iteration 5000; unresolved 1255; max gap 2.4e-08
+[2026-10-22T10:21:27.669496+00:00] H1 optimizer iteration 5000; unresolved 1309; max gap 2.25e-08
+[2026-10-22T10:22:17.808378+00:00] H1 optimizer iteration 5000; unresolved 1286; max gap 2.54e-08
+[2026-10-22T10:23:07.857077+00:00] H1 optimizer iteration 5000; unresolved 1315; max gap 2.51e-08
+[2026-10-22T10:23:57.840290+00:00] H1 optimizer iteration 5000; unresolved 1331; max gap 2.24e-08
+[2026-10-22T10:24:48.199326+00:00] H1 optimizer iteration 5000; unresolved 1315; max gap 2.72e-08
+[2026-10-22T10:25:38.734566+00:00] H1 optimizer iteration 5000; unresolved 1309; max gap 2.96e-08
+[2026-10-22T10:25:47.514161+00:00] H1 optimizer iteration 10000; unresolved 1; max gap 4.78e-09
+[2026-10-22T10:26:29.736511+00:00] H1 optimizer iteration 5000; unresolved 1339; max gap 2.92e-08
+[2026-10-22T10:26:38.360299+00:00] H1 optimizer iteration 10000; unresolved 1; max gap 4.4e-09
+[2026-10-22T10:27:21.034746+00:00] H1 optimizer iteration 5000; unresolved 1386; max gap 2.61e-08
+[2026-10-22T10:28:13.045708+00:00] H1 optimizer iteration 5000; unresolved 1397; max gap 2.3e-08
+[2026-10-22T10:28:32.046079+00:00] H1 optimizer iteration 5000; unresolved 313; max gap 2.04e-08
+[2026-10-22T10:28:35.262386+00:00] k=20 null banks 10/299; 200 subsets per size; max iterations 9185
+[2026-10-22T10:28:35.469414+00:00] k=20 null banks 20/299; 200 subsets per size; max iterations 9185
+[2026-10-22T10:28:35.691449+00:00] k=20 null banks 30/299; 200 subsets per size; max iterations 9451
+[2026-10-22T10:28:35.929827+00:00] k=20 null banks 40/299; 200 subsets per size; max iterations 9451
+[2026-10-22T10:28:36.183432+00:00] k=20 null banks 50/299; 200 subsets per size; max iterations 9451
+[2026-10-22T10:28:36.452561+00:00] k=20 null banks 60/299; 200 subsets per size; max iterations 9451
+[2026-10-22T10:28:36.736560+00:00] k=20 null banks 70/299; 200 subsets per size; max iterations 9451
+[2026-10-22T10:28:37.036162+00:00] k=20 null banks 80/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:37.352691+00:00] k=20 null banks 90/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:37.686893+00:00] k=20 null banks 100/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:38.036502+00:00] k=20 null banks 110/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:38.402820+00:00] k=20 null banks 120/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:38.783169+00:00] k=20 null banks 130/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:39.179979+00:00] k=20 null banks 140/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:39.594888+00:00] k=20 null banks 150/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:40.028693+00:00] k=20 null banks 160/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:40.478650+00:00] k=20 null banks 170/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:40.962915+00:00] k=20 null banks 180/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:41.448985+00:00] k=20 null banks 190/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:41.956680+00:00] k=20 null banks 200/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:42.483857+00:00] k=20 null banks 210/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:43.028118+00:00] k=20 null banks 220/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:43.597306+00:00] k=20 null banks 230/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:44.196294+00:00] k=20 null banks 240/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:44.828619+00:00] k=20 null banks 250/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:45.492447+00:00] k=20 null banks 260/299; 200 subsets per size; max iterations 10264
+[2026-10-22T10:28:46.198960+00:00] k=20 null banks 270/299; 200 subsets per size; max iterations 10302
+[2026-10-22T10:28:46.986409+00:00] k=20 null banks 280/299; 200 subsets per size; max iterations 10302
+[2026-10-22T10:28:47.857742+00:00] k=20 null banks 290/299; 200 subsets per size; max iterations 10302
+[2026-10-22T10:28:49.075100+00:00] k=20 null banks 299/299; 200 subsets per size; max iterations 10302
+target  explained_fraction  noise_p95  exceeds_noise_p95
+ZNF559            0.300738   0.388333              False
+ZNF574            0.241433   0.403881              False
+ZNF687            0.393220   0.391046               True
+ZNHIT6            0.111082   0.389163              False
+ ZRSR2            0.378897   0.387885              False
+k=20 H1 median 0.30528778; above noise 0.271676301

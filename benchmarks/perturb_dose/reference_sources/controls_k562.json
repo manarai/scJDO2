@@ -1,0 +1,32 @@
+{
+  "screen": "k562",
+  "n_cells": 310385,
+  "n_genes": 8563,
+  "n_controls": 10691,
+  "median_control_library": 13714.0,
+  "n_hvg": 2000,
+  "fit_cells": "non-targeting controls only",
+  "pca_dimensions": [
+    15,
+    20,
+    30
+  ],
+  "pca_solver": "full",
+  "pca_whiten": false,
+  "raw_counts_access": "Exactly sorted selected control rows only; h5py X reads audited by command path",
+  "pca_reused_from_S18": {
+    "path": "benchmarks/perturb_k562/cache/embedding.npz",
+    "sha256": "c1bfc77d63876da85bde891e73149a0308bb414d25db37b018d8d456279384de",
+    "members_read": [
+      "hvg",
+      "pca_mean",
+      "pca_components",
+      "explained_variance",
+      "control_indices"
+    ],
+    "z_and_labels_not_read": true
+  },
+  "group_lists_resolved_before_expression": "benchmarks/perturb_valleys/group_lists_k562.json",
+  "control_embedding_sha256": "a379545290cfd869859f680286ae334eb458b17aea9f9aa1715ee21000be47b7",
+  "finished_utc": "2026-10-22T15:31:11.299451+00:00"
+}

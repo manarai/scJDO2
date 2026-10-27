@@ -1,0 +1,20 @@
+START 2026-10-23T23:47:33Z unit=step0_v3_transition_s4 launcher=.sandbox/bin/python cap=14GiB estimate_lt=8GiB
+       27.67 real        23.59 user         2.19 sys
+          5400231936  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              635819  page reclaims
+                   5  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4283  voluntary context switches
+               19253  involuntary context switches
+        291034307497  instructions retired
+         95458201610  cycles elapsed
+          6176987592  peak memory footprint
+EXIT 0 2026-10-23T23:48:00Z

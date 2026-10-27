@@ -1,0 +1,39 @@
+{
+  "array_key": "J",
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/operators/score_v3_default_s3_k15.npz",
+  "array_sha256": "549548502ec269839be0af1bd8f7ce456f23c912e8f9b76d7727202dab7ebf42",
+  "configuration": {
+    "batch_size": 256,
+    "beta": 1.0,
+    "depth": 3,
+    "esm_laplacian": "exact",
+    "hidden": 96,
+    "loss": "esm",
+    "lr": 0.0005,
+    "n_epochs": 1500,
+    "seed": 0
+  },
+  "dataset": "v3_default_s3",
+  "finished_utc": "2026-10-24T17:24:30.257487Z",
+  "in_process_cpu_seconds": 38.703,
+  "input": {
+    "prepared_path": "benchmarks/synthetic_multimodal/s14/arrays/prepared/v3_default_s3.npz",
+    "prepared_sha256": "0ee4d820b7c760f0a977a4fef22d437fa5f6bdc69f468c241079881e11c2676e",
+    "source": "S14 observed prepared PCA-50 prefix"
+  },
+  "k": 15,
+  "observed_fit_complete_before_truth_scoring": true,
+  "operator": "J_score",
+  "pca15_source": "No S10 J_score artifact exists in PCA-15; refit exactly with S10 EnergyDrift settings in the matching observed PCA-k space.",
+  "peak_rss_bytes": 482263040,
+  "stage": "operators",
+  "started_utc": "2026-10-24T17:23:50.897048Z",
+  "symmetry": {
+    "max_asym": 2.245298560410447e-07,
+    "median_asym": 1.4896385636120613e-07
+  },
+  "task": "orient/S15",
+  "truth_keys_accessed": false,
+  "unit": "score_v3_default_s3_k15",
+  "wall_seconds": 39.36
+}

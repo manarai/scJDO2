@@ -1,0 +1,46 @@
+{
+  "best_mean_lineage_agreement": 0.7548631719043235,
+  "choose_k_by_dataset_csv": "benchmarks/synthetic_multimodal/s14/choose_k_by_dataset.csv",
+  "choose_k_csv": "benchmarks/synthetic_multimodal/s14/choose_k.csv",
+  "development_datasets": [
+    "v3_transition_s0",
+    "v3_transition_s1",
+    "v3_default_s0",
+    "v3_default_s1",
+    "larry"
+  ],
+  "finished_utc": "2026-10-21T05:30:05.492550Z",
+  "in_process_cpu_seconds": 0.013,
+  "k_star": 30,
+  "part_a_truth_free": true,
+  "peak_rss_bytes": 108183552,
+  "rule": "highest mean lineage agreement over five equally-weighted development datasets; candidates within 0.02 are broken by higher mean seed stability, then lower k deterministically",
+  "selection_locked_utc": "2026-10-21T05:30:05.491938Z",
+  "started_utc": "2026-10-21T05:30:05.475573Z",
+  "task": "orient/S14",
+  "truth_free": true,
+  "truth_free_inputs": [
+    "observed spliced counts",
+    "sampling day/time",
+    "barcodes",
+    "S10/S12/S13 observed PCA artifacts"
+  ],
+  "truth_keys_absent_from_selection": [
+    "z_true",
+    "fate_true",
+    "jacobian_state",
+    "ds_dt_true",
+    "z1_crit"
+  ],
+  "unit": "select_k",
+  "wall_seconds": 0.017,
+  "within_0_02_candidates": [
+    {
+      "k": 30,
+      "mean_lineage_agreement": 0.7548631719043235,
+      "mean_null_max": 0.1667048350223995,
+      "mean_seed_stability": 0.14334274595523264,
+      "n_datasets": 5
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "task": "orient/S21b",
+  "source_key": "cycle_s2",
+  "key": "cycle_s2_T8",
+  "backbone": "cycle",
+  "seed": 2,
+  "timepoints": 8,
+  "cells": 5000,
+  "genes": 1000,
+  "fork_cells": "NA",
+  "generate_experiment_seconds": 14.192,
+  "generated_utc": "2026-10-24 00:10:17 UTC",
+  "h5ad_path": "benchmarks/dyngen/data/cycle_s2_T8.h5ad",
+  "h5ad_sha256": "6c60303fb0806420e417e1e56407beef83aef25d3b3ee9b436004ecbc7e5a97b",
+  "h5ad_bytes": 66956421
+}

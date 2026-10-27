@@ -1,0 +1,16 @@
+{
+  "embedding": "benchmarks/real_flow/arrays/embeddings/scnt_hema_x_pca30.npz",
+  "finished_utc": "2026-10-19T06:01:42.855934+00:00",
+  "input_sha256": {
+    "processed": "635898d1e5ced4faac6546f0930548ceca56d0662b2527b867ab8f8a3ce62c11",
+    "raw": "2e0e274452fd730a30552b18fea26d9dcf665fff33ffc9de2007ec5c9eedb68d"
+  },
+  "map_sha256": "da14f87794ee0cd7a5f965a1a9d0d953345ec032b0decbdc16b9108911d946a2",
+  "n_cells": 1947,
+  "n_genes": 1956,
+  "normalization_target": 183.0,
+  "started_utc": "2026-10-19T06:01:42.280517+00:00",
+  "task": "orient/S11",
+  "unit": "prepare_scnt_hema",
+  "wall_seconds": 0.575
+}

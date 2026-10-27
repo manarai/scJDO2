@@ -1,0 +1,18 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "config": "MeasuredDrift default (n_epochs=1500, batch=256, hidden=96x3)",
+    "seed": 0
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:36:22.228128+00:00",
+  "n_cells": 1947,
+  "operator": "measured",
+  "operator_path": "benchmarks/real_flow/arrays/operators/scnt_hema_dynamo_gene_measured_s0.npz",
+  "seed": 0,
+  "source": "dynamo_gene",
+  "started_utc": "2026-10-19T06:35:39.498275+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_dynamo_gene_measured_s0",
+  "wall_seconds": 42.73
+}

@@ -1,0 +1,46 @@
+{
+  "task": "orient/S20",
+  "status": "done",
+  "compute": {
+    "cpu_hours": 0.8635,
+    "compute_budget_cpu_hours": 16.0,
+    "within_budget": true,
+    "threads_per_process": 3,
+    "memory_cap_bytes": 15032385536,
+    "max_completed_unit_rss_bytes": 9936683008,
+    "full_larry_best_solver_wall_seconds": 1278.34,
+    "full_larry_best_solver_peak_rss_bytes": 1305067520
+  },
+  "metrics": {
+    "gate_G1_agreement": {
+      "pass": true,
+      "solver": "minibatch",
+      "n_per_day": 4000,
+      "median_velocity_cosine": 0.999961793422699,
+      "flow_lambda1_spearman": 0.99996269824551
+    },
+    "gate_G2_full_larry": {
+      "pass": true,
+      "solver": "minibatch",
+      "ot_wall_seconds": 290.72,
+      "ot_peak_rss_bytes": 2544615424,
+      "fit_wall_seconds": 1278.34,
+      "fit_peak_rss_bytes": 1305067520
+    },
+    "solver_used": "minibatch",
+    "scaling_table": {"path": "benchmarks/scaling/scaling.csv", "rows": 36, "dense_full": "skipped_by_14GB_estimate"},
+    "full_lambda1_cell_type_spearman_vs_s11": 0.8181818181818182
+  },
+  "artifacts": {
+    "agreement": "benchmarks/scaling/agreement.csv",
+    "scaling": "benchmarks/scaling/scaling.csv",
+    "full_lambda1": "benchmarks/scaling/larry_full_lambda1.csv",
+    "figures": ["benchmarks/figures/scaling/runtime_memory_loglog.png", "benchmarks/figures/scaling/agreement_vs_dense.png"]
+  },
+  "deviations": [
+    "Dense full-LARRY OT skipped because the larger float64 pairwise distance matrix is approximately 21.0 GB before solver workspace.",
+    "Preparation retried once after a backed-CSR indexing incompatibility; direct chunked HDF5 CSR reading completed.",
+    "One low-rank fit was retried once after an incorrect environment invocation; the successful .sandbox run is recorded."
+  ],
+  "questions": []
+}

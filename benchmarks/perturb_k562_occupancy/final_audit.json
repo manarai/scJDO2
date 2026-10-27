@@ -1,0 +1,65 @@
+{
+  "status": "pass",
+  "source_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+  "full_scope_base": "orientation",
+  "authorized_exception": "coord/orient/tasks/S18b.md",
+  "planner_task_blob_unchanged": true,
+  "outside_allowed_paths": [],
+  "checks": [
+    {
+      "k": 20,
+      "n_basins": 59,
+      "n_targets": 865,
+      "n_null_banks": 299,
+      "published_statistics_reproduce": true
+    },
+    {
+      "k": 15,
+      "n_basins": 66,
+      "n_targets": 865,
+      "n_null_banks": 299,
+      "published_statistics_reproduce": true
+    },
+    {
+      "k": 30,
+      "n_basins": 65,
+      "n_targets": 865,
+      "n_null_banks": 299,
+      "published_statistics_reproduce": true
+    }
+  ],
+  "assignment_qc": {
+    "20": {
+      "score_J": {
+        "n_zero_vote_assigned_controls": 0,
+        "min_vote_assigned_controls": 28
+      },
+      "leiden": {
+        "n_zero_vote_assigned_controls": 0,
+        "min_vote_assigned_controls": 34
+      }
+    },
+    "15": {
+      "score_J": {
+        "n_zero_vote_assigned_controls": 0,
+        "min_vote_assigned_controls": 31
+      },
+      "leiden": {
+        "n_zero_vote_assigned_controls": 0,
+        "min_vote_assigned_controls": 10
+      }
+    },
+    "30": {
+      "score_J": {
+        "n_zero_vote_assigned_controls": 0,
+        "min_vote_assigned_controls": 26
+      },
+      "leiden": {
+        "n_zero_vote_assigned_controls": 0,
+        "min_vote_assigned_controls": 5
+      }
+    }
+  },
+  "recorded_cpu_hours_before_audit": 9.146783445,
+  "checked_utc": "2026-10-22T12:14:38.905988+00:00"
+}

@@ -1,0 +1,20 @@
+START 2026-10-22T12:43:56Z unit=prepare_v3_stress_s1 launcher=.sandbox/bin/python
+       35.81 real        38.90 user         2.89 sys
+          5869305856  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              413836  page reclaims
+                  16  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                3532  voluntary context switches
+              108647  involuntary context switches
+        199823139192  instructions retired
+        108136352316  cycles elapsed
+          4820161888  peak memory footprint
+EXIT 0 2026-10-22T12:44:32Z

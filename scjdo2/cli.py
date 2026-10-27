@@ -33,11 +33,9 @@ def _build_parser() -> argparse.ArgumentParser:
                      help="output run directory (adata.h5ad + phase_c.npz)")
     run.add_argument("--use-rep", default="X_pca",
                      help="latent key in adata.obsm (default: X_pca)")
-    run.add_argument("--time-key", default="pseudotime",
-                     help="pseudotime key in adata.obs (default: pseudotime)")
     run.add_argument("--n-epochs", type=int, default=1500,
                      dest="n_epochs_drift",
-                     help="DSM drift epochs (default: 1500)")
+                     help="energy-drift epochs (default: 1500)")
     run.add_argument("--k", type=int, default=30,
                      help="gene-space kNN radius (default: 30)")
     run.add_argument("--seed", type=int, default=0)
@@ -229,7 +227,7 @@ def _cmd_fig_ledger(args) -> int:
 
 def _cmd_run(args) -> int:
     from . import io as _scjdo2_io
-    from .drift import DriftConfig
+    from .energy_drift import EnergyDriftConfig
     from .pipeline import fit_latent_field, fit_rate_and_gene_field
 
     adata = _load_adata(args.input)
@@ -238,18 +236,13 @@ def _cmd_run(args) -> int:
             f"[scjdo2] adata.obsm['{args.use_rep}'] missing — provide "
             "the latent representation (e.g. X_pca from `sc.tl.pca`)."
         )
-    if args.time_key not in adata.obs:
-        raise SystemExit(
-            f"[scjdo2] adata.obs['{args.time_key}'] missing — provide "
-            "the pseudotime column (e.g. from `sc.tl.dpt`)."
-        )
-    print(f"[run] fitting latent drift + field "
+    print(f"[run] fitting energy drift + field "
           f"({args.n_epochs_drift} epochs, use_rep={args.use_rep})")
     fit_latent_field(
-        adata, use_rep=args.use_rep, time_key=args.time_key,
-        drift_config=DriftConfig(
+        adata, use_rep=args.use_rep,
+        drift_config=EnergyDriftConfig(
             hidden=96, depth=3, n_epochs=int(args.n_epochs_drift),
-            seed=int(args.seed), use_spectral_norm=False, batch_size=256,
+            seed=int(args.seed), batch_size=256,
         ),
     )
     if args.with_rate_model:

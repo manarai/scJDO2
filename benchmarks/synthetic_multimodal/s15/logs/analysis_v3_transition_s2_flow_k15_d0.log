@@ -1,0 +1,59 @@
+START 2026-10-23T23:55:14Z unit=analysis_v3_transition_s2_flow_k15_d0 launcher=.sandbox/bin/python cap=14GiB estimate_lt=8GiB
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+/Users/terooatt/Documents/scJDO2-manus/scripts/s15_archetypes.py:651: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="s15_leiden")
+      202.29 real       221.64 user        11.27 sys
+          2825109504  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              756875  page reclaims
+                1508  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2529  voluntary context switches
+              123331  involuntary context switches
+       3317855684593  instructions retired
+        850877537407  cycles elapsed
+          3110490432  peak memory footprint
+EXIT 0 2026-10-23T23:58:36Z

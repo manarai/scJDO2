@@ -1,0 +1,24 @@
+{
+  "python": "3.12.3",
+  "executable": "/home/ubuntu/scJDO2/.venv/bin/python",
+  "cpu_count": 6,
+  "threads": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "versions": {
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pandas": "2.3.3",
+    "scanpy": "1.12.4",
+    "anndata": "0.10.9",
+    "scikit-learn": "1.9.1",
+    "scikit-misc": "0.5.3",
+    "torch": "2.14.1",
+    "psutil": "7.2.2",
+    "pytest": "9.1.1",
+    "matplotlib": "3.11.2",
+    "h5py": "3.16.0"
+  },
+  "reused_venv": true,
+  "recorded_utc": "2026-10-23T02:28:15.490715+00:00"
+}

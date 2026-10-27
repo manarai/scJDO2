@@ -1,0 +1,9 @@
+{
+  "unit": "S22_download_and_checksums",
+  "exit_code": 0,
+  "started_utc": "2026-10-24T00:09:29.927430+00:00",
+  "finished_utc": "2026-10-24T00:09:35.251392+00:00",
+  "wall_seconds": 5.323954893996415,
+  "cpu_hours": 0.0003360958333333333,
+  "max_rss_kib": 66676
+}

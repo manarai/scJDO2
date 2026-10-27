@@ -1,0 +1,20 @@
+START 2026-10-20T12:54:24Z .venv/bin/python scripts/s10_real_transitions.py fit --dataset scnt --embedding pca --seed 2
+      153.03 real       145.72 user        10.71 sys
+           629948416  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+               48081  page reclaims
+                   1  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  24  voluntary context switches
+              426661  involuntary context switches
+        779572934227  instructions retired
+        312405996830  cycles elapsed
+           607110776  peak memory footprint
+EXIT 0 2026-10-20T12:56:57Z

@@ -1,0 +1,19 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "implementation": "scjdo2.orient.base.local_jacobian",
+    "k_neighbours": 30,
+    "ridge": 0.001
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:34:30.869722+00:00",
+  "n_cells": 1947,
+  "operator": "local",
+  "operator_path": "benchmarks/real_flow/arrays/operators/scnt_hema_scvelo_local.npz",
+  "seed": null,
+  "source": "scvelo",
+  "started_utc": "2026-10-19T06:34:28.721463+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_scvelo_local",
+  "wall_seconds": 2.148
+}

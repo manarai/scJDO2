@@ -1,0 +1,21 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "finite_gene_rule": "velocity_genes true and finite in every cell; all other genes zero",
+    "fit_reused": true,
+    "mode": "dynamical",
+    "n_cells_dropped": 0,
+    "n_genes_used": 72,
+    "n_genes_zeroed": 1884,
+    "n_pca_genes": 1956
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:18:21.018450+00:00",
+  "n_cells": 1947,
+  "source": "scvelo",
+  "started_utc": "2026-10-19T06:18:20.659359+00:00",
+  "task": "orient/S11",
+  "unit": "velocity_scnt_hema_scvelo",
+  "velocity": "benchmarks/real_flow/arrays/velocities/scnt_hema_scvelo.npz",
+  "wall_seconds": 0.359
+}

@@ -1,0 +1,81 @@
+[
+ {
+  "preset": "larry",
+  "seed": 0,
+  "method": "pca",
+  "estimator": "clone_dispersion",
+  "variant": "uncorrected",
+  "quantity": "trace/d",
+  "horizon_hours": 48.0,
+  "n_cells": 26490,
+  "n_clone_pairs": 1254,
+  "median_estimate": 0.0026425737396703823,
+  "median_over_clone_pairs": 0.0021809096932062476,
+  "note": "all LARRY cells with exactly one clone barcode; no Sigma_meas on real data"
+ },
+ {
+  "preset": "larry",
+  "seed": 0,
+  "method": "pca",
+  "estimator": "ot_noise",
+  "variant": "uncorrected",
+  "quantity": "trace/d",
+  "horizon_hours": 48.0,
+  "median_estimate": 0.006963717421438462,
+  "per_pair": "[{\"pair\": \"2->4\", \"D_hat\": 0.004994634767574629, \"factor_hat\": 0.25}, {\"pair\": \"4->6\", \"D_hat\": 0.008932800075302295, \"factor_hat\": 0.25}]",
+  "selection": "for each eps: balanced Sinkhorn plan between the earlier day and the 80 % training part of the later day; prediction of the later day = barycentric image of each earlier cell plus Gaussian noise with the Brownian-kernel variance eps/2 per dim (rng(0)); criterion = Sinkhorn divergence (reg = eps0; transport-cost form <P, C>) between the prediction and the 20 % held-out later cells; argmin over the grid",
+  "note": "S11 sample, 4000 cells per day"
+ },
+ {
+  "preset": "scnt_hema",
+  "seed": 0,
+  "method": "pca",
+  "estimator": "score_flow",
+  "variant": "raw_shared",
+  "quantity": "trace/d",
+  "horizon_hours": null,
+  "n_cells": 1947,
+  "median_estimate": -0.0005405661834990321,
+  "fraction_negative": 0.7663071391884951,
+  "by_cell_type": "{\"Bas\": -0.000373, \"Ery\": -0.000411, \"GMP-like\": -0.000952, \"HSC\": -0.001706, \"MEP-like\": -0.001448, \"Meg\": -0.00025, \"Mon\": -4.2e-05, \"Neu\": 0.000857}"
+ },
+ {
+  "preset": "scnt_hema",
+  "seed": 0,
+  "method": "pca",
+  "estimator": "score_flow",
+  "variant": "smoothed_shared",
+  "quantity": "trace/d",
+  "horizon_hours": null,
+  "n_cells": 1947,
+  "median_estimate": -0.002744042492824583,
+  "fraction_negative": 1.0,
+  "by_cell_type": "{\"Bas\": -0.00231, \"Ery\": -0.001437, \"GMP-like\": -0.003316, \"HSC\": -0.004146, \"MEP-like\": -0.004625, \"Meg\": -0.003957, \"Mon\": -0.000804, \"Neu\": -0.001092}"
+ },
+ {
+  "preset": "scnt_hema",
+  "seed": 0,
+  "method": "pca",
+  "estimator": "score_flow",
+  "variant": "raw_perpulse",
+  "quantity": "trace/d",
+  "horizon_hours": null,
+  "n_cells": 1947,
+  "median_estimate": -0.0006385063335038121,
+  "fraction_negative": 0.8043143297380585,
+  "by_cell_type": "{\"Bas\": -0.000705, \"Ery\": -0.000599, \"GMP-like\": -0.000767, \"HSC\": -0.001115, \"MEP-like\": -0.000972, \"Meg\": -0.000515, \"Mon\": -0.000169, \"Neu\": 0.00077}"
+ },
+ {
+  "preset": "scnt_hema",
+  "seed": 0,
+  "method": "pca",
+  "estimator": "score_flow",
+  "variant": "smoothed_perpulse",
+  "quantity": "trace/d",
+  "horizon_hours": null,
+  "n_cells": 1947,
+  "median_estimate": -0.0031645342439552116,
+  "fraction_negative": 0.9994863893168978,
+  "by_cell_type": "{\"Bas\": -0.002672, \"Ery\": -0.001535, \"GMP-like\": -0.004208, \"HSC\": -0.004892, \"MEP-like\": -0.005167, \"Meg\": -0.003904, \"Mon\": -0.000905, \"Neu\": -0.001065}"
+ }
+]

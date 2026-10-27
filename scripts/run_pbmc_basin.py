@@ -69,7 +69,6 @@ from scjdo2.data import (
     load_pbmc3k,
     present_cycle_genes,
 )
-from scjdo2.drift import DriftAdapter, DriftConfig
 from scjdo2.energy_drift import EnergyDriftAdapter, EnergyDriftConfig
 from scjdo2.pipeline import fit_rate_and_gene_field
 

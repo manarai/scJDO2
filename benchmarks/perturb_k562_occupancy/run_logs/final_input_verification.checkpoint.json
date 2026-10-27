@@ -1,0 +1,19 @@
+{
+  "unit": "final_input_verification",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "verify-input"
+  ],
+  "started_utc": "2026-10-22T12:09:47.212618+00:00",
+  "finished_utc": "2026-10-22T12:10:00.661032+00:00",
+  "exit_code": 0,
+  "wall_seconds": 13.44841628100039,
+  "cpu_hours": 0.002957657222222222,
+  "cpu_hours_before": 9.137891635555556,
+  "max_rss_kib": 40724,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/final_input_verification.log"
+}

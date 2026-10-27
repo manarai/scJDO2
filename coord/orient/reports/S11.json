@@ -1,0 +1,719 @@
+{
+  "artifacts": [
+    {
+      "bytes": 453945,
+      "committed": true,
+      "path": "benchmarks/real_flow/velocity_agreement.csv",
+      "regenerate": "detached scripts/s11_compare.py --action finalize",
+      "sha256": "94af717f0cb4b5e7d86d87258c2c76174441cd9cdec8bedb460bcce149881881"
+    },
+    {
+      "bytes": 3106,
+      "committed": true,
+      "path": "benchmarks/real_flow/operator_agreement.csv",
+      "regenerate": "detached scripts/s11_compare.py --action finalize",
+      "sha256": "551707cb9d54963e097abc383009d9f8457040c6fdff4cb42239cc934f14b322"
+    },
+    {
+      "bytes": 7574,
+      "committed": true,
+      "path": "benchmarks/real_flow/null.csv",
+      "regenerate": "detached scripts/s11_compare.py --action finalize after all null blocks",
+      "sha256": "c6298b040f9cea300f596a796f496442c491e7502d824e89613006c59caa86b2"
+    },
+    {
+      "bytes": 1753424,
+      "committed": true,
+      "path": "benchmarks/real_flow/score_vs_flow.csv",
+      "regenerate": "detached scripts/s11_compare.py --action finalize",
+      "sha256": "73a4f95b024fb0d3ca2e099f871500ee0325a667eb6f677ff0009fe470c057fe"
+    },
+    {
+      "bytes": 9877,
+      "committed": true,
+      "path": "benchmarks/real_flow/by_cell_type.csv",
+      "regenerate": "detached scripts/s11_compare.py --action finalize",
+      "sha256": "e3100b2eece02fa5fc7ae4445837b28655737a402dbd84e11bafa29da1dc5363"
+    },
+    {
+      "bytes": 2685,
+      "committed": true,
+      "path": "benchmarks/real_flow/RESULT_S11.md",
+      "regenerate": "detached scripts/s11_compare.py --action finalize",
+      "sha256": "ab713bf7f4626b35d780f3a69579cc13ae536392bcbf340315689100ca7e0242"
+    },
+    {
+      "bytes": 432,
+      "committed": true,
+      "path": "benchmarks/real_flow/dynamo_stored_invariants.json",
+      "regenerate": "detached scripts/s11_operators.py --dataset scnt_hema --operator stored_dynamo",
+      "sha256": "7a5ac210a3cac2af85dbe6b875c65129e97768380bcc71e8ce5677d5c8505f61"
+    },
+    {
+      "bytes": 5985,
+      "committed": true,
+      "path": "benchmarks/real_flow/run_ledger.csv",
+      "regenerate": "parse detached timed S11 logs plus mandatory post-run pytest",
+      "sha256": "2e1f9864800132ff79699f7cb535cb252cfcdbf1fc941d8cd069d031d0262219"
+    },
+    {
+      "committed": true,
+      "count": 20,
+      "path": "benchmarks/figures/real_flow/",
+      "regenerate": "detached scripts/s11_compare.py --action finalize",
+      "sha256_by_file": {
+        "agreement_vs_null.png": "c85b061a5a971773fb4f006af1c7138276958fc10a888f5be63e3cbd63b72237",
+        "embedding_lambda1_larry_lineage_dynamo.png": "1c1921ac0cfb150868a9373d5972a6eb23d85ffaa9bbf8f639e013ee47477a7c",
+        "embedding_lambda1_larry_lineage_local.png": "4d30c14d518b793040cf7d4dd498ff7e8b8341b772ab7bd3247e45090a704571",
+        "embedding_lambda1_larry_lineage_measured.png": "474fb0d5c0dc0c38ce97d6f761204bd1640940dff808bb3cad8a14a3950f4867",
+        "embedding_lambda1_larry_ot_dynamo.png": "bee355f894c23ebe3aa1641cf8e254e90d3017f7a0308caef5db9e7e63adb83b",
+        "embedding_lambda1_larry_ot_local.png": "c56ad02be3f11a823e631345cb89c63065db94201c2196c679f915936c90a9ce",
+        "embedding_lambda1_larry_ot_measured.png": "c57455a49430fce02c4f8630bcb3cb452bc6bac227e7a2e4460a96489e286430",
+        "embedding_lambda1_larry_score_score.png": "430b2174a3d92507a7ea1ba7bb3184b067c5dee983ad0f242ea0b73bf689e931",
+        "embedding_lambda1_scnt_hema_dynamo_gene_dynamo.png": "8a90c826cb9266be1d2de9d6b3e6368cb83e811ff2240893ac0de6f52cddd05d",
+        "embedding_lambda1_scnt_hema_dynamo_gene_local.png": "db2e8a1e0ecbe42a8add682e6cd25f6895b7050a87d73738a24a9e484cb304a4",
+        "embedding_lambda1_scnt_hema_dynamo_gene_measured.png": "627a0809bc10414900e80d1ef4443c3f4521994fb105f901c81231fbfd701161",
+        "embedding_lambda1_scnt_hema_labelling_dynamo.png": "0f68e0dc4afd04304c1ee85a04e04ffbf0b2b0c204dec2c777c9b15df22e2ee6",
+        "embedding_lambda1_scnt_hema_labelling_local.png": "a08669e88609e10427e22fd03fa9aef7d36b432174eb98e6bbf1ba915f4cb65f",
+        "embedding_lambda1_scnt_hema_labelling_measured.png": "831a0108d3b850f58d4b46a0e4c359850ea58c1e847fe90587e402c334014ba7",
+        "embedding_lambda1_scnt_hema_score_score.png": "11fb31ce5f06d376375f5168895f3d39e0a1e15c8bc476a3312396e5705d991a",
+        "embedding_lambda1_scnt_hema_scvelo_dynamo.png": "687a1b0f704cf9979a8419307e59104937b7947b83e160121225fe4f761bcbc7",
+        "embedding_lambda1_scnt_hema_scvelo_local.png": "baa017a668435da33bd390deac4e1b032861b48b99f6bf343126359cd8c7a1de",
+        "embedding_lambda1_scnt_hema_scvelo_measured.png": "ef2845ad87359f71bf74b728eb138ae750cc91c0a8103aa179cb093b44fddac1",
+        "lambda1_by_cell_type_larry.png": "0a7e215f6fc2bf1e27d9c42abc2cb974326be55e48c3c39bf82853e43bf19c6a",
+        "lambda1_by_cell_type_scnt_hema.png": "eedbd3f1a4d5e96e10d2e60acf11bc060144c7d47d1057325c76a9e7384b81fd"
+      }
+    }
+  ],
+  "compute": {
+    "compute_budget_cpu_hours": 10.0,
+    "cpu_hours": 0.6734888888888889,
+    "n_timed_units": 61,
+    "peak_memory_gb": 4.350558208,
+    "wall_hours_sum": 1.1232,
+    "within_budget": true
+  },
+  "deviations": [
+    "No real H5AD was modified.",
+    "Balanced POT OT only, as amended; unbalanced sensitivity omitted by task amendment.",
+    "Stored Dynamo VecFld_pca appears only as separate-basis report-only invariants."
+  ],
+  "finished_utc": "2026-10-19T08:31:29.641147+00:00",
+  "input_integrity": {
+    "larry_raw_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+    "real_files_modified": false,
+    "scnt_gene_map_sha256": "da14f87794ee0cd7a5f965a1a9d0d953345ec032b0decbdc16b9108911d946a2",
+    "scnt_processed_sha256": "635898d1e5ced4faac6546f0930548ceca56d0662b2527b867ab8f8a3ce62c11",
+    "scnt_raw_sha256": "2e0e274452fd730a30552b18fea26d9dcf665fff33ffc9de2007ec5c9eedb68d"
+  },
+  "metrics": {
+    "criterion_estimator_robust": [
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": 0.7146332827833326,
+        "leading_eigenvector_abs_cosine_median": 0.4867742111904194,
+        "left": "ot",
+        "null_eigenvector_abs_cosine_max": 0.2123107442656435,
+        "null_lambda1_spearman_max": -0.0294980728280948,
+        "pass": true,
+        "right": "ot",
+        "right_estimator": "local"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": 0.934063308602552,
+        "leading_eigenvector_abs_cosine_median": 0.9462952828024662,
+        "left": "ot",
+        "null_eigenvector_abs_cosine_max": 0.2997241374299431,
+        "null_lambda1_spearman_max": 0.1555452578600822,
+        "pass": true,
+        "right": "ot",
+        "right_estimator": "dynamo"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": 0.3406506263254176,
+        "leading_eigenvector_abs_cosine_median": 0.3737027570327417,
+        "left": "lineage",
+        "null_eigenvector_abs_cosine_max": 0.3157214147340736,
+        "null_lambda1_spearman_max": -0.0194866189879823,
+        "pass": true,
+        "right": "lineage",
+        "right_estimator": "local"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": 0.5706949959661597,
+        "leading_eigenvector_abs_cosine_median": 0.4690476119574485,
+        "left": "lineage",
+        "null_eigenvector_abs_cosine_max": 0.454153580282813,
+        "null_lambda1_spearman_max": -0.1367324654442674,
+        "pass": true,
+        "right": "lineage",
+        "right_estimator": "dynamo"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": -0.3440858296887023,
+        "leading_eigenvector_abs_cosine_median": 0.173863668513454,
+        "left": "labelling",
+        "null_eigenvector_abs_cosine_max": 0.1870961307171676,
+        "null_lambda1_spearman_max": 0.0335254414246884,
+        "pass": false,
+        "right": "labelling",
+        "right_estimator": "local"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": -0.1783741489944995,
+        "leading_eigenvector_abs_cosine_median": 0.2361885721499918,
+        "left": "labelling",
+        "null_eigenvector_abs_cosine_max": 0.2817106140300594,
+        "null_lambda1_spearman_max": -0.1347215651800383,
+        "pass": false,
+        "right": "labelling",
+        "right_estimator": "dynamo"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": 0.0527042920876296,
+        "leading_eigenvector_abs_cosine_median": 0.3711541907571037,
+        "left": "scvelo",
+        "null_eigenvector_abs_cosine_max": 0.4757559909578721,
+        "null_lambda1_spearman_max": 0.117999589365955,
+        "pass": false,
+        "right": "scvelo",
+        "right_estimator": "local"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": -0.0369630634770835,
+        "leading_eigenvector_abs_cosine_median": 0.5151581097470842,
+        "left": "scvelo",
+        "null_eigenvector_abs_cosine_max": 0.5039260208432069,
+        "null_lambda1_spearman_max": 0.0578658441906701,
+        "pass": false,
+        "right": "scvelo",
+        "right_estimator": "dynamo"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": 0.3105606874225015,
+        "leading_eigenvector_abs_cosine_median": 0.2156774770337068,
+        "left": "dynamo_gene",
+        "null_eigenvector_abs_cosine_max": 0.260187038682843,
+        "null_lambda1_spearman_max": 0.1357580745501585,
+        "pass": false,
+        "right": "dynamo_gene",
+        "right_estimator": "local"
+      },
+      {
+        "comparison_kind": "estimators",
+        "lambda1_spearman": 0.6763216209848026,
+        "leading_eigenvector_abs_cosine_median": 0.5824208875579737,
+        "left": "dynamo_gene",
+        "null_eigenvector_abs_cosine_max": 0.3907246176125314,
+        "null_lambda1_spearman_max": 0.1892382114134758,
+        "pass": true,
+        "right": "dynamo_gene",
+        "right_estimator": "dynamo"
+      }
+    ],
+    "criterion_reproducible_by_pair": [
+      {
+        "comparison_kind": "independent_sources",
+        "lambda1_spearman": 0.26847613912392,
+        "leading_eigenvector_abs_cosine_median": 0.2879189148613778,
+        "left": "ot",
+        "null_eigenvector_abs_cosine_max": 0.3213237969315387,
+        "null_lambda1_spearman_max": 0.2708254906225315,
+        "pass": false,
+        "right": "lineage",
+        "right_estimator": "measured_s0"
+      },
+      {
+        "comparison_kind": "independent_sources",
+        "lambda1_spearman": 0.2246510746281771,
+        "leading_eigenvector_abs_cosine_median": 0.1460777809690682,
+        "left": "labelling",
+        "null_eigenvector_abs_cosine_max": 0.1330792619870494,
+        "null_lambda1_spearman_max": 0.092883587329349,
+        "pass": true,
+        "right": "scvelo",
+        "right_estimator": "measured_s0"
+      },
+      {
+        "comparison_kind": "independent_sources",
+        "lambda1_spearman": -0.3256454582559953,
+        "leading_eigenvector_abs_cosine_median": 0.1750011096502674,
+        "left": "labelling",
+        "null_eigenvector_abs_cosine_max": 0.2039931845580453,
+        "null_lambda1_spearman_max": 0.3085289801932011,
+        "pass": false,
+        "right": "dynamo_gene",
+        "right_estimator": "measured_s0"
+      },
+      {
+        "comparison_kind": "independent_sources",
+        "lambda1_spearman": -0.0042140976622848,
+        "leading_eigenvector_abs_cosine_median": 0.1303281434859299,
+        "left": "scvelo",
+        "null_eigenvector_abs_cosine_max": 0.1455095640768976,
+        "null_lambda1_spearman_max": 0.1336920372585378,
+        "pass": false,
+        "right": "dynamo_gene",
+        "right_estimator": "measured_s0"
+      }
+    ],
+    "dynamo_baseline": {
+      "same_embedding_operator_sources": [
+        "scnt_hema:labelling",
+        "scnt_hema:scvelo",
+        "scnt_hema:dynamo_gene",
+        "larry:ot",
+        "larry:lineage"
+      ],
+      "stored_vecfld_report_only": {
+        "basis": "processed_file_X_pca",
+        "dynamo_version": "1.5.3",
+        "embedding_dimension": 30,
+        "jacobian_finite": true,
+        "jacobian_median_abs": 0.0012662611540972717,
+        "jacobian_shape_d_d_n": [
+          30,
+          30,
+          1947
+        ],
+        "kind": "report_only_stored_dynamo_baseline",
+        "n_cells": 1947,
+        "note": "Different PCA basis from S11 common embedding; report-only invariants, never cross-basis compared.",
+        "task": "orient/S11"
+      },
+      "version": "1.5.3"
+    },
+    "lambda1_by_cell_type": {
+      "n_rows": 157,
+      "table": "benchmarks/real_flow/by_cell_type.csv"
+    },
+    "null_agreement": {
+      "by_block": [
+        {
+          "dataset": "larry",
+          "eigenvector_abs_cosine_max": 0.454153580282813,
+          "lambda1_spearman_max": -0.1367324654442674,
+          "left": "lineage",
+          "n_seeds": 5,
+          "null_kind": "estimator_dynamo",
+          "right": "lineage"
+        },
+        {
+          "dataset": "larry",
+          "eigenvector_abs_cosine_max": 0.2997241374299431,
+          "lambda1_spearman_max": 0.1555452578600822,
+          "left": "ot",
+          "n_seeds": 5,
+          "null_kind": "estimator_dynamo",
+          "right": "ot"
+        },
+        {
+          "dataset": "larry",
+          "eigenvector_abs_cosine_max": 0.3157214147340736,
+          "lambda1_spearman_max": -0.0194866189879823,
+          "left": "lineage",
+          "n_seeds": 5,
+          "null_kind": "estimator_local",
+          "right": "lineage"
+        },
+        {
+          "dataset": "larry",
+          "eigenvector_abs_cosine_max": 0.2123107442656435,
+          "lambda1_spearman_max": -0.0294980728280948,
+          "left": "ot",
+          "n_seeds": 5,
+          "null_kind": "estimator_local",
+          "right": "ot"
+        },
+        {
+          "dataset": "larry",
+          "eigenvector_abs_cosine_max": 0.3213237969315387,
+          "lambda1_spearman_max": 0.2708254906225315,
+          "left": "ot",
+          "n_seeds": 5,
+          "null_kind": "independent_sources",
+          "right": "lineage"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.3907246176125314,
+          "lambda1_spearman_max": 0.1892382114134758,
+          "left": "dynamo_gene",
+          "n_seeds": 5,
+          "null_kind": "estimator_dynamo",
+          "right": "dynamo_gene"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.2817106140300594,
+          "lambda1_spearman_max": -0.1347215651800383,
+          "left": "labelling",
+          "n_seeds": 5,
+          "null_kind": "estimator_dynamo",
+          "right": "labelling"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.5039260208432069,
+          "lambda1_spearman_max": 0.0578658441906701,
+          "left": "scvelo",
+          "n_seeds": 5,
+          "null_kind": "estimator_dynamo",
+          "right": "scvelo"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.260187038682843,
+          "lambda1_spearman_max": 0.1357580745501585,
+          "left": "dynamo_gene",
+          "n_seeds": 5,
+          "null_kind": "estimator_local",
+          "right": "dynamo_gene"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.1870961307171676,
+          "lambda1_spearman_max": 0.0335254414246884,
+          "left": "labelling",
+          "n_seeds": 5,
+          "null_kind": "estimator_local",
+          "right": "labelling"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.4757559909578721,
+          "lambda1_spearman_max": 0.117999589365955,
+          "left": "scvelo",
+          "n_seeds": 5,
+          "null_kind": "estimator_local",
+          "right": "scvelo"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.2039931845580453,
+          "lambda1_spearman_max": 0.3085289801932011,
+          "left": "labelling",
+          "n_seeds": 5,
+          "null_kind": "independent_sources",
+          "right": "dynamo_gene"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.1330792619870494,
+          "lambda1_spearman_max": 0.092883587329349,
+          "left": "labelling",
+          "n_seeds": 5,
+          "null_kind": "independent_sources",
+          "right": "scvelo"
+        },
+        {
+          "dataset": "scnt_hema",
+          "eigenvector_abs_cosine_max": 0.1455095640768976,
+          "lambda1_spearman_max": 0.1336920372585378,
+          "left": "scvelo",
+          "n_seeds": 5,
+          "null_kind": "independent_sources",
+          "right": "dynamo_gene"
+        }
+      ],
+      "n_rows": 70,
+      "table": "benchmarks/real_flow/null.csv"
+    },
+    "operator_agreement": {
+      "n_rows": 24,
+      "seed_variability": [
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "larry",
+          "lambda1_spearman": 0.9245241842425655,
+          "leading_eigenvector_abs_cosine_median": 0.9807787411313064,
+          "left": "ot",
+          "left_estimator": "measured_s0",
+          "n_cells": 8000,
+          "relative_frobenius_median": 0.42460697889328,
+          "right": "ot",
+          "right_estimator": "measured_s1"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "larry",
+          "lambda1_spearman": 0.9484851289763304,
+          "leading_eigenvector_abs_cosine_median": 0.9697630406124396,
+          "left": "ot",
+          "left_estimator": "measured_s0",
+          "n_cells": 8000,
+          "relative_frobenius_median": 0.4238078594207763,
+          "right": "ot",
+          "right_estimator": "measured_s2"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "larry",
+          "lambda1_spearman": 0.7891954505735612,
+          "leading_eigenvector_abs_cosine_median": 0.792098132868803,
+          "left": "lineage",
+          "left_estimator": "measured_s0",
+          "n_cells": 1321,
+          "relative_frobenius_median": 0.6154119372367859,
+          "right": "lineage",
+          "right_estimator": "measured_s1"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "larry",
+          "lambda1_spearman": 0.7464755667131806,
+          "leading_eigenvector_abs_cosine_median": 0.7789287926027799,
+          "left": "lineage",
+          "left_estimator": "measured_s0",
+          "n_cells": 1321,
+          "relative_frobenius_median": 0.6093922257423401,
+          "right": "lineage",
+          "right_estimator": "measured_s2"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "scnt_hema",
+          "lambda1_spearman": 0.6666615023890782,
+          "leading_eigenvector_abs_cosine_median": 0.3490799600090105,
+          "left": "labelling",
+          "left_estimator": "measured_s0",
+          "n_cells": 1947,
+          "relative_frobenius_median": 0.9157447814941406,
+          "right": "labelling",
+          "right_estimator": "measured_s1"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "scnt_hema",
+          "lambda1_spearman": 0.7173522887651756,
+          "leading_eigenvector_abs_cosine_median": 0.3530760110368418,
+          "left": "labelling",
+          "left_estimator": "measured_s0",
+          "n_cells": 1947,
+          "relative_frobenius_median": 0.8888294696807861,
+          "right": "labelling",
+          "right_estimator": "measured_s2"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "scnt_hema",
+          "lambda1_spearman": 0.6974670045991295,
+          "leading_eigenvector_abs_cosine_median": 0.765513925369387,
+          "left": "scvelo",
+          "left_estimator": "measured_s0",
+          "n_cells": 1947,
+          "relative_frobenius_median": 0.5525789260864258,
+          "right": "scvelo",
+          "right_estimator": "measured_s1"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "scnt_hema",
+          "lambda1_spearman": 0.6480804955758054,
+          "leading_eigenvector_abs_cosine_median": 0.7124536954434323,
+          "left": "scvelo",
+          "left_estimator": "measured_s0",
+          "n_cells": 1947,
+          "relative_frobenius_median": 0.5435972213745117,
+          "right": "scvelo",
+          "right_estimator": "measured_s2"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "scnt_hema",
+          "lambda1_spearman": 0.8789041950763853,
+          "leading_eigenvector_abs_cosine_median": 0.8126224170347486,
+          "left": "dynamo_gene",
+          "left_estimator": "measured_s0",
+          "n_cells": 1947,
+          "relative_frobenius_median": 0.5300299525260925,
+          "right": "dynamo_gene",
+          "right_estimator": "measured_s1"
+        },
+        {
+          "comparison_kind": "seed_variability",
+          "dataset": "scnt_hema",
+          "lambda1_spearman": 0.8706863114203635,
+          "leading_eigenvector_abs_cosine_median": 0.8000880960035344,
+          "left": "dynamo_gene",
+          "left_estimator": "measured_s0",
+          "n_cells": 1947,
+          "relative_frobenius_median": 0.5262451171875,
+          "right": "dynamo_gene",
+          "right_estimator": "measured_s2"
+        }
+      ],
+      "table": "benchmarks/real_flow/operator_agreement.csv"
+    },
+    "score_vs_flow": {
+      "n_per_cell_rows": 15162,
+      "summary": [
+        {
+          "dataset": "larry",
+          "lambda1_spearman": 0.1052337113069653,
+          "leading_eigenvector_abs_cosine_median": 0.2573033950892595,
+          "n_cells": 1321,
+          "source": "lineage"
+        },
+        {
+          "dataset": "larry",
+          "lambda1_spearman": 0.2615059533829055,
+          "leading_eigenvector_abs_cosine_median": 0.18328130187034844,
+          "n_cells": 8000,
+          "source": "ot"
+        },
+        {
+          "dataset": "scnt_hema",
+          "lambda1_spearman": 0.2414275233007962,
+          "leading_eigenvector_abs_cosine_median": 0.1710753920419802,
+          "n_cells": 1947,
+          "source": "dynamo_gene"
+        },
+        {
+          "dataset": "scnt_hema",
+          "lambda1_spearman": -0.4610785312523995,
+          "leading_eigenvector_abs_cosine_median": 0.166831601834455,
+          "n_cells": 1947,
+          "source": "labelling"
+        },
+        {
+          "dataset": "scnt_hema",
+          "lambda1_spearman": -0.1432842582585928,
+          "leading_eigenvector_abs_cosine_median": 0.1513542969878429,
+          "n_cells": 1947,
+          "source": "scvelo"
+        }
+      ],
+      "table": "benchmarks/real_flow/score_vs_flow.csv"
+    },
+    "tests_passed": "48/48: tests/test_orient.py + tests/test_smoke.py",
+    "velocity_agreement": {
+      "n_rows": 7162,
+      "per_pair": [
+        {
+          "dataset": "larry",
+          "max": 0.981549084186554,
+          "mean": 0.6267698635178975,
+          "median": 0.6946887373924255,
+          "min": -0.5850176811218262,
+          "n_cells": 1321,
+          "source_a": "ot",
+          "source_b": "lineage"
+        },
+        {
+          "dataset": "scnt_hema",
+          "max": 0.5816043019294739,
+          "mean": -0.05090392858719417,
+          "median": -0.0524514764547348,
+          "min": -0.6680640578269958,
+          "n_cells": 1947,
+          "source_a": "labelling",
+          "source_b": "dynamo_gene"
+        },
+        {
+          "dataset": "scnt_hema",
+          "max": 0.6008927226066589,
+          "mean": 0.026703535450423657,
+          "median": 0.0273326952010393,
+          "min": -0.5392630696296692,
+          "n_cells": 1947,
+          "source_a": "labelling",
+          "source_b": "scvelo"
+        },
+        {
+          "dataset": "scnt_hema",
+          "max": 0.6095499396324158,
+          "mean": 0.13555458598236345,
+          "median": 0.1457971185445785,
+          "min": -0.5565720796585083,
+          "n_cells": 1947,
+          "source_a": "scvelo",
+          "source_b": "dynamo_gene"
+        }
+      ],
+      "table": "benchmarks/real_flow/velocity_agreement.csv"
+    },
+    "versions": {
+      "POT": "0.9.7.post1",
+      "POT_balanced_api": "ot.sinkhorn",
+      "dynamo_environment": ".venv-dynamo only",
+      "dynamo_pandas": "2.3.3",
+      "dynamo_pip_freeze_sha256": "4028b97944a9e0e6afb2a6a0560eae96fe378a326cc2b4e028d5080cc2fce08c",
+      "dynamo_release": "1.5.3",
+      "dynamo_statsmodels": "0.14.6",
+      "primary_anndata": "0.11.4",
+      "primary_python": "3.13.2",
+      "primary_scanpy": "1.12.4",
+      "primary_scvelo": "0.3.4"
+    },
+    "wall_hours": 1.1232
+  },
+  "observations": [
+    "Mandatory post-run regression: 48/48 passed.",
+    "All 14 fixed criteria are reported exactly; 6 passed and 8 failed, with no parameter tuning.",
+    "One optional-Markdown formatting error in the first aggregation occurred after numerical tables/figures were written; corrected aggregation retry passed."
+  ],
+  "questions": [],
+  "sources": {
+    "larry_lineage": {
+      "all_cells_used_for_clone_means": true,
+      "next_timepoint_only": true,
+      "retained_by_day": {
+        "2": 319,
+        "4": 1002
+      }
+    },
+    "larry_ot": {
+      "balanced": true,
+      "library": "POT",
+      "pairs": [
+        {
+          "epsilon": 3.8358795014973155,
+          "from_day": 2.0,
+          "n_source": 4000,
+          "n_target": 4000,
+          "to_day": 4.0
+        },
+        {
+          "epsilon": 6.860390457832162,
+          "from_day": 4.0,
+          "n_source": 4000,
+          "n_target": 4000,
+          "to_day": 6.0
+        }
+      ],
+      "version": "0.9.7.post1"
+    },
+    "scnt_dynamo_gene": {
+      "finite_gene_rule": "finite in every cell; all other genes zero",
+      "input": "/Users/terooatt/Documents/scJDO2/benchmarks/data/dynamo_hematopoiesis/data/hematopoiesis.h5ad",
+      "layer": "velocity_alpha_minus_gamma_s",
+      "n_cells_dropped": 0,
+      "n_genes_used": 1728,
+      "n_genes_zeroed": 228,
+      "n_pca_genes": 1956,
+      "stored_vecfld_pca_present": true
+    },
+    "scnt_scvelo": {
+      "finite_gene_rule": "velocity_genes true and finite in every cell; all other genes zero",
+      "fit_reused": true,
+      "mode": "dynamical",
+      "n_cells_dropped": 0,
+      "n_genes_used": 72,
+      "n_genes_zeroed": 1884,
+      "n_pca_genes": 1956
+    }
+  },
+  "started_utc": "2026-10-19T04:00:44Z",
+  "status": "done",
+  "suggestions": [],
+  "task": "orient/S11"
+}

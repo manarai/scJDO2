@@ -1,0 +1,10 @@
+{
+  "task": "orient/S22",
+  "recorded_utc": "2026-10-24T15:59:06.266628+00:00",
+  "repair": "exclude ignored __pycache__ only from artifact manifest",
+  "initial_precommit_artifact_assertion_failed": true,
+  "completed_coord_check_receipt": "run_logs/coord_check.checkpoint.json",
+  "scientific_files_and_function_bodies_unchanged": true,
+  "original_checksum_evidence": "audit_import_repair.json",
+  "new_final_review_unit": "coord_check_final"
+}

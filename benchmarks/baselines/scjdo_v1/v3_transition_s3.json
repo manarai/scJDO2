@@ -1,0 +1,19 @@
+{
+  "dataset": "v3_transition_s3",
+  "error": "scripts/install_v1_compare.sh failed: its default temp target is already registered as a missing Git worktree.",
+  "method": "scjdo_v1",
+  "peak_memory_bytes": null,
+  "runtime_seconds": "",
+  "settings": {
+    "fit": {
+      "archetype_method": "snmf",
+      "n_epochs": 5000,
+      "seed": 0
+    },
+    "preprocessing": "v1 defaults: log-normalise, 2000 HVGs, FA-30",
+    "pseudotime": "strict Palantir; same selected root cell passed to prepare_trajectory; API has no external pseudotime parameter",
+    "runner": "scripts/s16a_v1.py -> compare.run_v1._run_fit_drift"
+  },
+  "status": "not_run_installer_blocked",
+  "version": "unavailable; .venv-v1 not installed"
+}

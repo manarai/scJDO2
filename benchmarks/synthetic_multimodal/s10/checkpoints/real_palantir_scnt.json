@@ -1,0 +1,16 @@
+{
+  "actual_start_cell": "CTGCACAGTTCT-JL_10",
+  "actual_start_day": 0,
+  "finished_utc": "2026-10-20T12:57:13.052027Z",
+  "given_cell": "GCGCCTGCACCC-JL_10",
+  "given_day": 0,
+  "given_differs_from_actual": true,
+  "in_process_cpu_seconds": 1.093,
+  "path": "benchmarks/synthetic_multimodal/data/s10/real/palantir_scnt.npz",
+  "peak_rss_bytes": 568295424,
+  "root_rule": "default_rng(1000).choice(HSC cells)",
+  "started_utc": "2026-10-20T12:57:12.148805Z",
+  "task": "orient/S10",
+  "unit": "real_palantir_scnt",
+  "wall_seconds": 0.896
+}

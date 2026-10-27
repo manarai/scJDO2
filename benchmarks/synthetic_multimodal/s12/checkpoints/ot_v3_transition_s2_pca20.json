@@ -1,0 +1,78 @@
+{
+  "dim": 20,
+  "embedding": "pca20",
+  "finished_utc": "2026-10-20T22:11:09.305869Z",
+  "in_process_cpu_seconds": 31.424,
+  "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+  "measured_drift": {
+    "fit_device": "mps:0",
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "jacobian_device": "cpu",
+    "n_fit_cells": 1647,
+    "seconds": 17.46,
+    "seed": 0,
+    "weight_decay": 0.0001
+  },
+  "median_ot_speed": 0.21808503568172455,
+  "ot_library": {
+    "name": "POT",
+    "version": "0.9.7.post1"
+  },
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 26.80840848640928,
+      "final_err": 2.620023728574646e-10,
+      "from_day": 2,
+      "n_iter": 8,
+      "n_source": 190,
+      "n_target": 1457,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 26.659575061951003,
+      "final_err": 4.725824333239583e-10,
+      "from_day": 4,
+      "n_iter": 13,
+      "n_source": 1457,
+      "n_target": 11237,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 1.32,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca20.npz",
+  "peak_rss_bytes": 2518302720,
+  "scores": {
+    "auc_lam1": 0.9668463476432125,
+    "auc_lam1_s10_stored_operator": 0.9668463476432125,
+    "auc_soft_axis_curvature": 0.9702276278043751,
+    "auc_tangent5_lam1": 0.8824402518883252,
+    "fate_axis_abs_cos_at_saddle": 0.9670504817356707,
+    "fraction_saddle": 0.02825209562247749,
+    "max_abs_diff_ot_velocity_vs_s10": 0.0,
+    "median_lam1_committed": 0.0017317431520272012,
+    "median_lam1_saddle": 0.01324631809886994,
+    "n_committed": 9186,
+    "n_saddle": 364,
+    "soft_axis_abs_cos_fate_axis": 0.9971205617697161
+  },
+  "sha256": "23f98a8393c1d0bbd2aa2f10410e33f270c15b0dc504041db2c52e29bdfc2119",
+  "started_utc": "2026-10-20T22:10:35.973847Z",
+  "task": "orient/S12",
+  "unit": "ot_v3_transition_s2_pca20",
+  "wall_seconds": 33.332
+}

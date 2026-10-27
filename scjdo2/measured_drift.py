@@ -1,10 +1,10 @@
 """Measured-flow drift wrapper (V2_PLAN R16 Phase D §7).
 
-Replaces Step 2's residual-free DSM drift with a small MLP ``f(z, θ)``
+An alternative to Step 2's energy drift: a small MLP ``f(z, θ)``
 trained by direct MSE regression on a *measured* per-cell velocity
 field (e.g. labelled scNT-seq rates from Dynamo, or scVelo dynamical).
 Exposes the same ``.velocity(z, t)`` + ``.jacobian_autodiff(z, t)``
-surface as :class:`scjdo2.drift.DriftAdapter`, so Phase C's rate-model
+surface as :class:`scjdo2.energy_drift.EnergyDriftAdapter`, so Phase C's rate-model
 + anchor-fit path consumes it unchanged.
 
 Direction-free in the behaviour sense: the MLP is a smooth interpolant

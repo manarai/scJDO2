@@ -1,0 +1,13 @@
+{
+  "admitted": true,
+  "basis": "S10 max full-v3 generation + S13 max PCA-50 operator unit; explicit one-network fit equivalents",
+  "budget_cpu_hours": 24.0,
+  "generation_cpu_seconds_each": 3145.57,
+  "generation_units": 6,
+  "operator_cpu_seconds_each": 178.12,
+  "optimisation_and_combined_fit_equivalents": 64,
+  "part_a_model_fit_equivalents": 100,
+  "preparation_and_aggregation_allowance_seconds": 7200.0,
+  "projected_cpu_hours": 17.830861111111112,
+  "test_fit_equivalents": 50
+}

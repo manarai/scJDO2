@@ -1,0 +1,16 @@
+{
+  "actual_start_cell": "36260",
+  "actual_start_day": 6,
+  "finished_utc": "2026-10-20T12:52:39.406779Z",
+  "given_cell": "42746",
+  "given_day": 2,
+  "given_differs_from_actual": true,
+  "in_process_cpu_seconds": 41.77,
+  "path": "benchmarks/synthetic_multimodal/data/s10/real/palantir_larry.npz",
+  "peak_rss_bytes": 1271758848,
+  "root_rule": "default_rng(1000).choice(earliest-day cells)",
+  "started_utc": "2026-10-20T12:51:57.338642Z",
+  "task": "orient/S10",
+  "unit": "real_palantir_larry",
+  "wall_seconds": 42.06
+}

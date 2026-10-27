@@ -1,0 +1,12 @@
+{
+  "base_uid": "refine_p2_n_founders_3",
+  "base_unmet": 5,
+  "block": 2,
+  "complete": 24,
+  "eligible_points": 3,
+  "errors": [
+    "block2_04"
+  ],
+  "grid_points": 25,
+  "result": "no grid point improves on the base under the block preference; base kept"
+}

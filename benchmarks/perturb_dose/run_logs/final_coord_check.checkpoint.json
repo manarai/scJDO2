@@ -1,0 +1,24 @@
+{
+  "unit": "final_coord_check",
+  "command": [
+    ".venv/bin/python",
+    "coord/coord_check.py",
+    "check",
+    "orient",
+    "S18d",
+    "--base",
+    "ac3f502"
+  ],
+  "started_utc": "2026-10-23T02:59:05.658249+00:00",
+  "finished_utc": "2026-10-23T02:59:06.662668+00:00",
+  "exit_code": 0,
+  "wall_seconds": 1.0044219779993,
+  "cpu_hours": 3.251027777777778e-05,
+  "max_rss_kib": 25732,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/final_coord_check.log",
+  "stop_reason": null
+}

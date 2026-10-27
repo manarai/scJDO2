@@ -1,0 +1,40 @@
+START 2026-10-20T12:57:58Z .venv/bin/python scripts/s10_transitions.py
+[S10 transitions] v3_default s0
+[S10 transitions] v3_default s1
+[S10 transitions] v3_default s2
+[S10 transitions] v3_stress s0
+[S10 transitions] v3_stress s1
+[S10 transitions] v3_stress s2
+[S10 transitions] v3_batch s0
+[S10 transitions] v3_batch s1
+[S10 transitions] v3_batch s2
+[S10 transitions] v3_transition s0
+[S10 transitions] v3_transition s1
+[S10 transitions] v3_transition s2
+[S10 transitions] v3_stationary_cycle s0
+[S10 transitions] v3_stationary_cycle s1
+[S10 transitions] v3_stationary_cycle s2
+{
+ "gate_critical_transition": "fail_untestable",
+ "gate_critical_transition_ot": "fail_untestable",
+ "primary_variant_critical_transition": "fail_untestable"
+}
+     1275.28 real      1249.04 user        42.67 sys
+          6794559488  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             3953558  page reclaims
+                   9  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                4619  voluntary context switches
+              378494  involuntary context switches
+      15164133829465  instructions retired
+       3292123185257  cycles elapsed
+          4002418624  peak memory footprint
+EXIT 0 2026-10-20T13:19:13Z

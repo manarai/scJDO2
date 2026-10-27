@@ -1,0 +1,54 @@
+{
+  "cpu_seconds": 67.96370499999999,
+  "finished_unix": 1792931212.1630259,
+  "peak_rss_bytes": 6007963648,
+  "prepared_sha256": "bf9d418e64a2d0dc47ce80e6cc91e77874ff3519336778b29d3a3983fa796937",
+  "s14_checkpoint": {
+    "finished_utc": "2026-10-25T12:26:52.159172Z",
+    "in_process_cpu_seconds": 66.873,
+    "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s16.h5ad",
+    "input_sha256": "65eab7da9bc3df922c3f999feb10e9443041330b7f5fb7bef6e071e5bdf8a603",
+    "n_cells": 12024,
+    "part_a_truth_free": true,
+    "pca50": {
+      "path": null,
+      "source": "S14 observed S12 PCA code path"
+    },
+    "peak_rss_bytes": 6007963648,
+    "prepared_path": "benchmarks/synthetic_multimodal/s14b/arrays/prepared/v3_transition_s16.npz",
+    "prepared_sha256": "bf9d418e64a2d0dc47ce80e6cc91e77874ff3519336778b29d3a3983fa796937",
+    "started_utc": "2026-10-25T12:25:51.565896Z",
+    "strict_pseudotime": {
+      "actual_start_cell": "cell_0005319",
+      "actual_start_day": 2,
+      "candidate_roots": [
+        "cell_0005319",
+        "cell_0003796",
+        "cell_0002740",
+        "cell_0000062",
+        "cell_0001514"
+      ],
+      "given_cell": "cell_0005319",
+      "given_day": 2,
+      "given_differs_from_actual": false,
+      "given_root": "cell_0005319",
+      "key": "day2_strict_r0",
+      "root_rule": "default_rng(1000+seed).choice(earliest-day cells, 5, replace=False); strict r0",
+      "settings": {
+        "knn": 30,
+        "n_components": 10,
+        "num_waypoints": 500,
+        "seed": 0
+      },
+      "source": "S14 fixed S06 strict r0",
+      "wall_seconds": 26.348
+    },
+    "task": "orient/S14",
+    "unit": "prepare_v3_transition_s16",
+    "wall_seconds": 60.593
+  },
+  "started_unix": 1792931150.305373,
+  "task": "orient/S14b",
+  "unit": "prepare_v3_transition_s16",
+  "wall_seconds": 61.85765290260315
+}

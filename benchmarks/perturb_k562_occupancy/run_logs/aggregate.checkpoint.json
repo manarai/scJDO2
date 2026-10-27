@@ -1,0 +1,19 @@
+{
+  "unit": "aggregate",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18b_occupancy.py",
+    "aggregate"
+  ],
+  "started_utc": "2026-10-22T12:07:04.707167+00:00",
+  "finished_utc": "2026-10-22T12:07:13.590909+00:00",
+  "exit_code": 0,
+  "wall_seconds": 8.883747959000175,
+  "cpu_hours": 0.0024772225,
+  "cpu_hours_before": 9.131278920555555,
+  "max_rss_kib": 250512,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "log": "benchmarks/perturb_k562_occupancy/run_logs/aggregate.log"
+}

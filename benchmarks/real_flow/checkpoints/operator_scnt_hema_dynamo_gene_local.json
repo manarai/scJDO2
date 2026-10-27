@@ -1,0 +1,19 @@
+{
+  "dataset": "scnt_hema",
+  "details": {
+    "implementation": "scjdo2.orient.base.local_jacobian",
+    "k_neighbours": 30,
+    "ridge": 0.001
+  },
+  "dimension": 30,
+  "finished_utc": "2026-10-19T06:44:14.948787+00:00",
+  "n_cells": 1947,
+  "operator": "local",
+  "operator_path": "benchmarks/real_flow/arrays/operators/scnt_hema_dynamo_gene_local.npz",
+  "seed": null,
+  "source": "dynamo_gene",
+  "started_utc": "2026-10-19T06:44:12.853108+00:00",
+  "task": "orient/S11",
+  "unit": "operator_scnt_hema_dynamo_gene_local",
+  "wall_seconds": 2.096
+}

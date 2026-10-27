@@ -1,0 +1,93 @@
+Simulating experiment
+trying URL 'https://github.com/dynverse/dyngen/raw/data_files/zenodo_1443566_real_silver_placenta-trophoblast-differentiation_mca.rds'
+Content type 'application/octet-stream' length 358656 bytes (350 KB)
+==================================================
+downloaded 350 KB
+
+NULL
+NULL
+NULL
+/Users/terooatt/Documents/scJDO2-manus-C/scripts/s19_export.py:35: DeprecationWarning: The default value for `spmatrix` is changing to `False` in v1.20.
+             That means the default return type will be a sparse array.
+             Unless you use * instead of @, ** for matrix power, or you depend
+             on 2D shapes from e.g. `A.sum(axis=0)` it may not matter to you.
+             See the spmatrix to sparray migration guide for details.
+             https://docs.scipy.org/doc/scipy/reference/sparse.migration_to_sparray.html
+             
+  matrix = scipy.io.mmread(path)
+{
+  "backbone": "linear",
+  "bytes": 47360378,
+  "cells": 5000,
+  "finished_utc": "2026-10-24T00:36:11.398020Z",
+  "genes": 1000,
+  "key": "linear_s1_T8",
+  "path": "benchmarks/dyngen/data/linear_s1_T8.h5ad",
+  "seed": 1,
+  "settings": {
+    "R_version": "4.6.0",
+    "backbone": "linear",
+    "compute_cellwise_grn": false,
+    "compute_dimred": true,
+    "compute_rna_velocity": true,
+    "distance_metric": "pearson",
+    "dyngen_version": "1.1.1",
+    "experiment": {
+      "num_timepoints": 8,
+      "pct_between": 0.75,
+      "type": "synchronised"
+    },
+    "generate_experiment_seconds": 14.63,
+    "key": "linear_s1_T8",
+    "num_cells": 5000,
+    "num_features": 1000,
+    "num_hks": 50,
+    "num_modules": 21,
+    "num_simulations": 32,
+    "num_targets": 900,
+    "num_tfs": 50,
+    "seed": 1,
+    "source_key": "linear_s1",
+    "store_reaction_firings": false,
+    "store_reaction_propensities": false,
+    "task": "orient/S21b"
+  },
+  "sha256": "a5524eeb5c4188d76b4406c540710b48b8ab11706d337d7bf7d0dd97a9e2775e",
+  "status": "complete",
+  "task": "orient/S19"
+}
+{
+  "status": "complete",
+  "task": "orient/S21b",
+  "source_key": "linear_s1",
+  "key": "linear_s1_T8",
+  "backbone": "linear",
+  "seed": 1,
+  "timepoints": 8,
+  "cells": 5000,
+  "genes": 1000,
+  "fork_cells": "NA",
+  "generate_experiment_seconds": 14.63,
+  "generated_utc": "2026-10-24 00:36:00 UTC",
+  "h5ad_path": "benchmarks/dyngen/data/linear_s1_T8.h5ad",
+  "h5ad_sha256": "a5524eeb5c4188d76b4406c540710b48b8ab11706d337d7bf7d0dd97a9e2775e",
+  "h5ad_bytes": 47360378
+} 
+     1402.73 real       231.73 user         6.13 sys
+          4077305856  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              354091  page reclaims
+                 190  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                  31  messages sent
+                 114  messages received
+                   0  signals received
+                3549  voluntary context switches
+              260225  involuntary context switches
+        990114472674  instructions retired
+        529867933915  cycles elapsed
+          3719663240  peak memory footprint

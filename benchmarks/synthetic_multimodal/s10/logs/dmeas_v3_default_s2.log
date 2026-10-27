@@ -1,0 +1,20 @@
+START 2026-10-20T12:05:09Z .venv/bin/python scripts/s10_diffusion.py meas --preset v3_default --seed 2
+       33.76 real        19.82 user         7.36 sys
+          2220523520  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              781679  page reclaims
+                  10  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 858  voluntary context switches
+              145046  involuntary context switches
+        127475884321  instructions retired
+         70034182113  cycles elapsed
+          4246999936  peak memory footprint
+EXIT 0 2026-10-20T12:05:43Z

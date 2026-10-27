@@ -1,0 +1,8 @@
+{
+  "n_committed": 1629,
+  "n_fork": 22,
+  "n_rows": 4,
+  "task": "orient/S21",
+  "truth_read_after_fits": true,
+  "unit": "score_bifurcating_v2_s10"
+}

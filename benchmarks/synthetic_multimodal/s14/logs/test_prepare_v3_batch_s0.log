@@ -1,0 +1,20 @@
+START 2026-10-22T12:46:29Z unit=prepare_v3_batch_s0 launcher=.sandbox/bin/python
+       35.49 real        39.07 user         3.03 sys
+          6252036096  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              437513  page reclaims
+                   9  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2826  voluntary context switches
+              111990  involuntary context switches
+        208131077849  instructions retired
+        108898413562  cycles elapsed
+          5118547440  peak memory footprint
+EXIT 0 2026-10-22T12:47:05Z

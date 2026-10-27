@@ -1,0 +1,27 @@
+{
+  "attempts": 1,
+  "cpu_seconds": 3047.091509,
+  "finished_unix": 1792999710.089016,
+  "guard_rss_limit_bytes": 12000000000,
+  "guard_wall_limit_seconds": 3600,
+  "manifest_row": {
+    "detected_clone_fraction": 0.3524500295184279,
+    "f_sample": 0.0289091169431116,
+    "knob_values": "{\"batch_effect\": false, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_batch_effect\": true, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\", \"z1_crit\": 2.0}",
+    "n_cells": 11857,
+    "n_clones_detected": 681,
+    "n_collected_by_day": "[178, 1341, 10338]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s32.h5ad",
+    "preset": "v3_transition",
+    "seed": 32,
+    "sha256": "f1a14a0f77704727135b3696487244f178002c00f3e0c8f6c8cf066ed3c7521e"
+  },
+  "observed_child_peak_rss_bytes": 10847830016,
+  "peak_rss_bytes": 10847830016,
+  "reused_verified": false,
+  "started_unix": 1792996689.571968,
+  "status": "completed",
+  "task": "orient/S14b",
+  "unit": "generate_v3_transition_s32",
+  "wall_seconds": 3020.51704788208
+}

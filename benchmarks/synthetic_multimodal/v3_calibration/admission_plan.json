@@ -1,0 +1,24 @@
+{
+  "attempts_completed": 34,
+  "budget_cpu_hours": 16.0,
+  "decision": "blocked_before_lhs_batch_4",
+  "excluded_candidates": 0,
+  "mean_successful_evaluation_cpu_seconds": 257.5433125,
+  "peak_rss_bytes_observed": 8778809344,
+  "peak_rss_gb_observed": 8.778809344,
+  "projected_calibration_cpu_hours_no_additional_retries": 13.933231840277779,
+  "projected_overage_cpu_hours": 0.01981239583333405,
+  "projected_total_cpu_hours_no_additional_retries": 16.019812395833334,
+  "ranked_candidates_completed": 32,
+  "reason": "Live no-additional-retry projection exceeds the fixed 16 CPU-hour S09 budget; task stop condition applies before another unit.",
+  "remaining_ranked_evaluations": 162,
+  "reserved_cpu_hours": {
+    "final_s08_splicing_12_x_428s_cpu_hours": 1.4266666666666667,
+    "full_regressions_and_finalization_cpu_hours": 0.1399138888888889,
+    "other_final_s08_groups_cpu_hours": 0.27,
+    "v3_generation_and_S05_oracles_cpu_hours": 0.25
+  },
+  "resolved_retries": 2,
+  "spent_calibration_cpu_hours": 2.3437827777777778,
+  "spent_calibration_cpu_seconds": 8437.618
+}

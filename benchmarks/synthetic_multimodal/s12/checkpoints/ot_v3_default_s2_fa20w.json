@@ -1,0 +1,83 @@
+{
+  "dim": 20,
+  "embedding": "fa20w",
+  "finished_utc": "2026-10-20T22:09:51.560913Z",
+  "in_process_cpu_seconds": 33.387,
+  "input_sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+  "measured_drift": {
+    "fit_device": "mps:0",
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "jacobian_device": "cpu",
+    "n_fit_cells": 1647,
+    "seconds": 17.82,
+    "seed": 0,
+    "weight_decay": 0.0001
+  },
+  "median_ot_speed": 0.06642378121614456,
+  "ot_library": {
+    "name": "POT",
+    "version": "0.9.7.post1"
+  },
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 210.191604097864,
+      "final_err": 4.616747263679771e-10,
+      "from_day": 2,
+      "n_iter": 8,
+      "n_source": 190,
+      "n_target": 1457,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 197.85662814505739,
+      "final_err": 7.756934583939148e-10,
+      "from_day": 4,
+      "n_iter": 42,
+      "n_source": 1457,
+      "n_target": 11237,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 4.14,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_fa20w.npz",
+  "peak_rss_bytes": 2651914240,
+  "scores": {
+    "auc_lam1": 0.8968404069618425,
+    "auc_soft_axis_curvature": 0.760463403381636,
+    "auc_tangent5_lam1": 0.3270047942932532,
+    "fate_axis_abs_cos_at_saddle": 0.850673726006365,
+    "fraction_saddle": 0.0022508537721204593,
+    "median_lam1_committed": 0.0011281893455395995,
+    "median_lam1_saddle": 0.003018357032065968,
+    "n_committed": 12781,
+    "n_saddle": 29,
+    "soft_axis_abs_cos_fate_axis": 0.8240259538457481
+  },
+  "sha256": "a370684d44aa123aa5bc4d91374bf8bba623ef1a78150bc063572b8ad874ff2f",
+  "started_utc": "2026-10-20T22:09:16.120563Z",
+  "task": "orient/S12",
+  "unit": "ot_v3_default_s2_fa20w",
+  "wall_seconds": 35.44,
+  "whitening": {
+    "M_eigenvalues_min_max": [
+      4.219770549478378,
+      695.4367199611238
+    ],
+    "metric": "M = W^T Psi^-1 W (FA loadings W, FA noise variances Psi); cost = (z_i - z_j)^T M (z_i - z_j)"
+  }
+}

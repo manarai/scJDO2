@@ -1,0 +1,61 @@
+[2026-10-22T09:51:02.051582+00:00] k=20 Euler step 50/400; stopped 0/10691
+[2026-10-22T09:51:02.687393+00:00] k=20 Euler step 100/400; stopped 0/10691
+[2026-10-22T09:51:03.483682+00:00] k=20 Euler step 150/400; stopped 0/10691
+[2026-10-22T09:51:04.110570+00:00] k=20 Euler step 200/400; stopped 3/10691
+[2026-10-22T09:51:04.740895+00:00] k=20 Euler step 250/400; stopped 47/10691
+[2026-10-22T09:51:05.474679+00:00] k=20 Euler step 300/400; stopped 387/10691
+[2026-10-22T09:51:06.069393+00:00] k=20 Euler step 350/400; stopped 1393/10691
+[2026-10-22T09:51:06.601859+00:00] k=20 Euler step 400/400; stopped 2965/10691
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:52:31.030219+00:00] Leiden resolution=1: 11 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:53:19.870134+00:00] Leiden resolution=2: 22 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:53:48.244390+00:00] Leiden resolution=4: 48 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:54:27.424804+00:00] Leiden resolution=8: 118 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:55:11.230113+00:00] Leiden resolution=6: 77 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:55:49.457414+00:00] Leiden resolution=5: 69 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:56:08.209184+00:00] Leiden resolution=4.5: 55 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:56:37.607762+00:00] Leiden resolution=4.75: 62 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:57:01.343791+00:00] Leiden resolution=4.625: 56 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:57:32.335735+00:00] Leiden resolution=4.6875: 62 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:58:01.773025+00:00] Leiden resolution=4.65625: 64 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:58:30.533602+00:00] Leiden resolution=4.640625: 58 states; requested 59
+/home/ubuntu/scJDO2/scripts/s18b_occupancy.py:316: FutureWarning: The `igraph` implementation of leiden clustering is *orders of magnitude faster*. Set the flavor argument to (and install if needed) 'igraph' to use it.
+In the future, the default backend for leiden will be igraph instead of leidenalg. To achieve the future defaults please pass: `flavor='igraph'` and `n_iterations=2`. `directed` must also be `False` to work with igraph’s implementation.
+  sc.tl.leiden(a, resolution=float(resolution), random_state=0, key_added="state")
+[2026-10-22T09:59:14.349542+00:00] Leiden resolution=4.6484375: 59 states; requested 59
+k=20: initial 7901, merged basins 59, Leiden 59

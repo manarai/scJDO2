@@ -1,0 +1,137 @@
+{
+  "array_path": "benchmarks/synthetic_multimodal/s15/arrays/step0_v3_transition_s3_k15_reference.npz",
+  "array_sha256": "f9be6142cf2a7d5e822e33cd51d700bd54897ba7779c07800f1a4de68812c521",
+  "configuration": {
+    "ensemble": 1,
+    "eps": 0.05,
+    "hidden": [
+      96,
+      96,
+      96
+    ],
+    "last": "extrapolate",
+    "space": "raw",
+    "wd": 0.0001
+  },
+  "configuration_id": "reference",
+  "dataset": "v3_transition_s3",
+  "finished_utc": "2026-10-23T23:46:53.386816Z",
+  "in_process_cpu_seconds": 24.712,
+  "input_path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s3.h5ad",
+  "input_sha256": "28d27cea26eb7112c7a6395046fe52bb202905f8a28ea34d5de452c5d8b37de3",
+  "manifest_path": "benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+  "models": [
+    {
+      "fit_device": "mps:0",
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "jacobian_device": "cpu",
+      "n_fit_cells": 1634,
+      "seconds": 3.171,
+      "seed": 0,
+      "weight_decay": 0.0001
+    }
+  ],
+  "observed_fit_complete_before_truth_scoring": true,
+  "ot_pairs": [
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 24.873473035843602,
+      "final_err": 6.626658050829343e-10,
+      "from_day": 2,
+      "n_iter": 13,
+      "n_source": 187,
+      "n_target": 1447,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.01,
+      "to_day": 4,
+      "warnings": []
+    },
+    {
+      "dt_hours": 48.0,
+      "eps_factor": 0.05,
+      "epsilon": 24.6855464882819,
+      "final_err": 8.843402786926488e-10,
+      "from_day": 4,
+      "n_iter": 11,
+      "n_source": 1447,
+      "n_target": 11150,
+      "plan_mass": 1.0,
+      "rows_zero": 0,
+      "seconds": 0.44,
+      "to_day": 6,
+      "warnings": []
+    }
+  ],
+  "peak_rss_bytes": 5099225088,
+  "rows": [
+    {
+      "c_star_dataset": -0.06510762271908675,
+      "dataset": "v3_transition_s3",
+      "jref_neighbours": 30,
+      "k_flow": 15,
+      "lambda1_sign_agreement": 0.9687108886107635,
+      "lambda1_spearman": -0.004884492935855958,
+      "median_norm_J": 0.058668669758061814,
+      "median_norm_J_over_norm_Jref": 0.06887057962504234,
+      "median_norm_Jref": 0.8427982209969436,
+      "median_per_cell_cosine": -0.002331490899436362,
+      "median_relative_error_J": 1.0026050320137425,
+      "median_relative_error_cstar_J": 1.0000001195831292,
+      "n_cells": 12784
+    },
+    {
+      "c_star_dataset": -0.10220891121764676,
+      "dataset": "v3_transition_s3",
+      "jref_neighbours": 15,
+      "k_flow": 15,
+      "lambda1_sign_agreement": 0.9687108886107635,
+      "lambda1_spearman": -0.007073903207101377,
+      "median_norm_J": 0.058668669758061814,
+      "median_norm_J_over_norm_Jref": 0.02792954485549294,
+      "median_norm_Jref": 2.085472975675685,
+      "median_per_cell_cosine": -0.0011648556553370917,
+      "median_relative_error_J": 1.0004458236301312,
+      "median_relative_error_cstar_J": 1.0000009479386918,
+      "n_cells": 12784
+    }
+  ],
+  "s14_provenance": {
+    "array": "benchmarks/synthetic_multimodal/s14/arrays/test/v3_transition_s3_k15_reference.npz",
+    "array_sha256": "1a6376c5ff172a2bbe13c156196e9f8f63e59460040715f0091ac87cace8d12c",
+    "checkpoint": "benchmarks/synthetic_multimodal/s14/checkpoints/test_v3_transition_s3_k15_reference.json",
+    "checkpoint_sha256": "2c2c27392781093cff63d14510cb25702b357764acdff4d4d8f6308a313e9672",
+    "reuse_note": "S14 array/checkpoint verified and reused as provenance; full J is absent from the stored array, so this Step 0 refits exactly the locked raw reference configuration.",
+    "stored_array_keys": [
+      "jref_rel",
+      "lambda1"
+    ],
+    "stored_configuration": {
+      "ensemble": 1,
+      "eps": 0.05,
+      "hidden": [
+        96,
+        96,
+        96
+      ],
+      "last": "extrapolate",
+      "space": "raw",
+      "wd": 0.0001
+    }
+  },
+  "started_utc": "2026-10-23T23:46:26.854437Z",
+  "step": 0,
+  "task": "orient/S15",
+  "truth_scoring_only": [
+    "J_ref_k30",
+    "J_ref_k15",
+    "scale/direction diagnostics"
+  ],
+  "unit": "step0_v3_transition_s3",
+  "wall_seconds": 26.532
+}

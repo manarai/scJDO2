@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/ubuntu/scJDO2/scripts/s22_score_lineage.py", line 677, in <module>
+    main()
+  File "/home/ubuntu/scJDO2/scripts/s22_score_lineage.py", line 671, in main
+    audit()
+  File "/home/ubuntu/scJDO2/scripts/s22_score_lineage.py", line 573, in audit
+    from coord.coord_check import matches, read_task
+ModuleNotFoundError: No module named 'coord'

@@ -1,0 +1,21 @@
+{
+  "screen": "rpe1",
+  "n_cells": 247914,
+  "n_genes": 8749,
+  "n_controls": 11485,
+  "median_control_library": 11720.0,
+  "n_hvg": 2000,
+  "fit_cells": "non-targeting controls only",
+  "pca_dimensions": [
+    15,
+    20,
+    30
+  ],
+  "pca_solver": "full",
+  "pca_whiten": false,
+  "raw_counts_access": "Exactly sorted selected control rows only; h5py X reads audited by command path",
+  "pca_reused_from_S18": null,
+  "group_lists_resolved_before_expression": "benchmarks/perturb_valleys/group_lists_rpe1.json",
+  "control_embedding_sha256": "61d46fd7a6d9f8a42eed8076957f1c786903acd42be53d8aee3595ffada603cf",
+  "finished_utc": "2026-10-22T15:16:51.267852+00:00"
+}

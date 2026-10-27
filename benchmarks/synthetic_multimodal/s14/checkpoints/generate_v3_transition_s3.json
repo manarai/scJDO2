@@ -1,0 +1,27 @@
+{
+  "part": "C-input-generation",
+  "preset": "v3_transition",
+  "seed": 3,
+  "path": "benchmarks/synthetic_multimodal/data/v3/v3_transition_s3.h5ad",
+  "sha256": "28d27cea26eb7112c7a6395046fe52bb202905f8a28ea34d5de452c5d8b37de3",
+  "n_cells": 12784,
+  "manifest_path": "benchmarks/synthetic_multimodal/MANIFEST_v3.csv",
+  "initial_attempt": {
+    "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_transition_s3.log",
+    "exit": 1,
+    "wall_seconds": 3718.94,
+    "cpu_seconds": 3641.17,
+    "peak_rss_bytes": 9938954344,
+    "note": "writer emitted a valid dataset and manifest row, then the separate post-write verifier failed after its standard streams were closed"
+  },
+  "solo_retry": {
+    "log": "benchmarks/synthetic_multimodal/s14/logs/generate_v3_transition_s3_retry1.log",
+    "exit": 0,
+    "wall_seconds": 3589.69,
+    "cpu_seconds": 3544.85,
+    "peak_rss_bytes": 9933940840,
+    "note": "one prescribed isolated retry; completed within the 60-minute unit limit"
+  },
+  "retry_policy": "initial unit exceeded 60 minutes; exactly one solo retry was run before stopping for user direction",
+  "verified": "sha256 and H5AD metadata agree with the manifest row"
+}

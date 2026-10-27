@@ -1,0 +1,76 @@
+{
+  "cpu_seconds": 126.783,
+  "cumulative_cpu_hours": 19.03645861111111,
+  "dataset": "v3_batch_s2",
+  "finished_utc": "2026-10-20T08:43:47Z",
+  "manifest_row": {
+    "detected_clone_fraction": "0.35326443569553806",
+    "f_sample": "0.0289091169431116",
+    "knob_values": "{\"batch_effect\": true, \"beta0\": 0.2340347319320716, \"eta_u\": 1.0, \"f_constant\": 0.15, \"f_sample\": 0.0289091169431116, \"f_switch\": 0.15, \"gamma0\": 0.1625, \"labelling_efficiency\": 0.9, \"mu_b\": -2.75, \"n_founders\": 800, \"n_prog\": 5, \"p_barcode\": 0.35000000000000003, \"pulse_hours\": [3.0, 5.0], \"sigma_b\": 2.5, \"sigma_gamma\": 0.8999999999999999, \"stationary_cycle\": false, \"stress_beta_fraction\": 0.0, \"theta0\": 37.75, \"version\": \"v3\"}",
+    "n_cells": "12192",
+    "n_clones_detected": "695",
+    "n_collected_by_day": "[179, 1369, 10644]",
+    "path": "benchmarks/synthetic_multimodal/data/v3/v3_batch_s2.h5ad",
+    "preset": "v3_batch",
+    "seed": "2",
+    "sha256": "d3dda4aa5c99c8ea35dbc6f149baa1b06b1094395f284de5d11224bdf46d991f"
+  },
+  "oracles": [],
+  "path": "benchmarks/synthetic_multimodal/data/v3/v3_batch_s2.h5ad",
+  "peak_rss_bytes": 7789363200,
+  "s08": {
+    "group_rows": {
+      "counts_trajectory": 81,
+      "labelling": 19,
+      "lineage": 21,
+      "splicing": 43
+    },
+    "integrity": {
+      "bytes": 1171472795,
+      "dataset": "v2_v3_batch_s2",
+      "path": "/Users/terooatt/Documents/scJDO2-manus/benchmarks/synthetic_multimodal/data/v3/v3_batch_s2.h5ad",
+      "raw_layers": [
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "X",
+          "n_nonzero_values": 48768000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "new",
+          "n_nonzero_values": 48768000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "total",
+          "n_nonzero_values": 48768000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "spliced",
+          "n_nonzero_values": 48768000
+        },
+        {
+          "dtype": "int32",
+          "integer": true,
+          "layer": "unspliced",
+          "n_nonzero_values": 48768000
+        }
+      ],
+      "sha256": "d3dda4aa5c99c8ea35dbc6f149baa1b06b1094395f284de5d11224bdf46d991f",
+      "shape": [
+        12192,
+        4000
+      ],
+      "started_utc": "2026-10-20T08:40:19.962739Z",
+      "status": "complete",
+      "wall_seconds": 7.027
+    }
+  },
+  "task": "orient/S09",
+  "wall_seconds": 217.208
+}

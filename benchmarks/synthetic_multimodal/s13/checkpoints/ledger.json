@@ -1,0 +1,14 @@
+{
+  "budget_cpu_hours": 8.0,
+  "finished_utc": "2026-10-21T03:27:42.140533Z",
+  "in_process_cpu_seconds": 0.005,
+  "ledger": "benchmarks/synthetic_multimodal/s13/cpu_ledger.csv",
+  "n_logs": 31,
+  "peak_rss_bytes": 41205760,
+  "started_utc": "2026-10-21T03:27:42.130427Z",
+  "task": "orient/S13",
+  "timed_cpu_hours": 0.6991416666666667,
+  "unit": "ledger",
+  "wall_seconds": 0.01,
+  "within_budget": true
+}

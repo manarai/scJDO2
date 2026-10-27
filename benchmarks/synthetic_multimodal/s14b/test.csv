@@ -1,0 +1,2 @@
+phase,dataset,drift_seed,status,R,detected_bin,true_bin,reason
+held_out_and_transition_fits,,,not_run,,,,"The transition reserve s5–s16 was exhausted with only two eligible seeds; S14b requires four. The frozen Step 1 rule requires stopping here, so no null calibration, held-out fits, thresholds, or gate scores are available."

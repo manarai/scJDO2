@@ -1,0 +1,27 @@
+{
+  "k": 15,
+  "n_targets": 865,
+  "n_controls": 10691,
+  "n_basins": 66,
+  "gate_H1": {
+    "median_explained_fraction": 0.3352407189500448,
+    "required_median": 0.5,
+    "n_exceeds_noise_p95": 240,
+    "fraction_exceeds_noise_p95": 0.2774566473988439,
+    "required_fraction": 0.5,
+    "pass": false
+  },
+  "energy_definition": "sqrt(2 mean cross Euclidean distance - mean within each empirical population), all ordered pairs including diagonals",
+  "mixture_weights": "Nonnegative, sum1; each control in basin b receives w_b/n_b. All-control baseline is n_b/10691, not equal basin weights.",
+  "optimizer": "Convex simplex monotone-restart FISTA, no penalty; numerical tolerance1e-10*(1+q+max|A|+max|C|), KKT/Frank-Wolfe primal-dual gap certificate",
+  "n_distinct_target_sizes": 299,
+  "n_null_optimizations": 59800,
+  "null": "200 random control subsets per observed target size; shared bank for identical sizes; without replacement within draw; all controls retained in every mixture and denominator",
+  "null_rng": "default_rng(0), ascending unique sizes, 200 draws each",
+  "max_null_kkt_gap": 4.17079114301e-09,
+  "max_null_explained_fraction_uncertainty": 1.0975798765411326e-06,
+  "max_target_explained_fraction_uncertainty": 9.224573493948895e-08,
+  "max_null_iterations": 11081,
+  "max_target_iterations": 7068,
+  "control_distance_matrix": "Exact full10691x10691 float64 in memory for this unit; temporary, not serialized"
+}

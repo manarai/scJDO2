@@ -1,0 +1,166 @@
+{
+  "admission_plan": {
+    "admitted": true,
+    "basis": "S12/S10 completed timed units; conservative five-equivalent synthetic multiplier",
+    "budget_cpu_hours": 8.0,
+    "projected_cpu_hours": 2.2097416666666665,
+    "s12_median_cpu_seconds_by_embedding": {
+      "fa20": 33.545,
+      "pca10": 27.494999999999997,
+      "pca20": 33.945,
+      "pca50": 71.60499999999999
+    }
+  },
+  "finished_utc": "2026-10-21T01:57:02.174297Z",
+  "in_process_cpu_seconds": 9.387,
+  "larry": {
+    "raw_path": "/Users/terooatt/Documents/scJDO2/benchmarks/data/larry/larry_inVitro_raw.h5ad",
+    "raw_sha256": "3e13ff16d0f3d1338932860abe15b1609749bc7f70d4b2596058ae3d7763a80e",
+    "sample_path": "benchmarks/synthetic_multimodal/data/s10/real/arrays/embeddings/larry_x_pca30.npz",
+    "sample_per_day": 4000,
+    "sample_sha256": "bfe6fa91660335f05193b411cdf44149e2ddc8183382607858dc0f9e429d572d",
+    "sample_size": 12000
+  },
+  "memory_stop_gib": 24.0,
+  "passed": true,
+  "peak_rss_bytes": 472285184,
+  "started_utc": "2026-10-21T01:56:51.840302Z",
+  "synthetic": {
+    "v3_default_s0": {
+      "embedding_sha256": "1b9b822f77d9858b6495edfedf93ea539f928c4b313227c90e65841d024da1d2",
+      "input_sha256": "a2e914d15890ee80ba7ff9382bad535f271787fc59a0781571f5c6e0105ee8f5",
+      "raw": {
+        "fa20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_fa20.npz",
+          "sha256": "0ca8537269713e0a0c986e33323a5e566f4812d610d7c80f626cad7a98090bf1"
+        },
+        "pca10": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca10.npz",
+          "sha256": "5a4c3c99c65b34b31207c93f8845a070439ff4ec28f3818726c48ceafbe9bf42"
+        },
+        "pca20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca20.npz",
+          "sha256": "1516063e38fe95fae06556e69e10d83894f4662058081d2130253a40793f4f7f"
+        },
+        "pca50": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s0/step0_ot_pca50.npz",
+          "sha256": "cb6128336a6c170f8a5eb6c1ff83ce42d2b0eebb8f9c365539e276d856fc975b"
+        }
+      }
+    },
+    "v3_default_s1": {
+      "embedding_sha256": "fc9218040df16ecd3d721896b513319607607db64c16c420a1bbd98b2d81bca3",
+      "input_sha256": "d5dd02a5b42a12e25d4cf9dc57cf803691a9b55681fe1ce7cb139f7cbb998ba5",
+      "raw": {
+        "fa20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_fa20.npz",
+          "sha256": "7d9e91e5cc0f77c0d162c75ef01ae31fdf31197ffd9fa13e03f2136d9cc4608e"
+        },
+        "pca10": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca10.npz",
+          "sha256": "7a1787b8a79b537b733cbc86969189d0e5bd49ca1bc3a6b3be3295f5f4e59f1f"
+        },
+        "pca20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca20.npz",
+          "sha256": "d625f57e124f45424a56286fe8d0a86be3ce18fd5ffb51ba83917a3adf18207e"
+        },
+        "pca50": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s1/step0_ot_pca50.npz",
+          "sha256": "e4991d9e283088afd199c5d3ad68a328e609680ea7ac362d83cf7dc5caa32920"
+        }
+      }
+    },
+    "v3_default_s2": {
+      "embedding_sha256": "b157cef9ae3fdaf552a5e1dc40c1bb9b51e62d3769e8d8262af998eaedbeedc5",
+      "input_sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+      "raw": {
+        "fa20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_fa20.npz",
+          "sha256": "c24562a88956e965d5c2cc14bc219d0ffe9ff4a0bd8f8e37f964b8805a9ccca7"
+        },
+        "pca10": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca10.npz",
+          "sha256": "64f95532f224dbdfb76135699b2e90680f69753834467a3692786c2ee7823474"
+        },
+        "pca20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca20.npz",
+          "sha256": "47aeea81e8c8da34a733473859d8dd6ef70bb3e8164abc933b1f3f00f56fbdc4"
+        },
+        "pca50": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_default_s2/step0_ot_pca50.npz",
+          "sha256": "506a7b4f8e09772d71ed5c14e01fc9a8e320f47563c69b0ed569c00aaaa4109b"
+        }
+      }
+    },
+    "v3_transition_s0": {
+      "embedding_sha256": "027d9a4ae91eadd5b4b8666d1a37a792dc31642621c19b1cc3daedb83f8e9314",
+      "input_sha256": "1faec85323413f2b79f657413b2f7511367a4cbd244fa2d766ded8b09a30a308",
+      "raw": {
+        "fa20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_fa20.npz",
+          "sha256": "ec001e60adbb802355adee48ab7f6807dca16d315d9bb7e2411ea33c1d090885"
+        },
+        "pca10": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca10.npz",
+          "sha256": "a8a01e95b2e2e70fa792284953e9a5c812b07e0648cb4b8bb81abcefa3951419"
+        },
+        "pca20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca20.npz",
+          "sha256": "5d120bbb790b703ba944db62e89ece188e6a9506f85c4afe486bc5ec39eb08f1"
+        },
+        "pca50": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s0/step0_ot_pca50.npz",
+          "sha256": "a8e109f0736bbc37387a591f1e6c72ca1b59e3ac439731ab8f8f9ec28579f3d0"
+        }
+      }
+    },
+    "v3_transition_s1": {
+      "embedding_sha256": "13d3b637593775aab2f56567e861c12c6ee26872887260e3e59fa1f5b055890d",
+      "input_sha256": "f3d9743121031d2e8a2379ddf50648359fd6f9cd1d73eefcc0ab9244f26e30da",
+      "raw": {
+        "fa20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_fa20.npz",
+          "sha256": "93272594bccc5db40f468ea0676a5b3ac4fc314796e1689b8686cb0f886bc293"
+        },
+        "pca10": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca10.npz",
+          "sha256": "3a89db300e71f3e6c8806724d88340411095f1c7fa27bb63ca79c3932c7200c7"
+        },
+        "pca20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca20.npz",
+          "sha256": "b9b1f876fc689fb0379f44be8727baf8eee0c441e93e60ee7b9fb2dfbed2764d"
+        },
+        "pca50": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s1/step0_ot_pca50.npz",
+          "sha256": "442d812eceefdd681cc576de3b38a8e7d475238177abc3b946171e582208879b"
+        }
+      }
+    },
+    "v3_transition_s2": {
+      "embedding_sha256": "436b88abe7da31f34590b33799e7b378aa27ade3b7ed683f0bba185f7a634ca4",
+      "input_sha256": "8262dcc11dfabf8b33db732db1ac971aeaf0c87aa32a2ef6a2cc549164094fe9",
+      "raw": {
+        "fa20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_fa20.npz",
+          "sha256": "51703083dec5b865ad10bcc5da114bad49acc461684e726b1333df834c9dcf0a"
+        },
+        "pca10": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca10.npz",
+          "sha256": "4d970490d4fd159dd9146d9603c15397a5e5ee8e2d273d5c20c125d9002809be"
+        },
+        "pca20": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca20.npz",
+          "sha256": "23f98a8393c1d0bbd2aa2f10410e33f270c15b0dc504041db2c52e29bdfc2119"
+        },
+        "pca50": {
+          "path": "benchmarks/synthetic_multimodal/data/s12/v3_transition_s2/step0_ot_pca50.npz",
+          "sha256": "72d5474c6d777e8cfd6012612d58764f03514881bab1c515af5a6047f56d9863"
+        }
+      }
+    }
+  },
+  "task": "orient/S13",
+  "threads_limit": 12,
+  "unit": "preflight",
+  "wall_seconds": 10.334
+}

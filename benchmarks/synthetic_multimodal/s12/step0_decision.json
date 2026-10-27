@@ -1,0 +1,89 @@
+{
+  "clause_1_two_embeddings": false,
+  "clause_2_fa_fix_whitened_cost_ge_0_85_every_seed": false,
+  "embeddings_other_than_pca20_passing": [
+    "pca10"
+  ],
+  "per_embedding": {
+    "fa20": {
+      "auc_by_dataset": {
+        "v3_default_s0": 0.04717253526210172,
+        "v3_default_s1": 0.20042117245304497,
+        "v3_default_s2": 0.04324037026944629,
+        "v3_transition_s0": 0.4747305750484234,
+        "v3_transition_s1": 0.3015617254867317,
+        "v3_transition_s2": 0.5263208106937696
+      },
+      "every_seed_ge_0_85": false,
+      "min": 0.04324037026944629,
+      "n": 6
+    },
+    "fa20w": {
+      "auc_by_dataset": {
+        "v3_default_s0": 0.20743283237328022,
+        "v3_default_s1": 0.969931701764371,
+        "v3_default_s2": 0.8968404069618425,
+        "v3_transition_s0": 0.624833455053504,
+        "v3_transition_s1": 0.7874793872112368,
+        "v3_transition_s2": 0.8014647827678527
+      },
+      "every_seed_ge_0_85": false,
+      "min": 0.20743283237328022,
+      "n": 6
+    },
+    "pca10": {
+      "auc_by_dataset": {
+        "v3_default_s0": 0.9551518038892979,
+        "v3_default_s1": 0.9799630051223677,
+        "v3_default_s2": 0.9968649584917267,
+        "v3_transition_s0": 0.8752011558124027,
+        "v3_transition_s1": 0.8947830626677856,
+        "v3_transition_s2": 0.9626252802281542
+      },
+      "every_seed_ge_0_85": true,
+      "min": 0.8752011558124027,
+      "n": 6
+    },
+    "pca20": {
+      "auc_by_dataset": {
+        "v3_default_s0": 0.9738259199907604,
+        "v3_default_s1": 0.990486624928856,
+        "v3_default_s2": 0.9989801672202002,
+        "v3_transition_s0": 0.8180871939796145,
+        "v3_transition_s1": 0.9103276206461618,
+        "v3_transition_s2": 0.9668463476432125
+      },
+      "every_seed_ge_0_85": false,
+      "min": 0.8180871939796145,
+      "n": 6
+    },
+    "pca50": {
+      "auc_by_dataset": {
+        "v3_default_s0": 0.6367823061486712,
+        "v3_default_s1": 0.9676494023904382,
+        "v3_default_s2": 0.5585634926844535,
+        "v3_transition_s0": 0.8906150573143238,
+        "v3_transition_s1": 0.7868824752033059,
+        "v3_transition_s2": 0.9672237733962096
+      },
+      "every_seed_ge_0_85": false,
+      "min": 0.5585634926844535,
+      "n": 6
+    },
+    "scvi10": {
+      "auc_by_dataset": {
+        "v3_default_s0": 0.8280999610203994,
+        "v3_default_s1": 0.7165224815025613,
+        "v3_default_s2": 0.964440751222855,
+        "v3_transition_s0": 0.31020671260280064,
+        "v3_transition_s1": 0.5220872779830877,
+        "v3_transition_s2": 0.5561320619289267
+      },
+      "every_seed_ge_0_85": false,
+      "min": 0.31020671260280064,
+      "n": 6
+    }
+  },
+  "proceed": false,
+  "rule": "proceed if OT-flow-J fork AUC >= 0.85 on every seed in at least two embeddings other than PCA-20 (fa20, pca10, pca50, scvi10), or if (a)-(d) identify the FA inversion as a defect of the FA coordinates with a fix that brings FA to >= 0.85"
+}

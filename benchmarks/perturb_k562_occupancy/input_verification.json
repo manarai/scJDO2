@@ -1,0 +1,72 @@
+{
+  "raw_path": "benchmarks/perturb_k562/data/K562_essential_raw_singlecell_01.h5ad",
+  "raw_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+  "required_sha256": "3e5a63a9e892b21029bb55fca4e12517a49aad7af6c14133ca63d12cf68c6cee",
+  "matches": true,
+  "raw_bytes": 10661879995,
+  "raw_mtime_ns": 1792648524078208661,
+  "verified_utc": "2026-10-22T12:10:00.515706+00:00",
+  "raw_open_mode": "rb",
+  "n_significant_targets": 865,
+  "n_eligible_targets": 1299,
+  "n_controls_from_verified_S18_manifest": 10691,
+  "S18_outputs_and_caches": [
+    {
+      "path": "benchmarks/perturb_k562/targets.csv",
+      "bytes": 110962,
+      "sha256": "f5651bbdefe5fa1ead6b637387cd07cb9a3f4d5d6254a6a769a5c0ab187fe16f"
+    },
+    {
+      "path": "benchmarks/perturb_k562/embedding.json",
+      "bytes": 2199,
+      "sha256": "04289c7af795af24b8542c62813e8766c14bff427d52c0c1b457da93085691fe"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k10.npz",
+      "bytes": 3455967,
+      "sha256": "4f1d43ff365a69f7dda53b3c76eea504a05c5fa8149534d6b127bbbd669c24d8"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k15.npz",
+      "bytes": 7864714,
+      "sha256": "b2b216dc35ac24c327eae62cdc9754efa895376d36b5bb6d8d07f28fe0ad074b"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k20.npz",
+      "bytes": 14155573,
+      "sha256": "c716050cb0ef89e6d50e044b92249b892b5dd6f0081e9729d2168fc853f709ed"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/H_k30.npz",
+      "bytes": 32444269,
+      "sha256": "be93d800ce9f4640c7d474087e41e2c7993bb0158ed9908c95aa90d8c24ee591"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/embedding.npz",
+      "bytes": 35901963,
+      "sha256": "c1bfc77d63876da85bde891e73149a0308bb414d25db37b018d8d456279384de"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k10.npz",
+      "bytes": 1883839,
+      "sha256": "8a3cd8acbc0604a068306909bd4ead14d8b2304a3d67b6c8c9992d10a87b289a"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k15.npz",
+      "bytes": 2002859,
+      "sha256": "3598f60ce80a005c9f129facb26c8120a2fff3013712afb43acd04c273e4171b"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k20.npz",
+      "bytes": 2122785,
+      "sha256": "827bcbcec63df903ef0c7fbcc9427011f87e85b0c06d05951d1eb51edb1da6f2"
+    },
+    {
+      "path": "benchmarks/perturb_k562/cache/geometry_k30.npz",
+      "bytes": 2375381,
+      "sha256": "01f90f2de6787d13c3f726d9754d74480f04ea7b3567f9bf98ac0af27c09a6be"
+    }
+  ],
+  "fitted_network_state_present": false,
+  "missing_fit_note": "Network state was not saved in S18; exact refit permitted by planner."
+}

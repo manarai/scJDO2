@@ -1,0 +1,20 @@
+{
+  "unit": "input_reverification_after_amendment",
+  "command": [
+    ".venv/bin/python",
+    "scripts/s18d_dose.py",
+    "preflight"
+  ],
+  "started_utc": "2026-10-23T02:26:00.297598+00:00",
+  "finished_utc": "2026-10-23T02:28:17.842782+00:00",
+  "exit_code": 0,
+  "wall_seconds": 137.54518789699796,
+  "cpu_hours": 0.005466253333333334,
+  "max_rss_kib": 46684,
+  "threads": 6,
+  "cpu_count": 6,
+  "ram_bytes": 25599549440,
+  "per_process_rss_limit_bytes": 8589934592,
+  "log": "benchmarks/perturb_dose/run_logs/input_reverification_after_amendment.log",
+  "stop_reason": null
+}

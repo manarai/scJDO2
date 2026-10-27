@@ -1,0 +1,21 @@
+Error in library(dyngen) : there is no package called ‘dyngen’
+Calls: suppressPackageStartupMessages -> withCallingHandlers -> library
+Execution halted
+        0.21 real         0.08 user         0.03 sys
+            87326720  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+                8589  page reclaims
+                 268  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                  71  voluntary context switches
+                 204  involuntary context switches
+          1229376263  instructions retired
+           368465147  cycles elapsed
+            72319624  peak memory footprint

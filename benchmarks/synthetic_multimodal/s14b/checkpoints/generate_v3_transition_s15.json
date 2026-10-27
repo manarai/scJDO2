@@ -1,0 +1,12 @@
+{
+  "cpu_seconds": 1893.47,
+  "dataset_created": false,
+  "eligibility_assessed": false,
+  "error": "Stopped with SIGTERM as RSS approached 14 GB cap; 2694.54 s wall, 1893.47 s CPU, peak RSS 14727905280 bytes; no dataset or manifest row.",
+  "manifest_row_appended": false,
+  "peak_rss_bytes": 14727905280,
+  "status": "stopped_memory_limit",
+  "task": "orient/S14b",
+  "unit": "generate_v3_transition_s15",
+  "wall_seconds": 2694.54
+}

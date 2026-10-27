@@ -1,0 +1,64 @@
+{
+  "finished_utc": "2026-10-22T18:25:14.683138+00:00",
+  "n_per_day": 4000,
+  "n_velocity_cells": 8000,
+  "pairs": [
+    {
+      "epsilon": 3.6783537707414755,
+      "from_day": 2.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 73.5670754148295,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_shape": [
+        4000,
+        4000
+      ],
+      "to_day": 4.0,
+      "version": "0.9.7.post1"
+    },
+    {
+      "epsilon": 6.943671022992884,
+      "from_day": 4.0,
+      "library": "POT",
+      "median_method": "exact full pairwise median",
+      "median_squared_distance": 138.87342045985767,
+      "n_source": 4000,
+      "n_target": 4000,
+      "plan_shape": [
+        4000,
+        4000
+      ],
+      "to_day": 6.0,
+      "version": "0.9.7.post1"
+    }
+  ],
+  "rank": null,
+  "solver": "dense",
+  "stage": "ot",
+  "status": "complete",
+  "task": "orient/S20",
+  "unit": "ot_dense_4000",
+  "velocity_path": "benchmarks/scaling/data/velocity_dense_4000.npz",
+  "wall_seconds": 6.171,
+  "wall_seconds_internal": 6.172
+}
+        8.18 real         6.71 user         0.88 sys
+          1144651776  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              107269  page reclaims
+                2348  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2942  voluntary context switches
+                2042  involuntary context switches
+         42841493358  instructions retired
+         19796736249  cycles elapsed
+           741885872  peak memory footprint

@@ -1,0 +1,20 @@
+{
+  "finished_utc": "2026-10-20T17:34:42.602071Z",
+  "horizons": [
+    6.0,
+    24.0,
+    48.0
+  ],
+  "in_process_cpu_seconds": 728.239,
+  "input_sha256": "1983c1fc4149f57fc274277e7137624a7909ab15302d7490eccbe8f3c6af1255",
+  "n_cells": 1073,
+  "n_paths": 32,
+  "path": "benchmarks/synthetic_multimodal/data/s10/v3_default_s2/diffusion/truth_chunk11.npz",
+  "peak_rss_bytes": 3865182208,
+  "seed": 11,
+  "sha256": "bb1b0eb4a2831b5f074ec7c063b0fb7e5fcfd6df8082c066912f4e4abbbd9ffc",
+  "started_utc": "2026-10-20T17:22:32.287615Z",
+  "task": "orient/S10",
+  "unit": "dtruth_v3_default_s2_c11",
+  "wall_seconds": 730.314
+}
