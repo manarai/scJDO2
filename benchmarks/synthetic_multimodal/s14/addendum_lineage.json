@@ -1,0 +1,79 @@
+{
+  "n_cell_barcode_pairs": 554,
+  "n_permutations": 1000,
+  "drift_pooled": {
+    "spearman": 0.5606976454095578,
+    "null_median": 0.12226300470113005,
+    "null_q99": 0.14690806552292826,
+    "null_max": 0.15367743899282868,
+    "p_one_sided": 0.000999000999000999
+  },
+  "mean_shift_pooled": {
+    "spearman": 0.19083571370586905
+  },
+  "ot_displacement_pooled": {
+    "spearman": 0.5351569000135679,
+    "null_median": 0.11572589451018434,
+    "null_q99": 0.1422438302449999,
+    "null_max": 0.15444543845557573,
+    "p_one_sided": 0.000999000999000999
+  },
+  "drift_centred": {
+    "spearman": 0.5029398319577074,
+    "null_median": 0.002128134704892989,
+    "null_q99": 0.0313313136115024,
+    "null_max": 0.040373450074887095,
+    "p_one_sided": 0.000999000999000999
+  },
+  "ot_displacement_centred": {
+    "spearman": 0.47642890777338365,
+    "null_median": 0.002925275681671684,
+    "null_q99": 0.033508933925676235,
+    "null_max": 0.045222695673245085,
+    "p_one_sided": 0.000999000999000999
+  },
+  "magnitude_drift_vs_actual": 0.23535256030800517,
+  "magnitude_ot_vs_actual": 0.21260476698030967,
+  "lambda1_vs_actual_magnitude": -0.036436916087786625,
+  "per_cell_cosine_drift_actual_median": 0.7169515057680869,
+  "heldout_energy": {
+    "point": {
+      "flow": 0.6874104724666862,
+      "no_movement": 0.8815008253806457,
+      "mean_displacement": 0.8667826833933505
+    },
+    "n_boot": 200,
+    "ci95": {
+      "flow": [
+        0.658556401400623,
+        0.7255641117085183
+      ],
+      "no_movement": [
+        0.8343852510956202,
+        0.9374459646837452
+      ],
+      "mean_displacement": [
+        0.8459058383109074,
+        0.8935172665568885
+      ]
+    },
+    "diff_vs_flow_ci95": {
+      "no_movement": [
+        0.10640813181730677,
+        0.2661037401240375
+      ],
+      "mean_displacement": [
+        0.13492161558845708,
+        0.21875412843841252
+      ]
+    },
+    "frac_boot_flow_best": 1.0,
+    "train_days": [
+      2,
+      4
+    ],
+    "pca_fitted_on": "all three days (S14 prepare step)"
+  },
+  "seconds": 512.7,
+  "note": "post hoc, exploratory; S14 Part C reference configuration, raw PCA-15"
+}

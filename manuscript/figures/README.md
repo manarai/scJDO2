@@ -146,6 +146,7 @@ Regenerate everything with `.venv-fig/bin/python notebooks/run_all.py` (see `man
 | `benchmarks/scaling/agreement.csv` | `735000940bae701c4ccb8d4bab3a2bf20ba133e041f95623802855f4c60c4bbc` | c | S20 |  |
 | `benchmarks/scaling/larry_full_lambda1.csv` | `63030badd0232f834ed056742073482cf911a0c08d013df1c651528a2574cb3b` | d | S20 |  |
 | `benchmarks/scaling/scaling.csv` | `a6193ac2fde02bc4384fa5bae8b0d88de1ed51c1a447959a015aaba619ae5761` | c | S20 |  |
+| `benchmarks/synthetic_multimodal/s14/addendum_lineage.json` | `f9141c056dc4c81802bf6dbfd509d9a9321c8787f11f7429439ba4d5a5b67f65` | a | S14 addendum |  |
 | `benchmarks/synthetic_multimodal/s14/test.csv` | `c8784eca67f31cd169fae88e577fec252935d334186020370dc756829e4655b2` | a | S14 |  |
 
 ### Fig6
@@ -293,5 +294,5 @@ Regenerate everything with `.venv-fig/bin/python notebooks/run_all.py` (see `man
 ## Number provenance report
 
 - Notebook: `notebooks/numbers_v57.ipynb` → `manuscript/NUMBERS_v57.md`, `manuscript/figures/numbers_v57.csv`
-- Reads 68 source files (listed with sha256 at the end of NUMBERS_v57.md).
+- Reads 69 source files (listed with sha256 at the end of NUMBERS_v57.md).
 

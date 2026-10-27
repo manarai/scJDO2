@@ -1,6 +1,6 @@
 **Figure 7 | Archetypes of dynamics (S15).**
 Archetypes were fitted to unit-norm flow operators (semi-NMF, K by held-out reconstruction; operator-archetype view, K = 8) and by
-K-means on rank-transformed basis-invariant descriptors (descriptor view, K = 2), on the three held-out v3_transition
+K-means on rank-transformed magnitude-free descriptors (descriptor view, K = 2), on the three held-out v3_transition
 test seeds (s2–s4; PCA-15; S14 reference flow J), and compared with score-operator archetypes and Leiden clustering of expression at matched K.
 **a**, A1: recall of true saddle cells by the best-matching archetype and its precision relative to the saddle base rate (bars: drift seed 0, the
 gate rows; dots: drift seeds 1–2, report only). Operator view: recall 0.72–0.79, precision

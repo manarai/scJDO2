@@ -635,6 +635,16 @@
     ],
     "notes": []
    },
+   "benchmarks/synthetic_multimodal/s14/addendum_lineage.json": {
+    "sha256": "f9141c056dc4c81802bf6dbfd509d9a9321c8787f11f7429439ba4d5a5b67f65",
+    "panels": [
+     "a"
+    ],
+    "tasks": [
+     "S14 addendum"
+    ],
+    "notes": []
+   },
    "benchmarks/synthetic_multimodal/s14/test.csv": {
     "sha256": "c8784eca67f31cd169fae88e577fec252935d334186020370dc756829e4655b2",
     "panels": [
@@ -1593,6 +1603,16 @@
     ],
     "notes": []
    },
+   "benchmarks/synthetic_multimodal/s14/addendum_lineage.json": {
+    "sha256": "f9141c056dc4c81802bf6dbfd509d9a9321c8787f11f7429439ba4d5a5b67f65",
+    "panels": [
+     "numbers"
+    ],
+    "tasks": [
+     "S14 addendum (post hoc)"
+    ],
+    "notes": []
+   },
    "benchmarks/synthetic_multimodal/s14/choose_k.csv": {
     "sha256": "7832702e3688e0c032805105d02c36a6f86cb31208e460b60b65cdeb60c9339c",
     "panels": [
@@ -1784,7 +1804,7 @@
     "notes": []
    },
    "manuscript/scJDO_manuscript_v57.md": {
-    "sha256": "5877ad1bed4c6c3c1dc17b1a7724f20291ff7348a20a6ebcce09256d01e15375",
+    "sha256": "6c0e128937354a9f5b350319a3e383dc0f3be72c7bff9ca96e84aaea6e4533eb",
     "panels": [
      "all"
     ],

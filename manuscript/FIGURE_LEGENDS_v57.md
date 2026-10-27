@@ -12,11 +12,15 @@ determines which local operator can be estimated. A snapshot supports only the
 matching; it is symmetric and describes density curvature. A **measured** velocity (entropic
 optimal transport between sampling days, lineage displacement, metabolic labelling or RNA
 velocity) supports the **flow operator** *J_flow = ∂f/∂z* of a smooth drift *f* fitted to that
-velocity (MeasuredDrift). Per cell, basis-invariant descriptors (sign of Re λ₁, spectrum,
-rotational index, non-normality, transient gain), standardised and rank-transformed, define an
+velocity (MeasuredDrift). Per cell, magnitude-free descriptors, rank-transformed, define an
 operator space whose recurrent patterns are archetypes (compared with Leiden clustering at
-matched K). Under a change of coordinates *A* the score operator transforms as *A⁻ᵀHA⁻¹* and
-the flow operator as *AJA⁻¹*, so only descriptors invariant under both are compared directly.
+matched K). Under a change of coordinates *A* the score operator transforms as *A⁻ᵀHA⁻¹*
+(congruence) and the flow operator as *AJA⁻¹* (similarity). Spectral descriptors (sign of Re λ₁,
+number of eigenvalues with positive real part, rotational index, spectral gap, trace) are
+invariant for the flow operator under any invertible *A*; non-normality (Henrici) and transient
+gain only under orthogonal *A*; for the score operator only the inertia is invariant, and only
+inertia descriptors are compared between the two operators. Different embeddings (PCA, scVI,
+FA) are not related by such maps.
 Bottom: the six identifiability components and the tasks in which each is tested.
 
 **Figure 2 | A benchmark calibrated to six real datasets (S08, S09, S19).**
@@ -61,8 +65,8 @@ cost (PCA-10 0.53–0.79, PCA-20
 **d**, Flow J vs the Jacobian of the generator's true expected velocity in the same PCA-15 coordinates (J_ref; S15 Step 0;
 4 test datasets × J_ref neighbourhood 15/30): norm ratio 0.02–0.07,
 median per-cell cosine −0.002 to 0.008, per-cell λ₁ Spearman
-−0.11 to 0.00, relative error after optimal scalar c* 1.00.
-The reference was verified by finite differences of the true expected velocity (median per-cell cosine ≥ 1.000).
+−0.107 to −0.005 across all four datasets (−0.018 to −0.005 on the three transition seeds), relative error after optimal scalar c* 1.00.
+The reference was verified by finite differences of the true expected velocity (median per-cell cosine ≈ 1.000).
 Across S14 test rows the median relative Frobenius error is 1.000–1.005.
 **e**, Left, *post hoc*: peak-to-median ratio R of the 12-bin day-weighted strict-pseudotime λ₁ profile (reference, k = 15) on the
 three transition test seeds (1.91–2.69; |detected − true bin|, in parentheses in the panel, 1, 0, 5)
@@ -94,12 +98,17 @@ Diagnosis of the inverted dataset (s18): pending.
 
 **Figure 5 | Real data: lineage agreement, held-out prediction and scale (S14, S11, S20).** LARRY in vitro haematopoiesis
 (GSE140802; days 2/4/6); dense analyses use a fixed sample of 4,000 cells per day (`default_rng(0)`); barcodes used for scoring only.
-**a**, S14 held-out test (pre-registered; gate G3 applies to the selected configuration and failed). Left, Spearman between flow-J λ₁ and
-lineage displacement (◆) vs five permutation nulls (●): reference 0.56 (null max 0.15),
-selected 0.55 (null max 0.14). Right, energy distance between the day-6 distribution
+**a**, S14 held-out test (pre-registered; gate G3 applies to the selected configuration and failed). Left, Spearman, pooled over PCA coordinates of
+554 barcoded cell–clone pairs, between the displacement predicted by integrating the drift over the 48-h interval and the observed
+displacement to the clone's next-day centroid (◆), vs five permutation nulls (●; pre-registered): reference 0.56 (null max 0.15),
+selected 0.55 (null max 0.14). Post hoc, reference: 1,000 permutations, one-sided p < 0.001 (null max
+0.15); after centring each coordinate within an interval 0.50 (null max 0.04); population mean-shift predictor
+0.19; OT displacement without a drift 0.54; λ₁ vs displacement magnitude -0.04. This tests the velocity and drift, not λ₁. Right, energy distance between the day-6 distribution
 predicted by integrating the fitted drift from day 4 and the held-out day 6: reference flow 0.69, selected
 flow 0.94; mean-displacement baseline 0.87, no-movement
-baseline 0.88.
+baseline 0.88. Error bars (reference, post hoc): 95 % bootstrap intervals over cells (200 resamples): flow
+0.66–0.73, mean displacement 0.85–0.89, no movement 0.83–0.94. Transport and drift were fitted on
+days 2 and 4 only; the PCA on all three days.
 **b**, S11 (pre-registered criteria; 6 of 14 met). Left, per-cell cosine between velocity sources: LARRY OT vs clonal displacement
 (n = 1321 cells with a lineage velocity; median 0.69); scNT-seq haematopoiesis
 labelling vs dynamo -0.05, labelling vs scVelo 0.03,
@@ -148,7 +157,7 @@ p 0.002/0.012. Supplementary Tables S2 and S3.
 
 **Figure 7 | Archetypes of dynamics (S15).**
 Archetypes were fitted to unit-norm flow operators (semi-NMF, K by held-out reconstruction; operator-archetype view, K = 8) and by
-K-means on rank-transformed basis-invariant descriptors (descriptor view, K = 2), on the three held-out v3_transition
+K-means on rank-transformed magnitude-free descriptors (descriptor view, K = 2), on the three held-out v3_transition
 test seeds (s2–s4; PCA-15; S14 reference flow J), and compared with score-operator archetypes and Leiden clustering of expression at matched K.
 **a**, A1: recall of true saddle cells by the best-matching archetype and its precision relative to the saddle base rate (bars: drift seed 0, the
 gate rows; dots: drift seeds 1–2, report only). Operator view: recall 0.72–0.79, precision

@@ -80,6 +80,8 @@
  "d_median_relative_error_cstar_J_min": 0.9999684476958652,
  "d_median_relative_error_cstar_J_max": 1.0000025179200491,
  "d_fd_route_cosine_min": 0.9999999999996929,
+ "d_l1sp_tr_min": -0.0180795516346804,
+ "d_l1sp_tr_max": -0.0048844929358559,
  "d_s14_jref_relfrob_min": 1.0002650441309298,
  "d_s14_jref_relfrob_max": 1.004515009785054,
  "e_R_v3_transition_min": 1.9057707424167132,

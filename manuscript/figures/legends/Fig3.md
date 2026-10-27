@@ -22,8 +22,8 @@ cost (PCA-10 0.53–0.79, PCA-20
 **d**, Flow J vs the Jacobian of the generator's true expected velocity in the same PCA-15 coordinates (J_ref; S15 Step 0;
 4 test datasets × J_ref neighbourhood 15/30): norm ratio 0.02–0.07,
 median per-cell cosine −0.002 to 0.008, per-cell λ₁ Spearman
-−0.11 to 0.00, relative error after optimal scalar c* 1.00.
-The reference was verified by finite differences of the true expected velocity (median per-cell cosine ≥ 1.000).
+−0.107 to −0.005 across all four datasets (−0.018 to −0.005 on the three transition seeds), relative error after optimal scalar c* 1.00.
+The reference was verified by finite differences of the true expected velocity (median per-cell cosine ≈ 1.000).
 Across S14 test rows the median relative Frobenius error is 1.000–1.005.
 **e**, Left, *post hoc*: peak-to-median ratio R of the 12-bin day-weighted strict-pseudotime λ₁ profile (reference, k = 15) on the
 three transition test seeds (1.91–2.69; |detected − true bin|, in parentheses in the panel, 1, 0, 5)
