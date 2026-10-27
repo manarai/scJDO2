@@ -3,11 +3,35 @@
   "upload_type": "software",
   "description": "scJDO2 estimates per-cell local operators from single-cell data. scjdo2.flow fits a flow operator (the Jacobian of a drift fitted to an entropic optimal-transport velocity) from a sampled time course in one call, and returns per-cell spectral descriptors. Release archived for the Bioinformatics Application Note and the scJDO bioRxiv preprint (v57).",
   "creators": [
-    {"name": "Redd, David", "affiliation": "Brigham Young University"},
-    {"name": "Green, Sam", "affiliation": "Brigham Young University"},
-    {"name": "Terooatea, Tommy W.", "affiliation": "Brigham Young University"}
+    {
+      "name": "Redd, David",
+      "affiliation": "Brigham Young University"
+    },
+    {
+      "name": "Green, Sam",
+      "affiliation": "Brigham Young University"
+    },
+    {
+      "name": "Terooatea, Tommy W.",
+      "affiliation": "Brigham Young University"
+    }
   ],
   "license": "MIT",
-  "keywords": ["single-cell", "optimal transport", "Jacobian", "cell dynamics", "time course", "Python"],
-  "access_right": "open"
+  "keywords": [
+    "single-cell",
+    "optimal transport",
+    "Jacobian",
+    "cell dynamics",
+    "time course",
+    "Python"
+  ],
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "10.64898/2026.08.21.745996",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    }
+  ]
 }

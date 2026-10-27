@@ -16,3 +16,16 @@ authors:
   - family-names: Terooatea
     given-names: Tommy W.
     affiliation: Brigham Young University
+preferred-citation:
+  type: article
+  title: "Label-free flow operators and stability operators from single-cell time courses: what local dynamical operators can and cannot identify"
+  journal: bioRxiv
+  doi: "10.64898/2026.08.21.745996"
+  year: 2026
+  authors:
+    - family-names: Redd
+      given-names: David
+    - family-names: Green
+      given-names: Sam
+    - family-names: Terooatea
+      given-names: Tommy W.
