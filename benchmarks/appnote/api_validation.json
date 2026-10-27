@@ -1,0 +1,47 @@
+{
+  "synthetic": [
+    {
+      "dataset": "v3_transition_s2",
+      "n_cells": 12884,
+      "auc_api": 0.9601642370257654,
+      "auc_s14_reference": 0.9601642370257654,
+      "lambda1_spearman_api_vs_s14": 0.9999999999004073,
+      "seconds": 12.8
+    },
+    {
+      "dataset": "v3_transition_s3",
+      "n_cells": 12784,
+      "auc_api": 0.9601986888583071,
+      "auc_s14_reference": 0.9601986888583072,
+      "lambda1_spearman_api_vs_s14": 0.9999999999037954,
+      "seconds": 11.3
+    },
+    {
+      "dataset": "v3_transition_s4",
+      "n_cells": 12865,
+      "auc_api": 0.9241031102201898,
+      "auc_s14_reference": 0.9241031102201898,
+      "lambda1_spearman_api_vs_s14": 0.999999999884467,
+      "seconds": 11.1
+    }
+  ],
+  "larry_12000": {
+    "n_cells": 12000,
+    "seconds": 13.4,
+    "ot_pairs": [
+      {
+        "from_time": 48.0,
+        "to_time": 96.0,
+        "solver": "dense",
+        "n_iter": 15
+      },
+      {
+        "from_time": 96.0,
+        "to_time": 144.0,
+        "solver": "dense",
+        "n_iter": 23
+      }
+    ]
+  },
+  "note": "sj.flow defaults (PCA-15, eps 0.05, MLP 96x3, wd 1e-4, seed 0); fork AUC scored with the S14 scorer after fitting"
+}

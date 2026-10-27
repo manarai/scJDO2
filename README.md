@@ -11,6 +11,17 @@ A successor to [scJDO](https://github.com/manarai/scJDO). The package does
 not import v1; v1 is used only by the separate comparison harness in
 `compare/` (see [docs/V1_REMOVAL.md](docs/V1_REMOVAL.md)).
 
+## Flow operators from a time course in one call
+
+```python
+import scjdo2 as sj
+sj.flow(adata, time_key="day")     # OT velocity -> drift -> J_flow per cell
+adata.obs["flow_lambda1"]           # leading eigenvalue; adata.uns["scjdo2"]["J"] = operators
+```
+
+Quickstart with test data: `python examples/flow_quickstart.py`. Parameters,
+outputs and usage notes: [docs/flow.md](docs/flow.md).
+
 ## How it works
 
 1. **Embedding** (`scjdo2.embed`): latent positions `z_c` from the count
