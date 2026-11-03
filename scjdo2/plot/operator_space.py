@@ -1,16 +1,17 @@
-"""Three publication figures for scJDO2 operator-space analysis.
+"""Operator-space figures.
 
-Phase B scope:
-    - :func:`figure_operator_space` renders Panels A and B. Panel C
-      (gene-level drivers) needs a gene-space Jacobian from Phase C and
-      raises ``NotImplementedError`` for now; the figure is still produced
-      with an explanatory panel in its place.
-    - :func:`figure_archetype_sheet` raises ``NotImplementedError`` until
-      the archetype decomposer (``scjdo2.archetypes``) lands.
-    - :func:`figure_v1_vs_v2` consumes the Phase A v1 baseline and the
-      scJDO2 state on the same dataset.
+* :func:`figure_operator_space`  — Panels A (behaviour on the embedding),
+  B (spectrum view) and C (gene-level drivers; an explanatory panel when
+  no gene-space Jacobian is stored).
+* :func:`figure_archetype_sheet` — one row per archetype: eigenvalue
+  inset, driver bars, stats.
+* :func:`figure_ledger_summary`  — Fisher reason codes by confidence
+  decile + tangent-rank histogram (supplementary).
+* :func:`plot_drivers`           — axis-level driver bar chart.
 
-The plotting layer reads from AnnData only; it never fits or estimates.
+The v1-vs-v2 comparison is in :mod:`scjdo2.plot.compare` (it reuses
+``_panel_a`` from here). The plotting layer reads from AnnData only; it
+never fits or estimates.
 """
 
 from __future__ import annotations
@@ -24,6 +25,7 @@ import numpy as np
 from anndata import AnnData
 from matplotlib.figure import Figure
 
+from ._save import save_figure
 from .style import (
     BEHAVIOUR_COLOURS,
     BEHAVIOUR_MARKERS,
@@ -566,11 +568,7 @@ def figure_operator_space(
                   measured_flow=measured_flow)
         ax_c.set_title("C", loc="left", fontsize=10, fontweight="bold")
 
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+        save_figure(fig, out)
     return fig
 
 
@@ -671,11 +669,7 @@ def figure_archetype_sheet(
             ax2.text(0.0, 1.0, "\n".join(lines),
                      transform=ax2.transAxes, fontsize=7, va="top", ha="left")
 
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+        save_figure(fig, out)
     return fig
 
 
@@ -717,9 +711,13 @@ def figure_ledger_summary(
             conf_arr = np.asarray(conf.to_numpy() if hasattr(conf, "to_numpy") else conf)
             finite = np.isfinite(conf_arr)
             deciles = np.full(len(conf_arr), -1, dtype=int)
+            # Constant confidence (e.g. a per-cell fit with no cap) has no
+            # deciles: pool every cell into one bar and say so.
+            constant = bool(finite.any() and np.ptp(conf_arr[finite]) == 0)
             if finite.any():
                 qs = np.nanquantile(conf_arr[finite], np.linspace(0, 1, 11))
-                deciles[finite] = np.clip(np.searchsorted(qs[1:-1], conf_arr[finite]), 0, 9)
+                deciles[finite] = (0 if constant else
+                                   np.clip(np.searchsorted(qs[1:-1], conf_arr[finite]), 0, 9))
             codes = opspace.REASON_CODES
             counts = np.zeros((10, len(codes)), dtype=float)
             for c, dec in enumerate(deciles):
@@ -731,17 +729,22 @@ def figure_ledger_summary(
                                       float(np.sum(r == code))
             totals = counts.sum(axis=1, keepdims=True)
             fracs = np.divide(counts, totals, out=np.zeros_like(counts), where=totals > 0)
-            left = np.zeros(10)
+            n_rows = 1 if constant else 10
+            fracs = fracs[:n_rows]
+            left = np.zeros(n_rows)
             cmap = plt.get_cmap("Set2")
             for k, code in enumerate(codes):
-                ax_bar.barh(np.arange(10), fracs[:, k], left=left,
+                ax_bar.barh(np.arange(n_rows), fracs[:, k], left=left,
                             color=cmap(k), label=code, height=0.8)
                 left += fracs[:, k]
-            ax_bar.set_yticks(np.arange(10))
-            ax_bar.set_yticklabels([f"d{i+1}" for i in range(10)], fontsize=6)
+            ax_bar.set_yticks(np.arange(n_rows))
+            ax_bar.set_yticklabels(["all cells"] if constant else
+                                   [f"d{i+1}" for i in range(10)], fontsize=6)
             ax_bar.set_xlabel("fraction of entries", fontsize=7)
-            ax_bar.set_ylabel("op_confidence decile", fontsize=7)
-            ax_bar.legend(fontsize=6, loc="center left", bbox_to_anchor=(1.0, 0.5))
+            ax_bar.set_ylabel("op_confidence (constant)" if constant else
+                              "op_confidence decile", fontsize=7)
+            ax_bar.legend(fontsize=6, loc="lower center", bbox_to_anchor=(0.5, 1.01),
+                          ncol=3, frameon=False)
         else:
             ax_bar.axis("off")
             ax_bar.text(0.5, 0.5, "no Fisher ledger / confidence",
@@ -762,66 +765,10 @@ def figure_ledger_summary(
                          transform=ax_hist.transAxes, fontsize=7, color="0.5",
                          ha="center", va="center")
 
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+        save_figure(fig, out)
     return fig
 
 
 # ======================================================================
 # figure_v1_vs_v2
 # ======================================================================
-
-
-def figure_v1_vs_v2(
-    adata_v2: AnnData,
-    v1_results: str | Path | dict,
-    out: Optional[str | Path] = None,
-    use_rep: Optional[str] = None,
-) -> Figure:
-    """Side-by-side comparison of v1 slicing archetypes vs. scJDO2 Panel A.
-
-    ``v1_results`` is either a path to a v1 baseline directory (produced by
-    ``compare/run_v1.py``, containing ``adata.h5ad`` with
-    ``uns["scjdo"]["activations"]`` and ``uns["scjdo"]["t_centers"]``) or
-    a pre-loaded dict with keys ``activations``, ``t_centers``.
-    """
-    import anndata as ad
-
-    if isinstance(v1_results, (str, Path)):
-        v1_adata = ad.read_h5ad(Path(v1_results) / "adata.h5ad")
-        v1 = {
-            "activations": np.asarray(v1_adata.uns["scjdo"]["activations"]),
-            "t_centers": np.asarray(v1_adata.uns["scjdo"]["t_centers"]),
-        }
-    else:
-        v1 = dict(v1_results)
-
-    acts = np.asarray(v1["activations"])          # (T, K)
-    tc = np.asarray(v1["t_centers"])              # (T,)
-    K = acts.shape[1]
-
-    with style():
-        fig = plt.figure(figsize=(OPSPACE_FIG_WIDTH_IN, OPSPACE_FIG_HEIGHT_IN))
-        gs = fig.add_gridspec(1, 2, width_ratios=[1.0, 1.1], wspace=0.3)
-        ax_v1 = fig.add_subplot(gs[0, 0])
-        ax_v2 = fig.add_subplot(gs[0, 1])
-
-        for k in range(K):
-            ax_v1.plot(tc, acts[:, k], linewidth=1.0, label=f"archetype {k}")
-        ax_v1.set_xlabel("pseudotime")
-        ax_v1.set_ylabel("archetype activation")
-        ax_v1.set_title("v1 slicing", loc="left", fontsize=9)
-        ax_v1.legend(loc="upper right", fontsize=6)
-
-        _panel_a(ax_v2, adata_v2, use_rep=use_rep, lineages=None, label_fork=True)
-        ax_v2.set_title("scJDO2 operator field", loc="left", fontsize=9)
-
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
-    return fig

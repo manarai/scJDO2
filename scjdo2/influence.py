@@ -48,15 +48,6 @@ from scipy.linalg import expm
 
 ROLES = ("driver", "hub", "responder", "passenger", "unmeasured")
 
-ROLE_COLOURS: dict[str, str] = {
-    "driver": "#E69F00",
-    "hub": "#7F77DD",
-    "responder": "#009E73",
-    "passenger": "#B4B2A9",
-    "unmeasured": "#FFFFFF",
-}
-
-
 # ---------------------------------------------------------------- core maths
 
 

@@ -37,8 +37,7 @@ def main() -> None:
                                     n_perm=args.n_perm, seed=args.seed)
     for name, df in check.items():
         df.to_csv(out / f"reference_{name}.csv", index=False)
-    for ext in ("pdf", "png"):
-        drivers.plot_reference(check, save=out / f"reference_auroc.{ext}")
+    drivers.plot_reference(check, out=out / "reference_auroc")
     print(check["summary"].to_string(index=False))
 
 

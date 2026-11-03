@@ -1461,8 +1461,10 @@ def drivers(adata: AnnData, which: Literal["lead", "archetype"] = "lead",
     directly); ``use_lift=True`` requires the lifted eigvec to exist and
     errors otherwise.
     """
-    J, kind, dim = _get_J(adata)
-    if kind != "sparse":
+    # ``j_kind`` (storage: "sparse" gene-space / "dense" latent) must not
+    # reuse the name ``kind`` — that is the responders / drivers argument.
+    J, j_kind, dim = _get_J(adata)
+    if j_kind != "sparse":
         raise NotImplementedError(
             "drivers() requires a gene-space Jacobian (Phase C per-cell CSR J). "
             f"Current J is dense latent-space ({dim} dims vs {adata.n_vars} genes). "

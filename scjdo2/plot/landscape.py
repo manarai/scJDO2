@@ -38,7 +38,9 @@ import pandas as pd
 from anndata import AnnData
 from matplotlib.figure import Figure
 
+from ._save import save_figure
 from .style import (
+    add_footer,
     BEHAVIOUR_COLOURS,
     OPSPACE_FIG_HEIGHT_IN,
     OPSPACE_FIG_WIDTH_IN,
@@ -165,7 +167,7 @@ def _draw_ternary_frame(ax, tol: float, grid: int = 4) -> None:
 
 
 def _footer(fig: Figure, text: str) -> None:
-    fig.text(0.01, 0.005, text, fontsize=6, color="#606060", ha="left", va="bottom")
+    add_footer(fig, text, x=0.01, ha="left", color="#606060")
 
 
 # ----------------------------------------------------------------------
@@ -283,11 +285,7 @@ def figure_behaviour_landscape(
                       loc="lower left", bbox_to_anchor=(0.0, 1.02), frameon=False)
         _footer(fig, "coordinates: operator-space descriptors (orientation-free); "
                      f"weight: {weight}; null: {'none' if null is None else null.get('mode', 'flow')}")
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+        save_figure(fig, out, tight=True)
     return fig
 
 
@@ -432,11 +430,7 @@ def figure_behaviour_ternary(
         _footer(fig, f"fractions of latent eigenvalues at tol = {tol:.3g} "
                      f"(oracle); density weight: Fisher mass; "
                      f"condition: {condition_key or 'none'}")
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+        save_figure(fig, out, tight=True)
     return fig
 
 
@@ -656,11 +650,7 @@ def figure_behaviour_landscape_3d(
         _footer(fig, f"height: {height} (curvature-derived, not density); "
                      f"weight: {weight}; bins: {n_bins}; "
                      f"null: {'none' if null is None else null.get('mode', 'flow')}")
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+        save_figure(fig, out, tight=True)
     return fig
 
 
@@ -782,9 +772,5 @@ def figure_energy_landscape(
         _footer(fig, f"floor: {use_rep} (distances {'distorted' if 'umap' in use_rep.lower() else 'preserved'}); "
                      f"surface: per-bin mean E, σ={smooth_sigma} bins; "
                      "valley depth = cell abundance, not holding stiffness")
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+        save_figure(fig, out, tight=True)
     return fig

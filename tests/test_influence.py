@@ -148,9 +148,12 @@ def test_figure_influence_network_saves(tmp_path):
     G = 10
     ad = _adata_with_archetype(_star(G), np.eye(G))
     ref = pd.DataFrame({"source": ["g0"], "target": ["g1"]})
-    out = tmp_path / "influence.png"
-    fig = figure_influence_network(ad, ref_network=ref, save=out)
-    assert out.exists() and out.stat().st_size > 0
+    with pytest.raises(RuntimeError, match="drivers.influence"):
+        figure_influence_network(ad)                 # draw-only: nothing stored yet
+    inf.archetype_influence(ad)
+    out = tmp_path / "influence"
+    fig = figure_influence_network(ad, ref_network=ref, out=out)
+    assert out.with_suffix(".pdf").exists() and out.with_suffix(".png").exists()
     assert len(fig.axes) == 3
 
 
@@ -203,10 +206,16 @@ def test_edges_and_roles_show_driver_first():
 def test_figure_expression_cascade_saves(tmp_path):
     import matplotlib
     matplotlib.use("Agg")
+    from scjdo2 import drivers as D
     from scjdo2.plot import figure_expression_cascade
-    out = tmp_path / "cascade.png"
-    fig, summary = figure_expression_cascade(_cascade_adata(), save=out)
-    assert out.exists() and len(summary) == 1
+    ad = _cascade_adata()
+    with pytest.raises(RuntimeError, match="drivers.timing"):
+        figure_expression_cascade(ad)
+    summary = D.timing(ad, n_perm=50)["summary"]
+    out = tmp_path / "cascade"
+    fig = figure_expression_cascade(ad, out=out)
+    assert out.with_suffix(".png").exists() and len(summary) == 1
+    assert len(fig.axes) == 3
 
 
 # ---------------------------------------------------------------- one-call API
@@ -344,9 +353,54 @@ def test_plot_network_expression_saves(tmp_path):
     matplotlib.use("Agg")
     from scjdo2 import drivers as D
     ad = _state_adata()
-    out = tmp_path / "netexpr.png"
-    D.plot_network_expression(ad, 0, "state", save=out)
-    assert out.exists()
+    out = tmp_path / "netexpr"
+    D.plot_network_expression(ad, 0, "state", out=out)
+    assert out.with_suffix(".png").exists()
+    # Stored result is reused when no cluster_key is given.
+    D.plot_network_expression(ad, 0)
     paths = D.figures(ad, tmp_path, time_key="pseudotime", cluster_key="state",
                       formats=("png",))
     assert "network_expression_arch0" in paths
+
+
+def test_plot_package_exports_resolve():
+    import scjdo2.plot as P
+    missing = [n for n in P.__all__ if not hasattr(P, n)]
+    assert not missing, missing
+    # Pre-reorganisation names are aliases of the new ones.
+    assert P.spectrum_ladder is P.figure_spectrum_ladder
+    assert P.perturb_paired is P.figure_perturb_paired
+
+
+def test_save_figure_writes_each_format(tmp_path):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from scjdo2.plot import save_figure
+    fig = plt.figure()
+    paths = save_figure(fig, tmp_path / "sub" / "x.png", formats=("pdf", "png"))
+    assert [p.name for p in paths] == ["x.pdf", "x.png"] and all(p.exists() for p in paths)
+    assert save_figure(fig, None) == []
+
+
+def test_opspace_drivers_kind_selects_left_eigenvector():
+    """Regression: drivers(kind="drivers") used to return the responder
+    table because the storage kind from _get_J overwrote the argument."""
+    from scipy.sparse import csr_matrix
+
+    from scjdo2 import opspace
+    G = 6
+    ad = AnnData(np.zeros((2, G), dtype=np.float32))
+    ad.var_names = [f"g{i}" for i in range(G)]
+    right = np.array([1.0, 0.5, 0.1, 0.0, 0.0, 0.0], dtype=complex)
+    left = np.array([0.0, 0.1, 0.2, 1.0, 0.3, 0.0], dtype=complex)
+    ad.uns["scjdo2"] = {
+        "J": [csr_matrix(np.eye(G)), csr_matrix(np.eye(G))],
+        "op_eigvecs": np.zeros((2, 1, G), dtype=complex),
+        "archetypes": {0: {"eigvec": right, "eigvec_left": left, "fisher": np.ones(G),
+                           "reason": np.array(["ok"] * G, dtype=object)}},
+    }
+    resp = opspace.drivers(ad, which="archetype", archetype_id=0, kind="responders", top=1)
+    drv = opspace.drivers(ad, which="archetype", archetype_id=0, kind="drivers", top=1)
+    assert resp["gene"].iloc[0] == "g0"
+    assert drv["gene"].iloc[0] == "g3"

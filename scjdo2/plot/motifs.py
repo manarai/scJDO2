@@ -26,7 +26,8 @@ import pandas as pd
 from anndata import AnnData
 from matplotlib.figure import Figure
 
-from .style import OPSPACE_FIG_HEIGHT_IN, OPSPACE_FIG_WIDTH_IN, style
+from ._save import save_figure
+from .style import OPSPACE_FIG_HEIGHT_IN, OPSPACE_FIG_WIDTH_IN, add_footer, style
 
 
 def _motif_name(adata: AnnData, i: int, tol: Optional[float] = None) -> str:
@@ -174,17 +175,13 @@ def figure_motif_matrix(
             fig.add_subplot(gs[1, 3]).axis("off")
 
         null = uns.get("null", {})
-        fig.text(0.01, 0.005,
+        add_footer(fig,
                  f"contexts: {' × '.join(ctx_keys)}; null: context labels shuffled within "
                  f"{tissue_key} ({null.get('n_perm', '?')} perms, α={null.get('alpha', '?')}, "
                  f"replicate={null.get('replicate_key') or 'none'}); "
                  "pooled operators carry batch unless aligned (scOpAlign) — run within-dataset first",
-                 fontsize=6, color="#606060", ha="left", va="bottom")
-        if out is not None:
-            out = Path(out)
-            out.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(out.with_suffix(".pdf"))
-            fig.savefig(out.with_suffix(".png"), dpi=300)
+                   x=0.01, ha="left", color="#606060")
+        save_figure(fig, out, tight=True)
     return fig
 
 

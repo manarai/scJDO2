@@ -30,7 +30,7 @@ BEHAVIOUR_COLOURS: dict[str, str] = {
 
 # Marker shape for each behaviour. 'o' = filled circle; 'o+' = ringed circle;
 # 'o+dot' = ringed circle with dot.  We implement these by scatter calls that
-# combine basic markers; the renderer helpers in :mod:`scjdo2.plot.figures`
+# combine basic markers; the renderer helpers in :mod:`scjdo2.plot.operator_space`
 # consume this mapping directly.
 BEHAVIOUR_MARKERS: dict[str, str] = {
     "holder": "o",
@@ -38,6 +38,16 @@ BEHAVIOUR_MARKERS: dict[str, str] = {
     "fork": "o",
     "damped_oscillator": "o+",
     "growing_oscillator": "o+dot",
+}
+
+# Driver / responder roles (scjdo2.influence.ROLES). "unmeasured" is white
+# and drawn with a dashed outline: its influence is not measured, not zero.
+ROLE_COLOURS: dict[str, str] = {
+    "driver": "#E69F00",
+    "hub": "#7F77DD",
+    "responder": "#009E73",
+    "passenger": "#B4B2A9",
+    "unmeasured": "#FFFFFF",
 }
 
 DIVERGING_CMAP = "RdBu_r"       # blue–white–red; the standard choice
@@ -196,3 +206,28 @@ def relative_label(adata: Any, base: str) -> str:
     except (KeyError, AttributeError, TypeError):
         calibrated = False
     return base if calibrated else f"{base} (relative)"
+
+
+def add_footer(fig, text: str, x: float = 0.99, ha: str = "right",
+               fontsize: float = 6, color: str = "0.4") -> None:
+    """Footer text placed below every axis's tick labels and x-label.
+
+    A fixed figure position collides with rotated tick labels; this measures
+    them and drops the footer just below the lowest one. Save with
+    ``bbox_inches="tight"`` (``save_figure(..., tight=True)``) so the footer
+    stays inside the image.
+    """
+    y = 0.005
+    try:
+        fig.canvas.draw()
+        rend = fig.canvas.get_renderer()
+        h = fig.bbox.height
+        lows = [t.get_window_extent(rend).y0 / h
+                for ax in fig.axes for t in (*ax.get_xticklabels(), ax.xaxis.label)
+                if t.get_text() and t.get_visible()]
+        if lows:
+            y = min(y, min(lows) - 0.01)
+    except Exception:  # noqa: BLE001 — backends without a renderer
+        pass
+    fig.text(x, y, text, ha=ha, va="top" if y < 0.005 else "bottom",
+             fontsize=fontsize, color=color)

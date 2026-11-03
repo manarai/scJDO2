@@ -311,12 +311,15 @@ def timing(
     Returns ``{"summary"`` (one row per archetype: role test + edge
     test), ``"onsets"`` (gene × archetype: role, onset, direction),
     ``"edges"`` (edges with ``lag``)``}``. See :mod:`scjdo2.timing`.
+    The full per-archetype result (profiles included) is stored as
+    ``uns["scjdo2"]["archetypes"][k]["timing"]`` for :func:`plot_cascade`.
     """
     _ensure_influence(adata)
     summ, ons, eds = [], [], []
     for ak in _ids(adata, archetype_ids):
         r = _timing.expression_timing(adata, ak, time_key=time_key, layer=layer,
                                       n_bins=n_bins, n_perm=n_perm, seed=seed)
+        _arch(adata)[ak]["timing"] = r
         summ.append({"archetype": ak, "behaviour": _arch(adata)[ak].get("behaviour"),
                      "n_cells": r["n_cells"], **r["role_test"],
                      **{f"edge_{k}": v for k, v in r["edge_test"].items()}})
@@ -400,13 +403,17 @@ def network_expression(
     columns = cell states (``obs[cluster_key]``) in the order given by
     ``states``, else clusters holding ≥ 5% of the archetype's members
     ordered by median ``time_key``. See
-    :func:`scjdo2.timing.network_state_expression` for the returned dict.
+    :func:`scjdo2.timing.network_state_expression` for the returned dict;
+    it is also stored as ``uns["scjdo2"]["archetypes"][k]["network_expression"]``
+    for :func:`plot_network_expression`.
     """
     _ensure_influence(adata)
     e = _inf.influence_edges(adata, archetype_id, n_sources=n_sources,
                              n_targets=n_targets, n_hubs=n_hubs)
-    return _timing.network_state_expression(adata, archetype_id, cluster_key,
-                                            states=states, time_key=time_key, edges=e)
+    r = _timing.network_state_expression(adata, archetype_id, cluster_key,
+                                         states=states, time_key=time_key, edges=e)
+    _arch(adata)[int(archetype_id)]["network_expression"] = r
+    return r
 
 
 # ---------------------------------------------------------------- wrappers
@@ -470,53 +477,64 @@ def save_tables(results: dict[str, pd.DataFrame], out_dir: str | Path) -> dict[s
 
 
 # ----------------------------------------------------------------- figures
+#
+# The figure functions in :mod:`scjdo2.plot` only draw. These wrappers
+# run whatever analysis a figure needs when it has not been run yet, then
+# draw. ``out`` is a path stem: PDF + PNG are written.
 
 
 def plot_network(adata: AnnData, archetype_ids: Optional[Sequence[int]] = None,
                  ref_network: Optional[pd.DataFrame] = None,
-                 save: Optional[str | Path] = None, **kwargs):
+                 out: Optional[str | Path] = None, **kwargs):
     """Driver/responder map, influence over time and network per archetype."""
-    from .plot.influence import figure_influence_network
+    from .plot.drivers import figure_influence_network
     _ensure_influence(adata)
     return figure_influence_network(adata, archetype_ids=archetype_ids,
-                                    ref_network=ref_network, save=save, **kwargs)
+                                    ref_network=ref_network, out=out, **kwargs)
 
 
 def plot_cascade(adata: AnnData, archetype_ids: Optional[Sequence[int]] = None,
-                 time_key: str = "pseudotime", save: Optional[str | Path] = None, **kwargs):
-    """Pseudotime cascade (timing QC). Returns ``(figure, summary)``."""
-    from .plot.influence import figure_expression_cascade
+                 time_key: str = "pseudotime", out: Optional[str | Path] = None, **kwargs):
+    """Pseudotime cascade (timing QC). Runs :func:`timing` if needed."""
+    from .plot.timing import figure_expression_cascade
     _ensure_influence(adata)
-    return figure_expression_cascade(adata, archetype_ids=archetype_ids,
-                                     time_key=time_key, save=save, **kwargs)
+    ids = _ids(adata, archetype_ids)
+    need = [a for a in ids if "timing" not in _arch(adata)[a]]
+    if need:
+        timing(adata, time_key=time_key, archetype_ids=need)
+    return figure_expression_cascade(adata, archetype_ids=archetype_ids, out=out, **kwargs)
 
 
 def plot_reference(check: dict[str, pd.DataFrame] | pd.DataFrame,
-                   save: Optional[str | Path] = None):
+                   out: Optional[str | Path] = None):
     """Reference-recovery AUROC per archetype (from :func:`reference_check`)."""
-    from .plot.influence import figure_reference_auroc
-    return figure_reference_auroc(check, save=save)
+    from .plot.drivers import figure_reference_auroc
+    return figure_reference_auroc(check, out=out)
 
 
 def plot_branch_timing(branch_result: dict[str, pd.DataFrame],
-                       save: Optional[str | Path] = None):
+                       out: Optional[str | Path] = None):
     """Archetype × branch source-first matrix and lag distributions."""
-    from .plot.influence import figure_branch_timing
-    return figure_branch_timing(branch_result, save=save)
+    from .plot.timing import figure_branch_timing
+    return figure_branch_timing(branch_result, out=out)
 
 
-def plot_network_expression(adata: AnnData, archetype_id: int, cluster_key: str,
+def plot_network_expression(adata: AnnData, archetype_id: int,
+                            cluster_key: Optional[str] = None,
                             states: Optional[Sequence[str]] = None,
                             time_key: str = "pseudotime", result: Optional[dict] = None,
-                            save: Optional[str | Path] = None):
-    """One archetype: network genes across ordered cell states (optional QC)."""
-    from .plot.influence import figure_network_expression
+                            out: Optional[str | Path] = None):
+    """One archetype: network genes across ordered cell states (optional QC).
+
+    Uses ``result``, else runs :func:`network_expression` when
+    ``cluster_key`` is given, else draws the stored result.
+    """
+    from .plot.timing import figure_network_expression
     _ensure_influence(adata)
-    if result is None:
+    if result is None and cluster_key is not None:
         result = network_expression(adata, archetype_id, cluster_key, states=states,
                                     time_key=time_key)
-    return figure_network_expression(adata, archetype_id, cluster_key, result=result,
-                                     save=save)
+    return figure_network_expression(adata, archetype_id, result=result, out=out)
 
 
 def figures(
@@ -532,29 +550,29 @@ def figures(
 ) -> dict[str, Path]:
     """Render every figure the stored state supports into ``out_dir``.
 
-    ``results`` (from :func:`analyse`) is reused for the reference figure
-    so the permutation test is not run twice. With ``cluster_key``, also
-    renders the optional per-archetype ``network_expression_arch<k>``
-    QC (``states``: optional ``{archetype: ordered states}``). Returns
-    ``{name: Path}`` (first format).
+    ``results`` (from :func:`analyse`) is reused for the reference and
+    branch figures so the permutation tests are not run twice. With
+    ``cluster_key``, also renders the optional per-archetype
+    ``network_expression_arch<k>`` QC (``states``: optional
+    ``{archetype: ordered states}``). Returns ``{name: Path}`` (first format).
     """
     import matplotlib.pyplot as plt
 
+    from .plot._save import save_figure
+
     out = Path(out_dir)
-    out.mkdir(parents=True, exist_ok=True)
     paths: dict[str, Path] = {}
 
     def _save(fig, name):
-        for ext in formats:
-            fig.savefig(out / f"{name}.{ext}", dpi=300, bbox_inches="tight")
+        written = save_figure(fig, out / name, formats=formats, tight=True)
         plt.close(fig)
-        paths[name] = out / f"{name}.{formats[0]}"
+        paths[name] = written[0]
 
     _save(plot_network(adata, archetype_ids=archetype_ids, ref_network=ref_network),
           "influence_network")
     if time_key is not None and time_key in adata.obs:
-        fig, _ = plot_cascade(adata, archetype_ids=archetype_ids, time_key=time_key)
-        _save(fig, "expression_cascade")
+        _save(plot_cascade(adata, archetype_ids=archetype_ids, time_key=time_key),
+              "expression_cascade")
     if ref_network is not None and not ref_network.empty:
         if results is not None and "reference_summary" in results:
             check = {"summary": results["reference_summary"],

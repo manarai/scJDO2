@@ -5,6 +5,61 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Tutorial 07 — figure guide; figure fixes found while writing it — 2026-11-03
+
+- **`notebooks/07_figures_guide.ipynb`** (built by `make_tutorial_07.py`):
+  every `scjdo2.plot` figure on real stored runs or the synthetic
+  pitchfork, each with question / needs / how to read it / watch out.
+  TRRUST mouse table added at `benchmarks/data/trrust/` for Part F.
+- **Bug fix — `opspace.drivers(kind="drivers")` returned the responder
+  table.** The storage kind returned by `_get_J` overwrote the `kind`
+  argument, so the left-eigenvector (driver) table was never used. No
+  in-repo caller relied on it; regression test added.
+- `figure_spectrum_ladder`: the Gaussian oracle `−Σ⁻¹` is skipped for
+  types with fewer than 2 × latent-dim cells (a 14-cell type gave
+  eigenvalues near −10⁴ and flattened every ladder); `n_soft` / ratio
+  labels now sit under each ladder.
+- `figure_ledger_summary`: constant `op_confidence` (per-cell fits with no
+  cap) is drawn as one pooled bar instead of a fake decile; legend moved
+  off the histogram.
+- `figure_soft_axis_map`: title mentions the displacement arrow only when
+  it is drawn.
+- Footers (v0.5, landscape, motif figures) are placed below the tick
+  labels via a shared `style.add_footer`; landscape and motif figures now
+  save with tight cropping so the footer is kept.
+- `figure_influence_network`: node labels moved outside the nodes.
+
+### Plot package reorganised by topic — 2026-11-03
+
+- **One module per topic**, each drawing the results of the matching
+  analysis module: ``operator_space`` (was ``figures.py``), ``compare``
+  (``figure_v1_vs_v2``), ``symmetric`` (was ``figures_v05.py``),
+  ``aging``, ``perturbation``, ``landscape``, ``motifs``, ``drivers`` and
+  ``timing`` (split from ``plot/influence.py``). Moves use ``git mv``;
+  function bodies are unchanged.
+- **Names**: every figure is ``figure_*``. Renamed: ``spectrum_ladder``,
+  ``soft_axis_map``, ``ledger_map``, ``oracle_agreement``,
+  ``basin_index_by_type`` → ``figure_basin_index``, ``perturb_paired``,
+  ``aging_vectors``, ``energy_transect`` (each gains ``figure_``). The old
+  names stay importable from ``scjdo2.plot`` as aliases.
+  ``plot_drivers`` keeps its name (it draws into a given axis).
+- **One save routine**, ``scjdo2.plot.save_figure`` (``plot/_save.py``),
+  replaces ~15 copied blocks; each figure keeps its previous PNG dpi and
+  cropping, so outputs are unchanged.
+- **Driver / timing figures now follow the package conventions**:
+  ``out=`` path stem writing PDF + PNG (was ``save=`` single file); they
+  only draw and raise a clear error if the analysis has not run
+  (``drivers.timing`` / ``drivers.network_expression`` now store their
+  results per archetype); ``figure_expression_cascade`` returns only the
+  figure. The ``drivers.plot_*`` wrappers still run missing analyses.
+- ``ROLE_COLOURS`` moved from ``scjdo2.influence`` to ``plot.style``.
+- Fixed: ``figure_network_expression`` was listed in ``scjdo2.plot`` but
+  not importable; a test now checks every exported name.
+- Check: 18 figures rendered before/after from fixed inputs are
+  pixel-identical (the cascade's p-value text differs only when the
+  stored timing used a different permutation count than the old
+  figure's internal re-run).
+
 ### Driver API, timing QC and reference figure — 2026-11-03
 
 - **``scjdo2.drivers``** (new, one-call API in the style of
