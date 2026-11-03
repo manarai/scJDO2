@@ -40,8 +40,12 @@ def fit_latent_field(
     field_config: Optional[FieldConfig] = None,
     jacobian_method: Literal["autodiff", "neighbourhood"] = "autodiff",
     verbose: bool = False,
-) -> AnnData:
+    return_drift: bool = False,
+):
     """Fit Steps 2 and 5 on an AnnData and store results.
+
+    Returns ``adata``, or ``(adata, drift)`` when ``return_drift`` is True
+    (the fitted :class:`EnergyDriftAdapter`, e.g. for ``obs['energy']``).
 
     Step 2 is scJDO2's one drift: ``f = −∇E_θ``, an energy network fitted
     by score matching (:class:`scjdo2.energy_drift.EnergyDriftAdapter`).
@@ -86,6 +90,7 @@ def fit_latent_field(
     adata.uns.setdefault("scjdo2", {})
     adata.uns["scjdo2"]["J"] = J
     adata.uns["scjdo2"]["meta"] = {
+        "operator": "energy",
         "clock_calibrated": bool(drift_config.clock_calibrated),
         "use_rep": use_rep,
         "jacobian_method": jacobian_method,
@@ -102,7 +107,7 @@ def fit_latent_field(
         "field": field_meta,
     }
     adata.uns["scjdo2"]["field_reason_summary"] = field_reason_summary
-    return adata
+    return (adata, drift) if return_drift else adata
 
 
 def fit_rate_and_gene_field(

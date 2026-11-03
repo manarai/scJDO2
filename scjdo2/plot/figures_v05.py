@@ -77,8 +77,14 @@ def spectrum_ladder(adata: AnnData,
                      oracle: bool = True,
                      use_rep: Optional[str] = None,
                      n_cells_centroid: int = 30,
-                     out: Optional[str | Path] = None) -> Figure:
+                     out: Optional[str | Path] = None,
+                     groups: Optional[Sequence[str]] = None,
+                     group_key: str = "age_group") -> Figure:
     """Per-cluster centroid-operator eigenvalue ladder + Gaussian oracle.
+
+    When ``groups`` is given (e.g. ``("young", "old")``), draw two
+    ladders side-by-side per cluster, one per group label in
+    ``adata.obs[group_key]``. Oracle markers are per-group.
 
     Vertical ladders: for each cluster (``adata.obs[by]``) the eigenvalues
     of the per-cell latent ``J`` averaged over the ``n_cells_centroid``
@@ -115,44 +121,102 @@ def spectrum_ladder(adata: AnnData,
     tol = 0.1 * float(np.median(oracle_leads)) if oracle_leads else 0.1
 
     rows_annot = []
+    spectra: dict[tuple[str, str], tuple[np.ndarray, np.ndarray]] = {}
     with style():
         fig, ax = plt.subplots(figsize=(1.0 + 0.6 * len(clusters), 4.5))
         xs = np.arange(len(clusters))
-        for i, cl in enumerate(clusters):
-            m = cluster == cl
-            if m.sum() < 10:
-                continue
-            mu = z[m].mean(axis=0)
-            d_mu = np.linalg.norm(z - mu, axis=1)
-            idx = np.argpartition(d_mu, min(n_cells_centroid, len(z) - 1))[
-                : n_cells_centroid
-            ]
-            J_mu = J[idx].mean(axis=0)
-            ev = np.linalg.eigvalsh(0.5 * (J_mu + J_mu.T))
-            # Soft shading in [-tol, +tol].
-            ax.axvspan(i - 0.3, i + 0.3, ymin=0, ymax=1, color="none")
-            # Learned ladder.
-            ax.scatter(np.full(ev.size, i), ev, marker="_", s=90,
-                        color=BEHAVIOUR_COLOURS["fork"] if ev.max() > tol
-                        else BEHAVIOUR_COLOURS["holder"],
-                        linewidths=1.3, zorder=3)
-            # Oracle (hollow markers).
-            if oracle and cl in oracle_specs:
-                ax.scatter(np.full(oracle_specs[cl].size, i + 0.17),
-                            oracle_specs[cl], marker="o",
-                            facecolors="none", edgecolors="black",
-                            linewidths=0.8, s=20, zorder=4)
-            # Curvature ratio on negative directions.
-            neg_learned = ev[ev < -tol]
-            ratio = float("nan")
-            if cl in oracle_specs:
-                neg_or = oracle_specs[cl][oracle_specs[cl] < 0]
-                if neg_or.size and neg_learned.size:
-                    ratio = float(np.median(neg_learned) / np.median(neg_or))
-            n_soft = int((np.abs(ev) < tol).sum())
-            rows_annot.append({"cluster": cl, "n_soft": n_soft,
-                                "ratio_neg": ratio})
+        if groups is None:
+            group_list = [None]
+            offsets = [0.0]
+            colors_group = {None: None}
+        else:
+            group_list = list(groups)
+            # Spread two groups ±0.18 around the cluster x.
+            if len(group_list) == 1:
+                offsets = [0.0]
+            else:
+                offsets = np.linspace(-0.18, 0.18, len(group_list)).tolist()
+            group_cmap = [BEHAVIOUR_COLOURS["holder"], BEHAVIOUR_COLOURS["fork"],
+                           BEHAVIOUR_COLOURS["drift"]][: len(group_list)]
+            colors_group = dict(zip(group_list, group_cmap))
 
+        grp_arr = adata.obs[group_key].astype(str).to_numpy() \
+            if (groups is not None and group_key in adata.obs) \
+            else None
+        for gi, g in enumerate(group_list):
+            dx = offsets[gi]
+            for i, cl in enumerate(clusters):
+                m = cluster == cl
+                if g is not None and grp_arr is not None:
+                    m = m & (grp_arr == g)
+                if m.sum() < 10:
+                    continue
+                mu = z[m].mean(axis=0)
+                pool = np.flatnonzero(m)
+                d_mu = np.linalg.norm(z[pool] - mu, axis=1)
+                take = min(int(n_cells_centroid), len(pool))
+                idx = pool[np.argpartition(d_mu, take - 1)[:take]]
+                J_mu = J[idx].mean(axis=0)
+                ev, V = np.linalg.eigh(0.5 * (J_mu + J_mu.T))
+                if g is not None:
+                    spectra[(str(cl), str(g))] = (ev, V)
+                col = (colors_group.get(g)
+                        or (BEHAVIOUR_COLOURS["fork"] if ev.max() > tol
+                            else BEHAVIOUR_COLOURS["holder"]))
+                ax.scatter(np.full(ev.size, i + dx), ev,
+                            marker="_", s=90, color=col,
+                            linewidths=1.3, zorder=3,
+                            label=g if (gi >= 0 and i == 0 and g is not None)
+                                    else None)
+                # Oracle hollow markers for this group's spectrum.
+                if oracle:
+                    # Rebuild oracle per group (so Σ changes with the
+                    # cluster × group subset).
+                    if m.sum() >= 10:
+                        Sigma_g = (np.cov(z[m], rowvar=False, bias=False)
+                                    + 1e-4 * np.eye(z.shape[1]))
+                        ev_or_g = np.linalg.eigvalsh(-np.linalg.inv(Sigma_g))
+                        ax.scatter(np.full(ev_or_g.size, i + dx + 0.07),
+                                    ev_or_g, marker="o",
+                                    facecolors="none", edgecolors="black",
+                                    linewidths=0.8, s=18, zorder=4)
+                    else:
+                        ev_or_g = np.array([])
+                else:
+                    ev_or_g = np.array([])
+                neg_learned = ev[ev < -tol]
+                ratio = float("nan")
+                if ev_or_g.size:
+                    neg_or = ev_or_g[ev_or_g < 0]
+                    if neg_or.size and neg_learned.size:
+                        ratio = float(np.median(neg_learned) / np.median(neg_or))
+                n_soft = int((np.abs(ev) < tol).sum())
+                rows_annot.append({"cluster": cl, "group": g,
+                                    "n_soft": n_soft, "ratio_neg": ratio})
+
+        # Connect matched directions across age groups by maximum absolute
+        # eigendirection cosine.  The thin lines encode matching only; the
+        # vertical coordinates remain the stored centroid eigenvalues.
+        if groups is not None and len(group_list) >= 2:
+            g0, g1 = str(group_list[0]), str(group_list[1])
+            for i, cl in enumerate(clusters):
+                left = spectra.get((str(cl), g0))
+                right = spectra.get((str(cl), g1))
+                if left is None or right is None:
+                    continue
+                ev0, V0 = left
+                ev1, V1 = right
+                pairs: list[tuple[int, int]] = []
+                used0: set[int] = set()
+                used1: set[int] = set()
+                for flat in np.argsort(np.abs(V0.T @ V1).ravel())[::-1]:
+                    r, c = np.unravel_index(int(flat), (V0.shape[1], V1.shape[1]))
+                    if r not in used0 and c not in used1:
+                        pairs.append((int(r), int(c)))
+                        used0.add(int(r)); used1.add(int(c))
+                for r, c in pairs:
+                    ax.plot([i + offsets[0], i + offsets[1]], [ev0[r], ev1[c]],
+                            color="0.55", lw=0.35, alpha=0.7, zorder=1)
         # Tol shaded band.
         ax.axhspan(-tol, +tol, color="0.9", alpha=0.4, zorder=0,
                     label=f"soft band |λ| < {tol:.3f}")
@@ -180,15 +244,19 @@ def spectrum_ladder(adata: AnnData,
 
 
 def soft_axis_map(adata: AnnData,
-                   by: str = "cluster",
-                   use_rep: Optional[str] = None,
-                   n_cells_centroid: int = 30,
-                   out: Optional[str | Path] = None) -> Figure:
-    """Embedding scatter coloured by ``basin_index`` with per-cluster
-    soft-axis arrow (most-positive eigenvector of the centroid
-    operator, projected into the 2-D embedding). Length ∝ eigenvalue
-    magnitude; annotation = cosine with the direction to the nearest
-    other cluster centroid, named.
+                  by: str = "cluster",
+                  use_rep: Optional[str] = None,
+                  n_cells_centroid: int = 30,
+                  out: Optional[str | Path] = None,
+                  groups: Optional[Sequence[str]] = None,
+                  group_key: str = "age_group",
+                  displacement_arrow: bool = False) -> Figure:
+    """Embedding with centroid soft-axis arrows.
+
+    When ``groups`` supplies young and old labels and
+    ``displacement_arrow=True``, the black arrow is the young centroid's
+    leading eigendirection and the rust arrow is the stored old-minus-young
+    centroid displacement.  No direction is fit or re-estimated here.
     """
     use_rep = use_rep or ("X_umap" if "X_umap" in adata.obsm
                            else "X_tsne" if "X_tsne" in adata.obsm
@@ -196,39 +264,43 @@ def soft_axis_map(adata: AnnData,
                            else "X_pca")
     if "op_basin_index" not in adata.obs:
         raise RuntimeError("op_basin_index missing — run classify_basin_latent")
-    emb = np.asarray(adata.obsm[use_rep])[:, :2]
+    emb = np.asarray(adata.obsm[use_rep], dtype=np.float64)[:, :2]
     bi = adata.obs["op_basin_index"].to_numpy()
     cluster = adata.obs[by].astype(str).to_numpy()
     clusters = sorted(set(cluster))
-
-    # Compute per-cluster centroid in latent + 2D embedding.
     latent_key = (adata.uns.get("scjdo2", {}).get("meta", {}) or {}).get(
         "use_rep", "X_scVI" if "X_scVI" in adata.obsm else "X_pca",
     )
     z_lat = np.asarray(adata.obsm[latent_key], dtype=np.float64)
-    J = np.asarray(adata.uns["scjdo2"].get("J_latent",
-                     adata.uns["scjdo2"]["J"]))
-
-    cl_lat_centroids = {}
-    cl_emb_centroids = {}
+    J = np.asarray(adata.uns["scjdo2"].get("J_latent", adata.uns["scjdo2"]["J"]))
+    age = (adata.obs[group_key].astype(str).to_numpy()
+           if groups is not None and group_key in adata.obs else None)
+    young_label = str(groups[0]) if groups else None
+    old_label = str(groups[-1]) if groups and len(groups) > 1 else None
+    cent_lat: dict[str, np.ndarray] = {}
+    cent_emb: dict[str, np.ndarray] = {}
+    young_masks: dict[str, np.ndarray] = {}
+    old_cent_emb: dict[str, np.ndarray] = {}
     for cl in clusters:
-        m = cluster == cl
-        if m.sum() < 5:
+        base = cluster == cl
+        ref = base & (age == young_label) if age is not None and young_label else base
+        if ref.sum() < 5:
+            ref = base
+        if ref.sum() < 5:
             continue
-        cl_lat_centroids[cl] = z_lat[m].mean(axis=0)
-        cl_emb_centroids[cl] = emb[m].mean(axis=0)
+        cent_lat[cl] = z_lat[ref].mean(axis=0)
+        cent_emb[cl] = emb[ref].mean(axis=0)
+        young_masks[cl] = ref
+        if age is not None and old_label:
+            old = base & (age == old_label)
+            if old.sum() >= 5:
+                old_cent_emb[cl] = emb[old].mean(axis=0)
 
-    def _nearest(cl):
-        best = None; best_d = np.inf
-        for other, mu2 in cl_lat_centroids.items():
-            if other == cl:
-                continue
-            d = float(np.linalg.norm(cl_lat_centroids[cl] - mu2))
-            if d < best_d:
-                best, best_d = other, d
-        return best, best_d
+    def nearest(cl: str) -> str | None:
+        others = [(float(np.linalg.norm(cent_lat[cl] - other)), name)
+                  for name, other in cent_lat.items() if name != cl]
+        return min(others)[1] if others else None
 
-    # Build Panel A scatter.
     with style():
         fig, ax = plt.subplots(figsize=(7, 6))
         import matplotlib.colors as mcolors
@@ -236,66 +308,53 @@ def soft_axis_map(adata: AnnData,
         vmax = float(np.nanpercentile(np.abs(finite), 98)) if finite.size else 1.0
         norm = mcolors.Normalize(vmin=-vmax, vmax=vmax)
         sc1 = ax.scatter(emb[:, 0], emb[:, 1], c=bi, cmap=DIVERGING_CMAP,
-                          norm=norm, s=5, alpha=0.5, edgecolors="none")
+                         norm=norm, s=5, alpha=0.5, edgecolors="none")
         plt.colorbar(sc1, ax=ax, label=f"basin_index{_axis_tag_relative(adata)}",
-                      shrink=0.55, pad=0.02)
-
-        # For each cluster: arrow along most-positive eigvec, length ∝ λ.
-        for cl, mu_lat in cl_lat_centroids.items():
-            m = cluster == cl
-            d_mu = np.linalg.norm(z_lat - mu_lat, axis=1)
-            idx = np.argpartition(d_mu, min(n_cells_centroid, len(z_lat) - 1))[
-                : n_cells_centroid
-            ]
+                     shrink=0.55, pad=0.02)
+        for cl, mu_lat in cent_lat.items():
+            mask = young_masks[cl]
+            pool = np.flatnonzero(mask)
+            d_mu = np.linalg.norm(z_lat[pool] - mu_lat, axis=1)
+            take = min(int(n_cells_centroid), len(pool))
+            idx = pool[np.argpartition(d_mu, take - 1)[:take]]
             J_mu = J[idx].mean(axis=0)
             ev, V = np.linalg.eigh(0.5 * (J_mu + J_mu.T))
-            lead = int(np.argmax(ev))
-            v_pos = V[:, lead]                                      # (d_lat,)
-            # Project v_pos into the 2-D embedding via local projection:
-            # linear fit of emb[kNN] on z_lat[kNN].
-            z_c = z_lat[idx]
-            e_c = emb[idx]
-            # emb ≈ z_c @ W + b   →  W ∈ R^{d_lat × 2}
+            v_soft = V[:, int(np.argmax(ev))]
             try:
-                W, *_ = np.linalg.lstsq(z_c - z_c.mean(0),
-                                          e_c - e_c.mean(0), rcond=None)
+                W, *_ = np.linalg.lstsq(z_lat[idx] - z_lat[idx].mean(0),
+                                         emb[idx] - emb[idx].mean(0), rcond=None)
             except np.linalg.LinAlgError:
                 continue
-            arrow_2d = v_pos @ W                                     # (2,)
-            # Nearest cluster centroid in latent.
-            nb, d_nb = _nearest(cl)
-            cos_val = float("nan"); nb_name = "—"
-            if nb is not None:
-                u = cl_lat_centroids[nb] - mu_lat
-                u = u / (np.linalg.norm(u) + 1e-12)
-                cos_val = float(np.dot(v_pos, u))
-                nb_name = nb
-            # Length ∝ positive eigenvalue (clip for display).
-            scale = 0.6 * (float(ev[lead]) / max(abs(float(ev.max())), 1e-6))
-            # In embedding units: scale by local embedding std.
+            arrow = v_soft @ W
             emb_std = float(np.std(emb)) + 1e-6
-            arrow_disp = arrow_2d / (np.linalg.norm(arrow_2d) + 1e-12) * scale * emb_std
-            mu_e = cl_emb_centroids[cl]
-            ax.annotate("", xy=(mu_e[0] + arrow_disp[0],
-                                 mu_e[1] + arrow_disp[1]),
-                         xytext=mu_e,
-                         arrowprops=dict(arrowstyle="->",
-                                          color="black", linewidth=1.2))
-            ax.text(mu_e[0] + arrow_disp[0] * 1.08,
-                     mu_e[1] + arrow_disp[1] * 1.08,
-                     f"{cl}\n→{nb_name}  |cos|={abs(cos_val):.2f}",
-                     fontsize=5, ha="center", va="center",
-                     bbox=dict(boxstyle="round,pad=0.1",
-                                facecolor="white", edgecolor="none",
-                                alpha=0.7))
-        ax.set_xlabel(f"{use_rep}-1")
-        ax.set_ylabel(f"{use_rep}-2")
-        ax.set_title("soft-axis map — arrow = most-positive eigenvector of centroid J",
-                      fontsize=9)
+            scale = 0.6 * (float(ev.max()) / max(abs(float(ev.max())), 1e-6))
+            arrow = arrow / (np.linalg.norm(arrow) + 1e-12) * scale * emb_std
+            mu = cent_emb[cl]
+            nb = nearest(cl)
+            ax.annotate("", xy=(mu[0] + arrow[0], mu[1] + arrow[1]), xytext=mu,
+                        arrowprops=dict(arrowstyle="->", color="black", linewidth=1.2))
+            if displacement_arrow and cl in old_cent_emb:
+                delta = old_cent_emb[cl] - mu
+                ax.annotate("", xy=(mu[0] + delta[0], mu[1] + delta[1]), xytext=mu,
+                            arrowprops=dict(arrowstyle="->", color="#D85A30",
+                                            linewidth=1.2, linestyle="--"))
+            nb_name = nb if nb is not None else "—"
+            ax.text(mu[0] + arrow[0] * 1.08, mu[1] + arrow[1] * 1.08,
+                    f"{cl}\n→{nb_name}", fontsize=5, ha="center", va="center",
+                    bbox=dict(boxstyle="round,pad=0.1", facecolor="white",
+                              edgecolor="none", alpha=0.7))
+        if displacement_arrow:
+            from matplotlib.lines import Line2D
+            ax.legend(handles=[Line2D([], [], color="black", lw=1.2, label="u_young"),
+                               Line2D([], [], color="#D85A30", lw=1.2, ls="--",
+                                      label="old − young centroid")],
+                      fontsize=6, loc="upper right")
+        ax.set_xlabel(f"{use_rep}-1"); ax.set_ylabel(f"{use_rep}-2")
+        ax.set_title("soft-axis map — black: young soft axis; rust: centroid displacement",
+                     fontsize=9)
         _footer(fig, adata)
         _save(fig, out)
     return fig
-
 
 # =====================================================================
 # 3. ledger_map

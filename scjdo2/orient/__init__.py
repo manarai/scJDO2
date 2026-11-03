@@ -96,3 +96,16 @@ def orient(adata, sources: Iterable[str], embedding_key: str,
     }
     return {"flow": flow, "dev": dev, "flow_vs_dev": disagree, **fl,
             "results": results, "axes": axes, "meta": scj["orient_meta"]}
+
+
+class _CallableModule(__import__("types").ModuleType):
+    """Lets ``scjdo2.orient(adata, sources, ...)`` call :func:`scjdo2.api.orient`
+    even after this subpackage is imported (Python then binds the attribute
+    ``scjdo2.orient`` to the module, not to the API function)."""
+
+    def __call__(self, adata, sources, use_rep=None, **config):
+        from ..api import orient as _api_orient
+        return _api_orient(adata, sources, use_rep, **config)
+
+
+__import__("sys").modules[__name__].__class__ = _CallableModule

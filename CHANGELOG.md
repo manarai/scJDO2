@@ -1,5 +1,23 @@
 # Changelog
 
+## One-stop API (2026-11-03)
+
+- **One API for both routes.** Time course: `sj.flow`. Snapshot: `sj.fit` (energy
+  operator), `sj.analyse` (behaviour landscape, `scjdo2.landscape`), `sj.orient`,
+  `sj.figures`, `sj.run`. Guide: `API.md`.
+- **New for the flow operator:** `sj.flow_groups` (median λ₁ per group with a
+  bootstrap interval) and `sj.flow_stability` (per-cell and group agreement of λ₁
+  across fit seeds), the checks the App Note recommends; figure `flow_groups`;
+  `sj.run(..., time_key=)` runs the flow route.
+- **Operators kept apart.** `flow` and `fit` share `uns["scjdo2"]["J"]`; the energy
+  operator is tagged `meta["operator"] = "energy"`, each refuses to overwrite the
+  other (`overwrite=True` forces it), `analyse` refuses a flow operator, and
+  `figures` skips energy-only figures for a flow run.
+- **Landscape figures** (`scjdo2.plot`): behaviour landscape (2-D, 3-D), ternary,
+  energy landscape, orientation.
+- **Fix:** `io.save` dropped a dense `uns["scjdo2"]["J"]`; dense operators now go to
+  the sidecar and are restored by `io.load`.
+
 ## orientation branch (2026-10-16)
 
 - **Orientation layer** (`scjdo2/orient/`, `docs/ORIENTATION_SPEC.md`):

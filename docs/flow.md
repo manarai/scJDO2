@@ -127,6 +127,24 @@ by such maps, so compare descriptors only within one embedding.
   0.56, minimum −0.04). Compare per-cell values across refits (`seed = 1, 2, …`) before
   interpreting individual cells.
 
+### Group summary and refit check
+
+```python
+tab = sj.flow_groups(adata, "cell_type")                     # median λ₁ per group, 95% bootstrap CI
+st = sj.flow_stability(adata, seeds=(0, 1, 2), groupby="cell_type")
+st["per_cell_spearman_median"], st["group_spearman_min"], st["top_group_same"]
+```
+
+`flow_groups` reports, per group, the number of cells, the fraction whose operator is
+extrapolated (last sampling time), the median λ₁ with a bootstrap interval over cells (conditional
+on the fitted operator) and its rank. `flow_stability` refits transport and drift once per seed
+with the stored run's parameters (the stored operator is not changed) and reports the Spearman
+agreement of per-cell λ₁ and of group medians between refits; it also writes
+`obs["flow_lambda1_rank_sd"]`. `sj.run(adata, out_dir, cluster_key=..., time_key=...,
+stability_seeds=(0, 1, 2))` runs `flow`, both checks and the `flow_groups` figure and saves the
+run. Running `scjdo2.fit` (energy operator) on the same AnnData is refused, because both
+operators use `uns["scjdo2"]["J"]`; use `adata.copy()`.
+
 ## Reproducing the paper
 
 `scripts/appnote_validate_api.py` runs `sj.flow` on the held-out synthetic test sets and

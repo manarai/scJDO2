@@ -5,6 +5,10 @@ Public entry points:
     - :func:`figure_archetype_sheet` — pends Phase B Step 8 adapter.
     - :func:`figure_v1_vs_v2`        — side-by-side comparison with v1 baseline.
     - :func:`style`                  — context manager enforcing journal style.
+    - :func:`figure_behaviour_landscape` — Fisher-weighted density on the
+      (lead_re, spectral_gap | henrici) plane with a scrambled-flow null.
+    - :func:`figure_behaviour_ternary`   — eigenvalue-sign ternary + per-type
+      composition bars split by condition.
 """
 
 from .style import (
@@ -27,6 +31,14 @@ from .figures import (
     figure_v1_vs_v2,
     plot_drivers,
 )
+from .landscape import (
+    behaviour_composition,
+    figure_behaviour_landscape,
+    figure_behaviour_landscape_3d,
+    figure_behaviour_ternary,
+    figure_energy_landscape,
+)
+from .orientation import figure_orientation
 from .figures_v05 import (
     basin_index_by_type,
     ledger_map,
@@ -60,4 +72,20 @@ __all__ = [
     "oracle_agreement",
     "perturb_paired",
     "basin_index_by_type",
+    # behaviour-landscape figures (operator-space occupancy)
+    "figure_behaviour_landscape",
+    "figure_behaviour_landscape_3d",
+    "figure_behaviour_ternary",
+    "behaviour_composition",
+    "figure_energy_landscape",
+    "figure_orientation",
+    "figure_flow_groups",
 ]
+from .flow import figure_flow_groups  # noqa: E402
+
+# Optional parts (not shipped in every release).
+try:
+    from .motifs import figure_motif_matrix  # noqa: E402
+    __all__.append("figure_motif_matrix")
+except ImportError:
+    pass

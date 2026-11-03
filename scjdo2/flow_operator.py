@@ -34,7 +34,8 @@ from typing import Any, Optional, Sequence
 
 import numpy as np
 
-__all__ = ["flow", "ot_velocity", "drift_jacobian", "flow_descriptors", "DESCRIPTOR_NAMES"]
+__all__ = ["flow", "ot_velocity", "drift_jacobian", "flow_descriptors", "operator_kind",
+           "DESCRIPTOR_NAMES"]
 
 DENSE_MAX_PAIRS = 64_000_000   # n_source x n_target above which mini-batch OT is used
 BATCH_SIZE = 4000
@@ -269,11 +270,26 @@ def _pairs_table(pairs: list[dict[str, Any]]):
 # ---------------------------------------------------------------------------
 # One-call API
 # ---------------------------------------------------------------------------
+def operator_kind(adata) -> Optional[str]:
+    """Which operator ``uns["scjdo2"]["J"]`` holds: ``"flow"`` (:func:`flow`),
+    ``"energy"`` (:func:`scjdo2.fit` / ``pipeline.fit_latent_field``) or ``None``.
+
+    The two share the key, so each writer checks this before overwriting the other.
+    """
+    uns = adata.uns.get("scjdo2", {})
+    if "J" not in uns:
+        return None
+    meta = dict(uns.get("meta", {}))
+    if meta.get("operator") == "flow":
+        return "flow"
+    return "energy"
+
+
 def flow(adata, time_key: str, *, use_rep: str = "X_pca", n_comps: Optional[int] = 15,
          eps: float = 0.05, solver: str = "auto", hidden: Sequence[int] = (96, 96, 96),
          weight_decay: float = 1e-4, n_epochs: int = 1500, n_seeds: int = 1, seed: int = 0,
          device: Optional[str] = None, descriptors: bool = True, key_added: str = "flow",
-         copy: bool = False):
+         copy: bool = False, overwrite: bool = False):
     """Label-free flow operator of every cell from a sampled time course.
 
     Parameters
@@ -291,6 +307,9 @@ def flow(adata, time_key: str, *, use_rep: str = "X_pca", n_comps: Optional[int]
     descriptors : also compute the operator-space descriptors (needs ``n_comps >= 2``).
     key_added : prefix of the output keys.
     copy : return a modified copy instead of writing to ``adata``.
+    overwrite : replace an energy operator already in ``uns["scjdo2"]["J"]``
+        (from :func:`scjdo2.fit`). By default this raises, because both operators use
+        that key; fit them on separate copies of the AnnData instead.
 
     Writes
     ------
@@ -307,6 +326,10 @@ def flow(adata, time_key: str, *, use_rep: str = "X_pca", n_comps: Optional[int]
     Returns the AnnData if ``copy`` else ``None``.
     """
     adata = adata.copy() if copy else adata
+    if operator_kind(adata) == "energy" and not overwrite:
+        raise ValueError(
+            'adata.uns["scjdo2"]["J"] holds an energy operator (scjdo2.fit). The flow operator '
+            "uses the same key: run flow on adata.copy(), or pass overwrite=True.")
     if time_key not in adata.obs:
         raise KeyError(f"adata.obs[{time_key!r}] not found")
     times = np.asarray(adata.obs[time_key], dtype=np.float64)

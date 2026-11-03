@@ -19,8 +19,27 @@ sj.flow(adata, time_key="day")     # OT velocity -> drift -> J_flow per cell
 adata.obs["flow_lambda1"]           # leading eigenvalue; adata.uns["scjdo2"]["J"] = operators
 ```
 
+Group summary and refit check (what the App Note recommends before reading λ₁):
+
+```python
+sj.flow_groups(adata, "cell_type")          # median λ₁ per group, bootstrap CI
+sj.flow_stability(adata, time_key="day")    # per-cell and group agreement across fit seeds
+sj.run(adata, "runs/x", cluster_key="cell_type", time_key="day")   # all of it, saved
+```
+
 Quickstart with test data: `python examples/flow_quickstart.py`. Parameters,
 outputs and usage notes: [docs/flow.md](docs/flow.md).
+
+## Snapshot data: energy landscape in one call
+
+```python
+import scjdo2 as sj
+summary = sj.run(adata, "runs/x", cluster_key="cell_type", use_rep="X_pca",
+                 sources=["labelling", "lineage"])      # fit → analyse → orient → figures → save
+```
+
+Step by step (`sj.fit`, `sj.analyse`, `sj.orient`, `sj.figures`), what each
+needs and writes, every figure, and recipes: **[API.md](API.md)**.
 
 ## How it works
 
@@ -49,6 +68,12 @@ outputs and usage notes: [docs/flow.md](docs/flow.md).
 6. **Archetypes and grammar** (`scjdo2.archetypes`, `scjdo2.grammar`):
    semi-NMF archetypes of the operator field (reimplemented, no v1 import),
    named by eigenvalue signature; archetype sequences along the drift.
+
+### Behaviour landscape
+
+* `scjdo2.landscape.analyse` / `figures`: oracle tolerance, invariants,
+  basin classes, eigenvalue-sign fractions, well stiffness, energy, and
+  the landscape figures (2-D, 3-D, ternary, energy).
 
 ### Orientation layer (`scjdo2.orient`)
 
@@ -113,20 +138,13 @@ repository is not moved).
 
 ## Use
 
+Python: see [API.md](API.md). Command line:
+
 ```bash
 scjdo2 run      --input data.h5ad --out runs/x --use-rep X_pca [--with-rate-model]
 scjdo2 opspace  --input runs/x --out runs/x/opspace
 scjdo2 figure   operator-space|archetypes|ledger --input runs/x --out figs/
 scjdo2 compare  --v1 <dir> --v2 <dir> --out <dir>
-```
-
-```python
-from scjdo2.pipeline import fit_latent_field
-from scjdo2.orient import orient, OrientConfig
-
-fit_latent_field(adata, use_rep="X_pca")            # energy drift + J
-out = orient(adata, ["labelling", "lineage"], "X_pca",
-             OrientConfig(labelling_key="velocity_labelling"))
 ```
 
 ## Status

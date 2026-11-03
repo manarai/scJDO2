@@ -311,6 +311,9 @@ def save(adata: AnnData, out_dir: str | Path) -> dict[str, Path]:
     if is_dict:
         if "J" in scj and isinstance(scj["J"], (list, tuple)) and len(scj["J"]) and issparse(scj["J"][0]):
             sidecar_payload["J"] = _csr_list_to_arrays(list(scj["J"]))
+        elif "J" in scj and scj["J"] is not None:
+            # dense (n, d, d) operator field (energy fit or flow operator)
+            sidecar_payload["J_dense"] = np.asarray(scj["J"])
         if "J_latent" in scj and scj["J_latent"] is not None:
             sidecar_payload["J_latent"] = np.asarray(scj["J_latent"])
         if "grad_eta" in scj and scj["grad_eta"] is not None:
@@ -425,6 +428,8 @@ def load(in_dir: str | Path) -> AnnData:
     scj = adata.uns.setdefault("scjdo2", {})
     if "J" in payload:
         scj["J"] = _csr_list_from_arrays(payload["J"])
+    elif "J_dense" in payload:
+        scj["J"] = np.asarray(payload["J_dense"])
     if "J_latent" in payload:
         scj["J_latent"] = np.asarray(payload["J_latent"])
     if "grad_eta" in payload:

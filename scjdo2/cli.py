@@ -96,6 +96,49 @@ def _build_parser() -> argparse.ArgumentParser:
     f_ledger.add_argument("--input", required=True)
     f_ledger.add_argument("--out", required=True)
 
+    f_land = fig_sub.add_parser(
+        "landscape",
+        help="behaviour landscape: Fisher-weighted density on (lead_re, y) "
+             "with optional scrambled-flow null")
+    f_land.add_argument("--input", required=True)
+    f_land.add_argument("--out", required=True)
+    f_land.add_argument("--y", choices=("spectral_gap", "henrici"),
+                        default="spectral_gap")
+    f_land.add_argument("--null", default=None,
+                        help="path to an .npz written from "
+                             "scjdo2.opspace.flow_scrambled_null (keys lead_re, "
+                             "spectral_gap, henrici, weight, n_perm, mode)")
+    f_land.add_argument("--subtract", action="store_true",
+                        help="plot max(real − null, 0) instead of overlaying the null")
+    f_land.add_argument("--no-fisher", action="store_true",
+                        help="unweighted density (default: Fisher-mass weighted)")
+    f_land.add_argument("--three-d", action="store_true",
+                        help="also write the 3-D variant (height = well stiffness)")
+    f_land.add_argument("--height", default="stiffness",
+                        help="3-D height channel: stiffness (default), lambda_min, "
+                             "basin_index (warned: a plane), energy (warned), or an obs column")
+
+    f_energy = fig_sub.add_parser(
+        "energy",
+        help="energy landscape: E(z) as a surface over the embedding (UMAP by default)")
+    f_energy.add_argument("--input", required=True)
+    f_energy.add_argument("--out", required=True)
+    f_energy.add_argument("--use-rep", default="X_umap")
+    f_energy.add_argument("--energy-key", default="energy")
+    f_energy.add_argument("--colour-by", default="op_behaviour_basin")
+
+    f_tern = fig_sub.add_parser(
+        "ternary",
+        help="eigenvalue-sign ternary (holder/drift/fork) + per-type composition bars")
+    f_tern.add_argument("--input", required=True)
+    f_tern.add_argument("--out", required=True)
+    f_tern.add_argument("--color-key", default="cluster")
+    f_tern.add_argument("--condition-key", default=None,
+                        help="obs column splitting the composition bars (e.g. age)")
+    f_tern.add_argument("--tol", type=float, default=None,
+                        help="override the tolerance; default: oracle tol from "
+                             "uns['scjdo2']['oracle_tol'] or computed on --color-key clusters")
+
     cmp_ = sub.add_parser("compare", help="produce side-by-side comparison report")
     cmp_.add_argument("--v1", required=True)
     cmp_.add_argument("--v2", required=True)
@@ -225,6 +268,72 @@ def _cmd_fig_ledger(args) -> int:
     return 0
 
 
+def _cmd_fig_landscape(args) -> int:
+    from .plot import figure_behaviour_landscape
+
+    adata = _load_adata(args.input)
+    _require(adata, obs_keys=("lead_re", args.y), producer="scjdo2 opspace")
+    null = None
+    if args.null:
+        import numpy as _np
+        z = _np.load(args.null, allow_pickle=True)
+        null = {k: z[k] for k in z.files}
+        for k in ("n_perm", "mode"):
+            if k in null:
+                null[k] = null[k].item() if hasattr(null[k], "item") else null[k]
+    out = Path(args.out) / f"behaviour_landscape_{args.y}"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    figure_behaviour_landscape(
+        adata, y=args.y, null=null, subtract=bool(args.subtract),
+        weight="none" if args.no_fisher else "fisher", out=out,
+    )
+    print(f"figure: wrote {out}.pdf and {out}.png")
+    if args.three_d:
+        from .plot import figure_behaviour_landscape_3d
+        out3 = Path(args.out) / f"behaviour_landscape_3d_{args.y}_{args.height}"
+        figure_behaviour_landscape_3d(
+            adata, y=args.y, height=args.height, null=null,
+            weight="none" if args.no_fisher else "fisher", out=out3,
+        )
+        print(f"figure: wrote {out3}.pdf and {out3}.png")
+    return 0
+
+
+def _cmd_fig_energy(args) -> int:
+    from .plot import figure_energy_landscape
+
+    adata = _load_adata(args.input)
+    _require(adata, obs_keys=(args.energy_key,),
+             producer="scjdo2.opspace.store_energy (after the energy-drift fit)")
+    out = Path(args.out) / f"energy_landscape_{args.use_rep.replace('X_', '')}"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    figure_energy_landscape(adata, use_rep=args.use_rep, energy_key=args.energy_key,
+                            colour_by=args.colour_by, out=out)
+    print(f"figure: wrote {out}.pdf and {out}.png")
+    return 0
+
+
+def _cmd_fig_ternary(args) -> int:
+    from . import opspace
+    from .plot import figure_behaviour_ternary
+
+    adata = _load_adata(args.input)
+    tol = args.tol
+    if tol is None:
+        tol = adata.uns.get("scjdo2", {}).get("oracle_tol")
+    if tol is None:
+        use_rep = adata.uns.get("scjdo2", {}).get("meta", {}).get("use_rep", "X_pca")
+        tol = opspace.oracle_tol(adata, use_rep=use_rep, cluster_key=args.color_key)
+    opspace.behaviour_fractions(adata, tol=float(tol))
+    out = Path(args.out) / "behaviour_ternary"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    figure_behaviour_ternary(
+        adata, color_key=args.color_key, condition_key=args.condition_key, out=out,
+    )
+    print(f"figure: wrote {out}.pdf and {out}.png (tol = {float(tol):.4g})")
+    return 0
+
+
 def _cmd_run(args) -> int:
     from . import io as _scjdo2_io
     from .energy_drift import EnergyDriftConfig
@@ -285,6 +394,12 @@ def main(argv: list[str] | None = None) -> int:
             return _cmd_fig_compare(args)
         if args.fig_cmd == "ledger":
             return _cmd_fig_ledger(args)
+        if args.fig_cmd == "landscape":
+            return _cmd_fig_landscape(args)
+        if args.fig_cmd == "ternary":
+            return _cmd_fig_ternary(args)
+        if args.fig_cmd == "energy":
+            return _cmd_fig_energy(args)
     return 1
 
 
