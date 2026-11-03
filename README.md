@@ -1,171 +1,222 @@
-# scJDO v2
+# scJDO2
 
-Per-cell local operators for single-cell data. scJDO2 fits a drift field on a
-latent embedding of the cells, takes its Jacobian `J_c` at every cell (an
-*operator field*), and reads cell behaviour from the operator's spectrum:
-**basin** (holder), **fork** or **drift**. A post-hoc **orientation layer**
-then gives the operator directions from measured evidence (labelling,
-lineage, RNA velocity, pseudotime), without changing it.
-
-A successor to [scJDO](https://github.com/manarai/scJDO). The package does
-not import v1; v1 is used only by the separate comparison harness in
-`compare/` (see [docs/V1_REMOVAL.md](docs/V1_REMOVAL.md)).
-
-## Flow operators from a time course in one call
+**Per-cell local operators for single-cell RNA-seq.** For every cell, scJDO2
+estimates a small matrix $J_c$ that describes how nearby cells move relative to
+each other: whether they converge (a stable state), separate (a branch point) or
+rotate. It works on an `AnnData` and writes its results back into it.
 
 ```python
 import scjdo2 as sj
-sj.flow(adata, time_key="day")     # OT velocity -> drift -> J_flow per cell
-adata.obs["flow_lambda1"]           # leading eigenvalue; adata.uns["scjdo2"]["J"] = operators
+sj.flow(adata, time_key="day")       # one call: a flow operator for every cell
+adata.obs["flow_lambda1"]             # leading eigenvalue: high at branch points
 ```
 
-Group summary and refit check (what the App Note recommends before reading λ₁):
+There are two routes. Pick one by the kind of data you have:
 
-```python
-sj.flow_groups(adata, "cell_type")          # median λ₁ per group, bootstrap CI
-sj.flow_stability(adata, time_key="day")    # per-cell and group agreement across fit seeds
-sj.run(adata, "runs/x", cluster_key="cell_type", time_key="day")   # all of it, saved
-```
+| your data | route | what $J_c$ means | main call |
+|---|---|---|---|
+| **time course**: cells sampled at ≥ 2 times | flow operator | Jacobian of the drift, estimated from how the population moves between times | `sj.flow` |
+| **snapshot**: one time point | energy operator | curvature of the cell density (where cells are dense, sparse or saddle-shaped), **not** dynamics | `sj.fit` |
 
-Quickstart with test data: `python examples/flow_quickstart.py`. Parameters,
-outputs and usage notes: [docs/flow.md](docs/flow.md).
+If you have a time course, use the flow route. The snapshot route answers a
+narrower question; [docs/math.md §3.3](docs/math.md#33-why-this-is-density-curvature-not-stability)
+explains why a snapshot cannot give stability.
 
-## Snapshot data: energy landscape in one call
-
-```python
-import scjdo2 as sj
-summary = sj.run(adata, "runs/x", cluster_key="cell_type", use_rep="X_pca",
-                 sources=["labelling", "lineage"])      # fit → analyse → orient → figures → save
-```
-
-Step by step (`sj.fit`, `sj.analyse`, `sj.orient`, `sj.figures`), what each
-needs and writes, every figure, and recipes: **[API.md](API.md)**.
-
-## How it works
-
-1. **Embedding** (`scjdo2.embed`): latent positions `z_c` from the count
-   matrix via scVI, factor analysis or PCA. Encoder frozen after the fit.
-2. **Energy drift** (`scjdo2.energy_drift.EnergyDriftAdapter`): a learned
-   scalar energy `E(z)` fitted by Hyvärinen exact score matching (default
-   `loss="esm"`, exact Laplacian up to d = 20, Hutchinson probes above).
-   The drift is the score `f(z) = −β ∇E(z)`.
-3. **Operator field** (`scjdo2.pipeline.fit_latent_field`): `J_c = ∂f/∂z`
-   at every cell by autodiff (default; a kNN ridge regression is
-   available). `J = −β Hess E` is **symmetric by construction**: it
-   describes the curvature of the cell density, has real eigenvalues, and
-   cannot carry rotation. Stored in `adata.uns["scjdo2"]["J"]`.
-4. **Behaviour** (`scjdo2.opspace`): invariants per cell (eigenvalues,
-   spectral gap, Henrici index, transient gain) and the basin classifier
-   `classify_basin_latent`. Its default rule, `"lead_eig"`, uses the sign of
-   the leading eigenvalue against an oracle tolerance; the tangent-restricted
-   `"magnitude"` rule is kept as an option. Behaviour is read from the
-   **latent** operator (rule R15 in [V2_PLAN.md](V2_PLAN.md)).
-5. **Gene level (optional, `--with-rate-model`)**: an NB rate model on raw
-   counts with a smooth decoder (`scjdo2.rates`), the gene-space Jacobian
-   (`scjdo2.field`) and a per-entry Fisher confidence ledger
-   (`scjdo2.fisher`). Used for **driver genes** (the latent leading mode
-   lifted to genes) and uncertainty, not for behaviour.
-6. **Archetypes and grammar** (`scjdo2.archetypes`, `scjdo2.grammar`):
-   semi-NMF archetypes of the operator field (reimplemented, no v1 import),
-   named by eigenvalue signature; archetype sequences along the drift.
-
-### Behaviour landscape
-
-* `scjdo2.landscape.analyse` / `figures`: oracle tolerance, invariants,
-  basin classes, eigenvalue-sign fractions, well stiffness, energy, and
-  the landscape figures (2-D, 3-D, ternary, energy).
-
-### Orientation layer (`scjdo2.orient`)
-
-`f = −∇E` points toward higher density, not along development, so the
-direction of each eigen-axis of `J` comes from separate evidence.
-`orient(adata, sources, embedding_key)` returns two outputs that are never
-merged with each other ([docs/ORIENTATION_SPEC.md](docs/ORIENTATION_SPEC.md)):
-
-| Output | Question | Sources, by trust |
-|---|---|---|
-| **flow** | how the cell moves now | metabolic labelling > RNA velocity |
-| **developmental** | where development goes over days | lineage barcodes > pseudotime |
-
-* Within each output, the highest-ranked source with support decides each
-  (cell, axis) sign; disagreements are recorded as conflicts, never
-  blended. Disagreement between the two outputs is reported
-  (`obsm["orient_flow_vs_dev"]`).
-* Flow also gives magnitude (labelling clock) and rotation `omega` (the
-  antisymmetric part of a local regression of measured velocity).
-* **Reliability check** (§15): velocity that agrees with labelling below
-  0.6 on the pairs both sign is demoted to a cross-check for that dataset.
-* **Pseudotime guards** (§14, §16): the start cell must sit at the low end
-  of the pseudotime, and pseudotime must increase with sampling day.
-* Equilibrium and stationarity flags. `J` is read, never modified (hash
-  checked).
-
-Velocity and pseudotime are the user's own scVelo and Palantir runs; neither
-is a dependency.
-
-### Measured inputs
-
-* `scjdo2.labelled_rates.LabelledRateModel`: joint NB fit on new and total
-  counts with per-cell pulse length, giving per-gene degradation rates.
-* `scjdo2.measured_drift.MeasuredDrift`: a smooth drift regressed on a
-  measured velocity field.
-* `scjdo2.clone`: lineage-barcode measurements of the drift.
-
-## Synthetic data with ground truth (`scjdo2.data`)
-
-* `synthetic_pitchfork`, `synthetic_oriented`: analytic test systems.
-* `synthetic_multimodal.make_multimodal(preset, seed)`: one dynamical
-  system producing lineage barcodes, labelling (new/total), spliced and
-  unspliced counts, sampling days and inputs for pseudotime, with exact
-  truth. Presets `default`, `stress`, `batch`, `stationary_cycle` (v1) and
-  `v2_*` (realistic unspliced share, switching genes, overdispersed counts,
-  sparse lineage sampling). See
-  [docs/SYNTHETIC_MULTIMODAL.md](docs/SYNTHETIC_MULTIMODAL.md).
-
-Loaders for real data: `pbmc`, `larry`, `setty_cd34`, `dynamo_hematopoiesis`.
+---
 
 ## Install
 
 ```bash
+git clone https://github.com/manarai/scJDO2.git
 cd scJDO2
 python -m venv .venv && source .venv/bin/activate
-pip install -e .[dev]
+pip install -e .            # Python ≥ 3.10; installs torch, POT, anndata, scanpy
 ```
 
-For v1-vs-v2 comparison runs only, install v1 at its preprint tag with
-`bash scripts/install_v1_compare.sh` (a separate worktree, so the live v1
-repository is not moved).
+`pip install -e ".[dev]"` adds pytest and Jupyter. A GPU is optional
+(`device="cuda"` or `"mps"`); the examples below run on a laptop CPU.
 
-## Use
-
-Python: see [API.md](API.md). Command line:
+## Quickstart 1: a time course
 
 ```bash
-scjdo2 run      --input data.h5ad --out runs/x --use-rep X_pca [--with-rate-model]
-scjdo2 opspace  --input runs/x --out runs/x/opspace
-scjdo2 figure   operator-space|archetypes|ledger --input runs/x --out figs/
-scjdo2 compare  --v1 <dir> --v2 <dir> --out <dir>
+python examples/flow_quickstart.py          # ~10 s on a laptop CPU
 ```
 
-## Status
+The script simulates 2,000 cells at five times that split into two branches
+after $t = 2$, runs `sj.flow`, and prints:
 
-* Energy drift and latent basin classifier locked (SUMMARY §5.7).
-* Orientation layer implemented and tested on synthetic data with known
-  truth (`coord/orient/`, findings in `coord/orient/FINDINGS.md`); the
-  end-to-end evaluation on the v2 synthetic data is in progress.
-* Open: fork detection at saddles is limited by neighbourhood width;
-  real-data orientation not yet run.
+```
+median lambda_1  branch point (t=2): +2.341   committed (t=4): -0.263
+branch vs committed AUC of lambda_1: 1.00
+```
 
-History: [CHANGELOG.md](CHANGELOG.md), [SUMMARY.md](SUMMARY.md),
-[V2_PLAN.md](V2_PLAN.md).
+On your own data:
 
-## What this is not
+```python
+import scanpy as sc
+import scjdo2 as sj
 
-* Not a port of v1's Schrödinger-bridge, regulatory-inference or Koopman
-  pipelines (only the Henrici index and transient gain are reimplemented,
-  as formulas in `opspace.py`).
-* Not a source of rotation or absolute timescale from a snapshot: the
-  score-matched `J` is symmetric; rotation and clock come only from
-  measured flow (labelling, velocity) through the orientation layer.
-* scOpAlign (batch correction by operator-space alignment) is a separate
-  tool.
+adata = sc.read_h5ad("timecourse.h5ad")              # obs["day"]: numeric sampling time
+sc.pp.normalize_total(adata); sc.pp.log1p(adata)
+sc.pp.highly_variable_genes(adata, n_top_genes=2000, subset=True)
+sc.tl.pca(adata, n_comps=15)                         # unwhitened PCA, 10–20 components
+
+sj.flow(adata, time_key="day")                       # transport → drift → J_flow per cell
+tab = sj.flow_groups(adata, "cell_type")             # median λ₁ per group, 95% bootstrap CI
+st  = sj.flow_stability(adata, groupby="cell_type")  # do refits with other seeds agree?
+```
+
+Or run everything and save it to a folder with a figure:
+
+```python
+sj.run(adata, "runs/my_timecourse", cluster_key="cell_type", time_key="day",
+       stability_seeds=(0, 1, 2))
+```
+
+## Quickstart 2: a snapshot
+
+```bash
+python examples/snapshot_quickstart.py      # ~20 s; writes runs/snapshot_quickstart/
+```
+
+The script samples cells from a double well (two dense clusters joined by a
+thin bridge) and runs the energy route. Cells in the clusters are labelled
+*holder* (density peak) and cells on the bridge *fork* (saddle):
+
+```
+  left: median lead eigenvalue -0.884   holder 0.98  fork 0.02  drift 0.00
+bridge: median lead eigenvalue +2.233   holder 0.00  fork 1.00  drift 0.00
+ right: median lead eigenvalue -0.910   holder 0.97  fork 0.03  drift 0.01
+```
+
+On your own data:
+
+```python
+summary = sj.run(adata, "runs/my_snapshot", cluster_key="cell_type", use_rep="X_pca")
+# or step by step:
+drift = sj.fit(adata, use_rep="X_pca")                     # energy operator per cell
+sj.analyse(adata, cluster_key="cell_type", drift=drift)    # holder / fork / drift labels
+sj.figures(adata, "figures/", cluster_key="cell_type")     # every figure the data supports
+```
+
+If you also have measured directions (metabolic labelling, RNA velocity,
+lineage barcodes, pseudotime), `sj.orient` uses them to give the operator's
+axes a direction. See [API.md §3](API.md#3-sjorient--directions).
+
+## What you get
+
+| result | where | route |
+|---|---|---|
+| per-cell operators $J_c$, shape (cells × d × d) | `uns["scjdo2"]["J"]` | both |
+| leading eigenvalue $\lambda_1$ | `obs["flow_lambda1"]` | flow |
+| OT velocity and fitted drift | `obsm["flow_velocity"]`, `obsm["flow_drift"]` | flow |
+| eight coordinate-free descriptors (and their ranks) | `obsm["flow_descriptors"]`, `obsm["flow_descriptor_ranks"]` | flow |
+| group table: median λ₁, interval, rank | returned by `sj.flow_groups`; `uns["flow"]["groups"]` | flow |
+| refit agreement | returned by `sj.flow_stability`; `obs["flow_lambda1_rank_sd"]` | flow |
+| holder / fork / drift label, basin index | `obs["op_behaviour_basin"]`, `obs["op_basin_index"]` | energy |
+| energy $E(z)$ (low = dense) | `obs["energy"]` | energy |
+| oriented axes, rotation, conflicts | `obs["flow_orientation_class"]`, `obsm["orient_flow_sign"]`, … | energy + `orient` |
+
+`sj.run` also writes `summary.json`, `per_cell.csv`, `figures/` and the
+AnnData; reload a run with `scjdo2.io.load("runs/x")`.
+
+## How to read the results
+
+* **Compare groups, not single cells.** λ₁ is a within-dataset branch-point
+  score. Group medians stayed stable across refits in our tests; per-cell
+  rankings agreed only moderately (median Spearman 0.56). Run
+  `sj.flow_stability` before interpreting individual cells.
+* **Not a regulatory network.** The entries of $J_c$ do not recover the true
+  gene–gene Jacobian. Use the eigenvalues and descriptors.
+* **Sampling matters.** Three time points were too coarse on an independent
+  simulator; eight were enough. Proliferation and death are not modelled.
+* **Use unwhitened PCA** (10–20 components). The flow operator degrades on
+  whitened or Factor Analysis embeddings.
+* **Snapshot labels describe density.** *Holder* means "local density peak",
+  not "attractor". Fits recovered a known landscape in 2-d but not in 20-d;
+  for $d \ge 4$ treat the labels as descriptive.
+* **One operator per AnnData.** `sj.flow` and `sj.fit` refuse to overwrite
+  each other; use `adata.copy()` to compute both.
+
+## Documentation
+
+| page | read it for |
+|---|---|
+| [docs/math.md](docs/math.md) | the equations behind both routes, and what each can and cannot identify |
+| [docs/flow.md](docs/flow.md) | every `sj.flow` parameter and output, usage notes |
+| [API.md](API.md) | every top-level function, figure and recipe |
+| [examples/](examples/) | runnable scripts with test data |
+| [docs/ORIENTATION_SPEC.md](docs/ORIENTATION_SPEC.md) | the full rules of `sj.orient` |
+| [docs/SYNTHETIC_MULTIMODAL.md](docs/SYNTHETIC_MULTIMODAL.md) | simulated data with known truth, for testing a pipeline |
+| [docs/README.md](docs/README.md) | index of all documentation |
+| [CHANGELOG.md](CHANGELOG.md) | what changed, by version |
+
+## Repository layout
+
+```
+scjdo2/            the package
+  api.py             fit, analyse, orient, figures, run, flow_groups, flow_stability
+  flow_operator.py   sj.flow: OT velocity, drift Jacobian, descriptors
+  energy_drift.py    score-matched energy (snapshot route)
+  opspace.py         eigenvalues, invariants, holder/fork/drift classifier
+  orient/            orientation layer
+  plot/              figures
+  data/              synthetic generators and real-data loaders
+examples/          quickstart scripts (start here)
+docs/              method documentation
+tests/             pytest suite
+scripts/           analysis scripts behind the manuscript benchmarks
+notebooks/         figure notebooks for the manuscript
+benchmarks/        committed result tables of those benchmarks
+manuscript/        manuscript sources, figures and reproduction notes
+compare/           v1-vs-v2 comparison harness (needs scJDO v1; optional)
+```
+
+## Command line
+
+```bash
+scjdo2 run      --input data.h5ad --out runs/x --use-rep X_pca    # snapshot route
+scjdo2 opspace  --input runs/x --out runs/x/opspace
+scjdo2 figure   operator-space|archetypes|ledger --input runs/x --out figs/
+```
+
+The flow route and orientation are Python-only for now.
+
+## Reproducing the manuscript
+
+`scripts/appnote_validate_api.py` reruns `sj.flow` on the held-out synthetic
+test sets and LARRY and compares the output with the stored results.
+`notebooks/run_all.py` regenerates every figure of the preprint from committed
+result tables; see [manuscript/REPRODUCE_v57.md](manuscript/REPRODUCE_v57.md)
+and [notebooks/README.md](notebooks/README.md).
+
+## Tests
+
+```bash
+pip install -e ".[dev]"
+python -m pytest -q
+```
+
+A few benchmark tests read simulated data files that are too large to commit;
+they fail when those files are absent. The package and API tests do not need them.
+
+## Relation to scJDO (v1)
+
+scJDO2 succeeds [scJDO](https://github.com/manarai/scJDO). It does not import
+v1 and does not port v1's Schrödinger-bridge, regulatory-inference or Koopman
+pipelines; only the Henrici index and transient gain are reimplemented. v1 is
+used only by the optional comparison harness in `compare/`
+([docs/V1_REMOVAL.md](docs/V1_REMOVAL.md)).
+
+## Citation
+
+If you use scJDO2, please cite the preprint (see [CITATION.cff](CITATION.cff)):
+
+> Redd D., Green S., Terooatea T. W. (2026). Label-free flow operators and
+> stability operators from single-cell time courses: what local dynamical
+> operators can and cannot identify. *bioRxiv*.
+> doi:[10.64898/2026.08.21.745996](https://doi.org/10.64898/2026.08.21.745996)
+
+## License
+
+MIT; see [LICENSE](LICENSE).

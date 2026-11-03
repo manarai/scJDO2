@@ -56,3 +56,6 @@ benchmarks/synthetic_multimodal/s14c/arrays/
 
 # v57 figure environment (notebooks/run_all.py)
 .venv-fig/
+
+# Example and user run folders (examples/*.py, sj.run)
+runs/

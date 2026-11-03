@@ -1,4 +1,4 @@
-"""scJDO2 flow-operator quickstart (runs in about a minute on a laptop CPU).
+"""scJDO2 flow-operator quickstart (about 10 seconds on a laptop CPU).
 
 Test data: a simulated pitchfork time course. Five sampling times; cells move along
 x and split into two branches in y after t = 2. Branch-point cells (t = 2) should
