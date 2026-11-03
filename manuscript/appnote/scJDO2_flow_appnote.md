@@ -15,11 +15,11 @@ Application Note — Systems biology / Gene expression
 
 **Results:** scJDO2 provides `scjdo2.flow`, a single call that estimates a velocity by entropic optimal transport between sampling times, fits a smooth drift and returns the per-cell flow operator, its leading eigenvalue λ₁ (largest real part) and magnitude-free operator-space descriptors in an AnnData object. With a-priori settings, λ₁ ranked fate-bifurcation cells above committed cells on held-out synthetic data (AUC 0.89–1.00). On LARRY lineage-traced hematopoiesis, the fitted drift predicted each barcoded cell's clonal displacement beyond population movement and a held-out sampling day better than baselines. Mini-batch transport ran on all 130,887 cells in ≈ 26 min in total with a peak memory of 2.5 GB. The operator does not recover the values of the true Jacobian and depends on the transport metric; the documented default is a variance-weighted PCA with 10–20 components.
 
-**Availability and implementation:** Python (≥ 3.10), MIT license. Source, documentation, test data and reproduction scripts: https://github.com/manarai/scJDO2. Archived version: Zenodo, doi:[to be added on release].
+**Availability and implementation:** Python (≥ 3.10), MIT license. Source, documentation, test data and reproduction scripts: https://github.com/manarai/scJDO2. Archived version (v0.6.0): Zenodo, doi:10.5281/zenodo.23699152.
 
 **Contact:** tommy.terooatea@byu.edu
 
-**Supplementary information:** Supplementary data are available at *Bioinformatics* online and in the companion preprint (Redd *et al.*, 2026).
+**Supplementary information:** The full evaluation, pre-registered test specifications and supporting analyses are in the companion preprint (Redd *et al.*, 2026).
 
 ## 1 Introduction
 
@@ -31,7 +31,7 @@ Many experiments instead sample cells at several times. Optimal transport (OT) b
 
 `scjdo2.flow(adata, time_key=...)` runs four steps (Fig. 1a).
 
-*OT velocity.* Cells of consecutive sampling times are coupled by balanced entropic OT (Sinkhorn; Cuturi, 2013; POT, Flamary *et al.*, 2021) in a PCA of log-normalized counts (default 15 components), with regularization ε = 0.05 × the median squared distance of the pair. Each cell of the earlier time receives the barycentric velocity (barycentre of its image − z)/Δt. When a pair exceeds 64 × 10⁶ cell pairs, transport switches to mini-batches of 4,000 cells in which every source cell appears ten times (Fatras *et al.*, 2020), and the barycentres are averaged. Cells of the last time point receive no velocity.
+*OT velocity.* Cells of consecutive sampling times are coupled by balanced entropic OT (Sinkhorn; Cuturi, 2013; POT, Flamary *et al.*, 2021) in a PCA of log-normalized counts (default 15 components), with regularization ε = 0.05 × the median squared distance of the pair; the coupling is the static Schrödinger bridge between the two snapshots with a Brownian reference whose noise level is set by ε (Léonard, 2014). Each cell of the earlier time receives the barycentric velocity (barycentre of its image − z)/Δt. When a pair exceeds 64 × 10⁶ cell pairs, transport switches to mini-batches of 4,000 cells in which every source cell appears ten times (Fatras *et al.*, 2020), and the barycentres are averaged. Cells of the last time point receive no velocity.
 
 *Drift.* A multilayer perceptron *f(z)* (three hidden layers of 96 units; AdamW, weight decay 10⁻⁴) is fitted to the velocities by mean-squared error (PyTorch; Paszke *et al.*, 2019) and evaluated at every cell, including the last time point.
 
@@ -53,7 +53,7 @@ The evaluation was carried out in the companion preprint (Redd *et al.*, 2026); 
 
 ## 4 Usage notes and limitations
 
-λ₁ is an empirical ranking of branching cells in a stated transport space, not a measured regulatory Jacobian: compared with the Jacobian of the generator's true velocity, the per-cell relative error was ≈ 1.0 and the λ₁ Spearman correlation at most 0.11 in magnitude. Consistent with eigenvalue-level benchmarks of Jacobian methods (Balubaid *et al.*, 2025), we recommend reading only signs and ranks. The operator depends on the transport metric: in Factor Analysis coordinates the fork AUC fell to 0.04–0.53, against 0.88–1.00 in PCA-10; a variance-weighted PCA with 10–20 components is the documented default. Three sampling times were too coarse on dyngen, and per-cell operators from independent velocity sources on real data agreed only at null level, although cell-type orderings agreed. Detecting the timing of critical transitions and estimating diffusion are not supported. These diagnostics are reported in `uns["flow"]` and in the documentation.
+λ₁ is an empirical ranking of branching cells in a stated transport space, not a measured regulatory Jacobian: compared with the Jacobian of the generator's true velocity, the per-cell relative error was ≈ 1.0 and the λ₁ Spearman correlation at most 0.11 in magnitude. Consistent with eigenvalue-level benchmarks of Jacobian methods (Balubaid *et al.*, 2025), we recommend reading only signs and ranks. The operator depends on the transport metric: in Factor Analysis coordinates the fork AUC fell to 0.04–0.53, against 0.88–1.00 in PCA-10; a variance-weighted PCA with 10–20 components is the documented default. Three sampling times were too coarse on dyngen, and per-cell operators from independent velocity sources on real data agreed only at null level, although cell-type orderings agreed. The drift network is trained for 1,500 mini-batch steps (`n_epochs`); longer training is not a free improvement: at 15,000 and 50,000 steps the LARRY results held (lineage Spearman 0.55 and 0.54; held-out energy distance 0.75 and 0.73, still below both baselines), but the minimum fork AUC fell to 0.86 and 0.78. The operator is designed for time courses: in simulated steady-state populations, flow operators fitted to single-window metabolic-labelling velocity did not recover per-cell stability, with or without neighbour pooling, and a potential fitted to that velocity was no better than a density estimate, so we do not recommend either for stable populations. Detecting the timing of critical transitions and estimating diffusion are not supported. These diagnostics are reported in `uns["flow"]` and in the documentation.
 
 ## 5 Conclusion
 
@@ -94,6 +94,8 @@ Flamary, R. *et al.* (2021) POT: Python Optimal Transport. *J. Mach. Learn. Res.
 Klein, D. *et al.* (2025) Mapping cells through time and space with moscot. *Nature*, **638**, 1065–1075.
 
 La Manno, G. *et al.* (2018) RNA velocity of single cells. *Nature*, **560**, 494–498.
+
+Léonard, C. (2014) A survey of the Schrödinger problem and some of its connections with optimal transport. *Discrete Contin. Dyn. Syst.*, **34**, 1533–1574.
 
 Liu, J. *et al.* (2026) Learning stochastic dynamics and cell-fate landscapes from single-cell snapshots via optimal transport. *Sci. Adv.*, **12**, eaeb4205.
 

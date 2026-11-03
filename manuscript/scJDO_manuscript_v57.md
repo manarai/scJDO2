@@ -281,7 +281,7 @@ Datasets used only in the scJDO v1 analyses are listed in version 56 of this pre
 
 ## Code Availability
 
-scJDO2: https://github.com/manarai/scJDO2 (this version: branch `v57-revision`); a versioned release will be archived on Zenodo. The flow operator in the reference configuration is available as one call, `scjdo2.flow(adata, time_key=...)` (OT velocity, drift, Jacobian and operator-space descriptors; mini-batch transport for large time points). All v57 analyses are in `scripts/`, with task specifications, reports and reviews in `coord/orient/`, and number provenance in `manuscript/NUMBERS_v57.md`. The v56 package and analyses remain available at https://github.com/manarai/scJDO, fixed at git tag `scjdo-v56-submission-20260922`.
+scJDO2: https://github.com/manarai/scJDO2 (this version: release v0.6.0 of branch `v57-revision`, archived on Zenodo, doi:10.5281/zenodo.23699152). The flow operator in the reference configuration is available as one call, `scjdo2.flow(adata, time_key=...)` (OT velocity, drift, Jacobian and operator-space descriptors; mini-batch transport for large time points). All v57 analyses are in `scripts/`, with task specifications, reports and reviews in `coord/orient/`, and number provenance in `manuscript/NUMBERS_v57.md`. The v56 package and analyses remain available at https://github.com/manarai/scJDO, fixed at git tag `scjdo-v56-submission-20260922`.
 
 ## Author Contributions
 
