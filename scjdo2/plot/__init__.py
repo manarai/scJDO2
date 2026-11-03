@@ -39,7 +39,12 @@ from .landscape import (
     figure_energy_landscape,
 )
 from .motifs import figure_motif_matrix
-from .influence import figure_influence_network
+from .influence import (
+    figure_expression_cascade,
+    figure_influence_network,
+    figure_branch_timing,
+    figure_reference_auroc,
+)
 from .figures_v05 import (
     add_aging_footer,
     aging_vectors,
@@ -88,4 +93,8 @@ __all__ = [
     "figure_motif_matrix",
     # driver / responder influence network per archetype
     "figure_influence_network",
+    "figure_expression_cascade",
+    "figure_reference_auroc",
+    "figure_branch_timing",
+    "figure_network_expression",
 ]

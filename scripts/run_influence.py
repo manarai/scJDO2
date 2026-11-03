@@ -1,18 +1,21 @@
-"""Driver / responder influence per archetype on a saved scJDO2 run.
+"""Driver / responder analyses + figures on a saved scJDO2 run.
 
-Usage::
+Thin wrapper over :mod:`scjdo2.drivers`::
 
-    python scripts/run_influence.py benchmarks/v2/paul15 --organism mouse \
-        --ref builtin --out benchmarks/v2/paul15/influence
+    python scripts/run_influence.py benchmarks/v2/paul15 \
+        --ref-file trrust_rawdata.mouse.tsv --time-key pseudotime \
+        --out benchmarks/v2/paul15/drivers
 
-Re-runs ``opspace.archetype_operators`` on the stored archetype weights
-(so each entry carries the operator block and projector), then
-``influence.archetype_influence`` and the network figure. ``--ref``
-picks the v1 reference network source (``builtin`` | ``trrust`` |
-``collectri`` | ``none``), or ``--ref-file`` a TSV.
+Runs ``drivers.analyse`` (influence → roles → key genes → edges →
+reference check → expression-timing QC), writes every table as CSV and
+renders ``influence_network``, ``expression_cascade`` and
+``reference_auroc`` (pdf + png).
 
-Writes ``influence_long.csv`` (gene × archetype), ``roles_summary.csv``,
-``edges.csv``, ``key_genes.csv`` and ``influence_network.{pdf,png}``.
+``--ref-file`` is a TRRUST-style TSV; ``--ref`` a v1 network name
+(``builtin`` | ``trrust`` | ``collectri`` | ``none``) used when no file is
+given. ``--time-key none`` skips the timing QC. ``--branches paul15``
+adds the branch-aware timing QC (root 7MEP; erythroid / monocyte /
+neutrophil paths).
 """
 
 from __future__ import annotations
@@ -22,14 +25,21 @@ from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
-import numpy as np
-import pandas as pd
 
-from scjdo2 import influence, io, opspace
-from scjdo2.plot import figure_influence_network
+from scjdo2 import drivers, io
 
-KEY_GENES = ["Gata1", "Sfpi1", "Spi1", "Klf1", "Cebpa", "Cebpe", "Gata2",
-             "Fli1", "Irf8", "Gfi1", "Zfpm1", "Mpo", "Car2", "Hba-a2"]
+# Branch presets: root clusters + per-fate clusters (obs[cluster_key]).
+BRANCH_PRESETS = {
+    "paul15": {
+        "cluster_key": "paul15_clusters",
+        "root": ["7MEP"],
+        "branches": {
+            "erythroid": ["6Ery", "5Ery", "4Ery", "3Ery", "2Ery", "1Ery"],
+            "monocyte": ["9GMP", "10GMP", "14Mo", "15Mo"],
+            "neutrophil": ["9GMP", "10GMP", "16Neu", "17Neu"],
+        },
+    },
+}
 
 
 def main() -> None:
@@ -37,65 +47,48 @@ def main() -> None:
     ap.add_argument("run_dir")
     ap.add_argument("--out", default=None)
     ap.add_argument("--organism", default="mouse")
-    ap.add_argument("--ref", default="builtin")
-    ap.add_argument("--ref-file", default=None,
-                    help="TSV source/target/mode[/pmid] (e.g. TRRUST raw data); overrides --ref")
+    ap.add_argument("--ref", default="none")
+    ap.add_argument("--ref-file", default=None)
+    ap.add_argument("--time-key", default="pseudotime")
     ap.add_argument("--quantile", type=float, default=0.9)
-    ap.add_argument("--archetypes", default=None, help="comma-separated ids for the figure")
+    ap.add_argument("--n-perm", type=int, default=2000)
+    ap.add_argument("--archetypes", default=None, help="comma-separated ids for the figures")
+    ap.add_argument("--branches", default=None, choices=sorted(BRANCH_PRESETS),
+                    help="branch preset for the branch-aware timing QC")
+    ap.add_argument("--network-expression", action="store_true",
+                    help="also render the per-archetype network-genes-across-states QC "
+                         "(needs --branches for the cluster key)")
     args = ap.parse_args()
 
-    out = Path(args.out or Path(args.run_dir) / "influence")
-    out.mkdir(parents=True, exist_ok=True)
-
+    out = Path(args.out or Path(args.run_dir) / "drivers")
     adata = io.load(args.run_dir)
-    opspace.archetype_operators(adata)
-    long = influence.archetype_influence(adata, quantile=args.quantile)
-    long.to_csv(out / "influence_long.csv", index=False)
-
-    arch = adata.uns["scjdo2"]["archetypes"]
-    rows = []
-    for ak, info in sorted(arch.items()):
-        tbl = info["influence"]
-        counts = tbl["role"].value_counts()
-        top = lambda role, col: ", ".join(tbl[tbl["role"] == role].nlargest(5, col)["gene"])
-        rows.append({
-            "archetype": ak, "behaviour": info["behaviour"], "n_cells": info["n_cells"],
-            "lead_re": float(np.real(info["eigenvalues"][0])),
-            "t_star": info["influence_t"], "t_rule": info["influence_t_rule"],
-            **{f"n_{r}": int(counts.get(r, 0)) for r in influence.ROLES},
-            "top_drivers": top("driver", "out_influence"),
-            "top_hubs": top("hub", "out_influence"),
-            "top_responders": top("responder", "in_influence"),
-        })
-    pd.DataFrame(rows).to_csv(out / "roles_summary.csv", index=False)
-
-    keys = [g for g in KEY_GENES if g in set(adata.var_names)]
-    long[long["gene"].isin(keys)][
-        ["archetype", "behaviour", "gene", "role", "out_rank", "in_rank",
-         "out_influence", "in_influence", "polarity", "coverage", "reason"]
-    ].sort_values(["gene", "archetype"]).to_csv(out / "key_genes.csv", index=False)
 
     ref = None
     if args.ref_file:
-        ref = pd.read_csv(args.ref_file, sep="\t", header=None).iloc[:, :3]
-        ref.columns = ["source", "target", "mode"]
-        ref["weight"] = ref["mode"].map({"Activation": 1.0, "Repression": -1.0}).fillna(0.0)
-        print(f"[network] {args.ref_file}: {len(ref):,} edges, {ref['source'].nunique()} TFs")
+        ref = drivers.load_reference(args.ref_file)
     elif args.ref != "none":
-        from scjdo.tl import load_network
-        ref = load_network(organism=args.organism, source=args.ref)
-    edges = []
-    for ak in sorted(arch):
-        e = influence.annotate_reference(influence.influence_edges(adata, ak), ref)
-        edges.append(e.assign(archetype=ak))
-    pd.concat(edges, ignore_index=True).to_csv(out / "edges.csv", index=False)
+        ref = drivers.load_reference(args.ref, organism=args.organism)
+    if ref is not None:
+        print(f"[reference] {len(ref):,} edges, {ref['source'].nunique()} TFs")
 
+    time_key = None if args.time_key == "none" else args.time_key
+    br = BRANCH_PRESETS.get(args.branches, {})
+    res = drivers.analyse(adata, ref_network=ref, time_key=time_key,
+                          quantile=args.quantile, n_perm=args.n_perm,
+                          branches=br.get("branches"), cluster_key=br.get("cluster_key"),
+                          root=br.get("root", ()))
+    drivers.save_tables(res, out)
     ids = [int(a) for a in args.archetypes.split(",")] if args.archetypes else None
-    for ext in ("pdf", "png"):
-        figure_influence_network(adata, archetype_ids=ids, ref_network=ref,
-                                 save=out / f"influence_network.{ext}")
-    print(pd.DataFrame(rows).to_string(index=False))
-    print(f"\nwrote {out}")
+    paths = drivers.figures(adata, out, ref_network=ref, time_key=time_key,
+                            results=res, archetype_ids=ids,
+                            cluster_key=br.get("cluster_key") if args.network_expression else None)
+
+    print(res["roles"].to_string(index=False))
+    for key in ("reference_summary", "timing_summary", "branch_pooled", "branch_overall",
+                "branch_members_pooled", "branch_members_overall"):
+        if key in res:
+            print(f"\n{key}:\n{res[key].to_string(index=False)}")
+    print(f"\nwrote tables + {', '.join(paths)} to {out}")
 
 
 if __name__ == "__main__":

@@ -23,4 +23,7 @@ __all__ = [
     "pipeline",
     "plot",
     "data",
+    "influence",
+    "timing",
+    "drivers",
 ]

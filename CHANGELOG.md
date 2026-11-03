@@ -5,6 +5,62 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Driver API, timing QC and reference figure — 2026-11-03
+
+- **``scjdo2.drivers``** (new, one-call API in the style of
+  ``scjdo2.landscape``). Analyses: ``influence``, ``roles_summary``,
+  ``key_genes``, ``edges``, ``load_reference``, ``reference_check``,
+  ``timing``. Figures: ``plot_network``, ``plot_cascade``,
+  ``plot_reference``. Wrappers: ``analyse`` (all analyses, in order),
+  ``figures`` (all figures into one folder), ``save_tables``. The TRRUST
+  check moved from the script into ``reference_check``; both scripts are
+  now thin wrappers.
+- **``scjdo2.timing``** (new): expression-timing QC on an existing
+  pseudotime (no new ordering). Per archetype, member-cell expression is
+  binned, smoothed and min-max scaled per gene; onset = half-way
+  crossing (rising or falling). Role test (drivers earlier than
+  responders, Mann–Whitney) and edge test (fraction of driver→target
+  edges where the source changes first, vs random gene pairs).
+- **Figures**: ``figure_expression_cascade`` (scaled heatmap grouped by
+  role and sorted by onset, role median curves, onset by role) and
+  ``figure_reference_auroc``.
+- Paul15 result (``benchmarks/v2/paul15/drivers/``): **drivers do not
+  change before their targets**. Edges are source-first in 40–58% of
+  cases per archetype vs a 50% null (only archetype 4: 88%, n = 8,
+  p = 0.03, not significant after correction); pooled 34–49% across
+  bin counts and onset definitions. All archetypes sit in the first
+  ~30% of pseudotime and all are forks, so pseudotime averages over both
+  branches; a branch-aware timing check is the next test. The
+  pseudotime also set the velocity prior, so this is a consistency
+  check, not independent validation.
+- **Branch-aware timing** (``timing.branch_timing``,
+  ``drivers.branch_timing``, ``figure_branch_timing``): the edge test
+  run separately along each fate path (root + branch clusters, existing
+  pseudotime), on all path cells (``cells="path"``) or archetype members
+  only (``"members"``); pooled over edge × branch pairs against a
+  per-branch null. ``scripts/run_influence.py --branches paul15``
+  (root 7MEP; erythroid / monocyte / neutrophil). Paul15: **still no
+  general drivers-first ordering** — overall 0.49 (path) and 0.51
+  (members) vs a 0.50 null. One suggestive, biologically consistent cell:
+  the erythroid archetype 6 along the erythroid branch, 0.68 source-first
+  (n = 28, p < 0.05; pooled over branches 0.61, p = 0.03). That is 2 of
+  24 archetype × branch tests at p < 0.05, about what chance gives, and
+  archetypes 5 and 7 lean target-first (0.33, 0.35).
+- **Network genes across cell states** (optional QC, one archetype):
+  ``timing.network_state_expression``, ``drivers.network_expression``,
+  ``drivers.plot_network_expression`` / ``figure_network_expression``.
+  Mean expression of the archetype's network genes per cell state
+  (clusters in a given order, else those holding ≥ 5% of members ordered
+  by median pseudotime), scaled 0–1 per gene; on-state = where it crosses
+  0.5; per edge, does the source switch on first. Dot heatmap (one block
+  per driver) + one line panel per driver. ``figures(..., cluster_key=)``
+  renders it per archetype; script flag ``--network-expression``.
+  Paul15 archetype 6 along 7MEP → 6Ery → … → 1Ery: drivers first in
+  20/28 edges (Car1 and Mt2 4/4); most genes still rise together over
+  7MEP → 5Ery, so many calls rest on sub-state differences. The default
+  state order is not a trajectory for mixed-lineage archetypes (e.g.
+  archetype 7) — pass ``states`` along one branch.
+
 ### Driver / responder influence per archetype — 2026-11-03
 
 - **``scjdo2.influence``** (new module). Finite-time change operator

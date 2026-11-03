@@ -1,0 +1,9 @@
+archetype,behaviour,n_cells,lead_re,t_star,t_rule,n_driver,n_hub,n_responder,n_passenger,n_unmeasured,top_drivers,top_hubs,top_responders
+0,fork,411,0.6940109435385784,1.4408994689640833,lead_timescale,2,25,0,235,39,"Crip1, Psmb8","Slc18a2, Itga2b, Ptprcap, Spns2, Mdga1",
+1,fork,323,0.5255678730837612,1.902703820407659,lead_timescale,1,21,3,218,58,Mt1,"Mpl, Tuba1b, Ndrg1, Ehd3, Gm2a","Malat1, Gata2, Itga2b"
+2,fork,601,0.27264372668046605,3.6677902410422356,lead_timescale,1,25,0,225,50,Irf1,"Ptprcap, Ets1, Tuba8, Fcnb, P2rx1",
+3,fork,702,0.2923991962986698,3.41998204050655,lead_timescale,0,21,4,217,59,,"S100a4, Lgals3, Calr, Itgb7, Ahnak","Apoe, Nrgn, Irf8, Emb"
+4,fork,506,0.40771557462143465,2.4526902140751026,lead_timescale,0,23,1,216,61,,"Apoe, Fcnb, Cd9, Lpcat2, Tuba8",Ptprcap
+5,fork,561,0.5039132059917362,1.9844687301495316,lead_timescale,1,23,1,225,51,Iqgap1,"Mdga1, Zyx, Prkch, Atpase6, F2r",Malat1
+6,fork,949,0.09828728352700099,10.174256161279349,lead_timescale,6,13,0,168,114,"Nrgn, Car1, Rhd, Mrpl52, Glrx5","Mt2, Cpox, Ptprcap, Slc45a3, Calr",
+7,fork,372,0.4667522398642921,2.142464276745087,lead_timescale,3,23,0,228,47,"Zfpm1, Vamp5, Gm2a","Prdx2, Mpl, Treml1, Tubb5, P2rx1",
