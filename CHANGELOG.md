@@ -5,6 +5,42 @@ plan corresponds to one or more commits.
 
 ## [Unreleased]
 
+### Driver / responder influence per archetype — 2026-11-03
+
+- **``scjdo2.influence``** (new module). Finite-time change operator
+  ``M(t) = P^T (e^{Bt} − I) P`` on each archetype's tangent block.
+  Out-influence (column norm, self excluded) = how much a small push on a
+  gene moves the others; in-influence (row norm) = how much it is moved.
+  Roles per archetype: influential = top 10% of ``out + in``, split by
+  polarity ``log2(out/in)`` relative to the archetype median (±1 robust
+  SD) into driver / hub / responder; zero-Fisher or off-tangent genes are
+  ``unmeasured``, not weak. ``t*`` = transient-gain peak for stable
+  blocks, else ``1/|Re λ₁|``. ``influence_edges`` gives signed directed
+  edges; ``annotate_reference`` tags them against a TF→target network.
+- ``archetype_operators`` now stores ``block`` and ``projector`` per
+  archetype (needed for propagators; older sidecars must re-run it).
+- **``scjdo2.plot.figure_influence_network``**: per archetype, the
+  driver/responder map, influence share over time, and the network at
+  ``t*`` with role columns, signed edges and reference-support styling.
+  Replaces v1's eigenvector co-loading "de novo" edges.
+- ``scripts/run_influence.py`` + Paul15 output in
+  ``benchmarks/v2/paul15/influence/``. Finding: out- and in-influence are
+  strongly correlated (Spearman 0.73–0.96) and track the left/right
+  eigenvectors (0.84–1.00); the operators are near-normal (transient gain
+  ≤ 1.17), so most influential genes are hubs and few clear drivers
+  emerge. Zfpm1 is the top driver of archetype 7; Gata1, Sfpi1, Klf1 and
+  Cebpa are not influential in any archetype.
+- ``scripts/influence_reference_check.py``: TRRUST (mouse) check. Only 32
+  TRRUST edges / 15 TFs fall inside Paul15's 301 genes. Ranking genes by
+  ``|M[i, TF](t*)|`` recovers TRRUST targets above a size-matched
+  random-target null in 7/8 archetypes (mean AUROC 0.52–0.73; p < 0.05;
+  archetypes 0–2 survive Bonferroni over 8) and beats ``|Spearman|``
+  co-expression in 6/8. Signs: activation edges 92% positive vs a 69%
+  base rate of positive M entries; repression edges are mostly positive
+  too (19% agreement, n = 4 unique edges), so sign information is weak.
+  None of the figure's 116 top edges are TRRUST edges, because the top
+  sources are mostly non-TFs.
+
 ### Landscape API + tutorial 06 — 2026-10-17
 
 - **``scjdo2.landscape``** (new module): ``analyse(adata, cluster_key,

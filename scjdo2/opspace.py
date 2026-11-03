@@ -1938,6 +1938,11 @@ def archetype_operators(
             # the §5 PBMC basin arm to rank top-10 genes per eigenmode.
             "eigvec_full": lifted_right,
             "eigvec_left_full": lifted_left,
+            # Tangent-restricted operator block and its orthonormal basis
+            # (``block = P J_k P^T``). Kept so finite-time propagators
+            # (:mod:`scjdo2.influence`) can be formed without the ledger.
+            "block": block.astype(np.float64),
+            "projector": np.asarray(P_arch, dtype=np.float64),
             "henrici": float(henrici_k),
             "transient_gain": float(tgain_k),
             "n_cells": int(members.size),
