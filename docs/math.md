@@ -23,17 +23,17 @@ Each cell $c$ has a position $z_c \in \mathbb{R}^d$ in a low-dimensional embeddi
 (typically the first $d = 10$–$20$ principal-component scores of log-normalised
 counts). Assume cells move in that space according to
 
-$$
+$
 \frac{dz}{dt} = f(z) + \text{noise},
-$$
+$
 
 where $f$ is the **drift**. Near a cell, the drift is approximately linear:
 
-$$
+$
 f(z_c + \delta) \approx f(z_c) + J_c\,\delta,
 \qquad
 J_c = \frac{\partial f}{\partial z}\bigg|_{z_c} \in \mathbb{R}^{d\times d}.
-$$
+$
 
 $J_c$ is the **local operator** (the Jacobian of the drift). Its eigenvalues
 $\lambda_1, \dots, \lambda_d$, ordered by real part, describe what happens to two
@@ -74,13 +74,13 @@ $x_1, \dots, x_m$, with those of the later time, $y_1, \dots, y_{m'}$, by
 **entropic optimal transport**. The transport plan $\pi \in \mathbb{R}_{\ge 0}^{m\times m'}$
 solves
 
-$$
+$
 \pi^\star = \arg\min_{\pi} \sum_{j,k} \pi_{jk}\,\lVert x_j - y_k\rVert^2
 \;-\; \varepsilon\, H(\pi)
 \quad\text{s.t.}\quad
 \sum_k \pi_{jk} = \tfrac{1}{m},\;\;
 \sum_j \pi_{jk} = \tfrac{1}{m'},
-$$
+$
 
 with entropy $H(\pi) = -\sum_{jk}\pi_{jk}(\log \pi_{jk} - 1)$. The plan is the
 cheapest way to turn one population into the other while moving cells as little
@@ -88,18 +88,18 @@ as possible; the entropy term blurs it so that each early cell maps to a
 weighted cloud of later cells. It is computed with the Sinkhorn algorithm
 (library POT). The regularisation scales with the data,
 
-$$
+$
 \varepsilon = \texttt{eps} \times \operatorname{median}_{j,k} \lVert x_j - y_k\rVert^2,
 \qquad \texttt{eps} = 0.05 \text{ by default}.
-$$
+$
 
 Each early cell's **velocity** is the displacement to the centre of its cloud,
 divided by the time step:
 
-$$
+$
 v_j = \frac{1}{t^{(i+1)} - t^{(i)}}
 \left( \frac{\sum_k \pi^\star_{jk}\, y_k}{\sum_k \pi^\star_{jk}} - x_j \right).
-$$
+$
 
 Cells of the last time point have no later time and get no velocity
 (`obs["flow_has_velocity"] = False`). Large pairs (more than $64\times 10^6$ cell pairs)
@@ -115,10 +115,10 @@ The velocities are noisy and exist only at sampled cells. A neural network
 $f_\theta : \mathbb{R}^d \to \mathbb{R}^d$ (a multilayer perceptron, hidden layers
 96-96-96) is fitted to them by least squares,
 
-$$
+$
 \min_\theta \; \frac{1}{|\mathcal{C}|}\sum_{c \in \mathcal{C}} \lVert f_\theta(z_c) - v_c \rVert^2
 \quad (+\text{ weight decay}),
-$$
+$
 
 over the cells $\mathcal{C}$ that have a velocity (AdamW optimiser, 1,500 steps of 256 cells).
 The fitted $f_\theta$ is then evaluated at every cell, including the last time
@@ -126,9 +126,9 @@ point (by extrapolation).
 
 ### 2.3 The flow operator
 
-$$
+$
 J^{\text{flow}}_c = \frac{\partial f_\theta}{\partial z}\bigg|_{z_c},
-$$
+$
 
 computed exactly by automatic differentiation. $J^{\text{flow}}$ is **not**
 symmetric in general, so it can have complex eigenvalues and can represent
@@ -236,9 +236,9 @@ $\nabla^2 E = \operatorname{diag}(-4, 1)$, so $\lambda_1 = +4$.
 When is the energy operator equal to the true dynamical operator? Take the
 stochastic dynamics
 
-$$
+$
 dz = f(z)\,dt + \sqrt{2}\,dW, \qquad f(z) = -(I + \gamma Q)\,\nabla U(z),
-$$
+$
 
 with $Q$ a constant antisymmetric matrix ($Q^\top = -Q$). The steady-state
 density is $p \propto e^{-U}$ **for every $\gamma$**, because the rotating part
@@ -266,14 +266,14 @@ dimensions; for $d \ge 4$ treat $J^{\text{energy}}$ as descriptive.
 Each cell is labelled from the largest eigenvalue $\lambda_{\max}$ of
 $J^{\text{energy}}_c$, against a tolerance $\tau$:
 
-$$
+$
 \text{label}_c =
 \begin{cases}
 \text{holder (basin)} & \lambda_{\max} < -\tau \quad\text{(density curves down in every direction: a local peak)}\\
 \text{fork} & \lambda_{\max} > +\tau \quad\text{(curves up in some direction: a saddle or trough)}\\
 \text{drift} & \text{otherwise (flat in some direction)}
 \end{cases}
-$$
+$
 
 and `obs["op_basin_index"]` $= -\lambda_{\max}$ (larger means a sharper peak).
 
@@ -281,9 +281,9 @@ The tolerance comes from a **Gaussian oracle**: fit a Gaussian to each cluster
 $g$ and compute its softest curvature, $|\lambda_{\max}(-\Sigma_g^{-1})| = 1/\sigma_{g,\max}^2$.
 Then
 
-$$
+$
 \tau = 0.1 \times \operatorname{median}_g \frac{1}{\sigma_{g,\max}^2}.
-$$
+$
 
 Because $\tau$ depends on the cluster shapes and not on the fitted operator,
 two datasets classified with the same oracle are comparable.
@@ -302,12 +302,12 @@ layer gives each axis a sign from a measured velocity $v_c$ (metabolic
 labelling, RNA velocity, a lineage displacement, or a pseudotime gradient) in
 the same embedding:
 
-$$
+$
 \sigma_{c,k} = \operatorname{sign}(v_c \cdot u_{c,k})
 \quad\text{if}\quad
 \frac{|v_c \cdot u_{c,k}|}{\lVert v_c\rVert} \ge 0.2,
 \quad\text{otherwise no sign.}
-$$
+$
 
 Sources are grouped into two outputs that answer different questions and are
 never merged: **flow** (how the cell moves now: labelling, then RNA velocity)
