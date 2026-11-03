@@ -1,0 +1,31 @@
+{
+  "n_pairs": 554,
+  "n_clone_interval_units": 405,
+  "n_biological_clones": 386,
+  "clones_in_both_intervals": 19,
+  "pairs_per_unit_median": 1.0,
+  "max_pairs_one_unit": 6,
+  "protocol": "bootstrap resamples biological clones (all their pairs in both intervals); clone-interval means are permuted within sampling interval (unit label clone|start day); conditional on one fitted drift (seed 0)",
+  "pooled": {
+    "cell_level_spearman": 0.5606976454095578,
+    "clone_bootstrap_ci95": [
+      0.5292284575847239,
+      0.5892481971584885
+    ],
+    "clone_level_spearman": 0.551126972884427,
+    "clone_perm_null_max": 0.18343946968122837,
+    "clone_perm_null_q99": 0.1720489421218207,
+    "clone_perm_p": 0.000999000999000999
+  },
+  "centred": {
+    "cell_level_spearman": 0.5029398319577074,
+    "clone_bootstrap_ci95": [
+      0.470872245722427,
+      0.5323844984799632
+    ],
+    "clone_level_spearman": 0.49185813622977986,
+    "clone_perm_null_max": 0.07660051796100435,
+    "clone_perm_null_q99": 0.06428615176596068,
+    "clone_perm_p": 0.000999000999000999
+  }
+}

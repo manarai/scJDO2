@@ -100,16 +100,32 @@ by such maps, so compare descriptors only within one embedding.
 
 ## How to use the result — and how not to
 
-* **Use** λ₁ to rank cells: on held-out synthetic data, λ₁ ranked fate-bifurcation cells
-  above committed cells (AUC 0.89–1.00) with these defaults.
+* **Use** λ₁ to compare groups of cells: on held-out synthetic data, λ₁ ranked fate-bifurcation
+  cells above committed cells (AUC 0.89–1.00 with seed 0; 0.82–1.00 over seeds 0–2) with these defaults.
 * **Do not** read the matrix entries as a regulatory Jacobian: *J_flow* does not recover
   the values of the true Jacobian (median relative error ≈ 1).
-* **Use a variance-weighted space** (PCA of log-normalised counts, 10–20 components).
+* **Use unwhitened PCA scores** (PCA of log-normalised counts, 10–20 components).
   The operator inverts on Factor Analysis and degrades in whitened or high-dimensional
   spaces.
 * **Sampling density matters**: three sampling times were too coarse on an independent
   simulator; eight were sufficient.
 * The clock is the unit of `time_key`; λ₁ values are comparable within a dataset only.
+* **Balanced transport**: proliferation and death are not modelled; changes in composition
+  between sampling times are treated as movement of cells.
+* **Training length**: the default `n_epochs = 1500` (optimizer steps) is the evaluated setting.
+  At 15,000 and 50,000 steps the LARRY results held (lineage Spearman 0.55 and 0.54; held-out
+  energy distance 0.75 and 0.73, still below both baselines), but the minimum fork AUC fell to
+  0.86 and 0.78.
+* **Not for steady-state labeling data**: in simulated steady-state populations, flow operators
+  fitted to single-window metabolic-labeling velocity did not recover per-cell stability, with
+  or without kNN pooling of the velocity, and a potential fitted to that velocity was no better
+  than a density estimate (and unstable under uneven sampling).
+* **Fit-to-fit variation**: reported intervals are conditional on one fitted drift (`seed = 0`).
+  Refitting with seeds 1 and 2 kept the group-level results (fork AUC 0.82–1.00 on the 11
+  held-out datasets; LARRY lineage Spearman 0.55–0.56; held-out energy 0.69–0.75, below both
+  baselines), but per-cell λ₁ rankings agreed only moderately between fits (median Spearman
+  0.56, minimum −0.04). Compare per-cell values across refits (`seed = 1, 2, …`) before
+  interpreting individual cells.
 
 ## Reproducing the paper
 

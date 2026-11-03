@@ -1,0 +1,60 @@
+{
+  "note": "post hoc, exploratory; reference configuration; seed 0 = reported fit",
+  "n_synthetic_datasets": 11,
+  "ks": [
+    10,
+    15,
+    20
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "fork_auc_range_by_seed": {
+    "0": [
+      0.8869001158893725,
+      0.9996368038740919
+    ],
+    "1": [
+      0.8173630469508566,
+      0.999677158999193
+    ],
+    "2": [
+      0.9314062702325064,
+      0.9997830912025827
+    ]
+  },
+  "fork_auc_range_all": [
+    0.8173630469508566,
+    0.9997830912025827
+  ],
+  "fork_auc_max_abs_change_vs_seed0": 0.10674006326933316,
+  "lambda1_spearman_between_seeds": {
+    "min": -0.04078881563404824,
+    "median": 0.5601001030574589
+  },
+  "larry": [
+    {
+      "seed": 0,
+      "lineage_spearman": 0.5606976454095578,
+      "heldout_flow_energy": 0.6874104724666862,
+      "heldout_no_movement_energy": 0.8815008253806457,
+      "heldout_mean_displacement_energy": 0.8667826833933505
+    },
+    {
+      "seed": 1,
+      "lineage_spearman": 0.5546808191451535,
+      "heldout_flow_energy": 0.7511551439802686,
+      "heldout_no_movement_energy": 0.8815008253806457,
+      "heldout_mean_displacement_energy": 0.8667826833933505
+    },
+    {
+      "seed": 2,
+      "lineage_spearman": 0.5562510535961899,
+      "heldout_flow_energy": 0.7311360083735603,
+      "heldout_no_movement_energy": 0.8815008253806457,
+      "heldout_mean_displacement_energy": 0.8667826833933505
+    }
+  ]
+}
