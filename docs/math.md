@@ -200,10 +200,10 @@ It points toward denser regions.
 The normalising constant of $p$ is unknown, but Hyvärinen's score-matching
 objective does not need it. Up to a constant independent of $\theta$,
 
-$$
+$
 \mathbb{E}_{p}\!\left[\tfrac{1}{2}\lVert \nabla \log p_\theta - \nabla \log p \rVert^2\right]
 = \mathbb{E}_{p}\!\left[\tfrac{1}{2}\lVert \nabla E_\theta(z)\rVert^2 - \Delta E_\theta(z)\right] + \text{const},
-$$
+$
 
 where $\Delta E = \operatorname{tr} \nabla^2 E$ is the Laplacian. The right-hand
 side is averaged over the cells and minimised (`loss="esm"`). The Laplacian is
@@ -215,9 +215,9 @@ computed exactly for $d \le 20$ and by random probes
 The drift is taken to be the score, $f(z) = -\beta\,\nabla E_\theta(z)$
 ($\beta = 1$ by default), and the operator is its Jacobian:
 
-$$
+$
 J^{\text{energy}}_c = -\beta\,\nabla^2 E_\theta(z_c) = \beta\,\nabla^2 \log p(z_c).
-$$
+$
 
 A Hessian is **symmetric**, so $J^{\text{energy}}$ has real eigenvalues and orthogonal
 eigenvectors. It cannot represent rotation, and its eigenvectors have no sign.
