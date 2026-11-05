@@ -23,17 +23,17 @@ Each cell $c$ has a position $z_c \in \mathbb{R}^d$ in a low-dimensional embeddi
 (typically the first $d = 10$–$20$ principal-component scores of log-normalised
 counts). Assume cells move in that space according to
 
-$
+$$
 \frac{dz}{dt} = f(z) + \text{noise},
-$
+$$
 
 where $f$ is the **drift**. Near a cell, the drift is approximately linear:
 
-$
+$$
 f(z_c + \delta) \approx f(z_c) + J_c\,\delta,
 \qquad
-J_c = \frac{\partial f}{\partial z}\bigg|_{z_c} \in \mathbb{R}^{d\times d}.
-$
+J_c = \frac{\partial f}{\partial z}\bigg\vert_{z_c} \in \mathbb{R}^{d\times d}.
+$$
 
 $J_c$ is the **local operator** (the Jacobian of the drift). Its eigenvalues
 $\lambda_1, \dots, \lambda_d$, ordered by real part, describe what happens to two
@@ -41,9 +41,9 @@ cells that start close together:
 
 | leading eigenvalue $\lambda_1$ (largest real part) | nearby cells… | typical place |
 |---|---|---|
-| $\operatorname{Re}\lambda_1 < 0$ | move closer along every direction | inside a stable state |
-| $\operatorname{Re}\lambda_1 > 0$ | separate along at least one direction | a branch point (fate decision) |
-| $\operatorname{Re}\lambda_1 \approx 0$ | neither | along a path, or a flat region |
+| $\mathrm{Re}\lambda_1 \lt 0$ | move closer along every direction | inside a stable state |
+| $\mathrm{Re}\lambda_1 \gt 0$ | separate along at least one direction | a branch point (fate decision) |
+| $\mathrm{Re}\lambda_1 \approx 0$ | neither | along a path, or a flat region |
 
 A non-zero imaginary part means rotation (for example, a cycle).
 
@@ -64,7 +64,7 @@ Both are stored in `adata.uns["scjdo2"]["J"]` with shape $(n, d, d)$; the tag
 ## 2. Time course: the flow operator (`sj.flow`)
 
 Input: positions $z_c$ and a sampling time $t_c$ for every cell, with
-$T \ge 2$ distinct times $t^{(1)} < \dots < t^{(T)}$.
+$T \ge 2$ distinct times $t^{(1)} \lt \dots \lt t^{(T)}$.
 
 ### 2.1 Velocity from optimal transport (`ot_velocity`)
 
@@ -74,13 +74,13 @@ $x_1, \dots, x_m$, with those of the later time, $y_1, \dots, y_{m'}$, by
 **entropic optimal transport**. The transport plan $\pi \in \mathbb{R}_{\ge 0}^{m\times m'}$
 solves
 
-$
+$$
 \pi^\star = \arg\min_{\pi} \sum_{j,k} \pi_{jk}\,\lVert x_j - y_k\rVert^2
 \;-\; \varepsilon\, H(\pi)
 \quad\text{s.t.}\quad
 \sum_k \pi_{jk} = \tfrac{1}{m},\;\;
 \sum_j \pi_{jk} = \tfrac{1}{m'},
-$
+$$
 
 with entropy $H(\pi) = -\sum_{jk}\pi_{jk}(\log \pi_{jk} - 1)$. The plan is the
 cheapest way to turn one population into the other while moving cells as little
@@ -88,18 +88,18 @@ as possible; the entropy term blurs it so that each early cell maps to a
 weighted cloud of later cells. It is computed with the Sinkhorn algorithm
 (library POT). The regularisation scales with the data,
 
-$
-\varepsilon = \texttt{eps} \times \operatorname{median}_{j,k} \lVert x_j - y_k\rVert^2,
+$$
+\varepsilon = \texttt{eps} \times \mathrm{median}_{j,k} \lVert x_j - y_k\rVert^2,
 \qquad \texttt{eps} = 0.05 \text{ by default}.
-$
+$$
 
 Each early cell's **velocity** is the displacement to the centre of its cloud,
 divided by the time step:
 
-$
+$$
 v_j = \frac{1}{t^{(i+1)} - t^{(i)}}
 \left( \frac{\sum_k \pi^\star_{jk}\, y_k}{\sum_k \pi^\star_{jk}} - x_j \right).
-$
+$$
 
 Cells of the last time point have no later time and get no velocity
 (`obs["flow_has_velocity"] = False`). Large pairs (more than $64\times 10^6$ cell pairs)
@@ -115,10 +115,10 @@ The velocities are noisy and exist only at sampled cells. A neural network
 $f_\theta : \mathbb{R}^d \to \mathbb{R}^d$ (a multilayer perceptron, hidden layers
 96-96-96) is fitted to them by least squares,
 
-$
+$$
 \min_\theta \; \frac{1}{|\mathcal{C}|}\sum_{c \in \mathcal{C}} \lVert f_\theta(z_c) - v_c \rVert^2
 \quad (+\text{ weight decay}),
-$
+$$
 
 over the cells $\mathcal{C}$ that have a velocity (AdamW optimiser, 1,500 steps of 256 cells).
 The fitted $f_\theta$ is then evaluated at every cell, including the last time
@@ -126,29 +126,29 @@ point (by extrapolation).
 
 ### 2.3 The flow operator
 
-$
-J^{\text{flow}}_c = \frac{\partial f_\theta}{\partial z}\bigg|_{z_c},
-$
+$$
+J^{\text{flow}}_c = \frac{\partial f_\theta}{\partial z}\bigg\vert_{z_c},
+$$
 
 computed exactly by automatic differentiation. $J^{\text{flow}}$ is **not**
 symmetric in general, so it can have complex eigenvalues and can represent
 rotation. Its leading eigenvalue is stored as `obs["flow_lambda1"]`
-$= \operatorname{Re}\lambda_1(J^{\text{flow}}_c)$.
+$= \mathrm{Re}\lambda_1(J^{\text{flow}}_c)$.
 
 ### 2.4 Descriptors (`flow_descriptors`)
 
 Raw matrix entries depend on the coordinates, so scJDO2 summarises each
 $J_c$ with eight numbers. With eigenvalues ordered by real part
-($\operatorname{Re}\lambda_1 \ge \operatorname{Re}\lambda_2 \ge \dots$):
+($\mathrm{Re}\lambda_1 \ge \mathrm{Re}\lambda_2 \ge \dots$):
 
 | name | formula |
 |---|---|
-| `sign_lead_re` | $\operatorname{sign}(\operatorname{Re}\lambda_1)$ |
-| `n_positive_real` | $\#\{k : \operatorname{Re}\lambda_k > 0\}$ |
-| `lead_re_over_max_abs_lambda` | $\operatorname{Re}\lambda_1 / \max_k\lvert\lambda_k\rvert$ |
-| `max_abs_imag_over_max_abs_lambda` | $\max_k \lvert\operatorname{Im}\lambda_k\rvert / \max_k\lvert\lambda_k\rvert$ (rotation) |
-| `spectral_gap_over_max_abs_lambda` | $(\operatorname{Re}\lambda_1 - \operatorname{Re}\lambda_2) / \max_k\lvert\lambda_k\rvert$ |
-| `trace_over_sum_abs_lambda` | $\operatorname{tr} J / \sum_k \lvert\lambda_k\rvert$ |
+| `sign_lead_re` | $\mathrm{sign}(\mathrm{Re}\lambda_1)$ |
+| `n_positive_real` | number of $k$ with $\mathrm{Re}\lambda_k \gt 0$ |
+| `lead_re_over_max_abs_lambda` | $\mathrm{Re}\lambda_1 / \max_k\lvert\lambda_k\rvert$ |
+| `max_abs_imag_over_max_abs_lambda` | $\max_k \lvert\mathrm{Im}\lambda_k\rvert / \max_k\lvert\lambda_k\rvert$ (rotation) |
+| `spectral_gap_over_max_abs_lambda` | $(\mathrm{Re}\lambda_1 - \mathrm{Re}\lambda_2) / \max_k\lvert\lambda_k\rvert$ |
+| `trace_over_sum_abs_lambda` | $\mathrm{tr} J / \sum_k \lvert\lambda_k\rvert$ |
 | `henrici` | $\sqrt{\lVert J\rVert_F^2 - \sum_k \lvert\lambda_k\rvert^2} \,/\, \lVert J\rVert_F$ |
 | `transient_gain` | $\max_{1\le k\le 30} \lVert J^k\rVert_2$ |
 
@@ -200,24 +200,24 @@ It points toward denser regions.
 The normalising constant of $p$ is unknown, but Hyvärinen's score-matching
 objective does not need it. Up to a constant independent of $\theta$,
 
-$
+$$
 \mathbb{E}_{p}\!\left[\tfrac{1}{2}\lVert \nabla \log p_\theta - \nabla \log p \rVert^2\right]
 = \mathbb{E}_{p}\!\left[\tfrac{1}{2}\lVert \nabla E_\theta(z)\rVert^2 - \Delta E_\theta(z)\right] + \text{const},
-$
+$$
 
-where $\Delta E = \operatorname{tr} \nabla^2 E$ is the Laplacian. The right-hand
+where $\Delta E = \mathrm{tr} \nabla^2 E$ is the Laplacian. The right-hand
 side is averaged over the cells and minimised (`loss="esm"`). The Laplacian is
 computed exactly for $d \le 20$ and by random probes
-($\operatorname{tr} H \approx \tfrac{1}{K}\sum_k u_k^\top H u_k$, $u_k \in \{\pm 1\}^d$) above.
+($\mathrm{tr} H \approx \tfrac{1}{K}\sum_k u_k^\top H u_k$, $u_k \in \lbrace\pm 1\rbrace^d$) above.
 
 ### 3.2 The operator
 
 The drift is taken to be the score, $f(z) = -\beta\,\nabla E_\theta(z)$
 ($\beta = 1$ by default), and the operator is its Jacobian:
 
-$
+$$
 J^{\text{energy}}_c = -\beta\,\nabla^2 E_\theta(z_c) = \beta\,\nabla^2 \log p(z_c).
-$
+$$
 
 A Hessian is **symmetric**, so $J^{\text{energy}}$ has real eigenvalues and orthogonal
 eigenvectors. It cannot represent rotation, and its eigenvectors have no sign.
@@ -228,17 +228,17 @@ $-1/\sigma_k^2$, one per principal axis. Between two dense clusters,
 $\log p$ curves upward along the line joining them, so one eigenvalue is
 positive. `examples/snapshot_quickstart.py` shows this for
 $E(x,y) = (x^2-4)^2/4 + y^2/2$: at the two wells $(\pm 2, 0)$,
-$\nabla^2 E = \operatorname{diag}(8, 1)$, so $\lambda_1 = -1$; at the bridge $(0,0)$,
-$\nabla^2 E = \operatorname{diag}(-4, 1)$, so $\lambda_1 = +4$.
+$\nabla^2 E = \mathrm{diag}(8, 1)$, so $\lambda_1 = -1$; at the bridge $(0,0)$,
+$\nabla^2 E = \mathrm{diag}(-4, 1)$, so $\lambda_1 = +4$.
 
 ### 3.3 Why this is density curvature, not stability
 
 When is the energy operator equal to the true dynamical operator? Take the
 stochastic dynamics
 
-$
+$$
 dz = f(z)\,dt + \sqrt{2}\,dW, \qquad f(z) = -(I + \gamma Q)\,\nabla U(z),
-$
+$$
 
 with $Q$ a constant antisymmetric matrix ($Q^\top = -Q$). The steady-state
 density is $p \propto e^{-U}$ **for every $\gamma$**, because the rotating part
@@ -266,24 +266,24 @@ dimensions; for $d \ge 4$ treat $J^{\text{energy}}$ as descriptive.
 Each cell is labelled from the largest eigenvalue $\lambda_{\max}$ of
 $J^{\text{energy}}_c$, against a tolerance $\tau$:
 
-$
+$$
 \text{label}_c =
 \begin{cases}
-\text{holder (basin)} & \lambda_{\max} < -\tau \quad\text{(density curves down in every direction: a local peak)}\\
-\text{fork} & \lambda_{\max} > +\tau \quad\text{(curves up in some direction: a saddle or trough)}\\
+\text{holder (basin)} & \lambda_{\max} \lt -\tau \quad\text{(density curves down in every direction: a local peak)}\\
+\text{fork} & \lambda_{\max} \gt +\tau \quad\text{(curves up in some direction: a saddle or trough)}\\
 \text{drift} & \text{otherwise (flat in some direction)}
 \end{cases}
-$
+$$
 
 and `obs["op_basin_index"]` $= -\lambda_{\max}$ (larger means a sharper peak).
 
 The tolerance comes from a **Gaussian oracle**: fit a Gaussian to each cluster
-$g$ and compute its softest curvature, $|\lambda_{\max}(-\Sigma_g^{-1})| = 1/\sigma_{g,\max}^2$.
+$g$ and compute its softest curvature, $\lvert\lambda_{\max}(-\Sigma_g^{-1})\rvert = 1/\sigma_{g,\max}^2$.
 Then
 
-$
-\tau = 0.1 \times \operatorname{median}_g \frac{1}{\sigma_{g,\max}^2}.
-$
+$$
+\tau = 0.1 \times \mathrm{median}_g \frac{1}{\sigma_{g,\max}^2}.
+$$
 
 Because $\tau$ depends on the cluster shapes and not on the fitted operator,
 two datasets classified with the same oracle are comparable.
@@ -302,12 +302,12 @@ layer gives each axis a sign from a measured velocity $v_c$ (metabolic
 labelling, RNA velocity, a lineage displacement, or a pseudotime gradient) in
 the same embedding:
 
-$
-\sigma_{c,k} = \operatorname{sign}(v_c \cdot u_{c,k})
+$$
+\sigma_{c,k} = \mathrm{sign}(v_c \cdot u_{c,k})
 \quad\text{if}\quad
-\frac{|v_c \cdot u_{c,k}|}{\lVert v_c\rVert} \ge 0.2,
+\frac{\lvert v_c \cdot u_{c,k}\rvert}{\lVert v_c\rVert} \ge 0.2,
 \quad\text{otherwise no sign.}
-$
+$$
 
 Sources are grouped into two outputs that answer different questions and are
 never merged: **flow** (how the cell moves now: labelling, then RNA velocity)
