@@ -75,3 +75,12 @@ aging was a test application. No tasks are open. Resume points:
   types, systemic vs local) — answerable from stored results;
 * linear shared-space design (per-type young-referenced PCA/FA, within-
   study permutation) — candidate baseline for operator alignment.
+
+## atlas
+
+| task | owner | status | title | verdict |
+|---|---|---|---|---|
+| atlas/R01 | manus | draft | Hematopoiesis reference space: inventory, identical refits, stability and batch gate | |
+| atlas/R02 | manus | draft | Cross-dataset motif recurrence and lineage concordance | |
+
+* 2026-11-06 — atlas workstream created (common operator-descriptor reference space per theme; first theme hematopoiesis: Paul15, dynamo, Setty). R01 drafted; R02 outline drafted (finalised after R01).
