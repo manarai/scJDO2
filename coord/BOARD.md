@@ -80,7 +80,8 @@ aging was a test application. No tasks are open. Resume points:
 
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
-| atlas/R01 | manus | draft | Hematopoiesis reference space: inventory, identical refits, stability and batch gate | |
+| atlas/R01 | manus | issued | Hematopoiesis reference space: inventory, identical refits, stability and batch gate | |
 | atlas/R02 | manus | draft | Cross-dataset motif recurrence and lineage concordance | |
 
 * 2026-11-06 — atlas workstream created (common operator-descriptor reference space per theme; first theme hematopoiesis: Paul15, dynamo, Setty). R01 drafted; R02 outline drafted (finalised after R01).
+* 2026-11-06 — atlas/R01 issued to Manus A (~/Documents/scJDO2-manus): identical refits of Paul15/dynamo/Setty, seed/length/half/batch stability gate (20 fits, 12 CPU-h); base 48a0bda.
