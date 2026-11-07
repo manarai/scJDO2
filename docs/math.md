@@ -183,6 +183,36 @@ In the manuscript's tests the group results were stable across refits, but
 per-cell rankings agreed only moderately (median Spearman 0.56). Check
 `flow_stability` before reading individual cells.
 
+### 2.6 Operator sequences along the transport plan (`scjdo2.flow_motifs`)
+
+The operator field has no time index of its own; the entropic plan $\pi$ of
+§2.1 supplies it. For a source cell $i$ at time $t_k$, write the row-conditional
+plan $R_{ij} = \pi_{ij} / \sum_{j'} \pi_{ij'}$ over cells $j$ at $t_{k+1}$.
+
+**Archetypes.** Each operator is normalised, $\tilde J_c = J_c / \lVert J_c \rVert_F$,
+and factorised as $\tilde J_c \approx \sum_{a=1}^{K} W_{ca} H_a$ with
+$W \ge 0$ (semi-NMF); cell $c$ is labelled $\ell_c = \arg\max_a W_{ca}$.
+
+**Transition matrix.** With one-hot labels $A$ (cells × labels),
+
+$$
+M^{(k)}_{ab} \;=\; \sum_{i:\,\ell_i = a} \big(R A\big)_{ib},
+\qquad
+P^{(k)}(b \mid a) = M^{(k)}_{ab} / n_a .
+$$
+
+$RA$ is computed while the transport runs, so the full plan is used. The null
+permutes $\ell$ among the source cells at $t_k$; this keeps $n_a$ and the target
+composition and removes only the dependence of a cell's destination on its label.
+
+**Paths.** Chains $i_0 \to i_1 \to \dots$ with $i_{k+1} \sim R_{i_k \cdot}$ give label
+sequences $(\ell_{i_0}, \ell_{i_1}, \dots)$, compared with the Markov prediction ($p_0$ = label shares at the first time)
+$p_0(a_0)\prod_k P^{(k)}(a_{k+1} \mid a_k)$.
+
+**Drift paths.** $\dot z = f(z)$ integrated from chosen cells (fourth-order
+Runge–Kutta) gives a continuous operator profile $J(z(t))$; a deterministic
+path does not branch.
+
 ---
 
 ## 3. Snapshot: the energy operator (`sj.fit`)

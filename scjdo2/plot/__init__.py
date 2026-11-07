@@ -80,8 +80,10 @@ __all__ = [
     "figure_energy_landscape",
     "figure_orientation",
     "figure_flow_groups",
+    "figure_flow_archetypes",
+    "figure_flow_transitions",
 ]
-from .flow import figure_flow_groups  # noqa: E402
+from .flow import figure_flow_archetypes, figure_flow_groups, figure_flow_transitions  # noqa: E402
 
 # Optional parts (not shipped in every release).
 try:

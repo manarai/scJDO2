@@ -85,7 +85,8 @@ adata.uns["scjdo2"]["J"]                        # (n_cells, 15, 15) flow operato
 | `obsm["flow_drift"]` | fitted drift *f(z)* at every cell |
 | `obsm["flow_descriptors"]`, `obsm["flow_descriptor_ranks"]` | raw and rank-transformed descriptors |
 | `uns["scjdo2"]["J"]` | *J_flow*, (n, d, d) float32; read by `scjdo2.opspace` |
-| `uns["flow"]` | parameters, per-pair OT diagnostics (`ot_pairs`), drift-fit record |
+| `obsp["flow_plan"]` | transport plan: row *i* = destination distribution of cell *i* over the next sampling time, its `keep_plan` (default 100) most likely destinations, renormalised (a truncation: on a 3,000-cell LARRY subsample the top 100 held a median 63% of each row's mass) |
+| `uns["flow"]` | parameters, per-pair OT diagnostics (`ot_pairs`, incl. the plan's kept mass), drift-fit record, drift weights |
 
 All outputs can be written with `adata.write_h5ad`.
 
@@ -144,6 +145,55 @@ agreement of per-cell λ₁ and of group medians between refits; it also writes
 stability_seeds=(0, 1, 2))` runs `flow`, both checks and the `flow_groups` figure and saves the
 run. Running `scjdo2.fit` (energy operator) on the same AnnData is refused, because both
 operators use `uns["scjdo2"]["J"]`; use `adata.copy()`.
+
+## Operator motifs along the time course (`scjdo2.flow_motifs`)
+
+*J_flow* gives each cell an operator but no order: the operator of a day-2 cell and
+those of the day-4 cells it becomes are not linked by *J* itself. The link is the OT
+plan, which `sj.flow` now keeps. Archetypes (operator shapes) chained along the plan give
+operator **sequences**:
+
+```python
+sj.flow_archetypes(adata)                 # K shapes of J_flow, obs["flow_archetype"] = A1..AK
+tab = sj.flow_transitions(adata)          # archetype -> archetype per time pair, vs a shuffle null
+paths = sj.flow_paths(adata)              # sampled chains through the plan vs the Markov prediction
+res = sj.flow_integrate(adata, start=np.flatnonzero(adata.obs["day"] == 2)[:20])   # drift paths
+
+from scjdo2.plot import figure_flow_archetypes, figure_flow_transitions
+figure_flow_archetypes(adata, out="archetypes.png")     # eigenvalues + matrix per archetype
+figure_flow_transitions(adata, out="transitions.png")   # P(to | from) per time pair
+```
+
+* **`flow_archetypes`**: semi-NMF of the per-cell operators (`scjdo2.archetypes`), each
+  operator first divided by its Frobenius norm so archetypes are shapes, not speeds
+  (`normalize=None` keeps magnitudes); *K* by held-out reconstruction error. Fitted on up to
+  4,000 cells, then every cell is assigned by non-negative least squares. Writes
+  `obsm["flow_archetype_weights"]`, `obs["flow_archetype"]` (largest weight; A1 the most
+  common), `obs["flow_archetype_share"]` and `uns["flow"]["archetypes"]`.
+* **`flow_transitions`** (the default readout): for each pair of consecutive times, the mass
+  that cells labelled *k* send to cells labelled *l*, `prob = P(l | k)`, against a null that
+  permutes the source labels within the source time (label sizes and target composition
+  kept). It re-runs the transport of `sj.flow` with the same settings (checked against the
+  stored velocities) and contracts the **full** plan with the labels, so nothing is truncated;
+  `exact=False` uses the stored top-k plan instead. Any `obs` column can be the labels
+  (`labels="cell_type"`).
+* **`flow_paths`**: chains sampled through the stored (truncated) plan from the first time to
+  the last; counts of label sequences, with `obs_over_expected` against a Markov chain on the
+  same plan. Values far from 1 point to memory or rare routes the matrices average away.
+  Because the stored plan keeps only each cell's nearest destinations, read path frequencies
+  as approximate; the transition matrices are the exact readout.
+* **`flow_integrate`**: RK4 paths of the fitted drift (`scjdo2.flow_operator.load_drift`
+  rebuilds it from `uns["flow"]["drift_weights"]`), with λ₁ and the archetype weights along
+  each path. A deterministic path cannot branch: use it as a picture of the mean flow.
+
+**Status and caveats.** This readout is new and **not yet benchmarked**: in particular,
+archetype shapes have not yet been shown to be stable across biological replicates, and
+there is no cross-dataset frame yet. Read it within one dataset and check stability before
+interpreting a motif. Targets at the last sampling time have extrapolated operators
+(`to_extrapolated`). Balanced transport moves any change in composition between times as
+cells changing state; with mini-batch transport, batch-to-batch composition noise adds a
+small leak between labels (about 1% at the default 4,000-cell batches). The p-values are
+conditional on one fitted plan and drift; they do not include refit variation.
 
 ## Reproducing the paper
 

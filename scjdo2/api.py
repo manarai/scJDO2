@@ -257,7 +257,7 @@ def flow_stability(adata: AnnData, time_key: Optional[str] = None, *,
     lams = []
     for s in seeds:
         b = light.copy()
-        flow(b, time_key, seed=int(s), descriptors=False, key_added="_refit", **kw)
+        flow(b, time_key, seed=int(s), descriptors=False, keep_plan=None, key_added="_refit", **kw)
         lams.append(b.obs["_refit_lambda1"].to_numpy(np.float64))
     lams = np.vstack(lams)
 

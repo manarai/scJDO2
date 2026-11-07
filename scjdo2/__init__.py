@@ -6,6 +6,8 @@ Time course (label-free flow operator, App Note)::
     sj.flow(adata, time_key="day")              # J_flow, lambda_1, descriptors
     sj.flow_groups(adata, "cell_type")          # lambda_1 per group, bootstrap CI
     sj.flow_stability(adata, time_key="day")    # per-cell agreement across refits
+    sj.flow_archetypes(adata)                   # operator shapes, a label per cell
+    sj.flow_transitions(adata)                  # archetype -> archetype along the OT plan
 
 Snapshot (energy landscape; see API.md)::
 
@@ -24,6 +26,7 @@ module.
 __version__ = "0.6.0"
 
 from .flow_operator import flow, flow_descriptors, ot_velocity  # noqa: E402
+from .flow_motifs import flow_archetypes, flow_integrate, flow_paths, flow_transitions  # noqa: E402
 
 _API = ("fit", "analyse", "compare_conditions", "orient", "figures", "run", "FIGURES",
         "flow_groups", "flow_stability")
@@ -31,6 +34,7 @@ _API = ("fit", "analyse", "compare_conditions", "orient", "figures", "run", "FIG
 __all__ = [
     *_API,
     "flow", "ot_velocity", "flow_descriptors", "flow_operator",
+    "flow_archetypes", "flow_transitions", "flow_paths", "flow_integrate", "flow_motifs",
     "api", "embed", "energy_drift", "rates", "field", "fisher", "opspace", "landscape",
     "motifs", "compare", "archetypes", "clone", "grammar", "labelled_rates", "measured_drift",
     "orient", "io", "cli", "pipeline", "plot", "data",

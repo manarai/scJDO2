@@ -113,6 +113,8 @@ axes a direction. See [API.md §3](API.md#3-sjorient--directions).
 | eight coordinate-free descriptors (and their ranks) | `obsm["flow_descriptors"]`, `obsm["flow_descriptor_ranks"]` | flow |
 | group table: median λ₁, interval, rank | returned by `sj.flow_groups`; `uns["flow"]["groups"]` | flow |
 | refit agreement | returned by `sj.flow_stability`; `obs["flow_lambda1_rank_sd"]` | flow |
+| OT plan linking cells across times | `obsp["flow_plan"]` | flow |
+| operator archetypes and their transitions along the plan (new, not yet benchmarked) | `sj.flow_archetypes`, `sj.flow_transitions`, `sj.flow_paths` | flow |
 | holder / fork / drift label, basin index | `obs["op_behaviour_basin"]`, `obs["op_basin_index"]` | energy |
 | energy $E(z)$ (low = dense) | `obs["energy"]` | energy |
 | oriented axes, rotation, conflicts | `obs["flow_orientation_class"]`, `obsm["orient_flow_sign"]`, … | energy + `orient` |
