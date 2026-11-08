@@ -60,6 +60,22 @@ scjdo2 run     --input <h5ad> --embed scvi|fa|pca --k auto --out <dir>
 scjdo2 compare --v1 <dir> --v2 <dir>
 ```
 
+## Route simulation (for people and AI agents)
+
+```bash
+scjdo2 simulate --input data.h5ad --out results/ --state-key cell_type --start-state HSC \
+    [--clone-key clone --time-key day | --velocity-key velocity_pca --latent-key X_pca | --time-key day | --pseudotime-key pseudotime] \
+    [--reference trrust_rawdata.mouse.tsv]
+```
+
+Walkers hop between measured cells along a scJDO2 drift fitted to the best
+available direction evidence (lineage > measured velocity > time points >
+pseudotime) and the output is an interactive `route_page.html` (archetypes,
+genes and gene coupling along each route) plus `report.md` with caveats
+computed from the run. With lineage barcodes it also runs a held-out clone
+fate test. AI agents: read [`AGENTS.md`](AGENTS.md) first. Code:
+`scjdo2/routes/`.
+
 ## Status
 
 Phase A (audit + scaffold) in progress — see `V2_PLAN.md` and `CHANGELOG.md`.

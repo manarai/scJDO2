@@ -1,0 +1,572 @@
+<meta charset="utf-8">
+<title>__TITLE__</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one large rotatable landscape, an instrument panel beside it with live state counts (stacked on phones). */
+:root {
+  --bg: #eef1f3; --panel: #ffffff; --fg: #16202a; --muted: #5b6875; --line: #d3dae0; --accent: #2f6f8f;
+  --surf-lo: #1d3546; --surf-hi: #e3eaee; --contour: #0d1a22; --scene: #e6ebee;
+  --a0: #2f62c9; --a1: #b07a00; --a2: #8a3fb0; --drv: #c4452a; --rsp: #1f7f96;
+  --s0: #3b4a57; --s1: #b5651d; --s2: #6a8f2a; --s3: #b8323b; --s4: #d4577f; --s5: #7a5cc4; --s6: #1f8a9e; --s7: #c79a12;
+  --font-display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1418; --panel: #151e24; --fg: #e3eaef; --muted: #93a2ae; --line: #26333c; --accent: #7cc0dd;
+    --surf-lo: #0d2433; --surf-hi: #8fa8b7; --contour: #e8f1f6; --scene: #0b1115;
+    --a0: #7aa7ff; --a1: #f2c04b; --a2: #cf9bf5; --drv: #ff8a65; --rsp: #5fd4e6;
+    --s0: #dfe6ea; --s1: #f0a04b; --s2: #a6d66a; --s3: #ff6b6b; --s4: #ff9ec2; --s5: #b9a3ff; --s6: #5fd4e6; --s7: #ffd45e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1418; --panel: #151e24; --fg: #e3eaef; --muted: #93a2ae; --line: #26333c; --accent: #7cc0dd;
+  --surf-lo: #0d2433; --surf-hi: #8fa8b7; --contour: #e8f1f6; --scene: #0b1115;
+  --a0: #7aa7ff; --a1: #f2c04b; --a2: #cf9bf5; --drv: #ff8a65; --rsp: #5fd4e6;
+  --s0: #dfe6ea; --s1: #f0a04b; --s2: #a6d66a; --s3: #ff6b6b; --s4: #ff9ec2; --s5: #b9a3ff; --s6: #5fd4e6; --s7: #ffd45e;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 28px; box-sizing: border-box;
+}
+.wrap { max-width: 1280px; margin: 0 auto; display: grid; gap: 16px; }
+header { display: grid; gap: 4px; }
+h1 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+.sub { color: var(--muted); margin: 0; max-width: 72ch; }
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+@media (max-width: 860px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.stage { position: relative; min-width: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: var(--scene); aspect-ratio: 4 / 3; max-width: 100%; }
+@media (max-width: 860px) { .stage { aspect-ratio: 1 / 1; } }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.tag { position: absolute; left: 0; top: 0; transform: translate(-50%, -100%); font: 600 12px var(--font-mono); padding: 2px 7px; border-radius: 6px;
+       background: var(--panel); border: 1px solid var(--line); color: var(--fg); white-space: nowrap; pointer-events: none; }
+.tag i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
+.hint { position: absolute; left: 12px; bottom: 10px; font: 12px var(--font-mono); color: var(--muted); pointer-events: none; }
+.clock { position: absolute; right: 12px; top: 12px; font: 600 12px var(--font-mono); padding: 4px 9px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); pointer-events: none; font-variant-numeric: tabular-nums; }
+aside { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 18px; min-width: 0; }
+.label { font: 600 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 6px; }
+.controls { display: flex; gap: 8px; align-items: center; }
+button { font: 600 14px var(--font-body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; cursor: pointer; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--panel); min-width: 84px; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.row2 { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.states { display: grid; gap: 6px; }
+.st { display: grid; grid-template-columns: 10px 76px 1fr 32px; gap: 8px; align-items: center; font-size: 13.5px; }
+.st .dot { width: 10px; height: 10px; border-radius: 50%; }
+.st .bar { height: 7px; border-radius: 4px; background: var(--line); overflow: hidden; }
+.st .bar span { display: block; height: 100%; }
+.num { font: 13px var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.opts { display: grid; gap: 8px; font-size: 14px; }
+.opts label { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+.method { color: var(--muted); font-size: 13.5px; max-width: 78ch; display: grid; gap: 6px; }
+.method p { margin: 0; }
+code { font-family: var(--font-mono); font-size: 0.92em; }
+.routes { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+.routes h2 { font-family: var(--font-display); font-size: 20px; margin: 0; }
+.routes .lede { color: var(--muted); margin: 2px 0 0; font-size: 14px; max-width: 80ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 600 13px var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.chip[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.chip .n { font: 12px var(--font-mono); color: var(--muted); }
+.chip i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+.charts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 16px; }
+@media (max-width: 860px) { .charts { grid-template-columns: minmax(0, 1fr); } }
+.chart { min-width: 0; display: grid; gap: 8px; align-content: start; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart svg text { font: 11px var(--font-mono); fill: var(--muted); }
+.chart svg .glabel { font: 600 11.5px var(--font-mono); }
+.chart svg .axis { stroke: var(--line); }
+.badge { font: 12px var(--font-mono); padding: 3px 8px; border-radius: 6px; border: 1px solid var(--line); color: var(--muted); }
+.badge.ok { color: var(--fg); border-color: var(--accent); }
+.tip { font: 12px var(--font-mono); color: var(--muted); min-height: 1.5em; }
+.net { display: grid; gap: 8px; min-width: 0; }
+.net svg { width: 100%; height: auto; display: block; }
+.net svg text { font: 600 12px var(--font-mono); }
+.net .ctl { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-size: 13.5px; }
+.net .ctl input[type=range] { flex: 1 1 200px; width: auto; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font: 12px var(--font-mono); color: var(--muted); align-items: center; }
+.legend svg { width: 34px; height: 10px; display: inline-block; vertical-align: middle; }
+.ft { border-collapse: collapse; font-size: 13px; color: var(--fg); margin: 4px 0; }
+.ft th, .ft td { padding: 4px 12px 4px 0; border-bottom: 1px solid var(--line); text-align: left; }
+.ft th { font: 600 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.ft .num { text-align: right; font-variant-numeric: tabular-nums; }
+.caveat { color: var(--muted); font-size: 13px; margin: 0; max-width: 90ch; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>__HEADLINE__</h1>
+    <p class="sub">__SUB__</p>
+  </header>
+
+  <div class="main">
+    <div class="stage" id="stage">
+      <canvas id="c" aria-label="3D landscape with cells hopping between measured cells"></canvas>
+      <div id="tags"></div>
+      <div class="clock" id="clock">t = 0.00</div>
+      <div class="hint">drag to rotate · scroll or pinch to zoom</div>
+    </div>
+
+    <aside>
+      <div>
+        <p class="label">Playback</p>
+        <div class="controls">
+          <button class="primary" id="play">Pause</button>
+          <button id="restart">Restart</button>
+        </div>
+        <div style="margin-top:12px"><input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Time"></div>
+        <div class="row2" style="margin-top:6px">
+          <label for="speed" class="num" style="color:var(--muted)">speed</label>
+          <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select>
+        </div>
+      </div>
+
+      <div>
+        <p class="label">Cells in each state now</p>
+        <div class="states" id="states"></div>
+      </div>
+
+      <div class="opts">
+        <p class="label" style="margin:0">Display</p>
+        <label><input type="checkbox" id="optTrail" checked> Show trails</label>
+        <label><input type="checkbox" id="optReal"> Show the __NMEAS__ measured cells</label>
+        <label><input type="checkbox" id="optTags" checked> Label the states</label>
+        <label><input type="checkbox" id="optRotate"> Slow auto-rotate</label>
+      </div>
+    </aside>
+  </div>
+
+  <section class="routes" aria-labelledby="rt-h">
+    <div>
+      <h2 id="rt-h">Trajectories: archetypes and genes along each route</h2>
+      <p class="lede">Pick a route to highlight its cells on the landscape. Left: the share of nearby measured cells in each scJDO2 archetype, from the start (0) to arrival (1). Right: the selected archetype's most driver-leaning and most responder-leaning genes, and how their expression changes along the route.</p>
+    </div>
+    <div class="chips" id="routeChips" role="group" aria-label="Routes"></div>
+    <div class="charts">
+      <div class="chart">
+        <p class="label" style="margin:0">Archetype share along the route</p>
+        <svg id="archSvg" viewBox="0 0 520 250" role="img" aria-label="Archetype share over relative time"></svg>
+        <div class="chips" id="archChips" role="group" aria-label="Archetypes"></div>
+      </div>
+      <div class="chart">
+        <div class="row2"><p class="label" style="margin:0" id="geneTitle">Genes</p><span class="badge" id="refBadge"></span></div>
+        <svg id="geneSvg" viewBox="0 0 560 330" role="img" aria-label="Gene expression over relative time"></svg>
+        <div class="tip" id="geneTip">Hover a line for the gene, its formal role and polarity.</div>
+      </div>
+    </div>
+    <div class="net">
+      <div class="row2"><p class="label" style="margin:0" id="netTitle">Gene coupling</p><span class="badge" id="netBadge"></span></div>
+      <svg id="netSvg" viewBox="0 0 900 440" role="img" aria-label="Gene coupling within the selected archetype at the current point on the route"></svg>
+      <div class="ctl">
+        <label><input type="checkbox" id="netFollow" checked> Follow playback</label>
+        <input type="range" id="netScrub" min="0" max="1000" value="0" aria-label="Position along the route">
+        <span class="num" id="netPos" style="min-width:9ch">τ = 0.00</span>
+      </div>
+      <div class="legend">
+        <span><svg viewBox="0 0 34 10"><line x1="1" y1="5" x2="27" y2="5" stroke="var(--accent)" stroke-width="2.5"/><path d="M26,1 L33,5 L26,9 z" fill="var(--accent)"/></svg> gene A moves gene B in the archetype's operator</span>
+        <span>edge width = operator weight × archetype share × source expression, now</span>
+        <span>node size = expression now</span>
+      </div>
+      <div class="tip" id="netTip">Hover a gene or an edge.</div>
+    </div>
+    <p class="caveat" id="routeCaveat"></p>
+  </section>
+
+  <div class="method">
+    __METHODS__
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>window.DATA = __DATA__;</script>
+<script>window.ROUTES = __ROUTES__;</script>
+<script>window.CAVEAT = __CAVEAT__;</script>
+<script>
+(function () {
+  const D = window.DATA;
+  const GX = D.x.length, GY = D.y.length, x0 = D.x[0], x1 = D.x[GX - 1], y0 = D.y[0], y1 = D.y[GY - 1];
+  const span = Math.max(x1 - x0, y1 - y0), mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+  const S = 4.2 / span, CAP = D.meta.cap, HMAX = 1.25;
+  const F = D.traj.length, N = D.traj[0].length, NS = D.names.length;
+  const U = Float32Array.from(D.U.flat());
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const wx = x => (x - mx) * S, wz = y => -(y - my) * S, wy = e => (Math.min(e, CAP) / CAP) * HMAX;
+
+  const canvas = document.getElementById('c'), stageEl = document.getElementById('stage');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 100);
+  camera.position.set(-0.9, 5.4, 3.9);
+  const controls = new THREE.OrbitControls(camera, canvas);
+  controls.target.set(0.1, 0.2, 0); controls.enableDamping = true; controls.dampingFactor = 0.08;
+  controls.minDistance = 2.5; controls.maxDistance = 14; controls.maxPolarAngle = Math.PI * 0.49; controls.update();
+
+  // surface
+  const pos = new Float32Array(GX * GY * 3);
+  for (let j = 0; j < GY; j++) for (let i = 0; i < GX; i++) {
+    const k = j * GX + i; pos[3 * k] = wx(D.x[i]); pos[3 * k + 1] = wy(U[k]); pos[3 * k + 2] = wz(D.y[j]);
+  }
+  const idx = [];
+  for (let j = 0; j < GY - 1; j++) for (let i = 0; i < GX - 1; i++) { const a = j * GX + i, b = a + 1, c = a + GX, d = c + 1; idx.push(a, c, b, b, c, d); }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('energy', new THREE.BufferAttribute(Float32Array.from(U, e => Math.min(e, CAP)), 1));
+  geo.setAttribute('inside', new THREE.BufferAttribute(Float32Array.from(D.inside.flat()), 1));
+  geo.setIndex(idx);
+  const surfMat = new THREE.ShaderMaterial({
+    extensions: { derivatives: true }, side: THREE.DoubleSide,
+    uniforms: { lo: { value: new THREE.Color() }, hi: { value: new THREE.Color() }, line: { value: new THREE.Color() },
+                cap: { value: CAP }, lightDir: { value: new THREE.Vector3(0.3, 1.0, 0.4).normalize() } },
+    vertexShader: `attribute float energy; attribute float inside; varying float vE; varying float vIn; varying vec3 vP;
+      void main(){ vE = energy; vIn = inside; vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+    fragmentShader: `uniform vec3 lo; uniform vec3 hi; uniform vec3 line; uniform float cap; uniform vec3 lightDir;
+      varying float vE; varying float vIn; varying vec3 vP;
+      void main(){
+        if (vIn < 0.5) discard;
+        float t = clamp(vE / cap, 0.0, 1.0);
+        vec3 col = mix(lo, hi, pow(t, 0.8));
+        vec3 n = normalize(cross(dFdx(vP), dFdy(vP))); if (n.y < 0.0) n = -n;
+        col *= 0.55 + 0.45 * max(dot(n, lightDir), 0.0);
+        float c = vE * 2.0; float w = fwidth(c);
+        float band = 1.0 - smoothstep(0.0, w * 1.2, abs(fract(c + 0.5) - 0.5));
+        col = mix(col, line, band * 0.3 * (1.0 - step(cap - 0.02, vE)));
+        gl_FragColor = vec4(col, 1.0);
+      }`
+  });
+  scene.add(new THREE.Mesh(geo, surfMat));
+
+  function sampleU(x, y) {
+    const fx = Math.min(GX - 1.001, Math.max(0, (x - x0) / (x1 - x0) * (GX - 1)));
+    const fy = Math.min(GY - 1.001, Math.max(0, (y - y0) / (y1 - y0) * (GY - 1)));
+    const i = Math.floor(fx), j = Math.floor(fy), u = fx - i, v = fy - j, q = j * GX + i;
+    return (1 - u) * (1 - v) * U[q] + u * (1 - v) * U[q + 1] + (1 - u) * v * U[q + GX] + u * v * U[q + GX + 1];
+  }
+
+  const dotTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 64; const g = c.getContext('2d');
+    const r = g.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, '#fff'); r.addColorStop(0.62, '#fff');
+    r.addColorStop(0.75, 'rgba(255,255,255,0.35)'); r.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(c); })();
+
+  // measured cells (static)
+  const NR = D.cells.length, rPos = new Float32Array(NR * 3), rCol = new Float32Array(NR * 3);
+  D.cells.forEach((c, n) => { rPos[3 * n] = wx(c[0]); rPos[3 * n + 1] = wy(sampleU(c[0], c[1])) + 0.012; rPos[3 * n + 2] = wz(c[1]); });
+  const rGeo = new THREE.BufferGeometry();
+  rGeo.setAttribute('position', new THREE.BufferAttribute(rPos, 3)); rGeo.setAttribute('color', new THREE.BufferAttribute(rCol, 3));
+  const real = new THREE.Points(rGeo, new THREE.PointsMaterial({ size: 0.05, map: dotTex, vertexColors: true, transparent: true, opacity: 0.75, alphaTest: 0.2 }));
+  real.visible = false; scene.add(real);
+
+  // moving cells
+  const LIFT = 0.04;
+  const cPos = new Float32Array(N * 3), cCol = new Float32Array(N * 3);
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(cPos, 3)); pGeo.setAttribute('color', new THREE.BufferAttribute(cCol, 3));
+  scene.add(new THREE.Points(pGeo, new THREE.PointsMaterial({ size: 0.13, map: dotTex, vertexColors: true, transparent: true, alphaTest: 0.3 })));
+
+  const L = 18, tPos = new Float32Array(N * L * 6), tCol = new Float32Array(N * L * 6);
+  const tGeo = new THREE.BufferGeometry();
+  tGeo.setAttribute('position', new THREE.BufferAttribute(tPos, 3)); tGeo.setAttribute('color', new THREE.BufferAttribute(tCol, 3));
+  const trails = new THREE.LineSegments(tGeo, new THREE.LineBasicMaterial({ vertexColors: true })); scene.add(trails);
+
+  // state list + labels
+  const stEl = document.getElementById('states'), tagsEl = document.getElementById('tags');
+  const rows = D.names.map((n, k) => {
+    const r = document.createElement('div'); r.className = 'st';
+    r.innerHTML = `<span class="dot" style="background:var(--s${k})"></span><span>${n}</span><span class="bar"><span style="background:var(--s${k});width:0%"></span></span><span class="num">0</span>`;
+    stEl.appendChild(r); return { bar: r.querySelector('.bar span'), num: r.querySelector('.num') };
+  });
+  const tags = D.centroids.map((c, k) => {
+    const t = document.createElement('div'); t.className = 'tag'; t.innerHTML = `<i style="background:var(--s${k})"></i>${c.name}`;
+    tagsEl.appendChild(t);
+    return { el: t, v: new THREE.Vector3(wx(c.x), wy(sampleU(c.x, c.y)) + 0.28, wz(c.y)) };
+  });
+
+  const sc = [], bg = new THREE.Color();
+  function applyTheme() {
+    bg.set(css('--scene')); scene.background = bg;
+    for (let k = 0; k < NS; k++) sc[k] = new THREE.Color(css('--s' + k));
+    surfMat.uniforms.lo.value.set(css('--surf-lo')); surfMat.uniforms.hi.value.set(css('--surf-hi')); surfMat.uniforms.line.value.set(css('--contour'));
+    D.cells.forEach((c, n) => { const s = sc[c[2]]; rCol[3 * n] = s.r; rCol[3 * n + 1] = s.g; rCol[3 * n + 2] = s.b; });
+    rGeo.attributes.color.needsUpdate = true; dirty = true;
+  }
+
+  const opt = { trail: true, tags: true };
+  let SEL = null;
+  const ui = { scrub: document.getElementById('scrub'), play: document.getElementById('play'), clock: document.getElementById('clock') };
+  function lerp(n, fr) { const f0 = Math.floor(fr), f1 = Math.min(F - 1, f0 + 1), a = fr - f0, p = D.traj[f0][n], q = D.traj[f1][n];
+    return [(1 - a) * p[0] + a * q[0], (1 - a) * p[1] + a * q[1]]; }
+  function setFrame(fr) {
+    const f0 = Math.floor(fr), st = D.states[f0], counts = new Array(NS).fill(0);
+    for (let n = 0; n < N; n++) {
+      const [x, y] = lerp(n, fr), s = sc[st[n]]; counts[st[n]]++;
+      cPos[3 * n] = wx(x); cPos[3 * n + 1] = wy(sampleU(x, y)) + LIFT; cPos[3 * n + 2] = wz(y);
+      const kd = SEL && !SEL.has(n) ? 0.14 : 1;
+      cCol[3 * n] = bg.r + (s.r - bg.r) * kd; cCol[3 * n + 1] = bg.g + (s.g - bg.g) * kd; cCol[3 * n + 2] = bg.b + (s.b - bg.b) * kd;
+    }
+    pGeo.attributes.position.needsUpdate = true; pGeo.attributes.color.needsUpdate = true; pGeo.computeBoundingSphere();
+    trails.visible = opt.trail;
+    if (opt.trail) {
+      for (let n = 0; n < N; n++) for (let s = 0; s < L; s++) {
+        const fa = Math.max(0, f0 - s), fb = Math.max(0, f0 - s - 1), pa = D.traj[fa][n], pb = D.traj[fb][n], o = (n * L + s) * 6;
+        const ca = sc[D.states[fa][n]], dm = SEL && !SEL.has(n) ? 0 : 1, ka = (1 - s / L) * dm, kb = (1 - (s + 1) / L) * dm;
+        tPos[o] = wx(pa[0]); tPos[o + 1] = wy(sampleU(pa[0], pa[1])) + LIFT * 0.5; tPos[o + 2] = wz(pa[1]);
+        tPos[o + 3] = wx(pb[0]); tPos[o + 4] = wy(sampleU(pb[0], pb[1])) + LIFT * 0.5; tPos[o + 5] = wz(pb[1]);
+        tCol[o] = bg.r + (ca.r - bg.r) * ka; tCol[o + 1] = bg.g + (ca.g - bg.g) * ka; tCol[o + 2] = bg.b + (ca.b - bg.b) * ka;
+        tCol[o + 3] = bg.r + (ca.r - bg.r) * kb; tCol[o + 4] = bg.g + (ca.g - bg.g) * kb; tCol[o + 5] = bg.b + (ca.b - bg.b) * kb;
+      }
+      tGeo.attributes.position.needsUpdate = true; tGeo.attributes.color.needsUpdate = true; tGeo.computeBoundingSphere();
+    }
+    rows.forEach((r, k) => { r.num.textContent = counts[k]; r.bar.style.width = (100 * counts[k] / N) + '%'; });
+    ui.clock.textContent = (D.meta.clock_label || 't') + ' = ' + (fr / (F - 1) * D.meta.n_steps * D.meta.dt).toFixed(D.meta.clock_digits ?? 1);
+    ui.scrub.value = Math.round(1000 * fr / (F - 1));
+    if (window.__routePlayhead) window.__routePlayhead(fr);
+  }
+  const tmp = new THREE.Vector3();
+  function placeTags() {
+    const w = stageEl.clientWidth, h = stageEl.clientHeight;
+    tags.forEach(t => {
+      tmp.copy(t.v).project(camera);
+      const vis = opt.tags && tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
+      t.el.hidden = !vis;
+      if (vis) t.el.style.transform = `translate(${(tmp.x + 1) / 2 * w}px, ${(1 - tmp.y) / 2 * h}px) translate(-50%, -100%)`;
+    });
+  }
+
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let playing = !reduce, speed = 1, fr = 0, last = null, dirty = true, hold = 0;
+  const FPS = 30;
+  function setPlaying(p) { playing = p; ui.play.textContent = p ? 'Pause' : 'Play'; last = null; }
+  ui.play.addEventListener('click', () => { if (!playing && fr >= F - 1) fr = 0; setPlaying(!playing); });
+  document.getElementById('restart').addEventListener('click', () => { fr = 0; hold = 0; dirty = true; setPlaying(true); });
+  ui.scrub.addEventListener('input', () => { fr = (F - 1) * ui.scrub.value / 1000; dirty = true; setPlaying(false); });
+  document.getElementById('speed').addEventListener('change', e => { speed = parseFloat(e.target.value); });
+  document.getElementById('optTrail').addEventListener('change', e => { opt.trail = e.target.checked; dirty = true; });
+  document.getElementById('optReal').addEventListener('change', e => { real.visible = e.target.checked; });
+  document.getElementById('optTags').addEventListener('change', e => { opt.tags = e.target.checked; });
+  document.getElementById('optRotate').addEventListener('change', e => { controls.autoRotate = e.target.checked; controls.autoRotateSpeed = 0.6; });
+  if (!playing) { fr = Math.round(0.6 * (F - 1)); ui.play.textContent = 'Play'; }
+
+  function resize() { const w = stageEl.clientWidth, h = stageEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); dirty = true; }
+  new ResizeObserver(resize).observe(stageEl);
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  mq.addEventListener && mq.addEventListener('change', applyTheme);
+  new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+
+  // ---------------- route panels
+  const R = window.ROUTES, svgNS = 'http://www.w3.org/2000/svg';
+  const el = (tag, attrs, parent) => { const e = document.createElementNS(svgNS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+  const ref = {}; R.reference.forEach(r => { ref[r.archetype] = r; });
+  const chipsEl = document.getElementById('routeChips'), archChips = document.getElementById('archChips');
+  const archSvg = document.getElementById('archSvg'), geneSvg = document.getElementById('geneSvg');
+  const tipEl = document.getElementById('geneTip');
+  let route = null, arch = null, playX = [];
+  const routeName = r => r.states.join(' → ');
+
+  const allChip = document.createElement('button'); allChip.className = 'chip'; allChip.textContent = 'All cells';
+  allChip.addEventListener('click', () => selectRoute(null)); chipsEl.appendChild(allChip);
+  const rChips = R.routes.map((r, i) => {
+    const b = document.createElement('button'); b.className = 'chip';
+    const fate = D.names.indexOf(r.states[r.states.length - 1]);
+    b.innerHTML = `<i style="background:var(--s${fate})"></i>${routeName(r)} <span class="n">${r.n}</span>`;
+    b.addEventListener('click', () => selectRoute(i)); chipsEl.appendChild(b); return b;
+  });
+
+  function axes(svg, x0, y0, w, h, yMax, yLab, xLab, ticks) {
+    el('line', { x1: x0, y1: y0 + h, x2: x0 + w, y2: y0 + h, class: 'axis' }, svg);
+    el('line', { x1: x0, y1: y0, x2: x0, y2: y0 + h, class: 'axis' }, svg);
+    ticks.forEach(v => { const y = y0 + h - v / yMax * h; el('text', { x: x0 - 6, y: y + 4, 'text-anchor': 'end' }, svg).textContent = v; 
+      el('line', { x1: x0, x2: x0 + w, y1: y, y2: y, class: 'axis', 'stroke-dasharray': '2 4', opacity: 0.6 }, svg); });
+    if (xLab) { el('text', { x: x0, y: y0 + h + 16 }, svg).textContent = xLab[0]; el('text', { x: x0 + w, y: y0 + h + 16, 'text-anchor': 'end' }, svg).textContent = xLab[1]; }
+    if (yLab) el('text', { x: x0, y: y0 - 8 }, svg).textContent = yLab;
+  }
+  const path = (vals, X, Y) => { let d = '', pen = false; vals.forEach((v, i) => { if (v == null || isNaN(v)) { pen = false; return; } d += (pen ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1); pen = true; }); return d; };
+
+  function drawArch() {
+    archSvg.innerHTML = ''; archChips.innerHTML = ''; playX = [];
+    if (!route) return;
+    const r = R.routes[route.i], A = r.arch_curve, nb = A.length, K = A[0].length;
+    const x0 = 44, y0 = 22, w = 460, h = 190;
+    let yMax = 0; A.forEach(row => row.forEach(v => { yMax = Math.max(yMax, v); }));
+    yMax = Math.max(0.05, Math.ceil(yMax * 10) / 10);
+    const X = i => x0 + (r.rel_bins[i]) * w, Y = v => y0 + h - v / yMax * h;
+    axes(archSvg, x0, y0, w, h, yMax, 'share of nearby cells', ['start', 'arrival in ' + r.states[r.states.length - 1]], [0, +(yMax / 2).toFixed(2), yMax]);
+    const top = r.top;
+    for (let k = 0; k < K; k++) if (!top.includes(k))
+      el('path', { d: path(A.map(row => row[k]), X, Y), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1, opacity: 0.35 }, archSvg);
+    top.forEach((k, j) => {
+      const on = arch === k;
+      el('path', { d: path(A.map(row => row[k]), X, Y), fill: 'none', stroke: `var(--a${j})`, 'stroke-width': on ? 3 : 1.8, opacity: on || arch == null ? 1 : 0.55 }, archSvg);
+      const b = document.createElement('button'); b.className = 'chip'; b.setAttribute('aria-pressed', on);
+      b.innerHTML = `<i style="background:var(--a${j})"></i>Archetype ${k} <span class="n">${r.archetypes[j] ? (100 * r.archetypes[j].share).toFixed(0) + '%' : ''}</span>`;
+      b.addEventListener('click', () => { arch = k; drawArch(); drawGenes(); }); archChips.appendChild(b);
+    });
+    const ph = el('line', { x1: x0, x2: x0, y1: y0, y2: y0 + h, stroke: 'var(--accent)', 'stroke-width': 1.5, opacity: 0.8 }, archSvg);
+    playX.push({ ph, x0, w, y0, h });
+  }
+
+  function drawGenes() {
+    geneSvg.innerHTML = '';
+    const badge = document.getElementById('refBadge'), title = document.getElementById('geneTitle');
+    if (!route || arch == null) { title.textContent = 'Genes'; badge.textContent = ''; badge.className = 'badge'; 
+      el('text', { x: 20, y: 40 }, geneSvg).textContent = route ? 'Pick an archetype on the left.' : 'Pick a route above.'; drawNet(); return; }
+    const r = R.routes[route.i], a = r.archetypes.find(x => x.id === arch), j = r.top.indexOf(arch);
+    title.innerHTML = `Archetype ${arch} genes along the route`;
+    const rf = ref[arch];
+    if (rf) { const okp = rf.p_jacobian < 0.05; badge.className = 'badge' + (okp ? ' ok' : '');
+      badge.textContent = `TRRUST ${okp ? 'above' : 'not above'} random targets · AUROC ${rf.mean_auroc_jacobian.toFixed(2)}, p = ${rf.p_jacobian < 0.001 ? '<0.001' : rf.p_jacobian.toFixed(3)}`; }
+    const nb = r.rel_bins.length, x0 = 14, w = 400, hh = 118, gap = 44;
+    const groups = [['driver', 'Driver-leaning (move others more than they are moved)', 'var(--drv)'], ['responder', 'Responder-leaning (moved more than they move others)', 'var(--rsp)']];
+    groups.forEach(([side, lab, col], gi) => {
+      const y0 = 20 + gi * (hh + gap), X = i => x0 + r.rel_bins[i] * w, Y = v => y0 + hh - v * hh;
+      el('text', { x: x0, y: y0 - 8 }, geneSvg).textContent = lab;
+      el('line', { x1: x0, x2: x0 + w, y1: y0 + hh, y2: y0 + hh, class: 'axis' }, geneSvg);
+      if (gi === 1) { el('text', { x: x0, y: y0 + hh + 16 }, geneSvg).textContent = 'start';
+        el('text', { x: x0 + w, y: y0 + hh + 16, 'text-anchor': 'end' }, geneSvg).textContent = 'arrival'; }
+      const gs = a.genes.filter(g => g.side === side);
+      const ends = gs.map(g => { const last = [...g.curve].reverse().find(v => v != null && !isNaN(v)); return { g, y: Y(last == null ? 0 : last) }; })
+        .sort((p, q) => p.y - q.y);
+      for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
+      const shift = Math.max(0, ends.length ? ends[ends.length - 1].y - (y0 + hh + 4) : 0); ends.forEach(e => { e.y -= shift; });
+      ends.forEach(({ g, y }) => {
+        const p = el('path', { d: path(g.curve, X, Y), fill: 'none', stroke: col, 'stroke-width': 1.8, opacity: 0.85 }, geneSvg);
+        const hit = el('path', { d: path(g.curve, X, Y), fill: 'none', stroke: 'transparent', 'stroke-width': 10, style: 'cursor:pointer' }, geneSvg);
+        const tx = el('text', { x: x0 + w + 8, y: y + 4, class: 'glabel', fill: col }, geneSvg); tx.textContent = g.gene; tx.style.fill = col;
+        const show = () => { p.setAttribute('stroke-width', 3.2); p.setAttribute('opacity', 1);
+          tipEl.textContent = `${g.gene} · formal role: ${g.role} · polarity log2(out/in) = ${g.polarity.toFixed(2)} · mean log-expression ${g.mean_log.toFixed(2)}`; };
+        const hide = () => { p.setAttribute('stroke-width', 1.8); p.setAttribute('opacity', 0.85); };
+        [hit, tx].forEach(n => { n.addEventListener('mouseenter', show); n.addEventListener('mouseleave', hide); n.addEventListener('click', show); });
+      });
+      const ph = el('line', { x1: x0, x2: x0, y1: y0, y2: y0 + hh, stroke: 'var(--accent)', 'stroke-width': 1.5, opacity: 0.8 }, geneSvg);
+      playX.push({ ph, x0, w, y0, h: hh });
+    });
+    drawNet();
+    tipEl.textContent = `Polarity range in this archetype's gene pool: ${a.polarity_range[0].toFixed(2)} to ${a.polarity_range[1].toFixed(2)} (log2). Each line is scaled to its own range along the route.`;
+  }
+
+
+  // ---------------- regulatory network
+  const netSvg = document.getElementById('netSvg'), netTip = document.getElementById('netTip');
+  const netScrub = document.getElementById('netScrub'), netPos = document.getElementById('netPos'), netFollow = document.getElementById('netFollow');
+  let netTau = 0, netParts = null;
+  const interp = (arr, tau) => {
+    const x = tau * (arr.length - 1), i = Math.floor(x), f = x - i;
+    const a = arr[Math.min(i, arr.length - 1)], b = arr[Math.min(i + 1, arr.length - 1)];
+    if (a == null || isNaN(a)) return (b == null || isNaN(b)) ? 0 : b;
+    if (b == null || isNaN(b)) return a;
+    return a + (b - a) * f;
+  };
+  function drawNet() {
+    netSvg.innerHTML = ''; netParts = null;
+    const badge = document.getElementById('netBadge'), title = document.getElementById('netTitle');
+    if (!route || arch == null) { title.textContent = 'Gene coupling'; badge.textContent = '';
+      el('text', { x: 20, y: 40, fill: 'var(--muted)' }, netSvg).textContent = 'Pick a route and an archetype above.'; return; }
+    const r = R.routes[route.i], a = r.archetypes.find(x => x.id === arch);
+    title.textContent = `Archetype ${arch}: gene coupling along the route`;
+    const nT = a.edges.filter(e => e.trrust).length;
+    badge.textContent = `${a.edges.length} coupling edges · ${nT} in TRRUST`;
+    const cols = { driver: 150, hub: 450, responder: 750 };
+    const pos = {};
+    ['driver', 'hub', 'responder'].forEach(side => {
+      const gs = a.genes.filter(g => g.side === side), n = gs.length;
+      gs.forEach((g, i) => { pos[g.gene] = { x: cols[side], y: n === 1 ? 220 : 78 + i * (330 / Math.max(1, n - 1)), g }; });
+    });
+    [['Driver-leaning', 150], ['Hubs', 450], ['Responder-leaning', 750]].forEach(([s, x]) =>
+      el('text', { x, y: 18, 'text-anchor': 'middle', fill: 'var(--muted)', style: 'font-weight:400' }, netSvg).textContent = s);
+    const defs = el('defs', {}, netSvg);
+    [['arT', 'var(--accent)'], ['arO', 'var(--muted)']].forEach(([id, c]) => {
+      const m = el('marker', { id, viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse' }, defs);
+      el('path', { d: 'M0,0 L10,5 L0,10 z', fill: c }, m);
+    });
+    const shareK = r.arch_curve.map(row => row[arch]), smax = Math.max(1e-9, ...shareK);
+    const edges = a.edges.map(e => {
+      const p = pos[e.source], q = pos[e.target];
+      const dx = q.x - p.x, dy = q.y - p.y, len = Math.hypot(dx, dy) || 1;
+      const bend = p.x === q.x ? 70 * (p.x < 450 ? -1 : 1) : 0.18 * len;
+      const mx = (p.x + q.x) / 2 - dy / len * bend, my = (p.y + q.y) / 2 + dx / len * bend;
+      const ux = q.x - mx, uy = q.y - my, ul = Math.hypot(ux, uy) || 1;
+      const ex = q.x - ux / ul * 16, ey = q.y - uy / ul * 16;
+      const path = el('path', { d: `M${p.x},${p.y} Q${mx},${my} ${ex},${ey}`, fill: 'none',
+        stroke: 'var(--accent)', 'marker-end': 'url(#arT)' }, netSvg);
+      const hit = el('path', { d: `M${p.x},${p.y} Q${mx},${my} ${ex},${ey}`, fill: 'none', stroke: 'transparent', 'stroke-width': 12, style: 'cursor:pointer' }, netSvg);
+      const show = () => { netTip.textContent = `${e.source} → ${e.target} · coupling weight ${e.w.toFixed(2)} of this archetype's strongest edge · ${e.trrust ? 'TRRUST lists this pair' : 'not a known TF → target pair'}`; };
+      hit.addEventListener('mouseenter', show); hit.addEventListener('click', show);
+      return { e, path };
+    });
+    const nodes = Object.values(pos).map(({ x, y, g }) => {
+      const col = g.side === 'driver' ? 'var(--drv)' : g.side === 'responder' ? 'var(--rsp)' : 'var(--fg)';
+      const c = el('circle', { cx: x, cy: y, r: 8, fill: col, stroke: 'var(--panel)', 'stroke-width': 2, style: 'cursor:pointer' }, netSvg);
+      const anchor = g.side === 'driver' ? 'end' : g.side === 'responder' ? 'start' : 'middle';
+      const tx = el('text', { x: g.side === 'driver' ? x - 22 : g.side === 'responder' ? x + 22 : x, y: g.side === 'hub' ? y - 22 : y + 4, 'text-anchor': anchor, fill: col }, netSvg);
+      tx.textContent = g.gene; tx.style.fill = col;
+      const show = () => {
+        const out = a.edges.filter(e => e.source === g.gene).map(e => e.target + (e.trrust ? '*' : ''));
+        const inn = a.edges.filter(e => e.target === g.gene).map(e => e.source + (e.trrust ? '*' : ''));
+        netTip.textContent = `${g.gene} · formal role ${g.role} · polarity ${g.polarity.toFixed(2)} · moves: ${out.join(', ') || '—'} · moved by: ${inn.join(', ') || '—'}`;
+        edges.forEach(({ e, path }) => path.setAttribute('opacity', (e.source === g.gene || e.target === g.gene) ? 1 : 0.08));
+      };
+      const hide = () => updateNet();
+      [c, tx].forEach(n => { n.addEventListener('mouseenter', show); n.addEventListener('mouseleave', hide); n.addEventListener('click', show); });
+      return { g, c };
+    });
+    netParts = { edges, nodes, shareK, smax, a };
+    updateNet();
+  }
+  function updateNet() {
+    netPos.textContent = 'τ = ' + netTau.toFixed(2);
+    netScrub.value = Math.round(1000 * netTau);
+    if (!netParts) return;
+    const { edges, nodes, shareK, smax, a } = netParts, s = interp(shareK, netTau) / smax;
+    const ex = {}; a.genes.forEach(g => { ex[g.gene] = Math.max(0, Math.min(1, interp(g.curve, netTau))); });
+    edges.forEach(({ e, path }) => {
+      const k = e.w * s * ex[e.source];
+      path.setAttribute('stroke-width', (0.6 + 5.5 * k).toFixed(2));
+      path.setAttribute('opacity', (0.12 + 0.88 * Math.min(1, k * 1.6)).toFixed(2));
+    });
+    nodes.forEach(({ g, c }) => c.setAttribute('r', (5 + 11 * ex[g.gene]).toFixed(1)));
+  }
+  netScrub.addEventListener('input', () => { netFollow.checked = false; netTau = netScrub.value / 1000; updateNet(); });
+  netFollow.addEventListener('change', () => { if (netFollow.checked) dirty = true; });
+
+  function selectRoute(i) {
+    allChip.setAttribute('aria-pressed', i == null);
+    rChips.forEach((b, k) => b.setAttribute('aria-pressed', k === i));
+    if (i == null) { route = null; arch = null; SEL = null; }
+    else { route = { i }; arch = R.routes[i].top[0]; SEL = new Set(R.routes[i].members); }
+    drawArch(); drawGenes(); dirty = true;
+  }
+  window.__routePlayhead = fr => {
+    if (!route) return;
+    const am = R.routes[route.i].arrive_frame_median, rel = am > 0 ? Math.min(1, fr / am) : 1;
+    playX.forEach(({ ph, x0, w }) => { const x = x0 + rel * w; ph.setAttribute('x1', x); ph.setAttribute('x2', x); });
+    if (netFollow.checked) { netTau = rel; updateNet(); }
+  };
+  const nRef = R.reference.filter(r => r.p_jacobian < 0.05).length;
+  document.getElementById('routeCaveat').innerHTML = window.CAVEAT;
+  selectRoute(0);
+
+  function tick(now) {
+    if (playing) {
+      if (last !== null) {
+        const dt = Math.min(0.1, (now - last) / 1000);
+        if (fr >= F - 1) { hold += dt; if (hold > 3) { fr = 0; hold = 0; } } else fr = Math.min(F - 1, fr + dt * FPS * speed);
+        dirty = true;
+      }
+      last = now;
+    }
+    if (dirty) { setFrame(fr); dirty = false; }
+    controls.update(); renderer.render(scene, camera); placeTags();
+    requestAnimationFrame(tick);
+  }
+  applyTheme(); resize(); setFrame(fr); requestAnimationFrame(tick);
+})();
+</script>
