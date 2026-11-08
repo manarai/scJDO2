@@ -212,7 +212,9 @@ def flow_transitions(adata, labels: Optional[str] = None, *, key: str = "flow", 
     breaks only the link between a cell's label and where it goes. ``expected`` is the
     null mean of ``mass`` (``expected_prob`` the same as a probability), ``z`` = (mass - null mean) / null sd, and ``p_enriched`` /
     ``p_depleted`` are one-sided permutation p-values ``(1 + #) / (1 + n_perm)``.
-    They are per cell of the fitted plan: they do not include refit variation.
+    They are per cell of the fitted plan: they do not include refit variation. Where
+    a source time has a single label there is nothing to shuffle, and the null
+    columns are NaN.
 
     Parameters
     ----------
@@ -261,6 +263,7 @@ def flow_transitions(adata, labels: Optional[str] = None, *, key: str = "flow", 
             s2 += Mp ** 2
         mu = s1 / max(n_perm, 1)
         sd = np.sqrt(np.maximum(s2 / max(n_perm, 1) - mu ** 2, 0.0))
+        testable = n_perm > 0 and len(np.unique(c)) > 1     # one source label: nothing to shuffle
         last = bool(t1 == uniq[-1])
         for k in range(L):
             if n_k[k] == 0:
@@ -269,10 +272,11 @@ def flow_transitions(adata, labels: Optional[str] = None, *, key: str = "flow", 
                 rows.append({
                     "from_time": float(t0), "to_time": float(t1), "from_label": levels[k], "to_label": levels[l],
                     "n_from": int(n_k[k]), "mass": float(mass[k, l]), "prob": float(mass[k, l] / n_k[k]),
-                    "expected": float(mu[k, l]), "expected_prob": float(mu[k, l] / n_k[k]),
-                    "z": float((mass[k, l] - mu[k, l]) / sd[k, l]) if sd[k, l] > 0 else np.nan,
-                    "p_enriched": float((1 + ge[k, l]) / (1 + n_perm)) if n_perm else np.nan,
-                    "p_depleted": float((1 + le[k, l]) / (1 + n_perm)) if n_perm else np.nan,
+                    "expected": float(mu[k, l]) if testable else np.nan,
+                    "expected_prob": float(mu[k, l] / n_k[k]) if testable else np.nan,
+                    "z": float((mass[k, l] - mu[k, l]) / sd[k, l]) if testable and sd[k, l] > 0 else np.nan,
+                    "p_enriched": float((1 + ge[k, l]) / (1 + n_perm)) if testable else np.nan,
+                    "p_depleted": float((1 + le[k, l]) / (1 + n_perm)) if testable else np.nan,
                     "to_extrapolated": last})
     table = pd.DataFrame(rows)
     rec["transitions"] = {"labels": col, "levels": levels, "n_perm": int(n_perm), "seed": int(seed),

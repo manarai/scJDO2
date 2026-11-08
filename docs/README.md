@@ -8,8 +8,8 @@ Start with the [README](../README.md), then run the scripts in
 | page | contents |
 |---|---|
 | [math.md](math.md) | the mathematics of both routes: optimal-transport velocity, drift Jacobian, descriptors, score matching, density curvature, the holder/fork/drift rule, orientation, and what each route can identify |
-| [flow.md](flow.md) | `sj.flow`: parameters, outputs, descriptor invariance, how to use the result and how not to |
-| [../API.md](../API.md) | every top-level function (`flow`, `flow_groups`, `flow_stability`, `fit`, `analyse`, `orient`, `figures`, `run`), every figure, recipes, the module behind each call |
+| [flow.md](flow.md) | `sj.flow`: parameters, outputs, descriptor invariance, how to use the result and how not to; operator motifs along the time course (archetypes, transitions, paths) |
+| [../API.md](../API.md) | every top-level function (`flow`, `flow_groups`, `flow_stability`, `flow_archetypes`, `flow_transitions`, `flow_paths`, `flow_integrate`, `fit`, `analyse`, `orient`, `figures`, `run`), every figure, recipes, the module behind each call |
 | [opspace.md](opspace.md) | registry of the keys the analysis writes into `AnnData` |
 | [SYNTHETIC_MULTIMODAL.md](SYNTHETIC_MULTIMODAL.md) | simulated datasets with lineage, labelling and splicing readouts and exact truth; which keys are inputs and which are truth |
 | [ORIENTATION_SPEC.md](ORIENTATION_SPEC.md) | the full rules of the orientation layer (`sj.orient`) |

@@ -148,6 +148,7 @@ AnnData; reload a run with `scjdo2.io.load("runs/x")`.
 | [docs/flow.md](docs/flow.md) | every `sj.flow` parameter and output, usage notes |
 | [API.md](API.md) | every top-level function, figure and recipe |
 | [examples/](examples/) | runnable scripts with test data |
+| [notebooks/tutorial_flow_motifs.ipynb](notebooks/tutorial_flow_motifs.ipynb) | tutorial: operator motifs along a time course (archetypes, transitions, paths), with figures |
 | [docs/ORIENTATION_SPEC.md](docs/ORIENTATION_SPEC.md) | the full rules of `sj.orient` |
 | [docs/SYNTHETIC_MULTIMODAL.md](docs/SYNTHETIC_MULTIMODAL.md) | simulated data with known truth, for testing a pipeline |
 | [docs/README.md](docs/README.md) | index of all documentation |

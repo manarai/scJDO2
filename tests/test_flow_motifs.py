@@ -117,6 +117,9 @@ def test_transitions_recover_lanes_and_null_is_flat(lanes):
     assert (other["p_depleted"] <= 1.0 / 201 + 1e-12).all()
     assert tab.groupby(["from_time", "from_label"])["prob"].sum().round(6).eq(1).all()
     assert tab[tab.to_time == 3.0]["to_extrapolated"].all()
+    a.obs["one"] = "x"
+    single = sj.flow_transitions(a, labels="one", n_perm=50)
+    assert single["prob"].eq(1).all() and single["p_enriched"].isna().all()
 
     rng = np.random.default_rng(1)
     a.obs["noise"] = rng.choice(["p", "q"], a.n_obs)

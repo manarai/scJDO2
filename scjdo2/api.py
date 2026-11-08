@@ -308,6 +308,8 @@ FIGURES = {
     "soft_axis_map": "fit (+ condition_key for displacement arrows)",
     "orientation": "orient",
     "flow_groups": "flow (time course)",
+    "flow_archetypes": "flow + flow_archetypes (time course)",
+    "flow_transitions": "flow + flow_transitions (time course)",
 }
 
 #: Figures that read the energy operator; skipped when the stored operator is a flow one.
@@ -333,7 +335,7 @@ def figures(adata: AnnData, out_dir: str | Path, cluster_key: str = "cluster", *
     from .plot.orientation import figure_orientation
 
     from .flow_operator import operator_kind
-    from .plot.flow import figure_flow_groups
+    from .plot.flow import figure_flow_archetypes, figure_flow_groups, figure_flow_transitions
 
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -387,6 +389,8 @@ def figures(adata: AnnData, out_dir: str | Path, cluster_key: str = "cluster", *
         _do("flow_groups", lambda p: figure_flow_groups(adata, cluster_key, out=p))
     elif "flow_groups" in want and include and verbose:
         print("[figures] skip flow_groups: run sj.flow and give a cluster_key in obs")
+    _do("flow_archetypes", lambda p: figure_flow_archetypes(adata, out=p))
+    _do("flow_transitions", lambda p: figure_flow_transitions(adata, out=p))
     return paths
 
 
@@ -408,9 +412,11 @@ def run(adata: AnnData, out_dir: str | Path, cluster_key: str = "cluster", *,
     **Time course.** With ``time_key`` (a numeric sampling-time column) the flow
     operator replaces the energy fit: :func:`scjdo2.flow` (``flow_kwargs`` go to it)
     → :func:`flow_groups` by ``cluster_key`` (``groups.csv``) → optionally
-    :func:`flow_stability` over ``stability_seeds`` → the ``flow_groups`` figure →
-    save. ``sources``, ``condition_key``, ``motifs`` and ``with_rate_model`` belong to
-    the energy route and are refused here. Writes to ``out_dir``: the run (``adata.h5ad`` + sidecar, via
+    :func:`flow_stability` over ``stability_seeds`` → with ``motifs=True``,
+    :func:`scjdo2.flow_archetypes` and :func:`scjdo2.flow_transitions` (archetype
+    labels, ``transitions.csv``; and by ``cluster_key``, ``transitions_by_cluster.csv``)
+    → the flow figures → save. ``sources``, ``condition_key`` and ``with_rate_model``
+    belong to the energy route and are refused here. Writes to ``out_dir``: the run (``adata.h5ad`` + sidecar, via
     :func:`scjdo2.io.save`), ``figures/``, ``summary.json`` and
     ``per_cell.csv``. Returns the summary dict.
     """
@@ -423,9 +429,9 @@ def run(adata: AnnData, out_dir: str | Path, cluster_key: str = "cluster", *,
     if time_key is not None:
         return _run_flow(adata, out_dir, cluster_key, summary, time_key=time_key, use_rep=use_rep,
                          flow_kwargs=flow_kwargs, stability_seeds=stability_seeds, refit=refit,
-                         figures_kwargs=figures_kwargs, verbose=verbose,
+                         figures_kwargs=figures_kwargs, verbose=verbose, motifs=motifs,
                          refused={"sources": sources, "condition_key": condition_key,
-                                  "motifs": motifs, "with_rate_model": with_rate_model})
+                                  "with_rate_model": with_rate_model})
 
     drift = None
     if refit or "J" not in adata.uns.get("scjdo2", {}):
@@ -475,7 +481,7 @@ def run(adata: AnnData, out_dir: str | Path, cluster_key: str = "cluster", *,
 
 def _run_flow(adata, out_dir: Path, cluster_key: str, summary: dict, *, time_key: str,
               use_rep: str, flow_kwargs, stability_seeds, refit: bool, figures_kwargs,
-              verbose: bool, refused: dict) -> dict[str, Any]:
+              verbose: bool, refused: dict, motifs: bool = False) -> dict[str, Any]:
     from . import io
     from .flow_operator import flow, operator_kind
 
@@ -507,10 +513,23 @@ def _run_flow(adata, out_dir: Path, cluster_key: str, summary: dict, *, time_key
         summary["stability"] = {k: st[k] for k in ("seeds", "per_cell_spearman_median",
                                                    "per_cell_spearman_min", "group_spearman_median",
                                                    "group_spearman_min", "top_group_same") if k in st}
+    if motifs:
+        from .flow_motifs import flow_archetypes, flow_transitions
+        flow_archetypes(adata)
+        arch = adata.uns["flow"]["archetypes"]
+        summary["motifs"] = {"K": arch["k_selected"],
+                             "counts": adata.obs["flow_archetype"].value_counts().to_dict()}
+        if cluster_key in adata.obs:
+            flow_transitions(adata, labels=cluster_key).to_csv(out_dir / "transitions_by_cluster.csv",
+                                                                index=False)
+            summary["motifs"]["transitions_by_cluster_csv"] = "transitions_by_cluster.csv"
+        flow_transitions(adata).to_csv(out_dir / "transitions.csv", index=False)
+        summary["motifs"]["transitions_csv"] = "transitions.csv"
     figs = figures(adata, out_dir / "figures", cluster_key=cluster_key, verbose=verbose,
                    **(figures_kwargs or {}))
     summary["figures"] = sorted(figs)
-    cols = [c for c in ("flow_lambda1", "flow_has_velocity", "flow_lambda1_rank_sd") if c in adata.obs]
+    cols = [c for c in ("flow_lambda1", "flow_has_velocity", "flow_lambda1_rank_sd", "flow_archetype",
+                        "flow_archetype_share") if c in adata.obs]
     keep = [cluster_key] if cluster_key in adata.obs else []
     adata.obs[keep + [time_key] + cols].to_csv(out_dir / "per_cell.csv")
     io.save(adata, out_dir)

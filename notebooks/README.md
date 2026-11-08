@@ -10,6 +10,12 @@ python notebooks/run_all.py              # or: python notebooks/run_all.py fig3_
 
 Environment and details: [manuscript/REPRODUCE_v57.md](../manuscript/REPRODUCE_v57.md).
 
+## Tutorials
+
+| notebook | content |
+|---|---|
+| `tutorial_flow_motifs.ipynb` | operator motifs along a time course, one function at a time on a simulated pitchfork: `flow` (OT plan kept), `flow_archetypes`, `flow_transitions`, `flow_paths`, `flow_integrate`, and the figures; how to read an archetype and the null. Runs in under a minute; not part of `run_all.py` |
+
 ## Preprint figures
 
 | notebook | figure | content |

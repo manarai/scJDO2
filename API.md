@@ -15,6 +15,9 @@ import scjdo2 as sj
 sj.flow(adata, time_key="day")                             # 0. flow operator, lambda_1
 sj.flow_groups(adata, "cell_type")                         #    lambda_1 per group
 sj.flow_stability(adata, groupby="cell_type")              #    agreement across refits
+sj.flow_archetypes(adata)                                  # 0b. operator shapes, label per cell
+sj.flow_transitions(adata)                                 #     archetype -> archetype along the OT plan
+sj.flow_transitions(adata, labels="cell_type")             #     the same for any label column
 ```
 
 Snapshot:
@@ -34,7 +37,8 @@ or all of it in one call, saved to a run folder:
 summary = sj.run(adata, "runs/lung", cluster_key="cell_type",
                  sources=["labelling", "lineage"])                 # snapshot
 summary = sj.run(adata, "runs/larry", cluster_key="cell_type",
-                 time_key="day", stability_seeds=(0, 1, 2))        # time course
+                 time_key="day", stability_seeds=(0, 1, 2),
+                 motifs=True)                                      # time course (+ 0b)
 ```
 
 Each call wraps public functions in the modules listed at the end; you can
@@ -48,6 +52,8 @@ call those directly when you need finer control.
 |---|---|
 | `flow` | a numeric sampling time in `obs` (≥ 2 times); log-normalised counts in `X` or a PCA in `obsm["X_pca"]` (10–20 components; not Factor Analysis) |
 | `flow_groups`, `flow_stability` | `flow` done; a group column in `obs` |
+| `flow_archetypes`, `flow_transitions`, `flow_integrate` | `flow` done (any version for archetypes; this version for `flow_integrate`, which needs the stored drift weights) |
+| `flow_paths`, `flow_transitions(exact=False)` | `flow` run with `keep_plan` (default 100) |
 | `fit` | a low-dimensional embedding in `obsm` (PCA, FA or scVI). In synthetic tests the fitted energy operator recovered a multi-well landscape only in 2-d; for d ≥ 4 read `J` as descriptive density curvature (see "Things to know") |
 | `analyse` | `fit` done; a cell-type column in `obs` |
 | `orient` | at least one direction source (table below) |
@@ -105,6 +111,43 @@ st  = sj.flow_stability(adata, seeds=(0, 1, 2), groupby="cell_type")
 `sj.figures` draws `flow_groups` (median `lambda_1` per group with its
 interval, and `lambda_1` on `X_umap`) for a flow run; the landscape figures
 need the energy operator and are skipped.
+
+## 0b. Operator motifs along the time course
+
+`J_flow` gives every cell an operator, but nothing in `J` links a day-2 cell to the
+day-4 cells it becomes. The OT plan does, and `sj.flow` keeps it
+(`obsp["flow_plan"]`). These calls chain operator **shapes** (archetypes) along it.
+**New and not yet benchmarked**: archetype stability across replicates has not been
+tested yet; read results within one dataset.
+
+```python
+sj.flow_archetypes(adata, n_archetypes="auto")             # semi-NMF of J_flow
+tab   = sj.flow_transitions(adata, n_perm=1000)            # main readout
+tab_c = sj.flow_transitions(adata, labels="cell_type")     # any obs column as labels
+paths = sj.flow_paths(adata, n_paths=10_000, collapse=True)
+res   = sj.flow_integrate(adata, start=np.flatnonzero(adata.obs["day"] == 2)[:20])
+```
+
+| call | what it does | writes / returns |
+|---|---|---|
+| `flow_archetypes` | each cell's operator divided by its Frobenius norm (shape, not speed; `normalize=None` keeps magnitudes), semi-NMF into `K` archetypes (`K` by held-out error over `k_candidates`; warns if it picks the largest), fitted on ≤ 4,000 cells and assigned to all by non-negative least squares | `obsm["flow_archetype_weights"]`, `obs["flow_archetype"]` (A1 = most common), `obs["flow_archetype_share"]` (1 = pure), `uns["flow"]["archetypes"]` (patterns, eigenvalues, K curve); returns the patterns (K, d, d) |
+| `flow_transitions` | per pair of consecutive times: the mass cells labelled *k* send to cells labelled *l* (`prob` = P(l \| k)), against a null that shuffles source labels within the source time (sizes and target composition kept). Re-runs the transport with the stored settings, checks it reproduces the stored velocities, and contracts the **full** plan; `exact=False` uses the stored top-k plan | DataFrame: `from_time, to_time, from_label, to_label, n_from, mass, prob, expected, expected_prob, z, p_enriched, p_depleted, to_extrapolated`; `uns["flow"]["transitions"]` |
+| `flow_paths` | chains sampled through the stored plan from the first time to the last; counts of label sequences vs a Markov chain on the same plan (`obs_over_expected` ≠ 1 = memory or rare routes). The stored plan keeps each cell's nearest destinations only, so frequencies are approximate | DataFrame: `path, count, frequency, expected, obs_over_expected`; `uns["flow"]["paths"]` |
+| `flow_integrate` | RK4 paths of the fitted drift (rebuilt by `scjdo2.flow_operator.load_drift`), with λ₁ and archetype weights along each path; a deterministic path cannot branch, so use it for pictures | dict: `t`, `z` (m, steps+1, d), `lambda1`, `archetype_weights` |
+
+Figures: `scjdo2.plot.figure_flow_archetypes(adata)` (per archetype: eigenvalues on
+the complex plane above its matrix) and `scjdo2.plot.figure_flow_transitions(adata)`
+(P(to | from) per time pair, `*` where p_enriched < 0.01). `sj.figures` draws both
+when their inputs exist.
+
+**Reading an archetype.** The eigenvalues of flow `J`: a positive real part is a
+direction along which nearby cells spread apart (branch-like), a negative one a
+direction they converge along; a non-zero imaginary part is local rotation, in
+radians per unit of `time_key`. It is not a calibrated clock (`clock_calibrated` is
+False) and has not been validated as a cycle. The matrix heatmap shows the
+non-normal part (asymmetry across the diagonal: stretching, transient gain), which
+the eigenvalues do not. Flow `J` carries direction from time itself; `sj.orient` is
+for the energy operator, whose eigenvectors are unsigned.
 
 ## 1. `sj.fit` — the operator field
 
@@ -196,6 +239,9 @@ the rest (`verbose=True` says why). `sj.FIGURES` lists them:
 | `spectrum_ladder` | per-type eigenvalue ladder vs Gaussian oracle (paired by condition) | fit |
 | `soft_axis_map` | soft-axis arrows per type on the embedding | fit |
 | `orientation` | flow / developmental classes on the embedding, coverage and conflicts by group, the ledger | orient |
+| `flow_groups` | median λ₁ per group with its interval, and λ₁ on the embedding | flow + `cluster_key` |
+| `flow_archetypes` | per archetype: eigenvalues on the complex plane and the matrix | flow + `flow_archetypes` |
+| `flow_transitions` | P(to \| from) per time pair, enriched cells marked | flow + `flow_transitions` |
 
 `include=["ternary", "orientation"]` renders a subset.
 
@@ -210,7 +256,10 @@ summary = sj.run(adata, "runs/x", cluster_key="cell_type", use_rep="X_pca",
 ```
 
 Fit (skipped if `J` is already stored, unless `refit=True`) → analyse →
-orient (if `sources`) → figures → save. Writes to the run folder:
+orient (if `sources`) → figures → save. With `time_key=` the flow route runs
+instead: `flow` → `flow_groups` → `flow_stability` (if `stability_seeds`) → with
+`motifs=True`, `flow_archetypes` and `flow_transitions` (`transitions.csv`, and
+`transitions_by_cluster.csv` by `cluster_key`) → figures → save. Writes to the run folder:
 
 ```
 runs/x/
@@ -279,6 +328,7 @@ and orientation are Python-only for now.
 |---|---|
 | `flow` | `scjdo2.flow_operator` (`ot_velocity`, `drift_jacobian`, `flow_descriptors`), `scjdo2.measured_drift.MeasuredDrift` |
 | `flow_groups`, `flow_stability` | `scjdo2.api`; figure `scjdo2.plot.flow.figure_flow_groups` |
+| `flow_archetypes`, `flow_transitions`, `flow_paths`, `flow_integrate` | `scjdo2.flow_motifs` (archetypes via `scjdo2.archetypes`; plan via `ot_velocity(plan_top_k=, plan_apply=)`; drift via `flow_operator.load_drift`); figures `scjdo2.plot.flow.figure_flow_archetypes`, `figure_flow_transitions` |
 | `fit` | `scjdo2.pipeline.fit_latent_field`, `scjdo2.energy_drift.EnergyDriftAdapter`, `scjdo2.pipeline.fit_rate_and_gene_field` |
 | `analyse` | `scjdo2.landscape.analyse` → `scjdo2.opspace` (`oracle_tol`, `spectrum`, `invariants`, `classify_basin_latent`, `behaviour_fractions`, `well_stiffness`, `store_energy`) |
 | `orient` | `scjdo2.orient.orient`, `OrientConfig` |

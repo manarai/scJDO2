@@ -1,5 +1,21 @@
 # Changelog
 
+## Flow motifs (2026-11-07)
+
+- **`sj.flow` keeps the OT plan** (`obsp["flow_plan"]`, each cell's `keep_plan=100` most
+  likely destinations) and the drift weights (`uns["flow"]["drift_weights"]`;
+  `scjdo2.flow_operator.load_drift` rebuilds the drift). Velocities and λ₁ are unchanged.
+- **New module `scjdo2.flow_motifs`:** `sj.flow_archetypes` (operator shapes, a label per
+  cell), `sj.flow_transitions` (label → label transport per time pair against a
+  source-label shuffle null; exact, from the full plan), `sj.flow_paths` (chains through
+  the plan vs a Markov chain), `sj.flow_integrate` (drift paths for pictures).
+- **Figures:** `flow_archetypes` (eigenvalues and matrix per archetype) and
+  `flow_transitions` (heatmaps), in `scjdo2.plot` and `sj.figures`;
+  `sj.run(..., time_key=, motifs=True)` runs the motif step.
+- `ot_velocity` gains `plan_top_k` and `plan_apply`.
+- Tutorial: `examples/flow_motifs_tutorial.py`, `notebooks/tutorial_flow_motifs.ipynb`.
+- Not yet benchmarked (replicate stability of archetypes is untested).
+
 ## One-stop API (2026-11-03)
 
 - **One API for both routes.** Time course: `sj.flow`. Snapshot: `sj.fit` (energy

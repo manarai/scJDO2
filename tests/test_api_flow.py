@@ -35,9 +35,11 @@ def _fork(n_per_time: int = 120, seed: int = 0):
 
 
 def test_names_exported():
-    for name in ("flow", "flow_groups", "flow_stability", "fit", "run"):
+    for name in ("flow", "flow_groups", "flow_stability", "fit", "run", "flow_archetypes",
+                 "flow_transitions", "flow_paths", "flow_integrate"):
         assert callable(getattr(sj, name))
-    assert "flow_groups" in sj.FIGURES
+    for fig in ("flow_groups", "flow_archetypes", "flow_transitions"):
+        assert fig in sj.FIGURES
 
 
 def test_flow_groups_table_and_store():
@@ -123,3 +125,18 @@ def test_dense_energy_J_survives_save_load(tmp_path):
     back = sj.io.load(tmp_path)
     assert np.allclose(back.uns["scjdo2"]["J"], a.uns["scjdo2"]["J"])
     assert operator_kind(back) == "energy"
+
+
+def test_run_time_course_with_motifs(tmp_path):
+    a = _fork()
+    summary = sj.run(a, tmp_path / "m", cluster_key="stage", time_key="day", flow_kwargs=FAST,
+                     motifs=True)
+    assert summary["figures"] == ["flow_archetypes", "flow_groups", "flow_transitions"]
+    assert summary["motifs"]["K"] >= 2
+    for f in ("transitions.csv", "transitions_by_cluster.csv", "figures/flow_archetypes.png",
+              "figures/flow_transitions.png"):
+        assert (tmp_path / "m" / f).exists(), f
+    back = sj.io.load(tmp_path / "m")
+    assert "flow_plan" in back.obsp and "archetypes" in back.uns["flow"]
+    tab = sj.flow_transitions(back, labels="stage", n_perm=20)       # works on a reloaded run
+    assert set(tab["from_label"]) <= set(a.obs["stage"])
