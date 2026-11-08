@@ -146,6 +146,39 @@ def _build_parser() -> argparse.ArgumentParser:
     cmp_.add_argument("--v2", required=True)
     cmp_.add_argument("--out", required=True)
 
+    sim = sub.add_parser(
+        "simulate",
+        help="route simulation: walkers hop between cells along a scJDO2 drift; "
+             "writes route_page.html, report.md and tables")
+    sim.add_argument("--input", required=True, help="input .h5ad with raw counts (layers['counts'] or X)")
+    sim.add_argument("--out", required=True, help="output directory")
+    sim.add_argument("--state-key", required=True, help="obs column with cell states / types")
+    sim.add_argument("--start-state", required=True, help="state the walkers start in (e.g. HSC)")
+    sim.add_argument("--source", default="auto", choices=["auto", "clone", "velocity", "ot", "pseudotime"],
+                     help="direction source; auto picks clone > velocity > ot > pseudotime from what is given")
+    sim.add_argument("--clone-key", default=None, help="obs column or obsm one-hot matrix of lineage barcodes")
+    sim.add_argument("--time-key", default=None, help="obs column with numeric time points (e.g. day)")
+    sim.add_argument("--velocity-key", default=None, help="obsm velocity in the --latent-key space")
+    sim.add_argument("--latent-key", default=None, help="obsm latent space to use instead of a fresh PCA")
+    sim.add_argument("--pseudotime-key", default=None, help="obs column with pseudotime")
+    sim.add_argument("--basis", default=None, help="obsm 2-D layout for the floor (default: UMAP)")
+    sim.add_argument("--fate-states", nargs="*", default=None,
+                     help="states counted as fates in the clone fate test (default: all but the start)")
+    sim.add_argument("--reference", default=None,
+                     help="TRRUST-style TSV (TF, target, mode, pmid) to check gene coupling against")
+    sim.add_argument("--n-cells", type=int, default=2000, help="cells for the operator fit (memory!)")
+    sim.add_argument("--n-pcs", type=int, default=10)
+    sim.add_argument("--n-top-genes", type=int, default=2000)
+    sim.add_argument("--keep-genes", nargs="*", default=(), help="genes always kept (e.g. key TFs)")
+    sim.add_argument("--n-walkers", type=int, default=300)
+    sim.add_argument("--hops", type=int, default=150)
+    sim.add_argument("--sigma", type=float, default=0.25, help="drift kernel softmax scale")
+    sim.add_argument("--no-fate-test", action="store_true")
+    sim.add_argument("--title", default=None, help="page title (2-4 words)")
+    sim.add_argument("--dataset-name", default=None, help="used in the page headline")
+    sim.add_argument("--save-run", action="store_true", help="also save the fitted operator run (large)")
+    sim.add_argument("--seed", type=int, default=0)
+
     return p
 
 
@@ -384,8 +417,26 @@ def _cmd_run(args) -> int:
     return 0
 
 
+def _cmd_simulate(args) -> int:
+    import anndata as ad
+    from .drivers import load_reference
+    from .routes import simulate
+    adata = ad.read_h5ad(args.input)
+    ref = load_reference(args.reference) if args.reference else None
+    simulate(adata, args.state_key, args.start_state, args.out, clone_key=args.clone_key,
+             time_key=args.time_key, velocity_key=args.velocity_key, latent_key=args.latent_key,
+             pseudotime_key=args.pseudotime_key, source=args.source, basis=args.basis,
+             fate_states=args.fate_states, reference=ref, n_cells=args.n_cells, n_pcs=args.n_pcs,
+             n_top_genes=args.n_top_genes, keep_genes=args.keep_genes, n_walkers=args.n_walkers,
+             hops=args.hops, sigma=args.sigma, fate_test=not args.no_fate_test, title=args.title,
+             dataset_name=args.dataset_name, seed=args.seed, save_run=args.save_run)
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
+    if args.cmd == "simulate":
+        return _cmd_simulate(args)
     if args.cmd == "run":
         return _cmd_run(args)
     if args.cmd == "compare":
