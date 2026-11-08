@@ -91,3 +91,25 @@ aging was a test application. No tasks are open. Resume points:
 * 2026-11-07 — atlas/F01 issued (thresholds confirmed by user: F1 ARI ≥ 0.70, F2 cosine ≥ 0.80, F3 ≥ 0.8 × refit ARI); branch manus/atlas-F01 from 109bb4d (flow-motifs); starts after S14d no-fork generation.
 * 2026-11-07 — order changed (user): F01 runs now; orient/S14d paused (blocked at 8/11 no-fork seeds, runner wall limit failed) and resumes after F01 under Amendment 2.
 * 2026-11-08 — atlas/F01 ACCEPT (874e360): not stable — F1 0.514 < 0.70, F2 −0.44 < 0.80 fail; G0, F3 (0.801) pass; K* = 12 at boundary. Numbers re-derived. Branch not merged (based on flow-motifs code). orient/S14d may resume.
+
+## perturb (cloud)
+
+| task | owner | status | title | verdict |
+|---|---|---|---|---|
+| perturb/P01 | manus (cloud A) | draft | K562 data, control operator pilot, coverage and power | |
+| perturb/P02 | manus (cloud) | draft | Pre-registered test: gene coupling predicts held-out knockdowns (gates proposed) | |
+
+## reprog (cloud)
+
+| task | owner | status | title | verdict |
+|---|---|---|---|---|
+| reprog/C01 | manus (cloud B) | draft | CellTag MEF→iEP and Schiebinger iPSC: data, clones, time, factors | |
+
+## routes
+
+| task | owner | status | title | verdict |
+|---|---|---|---|---|
+| routes/T00 | claude | open | Merge flow-motifs with routes-sim; walker vs OT comparison in simulate | |
+| routes/T01 | manus (cloud) | draft | Measured OT transitions vs walker routes on LARRY | |
+
+* 2026-11-08 — workstreams perturb, reprog, routes created; tasks run in Manus cloud sandboxes (PROJECT.md "Cloud sandbox runs"). P01 and C01 issued in parallel (separate sandboxes); P02 gates proposed, await the user; T01 waits for T00 (Claude).
