@@ -97,7 +97,7 @@ aging was a test application. No tasks are open. Resume points:
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
 | perturb/P01 | manus (cloud A) | issued | K562 data, control operator pilot, coverage and power | |
-| perturb/P02 | manus (cloud) | draft | Pre-registered test: gene coupling predicts held-out knockdowns (gates proposed) | |
+| perturb/P02 | manus (cloud) | draft | Pre-registered test: gene coupling predicts held-out knockdowns (gates fixed 2026-11-08) | |
 
 ## reprog (cloud)
 
@@ -113,3 +113,4 @@ aging was a test application. No tasks are open. Resume points:
 | routes/T01 | manus (cloud) | draft | Measured OT transitions vs walker routes on LARRY | |
 
 * 2026-11-08 — workstreams perturb, reprog, routes created; tasks run in Manus cloud sandboxes (PROJECT.md "Cloud sandbox runs"). P01 and C01 issued in parallel (separate sandboxes); P02 gates proposed, await the user; T01 waits for T00 (Claude).
+* 2026-11-08 — user confirmed P02 gates G1–G3 as written (before any P01 result); P02 issues after P01 ACCEPT.
