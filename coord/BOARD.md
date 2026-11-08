@@ -81,7 +81,7 @@ aging was a test application. No tasks are open. Resume points:
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
 | atlas/R01 | codex (folder A) | withdrawn | Hematopoiesis reference space: inventory, identical refits, stability and batch gate | |
-| atlas/F01 | codex (folder A) | issued | Flow-J archetype stability across LARRY replicate wells (1 vs 2) | |
+| atlas/F01 | codex (folder A) | ACCEPT (not stable) | Flow-J archetype stability across LARRY replicate wells (1 vs 2) | reviews/F01.md |
 | atlas/R02 | manus | draft | Cross-dataset motif recurrence and lineage concordance | |
 
 * 2026-11-06 — atlas workstream created (common operator-descriptor reference space per theme; first theme hematopoiesis: Paul15, dynamo, Setty). R01 drafted; R02 outline drafted (finalised after R01).
@@ -90,3 +90,4 @@ aging was a test application. No tasks are open. Resume points:
 * 2026-11-07 — atlas/R01 withdrawn before any work (snapshot drift on pseudotime; Paul15/Setty have no sampling times). Replacement: flow-J archetype replicate test on LARRY wells 1 vs 2 (to be written). OT-plan motif feature built on local branch flow-motifs (4ca66f1).
 * 2026-11-07 — atlas/F01 issued (thresholds confirmed by user: F1 ARI ≥ 0.70, F2 cosine ≥ 0.80, F3 ≥ 0.8 × refit ARI); branch manus/atlas-F01 from 109bb4d (flow-motifs); starts after S14d no-fork generation.
 * 2026-11-07 — order changed (user): F01 runs now; orient/S14d paused (blocked at 8/11 no-fork seeds, runner wall limit failed) and resumes after F01 under Amendment 2.
+* 2026-11-08 — atlas/F01 ACCEPT (874e360): not stable — F1 0.514 < 0.70, F2 −0.44 < 0.80 fail; G0, F3 (0.801) pass; K* = 12 at boundary. Numbers re-derived. Branch not merged (based on flow-motifs code). orient/S14d may resume.
