@@ -96,14 +96,14 @@ aging was a test application. No tasks are open. Resume points:
 
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
-| perturb/P01 | manus (cloud A) | draft | K562 data, control operator pilot, coverage and power | |
+| perturb/P01 | manus (cloud A) | issued | K562 data, control operator pilot, coverage and power | |
 | perturb/P02 | manus (cloud) | draft | Pre-registered test: gene coupling predicts held-out knockdowns (gates proposed) | |
 
 ## reprog (cloud)
 
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
-| reprog/C01 | manus (cloud B) | draft | CellTag MEF→iEP and Schiebinger iPSC: data, clones, time, factors | |
+| reprog/C01 | manus (cloud B) | issued | CellTag MEF→iEP and Schiebinger iPSC: data, clones, time, factors | |
 
 ## routes
 
