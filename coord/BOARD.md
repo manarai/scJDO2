@@ -89,3 +89,4 @@ aging was a test application. No tasks are open. Resume points:
 * 2026-11-06 — atlas/R01 reassigned to Codex in agent A's folder (cloud Manus cannot reach the Mac); starts after S14d no-fork generation.
 * 2026-11-07 — atlas/R01 withdrawn before any work (snapshot drift on pseudotime; Paul15/Setty have no sampling times). Replacement: flow-J archetype replicate test on LARRY wells 1 vs 2 (to be written). OT-plan motif feature built on local branch flow-motifs (4ca66f1).
 * 2026-11-07 — atlas/F01 issued (thresholds confirmed by user: F1 ARI ≥ 0.70, F2 cosine ≥ 0.80, F3 ≥ 0.8 × refit ARI); branch manus/atlas-F01 from 109bb4d (flow-motifs); starts after S14d no-fork generation.
+* 2026-11-07 — order changed (user): F01 runs now; orient/S14d paused (blocked at 8/11 no-fork seeds, runner wall limit failed) and resumes after F01 under Amendment 2.
