@@ -98,14 +98,14 @@ aging was a test application. No tasks are open. Resume points:
 
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
-| perturb/P01 | manus (cloud A) | issued | K562 data, control operator pilot, coverage and power | |
+| perturb/P01 | manus (cloud A) | blocked (Figshare 403) | K562 data, control operator pilot, coverage and power | |
 | perturb/P02 | manus (cloud) | draft | Pre-registered test: gene coupling predicts held-out knockdowns (gates fixed 2026-11-08) | |
 
 ## reprog (cloud)
 
 | task | owner | status | title | verdict |
 |---|---|---|---|---|
-| reprog/C01 | manus (cloud B) | issued | CellTag MEF→iEP and Schiebinger iPSC: data, clones, time, factors | |
+| reprog/C01 | manus (cloud B) | ACCEPT | CellTag MEF→iEP and Schiebinger iPSC: data, clones, time, factors | reviews/C01.md |
 
 ## routes
 
@@ -117,3 +117,4 @@ aging was a test application. No tasks are open. Resume points:
 * 2026-11-08 — workstreams perturb, reprog, routes created; tasks run in Manus cloud sandboxes (PROJECT.md "Cloud sandbox runs"). P01 and C01 issued in parallel (separate sandboxes); P02 gates proposed, await the user; T01 waits for T00 (Claude).
 * 2026-11-08 — user confirmed P02 gates G1–G3 as written (before any P01 result); P02 issues after P01 ACCEPT.
 * 2026-11-08 — user approved atlas/F02 (exploratory, from F01 review proposal 1); issued. Branch manus/atlas-F02 from manus/atlas-F01 (874e360); reuses F01's six J files (checksums verified), no new flow fits; reading rule = F01 gate per K, fixed before compute; 1 CPU-h.
+* 2026-11-08 — reprog/C01 ACCEPT (bundle 9c79a55e): I1, I2 pass (661 multi-day clones; 8 with author outcomes). Not merged: 75 MB third-party files in research/. perturb/P01 blocked: Figshare HTTP 403 twice from the sandbox; the verified file (sha256 match) exists on the Mac.
