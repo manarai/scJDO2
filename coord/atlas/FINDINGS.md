@@ -17,3 +17,9 @@ labelled; only confirmatory ones speak to the frozen rules.
 **Meaning.** The flow operator is reproducible (per-cell λ₁ ρ 0.97 across wells, same as across seeds); the K = 12 archetype labelling is not, mostly because of the decomposition itself (seed refits: ARI 0.59–0.65, worst matched shapes −0.42 to 0.53). Held-out error keeps falling to K = 12: J_flow shapes look continuous on LARRY, not a few discrete motifs. Large archetypes (A1, cosines 0.82–0.94) recur; small ones do not. Premise 2 is not established at K = 12; premise-3 work waits.
 **Caveats.** One in-vitro dataset; "replicate" = well; one K rule frozen; Sinkhorn non-convergence warnings in mini-batch OT.
 **Next.** Proposed: F02 (exploratory, agreement vs K on the existing J files, ~0.3 CPU-h); doc caveat on archetype reproducibility in flow-motifs. Awaiting user.
+
+## 2026-11-08 — atlas/R01 (planned, withdrawn; STOP, closed)
+**Result.** Ran after its withdrawal (2026-11-07); stopped at step 1 with 0 of 20 fits. No gate evaluated.
+**Meaning.** None for the atlas question. By-product inventory: the dynamo hematopoiesis file has 1,956 genes and no raw counts, so it cannot enter count-based operator fits as is; Paul15 and Setty have counts.
+**Caveats.** Inventory only; not re-run by Claude beyond reading its tables.
+**Next.** Closed. Branch kept, not merged.
