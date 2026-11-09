@@ -19,10 +19,10 @@ co-expression.
 
 ## How the pages are made
 
-The route simulation code (`scjdo2.routes`, `scjdo2 simulate`) is in
-[pull request #2](https://github.com/manarai/scJDO2/pull/2) and reaches
-`main` with the `aging-basins` branch. With it installed, from the
-repository root:
+The route simulation code (`scjdo2.routes`, `scjdo2 simulate`) is on the
+`aging-basins` branch ([pull request #2](https://github.com/manarai/scJDO2/pull/2))
+and reaches `main` when that branch is merged. With it installed
+(`pip install -e .` from an `aging-basins` checkout), from the repository root:
 
 ```python
 from scjdo2.data import load_setty_cd34
