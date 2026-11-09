@@ -39,7 +39,10 @@ unstable coordinates.
   (`scjdo2/motifs.py` docstring). R01 is that check.
 * A recurring motif is a shared gene-program pattern, not evidence of
   shared TF→target regulation.
-* Score-J energy landscapes are not used (unreliable above 2-d).
+* One drift only: the energy drift (`scjdo2/energy_drift.py`). Never install
+  or import v1 `scjdo` (`docs/V1_REMOVAL.md` on the `orientation` branch).
+* Score-J energy *landscapes* (E surfaces) are not used as the reference
+  (unreliable above 2-d); only operator descriptors are.
 
 ## Required tests
 
@@ -50,7 +53,7 @@ must pass before any data run; a failure is a stop.
 
 ```json
 {
-  "protected_paths": ["scjdo2/motifs.py", "scjdo2/opspace.py",
+  "protected_paths": ["scjdo2/motifs.py", "scjdo2/opspace.py", "scjdo2/energy_drift.py",
                        "scjdo2/drift.py", "scjdo2/pipeline.py",
                        "coord/atlas/WORKSTREAM.md"]
 }

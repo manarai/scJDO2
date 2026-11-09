@@ -115,3 +115,4 @@ aging was a test application. No tasks are open. Resume points:
 
 * 2026-11-08 — workstreams perturb, reprog, routes created; tasks run in Manus cloud sandboxes (PROJECT.md "Cloud sandbox runs"). P01 and C01 issued in parallel (separate sandboxes); P02 gates proposed, await the user; T01 waits for T00 (Claude).
 * 2026-11-08 — user confirmed P02 gates G1–G3 as written (before any P01 result); P02 issues after P01 ACCEPT.
+* 2026-11-08 — atlas/R01 blocked before fitting (dynamo .X ambiguous, 1,956 genes, v1 scjdo missing); REVISE + Amendment 1: raw count inputs (paul15.h5, dynamo raw layers[total]), energy drift only (no v1), Paul15 batch halves, new G1 non-degeneracy gate; 22 fits.
