@@ -5,6 +5,19 @@ estimates a small matrix $J_c$ that describes how nearby cells move relative to
 each other: whether they converge (a stable state), separate (a branch point) or
 rotate. It works on an `AnnData` and writes its results back into it.
 
+<p align="center">
+  <a href="https://manarai.github.io/scJDO2/gallery/palantir_routes.html">
+    <img src="docs/gallery/palantir_routes.gif" width="760"
+         alt="CD34+ marrow cells hopping from HSC toward later states on a 3-D landscape, rotating">
+  </a>
+  <br>
+  <em>Route simulation on CD34+ marrow (Setty et al. 2019): walkers start in HSC and hop
+  between measured cells along scJDO2's drift, here directed by Palantir pseudotime, so where
+  they end is the model's tendency, not a measured fate.
+  <a href="https://manarai.github.io/scJDO2/gallery/palantir_routes.html">Open it interactively</a> ·
+  <a href="docs/gallery/">gallery and how it is made</a></em>
+</p>
+
 ```python
 import scjdo2 as sj
 sj.flow(adata, time_key="day")       # one call: a flow operator for every cell
