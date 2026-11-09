@@ -82,6 +82,7 @@ aging was a test application. No tasks are open. Resume points:
 |---|---|---|---|---|
 | atlas/R01 | codex (folder A) | withdrawn | Hematopoiesis reference space: inventory, identical refits, stability and batch gate | |
 | atlas/F01 | codex (folder A) | ACCEPT (not stable) | Flow-J archetype stability across LARRY replicate wells (1 vs 2) | reviews/F01.md |
+| atlas/F02 | codex (folder A) | issued | EXPLORATORY: K sweep (2–8) of flow-J archetype reproducibility on F01 fits | |
 | atlas/R02 | manus | draft | Cross-dataset motif recurrence and lineage concordance | |
 
 * 2026-11-06 — atlas workstream created (common operator-descriptor reference space per theme; first theme hematopoiesis: Paul15, dynamo, Setty). R01 drafted; R02 outline drafted (finalised after R01).
@@ -115,3 +116,4 @@ aging was a test application. No tasks are open. Resume points:
 
 * 2026-11-08 — workstreams perturb, reprog, routes created; tasks run in Manus cloud sandboxes (PROJECT.md "Cloud sandbox runs"). P01 and C01 issued in parallel (separate sandboxes); P02 gates proposed, await the user; T01 waits for T00 (Claude).
 * 2026-11-08 — user confirmed P02 gates G1–G3 as written (before any P01 result); P02 issues after P01 ACCEPT.
+* 2026-11-08 — user approved atlas/F02 (exploratory, from F01 review proposal 1); issued. Branch manus/atlas-F02 from manus/atlas-F01 (874e360); reuses F01's six J files (checksums verified), no new flow fits; reading rule = F01 gate per K, fixed before compute; 1 CPU-h.
