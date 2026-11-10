@@ -93,6 +93,7 @@ aging was a test application. No tasks are open. Resume points:
 * 2026-11-07 — order changed (user): F01 runs now; orient/S14d paused (blocked at 8/11 no-fork seeds, runner wall limit failed) and resumes after F01 under Amendment 2.
 * 2026-11-08 — atlas/F01 ACCEPT (874e360): not stable — F1 0.514 < 0.70, F2 −0.44 < 0.80 fail; G0, F3 (0.801) pass; K* = 12 at boundary. Numbers re-derived. Branch not merged (based on flow-motifs code). orient/S14d may resume.
 * 2026-11-08 — atlas/R01 ran despite its withdrawal (stopped at step 1, 0 fits); STOP, closed. Branch kept, not merged.
+* 2026-11-10 — atlas/F02 ACCEPT (38fe795), exploratory: only K = 2 reproduces (expanding vs committing; ≈ λ₁ threshold, AUROC 0.90). Not merged (flow-motifs base). F01 status set to accepted.
 
 ## perturb (cloud)
 

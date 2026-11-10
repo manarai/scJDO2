@@ -23,3 +23,9 @@ labelled; only confirmatory ones speak to the frozen rules.
 **Meaning.** None for the atlas question. By-product inventory: the dynamo hematopoiesis file has 1,956 genes and no raw counts, so it cannot enter count-based operator fits as is; Paul15 and Setty have counts.
 **Caveats.** Inventory only; not re-run by Claude beyond reading its tables.
 **Next.** Closed. Branch kept, not merged.
+
+## 2026-11-10 — atlas/F02 (exploratory, ACCEPT; reading: K = 2 only)
+**Result.** F01's gate applied at K ∈ {2, 3, 4, 5, 6, 8} on the six saved F01 fits: only K = 2 reproduces (replicate ARI 0.82, min matched cosine 0.98, F3 1.08; both archetypes stable). K = 3: ARI 0.65 fails; K ≥ 5 shapes fail too. All numbers re-derived by Claude; K = 2 and 3 labels recomputed from J identically.
+**Meaning.** Flow J on LARRY has one reproducible split: an expanding, uncommitted operator (78 % of day-2 cells, high λ₁) vs a contracting, committing one (22 %, nearly all day-2 Monocyte/Neutrophil/Baso cells). λ₁ alone separates them (AUROC 0.90–0.91). Finer motifs do not reproduce; J_flow varies continuously. Premise-3 motif work is not built on flow-J archetypes; λ₁ is the reproducible readout.
+**Caveats.** Exploratory (rule written after F01); one dataset; replicate = well; day-2 cells only; one decomposition method.
+**Next.** Proposed: flow λ₁ layer in `scjdo2 simulate` (Claude, part of T00); routes/T02 replicate test of the gene-operator archetypes (exploratory, ~4 CPU-h); flow-motifs doc caveat. Awaiting user.
