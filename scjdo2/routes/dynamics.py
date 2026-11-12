@@ -110,8 +110,12 @@ def _coupling(info, genes, gidx, ref_pairs, net_targets, min_rel):
 
 def route_dynamics(cells, states, names, start_state, latent, ops, reference=None,
                    min_hold=8, min_route=8, n_bins=20, n_top_arch=3, n_genes=5, n_hubs=4,
-                   net_targets=2, min_rel=0.05, pool=20, keep_cycle=False, k=15) -> dict:
-    """Route panels for the viewer. ``cells``/``states``: frames × walkers (cell index, state index)."""
+                   net_targets=2, min_rel=0.05, pool=20, keep_cycle=False, k=15, lam=None) -> dict:
+    """Route panels for the viewer. ``cells``/``states``: frames × walkers (cell index, state index).
+
+    ``lam``: optional flow λ₁ per cell; each route then gets ``lambda_curve``, the mean
+    λ₁ of nearby measured cells in each relative-time bin.
+    """
     F, N = states.shape
     W = (ops["W"] >= 0.5 * np.nanmax(ops["W"], axis=0)).astype(float)
     K = W.shape[1]
@@ -183,7 +187,11 @@ def route_dynamics(cells, states, names, start_state, latent, ops, reference=Non
                           "polarity_range": [round(float(pl["polarity"].min()), 3),
                                              round(float(pl["polarity"].max()), 3)] if len(pl) else [0, 0],
                           "share": round(float(curve[:, ak].mean()), 3), "genes": genes})
-        routes.append({"states": [names[s] for s in path], "n": len(members), "members": members,
+        extra = {}
+        if lam is not None:
+            extra["lambda_curve"] = [round(float(np.mean(lam[np.concatenate(r)])), 4) if r else None
+                                     for r in rows_by_bin]
+        routes.append({**extra, "states": [names[s] for s in path], "n": len(members), "members": members,
                        "arrive_frame_median": int(np.median(arrive)),
                        "rel_bins": np.round((bins[:-1] + bins[1:]) / 2, 3).tolist(),
                        "arch_curve": np.round(curve, 4).tolist(),

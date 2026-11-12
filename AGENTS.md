@@ -15,6 +15,8 @@ for, what to run, and what not to claim.
    along the drift (they cannot leave the data);
 4. for each route the walkers take, shows which archetypes they pass and
    how those archetypes' genes and gene coupling change along the way;
+   with time points, also the flow operator's λ₁ per cell and along each
+   route (above 0 expanding, below 0 contracting);
 5. writes `route_page.html` (interactive), `report.md` (plain-language
    result and caveats), `diagnostics.json` and CSV tables.
 
@@ -89,7 +91,10 @@ shown; rarer ones are merged into `Other`.
 3. If a held-out clone fate test ran, report the drift-guided walk against
    the baselines. Only if it beats the undirected walk and proximity may you
    say the model's direction carries fate information for this dataset.
-4. Point the user to `route_page.html` for the interactive view.
+4. If the report has a "Flow λ₁" section, say where λ₁ is high (expanding,
+   e.g. at a fate split) and low (contracting, committing) and how it
+   changes along the main routes. It is a ranking of neighbourhoods.
+5. Point the user to `route_page.html` for the interactive view.
 
 ## Do not claim
 
@@ -102,6 +107,11 @@ shown; rarer ones are merged into `Other`.
 - Genes absent from the panels (including known regulators) are usually
   "unmeasured" by the operator, not unimportant.
 - Playback counts hops, not time.
+- Flow λ₁ is not a measured rate or a stability of a state: the flow
+  operator's values depend on the transport space and do not recover a
+  true Jacobian. Archetypes of the flow operator are not shown because on
+  LARRY they reproduced across replicate wells only as an expanding vs
+  contracting split, which λ₁ already gives.
 - A state no walker reaches may be disconnected in the data, not an
   impossible fate.
 - Without lineage tracing or a time course, where walkers end is the
@@ -118,6 +128,9 @@ shown; rarer ones are merged into `Other`.
   on the page is only a backdrop.
 - On iPSC reprogramming, a 2-D landscape trapped every walker in
   Trophoblast; the cell walk reaches iPSCs.
+- On LARRY, per-cell flow λ₁ reproduced across replicate wells (Spearman
+  0.97); flow-operator archetypes reproduced only at K = 2 (expanding vs
+  contracting; λ₁ separates them with AUROC 0.90), so the page shows λ₁.
 - On a snapshot (CD34+ marrow), scJDO2's score-matching drift barely
   followed pseudotime, so the pseudotime source uses the pseudotime
   gradient directly.

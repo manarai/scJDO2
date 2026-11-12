@@ -1,0 +1,522 @@
+"""Flow operator from a sampled time course: ``scjdo2.flow(adata, time_key=...)``.
+
+One call runs the label-free pipeline evaluated in the v57 manuscript (Results 3-5):
+
+1. **OT velocity.** Balanced entropic optimal transport (Sinkhorn) between cells of
+   consecutive sampling times, with ``epsilon = eps x median squared distance`` of the
+   pair. Each cell of the earlier time gets the barycentric velocity
+   ``(barycentre of its image - z) / dt``. Cells of the last time point get none.
+2. **Drift.** A smooth drift ``f(z)`` (:class:`scjdo2.measured_drift.MeasuredDrift`,
+   an MLP) is fitted to those velocities. It is evaluated at every cell, so the last
+   time point is covered by extrapolation.
+3. **Flow operator.** ``J_flow = df/dz`` at every cell, by automatic differentiation.
+4. **Descriptors.** The leading eigenvalue ``lambda_1`` (max Re) and the
+   magnitude-free, basis-invariant operator-space descriptors, rank-transformed
+   within the dataset.
+
+The defaults are the a-priori "reference" configuration of the manuscript: PCA of
+log-normalised counts with 15 components, ``eps = 0.05``, MLP hidden (96, 96, 96),
+weight decay 1e-4, one fit seed. Large time pairs switch from dense to mini-batch
+transport (4,000-cell batches, each source cell in ten batches), which reproduced
+dense transport with velocity cosine 0.9998 (manuscript Results 5).
+
+What this operator is and is not (manuscript Results 3): ``lambda_1`` ranks cells
+at a fate bifurcation above committed cells. The values of ``J_flow`` do **not**
+recover the true Jacobian, and the operator depends on the transport metric (it
+inverts on Factor Analysis). Use a variance-weighted space such as PCA.
+"""
+
+from __future__ import annotations
+
+import time
+import warnings
+from typing import Any, Optional, Sequence
+
+import numpy as np
+
+__all__ = ["flow", "ot_velocity", "drift_jacobian", "flow_descriptors", "operator_kind",
+           "load_drift", "DESCRIPTOR_NAMES"]
+
+DENSE_MAX_PAIRS = 64_000_000   # n_source x n_target above which mini-batch OT is used
+BATCH_SIZE = 4000
+MINIBATCH_COVERAGE = 10
+
+DESCRIPTOR_NAMES = (
+    "sign_lead_re",
+    "n_positive_real",
+    "lead_re_over_max_abs_lambda",
+    "max_abs_imag_over_max_abs_lambda",
+    "spectral_gap_over_max_abs_lambda",
+    "henrici",
+    "transient_gain",
+    "trace_over_sum_abs_lambda",
+)
+
+
+# ---------------------------------------------------------------------------
+# 1. OT velocity
+# ---------------------------------------------------------------------------
+def _median_sq_dist(x: np.ndarray, y: np.ndarray, seed: int) -> tuple[float, str]:
+    if x.shape[0] * y.shape[0] <= DENSE_MAX_PAIRS:
+        import ot
+        return float(np.median(ot.dist(x, y, metric="sqeuclidean"))), "exact"
+    rng = np.random.default_rng(seed)
+    n = 2_000_000
+    r, c = rng.integers(0, len(x), n), rng.integers(0, len(y), n)
+    return float(np.median(np.sum((x[r] - y[c]) ** 2, axis=1))), f"{n:,}-pair sample"
+
+
+def _top_k_rows(R: np.ndarray, k: int) -> tuple[np.ndarray, np.ndarray]:
+    """Column indices and values of the ``k`` largest entries of each row of ``R``."""
+    k = min(int(k), R.shape[1])
+    idx = np.argpartition(-R, k - 1, axis=1)[:, :k] if k < R.shape[1] else np.tile(np.arange(R.shape[1]), (len(R), 1))
+    return idx, np.take_along_axis(R, idx, axis=1)
+
+
+def _dense_bary(x: np.ndarray, y: np.ndarray, eps: float, top_k: Optional[int] = None,
+                apply: Optional[np.ndarray] = None):
+    import ot
+    C = ot.dist(x, y, metric="sqeuclidean")
+    a = np.full(len(x), 1.0 / len(x))
+    b = np.full(len(y), 1.0 / len(y))
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        P, log = ot.sinkhorn(a, b, C, reg=eps, log=True)
+    rows = P.sum(axis=1, keepdims=True)
+    err = log.get("err", [])
+    plan = None
+    if top_k:
+        plan = _top_k_rows(P / np.maximum(rows, 1e-300), top_k)
+    applied = None if apply is None else (P @ apply) / np.maximum(rows, 1e-300)
+    return (P @ y) / np.maximum(rows, 1e-300), {
+        "solver": "dense", "n_iter": len(err), "final_err": float(err[-1]) if len(err) else None,
+        "rows_zero": int((rows[:, 0] <= 0).sum()), "warnings": [str(w.message)[:200] for w in caught]}, plan, applied
+
+
+def _minibatch_bary(x: np.ndarray, y: np.ndarray, eps: float, seed: int, batch_size: int,
+                    coverage: int, top_k: Optional[int] = None, apply: Optional[np.ndarray] = None):
+    import ot
+    rng = np.random.default_rng(seed)
+    schedule = np.tile(np.arange(len(x)), coverage)
+    rng.shuffle(schedule)
+    bary = np.zeros_like(x)
+    seen = np.zeros(len(x), dtype=np.int64)
+    n_batches = 0
+    rows_i, cols_j, vals = [], [], []
+    acc = None if apply is None else np.zeros((len(x), apply.shape[1]))
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        for lo in range(0, len(schedule), batch_size):
+            si = schedule[lo:lo + batch_size]
+            ti = rng.choice(len(y), size=batch_size, replace=len(y) < batch_size)
+            xb, yb = x[si], y[ti]
+            P = ot.sinkhorn(np.full(len(xb), 1.0 / len(xb)), np.full(len(yb), 1.0 / len(yb)),
+                            ot.dist(xb, yb, metric="sqeuclidean"), reg=eps)
+            mass = P.sum(axis=1, keepdims=True)
+            np.add.at(bary, si, (P @ yb) / np.maximum(mass, 1e-12))
+            np.add.at(seen, si, 1)
+            if acc is not None:
+                np.add.at(acc, si, (P @ apply[ti]) / np.maximum(mass, 1e-12))
+            if top_k:
+                ci, cv = _top_k_rows(P / np.maximum(mass, 1e-12), top_k)
+                rows_i.append(np.repeat(si, ci.shape[1]))
+                cols_j.append(ti[ci].ravel())
+                vals.append(cv.ravel())
+            n_batches += 1
+    bary /= seen[:, None]
+    plan = None
+    if top_k:
+        # Average the per-batch row-conditionals over the batches each source cell was
+        # in (the same estimator as the barycentre), then keep the top k per row.
+        from scipy import sparse
+        A = sparse.coo_matrix((np.concatenate(vals) / seen[np.concatenate(rows_i)],
+                               (np.concatenate(rows_i), np.concatenate(cols_j))),
+                              shape=(len(x), len(y))).tocsr()
+        A.sum_duplicates()
+        plan = _sparse_top_k_rows(A, top_k)
+    applied = None if acc is None else acc / seen[:, None]
+    return bary, {"solver": "minibatch", "batch_size": batch_size, "n_batches": n_batches,
+                  "coverage_min": int(seen.min()), "warnings": sorted({str(w.message)[:200] for w in caught})}, \
+        plan, applied
+
+
+def _sparse_top_k_rows(A, k: int) -> tuple[np.ndarray, np.ndarray]:
+    """Row-wise top ``k`` of a CSR matrix, padded with value 0 (index 0) where a row has fewer."""
+    n = A.shape[0]
+    idx = np.zeros((n, k), np.int64)
+    val = np.zeros((n, k), np.float64)
+    for r in range(n):
+        lo, hi = A.indptr[r], A.indptr[r + 1]
+        c, v = A.indices[lo:hi], A.data[lo:hi]
+        if len(v) > k:
+            keep = np.argpartition(-v, k - 1)[:k]
+            c, v = c[keep], v[keep]
+        idx[r, :len(c)], val[r, :len(v)] = c, v
+    return idx, val
+
+
+def ot_velocity(z: np.ndarray, times: np.ndarray, *, eps: float = 0.05, solver: str = "auto",
+                batch_size: int = BATCH_SIZE, coverage: int = MINIBATCH_COVERAGE, seed: int = 0,
+                plan_top_k: Optional[int] = None, plan_apply: Optional[np.ndarray] = None):
+    """Barycentric entropic-OT velocity between consecutive sampling times.
+
+    Parameters
+    ----------
+    z : (n, d) coordinates. The transport cost is squared Euclidean distance in ``z``.
+    times : (n,) numeric sampling time per cell. ``dt`` between two times is their
+        difference, so velocities are per unit of ``times``.
+    eps : entropic regularisation as a fraction of the pair's median squared distance.
+    solver : ``"dense"``, ``"minibatch"`` or ``"auto"`` (mini-batch when
+        ``n_source x n_target > 64e6``).
+    plan_top_k : if set, also return the transport plan: for every cell of an earlier
+        time, its ``plan_top_k`` most likely destination cells at the next time, with the
+        row-conditional plan ``P[i, j] / sum_j P[i, j]`` renormalised over the kept
+        entries. The kept mass before renormalisation is reported per pair.
+    plan_apply : optional (n, m) matrix ``M`` over cells. Returns ``R @ M`` for every
+        source cell, where ``R`` is the full (untruncated) row-conditional plan to the
+        next time, e.g. ``M`` = one-hot labels gives each cell's destination label mix.
+        Exact for dense transport; for mini-batch transport the same batch average as
+        the barycentre. Rows of last-time cells are NaN.
+
+    Returns
+    -------
+    v : (n, d) float32 velocity, NaN for cells of the last time point.
+    info : one record per time pair (epsilon, dt, solver, convergence).
+    plan : only with ``plan_top_k``: (n, n) ``scipy.sparse.csr_matrix``; row ``i``
+        is the destination distribution of cell ``i`` over cells of the next time
+        (rows of last-time cells are empty).
+    applied : only with ``plan_apply``: (n, m) ``R @ M`` (after ``plan``, if both).
+    """
+    if solver not in ("auto", "dense", "minibatch"):
+        raise ValueError(f"solver must be 'auto', 'dense' or 'minibatch'; got {solver!r}")
+    z = np.asarray(z, np.float64)
+    times = np.asarray(times, np.float64)
+    if z.ndim != 2 or times.shape != (len(z),):
+        raise ValueError(f"z must be (n, d) and times (n,); got {z.shape} and {times.shape}")
+    if not np.all(np.isfinite(times)):
+        raise ValueError("times contains NaN or inf")
+    uniq = np.unique(times)
+    if len(uniq) < 2:
+        raise ValueError("need at least two sampling times")
+    v = np.full(z.shape, np.nan)
+    info: list[dict[str, Any]] = []
+    pr, pc, pv = [], [], []
+    if plan_apply is not None:
+        plan_apply = np.asarray(plan_apply, np.float64)
+        if plan_apply.ndim != 2 or len(plan_apply) != len(z):
+            raise ValueError(f"plan_apply must be (n, m) with n = {len(z)}; got {plan_apply.shape}")
+        applied = np.full((len(z), plan_apply.shape[1]), np.nan)
+    for t0, t1 in zip(uniq[:-1], uniq[1:]):
+        i0, i1 = np.flatnonzero(times == t0), np.flatnonzero(times == t1)
+        x, y = z[i0], z[i1]
+        med, how = _median_sq_dist(x, y, seed)
+        e = float(eps * med)
+        if not np.isfinite(e) or e <= 0:
+            raise RuntimeError(f"invalid epsilon {e} for time pair {t0:g} -> {t1:g}")
+        use = solver if solver != "auto" else ("dense" if len(x) * len(y) <= DENSE_MAX_PAIRS else "minibatch")
+        tic = time.time()
+        if use == "dense":
+            bary, rec, plan, app = _dense_bary(x, y, e, plan_top_k, None if plan_apply is None else plan_apply[i1])
+        else:
+            bary, rec, plan, app = _minibatch_bary(x, y, e, seed, batch_size, coverage, plan_top_k,
+                                                   None if plan_apply is None else plan_apply[i1])
+        if app is not None:
+            applied[i0] = app
+        if plan is not None:
+            ci, cv = plan
+            kept = cv.sum(axis=1)
+            rec = {**rec, "plan_top_k": int(ci.shape[1]), "plan_kept_mass_median": float(np.median(kept)),
+                   "plan_kept_mass_min": float(kept.min())}
+            cv = cv / np.maximum(kept, 1e-300)[:, None]
+            nz = cv > 0
+            pr.append(np.repeat(i0, ci.shape[1])[nz.ravel()])
+            pc.append(i1[ci][nz])
+            pv.append(cv[nz])
+        dt = float(t1 - t0)
+        v[i0] = (bary - x) / dt
+        info.append({"from_time": float(t0), "to_time": float(t1), "dt": dt, "n_source": int(len(i0)),
+                     "n_target": int(len(i1)), "epsilon": e, "eps_factor": float(eps), "median_method": how,
+                     "seconds": round(time.time() - tic, 2), **rec})
+    out: tuple = (v.astype(np.float32), info)
+    if plan_top_k:
+        from scipy import sparse
+        out += (sparse.csr_matrix((np.concatenate(pv).astype(np.float32), (np.concatenate(pr), np.concatenate(pc))),
+                                  shape=(len(z), len(z))),)
+    if plan_apply is not None:
+        out += (applied,)
+    return out
+
+
+# ---------------------------------------------------------------------------
+# 2-3. Drift and its Jacobian
+# ---------------------------------------------------------------------------
+def _batched_jacobian(model, z: np.ndarray, chunk: int = 4096) -> np.ndarray:
+    import torch
+    from torch.func import jacrev, vmap
+    model = model.to("cpu").eval()
+    jac = vmap(jacrev(lambda zi: model(zi[None])[0]))
+    out = np.empty((len(z), z.shape[1], z.shape[1]), np.float32)
+    with torch.no_grad():
+        for lo in range(0, len(z), chunk):
+            zt = torch.as_tensor(z[lo:lo + chunk], dtype=torch.float32)
+            out[lo:lo + chunk] = jac(zt).numpy()
+    return out
+
+
+def drift_jacobian(z: np.ndarray, v: np.ndarray, *, hidden: Sequence[int] = (96, 96, 96),
+                   weight_decay: float = 1e-4, n_epochs: int = 1500, n_seeds: int = 1, seed: int = 0,
+                   device: Optional[str] = None) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
+    """Fit ``MeasuredDrift`` to the cells with a finite velocity; return the per-cell
+    Jacobian ``df/dz`` (n, d, d) and fitted drift ``f(z)`` (n, d) at **every** cell.
+
+    With ``n_seeds > 1`` the Jacobians and drifts of seeds ``seed .. seed+n_seeds-1``
+    are averaged (the manuscript's "ensemble" estimator).
+
+    The returned record holds the fitted weights under ``"weights"`` (one dict per
+    seed, ``layer{i}_weight`` / ``layer{i}_bias`` for the i-th linear layer), so the
+    drift can be rebuilt with :func:`load_drift`.
+    """
+    from .measured_drift import MeasuredDrift
+    z32 = np.asarray(z, np.float32)
+    v32 = np.asarray(v, np.float32)
+    ok = np.isfinite(v32).all(axis=1)
+    if ok.sum() < 2:
+        raise ValueError("fewer than two cells have a finite velocity")
+    Js, fs, devices, weights = [], [], [], []
+    tic = time.time()
+    for s in range(seed, seed + n_seeds):
+        md = MeasuredDrift(z32.shape[1], hidden=tuple(hidden), weight_decay=float(weight_decay),
+                           n_epochs=int(n_epochs), seed=int(s), device=device)
+        md.fit(z32[ok], v32[ok])
+        devices.append(str(next(md._model.parameters()).device))
+        md._model.to("cpu")
+        lin = [m for m in md._model.net if hasattr(m, "weight")]
+        weights.append({f"layer{i}_{p}": getattr(m, p).detach().numpy().astype(np.float32).copy()
+                        for i, m in enumerate(lin) for p in ("weight", "bias")})
+        fs.append(md.velocity(z32).astype(np.float64))
+        Js.append(_batched_jacobian(md._model, z32).astype(np.float64))
+    J = np.mean(Js, axis=0).astype(np.float32)
+    f = np.mean(fs, axis=0).astype(np.float32)
+    return J, f, {"n_fit_cells": int(ok.sum()), "hidden": list(hidden), "weight_decay": float(weight_decay),
+                  "n_epochs": int(n_epochs), "seeds": list(range(seed, seed + n_seeds)), "fit_device": devices[0],
+                  "jacobian": "autodiff (torch.func.jacrev), CPU", "seconds": round(time.time() - tic, 2),
+                  "weights": {f"seed{s}": w for s, w in zip(range(seed, seed + n_seeds), weights)}}
+
+
+def load_drift(adata, key: str = "flow"):
+    """Rebuild the fitted drift of a :func:`flow` run as a torch module.
+
+    Returns a ``torch.nn.Module`` mapping (m, d) to (m, d): the mean of the stored
+    seed MLPs, so it reproduces ``obsm[f"{key}_drift"]`` and its Jacobian is
+    ``J_flow``. Needs a run made with this version (weights in
+    ``uns[key]["drift_weights"]``).
+    """
+    import torch
+    from .measured_drift import _MLP
+
+    rec = adata.uns.get(key, {})
+    W = rec.get("drift_weights")
+    if not W:
+        raise KeyError(f"uns[{key!r}]['drift_weights'] missing: rerun scjdo2.flow with this version")
+    params = rec["params"]
+    d, hidden = int(params["n_comps"]), tuple(int(h) for h in params["hidden"])
+    nets = []
+    for name in sorted(W, key=lambda s: int(s[4:])):
+        net = _MLP(d, hidden)
+        lin = [m for m in net.net if hasattr(m, "weight")]
+        with torch.no_grad():
+            for i, m in enumerate(lin):
+                m.weight.copy_(torch.as_tensor(np.asarray(W[name][f"layer{i}_weight"])))
+                m.bias.copy_(torch.as_tensor(np.asarray(W[name][f"layer{i}_bias"])))
+        nets.append(net.eval())
+
+    class _Mean(torch.nn.Module):
+        def __init__(self, members):
+            super().__init__()
+            self.members = torch.nn.ModuleList(members)
+
+        def forward(self, z):
+            return torch.stack([m(z) for m in self.members]).mean(0)
+
+    return _Mean(nets).eval()
+
+
+# ---------------------------------------------------------------------------
+# 4. Descriptors
+# ---------------------------------------------------------------------------
+def _rank_quantiles(x: np.ndarray) -> np.ndarray:
+    from scipy.stats import rankdata
+    x = np.asarray(x, np.float64)
+    out = np.full(len(x), np.nan)
+    ok = np.isfinite(x)
+    if ok.sum() == 1:
+        out[ok] = 0.5
+    elif ok.sum() > 1:
+        out[ok] = (rankdata(x[ok], method="average") - 1.0) / (ok.sum() - 1.0)
+    return out
+
+
+def flow_descriptors(J: np.ndarray) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
+    """Magnitude-free operator-space descriptors of per-cell operators (n, d, d).
+
+    Returns ``(raw, ranks, meta)``: ``raw`` (n, 8) in the order of
+    :data:`DESCRIPTOR_NAMES`; ``ranks`` the within-dataset rank quantiles in [0, 1];
+    Henrici non-normality and transient gain come from :mod:`scjdo2.opspace`.
+    """
+    import anndata as ad
+    from . import opspace
+    J = np.asarray(J, np.float32)
+    if J.ndim != 3 or J.shape[1] != J.shape[2]:
+        raise ValueError(f"J must be (n, d, d); got {J.shape}")
+    a = ad.AnnData(X=np.zeros((len(J), 0), dtype=np.float32))
+    a.uns["scjdo2"] = {"J": J}
+    opspace.spectrum(a, n_eig=int(J.shape[1]), fisher_mask=False)
+    opspace.invariants(a)
+    eig = np.linalg.eigvals(J.astype(np.float64))
+    eig = np.take_along_axis(eig, np.argsort(-eig.real, axis=1, kind="stable"), axis=1)
+    max_abs = np.maximum(np.abs(eig).max(axis=1), 1e-300)
+    sum_abs = np.maximum(np.abs(eig).sum(axis=1), 1e-300)
+    lead = eig[:, 0].real
+    gap = lead - eig[:, 1].real if eig.shape[1] > 1 else np.zeros(len(eig))
+    cols = {
+        "sign_lead_re": np.sign(lead),
+        "n_positive_real": (eig.real > 0).sum(axis=1).astype(np.float64),
+        "lead_re_over_max_abs_lambda": lead / max_abs,
+        "max_abs_imag_over_max_abs_lambda": np.abs(eig.imag).max(axis=1) / max_abs,
+        "spectral_gap_over_max_abs_lambda": gap / max_abs,
+        "henrici": np.asarray(a.obs["henrici"], np.float64),
+        "transient_gain": np.asarray(a.obs["transient_gain"], np.float64),
+        "trace_over_sum_abs_lambda": np.trace(J.astype(np.float64), axis1=1, axis2=2) / sum_abs,
+    }
+    raw = np.column_stack([cols[k] for k in DESCRIPTOR_NAMES])
+    ranks = np.column_stack([_rank_quantiles(cols[k]) for k in DESCRIPTOR_NAMES])
+    return raw, ranks, {"lambda1": lead, "eigenvalues": eig}
+
+
+def _pairs_table(pairs: list[dict[str, Any]]):
+    """Per-pair OT records as a DataFrame (h5ad-writable)."""
+    import pandas as pd
+    rows = [{k: ("; ".join(v) if isinstance(v, list) else v) for k, v in p.items()} for p in pairs]
+    return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------------------
+# One-call API
+# ---------------------------------------------------------------------------
+def operator_kind(adata) -> Optional[str]:
+    """Which operator ``uns["scjdo2"]["J"]`` holds: ``"flow"`` (:func:`flow`),
+    ``"energy"`` (:func:`scjdo2.fit` / ``pipeline.fit_latent_field``) or ``None``.
+
+    The two share the key, so each writer checks this before overwriting the other.
+    """
+    uns = adata.uns.get("scjdo2", {})
+    if "J" not in uns:
+        return None
+    meta = dict(uns.get("meta", {}))
+    if meta.get("operator") == "flow":
+        return "flow"
+    return "energy"
+
+
+def flow(adata, time_key: str, *, use_rep: str = "X_pca", n_comps: Optional[int] = 15,
+         eps: float = 0.05, solver: str = "auto", hidden: Sequence[int] = (96, 96, 96),
+         weight_decay: float = 1e-4, n_epochs: int = 1500, n_seeds: int = 1, seed: int = 0,
+         device: Optional[str] = None, descriptors: bool = True, keep_plan: Optional[int] = 100,
+         key_added: str = "flow", copy: bool = False, overwrite: bool = False):
+    """Label-free flow operator of every cell from a sampled time course.
+
+    Parameters
+    ----------
+    adata : AnnData with a numeric sampling time in ``adata.obs[time_key]``.
+    time_key : obs column with the sampling time (e.g. day or hours). Velocities and
+        ``lambda_1`` are per unit of this column.
+    use_rep : ``obsm`` key of the transport space. Default ``"X_pca"``; if missing it
+        is computed with ``scanpy.tl.pca`` on ``adata.X`` (which should then hold
+        log-normalised counts). Avoid Factor Analysis: the operator inverts on it.
+    n_comps : leading components of ``use_rep`` to use (manuscript: 10-20, default 15).
+        ``None`` uses all.
+    eps, solver : see :func:`ot_velocity`.
+    hidden, weight_decay, n_epochs, n_seeds, seed, device : see :func:`drift_jacobian`.
+    descriptors : also compute the operator-space descriptors (needs ``n_comps >= 2``).
+    keep_plan : keep the transport plan that links cells across sampling times, as
+        each source cell's ``keep_plan`` most likely destination cells (row-conditional,
+        renormalised; the kept mass is in ``uns[key]['ot_pairs']``). It is what
+        :mod:`scjdo2.flow_motifs` samples paths along. The entropic plan is diffuse (on
+        LARRY, 90% of a row's mass needs ~10% of the next time's cells), so this is a
+        truncation; :func:`scjdo2.flow_transitions` does not use it by default.
+        ``None`` discards it.
+    key_added : prefix of the output keys.
+    copy : return a modified copy instead of writing to ``adata``.
+    overwrite : replace an energy operator already in ``uns["scjdo2"]["J"]``
+        (from :func:`scjdo2.fit`). By default this raises, because both operators use
+        that key; fit them on separate copies of the AnnData instead.
+
+    Writes
+    ------
+    ``obs[f"{key}_lambda1"]``           leading eigenvalue (max Re) of ``J_flow``
+    ``obs[f"{key}_has_velocity"]``      cell had an OT velocity (False on the last time)
+    ``obsm[f"{key}_velocity"]``         OT velocity (NaN on the last time point)
+    ``obsm[f"{key}_drift"]``            fitted drift ``f(z)`` at every cell
+    ``obsm[f"{key}_descriptors"]``      raw descriptors (columns: ``uns[...]['descriptor_names']``)
+    ``obsm[f"{key}_descriptor_ranks"]`` rank quantiles of the descriptors
+    ``obsp[f"{key}_plan"]``             transport plan, row i = destination distribution of
+                                        cell i over the next sampling time (``keep_plan``)
+    ``uns["scjdo2"]["J"]``              ``J_flow`` (n, d, d) float32, read by :mod:`scjdo2.opspace`
+    ``uns["scjdo2"]["meta"]``           operator kind, clock units, provenance
+    ``uns[key]``                        parameters, per-pair OT diagnostics, drift weights
+
+    Returns the AnnData if ``copy`` else ``None``.
+    """
+    adata = adata.copy() if copy else adata
+    if operator_kind(adata) == "energy" and not overwrite:
+        raise ValueError(
+            'adata.uns["scjdo2"]["J"] holds an energy operator (scjdo2.fit). The flow operator '
+            "uses the same key: run flow on adata.copy(), or pass overwrite=True.")
+    if time_key not in adata.obs:
+        raise KeyError(f"adata.obs[{time_key!r}] not found")
+    times = np.asarray(adata.obs[time_key], dtype=np.float64)
+    if use_rep not in adata.obsm:
+        if use_rep != "X_pca":
+            raise KeyError(f"adata.obsm[{use_rep!r}] not found")
+        import scanpy as sc
+        sc.tl.pca(adata, n_comps=max(int(n_comps or 50), 2))
+    z = np.asarray(adata.obsm[use_rep], np.float64)
+    if n_comps is not None:
+        if n_comps > z.shape[1]:
+            raise ValueError(f"n_comps={n_comps} > {z.shape[1]} columns in obsm[{use_rep!r}]")
+        z = z[:, :n_comps]
+    tic = time.time()
+    if keep_plan:
+        v, pairs, plan = ot_velocity(z, times, eps=eps, solver=solver, seed=seed, plan_top_k=int(keep_plan))
+        adata.obsp[f"{key_added}_plan"] = plan
+    else:
+        v, pairs = ot_velocity(z, times, eps=eps, solver=solver, seed=seed)
+        if f"{key_added}_plan" in adata.obsp:
+            del adata.obsp[f"{key_added}_plan"]
+    J, f, fit = drift_jacobian(z, v, hidden=hidden, weight_decay=weight_decay, n_epochs=n_epochs,
+                               n_seeds=n_seeds, seed=seed, device=device)
+
+    adata.obsm[f"{key_added}_velocity"] = v
+    adata.obsm[f"{key_added}_drift"] = f
+    adata.obs[f"{key_added}_has_velocity"] = np.isfinite(v).all(axis=1)
+    eig_lead = np.linalg.eigvals(J.astype(np.float64)).real.max(axis=1)
+    adata.obs[f"{key_added}_lambda1"] = eig_lead.astype(np.float32)
+    if descriptors:
+        raw, ranks, _ = flow_descriptors(J)
+        adata.obsm[f"{key_added}_descriptors"] = raw.astype(np.float32)
+        adata.obsm[f"{key_added}_descriptor_ranks"] = ranks.astype(np.float32)
+
+    sj = adata.uns.setdefault("scjdo2", {})
+    sj["J"] = J
+    sj["meta"] = {**dict(sj.get("meta", {})), "operator": "flow", "source": "entropic OT time course",
+                  "use_rep": use_rep, "n_comps": int(z.shape[1]), "time_key": time_key,
+                  "clock_calibrated": False, "velocity_units": f"per unit of obs[{time_key!r}]"}
+    adata.uns[key_added] = {
+        "params": {"time_key": time_key, "use_rep": use_rep, "n_comps": int(z.shape[1]), "eps": float(eps),
+                   "solver": solver, "hidden": list(hidden), "weight_decay": float(weight_decay),
+                   "n_epochs": int(n_epochs), "n_seeds": int(n_seeds), "seed": int(seed),
+                   "keep_plan": int(keep_plan) if keep_plan else 0},
+        "ot_pairs": _pairs_table(pairs), "drift_fit": {k: v for k, v in fit.items() if k != "weights"},
+        "drift_weights": fit["weights"], "descriptor_names": list(DESCRIPTOR_NAMES),
+        "seconds": round(time.time() - tic, 2)}
+    return adata if copy else None

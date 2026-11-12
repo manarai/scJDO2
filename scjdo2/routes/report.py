@@ -35,6 +35,14 @@ SOURCE = {
 }
 
 
+LAMBDA_TXT = ("The leading eigenvalue of scJDO2's flow operator (optimal transport between consecutive time "
+              "points, a smooth drift fitted to it, and that drift's Jacobian at each cell). Above 0, nearby cells "
+              "move apart (expanding, as at a fate split); below 0 they converge (contracting, as when cells "
+              "commit). On LARRY, per-cell λ₁ reproduced across replicate wells (Spearman 0.97); archetypes of "
+              "this operator reproduced only as that two-way split, so none are shown. λ₁ is a ranking of "
+              "neighbourhoods, not a measured rate: the operator's values depend on the transport space.")
+
+
 def warnings(diag) -> list[str]:
     """Plain-language caveats triggered by the diagnostics."""
     w = []
@@ -77,6 +85,13 @@ def warnings(diag) -> list[str]:
         if wd <= best_base:
             w.append(f"Held-out clone test: the drift-guided walk ({wd:.2f}) does not beat the baselines "
                      f"({best_base:.2f}); the drift adds no fate information here.")
+    fl = diag.get("flow_lambda")
+    if fl:
+        if fl["n_times"] == 2:
+            w.append("Flow λ₁ rests on two time points (one optimal-transport step); treat it as rough.")
+        if fl["frac_last_time"] > 0.3:
+            w.append(f"{fl['frac_last_time']:.0%} of the shown cells are on the last time point, where no later "
+                     "cells exist: their flow λ₁ comes from the drift's extrapolation, not from transport.")
     if diag["merged_states"]:
         w.append(f"{len(diag['merged_states'])} rare states were merged into 'Other' (the viewer has eight colours).")
     if diag["source"] == "pseudotime":
@@ -115,6 +130,10 @@ def _methods_html(diag, fate_tbl):
          f"{diag['n_walkers']} walkers start in {html.escape(diag['start_state'])}. At the end: {fin}. The floor is "
          f"{html.escape(diag['floor'])}; the surface (valleys from cell density, slope from the projected drift) is a "
          "backdrop only. Playback counts hops, not time.</p>"]
+    fl = diag.get("flow_lambda")
+    if fl:
+        p.append(f"<p><strong>Flow λ₁.</strong> {LAMBDA_TXT} Here: optimal transport between {fl['n_times']} time points "
+                 f"on {fl['fit_cells']:,} cells, a {fl['n_comps']}-component PCA, units {html.escape(fl['units'])}.</p>")
     al = [f"{k.split('_')[1]} {v:.2f}" for k, v in diag.items() if k.startswith("alignment_")]
     if al:
         p.append("<p>Median cosine between the drift and the direction of increasing " + "; ".join(al) + ".</p>")
@@ -163,6 +182,19 @@ def report_md(diag, routes, w) -> str:
     for k, v in diag.items():
         if k.startswith("alignment_"):
             L.append(f"- Drift vs {k.split('_')[1]}: median cosine {v:.2f} (1 = same direction, 0 = unrelated).")
+    fl = diag.get("flow_lambda")
+    if fl:
+        L += ["", "## Flow λ₁ (time course)", "", LAMBDA_TXT, "",
+              f"Optimal transport over {fl['n_times']} time points ({', '.join(f'{t:g}' for t in fl['times'])}) on "
+              f"{fl['fit_cells']:,} cells; λ₁ {fl['units']}. Shown cells: median {fl['quantiles_5_50_95'][1]:.2f} "
+              f"(5–95%: {fl['quantiles_5_50_95'][0]:.2f} to {fl['quantiles_5_50_95'][2]:.2f}); "
+              f"{fl['frac_expanding']:.0%} expanding.", "",
+              "| state | cells | median λ₁ | expanding |", "|---|---|---|---|"]
+        for n, v in fl["by_state"].items():
+            L.append(f"| {n} | {v['n']} | {v['median']:.2f} | {v['frac_expanding']:.0%} |")
+        L.append("")
+        for r in fl["routes"]:
+            L.append(f"- Route {' → '.join(r['path'])}: λ₁ {r['start']:.2f} at the start, {r['end']:.2f} on arrival.")
     ft = diag.get("fate_test", {})
     if "summary" in ft:
         L += ["", "## Held-out clone fate test", "", "| method | macro AUROC | 95% CI | top-fate acc. |", "|---|---|---|---|"]

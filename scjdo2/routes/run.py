@@ -14,6 +14,8 @@ Steps (each a public function in :mod:`scjdo2.routes`):
    (``pipeline.fit_rate_and_gene_field``) and ``opspace.compute``;
 4. walk: walkers hop between those cells along the drift (``walk``);
 5. routes: archetypes, genes and gene coupling along each route (``dynamics``);
+   with time points, also the flow operator's λ₁ per cell and along each
+   route (``flow_layer``: expanding vs contracting neighbourhoods);
 6. checks: drift alignment with time / pseudotime, operator directionality,
    gene coverage, reference-network support, and — with clones and time —
    the held-out clone fate test (``fate``);
@@ -31,6 +33,7 @@ import pandas as pd
 import scipy.sparse as sp
 
 from . import direction as dirn
+from . import flow_layer
 from .backdrop import surface
 from .dynamics import operator_tables, route_dynamics
 from .report import write_outputs
@@ -67,8 +70,13 @@ def simulate(adata, state_key, start_state, out_dir, *, clone_key=None, time_key
              n_top_genes=2000, keep_genes=(), n_walkers=300, hops=150, sigma=0.25, k=30,
              drift_epochs=1500, rate_epochs=150, n_anchors=300, anchor_max_live=200,
              fate_test=True, fate_max_cells=60000, max_fit_cells=60000, title=None,
-             dataset_name=None, seed=0, save_run=False, backdrop_steps=6000) -> dict:
-    """Run the whole route simulation; see the module docstring. Returns the diagnostics dict."""
+             dataset_name=None, seed=0, save_run=False, backdrop_steps=6000,
+             flow_lambda="auto", flow_max_cells=60000) -> dict:
+    """Run the whole route simulation; see the module docstring. Returns the diagnostics dict.
+
+    ``flow_lambda``: ``"auto"`` (default) adds flow λ₁ when ``time_key`` gives at least two
+    time points and the POT package is installed; ``True`` requires it; ``False`` skips it.
+    """
     import scanpy as sc
     from .. import io as scjdo2_io
     from .. import opspace
@@ -201,8 +209,30 @@ def simulate(adata, state_key, start_state, out_dir, *, clone_key=None, time_key
             "meta": {"cap": bd["cap"], "n_steps": hops, "dt": 1.0, "clock_label": "hops", "clock_digits": 0,
                      "n_flow": n_walkers, "final": final.tolist()}}
 
+    # flow λ₁ (time course only)
+    lam, flow_info = None, None
+    n_times = np.unique(tm[np.isfinite(tm)]).size if tm is not None else 0
+    want = flow_lambda is True or (flow_lambda == "auto" and n_times >= 2)
+    if flow_lambda not in (True, False, "auto"):
+        raise ValueError("flow_lambda must be 'auto', True or False")
+    if want and not flow_layer.available():
+        if flow_lambda is True:
+            raise ImportError("flow λ₁ needs the POT package (pip install pot)")
+        _log("flow λ₁ skipped: the POT package is not installed")
+        want = False
+    if flow_lambda is True and n_times < 2:
+        raise ValueError("flow_lambda=True needs time_key with at least two time points")
+    if want:
+        _log(f"flow λ₁: optimal transport over {n_times} time points, up to {flow_max_cells} cells")
+        lam, flow_info = flow_layer.flow_lambda(tmp.X[:, np.flatnonzero(hv)], tm, idx, max_cells=flow_max_cells,
+                                                n_epochs=drift_epochs, seed=seed)
+        lim = float(np.quantile(np.abs(lam), 0.98)) or 1.0
+        view["lambda"] = np.round(lam, 3).tolist()
+        view["meta"]["lambda"] = {"lim": round(lim, 3), "units": f"per unit of {time_key}"}
+        _log(f"flow λ₁ done in {flow_info['seconds']:.0f}s; median {np.median(lam):.2f}")
+
     # 5. routes
-    routes = route_dynamics(cells, states, names, start_state, Zs, ops, reference)
+    routes = route_dynamics(cells, states, names, start_state, Zs, ops, reference, lam=lam)
 
     # 6. checks
     diag = {"n_cells_total": int(adata.n_obs), "n_cells_operator": int(len(idx)), "n_genes": int(hv.sum()),
@@ -214,6 +244,9 @@ def simulate(adata, state_key, start_state, out_dir, *, clone_key=None, time_key
             "never_reached": [n for n, v in zip(names, visited) if v == 0],
             "floor": floor_name, "backdrop_phi_residual": bd["phi_residual"],
             "routes": [{"path": r["states"], "n": r["n"], "top_archetypes": r["top"]} for r in routes["routes"]]}
+    if lam is not None:
+        diag["flow_lambda"] = {**flow_info, "time_key": time_key, "units": f"per unit of {time_key}",
+                               **flow_layer.summarise(lam, lab, names, tm[idx], routes["routes"])}
     # alignment needs a continuous key: a local gradient of a few time points is noise
     for key, name in ((time_key, "time"), (pseudotime_key, "pseudotime")):
         if key and key in adata.obs and adata.obs[key].nunique() > 20:
