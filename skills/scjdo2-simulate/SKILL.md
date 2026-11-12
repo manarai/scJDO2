@@ -18,7 +18,8 @@ instruction set. In short:
    when available. Run it in the background; a run takes
    about an hour on a laptop CPU at the default `--n-cells 2000`.
 4. Report from `report.md`: where walkers ended, the direction source, the
-   fate test if it ran, and **every generated caveat**. Point to
+   fate test if it ran, the flow λ₁ section if present (expanding vs
+   contracting along the routes), and **every generated caveat**. Point to
    `route_page.html`.
 5. Never present gene coupling as a regulatory network or call genes
    regulators from this output; playback is hops, not time.

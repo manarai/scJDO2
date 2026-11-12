@@ -71,8 +71,9 @@ scjdo2 simulate --input data.h5ad --out results/ --state-key cell_type --start-s
 Walkers hop between measured cells along a scJDO2 drift fitted to the best
 available direction evidence (lineage > measured velocity > time points >
 pseudotime) and the output is an interactive `route_page.html` (archetypes,
-genes and gene coupling along each route) plus `report.md` with caveats
-computed from the run. With lineage barcodes it also runs a held-out clone
+genes and gene coupling along each route; with time points also the flow
+operator's λ₁, expanding vs contracting neighbourhoods) plus `report.md`
+with caveats computed from the run. With lineage barcodes it also runs a held-out clone
 fate test. AI agents: read [`AGENTS.md`](AGENTS.md) first. Code:
 `scjdo2/routes/`.
 

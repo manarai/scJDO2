@@ -174,6 +174,8 @@ def _build_parser() -> argparse.ArgumentParser:
     sim.add_argument("--hops", type=int, default=150)
     sim.add_argument("--sigma", type=float, default=0.25, help="drift kernel softmax scale")
     sim.add_argument("--no-fate-test", action="store_true")
+    sim.add_argument("--flow-lambda", default="auto", choices=["auto", "on", "off"],
+                     help="flow operator λ₁ per cell (needs --time-key with ≥ 2 time points); auto = when possible")
     sim.add_argument("--title", default=None, help="page title (2-4 words)")
     sim.add_argument("--dataset-name", default=None, help="used in the page headline")
     sim.add_argument("--save-run", action="store_true", help="also save the fitted operator run (large)")
@@ -429,7 +431,8 @@ def _cmd_simulate(args) -> int:
              fate_states=args.fate_states, reference=ref, n_cells=args.n_cells, n_pcs=args.n_pcs,
              n_top_genes=args.n_top_genes, keep_genes=args.keep_genes, n_walkers=args.n_walkers,
              hops=args.hops, sigma=args.sigma, fate_test=not args.no_fate_test, title=args.title,
-             dataset_name=args.dataset_name, seed=args.seed, save_run=args.save_run)
+             dataset_name=args.dataset_name, seed=args.seed, save_run=args.save_run,
+             flow_lambda={"auto": "auto", "on": True, "off": False}[args.flow_lambda])
     return 0
 
 
