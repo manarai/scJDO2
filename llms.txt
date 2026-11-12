@@ -1,0 +1,7 @@
+# scJDO2
+
+> Latent-space neighbourhood Jacobian operator fields for single-cell RNA-seq, with a route simulation that sends walkers between measured cells along a fitted drift and reports archetypes, genes and gene coupling along each route.
+
+- [Agent instructions](AGENTS.md): what to ask the user for, the `scjdo2 simulate` command, how to report results, and what not to claim.
+- [README](README.md): the scJDO2 pipeline.
+- [Route simulation code](scjdo2/routes/): direction sources, cell walk, route dynamics, held-out clone fate test, report.

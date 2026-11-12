@@ -60,6 +60,9 @@ where = ["."]
 include = ["scjdo2*"]
 exclude = ["tests*", "notebooks*", "compare*", "benchmarks*", "data*"]
 
+[tool.setuptools.package-data]
+"scjdo2.routes" = ["assets/*.html"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-v --tb=short"

@@ -53,7 +53,7 @@ from typing import Iterable, Optional, Sequence
 import numpy as np
 import pandas as pd
 from anndata import AnnData
-from scipy.stats import rankdata, spearmanr
+from scipy.stats import rankdata
 
 from . import influence as _inf
 from . import opspace as _opspace
@@ -237,6 +237,12 @@ def reference_check(
         base_pos = float(np.mean(M[~np.eye(G, dtype=bool)] > 0))
         wk = W[:, ak]
         Xm = X[wk >= membership_cutoff * wk.max()]
+        # Spearman of every gene with every gene, from ranks (scipy's spearmanr
+        # returns a single NaN instead of a matrix when some member-constant
+        # genes are present); constant genes get correlation 0.
+        Rc = rankdata(Xm, axis=0)
+        Rc -= Rc.mean(0)
+        r_norm = np.sqrt((Rc ** 2).sum(0))
         roles = info["influence"].set_index("gene")["role"]
         auc_j, auc_c, sizes, cols_j, cols_c = [], [], [], [], []
         keep_all = np.ones(G, bool)
@@ -247,9 +253,9 @@ def reference_check(
             keep = keep_all.copy()
             keep[j] = False
             s_j = np.abs(M[:, j])
-            if Xm[:, j].std() > 0:
+            if r_norm[j] > 0:
                 with np.errstate(invalid="ignore", divide="ignore"):
-                    rho = np.asarray(spearmanr(Xm[:, j], Xm).statistic)[0, 1:]
+                    rho = (Rc[:, j] @ Rc) / (r_norm[j] * r_norm)
             else:
                 rho = np.zeros(G)
             s_c = np.abs(np.nan_to_num(rho))
